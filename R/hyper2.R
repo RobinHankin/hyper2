@@ -154,15 +154,15 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 
-`lhyper2` <- function(H,p,log=TRUE){
+`loglik` <- function(H,p,log=TRUE){
   if(is.matrix(p)){
-    return(apply(p,1,function(o){.lhyper2_single(H,p=o, log=log)}))
+    return(apply(p,1,function(o){.loglik_single(H,p=o, log=log)}))
   } else {
-    return(.lhyper2_single(H,p,log=log))
+    return(.loglik_single(H,p,log=log))
   }
 }
 
-`.lhyper2_single` <- function(H,p,log=TRUE){
+`.loglik_single` <- function(H,p,log=TRUE){
   stopifnot(length(p) == size(H)-1)
   stopifnot(all(p>=0))
   stopifnot(sum(p)<=1)
@@ -353,7 +353,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         startp <- rep(1/n,n-1)
         }
 
-    objective <- function(p){ -lhyper2(H,p) }
+    objective <- function(p){ -loglik(H,p) }
     gradfun   <- function(p){ -(gradient(H,p))} #NB minus signs
     
     UI <- rbind(diag(nrow=n-1),-1)
@@ -507,7 +507,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `like_single_list` <- function(p,Lsub){;  # eg like_single(p,Lc)
-  sum(unlist(lapply(Lsub,lhyper2,p=p,log=FALSE)))
+  sum(unlist(lapply(Lsub,loglik,p=p,log=FALSE)))
   ## sum, because it can be any one of the orders specified in the
   ## elements of Lsub
 }

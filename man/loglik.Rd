@@ -1,5 +1,5 @@
-\name{lhyper2}
-\alias{lhyper2}
+\name{loglik}
+\alias{loglik}
 \alias{like_single_list}
 \alias{like_series}
 \title{
@@ -9,7 +9,7 @@ Log likelihood functions
 Returns a log-likelihood for a given hyper2 object at a specific point
 }
 \usage{
-lhyper2(H, p, log = TRUE)
+loglik(H, p, log = TRUE)
 like_single_list(p,Lsub)
 like_series(p,L,log=TRUE)
 
@@ -20,11 +20,11 @@ like_series(p,L,log=TRUE)
   \item{log}{Boolean with default \code{TRUE} meaning to return the
     log-likelihood and \code{FALSE} meaning to return the likelihood}
   \item{L,Lsub}{A list of \code{hyper2} objects, or a list of list of
-    \code{lhyper2} objects}
+    \code{loglik} objects}
 }
 \details{
 
-Function \code{lhyper2()} is a straightforward likelihood function.  It
+Function \code{loglik()} is a straightforward likelihood function.  It
 takes the vector
 \eqn{p=\left(p_1,\ldots,p_{n-1}\right)}{p=(p_1,...,p_{n-1})} and returns
 the (log) likelihood.  Note that the \sQuote{fillup} value is
@@ -54,7 +54,7 @@ intended for use with \code{ggol()}.
 \seealso{\code{\link{maxp}}}
 \examples{
 data(chess)
-lhyper2(chess,c(1/3,1/3))
+loglik(chess,c(1/3,1/3))
 
 data(masterchef)
 

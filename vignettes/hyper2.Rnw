@@ -297,10 +297,10 @@ chess
 The package can calculate log-likelihoods:
 
 <<loglikelihoodchess>>=
-lhyper2(chess,c(1/3,1/3))
+loglik(chess,c(1/3,1/3))
 @ 
 
-[the second argument of function \code{lhyper2()} is a vector of
+[the second argument of function \code{loglik()} is a vector of
 length 2, third element of $\boldp$ being the ``fillup''
 value~\citep{aitchison1986}]; the gradient of the log-likelihood is
 given by function \code{gradient()}:

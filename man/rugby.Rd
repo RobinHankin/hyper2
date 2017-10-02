@@ -29,11 +29,11 @@ Wikipedia contributors, \dQuote{2016 Super Rugby season,}
 }
   
 }
-\seealso{\code{\link{lhyper2}}}
+\seealso{\code{\link{loglik}}}
 \examples{
 data(super_rugby)
-lhyper2(super2016,indep(maxp(super2016)))
-lhyper2(super2016g,indep(maxp(super2016g)))
+loglik(super2016,indep(maxp(super2016)))
+loglik(super2016g,indep(maxp(super2016g)))
 
 # differ by more than 2, ghost is signficant!
 }
