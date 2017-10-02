@@ -4,6 +4,7 @@
 \alias{hyper2_add}
 \alias{hyper2_equality}
 \alias{hyper2_prod}
+\alias{hyper2_sum_numeric}
 \alias{sum.hyper2}
 \title{Arithmetic Ops Group Methods for hyper2 objects}
 \description{
@@ -18,19 +19,23 @@
   repeated observations of the same data.
 
   There are no unary operations for this class.
-  
+
 }
 \usage{
 \method{Ops}{hyper2}(e1, e2 = NULL)
 \method{sum}{hyper2}(x,...,na.rm=FALSE)
 hyper2_add(e1,e2)
 hyper2_equality(e1,e2)
+hyper2_sum_numeric(H,x)
 }
 \arguments{
   \item{e1,e2}{Objects of class \code{hyper2}, here interpreted as
     hyperdirichlet distributions}
   \item{x,...,na.rm}{In the \code{sum()} method, objects to be summed;
     \code{na.rm} is currently ignored}
+  \item{H,r}{In function \code{hyper2_sum_numeric()}, object \code{H} is
+    a \code{hyper2} object and \code{r} is a length-one real vector (a
+    number)}
 }
 \details{
 
@@ -40,6 +45,13 @@ hyper2_equality(e1,e2)
   order; and secondly, the \code{stl} \code{set} class is used for the
   brackets.  A set does not include information about the order of its
   elements; neither does it admit repeated elements.  See examples.
+
+  Function \code{hyper2_sum_numeric()} is defined so that idiom like
+
+  \code{H[p] <- H[p] + 3}
+
+  works (without this, one has to type \code{H[p] <- powers(H[p]) + 3},
+  which sucks).
   
 }
 \value{
@@ -52,6 +64,15 @@ Robin K. S. Hankin
 
 stopifnot(hyper2(list(1,1:2),1:2)==hyper2(list(1:2,1),2:1))  # stl map class
 stopifnot(hyper2(list(1,1:2),1:2)==hyper2(list(1,c(1,1,2)),1:2)) # stl set class
+
+
+n <- 4
+H <- hyper2(d=n)
+for(i in seq_len(30)){
+  jj <- sample(seq_len(n),sample(n,1),replace=FALSE)
+  H[jj] <- H[jj] + 1   
+}
+
 
 }
 \keyword{symbolmath}

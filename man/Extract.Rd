@@ -41,7 +41,11 @@ Extract or replace parts of a hyper2 object
  \code{overwrite()} in the \code{src/} directory] that was too neat to
  omit.
 
+ Incrementing a particular power, as in \code{H[x] <- H[x] + 1}, is
+ documented at \code{Ops.hyper2}, specifically
+ \code{hyper2_sum_numeric()}.
 }
+
 \value{
 The extractor method returns a \code{hyper2} object, restricted to the
 elements specified
@@ -51,12 +55,12 @@ elements specified
 Use \code{powers()} and \code{brackets()} to extract a numeric vector of
  powers or a list of integer vectors respectively.
 
-Replacement idiom \code{A[x] <- val} cannot use non-trivial recycling.
+Replacement idiom \code{H[x] <- val} cannot use non-trivial recycling.
 This is because the elements of \code{a} are not stored in a
-system-dependent order.
+system-dependent order.  Also see function \code{hyper2_sum_numeric()}.
 
 }
-\seealso{\code{\link{hyper2}}}
+\seealso{\code{\link{hyper2}},\code{\link{Ops.hyper2}}}
 \examples{
 data(chess)
 
