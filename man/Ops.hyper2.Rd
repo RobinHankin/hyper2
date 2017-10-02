@@ -26,7 +26,7 @@
 \method{sum}{hyper2}(x,...,na.rm=FALSE)
 hyper2_add(e1,e2)
 hyper2_equality(e1,e2)
-hyper2_sum_numeric(H,x)
+hyper2_sum_numeric(H,r)
 }
 \arguments{
   \item{e1,e2}{Objects of class \code{hyper2}, here interpreted as
