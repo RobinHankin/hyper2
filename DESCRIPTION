@@ -12,3 +12,4 @@ Depends: methods
 Imports: Rcpp (>= 0.12.5),partitions
 Suggests: magrittr
 LinkingTo: Rcpp
+URL: https://github.com/RobinHankin/hyper2.git
