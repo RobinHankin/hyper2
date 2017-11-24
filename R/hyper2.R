@@ -517,5 +517,48 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     if(log){ out <- log(out) }
     return(out)
 }
-  
 
+`dirichlet` <-
+  function(powers,alpha,pnames=NA){
+    if(!xor(missing(powers),missing(alpha))){
+      stop("supply one of powers, alpha")
+    } else if(missing(powers) & !missing(alpha)){
+      jj <- names(alpha)
+      d <- alpha-1
+    } else if (!missing(powers) & missing(alpha)){
+      jj <- names(powers)
+      d <- powers
+    } else {
+      stop("this cannot happen")
+    }
+
+    if(is.na(pnames)){pnames <- jj}
+    hyper2(as.list(seq_along(alpha)),d=alpha-1,pnames=pnames)
+}
+
+`GD` <- function(alpha, beta, beta0=0, pnames=NA){
+  k <- length(alpha)
+  stopifnot(length(beta) == k-1)
+  
+  H <- dirichlet(alpha-1,pnames=pnames)
+  for(i in 2:(k-1)){
+    H[(i:k)] <- beta[i-1] -(alpha[i]+beta[i])
+  }
+
+  H[k] <- beta[k-1]-1
+  H[seq_along(k)] <- beta0-(alpha[1]+beta[1])
+  return(H)   
+}
+
+`GD_wong` <- function(alpha, beta, beta0=0, pnames=NA){
+  k <- length(alpha)
+  stopifnot(length(beta) == k-1)
+
+  gamma <- beta-(alpha[-1]+beta[-1])
+  H <- dirichlet(alpha-1,pnames=pnames)
+  for(i in 1:k){
+    H[(i:k)] <- gamma[i]
+  }
+    H[1:k] <- gamma0
+  return(H)   
+}
