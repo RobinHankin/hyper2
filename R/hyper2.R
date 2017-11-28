@@ -518,22 +518,19 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
-`dirichlet` <-
-  function(powers,alpha,pnames=NA){
+`dirichlet` <-  function(powers, alpha, pnames=NA){
     if(!xor(missing(powers),missing(alpha))){
-      stop("supply one of powers, alpha")
-    } else if(missing(powers) & !missing(alpha)){
-      jj <- names(alpha)
-      d <- alpha-1
-    } else if (!missing(powers) & missing(alpha)){
-      jj <- names(powers)
-      d <- powers
-    } else {
-      stop("this cannot happen")
+        stop("supply exactly one of powers, alpha")
     }
 
-    if(is.na(pnames)){pnames <- jj}
-    hyper2(as.list(seq_along(alpha)),d=alpha-1,pnames=pnames)
+    if(missing(powers)){
+        powers <- alpha-1
+    }
+    
+    if(is.na(pnames) & !is.null(names(powers))){
+        pnames <- names(powers)
+    }
+    hyper2(as.list(seq_along(powers)),d=powers,pnames=pnames)
 }
 
 `GD` <- function(alpha, beta, beta0=0, pnames=NA){
