@@ -35,6 +35,7 @@ possession.
 }
 \examples{
 
+data(NBA)
 dotchart(maxp(NBA_likelihood))
 
 }
