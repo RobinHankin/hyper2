@@ -1,13 +1,9 @@
-library(hyper2)
-data(NBA)
-
-allplayers <- as.matrix(NBA[,5:23])
-
+a <- read.table("NBA.txt",header=TRUE)
+allplayers <- as.matrix(a[,5:23])
 
 H <- hyper2(pnames= c(colnames(allplayers),"C_possession","W_possession"))
 ## The two final names are 'ghost' players (in the sense of Hankin
 ## 2010) whose strength is added to that of the real players.
-
 
 
 ## players 1-9 Cleveland
@@ -16,8 +12,8 @@ C_onpitch <- allplayers[,1:9]
 W_onpitch <- allplayers[,10:19]
 
 ## go through each row:
-for(i in seq_len(nrow(NBA))){
-  if(NBA[i,4] == 'W'){  # Warriors score a point
+for(i in seq_len(nrow(a))){
+  if(a[i,4] == 'W'){  # Warriors score a point
     onpitch_scored  <- c(names(which(W_onpitch[i,])),"C_possession")
     onpitch_noscore <- names(which(C_onpitch[i,]))
   } else { # Cleveland score a point
