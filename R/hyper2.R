@@ -537,7 +537,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   k <- length(alpha)
   stopifnot(length(beta) == k-1)
   
-  H <- dirichlet(alpha-1,pnames=pnames)
+  H <- dirichlet(alpha=alpha-1,pnames=pnames)
   for(i in 2:(k-1)){
     H[(i:k)] <- beta[i-1] -(alpha[i]+beta[i])
   }
