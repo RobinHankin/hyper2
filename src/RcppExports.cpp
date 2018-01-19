@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // identityL
 List identityL(const List& L, const NumericVector& p);
-RcppExport SEXP _hyper2_identityL(SEXP LSEXP, SEXP pSEXP) {
+RcppExport SEXP hyper2_identityL(SEXP LSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // addL
 List addL(const List L1, const NumericVector p1, const List L2, const NumericVector p2);
-RcppExport SEXP _hyper2_addL(SEXP L1SEXP, SEXP p1SEXP, SEXP L2SEXP, SEXP p2SEXP) {
+RcppExport SEXP hyper2_addL(SEXP L1SEXP, SEXP p1SEXP, SEXP L2SEXP, SEXP p2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -33,7 +33,7 @@ END_RCPP
 }
 // equality
 bool equality(const List L1, const NumericVector p1, const List L2, const NumericVector p2);
-RcppExport SEXP _hyper2_equality(SEXP L1SEXP, SEXP p1SEXP, SEXP L2SEXP, SEXP p2SEXP) {
+RcppExport SEXP hyper2_equality(SEXP L1SEXP, SEXP p1SEXP, SEXP L2SEXP, SEXP p2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -47,7 +47,7 @@ END_RCPP
 }
 // accessor
 List accessor(const List L, const NumericVector powers, const List Lwanted);
-RcppExport SEXP _hyper2_accessor(SEXP LSEXP, SEXP powersSEXP, SEXP LwantedSEXP) {
+RcppExport SEXP hyper2_accessor(SEXP LSEXP, SEXP powersSEXP, SEXP LwantedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -60,7 +60,7 @@ END_RCPP
 }
 // overwrite
 List overwrite(const List L1, const NumericVector powers1, const List L2, const NumericVector powers2);
-RcppExport SEXP _hyper2_overwrite(SEXP L1SEXP, SEXP powers1SEXP, SEXP L2SEXP, SEXP powers2SEXP) {
+RcppExport SEXP hyper2_overwrite(SEXP L1SEXP, SEXP powers1SEXP, SEXP L2SEXP, SEXP powers2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -74,7 +74,7 @@ END_RCPP
 }
 // assigner
 List assigner(const List L, const NumericVector p, const List L2, const NumericVector value);
-RcppExport SEXP _hyper2_assigner(SEXP LSEXP, SEXP pSEXP, SEXP L2SEXP, SEXP valueSEXP) {
+RcppExport SEXP hyper2_assigner(SEXP LSEXP, SEXP pSEXP, SEXP L2SEXP, SEXP valueSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -88,7 +88,7 @@ END_RCPP
 }
 // evaluate
 double evaluate(const List L, const NumericVector powers, const NumericVector probs);
-RcppExport SEXP _hyper2_evaluate(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP) {
+RcppExport SEXP hyper2_evaluate(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -101,7 +101,7 @@ END_RCPP
 }
 // differentiate
 List differentiate(const List L, const NumericVector powers, const NumericVector probs, const unsigned int n);
-RcppExport SEXP _hyper2_differentiate(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP, SEXP nSEXP) {
+RcppExport SEXP hyper2_differentiate(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
