@@ -1,4 +1,6 @@
-a <- read.table("NBA.txt",header=TRUE)
+library("hyper2")
+data(NBA)
+a <- NBA
 allplayers <- as.matrix(a[,5:23])
 
 H <- hyper2(pnames= c(colnames(allplayers),"C_possession","W_possession"))
