@@ -48,7 +48,7 @@ team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")
   return(out)
 }
 
-## all rounds from the match, thanks to Zachary Hankin:
+## all rounds from the match, data kindly supplied by Zachary Hankin:
 zachslist <- list(
     round1 =
       c("Skadoodle","olofmeister","tarik",
