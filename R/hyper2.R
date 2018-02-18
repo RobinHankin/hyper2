@@ -537,7 +537,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   k <- length(alpha)
   stopifnot(length(beta) == k-1)
   
-  H <- dirichlet(alpha=alpha-1,pnames=pnames)
+  H <- dirichlet(powers=alpha-1,pnames=pnames)
   for(i in 2:(k-1)){
     H[(i:k)] <- beta[i-1] -(alpha[i]+beta[i])
   }
@@ -547,15 +547,15 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(H)   
 }
 
-`GD_wong` <- function(alpha, beta, beta0=0, pnames=NA){
+`GD_wong` <- function(alpha, beta, pnames=NA){
   k <- length(alpha)
-  stopifnot(length(beta) == k-1)
+  stopifnot(length(beta) == k)
 
-  gamma <- beta-(alpha[-1]+beta[-1])
-  H <- dirichlet(alpha-1,pnames=pnames)
+  gamma <- beta[-k]-(alpha[-1]+beta[-1])
+  gamma <- c(gamma, beta[k]-1)
+  H <- dirichlet(powers=alpha-1,pnames=pnames)
   for(i in 1:k){
-    H[(i:k)] <- gamma[i]
+    H[(i+1):(k+1)] <- gamma[i]
   }
-    H[1:k] <- gamma0
   return(H)   
 }

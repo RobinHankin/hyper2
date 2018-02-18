@@ -23,6 +23,7 @@ GD_wong(alpha, beta, beta0=0, pnames=NA)
   \item{powers}{In function \code{dirichlet()} a (named) vector of powers}
   \item{alpha,beta}{A vector of parameters for the Dirichlet or
     generalized Dirichlet distribution}
+  \item{beta0}{In function \code{GD()}, an arbitrary parameter}
   \item{pnames}{Optional; a character vector specifying the names of
     \eqn{p_1} through \eqn{p_n}}
 }
