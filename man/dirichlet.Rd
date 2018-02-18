@@ -17,7 +17,7 @@ generalized Dirichlet distribution due to Connor and Mosimann
 \usage{
 dirichlet(powers, alpha, pnames=NA)
 GD(alpha, beta, beta0=0, pnames=NA)
-GD_wong(alpha, beta, beta0=0, pnames=NA)
+GD_wong(alpha, beta, pnames=NA)
 }
 \arguments{
   \item{powers}{In function \code{dirichlet()} a (named) vector of powers}
