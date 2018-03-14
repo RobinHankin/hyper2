@@ -1,7 +1,7 @@
 Package: hyper2
 Type: Package
 Title: The Hyperdirichlet Distribution, Mark 2
-Version: 1.0-3
+Version: 1.0-4
 Date: 2017-10-09
 Author: Robin K. S. Hankin
 Maintainer: Robin K. S. Hankin <hankin.robin@gmail.com>
