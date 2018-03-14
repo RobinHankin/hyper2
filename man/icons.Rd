@@ -2,15 +2,18 @@
 \alias{icons}
 \alias{oneill}
 \docType{data}
-\title{Responses to climate change icons}
+\title{Dataset on climate change due to O'Neill}
 \description{
   A matrix of nine rows and six columns, one column for each of six
   icons relevant to climate change.  The matrix entries show the number
   of respondents who indicated which icon they found most concerning.
   The nine rows show different classes of respondents who were exposed
-  to different subsets (of size four) of the six icons
+  to different subsets (of size four) of the six icons.
+
+  The columns correspond to the different stimulus icons used, detailed
+  below. 
 }
-\usage{data(icons)}
+\usage{data(oneill)}
 \details{
   The six icons were used in this study were:
   \describe{
@@ -43,7 +46,7 @@
   }
 }
 \examples{
-data(icons)
+data(oneill)
 maxp(icons)
 }
 \keyword{datasets}
