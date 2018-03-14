@@ -3,6 +3,8 @@
 \alias{doubles}
 \alias{doubles_noghost}
 \alias{tennis_noghost}
+\alias{doubles_ghost}
+\alias{tennis_ghost}
 \docType{data}
 \title{Match outcomes from repeated doubles tennis matches}
 \description{Match outcomes from repeated doubles tennis matches}
