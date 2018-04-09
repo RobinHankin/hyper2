@@ -8,8 +8,8 @@ team1  <- c("autimatic","tarik", "Skadoodle","Stewie2k","RUSH")
 team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")
 
 ## assumes that players are always killed by the opposing team.  If a
-## player is killed by his own team, counterstrike() may return an
-## error.
+## player is killed by his own team, counterstrike_maker() may return
+## an error.
 
 `counterstrike_maker` <- function(team1,team2,deathorder){
 
