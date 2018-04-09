@@ -27,7 +27,7 @@ due to complex gameplay features such as cooperative teamwork,
 within-team communication, and real-time strategic fluidity.
 
 It is the task of the statistician to make robust inferences from such
-complex datasets, and in this talk I will analyze an influential match
+complex datasets, and here I analyze an influential match
 between \dQuote{FaZe Clan} and \dQuote{Cloud9}, two of the most
 successful E-sports syndicates of all time, when they competed at Boston
 2018.  
@@ -39,7 +39,7 @@ synthetic datasets for the purposes of comparison.
 
 The probability model is identical to that of \code{NBA}: when a player
 kills (scores), this is taken to be a success of the whole team rather
-than the shooter (shooter).
+than the shooter.
 
 Counterstrike Data kindly supplied by Zachary Hankin.
 
