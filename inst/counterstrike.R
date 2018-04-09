@@ -11,7 +11,7 @@ team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")
 ## player is killed by his own team, counterstrike() may return an
 ## error.
 
-`counterstrike` <- function(team1,team2,deathorder){
+`counterstrike_maker` <- function(team1,team2,deathorder){
 
   if(identical(sort(c(team1,team2)),sort(deathorder))){
     deathorder <- deathorder[-length(deathorder)]  # last player not killed
@@ -80,14 +80,14 @@ zachslist <- list(
 
 H <- hyper2(pnames=c(team1,team2))
 for(i in zachslist){
-  H <- H + counterstrike(team1,team2, deathorder=i)
+  H <- H + counterstrike_maker(team1,team2, deathorder=i)
 }
 dotchart(maxp(H),pch=16,main='observed data')
 
 Hrand <- hyper2(pnames=c(team1,team2))
 for(i in 1:6){
   pp <- rdeath(team1,team2)
-  Hrand <- Hrand + counterstrike(team1,team2, pp)
+  Hrand <- Hrand + counterstrike_maker(team1,team2, pp)
 }
 dev.new()
 dotchart(maxp(Hrand),pch=16,main='synthetic data')
