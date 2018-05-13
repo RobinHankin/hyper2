@@ -25,9 +25,10 @@ order_likelihood(M,times=1)
   \item{all_players,winners,losers}{Numeric or character vectors
     specifying (all,winning,losing) competitors in randomly chosen
     groups}
-  \item{M}{Matrix with each row corresponding to a race.  The columns
-  correspond to the finishing order; thus \code{a=M[i,j]} means that
-  competitor \code{a} finished in place \code{j} in race \code{i}}
+  \item{M}{In function \code{order_likelihood()}, a matrix with each
+    row corresponding to a race.  The columns
+    correspond to the finishing order; thus \code{a=M[i,j]} means that
+    competitor \code{a} finished in place \code{j} in race \code{i}}
   \item{times}{Vector specifiying the number of times each row is
   observed}
 }
