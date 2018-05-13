@@ -24,17 +24,13 @@ maxp(H, startp=NULL, give=FALSE, ...)
   \code{masterchef_series6} dataset.  These require a bespoke
   optimization as shown in the vignette.
 
-  Function \code{equalp()} returns the value of $p$ for which all
+  Function \code{equalp()} returns the value of \eqn{p} for which all
   elements are the same.
 
 }
-\author{
-Robin K. S. Hankin
-}
-\note{
-This functionality is peculiarly susceptible to off-by-one errors.
-}
-\seealso{\code{\link{gradient}}}
+\author{Robin K. S. Hankin}
+\note{This functionality is peculiarly susceptible to off-by-one errors.}
+\seealso{\code{\link{gradient}},\code{\link{fillup}}}
 \examples{
 
 data(chess)
