@@ -58,8 +58,9 @@ Use \code{powers()} and \code{brackets()} to extract a numeric vector of
  powers or a list of integer vectors respectively.
 
 Replacement idiom \code{H[x] <- val} cannot use non-trivial recycling.
-This is because the elements of \code{a} are not stored in a
-system-dependent order.  Also see function \code{hyper2_sum_numeric()}.
+This is because the elements of \code{H} are stored in an arbitrary
+order, but the elements of \code{val} are stored in a particular order.
+Also see function \code{hyper2_sum_numeric()}.
 
 }
 \seealso{\code{\link{hyper2}},\code{\link{Ops.hyper2}}}
