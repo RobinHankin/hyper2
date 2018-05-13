@@ -1,9 +1,7 @@
 \name{fillup}
 \alias{fillup}
 \alias{indep}
-\title{
-Fillup function
-}
+\title{Fillup function}
 \description{
   Function \code{fillup()} concatenates a vector with a \sQuote{fillup}
   value to ensure a unit sum; if given a matrix, attaches a column so
@@ -21,6 +19,7 @@ indep(x)
   \item{x}{Numeric vector}
 }
 \author{Robin K. S. Hankin}
+\seealso{\code{\link{equalp}}}
 \examples{
 fillup(c(1/2,1/3))
 
