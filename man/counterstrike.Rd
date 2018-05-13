@@ -42,7 +42,7 @@ kills (scores), this is taken to be a success of the whole team rather
 than the shooter.
 
 The \code{counterstrike} object is created in
-\code{inst/counterstrike.R} (but is called \dquote{\code{H}} there, to
+\code{inst/counterstrike.R} (but is called \dQuote{\code{H}} there, to
 avoid terrible confusion).  There is quite a lot of extra documentation
 in that file.
 
