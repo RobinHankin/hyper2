@@ -559,3 +559,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
   return(H)   
 }
+
+`equalp` <- function(H){
+    n <- size(H)
+    rep(1/n,n)
+}
