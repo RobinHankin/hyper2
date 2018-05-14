@@ -110,7 +110,7 @@ for(i in seq_len(nrow(preference))){   # cycle through the rows; each row is a v
     d[is.na(d)] <- -1  # kludge: make the voting country ineligible to vote.
     while(any(d>0)){
         eligible <- which(d>=0)   # This is why we set NA values to -1
-        euro2009[which(d==1)] <- euro2009[which(d==1)] +1
+        euro2009[which(d==1)] %<>% "+"(1)
                                         # The first choice among
                                         # eligible players has +1
                                         # power on the numerator
@@ -121,7 +121,7 @@ for(i in seq_len(nrow(preference))){   # cycle through the rows; each row is a v
 
         d[d==1] <- -1  # once you've won, you are ineligible to be chosen again
 
-        d[d>0] <- d[d>0]-1  # everyone moves down the list, so who
+        d[d>0] %<>% "-"(1)  # everyone moves down the list, so who
                             # *was* second choice becomes first
                             # choice, who *was* third choice becomes
                             # second, and so on.
