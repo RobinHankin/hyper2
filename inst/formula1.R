@@ -1,6 +1,12 @@
+## use-case:
 
-## use-case: F1_likelihood(wiki_table=read.table("formula1.txt",header=TRUE))
-## File 'formula1.txt' is directly copied from Wikipedia (with slight whitespace changes)
+## R> F1_likelihood(wiki_table=read.table("formula1_2017.txt",header=TRUE))
+
+## File 'formula1_2017.txt' is directly copied from Wikipedia (with
+## slight whitespace changes)
+
+
+
 
 `F1_likelihood` <- function(wiki_table, noscore=c("Ret", "WD", "DNS")){
 
