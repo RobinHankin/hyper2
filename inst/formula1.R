@@ -1,42 +1,54 @@
-library("hyper2")
-library("magrittr")
+
+## use-case: F1_likelihood(wiki_table=read.table("formula1.txt",header=TRUE))
+## File 'formula1.txt' is directly copied from Wikipedia (with slight whitespace changes)
+
+`F1_likelihood` <- function(wiki_table, noscore=c("Ret", "WD", "DNS")){
+
+  ## columns of wiki_table are assumed to be: driver, venue_1,
+  ## venue_2, ..., venue_n, points
+
+  first_and_last <- c(1,ncol(wiki_table))
+  
+  racers <- wiki_table[,1]
+  venues <- colnames(wiki_table)[-first_and_last]
+
+  
+
+  ## Now create a numeric matrix, fmat.  Two steps.  First step, strip
+  ## out no-score entries;  we need to count any of noscore
+  ## [Ret=retired, WD=withdrawn, DNS=did not start, etc] as a zero:
+  
+  f <- function(x){
+    if(any(x %in% noscore)){x[x%in%noscore] <- 0}
+    return(x)
+  }
+
+  jj <- apply(wiki_table,2,f)
+  
+
+  ## Second step: convert to numeric and strip out names; transpose of
+  ## wiki_table (because we want each row to be a venue):
+  fmat <- matrix(as.numeric(jj[,-first_and_last]),byrow=TRUE,ncol=nrow(wiki_table)) 
+  colnames(fmat) <- racers
+  rownames(fmat) <- venues
 
 
-## File formula1.txt is directly copied from Wikipedia (with slight whitespace changes)
-wiki_table <- read.table("formula1.txt",header=TRUE)
-racers <- wiki_table[,1]
-venues <- colnames(wiki_table)[-c(1,22)]
-
-## need to count any of Ret (retired), WD (withdrawn) or DNS (did not start) as a zero:
-noscore <- c("Ret", "WD", "DNS")
-f <- function(x){
-  if(any(x %in% noscore)){x[x%in%noscore] <- 0}
-  return(x)
-}
-
-numerical_table <- apply(wiki_table,2,f)
+  ## Considering Formula1, 2017 as an example: taking the first row of
+  ## fmat is AUS (Australia), in which Hamilton camge second, Vettel
+  ## came first, etc.  The first column of fmat is Hamilton's
+  ## results. He came second in AUS, first in CHN, second in BHR, etc.
 
 
-# Now create a numeric matrix:
-fmat <- matrix(as.numeric(numerical_table[,-c(1,22)]),byrow=TRUE,ncol=nrow(wiki_table)) # convert to numeric and strip out names; transpose of wiki_table
+  ## Following is similar to, but slightly different from, the analysis in eurovision.R:
+  ## Define an empty hyper2 object:
 
-colnames(fmat) <- racers
-rownames(fmat) <- venues
+  F1 <- hyper2(d=ncol(fmat))
 
-## Thus the first row of fmat is AUS (Australia), in which Hamilton camge second, Vettel came first, etc.
-## The first column of fmat is Hamilton's results. He came second in AUS, first in CHN, second in BHR, etc.
-
-
-## Following is similar to, but slightly different from, the analysis in eurovision.R:
-## Define an empty hyper2 object:
-F1 <- hyper2(d=ncol(fmat))
-
-for(i in seq_len(nrow(fmat))){   # cycle through the rows; each row is a voter
+  for(i in seq_len(nrow(fmat))){   # cycle through the rows; each row is a venue [voter]
     d <- fmat[i,,drop=TRUE]
-    d[is.na(d)] <- -1  # kludge: make the voting country ineligible to vote.
     while(any(d>0)){
       eligible <- which(d>=0)  
-
+      
       ## The first choice among eligible players has +1 power on the
       ## numerator:
       F1[which(d==1)] %<>% "+"(1)
@@ -53,11 +65,19 @@ for(i in seq_len(nrow(fmat))){   # cycle through the rows; each row is a voter
       d[d>0] %<>% "-"(1)
 
     } # while() loop closes
-} # i loop closes
+  } # i loop closes
+  
+
+  ## syntatic sugar:
+  pnames(F1) <- racers
+
+  return(F1)
+}  # function F1_likelihood() closes
 
 
-## syntatic sugar:
-pnames(F1) <- racers
+
+wiki_table <- read.table("formula1.txt",header=TRUE)
+F1 <- F1_likelihood(wiki_table)
 
 m <- maxp(F1)
 pdf(file="f.pdf")
