@@ -1,5 +1,4 @@
 library(hyper2)
-rm(list=ls())
 
 filename <- "rowing.txt"  # could be rowing_minimal.txt
 o <- strsplit(readLines(filename)," ")
