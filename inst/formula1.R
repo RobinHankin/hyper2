@@ -9,9 +9,7 @@ library(magrittr)
 ## slight whitespace changes)
 
 
-
-
-`F1_likelihood` <- function(wiki_table, noscore=c("Ret", "WD", "DNS")){
+`F1_likelihood` <- function(wiki_table, noscore=c("Ret","WD","DNS","DSQ", "DNP")){
 
   ## columns of wiki_table are assumed to be: driver, venue_1,
   ## venue_2, ..., venue_n, points
@@ -87,7 +85,7 @@ library(magrittr)
 
 
 
-wiki_table <- read.table("formula1_2017.txt",header=TRUE)
+wiki_table <- read.table("formula1_2016.txt",header=TRUE)
 
 points <- wiki_table$points
 names(points) <- wiki_table$driver
