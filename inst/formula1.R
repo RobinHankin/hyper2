@@ -1,3 +1,6 @@
+library(hyper2)
+library(magrittr)
+
 ## use-case:
 
 ## R> F1_likelihood(wiki_table=read.table("formula1_2017.txt",header=TRUE))
@@ -82,7 +85,12 @@
 
 
 
-wiki_table <- read.table("formula1.txt",header=TRUE)
+
+
+wiki_table <- read.table("formula1_2017.txt",header=TRUE)
+
+points <- wiki_table$points
+names(points) <- wiki_table$driver
 F1 <- F1_likelihood(wiki_table)
 
 m <- maxp(F1)
@@ -92,7 +100,7 @@ dev.off()
 
 pdf(file="g.pdf")
 
-ox <- order(wiki_table$points,decreasing=TRUE)
+ox <- order(points,decreasing=TRUE)
 oy <- order(m,decreasing=TRUE)
 par(pty='s') # square plot
 plot(ox,oy,asp=1,pty='s',xlim=c(0,25),ylim=c(0,25),pch=16,xlab="official order",ylab="my order")
