@@ -9,10 +9,12 @@ library(magrittr)
 ## slight whitespace changes)
 
 
-`F1_likelihood` <- function(wiki_table, noscore=c("Ret","WD","DNS","DSQ", "DNP", "NC")){
+`F1_likelihood` <- function(wiki_table){
 
   ## columns of wiki_table are assumed to be: driver, venue_1,
   ## venue_2, ..., venue_n, points
+
+  noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
 
   first_and_last <- c(1,ncol(wiki_table))
   
