@@ -9,7 +9,7 @@ library(magrittr)
 ## slight whitespace changes)
 
 
-`F1_likelihood` <- function(wiki_table, noscore=c("Ret","WD","DNS","DSQ", "DNP")){
+`F1_likelihood` <- function(wiki_table, noscore=c("Ret","WD","DNS","DSQ", "DNP", "NC")){
 
   ## columns of wiki_table are assumed to be: driver, venue_1,
   ## venue_2, ..., venue_n, points
@@ -53,6 +53,7 @@ library(magrittr)
 
   for(i in seq_len(nrow(fmat))){   # cycle through the rows; each row is a venue [voter]
     d <- fmat[i,,drop=TRUE]
+    print(d)
     while(any(d>0)){
       eligible <- which(d>=0)  
       
@@ -83,6 +84,7 @@ library(magrittr)
 
 
 
+m4 <- "formula1_2014.txt" %>% read.table(header=TRUE) %>% F1_likelihood
 m5 <- "formula1_2015.txt" %>% read.table(header=TRUE) %>% F1_likelihood
 m6 <- "formula1_2016.txt" %>% read.table(header=TRUE) %>% F1_likelihood
 m7 <- "formula1_2017.txt" %>% read.table(header=TRUE) %>% F1_likelihood
