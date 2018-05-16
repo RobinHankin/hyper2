@@ -1,6 +1,8 @@
 library(hyper2)
-## Analysis of different years of F1 results
+library(magrittr)
+## Analysis of different years of F1 results. 
 
+rm(list=ls())
 files <- c(
     "formula1_2014.txt",
     "formula1_2015.txt",
@@ -8,29 +10,53 @@ files <- c(
     "formula1_2017.txt"
     )
 
-d <- list()
+allyears <- list()
 drivers <- c()
-for(i in files){
-  jj <- read.table(i,header=TRUE)
-  d <- list(d,jj)
+for(i in seq_along(files)){
+    jj <- read.table(files[i],header=TRUE)
+  allyears[[i]] <- jj
   drivers <- c(drivers, as.character(jj$driver))
 }
 
-drivers <- sort(unique(drivers))
+drivers %<>% unique %>% sort
 
-F1a <- hyper2(pnames=drivers)
+
 
 likelihood_from_finishing_order <- function(H, df){
   ## 'H' a pre-existing hyper2 object, 'df' a dataframe such as
   ## read.table("formula1_2017.txt",header=T)
+    LARGE <- 9999
 
+    drivers <- as.character(df$driver)
 
+    for(i in seq(from=2,to=ncol(df)-1)){
+        d <- as.numeric(as.character(df[,i,drop=TRUE])) # coerces text to NA
+        jj <- is.na(d)|(d==0)
+        nonfinishers <- drivers[jj]
+        finishers <- drivers[!jj]
+        finishers <- finishers[order(d[!jj])]
+        while(length(finishers)>1){
+            H[finishers[1 ]] %<>% "+"(1)
+            H[c(nonfinishers,finishers)]%<>% "-"(1)
+            finishers <- finishers[-1]
+        }
+    }
+    return(H)
 }
 
 
+H <- hyper2(pnames=drivers)
 
-
-
-
-
+if(FALSE){  # too slow!
+    for(p in allyears){
+        H %<>% likelihood_from_finishing_order(p)
+    }
+} else {  ## Much faster (identical result):
+    H1 <- likelihood_from_finishing_order(hyper2(pnames=drivers),allyears[[1]])
+    H2 <- likelihood_from_finishing_order(hyper2(pnames=drivers),allyears[[2]])
+    H3 <- likelihood_from_finishing_order(hyper2(pnames=drivers),allyears[[3]])
+    H4 <- likelihood_from_finishing_order(hyper2(pnames=drivers),allyears[[4]])
+    
+    HH <- H1+H2+H3+H4
+}
 
