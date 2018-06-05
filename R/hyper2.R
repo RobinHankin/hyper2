@@ -141,11 +141,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   } else if(identical(pnames(e2),NA) & !identical(pnames(e1),NA)){
     jj <- pnames(e1)
   } else if(!identical(pnames(e2),NA) & !identical(pnames(e1),NA)){
-    if(size(e2)>size(e1)){
-      jj <- pnames(e2)
-    } else {
-      jj <- pnames(e1)
-    }
+    stopifnot(identical(pnames(e1),pnames(e2)))
+    jj <- pnames(e1)
   } else {
     stop("this cannot happen")
   }

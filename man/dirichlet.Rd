@@ -38,6 +38,6 @@ x1 <- dirichlet(c(a=1,b=2,c=3))
 x2 <- dirichlet(c(c=3,d=4))
 
 
-x1+x2  ## probably not what you wanted
+# will not work: x1+x2  ## probably not what you wanted
 
 }
