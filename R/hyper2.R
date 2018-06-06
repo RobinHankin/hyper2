@@ -30,9 +30,27 @@ setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
 setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `pnames<-` <- function(x,value){UseMethod("pnames<-")}
 `pnames<-.hyper2` <- function(x,value){
-  hyper2(brackets(x),powers(x),pnames=value)
+  if(identical(pnames(x),NA)){
+    return(hyper2(brackets(x),powers(x),pnames=value))
+  } else {
+    return(change_pnames(x,value))
+  }
 }
 ## setter methods end
+
+
+`change_pnames` <- function(H,new_pnames){  # new_pnames is a character vector, eg c('a', 'b')
+
+  b <- brackets(H)
+  pn <- pnames(H)
+  pow <- powers(H)
+  out <- hyper2(pnames=new_pnames)
+  for(i in seq_along(b)){
+#    out[new_pnames[new_pnames %in% pn[b[[i]]]]]  <- pow[i]
+    out[which(new_pnames %in% pn[b[[i]]])]  <- pow[i]
+  }
+  return(out)
+}
 
 `is_constant` <- function(H){ length(brackets(H))==0 }
 
