@@ -86,11 +86,10 @@ library(magrittr)
 
 
 
-m4 <- "formula1_2014.txt" %>% read.table(header=TRUE) %>% F1_likelihood
-m5 <- "formula1_2015.txt" %>% read.table(header=TRUE) %>% F1_likelihood
-m6 <- "formula1_2016.txt" %>% read.table(header=TRUE) %>% F1_likelihood
-m7 <- "formula1_2017.txt" %>% read.table(header=TRUE) %>% F1_likelihood
-
+F1_2014 <- "formula1_2014.txt" %>% read.table(header=TRUE) %>% F1_likelihood
+F1_2015 <- "formula1_2015.txt" %>% read.table(header=TRUE) %>% F1_likelihood
+F1_2016 <- "formula1_2016.txt" %>% read.table(header=TRUE) %>% F1_likelihood
+F1_2017 <- "formula1_2017.txt" %>% read.table(header=TRUE) %>% F1_likelihood
 
 wiki_table <- read.table("formula1_2016.txt",header=TRUE)
 
