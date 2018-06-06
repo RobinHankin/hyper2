@@ -74,5 +74,21 @@ for(i in seq_len(30)){
 }
 
 
+## without pnames:
+x1 <- hyper2(list(1,1:2,1:3),1:3)
+x2 <- hyper2(list(4,5),10:11)
+x1+x2
+
+## Same as above, but with pnames:
+y1 <- hyper2(list(1,1:2,1:3),1:3,pnames=letters[1:3])
+y2 <- hyper2(list(4,5),10:11,pnames=letters[1:5])
+\dontrun{y1+y2}  # fails, pnames not identical 
+
+pnames(y1) <- letters[1:5]
+y1+y2
+
+
+
+
 }
 \keyword{symbolmath}

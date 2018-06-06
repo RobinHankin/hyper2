@@ -2,16 +2,29 @@
 \alias{change_pnames}
 \title{Change pnames of a hyper2 object}
 \description{Change the pnames attribute of a hyper2 object}
-\usage{change_pnames(H, new_pnames)}
+\usage{
+change_pnames(H, new_pnames)
+all_pnames(L)
+}
 \arguments{
   \item{H}{Object of class hyper2}
+  \item{L}{List of hyper2 objects}
   \item{new_pnames}{Character vector of the new pnames}
 }
 \author{Robin K. S. Hankin}
 \note{
-  This is not a straightforward function.  The intent is to enable one
-  to add hyper2 objects with non-identical pnames attributes in a sensible
-  way.
+
+  Function \code{change_pnames()} is not a straightforward function.
+  The intent is to enable one to add hyper2 objects with non-identical
+  pnames attributes in a sensible way.
+
+  The standard use for \code{change_names()} is to add new players to a
+  hyper2 object: so the new names must be a superset of the old,
+  although the order may differ.
+
+  Function \code{all_pnames()} returns the union of the pnames of the
+  hyper2 objects sent to it
+  
 }
 \examples{
 

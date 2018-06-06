@@ -40,7 +40,10 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 
 `change_pnames` <- function(H,new_pnames){  # new_pnames is a character vector, eg c('a', 'b')
+  if(identical(pnames(H),NA)){return(hyper2(brackets(H),powers(H),pnames=new_pnames))}
+  if(identical(new_pnames,NA)){return(hyper2(brackets(H),powers(H)))}
 
+  stopifnot(all(pnames(H) %in% new_pnames))
   b <- brackets(H)
   pn <- pnames(H)
   pow <- powers(H)
@@ -578,4 +581,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `equalp` <- function(H){
     n <- size(H)
     rep(1/n,n)
+}
+
+`all_pnames` <- function(L){  # needs a list
+  L %>% lapply(function(x){x %>% pnames %>% as.character}) %>% c(recursive=TRUE) %>% unique %>% sort
 }

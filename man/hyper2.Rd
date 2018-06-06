@@ -52,9 +52,6 @@ where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.  Note that function
 \code{lhyper2()} takes the vector
 \eqn{p=\left(p_1,\ldots,p_{n-1}\right)}{p=(p_1,...,p_{n-1})}.
 
-
-
-
 }
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{Ops.hyper2}},\code{\link{Extract}},\code{\link{loglik}}}
