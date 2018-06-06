@@ -1,5 +1,6 @@
 \name{change_pnames}
 \alias{change_pnames}
+\alias{all_pnames}
 \title{Change pnames of a hyper2 object}
 \description{Change the pnames attribute of a hyper2 object}
 \usage{
