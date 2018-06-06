@@ -2,6 +2,11 @@
 \alias{formula1}
 \alias{formula_1}
 \alias{formula_one}
+\alias{F1}
+\alias{F1_2014}
+\alias{F1_2015}
+\alias{F1_2016}
+\alias{F1_2017}
 \docType{data}
 \title{Formula 1 dataset}
 \description{Race results from 2017 Formula One World Championship}
