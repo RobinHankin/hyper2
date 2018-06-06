@@ -1,7 +1,9 @@
 library(hyper2)
 library(magrittr)
 
-## use-case:
+## takes about a minute to run.
+
+## use-case for F1_likelihood():
 
 ## R> F1_likelihood(wiki_table=read.table("formula1_2017.txt",header=TRUE))
 
@@ -91,25 +93,38 @@ F1_2015 <- "formula1_2015.txt" %>% read.table(header=TRUE) %>% F1_likelihood
 F1_2016 <- "formula1_2016.txt" %>% read.table(header=TRUE) %>% F1_likelihood
 F1_2017 <- "formula1_2017.txt" %>% read.table(header=TRUE) %>% F1_likelihood
 
-wiki_table <- read.table("formula1_2016.txt",header=TRUE)
 
+## Do the 2017 season:
+wiki_table <- read.table("formula1_2017.txt",header=TRUE)
 points <- wiki_table$points
 names(points) <- wiki_table$driver
-F1 <- F1_likelihood(wiki_table)
 
-m <- maxp(F1)
-pdf(file="f.pdf")
-dotchart(m,pch=16)
-dev.off()
+m <- maxp(F1_2017)
+dotchart(m,pch=16,main='2017 season')
 
-pdf(file="g.pdf")
+dev.new()
 
 ox <- order(points,decreasing=TRUE)
 oy <- order(m,decreasing=TRUE)
 par(pty='s') # square plot
-plot(ox,oy,asp=1,pty='s',xlim=c(0,25),ylim=c(0,25),pch=16,xlab="official order",ylab="my order")
+plot(ox,oy,asp=1,pty='s',xlim=c(0,25),ylim=c(0,25),pch=16,xlab="official order",ylab="my order",main='Formula 1, 2017 season')
 par(xpd=TRUE) # allow drivers' names to appear outside plotting region
 for(i in seq_along(ox)){  text(ox[i],oy[i],names(m)[ox[i]],pos=4,col='gray') }
 par(xpd=FALSE) # stop diagonal line from protruding beyond plotting region
 abline(0,1)
-dev.off()
+
+
+a <- list(F1_2014, F1_2015, F1_2016, F1_2017)
+alldrivers <- all_pnames(a)
+
+F1_total <- hyper2(pnames=alldrivers)
+
+F1_total %<>% add(change_pnames(F1_2014,alldrivers)) 
+F1_total %<>% add(change_pnames(F1_2015,alldrivers)) 
+F1_total %<>% add(change_pnames(F1_2016,alldrivers)) 
+F1_total %<>% add(change_pnames(F1_2017,alldrivers)) 
+
+mallyears <- maxp(F1_total)
+
+dev.new()
+dotchart(mallyears,pch=16,main='Formula 1, 2014-7')
