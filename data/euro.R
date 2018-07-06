@@ -155,4 +155,5 @@ structure(list(brackets = list(1, c(1, 2, 3, 4, 5, 6, 7, 8, 9,
 15, 9, 13, 17, 18), pnames = structure(c(13L, 8L, 4L, 6L, 18L, 
 2L, 1L, 7L, 19L, 11L, 5L, 12L, 14L, 17L, 10L, 16L, 15L, 3L), .Label = c("AD", 
 "AM", "BA", "BE", "BG", "BY", "CH", "CZ", "DE", "FI", "IL", "IS", 
-"ME", "MK", "MT", "PT", "RO", "SW", "TR", "UK"), class = "factor")), class = "hyper2")
+"ME", "MK", "MT", "PT", "RO", "SW", "TR", "UK"), class = "factor")),
+ class = "hyper2")
