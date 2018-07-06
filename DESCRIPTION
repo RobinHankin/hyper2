@@ -9,6 +9,6 @@ Description: A suite of routines for the hyperdirichlet distribution; supersedes
 License: GPL (>= 2)
 LazyLoad: yes
 Depends: methods, magrittr
-Imports: Rcpp (>= 0.12.5),partitions
+Imports: Rcpp (>= 0.12.5), partitions
 LinkingTo: Rcpp
 URL: https://github.com/RobinHankin/hyper2.git
