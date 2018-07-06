@@ -46,7 +46,7 @@ structure(list(brackets = list(1, c(1, 3, 4, 19, 21, 23), c(1,
     "garcia", "grant", "hoff", "kelmelis", "khafaji", "kholmirzayev", 
     "martin", "memo", "molnar", "monasterio", "obreno", "peebles", 
     "rivarola", "rosso", "saensuk", "shcharbachenia", "synek", 
-    "szymczyk", "taieb", "teilemb", "yakovlev", "zambrano")), .Names = c("brackets", 
-                                                                         "powers", "pnames"), class = "hyper2")
+    "szymczyk", "taieb", "teilemb", "yakovlev", "zambrano")),
+          .Names = c("brackets", "powers", "pnames"), class = "hyper2")
 
 allrowers <- sculls2016$pnames
