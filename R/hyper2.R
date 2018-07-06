@@ -57,7 +57,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 `is_constant` <- function(H){ length(brackets(H))==0 }
 
-
 `is_valid_hyper2` <- function(L,d,pnames){
   stopifnot(is.list(L))
   stopifnot(is.vector(d))
@@ -170,7 +169,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
   return(hyper2(out[[1]],out[[2]],pnames=jj))
 }
-
 
 `loglik` <- function(H,p,log=TRUE){
   if(is.matrix(p)){
