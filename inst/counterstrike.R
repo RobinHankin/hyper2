@@ -7,6 +7,11 @@ library(magrittr)
 team1  <- c("autimatic","tarik", "Skadoodle","Stewie2k","RUSH")
 team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")
 
+## This script creates a hyper2 object H which is a likelihood function
+## for the strengths of the players in team1 and team2 above.  It defines
+## a function counterstrike_maker() which is called in a loop at the bottom
+## of the script.   The dataset is a list called zachslist, defined in
+## this file below. 
 
 ## Function counterstrike_maker() needs the identities of all players
 ## on each team.  It assumes that players are always killed by the
