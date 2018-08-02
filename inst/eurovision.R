@@ -1,15 +1,12 @@
-## This file creates hyper2 object 'eurovision2009'.
+## This file creates hyper2 object 'euro2009'.
 
-## The dataset is copied from "Eurovision Song Contest 2009," Wikipedia,
-## accessed May 13, 2018.
-
+## The dataset wiki_matrix, defined below, is copied from "Eurovision
+## Song Contest 2009," Wikipedia, accessed May 13, 2018.
 
 ## More documentation is given in euro.Rd [type help(euro2009) at the
 ## R prompt]
 
- library("hyper2")
-## might be needed.
-
+library("hyper2")
 
 abbreviated <- TRUE
 ## change to FALSE to use full country names rather than two-letter abbreviations.
@@ -94,13 +91,13 @@ rownames(preference) <- competitors
 ## and indeed the emulator package), so we take the transpose:
 preference <- t(preference)
 
-
 ## Now, take the first row of 'preference'.  This represents the votes
 ## cast BY (sic) Montenegro ("ME").  Their favourite was [last column]
 ## Bosnia & Herzegovina who they gave rank 1 to.  Their second
 ## favourite was Macedonia, their third was Turkey, and so on.  They
 ## were not allowed to vote for themselves, which is why the first
-## column is NA.  So the order was: bh, mc, tu,ic,ro,is, ar,fi,br,ma
+## column is NA.  So the order was:
+## bh, mc, tu, ic, ro, is, ar, fi, br, ma
 
 ## Define an empty hyper2 object:
 euro2009 <- hyper2(d=18)
