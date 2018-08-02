@@ -1,17 +1,15 @@
 library(hyper2)
 library(magrittr)
 
-## takes about a minute to run.
+## This script takes about a minute to run.  It creates hyper2 objects
+## 'F1_2014' through 'F1_2017', which are the likelihood functions for
+## the F1 results table for each of the years.
 
-## This script creates hyper2 objects 'F1_2014' through 'F1_2017',
-## which are the likelihood functions for the F1 results table for
-## each of the years.
+## Function F1_likelihood() is defined here; this creates objects such
+## as F1_2017 by processing formula1_2017.txt.
 
-## Function F1_likelihood() is defined here; creates objects such as
-## F1_2017 by processing formula1_2017.txt.
-
-##  At the end of the script, hyper2 object 'F1_total' is created, which
-##  is a likelihood function for all four years' data.
+## At the end of the script, hyper2 object 'F1_total' is created, which
+## is a likelihood function for all four years' data.
 
 
 ## use-case for F1_likelihood():
