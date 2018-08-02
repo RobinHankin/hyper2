@@ -3,7 +3,8 @@
 # long time to run.
 
 
-library(hyper2)
+library("hyper2")
+data("masterchef")
 
 `profile_likelihood` <- function(lauras_strength,upper=TRUE,give=FALSE){
 
@@ -42,19 +43,19 @@ library(hyper2)
   }
 }
 
-laura <-
+probs <-
   c(0.1, 0.14, 0.145, 0.146, 0.15, 0.2, 0.27, 0.3, 0.4, 0.46,
     0.465, 0.47, 0.5)
 
-laura_likelihood <- laura + NA
+laura_likelihood <- probs + NA
 
 f <- function(i){
-  profile_likelihood(lauras_strength=laura[i],upper=laura[i] > 0.27,give=FALSE)
+  profile_likelihood(lauras_strength=probs[i],upper=probs[i] > 0.27,give=FALSE)
 }
 
-for(i in seq_along(laura)){
+for(i in seq_along(probs)){
   laura_likelihood[i] <- f(i)
 }
 
-plot(laura,laura_likelihood-min(laura_likelihood))
+plot(probs,laura_likelihood-min(laura_likelihood))
 abline(h=2)
