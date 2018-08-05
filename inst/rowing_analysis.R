@@ -1,4 +1,10 @@
-library(hyper2)
+## This script creates hyper2 objects "H" and "I" which are identical
+## but object "I" uses slicker idiom.  These objects are identical to
+## sculls2016 [use 'data(rowing)' at the prompt to access this].
+
+## More documentation is provided at rowing.Rd.
+
+library("hyper2")
 
 filename <- "rowing.txt"  # could be rowing_minimal.txt
 o <- strsplit(readLines(filename)," ")
@@ -18,3 +24,8 @@ I <- hyper2(pnames=rowers)
 for(v in o){
   I <- I+order_likelihood(character_to_number(v,rowers))
 }
+
+
+data("rowing")
+stopifnot(H == sculls2016)
+stopifnot(I == sculls2016)
