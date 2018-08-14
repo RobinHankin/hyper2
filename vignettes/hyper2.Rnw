@@ -372,7 +372,7 @@ likelihood function is to define a \code{hyper2} object which stores
 the names of the participants:
   
 <<2016_olympics_heat1_setup>>=
-data("rowing")
+data("rowing")   # see rowing.Rd
 H <- hyper2(pnames=allrowers)
 H
 @ 
@@ -396,7 +396,7 @@ subsequent heats in a similar manner, the package includes a
 ready-made dataset, \code{sculls2016}:
 
 <<rowers>>=
-head(sculls2016)
+head(sculls2016)   # see rowing.Rd
 @ 
  
 Finding the maximum likelihood estimate for the
@@ -685,15 +685,16 @@ might be
 
 The package provides an overall likelihood function for all
 informative judgements in the series on the final 13 players in object
-\code{masterchef\_series6}.  We may assess a number of related
-hypotheses using the package.  The first step is to calculate the
-likelihood for the hypothesis that all players are of equal strength:
+\code{masterchef\_series6}, documented at \code{masterchef.Rd}.  We
+may assess a number of related hypotheses using the package.  The
+first step is to calculate the likelihood for the hypothesis that all
+players are of equal strength:
  
 <<like_series>>=
 data("masterchef")
 n <- 13   # 13 players
 equal_strengths <- rep(1/n,n-1)
-like_series(equal_strengths, masterchef_series6)
+like_series(equal_strengths, masterchef_series6)  # see masterchef.Rd
 @ 
 
 The strengths of the 13 players may be estimated using standard
@@ -702,12 +703,12 @@ in order to prevent the search from passing through inadmissible
 points in p-space:
 
 <<unconstrained_optimization,eval=FALSE>>=
-UI = rbind(diag(n-1),-1)  # p_i >= 0
-CI = c(rep(0,n-1),-1)     # p_1+...+p_{n-1} <= 1
+UI <- rbind(diag(n-1),-1)  # p_i >= 0
+CI <- c(rep(0,n-1),-1)     # p_1+...+p_{n-1} <= 1
 
 constrOptim(
-    theta = equal_strengths,
-    f = function(p){-like_series(p,L)}, 
+    theta = equal_strengths,  # starting point for optimization
+    f = function(p){-like_series(p,masterchef_series6)}, # see masterchef.Rd
     ui=UI, ci=CI,
     grad=NULL)
 @ 
@@ -748,12 +749,12 @@ for~${\mathbf p}$, subject to the constraint
 that~$p_\mathrm{Laura}\leqslant p_\mathrm{Brent}$:
 
 <<brent.gt.laura, eval=FALSE>>=
-UI = rbind(UI,c(0,0,1,0,0,0,0,0,-1,0,0,0,0))  # Brent >= Laura
+UI <- rbind(UI,c(0,0,1,0,0,0,0,0,-1,0,0,0,0))  # Brent >= Laura
 CI <- c(CI,0)
 ans2 <-
 constrOptim(
     theta = equal_strengths,
-    f = function(p){-like_series(p,L)},  # 'L' created by ggol() above
+    f = function(p){-like_series(p,masterchef_series6)},  # see masterchef.Rd
     grad=NULL,
     ui = UI, ci=CI)
 @ 
