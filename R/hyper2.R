@@ -543,7 +543,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         powers <- alpha-1
     }
     
-    if(is.na(pnames) & !is.null(names(powers))){
+    if(isTRUE(is.na(pnames)) & !is.null(names(powers))){
         pnames <- names(powers)
     }
     hyper2(as.list(seq_along(powers)),d=powers,pnames=pnames)
