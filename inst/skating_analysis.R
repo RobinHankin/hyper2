@@ -7,6 +7,8 @@
 ##  each judge is a column.  Function \code{order_likelihood()}
 ##  considers each row to be a race [or a judge]
 
+library("hyper2")
+
 
 ## The following R idiom is plausible but incorrect:
 
