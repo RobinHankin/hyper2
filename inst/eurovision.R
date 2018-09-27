@@ -42,7 +42,7 @@ wiki_matrix <- matrix(c(
 
 points <- c(12,10,8,7,6,5,4,3,2,1)
 ## Variable 'points' gives the number of points awarded, under
-## Eurovision rules, to voters' first, econd, third, etc choice.
+## Eurovision rules, to voters' first, second, third, etc choice.
 ## Points for any competitor are added and the winner is the
 ## competitor with the most points.  However, in this model, the
 ## numerical values themselves do not affect the likelihood function;
