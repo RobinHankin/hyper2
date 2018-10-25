@@ -23,7 +23,7 @@ library("hyper2",quietly=TRUE)
 The first step is to define a ```hyper2``` object:
 
 ```{r}
-H <- hyper2(pnames=c("a","b","c","S"))
+H <- hyper2(pnames=c("S","a","b","c"))
 ```
 
 Now we have to input the data:
@@ -79,10 +79,10 @@ small <- 1e-6
 maxlike_constrained <-
     constrOptim(
         f = function(p){loglik(H,p)},
-        theta=rep(1/3,3)-small,
+        theta=c(small, 1/3-small/2, 1/3-small/2),
         grad=NULL,
-        ui=rbind(diag(3),-diag(3),1,-1),
-        ci=c(rep(small,3),rep(small,3)-1, 1-4*small, small*2-1),
+        ui=rbind(diag(3),-diag(3),-1),
+        ci=c(rep(small/2,3),c(-small*2,-1,-1),-1),
         control=list(fnscale = -1)  # finds max, not min
     )
 ```	
