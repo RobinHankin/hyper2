@@ -103,9 +103,11 @@ LR <- exp(delta_support)
 LR
 ```
 
-On the null, Wilks's theorem says that $\Lambda\sim\chi^2_1$, where
-$\Lambda=2\log(L_1/L_2)$, so the
-p-value is
+The difference in support, ```delta_support```, is about 2.62 which
+exceeds Edwards's two-units-of-support criterion.  We can reject the
+null.  Alternatively, Wilks's theorem gives us that
+$\Lambda=2\log(LR)$ is distributed as chi-squared with one degree of
+freedom:
 
 ```{r}
 Lambda <- 2*delta_support
@@ -113,14 +115,8 @@ pval <- pchisq(Lambda,df=1,lower.tail=FALSE)
 pval 
 ```
 
-
-
-The difference in support, ```delta_support```, is about 2.62 which
-exceeds Edwards's two-units-of-support criterion.  The likelihood
-ratio LR is about 13.7, and Wilks's theorem gives us that
-$\Lambda=2\log(LR)$ is distributed as chi-squared with one degree of
-freedom; the tail area, pval, is about 0.022 which gives us a
-significant result.
+Thus the tail area, pval, is about 0.022 which gives us a significant
+result.
 
 
 Further, note that our maximum likelihood estimate for strengths
