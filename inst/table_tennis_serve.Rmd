@@ -14,7 +14,8 @@ follows:
 * A vs C, A serves, 4-1
 * A vs C, C serves, 1-2
 
-This is easily analysed with the ```hyper2``` package.
+(note that A does not play C).  This dataset is easily analysed with
+the ```hyper2``` package.
 
 ```{r}
 library("hyper2",quietly=TRUE)
@@ -58,6 +59,8 @@ H[c("a","c","S")] %<>% "-"(1+2) # a+c+S play 1+2=3 games
 ```
 
 So H is the likelihood function for three players and a serve.
+
+# Results 
 We now find the unconstrained MLE:
 
 ```{r}
@@ -118,3 +121,11 @@ ratio LR is about 13.8, and Wilks's theorem gives us that
 $\Lambda=2\log(LR)$ is distributed as chi-squared with one degree of
 freedom; the tail area, pval, is about 0.022 which gives us a
 significant result.
+
+
+Further, note that our estimated strengths as obtained by MLE allow us
+to assess what might happen when A plays C (which was not observed).
+If A serves, we would have $A+S:C\simeq 0.24+0.45:0.16\equiv 69:16$,
+or A wins with probability of about $0.81$.  If C serves we have
+$A:C+S\simeq 0.24:0.16+0.45\equiv 24:61$, so A wins with a probability
+of about $0.28$.
