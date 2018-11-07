@@ -18,10 +18,10 @@ team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")
 ## opposing team; if a player is killed by his own team,
 ## counterstrike_maker() may return an error.
 
-## In the function, the the 'deathorder' argument specifies the order
-## in which players were killed (the first element is the first player
-## to be killed and so on).  Note that the identity of the killer is
-## not needed as it is assumed that a death is due to the combined
+## In the function, the 'deathorder' argument specifies the order in
+## which players were killed (the first element is the first player to
+## be killed and so on).  Note that the identity of the killer is not
+## needed as it is assumed that a death is due to the combined
 ## strength of the team, rather than the individual shooter who
 ## actually fired the shot.
 
@@ -51,15 +51,15 @@ team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")
 
 ## The dataset [here, `zachslist`] is a list whose six elements
 ## correspond to six rounds of play, which are assumed to be
-## independent.  Object H corresponds to an overall likelihood
-## function for all the rounds combined: it is created by iterating
-## through zachslist and incrementing the likelihood function for each
-## round.
+## statistically independent.  Object H corresponds to an overall
+## likelihood function for all the rounds combined: it is created by
+## iterating through zachslist and incrementing the likelihood
+## function for each round.
 
 ## File man/counterstrike.Rd has more details on the data's origin.
 
 
-## Object Hrand creates a synthetically-generated version of H by
+## Object Hrand is a randomly generated version of H, created by
 ## running an in-silico deathmatch on the assumption of equal player
 ## strengths.
 
