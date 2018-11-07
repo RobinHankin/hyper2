@@ -117,14 +117,20 @@ pval
 
 The difference in support, ```delta_support```, is about 2.62 which
 exceeds Edwards's two-units-of-support criterion.  The likelihood
-ratio LR is about 13.8, and Wilks's theorem gives us that
+ratio LR is about 13.7, and Wilks's theorem gives us that
 $\Lambda=2\log(LR)$ is distributed as chi-squared with one degree of
 freedom; the tail area, pval, is about 0.022 which gives us a
 significant result.
 
 
-Further, note that our estimated strengths as obtained by MLE allow us
-to assess what might happen when A plays C (which was not observed).
+Further, note that our maximum likelihood estimate for strengths
+allows us to assess what might happen when A plays C (which was not
+observed).  For convenience, here is the evaluate:
+
+```{r}
+maxp(H)
+```
+
 If A serves, we would have $A+S:C\simeq 0.24+0.45:0.16\equiv 69:16$,
 or A wins with probability of about $0.81$.  If C serves we have
 $A:C+S\simeq 0.24:0.16+0.45\equiv 24:61$, so A wins with a probability
