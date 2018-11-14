@@ -34,7 +34,10 @@ H <- hyper2(pnames=c("S","a","b","c"))
 H
 ```
 
-so the likelihood function is uniform Now we have to input the data:
+so the likelihood function is uniform, for the only term is raised to
+the zeroth power.  Now we have to input the data, and we will go
+through the four scorelines above, one by one.  Note that this
+approach implicitly assumes independence of scores.
 
 
 ### A vs B, A serves, score 5-1:
@@ -69,8 +72,6 @@ H[c("c","S")]     %<>% "+"(  2) # c+S win 2 games
 H[c("a","c","S")] %<>% "-"(1+2) # a+c+S play 1+2=3 games
 ```
 
-So H is the likelihood function for three players and a serve.
-
 
 ## Likelihood function
 
@@ -80,7 +81,13 @@ For the entire dataset we have
 H
 ```
 
-Here $H$ is a likelihood function on $a,b,c,S$.  
+Here $H$ is a likelihood function on $a,b,c,S$, algebraically
+proportional to
+
+\[
+\frac{(S+a)^9(S+b)^3(S+c)^2a^2bc}{(S+a+b)^{10}(S+a+c)^8}
+\]
+
 
 
 # Results 
