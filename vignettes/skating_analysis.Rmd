@@ -17,7 +17,7 @@ Ladies' Figure Skating at the 2002 Winter Olympics.  Dataframe
 more details).
 
 ```{r}
-library("hyper2")
+library("hyper2",quietly=TRUE)
 data("skating")
 skating_table
 ```		
