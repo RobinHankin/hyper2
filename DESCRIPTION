@@ -8,7 +8,8 @@ Maintainer: Robin K. S. Hankin <hankin.robin@gmail.com>
 Description: A suite of routines for the hyperdirichlet distribution; supersedes the 'hyperdirichlet' package for most purposes.
 License: GPL (>= 2)
 LazyLoad: yes
-Depends: methods, magrittr, knitr
+Depends: methods, magrittr
+Suggests: knitr
 VignetteBuilder: knitr
 Imports: Rcpp (>= 0.12.5), partitions
 LinkingTo: Rcpp
