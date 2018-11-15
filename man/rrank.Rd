@@ -69,11 +69,22 @@ R>
 }
 
 This shows that runner 1 came second, runner 2 came third, runner 3 came
-first, and runner 4 cane fourth.
+first, and runner 4 came fourth.
+
+Take the first race as an example.
+
+Rank: who came first? runner 3.  Who came second? runner 1.  Who came
+third? runner 2.  Who came fourth? runner 4.
+
+Order: where did runner 1 come?  second.  Where did runner 2 come?
+third.  Where did runner 3 come?  first.  Where did runner 4 come?
+fourth.  For order_likelihood(), we need rank data, not order data.  See
+the men's sculling section of the vignette for an example.
+
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ggol}}
+\seealso{\code{\link{ggol}},\code{\link{order_likelihood}}}
 }
 \examples{
 ptrue <- (4:1)/10
