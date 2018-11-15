@@ -1,7 +1,7 @@
 ## This script creates hyper2 object 'skating' which is a likelihood
 ## function for the strengths of the competitors in the Ladies' Figure
 ## Skating at the 2002 Winter Olympics.  File 'skating.txt' is copied
-## from Lock and Lock (see skating.Rd for more details.
+## from Lock and Lock (see skating.Rd for more details).
 
 ##  Note that file is structured so that each competitor is a row, and
 ##  each judge is a column.  Function \code{order_likelihood()}
@@ -21,15 +21,17 @@ skating_incorrect <- order_likelihood(t(a))
 
 b <- apply(a,2,order)
 
+
 ## Column 1 of 'a' and column 1 of 'b' are confusingly simular. So
-## consider column 2, corresponding to jugde number 2. If aa=a[,2] and
+## consider column 2, corresponding to judge number 2. If aa=a[,2] and
 ## bb=b[,2] we have aa=c(4,1,3,2, ...) and bb=c(2,4,3,1, ...).  Thus
 ## aa means that hughes was judged to be fourth best, slutskaya was
 ## judged to be the best, kwan third best, cohen second best, and so
 ## on.  Conversely, bb means that the best competitor was number two
 ## [slutskaya], the second best number was number four [cohen], the
-## third best was number three [kwan], the fourh best number 1
-## [hughes], and so on.
+## third best was number three [kwan], the fourth best number 1
+## [hughes], and so on.  Note that this means the rows of b cannot be
+## named.
 
 ## The R idiom requires the transpose of the matrix because function
 ## order_likelihood() treats the rows as independent observations
