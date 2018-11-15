@@ -161,3 +161,51 @@ If A serves, we would have $A+S:C\simeq 0.24+0.45:0.16\equiv 69:16$,
 or A wins with probability of about $0.81$.  If C serves we have
 $A:C+S\simeq 0.24:0.16+0.45\equiv 24:61$, so A wins with a probability
 of about $0.28$.
+
+
+
+# Profile likelihood
+
+We can give a profile likelihood for $S$ by maximizing the likelihood
+of $(S,p_a,p_b,p_c)$ subject to a particular value of $S$ (in addition
+to the unit sum constraint).  The following function defines a profile
+likelihood function for $S$:
+
+```{r}
+
+profile_likelihood <- function(S,give=FALSE){
+
+  objective <- function(pab){# pab=c(a,b); S in scope
+    loglik(H,c(S,pab[1],pab[2]))  # no minus because we use fnscale= -1
+  }
+  
+  maxlike_constrained <-           # 2 DoF, a,b [S is given]
+    constrOptim(
+        f = objective,
+        theta=c(rep((1-S)/3,2)),   # start at indep([c(S,x,x,x)])
+        grad=NULL,
+        ui=rbind(diag(2),-1),      # pa,pb>=0, pa+pb <1-S
+        ci=c(0,0,S-1),             # ditto
+        control=list(fnscale = -1) # finds max, not min
+    )
+
+  if(give){
+    return(maxlike_constrained)
+  } else{
+    return(maxlike_constrained$value)
+  }
+}
+```
+
+We can then evaluate the profile likelihood for a range of possible
+values of $S$:
+
+```{r}
+S_vals <- seq(from=0.02,to=0.85,len=30)  # possible values for S
+prof_like <- sapply(S_vals,profile_likelihood)  
+plot(S_vals, prof_like-max(prof_like),xlab="serve strength",ylab="profile likelihood")
+abline(h= -2)
+```
+
+So we can see that the credible range is from about 0.07-0.8 (and in
+particular excludes zero).
