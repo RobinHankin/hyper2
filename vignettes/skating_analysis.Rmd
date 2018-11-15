@@ -8,11 +8,13 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+# Ladies' figure skating in the 2002 Winter Olympics
 
-This script creates hyper2 object "skating" which is a likelihood
-function for the strengths of the competitors in the Ladies' Figure
-Skating at the 2002 Winter Olympics.  Dataframe ```skating_table``` is
-copied from Lock and Lock (see skating.Rd for more details).
+This script creates and analyses hyper2 object "skating" which is a
+likelihood function for the strengths of the competitors in the
+Ladies' Figure Skating at the 2002 Winter Olympics.  Dataframe
+```skating_table``` is copied from Lock and Lock (see skating.Rd for
+more details).
 
 ```{r}
 library("hyper2")
