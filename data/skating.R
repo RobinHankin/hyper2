@@ -106,3 +106,27 @@ structure(list(brackets = list(1, c(1, 2, 3, 4, 5, 6, 7, 8, 9,
 "volchkova", "maniachenko", "fontana", "liashenko", "onda", "hubert", 
 "meier", "gusmeroli", "soldatova", "hegel", "giunchi", "babiakova", 
 "kopac", "luca")), class = "hyper2")
+
+`skating_table` <-
+structure(list(J1 = c(1L, 3L, 2L, 5L, 4L, 6L, 7L, 8L, 9L, 10L, 
+13L, 14L, 15L, 11L, 12L, 16L, 17L, 19L, 20L, 18L, 22L, 21L, 23L
+), J2 = c(4L, 1L, 3L, 2L, 8L, 5L, 7L, 10L, 9L, 6L, 12L, 11L, 
+13L, 14L, 17L, 16L, 15L, 18L, 21L, 19L, 20L, 22L, 23L), J3 = c(3L, 
+1L, 2L, 4L, 5L, 8L, 7L, 12L, 13L, 14L, 11L, 18L, 6L, 10L, 17L, 
+9L, 15L, 22L, 16L, 20L, 19L, 23L, 21L), J4 = c(4L, 1L, 2L, 3L, 
+5L, 7L, 9L, 8L, 6L, 11L, 12L, 16L, 10L, 15L, 13L, 14L, 17L, 20L, 
+22L, 21L, 19L, 18L, 23L), J5 = c(1L, 4L, 2L, 3L, 5L, 12L, 6L, 
+7L, 12L, 10L, 16L, 9L, 8L, 15L, 11L, 14L, 17L, 21L, 18L, 19L, 
+20L, 22L, 23L), J6 = c(2L, 1L, 3L, 4L, 7L, 5L, 8L, 6L, 10L, 12L, 
+11L, 15L, 14L, 13L, 16L, 9L, 18L, 17L, 19L, 20L, 21L, 22L, 23L
+), J7 = c(1L, 2L, 3L, 4L, 5L, 8L, 10L, 12L, 7L, 6L, 11L, 9L, 
+13L, 15L, 14L, 16L, 17L, 18L, 21L, 20L, 19L, 22L, 23L), J8 = c(1L, 
+3L, 2L, 4L, 5L, 7L, 6L, 8L, 11L, 9L, 10L, 12L, 14L, 13L, 15L, 
+16L, 17L, 18L, 19L, 20L, 22L, 21L, 23L), J9 = c(1L, 2L, 3L, 4L, 
+5L, 6L, 7L, 8L, 14L, 15L, 9L, 10L, 16L, 11L, 13L, 12L, 17L, 19L, 
+18L, 20L, 22L, 21L, 23L)), class = "data.frame", row.names = c("hughes", 
+"slutskaya", "kwan", "cohen", "suguri", "butyrskaya", "robinson", 
+"sebestyen", "kettunen", "volchkova", "maniachenko", "fontana", 
+"liashenko", "onda", "hubert", "meier", "gusmeroli", "soldatova", 
+"hegel", "giunchi", "babiakova", "kopac", "luca"))
+ 
