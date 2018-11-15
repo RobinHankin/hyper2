@@ -16,8 +16,8 @@ library("hyper2")
 a <- as.matrix(read.table("skating.txt"))
 skating_incorrect <- order_likelihood(t(a))
 
-## the above is incorrect because we want the order, and we have the
-## ranks.   Correct analysis follows.
+## the above is incorrect because we want the ranks, and we have the
+## order.   Correct analysis follows.
 
 b <- apply(a,2,order)
 
