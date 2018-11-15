@@ -85,7 +85,6 @@ the men's sculling section of the vignette for an example.
 }
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{ggol}},\code{\link{order_likelihood}}}
-}
 \examples{
 ptrue <- (4:1)/10
 rrank(100,p=ptrue)
