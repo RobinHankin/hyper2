@@ -21,7 +21,8 @@ follows:
 * A vs C, C serves, 1-2
 
 (note that A does not play C).  This dataset is easily analysed with
-the ```hyper2``` package.
+the ```hyper2``` package although the model implicitly assumes that
+the serve strength does not depend on who is serving.
 
 ```{r}
 library("hyper2",quietly=TRUE)
