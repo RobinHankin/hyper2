@@ -1,5 +1,6 @@
 \name{skating}
 \alias{skating}
+\alias{skating_table}
 \docType{data}
 \title{Figure skating at the 2002 Winter Olympics}
 \description{
@@ -17,7 +18,8 @@
   workers, including Lock and Lock, for consistency between the judges.
 
   Note that file is structured so that each competitor is a row, and
-  each judge is a column.  Function \code{order_likelihood()} 
+  each judge is a column.  Function \code{order_likelihood()} requires a
+  transpose of this to operate.
 
 }
 \references{
