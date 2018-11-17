@@ -12,10 +12,8 @@ vignette: >
 # Public perception of climate change
 
 This short document analyses the climate change dataset originally
-presented in the hyperdirichlet R package^[RKS Hankin 2010.  "A
-generalization of the Dirichlet distribution", *Journal of Statistical
-Software*, 33:11] but using the hyper2 package instead.
-
+presented in the hyperdirichlet R package, but using the hyper2
+package instead.
 
 ```{r}
 library("hyper2",quietly=TRUE)
@@ -28,15 +26,15 @@ provided by Saffy:
 
 ```{r}
 M <- matrix(c(
-    5 , 3 , NA,  4, NA,   3,
-    3 , NA,  5,  8, NA,   2,
-    NA,  4,  9,  2, NA,   1,
-    10,  3, NA,  3,  4,  NA,
-    4 , NA,  5,  6,  3,  NA,
-    NA,  4,  3,  1,  3,  NA,
-    5 ,  1, NA, NA,  1,   2,
-    5 , NA,  1, NA,  1,   1,
-    NA,  9,  7, NA,  2,   0)
+    5 , 3 , NA,   4, NA,   3,
+    3 , NA,  5,   8, NA,   2,
+    NA,  4,  9,   2, NA,   1,
+    10,  3, NA,   3,  4,  NA,
+    4 , NA,  5,   6,  3,  NA,
+    NA,  4,  3,   1,  3,  NA,
+    5 ,  1, NA,  NA,  1,   2,
+    5 , NA,  1,  NA,  1,   1,
+    NA,  9,  7,  NA,  2,   0)
   , byrow=TRUE,ncol=6)
 colnames(M) <- c("NB","L","PB","THC","OA","WAIS")
 M
@@ -47,47 +45,40 @@ respondents.  The first row, for example, means that a total of
 $5+3+4+3=15$ people were shown icons NB, L, TCH, WAIS [column names of
 the the non-NA entries]; 5 people chose NB as most concerning, 3 chose
 L, and so on.  The dataset is more fully described in the
-hyperdirichlet package.  To recreate the ```icons``` dataset in the
-```hyper2``` package, we proceed as follows.  First set up a hyper2
-object with the correct names:
+hyperdirichlet package.
+
+To recreate the ```icons``` dataset in the ```hyper2``` package, we
+proceed as follows.  First set up a hyper2 object with the correct
+names:
 
 ```{r}
 icons <- hyper2(pnames=colnames(M))
-icons
 ```
 
-(that is, a uniform likelihood; we have added no observations to it
-yet).  To add observervations, we first iterate through each row to
-work out the denominators:
+The  iterate through each row to work out the denominators:
 
 ```{r}
 for(i in seq_len(nrow(M))){
   onerow <- M[i,]
   ## variable 'choices' = icons presented to that row of respondents:
   choices <- names(onerow[!is.na(onerow)])
-  icons[choices] %<>%  `-`(sum(onerow,na.rm=TRUE))
+  icons[choices] %<>%  "-"(sum(onerow,na.rm=TRUE))
 }
-icons
 ```
 
 Now iterate through columns to find numerators:
-
-```{r}
 for(j in seq_len(ncol(M))){
-  icons[colnames(M)[j]] %<>% `+`(sum(M[,j],na.rm=TRUE))
+  icons[colnames(M)[j]] %<>% "+"(sum(M[,j],na.rm=TRUE))
 }
-icons
-```
 
 At this point, the ```icons``` object as created above is
 mathematically identical to ```icons``` object in the hyperdirichlet
-package (and indeed the hyper2 package), but the terms might appear in
-a different order.
+package, but the terms might appear in a different order.
 
-## Analysis of the icons dataset
+## Analysis of the ```icons``` dataset
 
-The first step is to find the maximum
-likelihood estimate for the ```icons``` likelihood:
+The first step is to find the maximum likelihood estimate for the
+```icons``` likelihood:
 
 ```{r}
 mic <- maxp(icons)
@@ -119,7 +110,7 @@ constraint that $p_1\leqslant 1/6$.  This is most easily done with the
 small <- 1e-6  #  ensure start at an interior point
 maxlike_constrained <-
     constrOptim(
-        f = function(p){loglik(icons,p)},  
+        f = function(p){print(p);loglik(icons,p)},  
         theta=indep(equalp(icons))-c(small,0,0,0,0),
         grad=NULL,
         ui=rbind(nonneg=diag(5), -1, c(-1,0,0,0,0)), # p1-p5; fillup; p1
@@ -279,7 +270,3 @@ We should look at the maximum value:
 ```{r}
    o(c( 0, 0, 0,-1, 1), 0,give=TRUE,start=start)
 ```
-
-So the evaluate is at the boundary, for $p_4=p_5$.  I have no
-explanation for the discrepancy between this and that in the
-hyperdirichlet package.
