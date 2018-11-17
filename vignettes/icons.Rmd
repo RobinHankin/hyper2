@@ -23,8 +23,8 @@ data("oneill")
 icons
 ```
 
-The likelihood function is identical to that used in the
-hyperdirichlet package.  The first step is to find the maximum
+The likelihood function above is mathematically identical to that used in the
+hyperdirichlet package, but the terms might appear in a different order.  The first step is to find the maximum
 likelihood estimate for the ```icons``` likelihood:
 
 ```{r}
