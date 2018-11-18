@@ -598,4 +598,18 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
-
+`volley` <- function(M){
+    out <- hyper2()
+    if(!is.null(colnames(M))){pnames(out) <- colnames(M)}
+    for(i in seq_len(nrow(M))){
+        onerow <- M[i,]
+        winning_side <- onerow==1
+        losing_side  <- onerow==0
+        playing <- !is.na(onerow)
+        if(any(playing) & any(winning_side) & any(losing_side)){
+          out[which(winning_side)] %<>% `+`(1)
+          out[which(playing)] %<>% `-`(1)
+        }
+    }
+    return(out)
+}
