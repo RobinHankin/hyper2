@@ -15,8 +15,8 @@ H <- hyper2(list(),0,pnames=rowers)
 for(v in o){
     v <- rev(v)
     for(i in seq_along(v)){
-        H[v[i]] <- powers(H[v[i]]) + 1
-        H[v[seq_len(i)]] <- powers(H[v[seq_len(i)]])-1
+        H[v[i]] %<>% `+`(1)
+        H[v[seq_len(i)]] %<>% `-`(1)
     }
 }
 
