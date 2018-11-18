@@ -22,8 +22,8 @@ for(i in seq_len(nrow(a))){
     onpitch_scored  <- c(names(which(C_onpitch[i,])),"W_possession")
     onpitch_noscore <- names(which(W_onpitch[i,]))
     
-    H[onpitch_scored] <- H[onpitch_scored] + 1
-    H[c(onpitch_scored,onpitch_noscore)] <- H[c(onpitch_scored,onpitch_noscore)] - 1
+    H[onpitch_scored] %<>% `+`(1)
+    H[c(onpitch_scored,onpitch_noscore)] %<>% `-`(1)
   }
 }
 
