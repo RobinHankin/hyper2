@@ -53,6 +53,7 @@ the ```icons``` dataset in the ```hyper2``` package, we use the
 
 ```{r}
 icons <- saffy(M)
+icons
 ```
 
 At this point, the ```icons``` object as created above is
