@@ -1,5 +1,6 @@
 \name{saffy}
 \alias{saffy}
+\title{Choice matrix functionality}
 \description{
 Converts a matrix of restricted choices into a likelihood function.  It
 is named for Saffron O'Neill.
