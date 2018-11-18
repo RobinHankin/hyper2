@@ -584,3 +584,18 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `all_pnames` <- function(L){  # needs a list
   L %>% lapply(function(x){x %>% pnames %>% as.character}) %>% c(recursive=TRUE) %>% unique %>% sort
 }
+
+`saffy` <- function(M){
+    out <- hyper2(pnames=colnames(M))
+    for(i in seq_len(nrow(M))){
+        onerow <- M[i,]
+        choices <- names(onerow[!is.na(onerow)])
+        out[choices] %<>%  `-`(sum(onerow,na.rm=TRUE))
+    }
+    for(j in seq_len(ncol(M))){
+        out[colnames(M)[j]] %<>% `+`(sum(M[,j],na.rm=TRUE))
+    }
+    return(out)
+}
+
+
