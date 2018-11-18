@@ -48,6 +48,8 @@
       Climate Change and Individual Behaviour: Closing the Gap}. 
     In  \emph{Avoiding Dangerous Climate Change} (conference
     proceedings), UK Met Office, Exeter, 1-3 February
+    \item R. K. S. Hankin 20101. \dQuote{A generalization of the Dirichlet
+      distribution}.   \emph{Journal of Statistical software}, 33:11
   }
 }
 \examples{
