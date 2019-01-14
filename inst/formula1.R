@@ -1,5 +1,5 @@
-library(hyper2)
-library(magrittr)
+library("hyper2")
+library("magrittr")
 
 ## This script takes about a minute to run.  It creates hyper2 objects
 ## 'F1_2014' through 'F1_2017', which are the likelihood functions for
@@ -8,16 +8,18 @@ library(magrittr)
 ## Function F1_likelihood() is defined here; this creates objects such
 ## as F1_2017 by processing formula1_2017.txt.
 
-## At the end of the script, hyper2 object 'F1_total' is created, which
-## is a likelihood function for all four years' data.
+## At the end of the script, hyper2 object 'F1_total' is created,
+## which is a likelihood function for all four years' data.  This
+## object is called 'formula1' in the package.  File F1_allyears.R is
+## functionally identical but uses slightly different R idiom.
 
 
 ## use-case for F1_likelihood():
 
 ## R> F1_likelihood(wiki_table=read.table("formula1_2017.txt",header=TRUE))
 
-## File 'formula1_2017.txt' is directly copied from Wikipedia (with
-## slight whitespace changes)
+## Files like 'formula1_2017.txt' are directly copied from Wikipedia
+## (with slight whitespace changes)
 
 
 `F1_likelihood` <- function(wiki_table){
@@ -54,13 +56,13 @@ library(magrittr)
 
 
   ## Considering Formula1, 2017 as an example: taking the first row of
-  ## fmat is AUS (Australia), in which Hamilton camge second, Vettel
-  ## came first, etc.  The first column of fmat is Hamilton's
-  ## results. He came second in AUS, first in CHN, second in BHR, etc.
+  ## fmat is AUS (Australia), in which Hamilton came second, Vettel
+  ## came first, etc.  The first column of fmat is Hamilton's results.
+  ## He came second in AUS, first in CHN, second in BHR, etc.
 
 
-  ## Following is similar to, but slightly different from, the analysis in eurovision.R:
-  ## Define an empty hyper2 object:
+  ## Following is similar to, but slightly different from, the
+  ## analysis in eurovision.R: Define an empty hyper2 object:
 
   F1 <- hyper2(d=ncol(fmat))
 
