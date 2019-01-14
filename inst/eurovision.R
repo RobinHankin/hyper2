@@ -78,13 +78,9 @@ competitors <- jj[1:18]
 colnames(preference) <- jj      # voters; 20 countries (18 + DE + UK)
 
 rownames(preference) <- competitors  
-# The competitors were the first
-                                     # 18 countries (the last two
-                                     # countries, Germany and the UK,
-                                     # voted but did not compete)
 
-
-
+## The competitors were the first 18 countries (the last two
+## countries, Germany and the UK, voted but did not compete)
 
 ## We need the voters' choices to be the *rows* for consistency with
 ## the rest of the package (and, for that matter, the aylmer package
