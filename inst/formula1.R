@@ -115,13 +115,14 @@ dev.new()
 
 ox <- order(points,decreasing=TRUE)
 oy <- order(m,decreasing=TRUE)
+png(file="formula1.png")
 par(pty='s') # square plot
 plot(ox,oy,asp=1,pty='s',xlim=c(0,25),ylim=c(0,25),pch=16,xlab="official order",ylab="my order",main='Formula 1, 2017 season')
 par(xpd=TRUE) # allow drivers' names to appear outside plotting region
 for(i in seq_along(ox)){  text(ox[i],oy[i],names(m)[ox[i]],pos=4,col='gray') }
 par(xpd=FALSE) # stop diagonal line from protruding beyond plotting region
 abline(0,1)
-
+dev.off()
 
 a <- list(F1_2014, F1_2015, F1_2016, F1_2017)
 alldrivers <- all_pnames(a)
