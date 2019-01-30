@@ -613,3 +613,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
     return(out)
 }
+
+`inc` <- function(x,val=1){ x %<>% `+`(val)}   # increment
+`dec` <- function(x,val=1){ x %<>% `-`(val)}   # decrement
