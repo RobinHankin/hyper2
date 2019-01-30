@@ -6,6 +6,10 @@
 
 library("hyper2")
 
+
+`inc` <- function(x){ x %<>% `+`(1)}   # increment
+`dec` <- function(x){ x %<>% `-`(1)}   # decrement
+
 filename <- "rowing.txt"  # could be rowing_minimal.txt
 o <- strsplit(readLines(filename)," ")
 
@@ -15,8 +19,8 @@ H <- hyper2(list(),0,pnames=rowers)
 for(v in o){
     v <- rev(v)
     for(i in seq_along(v)){
-        H[v[i]] %<>% `+`(1)
-        H[v[seq_len(i)]] %<>% `-`(1)
+        H[v[i]] %<>% inc           # H[v[i]] %<>% `+`(1)
+        H[v[seq_len(i)]] %<>% dec  # H[v[seq_len(i)]] %<>% `-`(1)
     }
 }
 

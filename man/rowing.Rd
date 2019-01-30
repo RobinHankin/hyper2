@@ -15,7 +15,7 @@ function for the 2016 men's sculls.
 \details{
 Object \code{sculls2016} is created by the code in
 \code{inst/rowing_analysis.R}.  This reads file \code{inst/rowing.txt},
-each line of which is a heat showing the finishing order.   Character vector
+each line of which is a heat showing the finishing order.  Character vector
 \code{allrowers} holds the names of all the rowers.
 
 File \code{inst/rowing_minimal.txt} has the same data but with dominated

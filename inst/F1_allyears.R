@@ -1,8 +1,9 @@
-library(hyper2)
-library(magrittr)
-## Analysis of different years of F1 results. 
+library("hyper2")
+library("magrittr")
 
-rm(list=ls())
+## Analysis of different years of F1 results.  File formula1.R is
+## functionally identical to this but uses slightly different idiom.
+
 files <- c(
     "formula1_2014.txt",
     "formula1_2015.txt",
