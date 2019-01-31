@@ -63,7 +63,7 @@ head(skating)
 Now some data visualization.  First the MLE for the strengths:
 
 
-```{r}
+```{r,dpi=72}
 dotchart(maxp(skating))
 dotchart(log(maxp(skating)))
 ```
@@ -71,7 +71,7 @@ dotchart(log(maxp(skating)))
 
 Now compare my rating with the official point-tallying method:
 
-```{r}
+```{r,dpi=72}
 par(pty='s')
 lik <- order(maxp(skating),decreasing=TRUE)
 plot(1:23,lik,asp=1,pch=16,xlab='official order',ylab='likelihood order')
