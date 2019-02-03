@@ -84,6 +84,7 @@ optimization, integration, simplex, unit-sum constraint}
 
 <<echo=FALSE,print=FALSE>>=
 ignore <- require(hyper2,quietly=TRUE)
+ignore <- require(magrittr,quietly=TRUE)
 @ 
 
 Consider Table~\ref{chess} in which matches between three chess
@@ -202,26 +203,103 @@ g <- function(p){(p[1]<p[2]) & (p[2]<p[3])}
 1-probability(H,disallowed=g,tol=0.1)
 @   
 
-\section{More results}
+\section{More results: icons dataset}
 
-Consider the \code{icons} dataset and the following hypotheses, again
-following \citet{hankin2010}:
+Consider the \code{icons} dataset, shown in table~\ref{saffron}, and
+the following hypotheses, again following \citet{hankin2010}, and
+reproduced here for convenience. 
 
-\begin{itemize}
-\item $H_1\colon p_1\geqslant\frac{1}{6}$; reject $H_1$ (support $-2.61$)
-\item $H_2\colon p_1\geqslant\max\left(p_2,\ldots p_6\right)$; fail to
-  reject $H_2$ (support $0.085$)
-\item $H_3\colon p_5+p_6\geqslant\frac{1}{3}$; reject $H_3$ (support $7.71$)
-\item
-  $H_4\colon\max\left\{p_1,p_2\right\}\geqslant\min\left\{p_1,p_2,p_3,p_4\right\}$;
-  reject $H_4$ (support $3.16$)
-\end{itemize}
+<<>>=
+data("oneill")                    # load the dataset
+icons
+maxp(icons)
+@ 
 
-(note that these hypotheses are phrased in ``positive'' language as
-\citet{hankin2010} used the method of support).  We can use the
-Bayesian paradigm to calculate posterior probabilities of these four
-hypotheses, on the assumption of a uniform prior:
 
+The basic idea is that we make some
+observation (e.g. $p_1>\frac{1}{6}$), then wonder if this observation
+is statistically robust.  We form a test statistic, say
+$T=p_1-\frac{1}{6}$ then calculate the support at two points:
+
+\begin{table}
+\centering
+\begin{tabular}{|cccccc|c|}\hline
+\multicolumn{6}{|c|}{icon}&\\ \hline
+NB & L & PB & THC & OA & WAIS & total\\ \hline
+5	&3	&-	&4	&-	&3	&15\\
+3	&-	&5	&8	&-	&2	&18\\
+-	&4	&9	&2	&-	&1	&16\\
+1	&3	&-	&3	&4	&-	&11\\
+4	&-	&5	&6	&3	&-	&18\\
+-	&4	&3	&1	&3	&-	&11\\
+5	&1	&-	&-	&1	&2	& 9\\
+5	&-	&1	&-	&1	&1	& 8\\
+-	&9	&7	&-	&2	&0	&18\\ \hline
+23      &24     &30     &24     &14     &9      &124\\ \hline
+\end{tabular} 
+\caption{Experimental results\label{saffron} from \citet{oneill2008}
+  (dataset \code{icons} in the package): Respondents' choice of `most
+  concerning' icon of those presented.  Thus the first row shows
+  results from respondents presented with icons NB, L, THC, and WAIS;
+  of the~15 respondents, 5 chose NB as the most concerning (see text
+  for a key to the acronyms).  Note the ``0'' in row~6, column~9: This
+  option was available to the~18 respondents of that row, but none of
+  them actually chose WAIS.  The likelihood function is }
+\end{table}
+
+\begin{enumerate}
+\item The evaluate, that is, the point in parameter space at which the
+support is maximized
+\item The constrained evaluate, that is, the point at which the support is
+maximized subject to the constraint $T\leqslant 0$.
+\end{enumerate}
+                                                        
+Here I will analyse just the first hypothesis, that is $H_1\colon
+p_1\leqslant\frac{1}{6}$.  Observation and expectation was that $p_1$
+was large.  \citet{hankin2010} rejected $H_1$ (support $-2.61$).
+First we need to set up some general functions:
+
+<<>>=
+n <- size(icons)                    # number of icons (6)
+start <- indep(equalp(icons))        # start point for optimization
+obj <- function(p){-loglik(icons,p)}  # objective, negative as we are minimizing
+gr  <- function(p){-gradient(icons,p)} # gradient of objective, needed for speed
+UI <- rbind(diag(n-1),-1)             # UI and CI specify constraints
+CI <- c(rep(0,n-1),-1)               # p_i >= 0 and sum p_i <= 1
+@ 
+
+                      
+We will test $H_1\colon p_1\leqslant\frac{1}{6}$ using different
+techiques.  Observation and expectation was that $p_1$ was large.
+Now try the constrained optimization:
+
+<<>>=
+ml_H1 <- constrOptim(theta=c(0.01,rep(0.1,4)), f = obj,grad=gr,
+ui = rbind(UI,c(-1,0,0,0,0)),   # p1>=1/6
+ci = c(CI,-1/6))
+ml_H1$val
+@ 
+
+Then the difference is
+
+<<>>=
+loglik(icons,indep(maxp(icons)))+ml_H1$val
+@ 
+
+comparing well with 2.608 as reported by \citet{hankin2010}.  But we
+can perform a Bayesian analysis, made possible by the efficient coding
+of \pkg{hyper2}:
+
+<<>>=
+probability(icons, disallowed=function(p){p[1] > 1/6}, tol=0.1)
+@ 
+
+See how the disallowed region is the {\em expected} bit of the
+parameter space.  Thus the probability that the $p_i$ are unexpected
+(that is, $p_1<1/6$) is about 1.5\% or conversely, the probability
+that $p_1\geqslant 1/6$ is about 98.5\%.
+
+For reference, the other hypotheses were:
 
 <<>>=
 f1 <- function(p){p[1] > 1/6}
@@ -231,37 +309,7 @@ f4 <- function(p){max(fillup(p)[1:2]) > min(fillup(p)[3:6])}
 @ 
 
 
-
-Then
-\begin{Schunk}
-\begin{Sinput}
-> data("oneill")
-> probability(icons,f1,tol=0.1)
-\end{Sinput}
-\begin{Soutput}
-[1] 0.01501733
-\end{Soutput}
-\begin{Sinput}
-> probability(icons,f2,tol=0.1)
-\end{Sinput}
-\begin{Soutput}
-[1] 0.3694677
-\end{Soutput}
-\begin{Sinput}
-> probability(icons,f3,tol=0.1)
-\end{Sinput}
-\begin{Soutput}
-[1] 0.9997976
-\end{Soutput}
-\begin{Sinput}
-> probability(icons,f4,tol=0.1)
-\end{Sinput}
-\begin{Soutput}
-[1] 0.xxxxx
-\end{Soutput}
-\end{Schunk}
-
-
+\section{Incomplete survey data}
 
 
 \bibliography{hyper2}
