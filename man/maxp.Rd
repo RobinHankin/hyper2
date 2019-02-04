@@ -7,6 +7,7 @@
 \description{Find the maximum likelihood estimate for p, also equal probabilities}
 \usage{
 maxp(H, startp=NULL, give=FALSE, ...)
+equalp(H)
 }
 \arguments{
   \item{H}{A \code{hyper2} object}
