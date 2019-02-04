@@ -81,7 +81,6 @@ optimization, integration, simplex, unit-sum constraint}
 
 \SweaveOpts{}
 \begin{document}
-\section{Introduction}
 
 <<echo=FALSE,print=FALSE>>=
 ignore <- require(hyper2,quietly=TRUE)
@@ -321,8 +320,9 @@ f4 <- function(p){max(fillup(p)[1:2]) > min(fillup(p)[3:6])}
 This section performs the analysis originally presented
 in~\citet{altham2010}.  The data, given here in
 table~\ref{Linetaldata} arises from 69 medical malpractice claims, and
-are the two
-surgeons' answers to the question: was there a communication breakdown in the hand-off between physicians caring for the patient?
+are the two surgeons' answers to the question: was there a
+communication breakdown in the hand-off between physicians caring for
+the patient?
 
 
 \begin{table}[!th]
@@ -377,7 +377,9 @@ H[c("t10","t00")] <- 4
 H
 @ 
 
-Then we may estimate the probability that reviewer 2 is more likely to give a `yes' than reviewer 1 as follows:
+(object \code{H} is provided as \code{handover} in the package).  Then
+we may estimate the probability that reviewer 2 is more likely to give
+a `yes' than reviewer 1 as follows:
 
 
 <<>>=
