@@ -23,13 +23,14 @@
 \Shorttitle{Integration in the hyper2 package}
 
 %% an abstract and keywords
-\Abstract{The \pkg{hyper2} package~\citep{hankin2017} presented a
-  generalization of the hypergeometric package~\citep{hankin2010}.
-  However, \pkg{hyper2} was based on likelihood methods and as of 2018
-  did not  have the ability to integrate over the unit-sum simplex.
-  This functionality has now been incorporated into the package which
-  is documented here.
-}
+
+\Abstract{The \pkg{hyper2} package presented a new formulation of the
+  \pkg{hyperdirichlet} package, but offered speed advantages.
+  However, \pkg{hyper2} was based on likelihood methods and as
+  originally uploaded did not have the ability to integrate over the
+  unit-sum simplex.  This functionality has now been incorporated into
+  the package which is documented here, by reproducing earlier
+  analysis.}
 
 \Keywords{Dirichlet distribution, hyperdirichlet, \pkg{hyper2},
   combinatorics, \proglang{R}, multinomial distribution, constrained
@@ -87,9 +88,20 @@ ignore <- require(hyper2,quietly=TRUE)
 ignore <- require(magrittr,quietly=TRUE)
 @ 
 
+\section{Introduction}
+
+The \pkg{hyper2} package~\citep{hankin2017} presented a new
+formulation of the hyperdirichlet distribution~\citep{hankin2010}
+which offered speed advantages over the original \pkg{hyperdirichlet}
+package.  However, \pkg{hyper2} was based on likelihood methods and as
+originally uploaded did not have the ability to integrate over the
+unit-sum simplex.  This functionality has now been incorporated into
+the package which is documented here, by reproducing earlier analysis.
+
+\section{Chess}
 Consider Table~\ref{chess} in which matches between three chess
 players are tabulated; this dataset was analysed by~\citet{hankin2010}.
-The likelihood function is 
+
 
 \[C
 \frac{p_1^{30}p_2^{36}p_3^{22}}{
@@ -129,11 +141,8 @@ probability(chess, disallowed=f,tol=0.01)
 
 Again comparing well with the older result (smaller values of
 \code{tol} give closer agreement at the expense of increased
-computation time).
-
-
-Finally, we can calculate the probability that Topalov is a better
-player than Anand:
+computation time).  Finally, we can calculate the probability that
+Topalov is a better player than Anand:
 
 <<>>=
 T.lt.A <- function(p){p[1]<p[2]}
@@ -238,13 +247,13 @@ NB & L & PB & THC & OA & WAIS & total\\ \hline
 23      &24     &30     &24     &14     &9      &124\\ \hline
 \end{tabular} 
 \caption{Experimental results\label{saffron} from \citet{oneill2008}
-  (dataset \code{icons} in the package): Respondents' choice of `most
+  (dataset \code{icons} in the package): respondents' choice of `most
   concerning' icon of those presented.  Thus the first row shows
   results from respondents presented with icons NB, L, THC, and WAIS;
   of the~15 respondents, 5 chose NB as the most concerning (see text
-  for a key to the acronyms).  Note the ``0'' in row~6, column~9: This
+  for a key to the acronyms).  Note the ``0'' in row~9, column~6: this
   option was available to the~18 respondents of that row, but none of
-  them actually chose WAIS.  The likelihood function is }
+  them actually chose WAIS}
 \end{table}
 
 \begin{enumerate}
@@ -255,9 +264,8 @@ maximized subject to the constraint $T\leqslant 0$.
 \end{enumerate}
                                                         
 Here I will analyse just the first hypothesis, that is $H_1\colon
-p_1\leqslant\frac{1}{6}$.  Observation and expectation was that $p_1$
-was large.  \citet{hankin2010} rejected $H_1$ (support $-2.61$).
-First we need to set up some general functions:
+p_1\leqslant\frac{1}{6}$ using the \pkg{hyper2} package and compare
+with previous results.  First set up some general functions:
 
 <<>>=
 n <- size(icons)                    # number of icons (6)
@@ -267,28 +275,27 @@ gr  <- function(p){-gradient(icons,p)} # gradient of objective, needed for speed
 UI <- rbind(diag(n-1),-1)             # UI and CI specify constraints
 CI <- c(rep(0,n-1),-1)               # p_i >= 0 and sum p_i <= 1
 @ 
-
-                      
+                
 We will test $H_1\colon p_1\leqslant\frac{1}{6}$ using different
 techiques.  Observation and expectation was that $p_1$ was large.
 Now try the constrained optimization:
 
 <<>>=
-ml_H1 <- constrOptim(theta=c(0.01,rep(0.1,4)), f = obj,grad=gr,
+ml_H1 <- constrOptim(theta=c(0.01,rep(0.1,4)), f=obj, grad=gr,
 ui = rbind(UI,c(-1,0,0,0,0)),   # p1>=1/6
 ci = c(CI,-1/6))
 ml_H1$val
 @ 
 
-Then the difference is
+Then the difference in support is
 
 <<>>=
 loglik(icons,indep(maxp(icons)))+ml_H1$val
 @ 
 
 comparing well with 2.608 as reported by \citet{hankin2010}.  But we
-can perform a Bayesian analysis, made possible by the efficient coding
-of \pkg{hyper2}:
+can also perform a Bayesian analysis, made possible by the efficient
+coding of \pkg{hyper2}:
 
 <<>>=
 probability(icons, disallowed=function(p){p[1] > 1/6}, tol=0.1)
@@ -381,10 +388,7 @@ m
 free$value
 @ 
 
-
-
 Then the constrained optimization:
-
 
 <<>>=
 obj <- function(p){-loglik(H,p)}   # objective func
