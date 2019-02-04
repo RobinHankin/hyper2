@@ -26,6 +26,7 @@ vignettes/*.aux
 vignettes/*.log
 vignettes/*.out
 vignettes/*.R
+vignettes/*.blg
 
 vignettes/jss.bst
 vignettes/jss.cls
