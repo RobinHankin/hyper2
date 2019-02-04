@@ -310,7 +310,108 @@ f4 <- function(p){max(fillup(p)[1:2]) > min(fillup(p)[3:6])}
 
 
 \section{Incomplete survey data}
+ 
+This section performs the analysis originally presented
+in~\citet{altham2010}.  The data, given here in
+table~\ref{Linetaldata} arises from 69 medical malpractice claims, and
+are the two
+surgeons' answers to the question: was there a communication breakdown in the hand-off between physicians caring for the patient?
 
+
+\begin{table}[!th]
+\centering
+\begin{tabular} {|l| c  c  c c c|}
+\hline
+Reviewer 1 &\multicolumn{5}{c|}{Reviewer 2}\\ \cline{2-6}
+ $ \ $&Yes& No& Missing&\rule{2mm}{0mm}& Total\\
+\hline
+Yes& 26& 1&2&&29\\
+No & 5&18&9&&32\\
+Missing& 4&4&0&&8\\
+&&&&&\rule{0mm}{0mm}\\
+Total & 35 & 23 & 11 && 69\\  
+\hline
+\end{tabular}
+\caption{Two surgeon reviews of malpractice claims data}
+\label{Linetal}
+\end{table}
+
+\begin{table}[!th]
+\centering
+\begin{tabular} {|l| c  c  c c c|}
+\hline
+Reviewer 1 &\multicolumn{5}{c|}{Reviewer 2}\\ \cline{2-6}
+ $ \ $&Yes& No& Missing&\rule{2mm}{0mm}& Total\\
+\hline
+Yes     & $y_{11}$ & $y_{10}$& $z_{1+}$ && $y_{1+} + z_{1+}$\\
+No      & $y_{01}$ & $y_{00}$& $z_{0+}$ && $y_{0+} + z_{0+}$\\
+Missing & $u_{+1}$ & $u_{+0}$& $0$     && $ u_{++}$        \\
+&&&&&\rule{0mm}{0mm}\\
+Total & $y_{+1} + u_{+1}$ & $y_{+0} +u_{+0} $&$z_{++}$&&$n$ \\
+\hline
+\end{tabular}
+\caption{Notation for the data}
+\label{Linetaldata}
+\end{table}
+
+We may implement an appropriate likelihood function as follows:
+
+<<>>=
+H <- hyper2(d=4)
+pnames(H) <- c("t00","t10", "t01", "t11")
+H["t00"] <- 18
+H["t10"] <- 01
+H["t01"] <- 05
+H["t11"] <- 26
+H[c("t11","t10")] <- 2
+H[c("t01","t00")] <- 9
+H[c("t11","t01")] <- 4
+H[c("t10","t00")] <- 4
+H
+@ 
+
+Then we may estimate the probability that reviewer 2 is more likely to give a `yes' than reviewer 1 as follows:
+
+
+<<>>=
+free <- maxp(H,give=TRUE)
+m <- fillup(free$par)
+names(m) <- pnames(H)
+m
+free$value
+@ 
+
+
+
+Then the constrained optimization:
+
+
+<<>>=
+obj <- function(p){-loglik(H,p)}   # objective func
+gr  <- function(p){-gradient(H,p)} # gradient, needed for speed
+UI <- rbind(diag(3),-1)           # UI and CI specify constraints
+CI <- c(rep(0,3),-1)              # p_i >= 0 and sum p_i <= 1
+@ 
+
+                      
+We will test $H_A\colon p_2<p_3$ using the method of support.
+
+
+<<>>=
+ml_HA <- constrOptim(theta=c(0.1,0.2,0.1), f = obj,grad=gr,
+ui = rbind(UI,c(0,1,-1)),   # p2 > p3
+ci = c(CI,0))
+ml_HA$value
+@ 
+
+
+Thus  the support for $H_A$ is
+
+<<>>=
+ml_HA$value - free$value
+@ 
+
+thus agreeing almost exactly with~\citet{altham2010}.
 
 \bibliography{hyper2}
 \end{document}
