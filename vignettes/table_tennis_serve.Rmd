@@ -11,7 +11,7 @@ vignette: >
 
 # The importance of serve in table tennis.
 
-Suppose we have three players, "a","b", and "c" who play table tennis.
+Suppose we have three players, "A","B", and "C" who play table tennis.
 We seek to quantify the effect of the serve.  The scoreline is as
 follows:
 
@@ -20,7 +20,7 @@ follows:
 * A vs C, A serves, 4-1
 * A vs C, C serves, 1-2
 
-(note that A does not play C).  This dataset is easily analysed with
+(note that B does not play C).  This dataset is easily analysed with
 the ```hyper2``` package although the model implicitly assumes that
 the serve strength does not depend on who is serving.
 
@@ -36,9 +36,10 @@ H
 ```
 
 so the likelihood function is uniform, for the only term is raised to
-the zeroth power.  Now we have to input the data, and we will go
-through the four scorelines above, one by one.  Note that this
-approach implicitly assumes independence of scores.
+the zeroth power (players' names are not capitalised in R idiom for
+clarity).  Now we have to input the data, and we will go through the
+four scorelines above, one by one.  Note that this approach implicitly
+assumes independence of scores.
 
 
 ### A vs B, A serves, score 5-1:
@@ -50,7 +51,8 @@ H
 ```
 
 The likelihood function is of the form
-$\frac{\left(a+S\right)^5b}{\left(a+b+S\right)^6}$.  We can add the other observations to $H$:
+$\frac{\left(a+S\right)^5b}{\left(a+b+S\right)^6}$.  We can add the
+other observations to $H$:
 
 ### A vs B, B serves, score 1-3:
 ```{r}
@@ -88,8 +90,6 @@ proportional to
 \[
 \frac{(S+a)^9(S+b)^3(S+c)^2a^2bc}{(S+a+b)^{10}(S+a+c)^8}
 \]
-
-
 
 # Results 
 We now find the unconstrained MLE:
@@ -147,25 +147,26 @@ pval
 ```
 
 Thus the tail area, pval, is about 0.022 which gives us a significant
-result.
+result: the serve has nonzero strength.
 
 
-Further, note that our maximum likelihood estimate for strengths
-allows us to assess what might happen when A plays C (which was not
-observed).  For convenience, here is the evaluate:
+## Assessment of B vs C
+
+The maximum likelihood estimate for strengths allows us to assess what
+might happen when B plays C (which was not observed).  For
+convenience, here is the evaluate:
 
 ```{r}
 maxp(H)
 ```
 
-If A serves, we would have $A+S:C\simeq 0.24+0.45:0.16\equiv 69:16$,
-or A wins with probability of about $0.81$.  If C serves we have
-$A:C+S\simeq 0.24:0.16+0.45\equiv 24:61$, so A wins with a probability
-of about $0.28$.
+If B serves, we would have $B+S:C\simeq 0.14+0.45:0.15\equiv 59:15$,
+or B wins with probability of about $0.78$.  If C serves we have
+$B:C+S\simeq 0.14:0.16+0.45\equiv 14:61$, so B wins with a probability
+of about $0.19$.
 
 
-
-# Profile likelihood
+# Profile likelihood for serve strength
 
 We can give a profile likelihood for $S$ by maximizing the likelihood
 of $(S,p_a,p_b,p_c)$ subject to a particular value of $S$ (in addition
@@ -176,16 +177,16 @@ likelihood function for $S$:
 
 profile_likelihood <- function(S,give=FALSE){
 
-  objective <- function(pab){# pab=c(a,b); S in scope
-    loglik(H,c(S,pab[1],pab[2]))  # no minus because we use fnscale= -1
+  objective <- function(pab){      # pab=c(a,b); S in scope (c is the fillup)
+    loglik(H,c(S,pab[1],pab[2]))   # no minus because we use fnscale= -1
   }
   
-  maxlike_constrained <-           # 2 DoF, a,b [S is given]
+  maxlike_constrained <-           # 2 DoF, a,b [S is given, c is fillup]
     constrOptim(
         f = objective,
         theta=c(rep((1-S)/3,2)),   # start at indep([c(S,x,x,x)])
         grad=NULL,
-        ui=rbind(diag(2),-1),      # pa,pb>=0, pa+pb <1-S
+        ui=rbind(diag(2),-1),      # pa,pb>=0, pa+pb <1-S (pc is the fillup)
         ci=c(0,0,S-1),             # ditto
         control=list(fnscale = -1) # finds max, not min
     )
@@ -210,3 +211,76 @@ abline(h= -2)
 
 So we can see that the credible range is from about 0.07-0.8 (and in
 particular excludes zero).
+
+
+# Profile likelihood for B vs C
+
+The profile likelihood technique can be applied to the question of the
+strengths of players B and C, even though no competition between the
+players was observed:  
+
+```{r}
+proflike <- function(bc,give=FALSE){
+  B <- bc[1]
+  C <- bc[2]
+  if(B+C>=1){return(NA)}
+
+  objective <- function(S){     #
+
+    jj <- c(S,A=1-(S+B+C),B,C)  # B,C fixed
+    loglik(H,indep(jj))         # no minus: we use maximum=T in optimize()
+  }
+  
+  maxlike_constrained <-  # single DoF is S [B,C given, A is fillup]
+    optimize(             # single DoF -> use optimize() not optim()
+        f = objective,         
+        interval = c(0,1-(B+C)),
+        maximum = TRUE
+    )
+
+  if(give){
+    return(maxlike_constrained)
+  } else{
+    return(maxlike_constrained$objective)
+  }
+} 
+
+small <- 1e-5
+n <- 50
+p <- seq(from=small,to=1-small,length=n)
+jj <- expand.grid(p,p)
+support <- apply(jj,1,proflike)
+support <- support-max(support,na.rm=TRUE)
+supportx <- support
+dim(supportx) <- c(n,n)
+
+x <- jj[,1]+jj[,2]/2
+y <- jj[,2]*sqrt(3)/2
+plot(x,y,cex=(support+6)/12, 
+   pch=16,asp=1,xlim=c(-0.1,1.1),ylim=c(-0.2,0.9),
+   axes=FALSE,xlab="",ylab="",main="profile likelihood for B,C")
+polygon(x=c(0,1/2,1),y=c(0,sqrt(3)/2,0))
+text(0.07,-0.04,'B=0, C=0')
+text(0.50,+0.90,'B=1, C=0')
+text(0.93,-0.04,'B=0, C=1')
+```
+
+
+But what one is really interested in is the relative strength of
+player B and player C.  We are indifferent between $p_B=0.1,p_C=0.2$
+and $p_B=0.3,p_C=0.6$.  To this end we need the profile likelihood
+curve of the log contrast, $X=\log\left(p_B/p_C\right)$.
+
+```{r}
+logcontrast <- apply(jj,1,function(x){log(x[1]/x[2])})
+plot(logcontrast,support,xlim=c(-5,5),ylim=c(-4,0))
+abline(h=-2)
+```
+
+From the graph, we can see that the two-units-of-support interval is
+from about $-3$ to $+3$ which would translate into a probability of B
+winning against C being in the interval
+$\left(\frac{1}{1+e^{3}},\frac{1}{1+e^{-3}}\right)$, or about
+$(0.047,0.953)$.  However, it is not clear if $p_B$ and $p_C$ are
+meaningful in isolation, as a real table tennis point has to have a
+server and the value of $S$ is itself uncertain.
