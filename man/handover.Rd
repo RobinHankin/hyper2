@@ -10,9 +10,10 @@
   dataset arising from 69 medical malpractice claims and concerns
   handover (or hand-off) between physicians.  This dataset was analysed
   by Lin et al. (2009), and further analysed by Altham and Hankin
-  (2010).  The computational methods are presented in the hyperdirichlet
-  and aylmer packages and a further discussion is given in the
-  \dQuote{integration} vignette.
+  (2010).  The computational methods are presented in the
+  \sQuote{hyperdirichlet} and \sQuote{aylmer} packages and a further
+  discussion is given in the \dQuote{integration} vignette of the
+  \sQuote{hyper2} package.
 
 }
 \usage{data(handover)}
