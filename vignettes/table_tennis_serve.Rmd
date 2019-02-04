@@ -11,7 +11,7 @@ vignette: >
 
 # The importance of serve in table tennis.
 
-Suppose We have three players, "a","b", and "c" who play table tennis.
+Suppose we have three players, "a","b", and "c" who play table tennis.
 We seek to quantify the effect of the serve.  The scoreline is as
 follows:
 
