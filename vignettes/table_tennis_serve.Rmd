@@ -219,7 +219,7 @@ The profile likelihood technique can be applied to the question of the
 strengths of players B and C, even though no competition between the
 players was observed:  
 
-```{r}
+```{r,dpi=72}
 proflike <- function(bc,give=FALSE){
   B <- bc[1]
   C <- bc[2]
