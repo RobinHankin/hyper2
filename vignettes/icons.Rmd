@@ -131,10 +131,10 @@ the maximum likelihood over the region defined by $p_1$ being greater
 than *at least one* of $p_2,\ldots,p_6$.  The union of convex sets is
 not necessarily convex (think two-way Venn diagrams).  As far as I can
 see, the only way to do it is to perform a sequence of five
-constrained optimizations: $p_1\leq p_2, p_1\leq p_3, p_1\leq p_4,
-p_1\leq p_5$.  The fillup constaint would be $p_1\leq
-p_6\longrightarrow 2p_1+p_2+\ldots p_5\leq 1$.  We then choose the
-largest likelihood from the five.
+constrained optimizations: $p_1\leqslant p_2, p_1\leqslant p_3,
+p_1\leqslant p_4, p_1\leqslant p_5$.  The fillup constraint would be
+$p_1\leqslant p_6\longrightarrow 2p_1+p_2+\ldots p_5\leqslant 1$.  We
+then choose the largest likelihood from the five.
 
 ```{r}
 o <- function(Ul,Cl,give=FALSE,start){
@@ -153,8 +153,8 @@ o <- function(Ul,Cl,give=FALSE,start){
 ```
 
 In the above, the idea is that we implement the additional constraint
-($p_1\leq p2$ etc) by passing ```Ul``` and ```cl``` which are the last
-row of ```Ui``` and vector ```Ci``` respectively.
+($p_1\leq p_2$ etc) by passing ```Ul``` and ```cl``` which are the
+last row of ```Ui``` and vector ```Ci``` respectively.
 
 ```{r}
 p2max <- o(c(-1, 1, 0, 0, 0), 0)
@@ -194,9 +194,11 @@ o(c(-2,-1,-1,-1,-1),-1,give=TRUE)$par
 
 ## Low frequency responses
 
-The next hypothesis was $p_5+p_6\geqslant\frac{1}{3}$.  This translates
-into optimizing subject to $-p_1-p_2-p_3-p_4\geqslant\frac{-2}{3}$.  Dead
-easy:
+The next hypothesis was testing the smallness of $p_5+p_6$, and we
+suspected that $p_5+p_6 < \frac{1}{3}$.  This translates into
+optimizing subject to $p_5+p_6\geqslant\frac{1}{3}$, and the required
+constraint is $-p_1-p_2-p_3-p_4\geqslant-\frac{2}{3}$ (because
+$p_5+p_6=1-p_1-p_2-p_3-p_4$).  Dead easy:
 
 ```{r} 
 jj <- o(c(-1,-1,-1,-1,0) , -2/3, give=TRUE,start=indep((1:6)/21))$value
@@ -222,11 +224,13 @@ $\left\{p_1,p_2,p_3,p_4\right\}$.  So we have the union of the various
 possibilities:
 
 \[
-\bigcup_{i=1}^4(p_5\geqslant p_i)\cup(p_6\geqslant p_i)
+\bigcup_{j\in\left\{5,6\right\}\atop k\in\left\{1,2,3,4\right\}}
+\left\{\left(p_1,p_2,p_3,p_4,p_5,p_6\right)\left|\sum p_i=1,
+p_j\geqslant p_k\right.\right\}
 \]
 
 and of course $p_6\geqslant p_2$, say, translates to
-$-p_1-2p_2-p_3-p_4-p_5\geqslant 1$.
+$-p_1-2p_2-p_3-p_4-p_5\geqslant -1$.
 
 ```{r}
 start <- indep(c(small,small,small,small,0.5-2*small,0.5-2*small))
