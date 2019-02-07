@@ -25,12 +25,12 @@
 %% an abstract and keywords
 
 \Abstract{The \pkg{hyper2} package presented a new formulation of the
-  \pkg{hyperdirichlet} package, but offered speed advantages.
-  However, \pkg{hyper2} was based on likelihood methods and as
-  originally uploaded did not have the ability to integrate over the
-  unit-sum simplex.  This functionality has now been incorporated into
-  the package which is documented here, by reproducing earlier
-  analysis.}
+  \pkg{hyperdirichlet} package, offering speed advantages and the
+  ability to deal with higher-dimensional datasets.  However,
+  \pkg{hyper2} was based on likelihood methods and as originally
+  uploaded did not have the ability to integrate over the unit-sum
+  simplex.  This functionality has now been incorporated into the
+  package which is documented here, by reproducing earlier analysis.}
 
 \Keywords{Dirichlet distribution, hyperdirichlet, \pkg{hyper2},
   combinatorics, \proglang{R}, multinomial distribution, constrained
@@ -92,7 +92,8 @@ ignore <- require(magrittr,quietly=TRUE)
 The \pkg{hyper2} package~\citep{hankin2017} presented a new
 formulation of the hyperdirichlet distribution~\citep{hankin2010}
 which offered speed advantages over the original \pkg{hyperdirichlet}
-package.  However, \pkg{hyper2} was based on likelihood methods and as
+package, and the ability to deal with higher-dimensional datasets.
+However, \pkg{hyper2} was based on likelihood methods and as
 originally uploaded did not have the ability to integrate over the
 unit-sum simplex.  This functionality has now been incorporated into
 the package which is documented here, by reproducing earlier analysis.
