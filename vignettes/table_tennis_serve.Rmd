@@ -11,6 +11,11 @@ vignette: >
 
 # The importance of serve in table tennis.
 
+(In this vignette, object ```H``` is created.  It is identical to
+object ```table_tennis``` in the package; to see it type
+```data(table_tennis)``` at the command line, and to see the help
+page, type ```help(table_tennis)```).
+
 Suppose we have three players, "A","B", and "C" who play table tennis.
 We seek to quantify the effect of the serve.  The scoreline is as
 follows:
@@ -74,6 +79,7 @@ H["a"]            %<>% "+"(1  ) # a wins 1 game
 H[c("c","S")]     %<>% "+"(  2) # c+S win 2 games
 H[c("a","c","S")] %<>% "-"(1+2) # a+c+S play 1+2=3 games
 ```
+
 
 
 ## Likelihood function
