@@ -27,7 +27,7 @@ As discussed in vignette \code{table_tennis_serve}, we wish to assess
 the importance of the serve.  The vignette presents a number of analyses
 including a profile likelihood plot.
 
-See vignette \code{table_tennis_serve} for an account of how to crete
+See vignette \code{table_tennis_serve} for an account of how to create
 \code{table_tennis}.
   
 }
