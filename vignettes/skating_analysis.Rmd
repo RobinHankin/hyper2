@@ -79,3 +79,75 @@ text(1:23,lik,asp=1,pch=16,pos=c(rep(4,19),rep(2,4)),rownames(skating_table))
 abline(0,1)
 ```
 
+
+
+## Evidence for medal positions
+
+Looking at the figure, it seems that the medallists (Kwan, Slutskya,
+Hughes) were considerably higher in strength than the rest of the
+field.  Here I will test the hypothesis that the medallists were in
+fact the strongest three competitors.  Technically you need to
+optimize over the union of the possibilities that one of the three
+medallists did not come in the top three; but this is hard.  We will
+do something much easier but numerically equivalent: optimize of the
+union of outcomes where either Cohen or Suguri had higher strength
+than any of the medallists.
+
+```{r}
+jj <-
+    matrix(c(
+        -1, 0, 0,   1,0,  # Hughes   < Cohen
+         0,-1, 0,   1,0,  # Slutskya < Cohen
+         0, 0,-1,   1,0,  # Kwan     < Cohen
+        
+        -1, 0, 0,   0,1,  # Hughes   < Suguri
+         0,-1, 0,   0,1,  # Slutskya < Suguri
+         0, 0,-1,   0,1), # Kwan     < Suguri
+        byrow=TRUE,ncol=5)
+
+problem_constraints <-  # fill with zeros for other competitors
+    cbind(jj,matrix(0,nrow(jj),size(skating)-ncol(jj)-1))
+
+standard_constraints <- rbind(
+    diag(22), # p_i >=0
+    -1        # p_1+p_2+...+p_22 <= 1
+    )
+
+small <-1e-3  # need a sensible start value satisfying the constraints
+start <- c(rep(2*small,3),rep(3*small,2),rep(small,17))
+
+objective <- function(p){loglik(skating,p)}
+grad <- function(p){gradient(skating,p)}
+
+out <- rep(0,nrow(problem_constraints))
+fullout <- list()
+for(i in seq_len(nrow(problem_constraints))){
+    UI <-   # constraints are: ONE of the problem constraints,
+            # and all of the standard constraints
+      rbind(problem_constraints[i,,drop=FALSE],
+      standard_constraints)
+    CI <-
+        c(
+            0,                       # p_i >=0
+            rep(0,size(skating)-1),  # p_1+p_2+...+p_22 <= 1
+            -1                       # problem constraint
+        )
+    
+    jj <-
+        constrOptim(
+            theta   = start,
+            f       = objective,
+            grad    = grad,
+            ui      = UI,
+            ci      = CI,
+            control = list(fnscale = -1)  # maximizing
+        )
+    fullout[[i]] <- jj
+    out[i] <- -jj$value   # minus because of fnscale
+}
+
+max(out)-maxp(skating,give=TRUE)$value 
+```
+
+that is, almost 6 units of support, well above the two units suggested
+by Edwards.
