@@ -36,6 +36,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(change_pnames(x,value))
   }
 }
+
+`length.hyper2` <- function(x){length(x$brackets)}
+
 ## setter methods end
 
 
@@ -55,7 +58,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(out)
 }
 
-`is_constant` <- function(H){ length(brackets(H))==0 }
+`is_constant` <- function(H){ length(H)==0 }
 
 `is_valid_hyper2` <- function(L,d,pnames){
   stopifnot(is.list(L))
