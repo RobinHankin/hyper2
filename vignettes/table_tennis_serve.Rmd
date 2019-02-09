@@ -179,28 +179,18 @@ to the unit sum constraint).  The following function defines a profile
 likelihood function for $S$:
 
 ```{r}
-
 profile_likelihood <- function(S,give=FALSE){
-
-  objective <- function(pab){      # pab=c(a,b); S in scope (c is the fillup)
-    loglik(H,c(S,pab[1],pab[2]))   # no minus because we use fnscale= -1
-  }
-  
-  maxlike_constrained <-           # 2 DoF, a,b [S is given, c is fillup]
-    constrOptim(
-        f = objective,
-        theta=c(rep((1-S)/3,2)),   # start at indep([c(S,x,x,x)])
-        grad=NULL,
-        ui=rbind(diag(2),-1),      # pa,pb>=0, pa+pb <1-S (pc is the fillup)
-        ci=c(0,0,S-1),             # ditto
-        control=list(fnscale = -1) # finds max, not min
-    )
-
-  if(give){
-    return(maxlike_constrained)
-  } else{
-    return(maxlike_constrained$value)
-  }
+    small <- 1e-2  # cannot make this too small, optimization routine needs wiggle room
+    out <- maxp(
+       H, startp=c(S+small/2 , small,small),
+       give=TRUE,
+       fcm=rbind(c(1,0,0),c(-1,0,0)),fcv=c(S,-S-small)  # S <= p[1] <= S+small
+       )
+    if(give){
+       return(out)
+      } else {
+       return(out$value)
+      }
 }
 ```
 
