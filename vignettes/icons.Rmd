@@ -104,6 +104,13 @@ maxlike_constrained <-
         control=list(fnscale = -1)  # find max, not min
     )
     maxlike_constrained
+    
+    maxp(icons, startp=indep(equalp(icons))-c(small,0,0,0,0),
+         give=TRUE, fcm=c(-1,0,0,0,0),fcv= -1/6)
+           
+           
+           
+    
 ```	
 
 So the extra support is given by

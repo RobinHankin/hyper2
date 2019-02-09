@@ -364,7 +364,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
 }
 
-`maxp` <- function(H, startp=NULL, give=FALSE, ...){
+`maxp` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, ...){
     SMALL <- 1e-6
     
     n <- size(H)
@@ -375,8 +375,14 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     objective <- function(p){ -loglik(H,p) }
     gradfun   <- function(p){ -(gradient(H,p))} #NB minus signs
     
-    UI <- rbind(diag(nrow=n-1),-1)
-    CI <- c(rep(SMALL,n-1),-1+SMALL)
+    UI <- rbind(
+        diag(nrow=n-1),  # regular: p1 >=0, p2 >= 0, ..., p_{n-1} >= 0
+        -1,              # fillup: p_n = 1-(p1+p2+...+p_{n-1}) >= 0
+        fcm)             # further problem-specific constraints
+    CI <- c(
+        rep(SMALL,n-1),  # regular
+        -1+SMALL,        # fillup
+        fcv)             # further contraint vector
     
     out <- constrOptim(
         theta = startp,

@@ -6,7 +6,7 @@
 \title{Maximum likelihood estimation}
 \description{Find the maximum likelihood estimate for p, also equal probabilities}
 \usage{
-maxp(H, startp=NULL, give=FALSE, ...)
+maxp(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, ...)
 equalp(H)
 }
 \arguments{
@@ -15,6 +15,7 @@ equalp(H)
   \item{give}{Boolean, with default \code{FALSE} meaning to return just
     the evaluate (including fillup), and \code{TRUE} meaning to return
     the entire formal output of the optimization routine}
+  \item{fcm,fcv}{Further problem-specific constraints}
   \item{...}{Further arguments which \code{maxp()} passes to
     \code{constrOptim()}}
 }
