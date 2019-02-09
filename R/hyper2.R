@@ -391,7 +391,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         ui    = UI,
         ci    = CI,
         ...)
-        
+
+    out$value <- -out$value # correct for -ve sign in objective()
     
     if(give){
       return(out)
