@@ -706,7 +706,7 @@ points in p-space:
 UI <- rbind(diag(n-1),-1)  # p_i >= 0
 CI <- c(rep(0,n-1),-1)     # p_1+...+p_{n-1} <= 1
 
-constrOptim(   # maxp() does not work for masterchef_series6
+constrOptim(  # maxp() does not work for masterchef_series6
     theta = equal_strengths,  # starting point for optimization
     f = function(p){-like_series(p,masterchef_series6)}, # see masterchef.Rd
     ui=UI, ci=CI,

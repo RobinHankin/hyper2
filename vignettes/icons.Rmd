@@ -89,8 +89,10 @@ Norfolk Broads] is the largest-probability icon (as expected on
 theoretical grounds by O'Neill).  This would suggest that $p_1$ is
 large, in some sense.  Consider the hypothesis that $p_1\leqslant 1/6$
 and to that end perform a constrained optimization, with (active)
-constraint that $p_1\leqslant 1/6$.  This is most easily done with the
-```constrOptim()``` function for constrained optimization:
+constraint that $p_1\leqslant 1/6$.  This is most easily done by
+imposing additional constraints to the ```maxp()``` function via the
+```fcm``` and ```fcv``` arguments:
+
 
 ```{r}
 small <- 1e-6  #  ensure start at an interior point
