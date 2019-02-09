@@ -264,38 +264,10 @@ maximized subject to the constraint $T\leqslant 0$.
 \end{enumerate}
                                                         
 Here I will analyse just the first hypothesis, that is $H_1\colon
-p_1\leqslant\frac{1}{6}$ using the \pkg{hyper2} package and compare
-with previous results.  First set up some general functions:
-
-<<>>=
-n <- size(icons)                    # number of icons (6)
-start <- indep(equalp(icons))        # start point for optimization
-obj <- function(p){-loglik(icons,p)}  # objective, negative as we are minimizing
-gr  <- function(p){-gradient(icons,p)} # gradient of objective, needed for speed
-UI <- rbind(diag(n-1),-1)             # UI and CI specify constraints
-CI <- c(rep(0,n-1),-1)               # p_i >= 0 and sum p_i <= 1
-@ 
-                
-We will test $H_1\colon p_1\leqslant\frac{1}{6}$ using different
-techiques.  Observation and expectation was that $p_1$ was large.
-Now try the constrained optimization:
-
-<<>>=
-ml_H1 <- constrOptim(theta=c(0.01,rep(0.1,4)), f=obj, grad=gr,
-ui = rbind(UI,c(-1,0,0,0,0)),   # p1>=1/6
-ci = c(CI,-1/6))
-ml_H1$val
-@ 
-
-Then the difference in support is
-
-<<>>=
-loglik(icons,indep(maxp(icons)))+ml_H1$val
-@ 
-
-comparing well with 2.608 as reported by \citet{hankin2010}.  But we
-can also perform a Bayesian analysis, made possible by the efficient
-coding of \pkg{hyper2}:
+p_1\leqslant\frac{1}{6}$ using the integration facilities of the
+\pkg{hyper2} package, and compare with previous results.  Here we
+perform a Bayesian analysis, made possible by the efficient coding of
+\pkg{hyper2}:
 
 <<>>=
 probability(icons, disallowed=function(p){p[1] > 1/6}, tol=0.1)
@@ -306,7 +278,15 @@ parameter space.  Thus the probability that the $p_i$ are unexpected
 (that is, $p_1<1/6$) is about 1.5\% or conversely, the probability
 that $p_1\geqslant 1/6$ is about 98.5\%.
 
-For reference, the other hypotheses were:
+The likelihood ratio reported was about 2.608, which would correspond
+to a $p$-value of about 
+
+<<>>=
+pchisq(2*2.608,df=1,lower.tail=FALSE)
+@ 
+
+which would be comparable strength of evidence.  For reference, the
+other hypotheses were:
 
 <<>>=
 f1 <- function(p){p[1] > 1/6}
@@ -314,6 +294,7 @@ f2 <- function(p){p[1] > max(fillup(p)[-1])}
 f3 <- function(p){sum(fillup(p)[5:6]) > 1/3}
 f4 <- function(p){max(fillup(p)[1:2]) > min(fillup(p)[3:6])}
 @ 
+
 
 
 \section{Incomplete survey data}
