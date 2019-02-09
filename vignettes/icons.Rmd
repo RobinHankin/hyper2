@@ -94,23 +94,10 @@ constraint that $p_1\leqslant 1/6$.  This is most easily done with the
 
 ```{r}
 small <- 1e-6  #  ensure start at an interior point
-maxlike_constrained <-
-    constrOptim(
-        f = function(p){loglik(icons,p)},  
-        theta=indep(equalp(icons))-c(small,0,0,0,0),
-        grad=NULL,
-        ui=rbind(nonneg=diag(5), -1, c(-1,0,0,0,0)), # p1-p5; fillup; p1
-        ci=c(rep(0,5),-1,-1/6), # nonneg; nonneg; <1/6
-        control=list(fnscale = -1)  # find max, not min
-    )
-    maxlike_constrained
-    
+maxlike_constrained <- 
     maxp(icons, startp=indep(equalp(icons))-c(small,0,0,0,0),
          give=TRUE, fcm=c(-1,0,0,0,0),fcv= -1/6)
-           
-           
-           
-    
+maxlike_constrained	 
 ```	
 
 So the extra support is given by
@@ -144,26 +131,17 @@ $p_1\leqslant p_6\longrightarrow 2p_1+p_2+\ldots p_5\leqslant 1$.  We
 then choose the largest likelihood from the five.
 
 ```{r}
-o <- function(Ul,Cl,give=FALSE,start){
+o <- function(Ul,Cl,startp,give=FALSE){
     small <- 1e-6  #  ensure start at an interior point
-    if(missing(start)){start <- indep(c(small, rep(0.1,5)))}
-    out <- constrOptim(
-        f = function(p){loglik(icons,p)},  
-        theta=start,
-        grad=NULL,
-        ui=rbind(nonneg=diag(5), -1, Ul),
-        ci=c(rep(0,5),-1,Cl), 
-        control=list(fnscale = -1)  # find max, not min
-    )
-    if(give){return(out)}else{return(out$value)}
+    if(missing(startp)){startp <- small*(1:5)+rep(0.1,5)}			
+    out <- maxp(icons, startp=small*(1:5)+rep(0.1,5), give=TRUE, fcm=Ul,fcv=Cl)
+    if(give){
+        return(out)
+    }else{
+        return(out$value)
+    }
 }
-```
 
-In the above, the idea is that we implement the additional constraint
-($p_1\leq p_2$ etc) by passing ```Ul``` and ```cl``` which are the
-last row of ```Ui``` and vector ```Ci``` respectively.
-
-```{r}
 p2max <- o(c(-1, 1, 0, 0, 0), 0)
 p3max <- o(c(-1, 0, 1, 0, 0), 0)
 p4max <- o(c(-1, 0, 0, 1, 0), 0)
@@ -177,7 +155,7 @@ hyperdirichlet package deals with this issue
 ```{r}
 likes <- c(p2max,p3max,p4max,p5max,p6max)
 likes
-ml <- max(likes)
+ml <- max(likes) 
 ml
 ```
 
