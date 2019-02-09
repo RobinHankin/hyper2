@@ -83,14 +83,15 @@ abline(0,1)
 
 ## Evidence for medal positions
 
-Looking at the figure, it seems that the medallists (Kwan, Slutskya,
-Hughes) were considerably higher in strength than the rest of the
-field.  Here I will test the hypothesis that the medallists were in
-fact the strongest three competitors.  Technically you need to
-optimize over the union of the possibilities that one of the three
-medallists did not come in the top three; but this is hard.  We will
-do something much easier but numerically equivalent: optimize of the
-union of outcomes where either Cohen or Suguri had higher strength
+Looking at the figure, it seems that the medallists---Hughes (gold),
+Slutskya (silver), Kwan (bronze)---were considerably higher in
+strength than the rest of the field.  Here I will test the hypothesis
+that the medallists were in fact the strongest three competitors.
+Technically you need to optimize over the union of the possibilities
+that one of the three medallists did not come in the top three; but
+this is hard.  We will do something much easier but numerically
+equivalent: optimize over the union of outcomes where either Cohen or
+Suguri (who placed fourth and fifth respectively) had higher strength
 than any of the medallists.
 
 ```{r}
@@ -108,46 +109,56 @@ jj <-
 problem_constraints <-  # fill with zeros for other competitors
     cbind(jj,matrix(0,nrow(jj),size(skating)-ncol(jj)-1))
 
-standard_constraints <- rbind(
-    diag(22), # p_i >=0
-    -1        # p_1+p_2+...+p_22 <= 1
-    )
-
 small <-1e-3  # need a sensible start value satisfying the constraints
 start <- c(rep(2*small,3),rep(3*small,2),rep(small,17))
 
-objective <- function(p){loglik(skating,p)}
-grad <- function(p){gradient(skating,p)}
-
 out <- rep(0,nrow(problem_constraints))
 fullout <- list()
-for(i in seq_len(nrow(problem_constraints))){
-    UI <-   # constraints are: ONE of the problem constraints,
-            # and all of the standard constraints
-      rbind(problem_constraints[i,,drop=FALSE],
-      standard_constraints)
-    CI <-
-        c(
-            0,                       # p_i >=0
-            rep(0,size(skating)-1),  # p_1+p_2+...+p_22 <= 1
-            -1                       # problem constraint
-        )
-    
-    jj <-
-        constrOptim(
-            theta   = start,
-            f       = objective,
-            grad    = grad,
-            ui      = UI,
-            ci      = CI,
-            control = list(fnscale = -1)  # maximizing
-        )
-    fullout[[i]] <- jj
-    out[i] <- -jj$value   # minus because of fnscale
-}
 
-max(out)-maxp(skating,give=TRUE)$value 
+for(i in seq_len(nrow(problem_constraints))){
+	jj <- maxp(skating, startp=start, give=TRUE,fcm=problem_constraints[i,], fcv=0)
+   fullout[[i]] <- jj
+   out[i] <- jj$value
+}
+out
+maxp(skating,give=TRUE)$value  - max(out)
 ```
 
-that is, almost 6 units of support, well above the two units suggested
-by Edwards.
+that is, about 1 unit of support, falling short of the two units
+suggested by Edwards.  Observe that the maximum likelihood among the
+six alternative hypotheses is that of number 3, in which the
+maximization was constrained to obey ```Kwan < Cohen```.
+
+If, instead, we ask whether there is evidence that Suguri should not
+have been a medallist, we find
+
+```{r}
+maxp(skating,give=TRUE)$value  - max(out[4:5])
+```
+
+There is something odd going on:
+
+```{r}
+plot(out,ylab="log likelihood",axes=FALSE)
+axis(2)
+axis(side=1,at=1:6,srt=45,labels=c(
+"Hug<Coh", "Slu<Coh", "Kwa<Coh",
+"Hug<Sug", "Slu<Sug", "Kwa<Sug"
+))
+```
+
+In the plot above, the vertical axis shows the support.  The six
+points on the x-axis correspond to the six rows of
+```problem_constraints```; names have been abbreviated to the first
+three letters.  Thus the first three points are maximum likelihoods
+for ```Hughes < Cohen```, ```Slutskya < Cohen```, and ```Kwan <
+Cohen``` respectively.  See how the likelihoods increase from the
+first to the third point; this indicates that ```Hughes < Cohen```, is
+the least likely option, and ```Kwan < Cohen``` the most likely
+option.  This makes sense because Cohen is the weakest of the three
+medallists.  Points 4-6 are in the reverse order, and I have no
+explanation for this.  The likelihoods indicate that, if Suguri is
+*more* likely to be stronger than Hughes than to be stronger than
+Kwan, which is difficult to understand because Hughes has a higher
+estimated strength than Kwan.
+
