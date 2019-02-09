@@ -706,7 +706,7 @@ points in p-space:
 UI <- rbind(diag(n-1),-1)  # p_i >= 0
 CI <- c(rep(0,n-1),-1)     # p_1+...+p_{n-1} <= 1
 
-constrOptim(
+constrOptim(   # maxp() does not work for masterchef_series6
     theta = equal_strengths,  # starting point for optimization
     f = function(p){-like_series(p,masterchef_series6)}, # see masterchef.Rd
     ui=UI, ci=CI,
@@ -752,7 +752,7 @@ that~$p_\mathrm{Laura}\leqslant p_\mathrm{Brent}$:
 UI <- rbind(UI,c(0,0,1,0,0,0,0,0,-1,0,0,0,0))  # Brent >= Laura
 CI <- c(CI,0)
 ans2 <-
-constrOptim(
+constrOptim(  # maxp() does not work for masterchef_series6
     theta = equal_strengths,
     f = function(p){-like_series(p,masterchef_series6)},  # see masterchef.Rd
     grad=NULL,
