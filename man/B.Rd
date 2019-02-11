@@ -45,22 +45,11 @@ p_to_e(p)
 }
 \details{
   \itemize{
-    \item Function \code{B()} is the user-friendly version.  It accesses
-    the \code{NC} slot.  If not \code{NA}, the value is returned; if
-    \code{NA}, the normalizing constant is calculated using
-    \code{adaptIntegrate()} of the \code{cubature()} package, via
-    \code{calculate_B()}.
-    
-    \item Function \code{NC()} is not intended for the user.  It is used
-    internally as an accessor method for the \code{NC} slot, and this
-    value is returned indiscriminately.
 
-    \item Function \code{calculate_B()} is the engine which actually
-    does the work.  Observe how \eqn{p} is converted to \code{e} (by
-    \code{e_to_p()}) and the integral proceeds over a hypercube.
-    Function \code{dirichlet()} and \code{gd()} do not use this as the
-    normalizing constant has an analytical expression and this is used
-    instead.
+    \item Function \code{B()} returns the normalizing constant;
+    \code{dhyper2(p,H)/B(H)} is a probability density function.
+    Internally, \eqn{p} is converted to \code{e} (by \code{e_to_p()})
+    and the integral proceeds over a hypercube.
 
     \item Function \code{probability()} gives the probability of an
     observation from a hyperdirichlet distribution satisfying
@@ -71,24 +60,25 @@ p_to_e(p)
     expectation of \eqn{\prod_{i=1}^n {p_i}^{{\rm powers}[i]}}{prod
     p^powers} is returned.
 
-    \item Function \code{mean()} returns the mean value of the
+    \item Function \code{mean_hyper2()} returns the mean value of the
     hyperdirichlet distribution.  This is computationally slow (consider
-    \code{maximum_likelihood()} for a measure of central tendency).  The
-    function takes a \code{normalize} argument, not passed to
+    \code{maxp()} for a measure of central tendency).  The function
+    takes a \code{normalize} argument, not passed to
     \code{adaptIntegrate()}: this is Boolean with \code{FALSE} meaning
     to return the value found by integration directly, and default
     \code{TRUE} meaning to normalize so the sum is exactly 1
   }
 }
 \value{
-  Functions \code{B()}, \code{NC()}, \code{calculate_NC()} notionally
-  return a scalar: the normalization constant
-
-  Functions \code{mean()} and \code{mgf()} return a \eqn{k}-tuple
-
-  Functions \code{is.proper()} and \code{validated()} return a Boolean
-
-  Function \code{probability()} returns a scalar, a probability.
+  \itemize{
+    \item Function \code{B()} returns a scalar: the normalization constant
+    \item Function \code{mean()} returns a \eqn{k}-tuple with unit sum
+    \item Function \code{mgf()} returns a scalar equal to the expectation of
+    \code{p^power}
+    \item Functions \code{is.proper()} and \code{validated()} return a Boolean
+    \item Function \code{probability()} returns a scalar, a (Bayesian)
+    probability
+    }
 }
 \author{Robin K. S. Hankin}
 
