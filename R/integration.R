@@ -49,12 +49,12 @@ function(e, H, include.Jacobian=TRUE){
 
 `mean_hyper2` <- function(H, normalize=TRUE, ...){
   f <- function(i){
-    jj <- rep(0,dim(H))
+    jj <- rep(0,size(H))
     jj[i] <- 1
     return(mgf(H,jj, ...))
   }
 
-  out <- sapply(seq_len(dim(H)),f)
+  out <- sapply(seq_len(size(H)),f)
   if(normalize){
     out <- out/sum(out)
   }
