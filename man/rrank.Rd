@@ -78,13 +78,13 @@ third? runner 2.  Who came fourth? runner 4.
 
 Order: where did runner 1 come?  second.  Where did runner 2 come?
 third.  Where did runner 3 come?  first.  Where did runner 4 come?
-fourth.  For order_likelihood(), we need rank data, not order data.  See
-the men's sculling section of the vignette for an example.
-
+fourth.  For \code{order_likelihood()}, we need rank data, not order
+data.  See vignette \dQuote{\code{skating_analysis}} for more
+discussion.
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ggol}},\code{\link{order_likelihood}}}
+\seealso{\code{\link{ggol}},\code{\link{order_likelihood}},\code{\link{skating}}}
 \examples{
 ptrue <- (4:1)/10
 rrank(100,p=ptrue)
