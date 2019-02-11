@@ -35,6 +35,10 @@ wiki_matrix <- matrix(c(
     12, 08, 05, 05, 08, 06, 00, 08, 12, 03, 07, 03, 10, 05, 08, 07, 07, NA, 08, 03) # BA
 , nrow=18,byrow=TRUE)
 
+## Each row corresponds to a competitor and each column to a
+## judge. Note that the matrix is not square: Germany and the UK were
+## judges but not competitors.
+
 ## I have removed the first column which is the total of the points,
 ## replaced self-voting entries with NA, and replaced blanks with
 ## '00'; every entry is padded to two digits.
@@ -76,8 +80,10 @@ if(abbreviated){
 
 competitors <- jj[1:18]
 colnames(preference) <- jj      # voters; 20 countries (18 + DE + UK)
-
 rownames(preference) <- competitors  
+
+rownames(wiki_matrix) <- jj[1:18]
+colnames(wiki_matrix) <- jj
 
 ## The competitors were the first 18 countries (the last two
 ## countries, Germany and the UK, voted but did not compete)
@@ -108,13 +114,11 @@ for(i in seq_len(nrow(preference))){   # cycle through the rows; each row is a v
                                         # eligible players has +1
                                         # power on the numerator
         
-
-        euro2009[eligible] <- euro2009[eligible] - 1
-                                        # denominator of all eligible players; power -1
+        euro2009[eligible] %<>% dec()   # denominator of all eligible players
 
         d[d==1] <- -1  # once you've won, you are ineligible to be chosen again
 
-        d[d>0] %<>% "-"(1)  # everyone moves down the list, so who
+        d[d>0] %<>% dec()  # everyone moves down the list, so who
                             # *was* second choice becomes first
                             # choice, who *was* third choice becomes
                             # second, and so on.
@@ -125,3 +129,7 @@ for(i in seq_len(nrow(preference))){   # cycle through the rows; each row is a v
 
 ## syntatic sugar:
 pnames(euro2009) <- competitors
+
+## plot points vs strength:
+plot(rowSums(wiki_matrix,na.rm=TRUE),maxp(euro2009),
+     pch=16,xlab="points scored",ylab="MLE strength")
