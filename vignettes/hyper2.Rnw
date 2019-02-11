@@ -488,8 +488,8 @@ H
 @ 
 
 (Sarah did not take part).  The above idiom makes it possible to
-defined likelihoods for observations that have a peculiar probability
-structure, and I give two examples below.
+define likelihood functions for observations that have a peculiar
+probability structure, and I give two examples below.
 
 One event involved eight competitors who were split randomly into four
 teams of two.  The show format was specified in advance as follows:
