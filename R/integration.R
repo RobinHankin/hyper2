@@ -55,6 +55,7 @@ function(e, H, include.Jacobian=TRUE){
   }
 
   out <- sapply(seq_len(size(H)),f)
+  if(!identical(pnames(H),NA)){names(out) <- pnames(H)}
   if(normalize){
     out <- out/sum(out)
   }
