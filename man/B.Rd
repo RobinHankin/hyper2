@@ -101,5 +101,7 @@ package uses \code{adaptIntegrate} of the cubature package.
 \seealso{\code{\link{loglik}}}
 \examples{
 
-3+3
+data(chess)
+mean_hyper2(chess)
+maxp(chess)
 }
