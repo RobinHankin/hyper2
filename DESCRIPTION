@@ -7,7 +7,7 @@ Authors@R: person(given=c("Robin", "K. S."), family="Hankin", role = c("aut","cr
 Maintainer: Robin K. S. Hankin <hankin.robin@gmail.com>
 Description: A suite of routines for the hyperdirichlet distribution; supersedes the 'hyperdirichlet' package for most purposes.
 License: GPL (>= 2)
-LazyLoad: yes
+LazyData: yes
 Depends: methods, magrittr, cubature
 Suggests: knitr
 VignetteBuilder: knitr
