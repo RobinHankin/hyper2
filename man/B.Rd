@@ -104,4 +104,9 @@ package uses \code{adaptIntegrate} of the cubature package.
 data(chess)
 mean_hyper2(chess)
 maxp(chess)
+
+# disallowed argument typically means slow run times; use high tol for speed
+probability(chess,disallowed=function(p){p[1]>p[2]},tol=0.1)
+probability(chess,disallowed=function(p){p[1]<p[2]},tol=0.1)
+
 }
