@@ -6,7 +6,7 @@
 
 library("hyper2")
 
-jj <- read.table("table.txt",header=FALSE)
+jj <- read.table("stockholm1962.txt",header=FALSE)
 results <- as.matrix(jj[,-(1:2)])
 players <- as.character(jj$V1)
 nationality <- as.character(jj$V2)
@@ -37,19 +37,20 @@ for(i in seq_len(nrow(results)-1)){  # i=row
     }  # j loop closes
 } # i loop closes
 
-
-
-free <- loglik(H,indep(maxp(H)))
+## Now some optimization.  First optimize freely:
+max_support_free <- maxp(H,give=TRUE)$value
+ml_p   <- maxp(H)
 
 s <- indep(equalp(H))
-s[1] <- s[1] + 0.001
-s[2] <- s[2] - 0.001
+small <- 1e-3
+s[1] <- s[1] + small
+s[2] <- s[2] - small
 
+## Perform the constrained optimization:
+ml_p_constrained <- maxp(H,fcm=c(1,-1,rep(0,22)),fcv=0,startp=s)
+max_support_constrained <- loglik(H,indep(mle))
 
-mle <- maxp(H,fcm=c(1,-1,rep(0,22)),fcv=0,startp=s)
-constrained <- loglik(H,indep(mle))
-
-support <- free-constrained
+support <- max_support_free - max_support_constrained
 
 print(paste("support = ", support,sep=""))
 if(support>2){print("two units of support criterion exceeded: the Soviets *did* collude!")}
