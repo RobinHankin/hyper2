@@ -1,3 +1,9 @@
+# Analysis of the 1962 world chess championship, Curacao.  Reference:
+# C. C. Moul and J. V. C. Nye 2009. "Did the Soviets collude? A
+# statistical analysis of championship chess 1940-1978.  Journal of
+# Economic Behaviour and Organization 70(2009) 10-21
+
+
 library("hyper2")
 
 jj <- read.table("table.txt",header=FALSE)
