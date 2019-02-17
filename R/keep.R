@@ -20,6 +20,7 @@
   }
   return(hyper2(bracketout,powerout,pout))
 }
+
 `keep` <- function(H, keep, tidy=TRUE){
   p <- pnames(H)    # might be NA
   if(is.character(keep)){
