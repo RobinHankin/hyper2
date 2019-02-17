@@ -48,11 +48,11 @@ s[2] <- s[2] - small
 
 ## Perform the constrained optimization:
 ml_p_constrained <- maxp(H,fcm=c(1,-1,rep(0,22)),fcv=0,startp=s)
-max_support_constrained <- loglik(H,indep(mle))
+max_support_constrained <- loglik(H,indep(ml_p_constrained))
 
 support <- max_support_free - max_support_constrained
 
 print(paste("support = ", support,sep=""))
-if(support>2){print("two units of support criterion exceeded: the Soviets *did* collude!")}
+if(support>2){print("two units of support criterion exceeded: strong evidence that the Soviets colluded")}
 
 print(paste("p-value = ",pchisq(2*support,df=1,lower.tail=FALSE)))
