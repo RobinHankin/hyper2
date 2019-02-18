@@ -7,8 +7,9 @@
 ## wins (there is a "refine search" tab at the bottom).  Some searches
 ## have more than one page of results.
 
-## Numbers here downloaded 17 February 2019.
-
+## Numbers here downloaded 17 February 2019.  Note that only
+## "classical games" are considered here (rapid and exhibition games
+## being ignored).
 
 library("hyper2")
 H <- hyper2(pnames=c("Karpov","Kasparov","Anand","white","draw"))
