@@ -1,3 +1,15 @@
+## Analysis of three chess players (Kasparov, Karpov, Anand).  Data
+## drawn from chessgames.com, specifically
+
+## http://www.chessgames.com/perl/ezsearch.pl?search=karpov+vs+kasparov
+
+## Note that the database allows one to sort by white wins or black
+## wins (there is a "refine search" tab at the bottom).  Some searches
+## have more than one page of results.
+
+## Numbers here downloaded 17 February 2019.
+
+
 library("hyper2")
 H <- hyper2(pnames=c("Karpov","Kasparov","Anand","white","draw"))
 
@@ -39,7 +51,7 @@ H[c("Anand")]            %<>% inc(anand_plays_black_beats_kasparov)
 H[kasparov_vs_anand]     %<>% dec(anand_plays_black_beats_kasparov)
 H[c("draw")]             %<>% inc(kasparov_draws_anand)
 H[kasparov_vs_anand]     %<>% dec(kasparov_draws_anand)
-
+ 
 ## Karpov vs Anand
 karpov_plays_white_beats_anand <- 7
 anand_plays_white_beats_karpov <- 18
@@ -95,14 +107,13 @@ ml_p_constrained <- jj
 support_different_strengths <- max_support_free - max_support_constrained
 
 print(paste("support for different strengths = ", support_different_strengths, sep=""))
-if(support>2){
+if(support_different_strengths > 2){
   print("two units of support criterion exceeded: strong evidence that the three players have different strengths")
 } else {
   print("less than two units of support: no evidence for differing players' strengths")
 }
 
-print(paste("p-value = ",pchisq(2*support,df=1,lower.tail=FALSE)))
-
+print(paste("p-value = ",pchisq(2*support_different_strengths,df=1,lower.tail=FALSE)))
 
 
 ## Now test the hypothesis that playing white confers no advantage:
@@ -130,7 +141,7 @@ max_support_nowhite <- constrained_optimization$value
 support_no_white_advantage <- max_support_free - max_support_nowhite
 
 print(paste("support for white advantage = ", support_no_white_advantage, sep=""))
-if(support>2){
+if(support_no_white_advantage > 2){
   print("two units of support criterion exceeded: strong evidence that playing white is an advantage")
 } else {
   print("less than two units of support: no evidence for white being an advantage")
