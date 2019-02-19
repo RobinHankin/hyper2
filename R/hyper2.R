@@ -624,8 +624,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
-`inc` <- function(H,val=1){ x %<>% `+`(val)}   # increment
-`dec` <- function(H,val=1){ x %<>% `-`(val)}   # decrement
+`inc` <- function(H,val=1){ H %<>% `+`(val)}   # increment
+`dec` <- function(H,val=1){ H %<>% `-`(val)}   # decrement
 
 `trial` <- function(H,winners,players,val=1){
   H[winners] %<>% `+`(val)
