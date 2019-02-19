@@ -12,8 +12,8 @@ Kasparov, and Anand}
   function allows one to estimate the players' strengths, propensity to
   draw, and also the additional strength conferred by playing white.
 
-  The likelihood function is identical to object \code{H}, created by
-  file \code{inst/karpov_kasparov_anand.R}, which is heavily documented.
+  The likelihood function is created by file
+  \code{inst/karpov_kasparov_anand.R}, which is heavily documented.
 
   The reason that the players are different from those in the
   \code{chess} dataset is that the original data does not seem to be

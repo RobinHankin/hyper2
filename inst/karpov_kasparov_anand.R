@@ -11,6 +11,14 @@
 ## "classical games" are considered here (rapid and exhibition games
 ## being ignored).
 
+## This file creates likelihood function 'H' which is identical to
+## data object karpov_kasparov_anand in the package.
+
+## In this file, object 'H' is created first and then used to test two
+## hypotheses: firstly, that all three players have the same strength,
+## and secondly that playing white confers no strength.
+
+
 library("hyper2")
 H <- hyper2(pnames=c("Karpov","Kasparov","Anand","white","draw"))
 
@@ -149,3 +157,4 @@ if(support_no_white_advantage > 2){
 }
 
 print(paste("p-value = ",pchisq(2*support_no_white_advantage,df=1,lower.tail=FALSE)))
+
