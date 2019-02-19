@@ -64,3 +64,6 @@ if(support>2){
 }
 
 print(paste("p-value = ",pchisq(2*support,df=1,lower.tail=FALSE)))
+
+
+
