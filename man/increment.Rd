@@ -15,6 +15,8 @@ trial(H,winners,players,val=1)
 }
 \arguments{
   \item{H}{A hyper2 object}
+  \item{winners,players}{Numeric or character vectors specifying the
+    winning team and the losing team}
   \item{val}{Numeric}
 }
 \details{
