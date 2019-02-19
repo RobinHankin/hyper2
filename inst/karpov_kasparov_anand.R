@@ -12,11 +12,14 @@
 ## being ignored).
 
 ## This file creates likelihood function 'H' which is identical to
-## data object karpov_kasparov_anand in the package.
+## data object 'karpov_kasparov_anand' in the package.
 
-## In this file, object 'H' is created first and then used to test two
-## hypotheses: firstly, that all three players have the same strength,
-## and secondly that playing white confers no strength.
+## In this file, the dataset from chessgames is set up first in
+## objects like 'karpov_plays_white_beats_kasparov'.
+
+## Then object 'H' is created, and used to test two hypotheses:
+## firstly, that all three players have the same strength, and
+## secondly that playing white confers no strength.
 
 
 library("hyper2")
@@ -29,8 +32,24 @@ kasparov_plays_white_beats_karpov <- 30  # 13 on p1, 17 on p2
 karpov_plays_black_beats_kasparov <- 9
 kasparov_plays_black_beats_karpov <- 7
 karpov_draws_kasparov <- 121
-karpov_vs_kasparov <- c("Karpov","Kasparov","white","draw")
 
+## Kasparov vs Anand
+kasparov_plays_white_beats_anand <- 15
+anand_plays_white_beats_kasparov <- 6
+kasparov_plays_black_beats_anand <- 2
+anand_plays_black_beats_kasparov <- 11
+kasparov_draws_anand <- 31
+
+## Karpov vs Anand
+karpov_plays_white_beats_anand <- 7
+anand_plays_white_beats_karpov <- 18
+karpov_plays_black_beats_anand <- 13
+anand_plays_black_beats_karpov <- 5
+karpov_draws_anand <- 28
+
+
+## Kasparov vs Karpov
+karpov_vs_kasparov <- c("Karpov","Kasparov","white","draw")
 H[c("Karpov","white")]   %<>% inc(karpov_plays_white_beats_kasparov)
 H[karpov_vs_kasparov]    %<>% dec(karpov_plays_white_beats_kasparov)
 H[c("Kasparov","white")] %<>% inc(kasparov_plays_white_beats_karpov)
@@ -43,13 +62,7 @@ H[c("draw")]             %<>% inc(karpov_draws_kasparov)
 H[karpov_vs_kasparov]    %<>% dec(karpov_draws_kasparov)
 
 ## Kasparov vs Anand
-kasparov_plays_white_beats_anand <- 15
-anand_plays_white_beats_kasparov <- 6
-kasparov_plays_black_beats_anand <- 2
-anand_plays_black_beats_kasparov <- 11
-kasparov_draws_anand <- 31
 kasparov_vs_anand <- c("Kasparov","Anand","white","draw")
-
 H[c("Kasparov","white")] %<>% inc(kasparov_plays_white_beats_anand)
 H[kasparov_vs_anand]     %<>% dec(kasparov_plays_white_beats_anand)
 H[c("Anand","white")]    %<>% inc(anand_plays_white_beats_kasparov)
@@ -61,12 +74,7 @@ H[kasparov_vs_anand]     %<>% dec(anand_plays_black_beats_kasparov)
 H[c("draw")]             %<>% inc(kasparov_draws_anand)
 H[kasparov_vs_anand]     %<>% dec(kasparov_draws_anand)
  
-## Karpov vs Anand
-karpov_plays_white_beats_anand <- 7
-anand_plays_white_beats_karpov <- 18
-karpov_plays_black_beats_anand <- 13
-anand_plays_black_beats_karpov <- 5
-karpov_draws_anand <- 28
+
 karpov_vs_anand <- c("Karpov","Anand","white","draw")
 
 H[c("Karpov","white")] %<>% inc(karpov_plays_white_beats_anand)
