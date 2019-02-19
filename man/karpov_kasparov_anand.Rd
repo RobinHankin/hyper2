@@ -27,7 +27,7 @@ Kasparov, and Anand}
  \url{http://www.chessgames.com/perl/ezsearch.pl?search=karpov+vs+kasparov}
 
  Note that the database allows one to sort by white wins or black wins
- (there is a \Quote{refine search} tab at the bottom).  Some searches
+ (there is a \sQuote{refine search} tab at the bottom).  Some searches
  have more than one page of results.
  
  Numbers here downloaded 17 February 2019.  Note that only
