@@ -1,16 +1,3 @@
-## Analysis of three chess players (Kasparov, Karpov, Anand).  Data
-## drawn from chessgames.com, specifically
-
-## http://www.chessgames.com/perl/ezsearch.pl?search=karpov+vs+kasparov
-
-## Note that the database allows one to sort by white wins or black
-## wins (there is a "refine search" tab at the bottom).  Some searches
-## have more than one page of results.
-
-## Numbers here downloaded 17 February 2019.  Note that only
-## "classical games" are considered here (rapid and exhibition games
-## being ignored).
-
 ## This file creates likelihood function 'H' which is identical to
 ## data object 'karpov_kasparov_anand' in the package.
 
@@ -23,29 +10,9 @@
 
 
 library("hyper2")
+results <- as.list(kka)
+attach(results)
 H <- hyper2(pnames=c("Karpov","Kasparov","Anand","white","draw"))
-
-
-## Kasparov vs Karpov
-karpov_plays_white_beats_kasparov <- 18  # 12 on p1, 6 on p2
-kasparov_plays_white_beats_karpov <- 30  # 13 on p1, 17 on p2
-karpov_plays_black_beats_kasparov <- 9
-kasparov_plays_black_beats_karpov <- 7
-karpov_draws_kasparov <- 121
-
-## Kasparov vs Anand
-kasparov_plays_white_beats_anand <- 15
-anand_plays_white_beats_kasparov <- 6
-kasparov_plays_black_beats_anand <- 2
-anand_plays_black_beats_kasparov <- 11
-kasparov_draws_anand <- 31
-
-## Karpov vs Anand
-karpov_plays_white_beats_anand <- 7
-anand_plays_white_beats_karpov <- 18
-karpov_plays_black_beats_anand <- 13
-anand_plays_black_beats_karpov <- 5
-karpov_draws_anand <- 28
 
 
 ## Kasparov vs Karpov
@@ -87,6 +54,8 @@ H[c("Anand")]          %<>% inc(anand_plays_black_beats_karpov)
 H[karpov_vs_anand]     %<>% dec(anand_plays_black_beats_karpov)
 H[c("draw")]           %<>% inc(karpov_draws_anand)
 H[karpov_vs_anand]     %<>% dec(karpov_draws_anand)
+
+detach(results)
 
 ## Test the hypothesis that all three players have the same strength
 

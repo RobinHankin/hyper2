@@ -1,5 +1,6 @@
 \name{karpov_kasparov_anand}
 \alias{karpov_kasparov_anand}
+\alias{kka}
 \docType{data}
 \title{Karpov, Kasparov, Anand}
 \description{
@@ -18,6 +19,25 @@ Kasparov, and Anand}
   The reason that the players are different from those in the
   \code{chess} dataset is that the original data does not seem to be
   available any more.
+
+  Dataset \code{kka} refers to matches between three chess players
+ (Kasparov, Karpov, Anand).  Data drawn from chessgames.com,
+ specifically
+
+ \url{http://www.chessgames.com/perl/ezsearch.pl?search=karpov+vs+kasparov}
+
+ Note that the database allows one to sort by white wins or black wins
+ (there is a \Quote{refine search} tab at the bottom).  Some searches
+ have more than one page of results.
+ 
+ Numbers here downloaded 17 February 2019.  Note that only
+ \sQuote{classical games} are considered here (rapid and exhibition
+ games being ignored).
+
+
+
+
+
 }
 \seealso{\code{\link{chess}}}
 \examples{
