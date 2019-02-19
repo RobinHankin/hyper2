@@ -1,6 +1,7 @@
 \name{increment}
 \alias{increment}
 \alias{decrement}
+\alias{trial}
 \alias{inc}
 \alias{dec}
 \title{Increment and decrement operators}
@@ -8,12 +9,12 @@
 Syntactic sugar for incrementing and decrementing likelihood functions
 }
 \usage{
-inc(x, val = 1)
-dec(x, val = 1)
+inc(H, val = 1)
+dec(H, val = 1)
+trial(H,winners,players,val=1)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{A hyper2 object}
+  \item{H}{A hyper2 object}
   \item{val}{Numeric}
 }
 \details{
@@ -66,8 +67,27 @@ Or even
 H[c("a","b")] \%<>\% inc(H["a"])
 }
 
+
+The convenience function \code{trial()} takes this one step further and
+increments the \sQuote{winning team} and decrements the \sQuote{losing
+team}.  This function is intended to be used with magrittr pipes:
+
+
+\preformatted{
+> H <- hyper2(pnames=letters[1:6])
+> H
+(a + b + c + d + e + f)^0
+> H \%<>\% trial(c("a","b"),c("a","b","c"))
+> H
+(a + b) * (a + b + c)^-1
+}
+
+Using \code{trial()} in this way ensures that the powers sum to zero.
+
 The \code{inc} and \code{dec} operators are used in
-\code{inst/rowing_analysis.R}.
+\code{inst/rowing_analysis.R}; and the \code{trial()} function is used
+in \code{inst/kka_draws.R}. 
+
 }
 \author{Robin K. S. Hankin}
 \examples{
