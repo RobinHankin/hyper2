@@ -1,12 +1,15 @@
 ## This file creates likelihood function 'H' which is identical to
 ## data object 'karpov_kasparov_anand' in the package.
 
-## In this file, the dataset from chessgames is set up first in
-## objects like 'karpov_plays_white_beats_kasparov'.
+## In this file, object 'kka' holds the chess playing results; see
+## karpov_kasparov_anand.Rd for more details.
 
 ## Then object 'H' is created, and used to test two hypotheses:
 ## firstly, that all three players have the same strength, and
 ## secondly that playing white confers no strength.
+
+## In this file, all three players are assumed to have the same draw
+## strength.
 
 
 library("hyper2")
@@ -51,7 +54,7 @@ ml_p_free    <- maxp(H)
 
 ## Now the constrained optimization.  We enforce that
 ## Karpov==Anand==Kasparov==p but allow the white ghost and the draw
-## monster to range freely, subject to the unit sum constraint,
+## monster to range freely, subject to the unit sum constraint.
 
 
 objective <- function(x){

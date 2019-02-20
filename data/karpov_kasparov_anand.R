@@ -30,3 +30,10 @@ structure(list(brackets = list(1, c(1, 2, 4, 5), c(1, 3, 4, 5
 ), c(1, 4), 2, c(2, 3, 4, 5), c(2, 4), 3, c(3, 4), 5), powers = c(22, 
 -185, -71, 25, 9, -65, 45, 16, 24, 180), pnames = c("Karpov", 
 "Kasparov", "Anand", "white", "draw")), class = "hyper2")
+
+`kka_3draws` <-
+structure(list(brackets = list(1, c(1, 2, 4, 5, 6), c(1, 3, 4, 
+5, 7), c(1, 4), 2, c(2, 3, 4, 6, 7), c(2, 4), 3, c(3, 4), c(5, 
+6), c(5, 7), c(6, 7)), powers = c(22, -185, -71, 25, 9, -65, 
+45, 16, 24, 121, 28, 31), pnames = c("Karpov", "Kasparov", "Anand", 
+"white", "Karpov_draw", "Kasparov_draw", "Anand_draw")), class = "hyper2")
