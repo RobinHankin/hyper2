@@ -1,11 +1,11 @@
-"https://www.youtube.com/watch?v=XKWzlG4jDnI"
+## https://www.youtube.com/watch?v=XKWzlG4jDnI
 
 library(hyper2)
 library(partitions) ## needed for perms()
 library(magrittr) 
 
-team1  <- c("autimatic","tarik", "Skadoodle","Stewie2k","RUSH")
-team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")
+team1  <- c("autimatic","tarik", "Skadoodle","Stewie2k","RUSH")   #Cloud9
+team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")  # FaZe Clan
 
 ## This script creates a hyper2 object H which is a likelihood function
 ## for the strengths of the players in team1 and team2 above.  It defines
@@ -36,7 +36,7 @@ team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")
 ## Note the appearance of (a) in the denominator: he [surely!] was on
 ## the losing team.
 
-## The '%<>% line in the main loop removes the killed player from the
+## The '%<>%' line in the main loop removes the killed player from the
 ## appropriate team.
 
 ## The likelihood function for the full deathorder is then
