@@ -29,11 +29,11 @@
 %% an abstract and keywords
 \Abstract{
 
-Here I present the \pkg{hyper2} package for generalized
-Bradley-Terry models and give examples from two competetive
-situations: single scull rowing, and the competitive cooking game show
-MasterChef Australia.  A number of natural statistical hypotheses may
-be tested straightforwardly using the software.
+Here I present the \pkg{hyper2} package for generalized Bradley-Terry
+models and analyze two situations: single scull rowing, and the
+competitive cooking game show MasterChef Australia.  A number of
+natural statistical hypotheses may be tested straightforwardly using
+the software.  This vignette is based on \citep{hankin2017}.
 }
 
 
