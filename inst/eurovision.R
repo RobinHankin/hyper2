@@ -117,6 +117,7 @@ for(i in seq_len(nrow(preference))){   # cycle through the rows; each row is a v
         euro2009[eligible] %<>% dec()   # denominator of all eligible players
 
         d[d==1] <- -1  # once you've won, you are ineligible to be chosen again
+                       # NB, pipe idiom is ugly:  d %<>% `[<-`(. == 1, -1)
 
         d[d>0] %<>% dec()  # everyone moves down the list, so who
                             # *was* second choice becomes first
