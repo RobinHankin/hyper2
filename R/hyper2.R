@@ -15,13 +15,14 @@ setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
 `brackets` <- function(H){UseMethod("brackets")}
 `powers`   <- function(H){UseMethod("powers"  )}
 `pnames`   <- function(H){UseMethod("pnames"  )}
-
 `brackets.hyper2` <- function(H){ H$brackets }
-`powers.hyper2` <- function(H){if(is_constant(H)){
-                                 return(0)
-                               } else {
-                                 return(H$powers)
-                               }
+
+`powers.hyper2` <- function(H){
+  if(is_constant(H)){
+    return(0)
+  } else {
+    return(H$powers)
+  }
 }
   `pnames.hyper2` <- function(H){ H$pnames   }
 ## accessor methods end
@@ -29,6 +30,7 @@ setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
 ## Following function is the only setter method in the package
 setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `pnames<-` <- function(x,value){UseMethod("pnames<-")}
+
 `pnames<-.hyper2` <- function(x,value){
   if(identical(pnames(x),NA)){
     return(hyper2(brackets(x),powers(x),pnames=value))
@@ -38,9 +40,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `length.hyper2` <- function(x){length(x$brackets)}
-
 ## setter methods end
-
 
 `change_pnames` <- function(H,new_pnames){  # new_pnames is a character vector, eg c('a', 'b')
   if(identical(pnames(H),NA)){return(hyper2(brackets(H),powers(H),pnames=new_pnames))}
@@ -169,7 +169,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   } else {
     stop("this cannot happen")
   }
-
   return(hyper2(out[[1]],out[[2]],pnames=jj))
 }
 
