@@ -1,10 +1,10 @@
 Package: hyper2
 Type: Package
 Title: The Hyperdirichlet Distribution, Mark 2
-Version: 1.0-6
+Version: 1.0-7
 Authors@R: person(given=c("Robin", "K. S."), family="Hankin", role = c("aut","cre"), email="hankin.robin@gmail.com", comment = c(ORCID = "0000-0001-5982-0415"))
 Maintainer: Robin K. S. Hankin <hankin.robin@gmail.com>
-Description: A suite of routines for the hyperdirichlet distribution; supersedes the 'hyperdirichlet' package for most purposes.
+Description: A suite of routines for the hyperdirichlet distribution; supersedes the 'hyperdirichlet' package.
 License: GPL (>= 2)
 LazyData: yes
 Depends: methods, magrittr, cubature
@@ -13,3 +13,4 @@ VignetteBuilder: knitr
 Imports: Rcpp (>= 0.12.5), partitions
 LinkingTo: Rcpp
 URL: https://github.com/RobinHankin/hyper2.git
+BugReports: https://github.com/RobinHankin/hyper2/issues
