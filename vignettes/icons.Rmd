@@ -9,22 +9,35 @@ vignette: >
 ---
 
 
-# Public perception of climate change
-
 This short document analyses the climate change dataset originally
 presented in the hyperdirichlet R package^[RKS Hankin 2010.  "A
 generalization of the Dirichlet distribution", *Journal of Statistical
-Software*, 33:11] but using the hyper2 package instead.
+Software*, 33:11] but using the hyper2 package instead.  Lay
+perception of climate change is a complex and interesting process^[SC
+Moser and L Dilling 2007.  "Creating a climate for change:
+communicating climate change and facilitating social change".
+Cambridge University Press] here we assess the engagement of
+non-experts by the use of "icons" (this word is standard in this
+context.  An icon is a "representative symbol") that illustrate
+different impacts of climate change.
 
+Here we analyse results of one experiment^[S. O'Neill 2007. "An Iconic
+Approach to Representing Climate Change", School of Environmental
+Science, University of East Anglia], in which subjects were presented
+with a set of icons of climate change and asked to identify which of
+them they find most concerning.  Six icons were used: PB [polar bears,
+which face extinction through loss of ice floe hunting grounds], NB
+[the Norfolk Broads, which flood due to intense rainfall events], L
+[London flooding, as a result of sea level rise], THC [the
+thermo-haline circulation, which may slow or stop as a result of
+anthropogenic modification of the water cycle], OA [oceanic
+acidification as a result of anthropogenic emissions of ${\mathrm
+C}{\mathrm O}_2$], and WAIS [the West Antarctic Ice Sheet, which is
+rapidly calving as a result of climate change].
 
-```{r}
-library("hyper2",quietly=TRUE)
-```
-
-## Create a likelihood function
-
-First specify the matrix as appearing in hyperdirichlet, as originally
-provided by Saffy:
+Methodological constraints dictated that each respondent could be
+presented with a maximum of four icons.  The R idiom below (dataset
+```icons``` in the package) shows the experimental results.
 
 ```{r}
 M <- matrix(c(
@@ -48,10 +61,11 @@ for example, means that a total of $5+3+4+3=15$ people were shown
 icons NB, L, TCH, WAIS [column names of the the non-NA entries]; 5
 people chose NB as most concerning, 3 chose L, and so on.  The dataset
 is more fully described in the hyperdirichlet package.  To recreate
-the ```icons``` dataset in the ```hyper2``` package, we use the
-```saffy()``` function:
+the ```icons``` likelihood function in the ```hyper2``` package, we
+use the ```saffy()``` function:
 
 ```{r}
+library("hyper2",quietly=TRUE)
 icons <- saffy(M)
 icons
 ```
@@ -72,7 +86,7 @@ mic
 dotchart(mic,pch=16)
 ```
 
-We also need the likelihood at an unconstrained maximum:
+We also need the log-likelihood at an unconstrained maximum:
 
 ```{r}
 L1 <- loglik(icons,indep(mic))
@@ -81,6 +95,9 @@ L1
 
 Agreeing to 4 decimal places with the value given in the
 hyperdirichlet package.
+
+The next step is to assess a number of hypotheses concerning the
+relative sizes of $p_1$ through $p_6$.
 
 ## Hypothesis 1: $p_1\geqslant 1/6$
 
@@ -102,7 +119,8 @@ maxlike_constrained <-
 maxlike_constrained	 
 ```	
 
-So the extra support is given by
+Note that the value of $p_1$ is equal to $1/6$: the maximum is on the
+boundary of the admissible region.  The extra support is given by
 
 ```{r}
 ES <- L1-maxlike_constrained$value 
@@ -110,7 +128,7 @@ ES
 ```
 
 (compare 2.608181 from the hyperdirichlet package).  This exceeds
-Edwards's two-units-of-support criterion); a pvalue would be
+Edwards's two-units-of-support criterion; a $p$-value would be
 
 ```{r}
 pchisq(2*ES,df=1,lower.tail=FALSE)
@@ -151,8 +169,7 @@ p5max <- o(c(-1, 0, 0, 0, 1), 0)
 p6max <- o(c(-2,-1,-1,-1,-1),-1)
 ```
 
-(the final line is different because $p_6$ is the fillup value; the
-hyperdirichlet package deals with this issue 
+(the final line is different because $p_6$ is the fillup value).
 
 ```{r}
 likes <- c(p2max,p3max,p4max,p5max,p6max)
@@ -161,15 +178,23 @@ ml <- max(likes)
 ml
 ```
 
-So the extra likelihood is given by
+Thus the first element of ```likes``` corresponds to the maximum
+likelihood, constrained so that $p_1\leqslant p_2$; the second element
+corresponds to the constraint that $p_1\leqslant p_3$, and so on.  The
+largest likelihood is the easiest constraint to break, in this case
+$p_1\leqslant p_3$: this makes sense because $p_3$ has the second
+highest MLE after $p_1$.  The extra likelihood is given by
 
 ```{r}
 L1-ml
 ```
 
-(the hyperdirichlet package gives 0.0853 here, the small difference
-probably being due to the difficulties of optimizing over a nonconvex
-region).  It's worth looking at the evaluate too:
+(the hyperdirichlet package gives 0.0853 here, a suprisingly small
+discrepancy given the difficulties of optimizing over a nonconvex
+region).  We conclude that there is no evidence for
+$p_1\geqslant\max\left(p_2,\ldots,p_6\right)$.
+
+It's worth looking at the evaluate too:
 
 ```{r}
 o(c(-1, 1, 0, 0, 0), 0,give=TRUE)$par
