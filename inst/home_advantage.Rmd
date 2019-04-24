@@ -85,9 +85,9 @@ for(i in seq_len(nrow(away_games_won))){
     if(i != j){
       game_winner <- teams[i]
       game_loser  <- teams[j]
-      no_of_matches <- away_games_won[i,j] # won with home strength helping
-      H[c(game_winner                  )] %<>% inc(no_of_matches)  # won with home ground helping
-      H[c(game_winner,game_loser,"home")] %<>% dec(no_of_matches)
+      no_of_matches <- away_games_won[i,j] # won without the benefit of home strength
+      H[c(game_winner                  )] %<>% inc(no_of_matches)  # won without home ground helping...
+      H[c(game_winner,game_loser,"home")] %<>% dec(no_of_matches)  # home strength nevertheless on denominator
     }
   }
 }
