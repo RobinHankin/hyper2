@@ -29,6 +29,13 @@ equalp(H)
   Function \code{equalp()} returns the value of \eqn{p} for which all
   elements are the same.
 
+  In function \code{maxp()}, arguments \code{fcm} and \code{fcv}
+  implement linear constraints to be passed to \code{constrOptim()}.
+  These constraints are in addition to the usual nonnegativity
+  constraints and unit-sum constraint.  Examples of their use are given
+  in the \dQuote{icons} vignette.
+  
+
 }
 \author{Robin K. S. Hankin}
 \note{This functionality is peculiarly susceptible to off-by-one errors.}
