@@ -114,15 +114,16 @@ argument:
 
 ```{r}
 small <- 1e-4
-f <- function(home_strength){
-  maxp(H,startp=rep((1-small)/4,4),give=TRUE,fcm=t(rep(1,4)),fcv=1-home_strength)$value
+f <- function(home){
+  maxp(H,startp=rep((1-small)/4,4),give=TRUE,fcm=t(rep(1,4)),fcv=1-home)$value
 }
 ```
 
 See how the ```fcm``` and ```fcv``` constraints make the sum of
-a,b,c,d, greater than 1-home_strength.  Thus 'home' [which is the
-fillup value] is constrained to be less than home_strength.  Using
-this function, the likelihood ratio test is straightforward:
+a,b,c,d, greater than ```1-home```.  Thus 'home' [which is the fillup
+value, $p_\mathrm<{home}=1-(p_A+p_B+p_C+p_D)$] is constrained to be
+less than argument ```home```.  Using this function, the likelihood
+ratio test is straightforward:
 
 ```{r}
 Lambda <- -2*(f(2e-4)-maxp(H,give=TRUE)$value)
@@ -131,13 +132,13 @@ Lambda
 
 Under the null, Wilks's theorem gives us that Lambda is distributed as
 a chi-square with 1 degree of freedom (clearly rejected).  However, it
-is always interesting to plot likelihood functions.To plot a profile
+is always interesting to plot likelihood functions.  To plot a profile
 likelihood we can constrain the home to be greater than a particular
 value:
 
 ```{r}
-g <- function(home_strength){
-  maxp(H,startp=rep(small/4,4),give=TRUE,fcm=-t(rep(1,4)),fcv=home_strength-1)$value
+g <- function(home){
+  maxp(H,startp=rep(small/4,4),give=TRUE,fcm=-t(rep(1,4)),fcv=home-1)$value
 }
 ```
 
