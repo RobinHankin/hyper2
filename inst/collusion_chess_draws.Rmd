@@ -108,4 +108,54 @@ tail region of its asymptotic distribution:
 pchisq(2*extra_support,df=1,lower.tail=FALSE)
 ```
 
+# Now Curacao
 
+This is the 5th candidates Curacao 1962 results table:
+
+```{r}
+jj <- read.table("curacao1962.txt",header=FALSE)
+curacao <- as.matrix(jj[,-(1:2)])
+players <- as.character(jj$V1)
+nationality <- as.character(jj$V2)
+rownames(curacao) <- players
+colnames(curacao) <- players
+curacao[is.na(curacao)] <- ""
+curacao <- noquote(curacao)
+curacao
+```
+
+
+Now convert to a likelihood function:
+```{r}
+Hcur <- hyper2(pnames=c("draw","collusion",players))
+for(i in seq_len(nrow(curacao)-1)){  # i=row
+  for(j in seq(from=i+1,to=ncol(curacao))){ # j = col
+    r <- strsplit(curacao[i,j],'')[[1]]
+    if((nationality[i]=="USSR") & (nationality[j]=="USSR")){
+      monster <- "collusion"
+    } else {
+      monster <- "draw"
+    }
+    if(any(r=="W")){  # row player wins
+      wins <- sum(r=="W")
+      Hcur[  players[i]                    ] %<>% inc(wins)
+      Hcur[c(players[i],players[j],monster)] %<>% dec(wins)
+    }
+    if(any(r=="L")){  # row player loses
+      losses <- sum(r=="L")
+      Hcur[             players[j]         ] %<>% inc(losses)
+      Hcur[c(players[i],players[j],monster)] %<>% dec(losses)
+    }
+    if(any(r=="W")){  # row player draws
+      draws <- sum(r=="D")
+      Hcur[                        monster ] %<>% inc(draws)
+      Hcur[c(players[i],players[j],monster)] %<>% dec(draws)
+    }
+  }  # j loop closes
+} # i loop closes
+Hcur
+```
+
+```{r}
+dotchart(maxp(Hcur))
+```
