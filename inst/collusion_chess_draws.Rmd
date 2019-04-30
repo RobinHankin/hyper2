@@ -1,0 +1,111 @@
+---
+title: "Collusion at the 1962 chess world championships"
+author: "Robin K. S. Hankin"
+date: "`r Sys.Date()`"
+vignette: |
+  %\VignetteIndexEntry{collusion at the 1962 world chess championships}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+First load the package:
+```{r}
+library("hyper2")
+options("width" = 90)
+```
+
+
+Now generate the dataset:
+
+
+```{r}
+jj <- read.table("stockholm1962.txt",header=FALSE)
+results <- as.matrix(jj[,-(1:2)])
+players <- as.character(jj$V1)
+nationality <- as.character(jj$V2)
+rownames(results) <- players
+colnames(results) <- substr(players,1,1)
+results
+```
+
+(this taken from Wikipedia
+\url{https://en.wikipedia.org/wiki/World_Chess_Championship_1963}).
+In this dataset, "0" means a loss, "1" a draw and "2" a win.  Thus
+Fisher (row 1) beat Korchnoi (column 4).  As a consistency check we
+verify that the results table is antisymmetric:
+
+```{r}
+all(t(results) == 2-results)
+which(results != 2-t(results),arr.ind=TRUE)
+```
+
+Thus Barcza vs Portisch is problematic.  Glossing over this
+
+```{r}
+H <- hyper2(pnames=c("draw","collusion",players))
+
+for(i in seq_len(nrow(results)-1)){  # i=row
+    for(j in seq(from=i+1,to=ncol(results))){ # j = col
+        o <- results[i,j]
+        if((nationality[i]=="USSR") & (nationality[j]=="USSR")){
+            monster <- "collusion"
+        } else {
+            monster <- "draw" 
+        }
+        if(o==2){ # row player wins
+            H[players[i]] %<>% inc(1)
+        } else if(o==0){  # col player wins
+            H[players[j]] %<>% inc(1)
+        } else if(o==1){ # game drawn
+            H[monster] %<>% inc(1)
+        } else {
+            stop("this cannot happen")
+        }
+        H[c(players[i],players[j],monster)] %<>% dec(1)
+    }  # j loop closes
+} # i loop closes
+```
+and we have
+
+```{r}
+head(H)
+dotchart(maxp(H),pch=16)
+dotchart(log(maxp(H)),pch=16)
+```
+
+which would indicate strongly that collusion is indeed a strong
+feature of the tournament.  Now some optimization.  First optimize freely:
+
+```{r}
+max_support_free <- maxp(H,give=TRUE)$value
+ml_p   <- maxp(H)
+
+s <- indep(equalp(H))
+small <- 1e-3
+s[1] <- s[1] + small
+s[2] <- s[2] - small
+```
+Perform the constrained optimization:
+```{r}
+ml_p_constrained <- maxp(H,fcm=c(1,-1,rep(0,22)),fcv=0,startp=s)
+max_support_constrained <- loglik(H,indep(ml_p_constrained))
+max_support_constrained
+```
+
+Now compare the supports:
+
+```{r}
+extra_support <- max_support_free - max_support_constrained
+extra_support
+```
+
+well in excess of Edwards's two-unit criterion.  Alternatively, we may
+apply Wilks's theorem and observe that the test statistic is in the
+tail region of its asymptotic distribution:
+
+```{r}
+pchisq(2*extra_support,df=1,lower.tail=FALSE)
+```
+
+
