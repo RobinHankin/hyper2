@@ -1,9 +1,8 @@
 ## This file defines dataset kka which is the raw dataset.  It is used
-## in file inst/karpov_kasparov_anand.R to calculate the likelihood
-## function `karpov_kasparov_anand`.
-
-## It is also used in file inst/kka_3draws.R to calculate likelihood
-## function kka_3draws.
+## calculate two likelihood functions: `karpov_kasparov_anand` and
+## `kka_3draws` which are assigned here.  These functions are
+## calculated in files inst/karpov_kasparov_anand.R and
+## inst/kka_3draws.R respectively.
 
 kka <- c(
 ## Kasparov vs Karpov
