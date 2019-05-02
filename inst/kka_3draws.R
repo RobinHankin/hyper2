@@ -21,7 +21,8 @@ H %<>% trial(c("Karpov"  ,"white"), karpov_vs_kasparov, karpov_plays_white_beats
 H %<>% trial(c("Kasparov","white"), karpov_vs_kasparov, kasparov_plays_white_beats_karpov)
 H %<>% trial(c("Karpov"  )        , karpov_vs_kasparov, karpov_plays_black_beats_kasparov)
 H %<>% trial(c("Kasparov")        , karpov_vs_kasparov, kasparov_plays_black_beats_karpov)
-H %<>% trial(draw1                , karpov_vs_kasparov, karpov_draws_kasparov            )
+H %<>% trial(draw1                , karpov_vs_kasparov, karpov_plays_white_draws_kasparov)
+H %<>% trial(draw1                , karpov_vs_kasparov, kasparov_plays_white_draws_karpov)
 
 ## Kasparov vs Anand
 kasparov_vs_anand <- c("Kasparov","Anand","Kasparov_draw","Anand_draw","white")
@@ -30,7 +31,9 @@ H %<>% trial(c("Kasparov","white"), kasparov_vs_anand, kasparov_plays_white_beat
 H %<>% trial(c("Anand"   ,"white"), kasparov_vs_anand, anand_plays_white_beats_kasparov)
 H %<>% trial(c("Kasparov"  )      , kasparov_vs_anand, kasparov_plays_black_beats_anand)
 H %<>% trial(c("Anand")           , kasparov_vs_anand, anand_plays_black_beats_kasparov)
-H %<>% trial(draw2                , kasparov_vs_anand, kasparov_draws_anand            )
+H %<>% trial(draw2                , kasparov_vs_anand, kasparov_plays_white_draws_anand)
+H %<>% trial(draw2                , kasparov_vs_anand, anand_plays_white_draws_kasparov)
+
 
 ## Karpov vs Anand
 karpov_vs_anand <- c("Karpov","Anand","Karpov_draw","Anand_draw","white")
@@ -40,7 +43,8 @@ H %<>% trial(c("Karpov","white"), karpov_vs_anand, karpov_plays_white_beats_anan
 H %<>% trial(c("Anand" ,"white"), karpov_vs_anand, anand_plays_white_beats_karpov)
 H %<>% trial(c("Karpov"        ), karpov_vs_anand, karpov_plays_black_beats_anand)
 H %<>% trial(c("Anand"         ), karpov_vs_anand, anand_plays_black_beats_karpov)
-H %<>% trial(draw3              , karpov_vs_anand, karpov_draws_anand            )
+H %<>% trial(draw3              , karpov_vs_anand, karpov_plays_white_draws_anand) 
+H %<>% trial(draw3              , karpov_vs_anand, anand_plays_white_draws_karpov) 
 
 detach(results)
 
