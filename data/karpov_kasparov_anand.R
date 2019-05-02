@@ -5,22 +5,22 @@ kka <- c(
 ## Kasparov vs Karpov
 karpov_plays_white_beats_kasparov = 18,  # 12 on p1, 6 on p2
 kasparov_plays_white_beats_karpov = 30, # 13 on p1, 17 on p2
-karpov_plays_black_beats_kasparov =  9,
-kasparov_plays_black_beats_karpov =  7,
+karpov_plays_black_beats_kasparov = 07,
+kasparov_plays_black_beats_karpov = 09,
 karpov_draws_kasparov = 121,
 
 ## Kasparov vs Anand
 kasparov_plays_white_beats_anand = 15,
-anand_plays_white_beats_kasparov =  6,
-kasparov_plays_black_beats_anand =  2,
-anand_plays_black_beats_kasparov = 11,
+anand_plays_white_beats_kasparov = 06,
+kasparov_plays_black_beats_anand = 11,
+anand_plays_black_beats_kasparov = 02,
 kasparov_draws_anand = 31,
 
 ## Karpov vs Anand
-karpov_plays_white_beats_anand =  7,
+karpov_plays_white_beats_anand = 07,
 anand_plays_white_beats_karpov = 18,
-karpov_plays_black_beats_anand = 13,
-anand_plays_black_beats_karpov =  5,
+karpov_plays_black_beats_anand = 05,
+anand_plays_black_beats_karpov = 13,
 karpov_draws_anand = 28
 )
 
