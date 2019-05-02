@@ -15,8 +15,74 @@ library("hyper2")
 options("width" = 90)
 ```
 
+In inference problems where the dataset is outcomes of paired
+comparisons, such as chess, The Bradley-Terry model can be augmented
+to accommodate draws in a number of ways.  Here I present a new
+augmentation of Bradley-Terry in which a drawn chess match is regarded
+as a three-way competition between the players and an entity that wins
+if the match is drawn.  The resulting likelihood functions are easily
+optimised numerically and I present a number of results.
 
-Now generate the dataset:
+Consider first the standard Bradley-Terry model for $n$ players.
+First we ignore the effect of playing white.  We wish to find numbers
+("strengths") $p_i,1\leqslant i\leqslant n$ with $p_i\geqslant 0, \sum
+p_i=1$ such that the probability of $i$ beating $j\neq i$ is
+$\frac{p_i}{p_i+p_j}$.  A suitable likelihood function, on the
+assumption of independence of trials, would be
+
+$$
+\prod_{i<j}
+\left(\frac{p_i}{p_i+p_j}\right)^{w_{ij}}
+\left(\frac{p_j}{p_i+p_j}\right)^{l_{ij}}
+$$
+
+
+where $w_{ij}$ is the number of times $i$ beats $j$ and $l_{ij}$ is
+the number of times $i$ loses to $j$.  Incorporation of draws is
+straightforward: we consider a chess match to be a three-way trial
+between the two players and an entity that wins if the match is drawn.
+We thus seek a likelihood function for non-negative
+$p_1,\ldots,p_n,p_D$ $p_D+\sum p_i=1$ and this would be
+
+\[
+\prod_{i<j}
+\left(\frac{p_i}{p_i+p_j+p_D}\right)^{W_{ij}}
+\left(\frac{p_j}{p_i+p_j+p_D}\right)^{L_{ij}}
+\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}}
+\]
+
+where $W_{ij}$ is the number of games won by $i$ when playing $j$,
+$L_{ij}$ is games lost and $D_{ij}$ is games drawn.  However, this
+approach ignores the extra strength conferred by playing white.  We
+thus consider a chess match between two players to be a three-way
+entity but with a friendly ghost with strength $p_W$ whose strength is
+added to the white player.
+
+\[
+\prod_{i<j}
+\left(\frac{p_i+p_W}{p_i+p_j+p_D+p_W}\right)^{W_{ij}^\mathrm{white}}
+\left(\frac{p_j}{p_i+p_j+p_D+p_W    }\right)^{L_{ij}^\mathrm{white}}
+\left(\frac{p_i}{p_i+p_j+p_D+p_W}\right)^{W_{ij}^\mathrm{black}}
+\left(\frac{p_j+p_W}{p_i+p_j+p_D+p_W    }\right)^{L_{ij}^\mathrm{black}}
+\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}}
+\]
+
+where $W_{ij}^\mathrm{white}$ is the number of games won by $i$ when
+playing white against $j$, and so on.  The final term is algebraically
+equal to
+
+\[
+\prod_{i<j}
+\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}^\mathrm{white}}
+\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}^\mathrm{black}}
+\]
+
+which might be preferable on grounds of clarity.  We now apply this
+likelihood model to a real dataset.
+
+
+
+
 
 
 ```{r}
