@@ -2,12 +2,17 @@
 \alias{karpov_kasparov_anand}
 \alias{kka}
 \alias{kka_3draws}
+\alias{white_wins}
+\alias{drawn_games}
+\alias{black_wins}
+\alias{kka_array}
 \docType{data}
 \title{Karpov, Kasparov, Anand}
 \description{
-A likelihood function for the strengths of three chess players: Karpov,
-Kasparov, and Anand}
-\usage{data(karpov_kasparov_anand)}
+  Data of three chess players: Karpov, Kasparov, and Anand.  Includes
+two likelihood functions for the strengths of the players, and matrices
+of game results}
+
 \details{
   The strengths of chess players may be assessed using the generalized
   Bradley-Terry model.  The \code{karpov_kasparov_anand} likelihood
@@ -31,6 +36,11 @@ Kasparov, and Anand}
   \sQuote{\code{karpov_plays_white_beats_kasparov}} which has value 18:
   we have a total of 18 games between Karpov and Kasparov in which
   Karpov played white and beat Kasparov.
+
+  The three matrices \code{white_wins}, \code{drawn_games}, and
+  \code{black_wins} tabulate this information in a coherent way; and
+  array \code{kka_array} presents the same information in a 3D array
+  (but the names of the dimnames are lost).
 
   All data drawn from chessgames.com, specifically
 
