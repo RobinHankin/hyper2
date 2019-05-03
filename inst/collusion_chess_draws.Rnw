@@ -70,18 +70,11 @@ optimization, Bradley-Terry}
 
 %% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\bolda}{\mathbf a}
-\newcommand{\boldp}{\mathbf p}
-\newcommand{\boldV}{\mathbf V}
-\newcommand{\boldalpha}{\mbox{\boldmath$\alpha$}}
-\newcommand{\boldzero}{\mathbf 0}
 
-\newcommand{\mcf}{\mathcal F}
-\newcommand{\mcm}{\mathcal M}
-\newcommand{\mcs}{\mathcal S}
-\newcommand{\mcw}{\mathcal W}
+\newcommand\headercell[1]{%
+   \smash[b]{\begin{tabular}[t]{@{}c@{}} #1 \end{tabular}}}
 
-\newcommand{\pG}{p_{\mbox{\frakfamily g}}}
+
 
 \SweaveOpts{}
 \begin{document}
@@ -124,7 +117,7 @@ the number of times $i$ loses to $j$.  Incorporation of draws is
 straightforward: we consider a chess match to be a three-way trial
 between the two players and an entity that wins if the match is drawn.
 We thus seek a likelihood function for non-negative
-$p_1,\ldots,p_n,p_D$ $p_D+\sum p_i=1$ and this would be
+$p_1,\ldots,p_n,p_D$ with $p_D+\sum p_i=1$ and this would be
 
 \begin{equation}
 \prod_{i<j}
@@ -140,14 +133,15 @@ thus consider a chess match between two players to be a three-way
 entity but with a friendly ghost with strength $p_W$ whose strength is
 added to the white player.
 
-\begin{equation}
-\prod_{i<j}
+\begin{align}\nonumber
+\prod_{i<j}&{}
 \left(\frac{p_i+p_W}{p_i+p_j+p_D+p_W}\right)^{W_{ij}^\mathrm{white}}
-\left(\frac{p_j}{p_i+p_j+p_D+p_W    }\right)^{L_{ij}^\mathrm{white}}
-\left(\frac{p_i}{p_i+p_j+p_D+p_W}\right)^{W_{ij}^\mathrm{black}}
-\left(\frac{p_j+p_W}{p_i+p_j+p_D+p_W    }\right)^{L_{ij}^\mathrm{black}}
-\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}}
-\end{equation}
+\left(\frac{p_j}{p_i+p_j+p_D+p_W    }\right)^{L_{ij}^\mathrm{white}}\\
+&{} \left(\frac{p_i}{p_i+p_j+p_D+p_W}\right)^{W_{ij}^\mathrm{black}}\label{likelihood_kka}
+\left(\frac{p_j+p_W}{p_i+p_j+p_D+p_W    }\right)^{L_{ij}^\mathrm{black}}\\
+&{} \left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}}
+\nonumber
+\end{align}
 
 where $W_{ij}^\mathrm{white}$ is the number of games won by $i$ when
 playing white against $j$, and so on.  The final term is algebraically
@@ -160,10 +154,19 @@ equal to
 \end{equation}
 
 which might be preferable on grounds of clarity.  We now apply this
-likelihood model to a real dataset.
+likelihood model to a real dataset, shown in table~\ref{kka}.  The
+likelihood function is easily maximized,
+figure~\ref{maxp_karpov_kasparov_anand}.
 
-\newcommand\headercell[1]{%
-   \smash[b]{\begin{tabular}[t]{@{}c@{}} #1 \end{tabular}}}
+\begin{figure}[htbp]
+\begin{center}
+<<rowing_maxp,echo=TRUE,fig=TRUE>>=
+dotchart(maxp(karpov_kasparov_anand),pch=16,xlim=c(0,0.55))
+@
+\caption{Maximum likelihood estimate for the strengths of the 3 Grandmasters in Table~\ref{kka} 
+\label{maxp_karpov_kasparov_anand} under a likelihood defined as Equation~\ref{likelihood_kka}}
+  \end{center}
+\end{figure}
 
 
 \begin{table}
@@ -187,7 +190,7 @@ likelihood model to a real dataset.
   Ks & 26 &  57 &  -   \\
 \end{tabular}\quad
 \begin{tabular}{@{} *{4}{c} @{}}
-\headercell{\small{Plays W,}\\ \small{loses}} & \multicolumn{3}{c@{}}{\small{Plays white, loses}}\\
+\headercell{\small{Plays W,}\\ \small{loses}} & \multicolumn{3}{c@{}}{\small{Plays black, wins}}\\
 \cmidrule(l){2-4}
 & An &  Kr & Ks        \\ 
 \midrule
@@ -195,13 +198,18 @@ likelihood model to a real dataset.
   Kr &  5 &  -  &   7  \\
   Ks & 11 &   9 &  -   \\
 \end{tabular}
-\caption{Results of 365 chess matches \label{kka} between three
-  Grandmasters.  Thus, for example, Anand played white against Karpov
-  a total of $18+20+13=51$ times and won 18, drew 20, lost 13}
+\caption{Results of 365 chess matches \label{kka} between Grandmaster
+  Anand, Grandmaster Karpov, and Grandmaster Kasparov.  Thus, for
+  example, Anand played white against Karpov a total of $18+20+13=51$
+  times and won 18, drew 20, lost 13}
 \end{table}
 
-The likelihood function is 
-
+Figure~\ref{kka} suggests a number of interesting hypotheses.
+Firstly, we observe that $p_D=0$ cannot possibly be the case: the
+likelihood would be identically zero, owing to the nonzero term in the
+numerator of the last term of Equation~\ref{likelihood_kka}.  However,
+it is conceivable that $p_W=0$ and this hypothesis can readily be
+tested using the concept of profile likelihood.
 
 
 <<>>=
