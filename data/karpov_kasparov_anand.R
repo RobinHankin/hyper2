@@ -13,24 +13,24 @@ kka <- c(
 ## Kasparov vs Karpov
 karpov_plays_white_beats_kasparov = 18,  # 12 on p1, 6 on p2
 kasparov_plays_white_beats_karpov = 30, # 13 on p1, 17 on p2
-karpov_plays_black_beats_kasparov = 07,
-kasparov_plays_black_beats_karpov = 09,
+kasparov_plays_white_losesto_karpov = 07,
+karpov_plays_white_losesto_kasparov = 09,
 karpov_plays_white_draws_kasparov = 11+13+14+17+14+03,
 kasparov_plays_white_draws_karpov = 14+12+11+08+11+01,
 
 ## Kasparov vs Anand
 kasparov_plays_white_beats_anand = 15,
 anand_plays_white_beats_kasparov = 06,
-kasparov_plays_black_beats_anand = 11,
-anand_plays_black_beats_kasparov = 02,
+anand_plays_white_losesto_kasparov = 11,
+kasparov_plays_white_losesto_anand = 02,
 kasparov_plays_white_draws_anand = 26,
 anand_plays_white_draws_kasparov = 20,
 
 ## Karpov vs Anand
 karpov_plays_white_beats_anand = 07,
 anand_plays_white_beats_karpov = 18,
-karpov_plays_black_beats_anand = 05,
-anand_plays_black_beats_karpov = 13,
+anand_plays_white_losesto_karpov = 05,
+karpov_plays_white_losesto_anand = 13,
 karpov_plays_white_draws_anand = 29,
 anand_plays_white_draws_karpov = 20
 )
@@ -53,21 +53,21 @@ structure(list(brackets = list(1, c(1, 2, 4, 5, 6), c(1, 3, 4,
 
 
 ## Matrices of scorelines calculated in ist/kka_array.R follows:
-`white_wins` <-
+`plays_white_wins` <-
   structure(c(NA, 7, 15, 18, NA, 30, 6, 18, NA),
             .Dim = c(3L, 3L),
             .Dimnames = list(
                 plays_white_wins = c("Anand", "Karpov", "Kasparov"),
                 plays_black_loses = c("Anand", "Karpov", "Kasparov")))
 
-`drawn_games` <-
+`plays_white_draws` <-
   structure(c(NA, 29, 26, 20, NA, 57, 20, 72, NA),
             .Dim = c(3L, 3L),
             .Dimnames = list(
                 plays_white_draws = c("Anand", "Karpov", "Kasparov"),
                 plays_black_draws = c("Anand", "Karpov", "Kasparov")))
 
-`black_wins` <-
+`plays_white_loses` <-
   structure(c(NA, 5, 11, 13, NA, 9, 2, 7, NA),
             .Dim = c(3L, 3L),
             .Dimnames = list(
@@ -81,4 +81,6 @@ structure(c(NA, 7, 15, 18, NA, 30, 6, 18, NA, NA, 29, 26, 20,
           .Dimnames = list(
               c("Anand", "Karpov", "Kasparov"),
               c("Anand", "Karpov", "Kasparov"),
-              c("white_wins","drawn_games","black_wins")))
+              c("plays_white_wins",
+                "plays_white_draws",
+                "plays_white_loses")))

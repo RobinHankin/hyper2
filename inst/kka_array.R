@@ -7,33 +7,37 @@ attach(as.list(kka))
         
 players <- c("Anand","Karpov","Kasparov")
 
-white_wins <- matrix(NA,3,3)
-dimnames(white_wins) <- list(plays_white_wins=players,plays_black_loses=players)
-white_wins["Anand"   ,"Karpov"  ] <- anand_plays_white_beats_karpov
-white_wins["Anand"   ,"Kasparov"] <- anand_plays_white_beats_kasparov
-white_wins["Karpov"  ,"Anand"   ] <- karpov_plays_white_beats_anand
-white_wins["Karpov"  ,"Kasparov"] <- karpov_plays_white_beats_kasparov
-white_wins["Kasparov","Anand"   ] <- kasparov_plays_white_beats_anand
-white_wins["Kasparov","Karpov"  ] <- kasparov_plays_white_beats_karpov
+plays_white_wins <- matrix(NA,3,3)
+dimnames(plays_white_wins) <- list(plays_white_wins=players,plays_black_loses=players)
+plays_white_wins["Anand"   ,"Karpov"  ] <- anand_plays_white_beats_karpov
+plays_white_wins["Anand"   ,"Kasparov"] <- anand_plays_white_beats_kasparov
+plays_white_wins["Karpov"  ,"Anand"   ] <- karpov_plays_white_beats_anand
+plays_white_wins["Karpov"  ,"Kasparov"] <- karpov_plays_white_beats_kasparov
+plays_white_wins["Kasparov","Anand"   ] <- kasparov_plays_white_beats_anand
+plays_white_wins["Kasparov","Karpov"  ] <- kasparov_plays_white_beats_karpov
 
-drawn_games <- matrix(NA,3,3)
-dimnames(drawn_games) <- list(plays_white_draws=players,plays_black_draws=players)
-drawn_games["Anand"   ,"Karpov"  ] <- anand_plays_white_draws_karpov
-drawn_games["Anand"   ,"Kasparov"] <- anand_plays_white_draws_kasparov
-drawn_games["Karpov"  ,"Anand"   ] <- karpov_plays_white_draws_anand
-drawn_games["Karpov"  ,"Kasparov"] <- karpov_plays_white_draws_kasparov
-drawn_games["Kasparov","Anand"   ] <- kasparov_plays_white_draws_anand
-drawn_games["Kasparov","Karpov"  ] <- kasparov_plays_white_draws_karpov
+plays_white_draws  <- matrix(NA,3,3)
+dimnames(plays_white_draws) <- list(plays_white_draws=players,plays_black_draws=players)
+plays_white_draws["Anand"   ,"Karpov"  ] <- anand_plays_white_draws_karpov
+plays_white_draws["Anand"   ,"Kasparov"] <- anand_plays_white_draws_kasparov
+plays_white_draws["Karpov"  ,"Anand"   ] <- karpov_plays_white_draws_anand
+plays_white_draws["Karpov"  ,"Kasparov"] <- karpov_plays_white_draws_kasparov
+plays_white_draws["Kasparov","Anand"   ] <- kasparov_plays_white_draws_anand
+plays_white_draws["Kasparov","Karpov"  ] <- kasparov_plays_white_draws_karpov
 
 
-black_wins <- matrix(NA,3,3)
-dimnames(black_wins) <- list(plays_black_wins=players,plays_black_loses=players)
-black_wins["Anand"   ,"Karpov"  ] <- anand_plays_black_beats_karpov
-black_wins["Anand"   ,"Kasparov"] <- anand_plays_black_beats_kasparov
-black_wins["Karpov"  ,"Anand"   ] <- karpov_plays_black_beats_anand
-black_wins["Karpov"  ,"Kasparov"] <- karpov_plays_black_beats_kasparov
-black_wins["Kasparov","Anand"   ] <- kasparov_plays_black_beats_anand
-black_wins["Kasparov","Karpov"  ] <- kasparov_plays_black_beats_karpov
+plays_white_loses <- matrix(NA,3,3)
+dimnames(plays_white_loses) <- list(plays_white_loses=players,plays_black_wins=players)
+plays_white_loses["Karpov"   ,"Anand"   ] <- karpov_plays_white_losesto_anand
+plays_white_loses["Kasparov" ,"Anand"   ] <- kasparov_plays_white_losesto_anand
+plays_white_loses["Anand"    ,"Karpov"  ] <- anand_plays_white_losesto_karpov
+plays_white_loses["Kasparov" ,"Karpov"  ] <- kasparov_plays_white_losesto_karpov
+plays_white_loses["Anand"    ,"Kasparov"] <- anand_plays_white_losesto_kasparov
+plays_white_loses["Karpov"   ,"Kasparov"] <- karpov_plays_white_losesto_kasparov
 
-kka_array <- abind(white_wins,drawn_games,black_wins,along=3)
+kka_array <- abind(
+    plays_white_wins,
+    plays_white_draws,
+    plays_white_loses,
+    along=3)
 detach(as.list(kka))
