@@ -1,0 +1,235 @@
+% -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
+\documentclass[nojss]{jss}
+\usepackage{dsfont}
+\usepackage{bbm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{yfonts}
+\usepackage{booktabs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%% just as usual
+\author{Robin K. S. Hankin\\Auckland University of Technology}
+\title{Partial rank data with the \pkg{hyper2} package: likelihood
+  functions for generalized Bradley-Terry models}
+
+
+%\VignetteIndexEntry{The hyper2 package}
+
+%% for pretty printing and a nice hypersummary also set:
+\Plainauthor{Robin K. S. Hankin}
+\Plaintitle{Chess Draws}
+\Shorttitle{Chess Draws}
+
+%% an abstract and keywords
+\Abstract{
+
+Here I analyse chess games for draws using the hyper2 package.
+}
+
+
+\Keywords{Dirichlet distribution, hyperdirichlet distribution,
+  combinatorics, \proglang{R}, multinomial distribution, constrained
+optimization, Bradley-Terry}
+\Plainkeywords{Dirichlet distribution, hyperdirichlet distribution,
+  combinatorics, R, multinomial distribution, constrained
+optimization, Bradley-Terry}
+  
+  
+  
+%% publication information
+%% NOTE: This needs to filled out ONLY IF THE PAPER WAS ACCEPTED.
+%% If it was not (yet) accepted, leave them commented.
+%% \Volume{13}
+%% \Issue{9}
+%% \Month{September}
+%% \Year{2004}
+%% \Submitdate{2004-09-29}
+%% \Acceptdate{2004-09-29}
+
+%% The address of (at least) one author should be given
+%% in the following format:
+\Address{
+  Robin K. S. Hankin\\
+  Auckland University of Technology\\
+  E-mail: \email{hankin.robin@gmail.com}
+}
+%% It is also possible to add a telephone and fax number
+%% before the e-mail in the following format:
+%% Telephone: +43/1/31336-5053
+%% Fax: +43/1/31336-734
+
+%% for those who use Sweave please include the following line (with % symbols):
+%% need no \usepackage{Sweave.sty}
+
+%% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\bolda}{\mathbf a}
+\newcommand{\boldp}{\mathbf p}
+\newcommand{\boldV}{\mathbf V}
+\newcommand{\boldalpha}{\mbox{\boldmath$\alpha$}}
+\newcommand{\boldzero}{\mathbf 0}
+
+\newcommand{\mcf}{\mathcal F}
+\newcommand{\mcm}{\mathcal M}
+\newcommand{\mcs}{\mathcal S}
+\newcommand{\mcw}{\mathcal W}
+
+\newcommand{\pG}{p_{\mbox{\frakfamily g}}}
+
+\SweaveOpts{}
+\begin{document}
+\section{Introduction}
+
+
+<<echo=FALSE,print=FALSE>>=
+ignore <- require(magrittr,quietly=TRUE)
+ignore <- require(hyper2,quietly=TRUE)
+options("width" = 90)
+@ 
+
+\section{Introduction: the Bradley-Terry model}
+
+
+In inference problems where the dataset is outcomes of paired
+comparisons, such as chess, The Bradley-Terry model can be augmented
+to accommodate draws in a number of ways.  Here I present a new
+augmentation of Bradley-Terry in which a drawn chess match is regarded
+as a three-way competition between the players and an entity that wins
+if the match is drawn.  The resulting likelihood functions are easily
+optimised numerically and I present a number of results.
+
+Consider first the standard Bradley-Terry model for $n$ players.
+First we ignore the effect of playing white.  We wish to find numbers
+("strengths") $p_i,1\leqslant i\leqslant n$ with $p_i\geqslant 0, \sum
+p_i=1$ such that the probability of $i$ beating $j\neq i$ is
+$\frac{p_i}{p_i+p_j}$.  A suitable likelihood function, on the
+assumption of independence of trials, would be
+
+$$
+\prod_{i<j}
+\left(\frac{p_i}{p_i+p_j}\right)^{w_{ij}}
+\left(\frac{p_j}{p_i+p_j}\right)^{l_{ij}}
+$$
+
+
+where $w_{ij}$ is the number of times $i$ beats $j$ and $l_{ij}$ is
+the number of times $i$ loses to $j$.  Incorporation of draws is
+straightforward: we consider a chess match to be a three-way trial
+between the two players and an entity that wins if the match is drawn.
+We thus seek a likelihood function for non-negative
+$p_1,\ldots,p_n,p_D$ $p_D+\sum p_i=1$ and this would be
+
+\begin{equation}
+\prod_{i<j}
+\left(\frac{p_i}{p_i+p_j+p_D}\right)^{W_{ij}}
+\left(\frac{p_j}{p_i+p_j+p_D}\right)^{L_{ij}}
+\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}}
+\end{equation}
+
+where $W_{ij}$ is the number of games won by $i$ when playing $j$,
+$L_{ij}$ is games lost and $D_{ij}$ is games drawn.  However, this
+approach ignores the extra strength conferred by playing white.  We
+thus consider a chess match between two players to be a three-way
+entity but with a friendly ghost with strength $p_W$ whose strength is
+added to the white player.
+
+\begin{equation}
+\prod_{i<j}
+\left(\frac{p_i+p_W}{p_i+p_j+p_D+p_W}\right)^{W_{ij}^\mathrm{white}}
+\left(\frac{p_j}{p_i+p_j+p_D+p_W    }\right)^{L_{ij}^\mathrm{white}}
+\left(\frac{p_i}{p_i+p_j+p_D+p_W}\right)^{W_{ij}^\mathrm{black}}
+\left(\frac{p_j+p_W}{p_i+p_j+p_D+p_W    }\right)^{L_{ij}^\mathrm{black}}
+\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}}
+\end{equation}
+
+where $W_{ij}^\mathrm{white}$ is the number of games won by $i$ when
+playing white against $j$, and so on.  The final term is algebraically
+equal to
+
+\begin{equation}
+\prod_{i<j}
+\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}^\mathrm{white}}
+\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}^\mathrm{black}}
+\end{equation}
+
+which might be preferable on grounds of clarity.  We now apply this
+likelihood model to a real dataset.
+
+\newcommand\headercell[1]{%
+   \smash[b]{\begin{tabular}[t]{@{}c@{}} #1 \end{tabular}}}
+
+
+\begin{table}
+\centering
+\begin{tabular}{@{} *{4}{c} @{}}
+\headercell{\small{Plays White,}\\ \small{wins}} & \multicolumn{3}{c@{}}{\small{Plays black, loses}}\\
+\cmidrule(l){2-4}
+& An &  Kr & Ks        \\ 
+\midrule
+  An & -  &  18 &   6  \\
+  Kr &  7 &  -  &  18  \\
+  Ks & 15 &  30 &  -   \\
+\end{tabular}\quad
+\begin{tabular}{@{} *{4}{c} @{}}
+\headercell{\small{Plays W,}\\ \small{draws}} & \multicolumn{3}{c@{}}{\small{Plays black, draws}}\\
+\cmidrule(l){2-4}
+& An &  Kr & Ks        \\ 
+\midrule
+  An & -  &  20 &  20  \\
+  Kr & 29 &  -  &  72  \\
+  Ks & 26 &  57 &  -   \\
+\end{tabular}\quad
+\begin{tabular}{@{} *{4}{c} @{}}
+\headercell{\small{Plays W,}\\ \small{loses}} & \multicolumn{3}{c@{}}{\small{Plays white, loses}}\\
+\cmidrule(l){2-4}
+& An &  Kr & Ks        \\ 
+\midrule
+  An & -  &  13 &   2  \\
+  Kr &  5 &  -  &   7  \\
+  Ks & 11 &   9 &  -   \\
+\end{tabular}
+\caption{Results of 365 chess matches \label{kka} between three
+  Grandmasters.  Thus, for example, Anand played white against Karpov
+  a total of $18+20+13=51$ times and won 18, drew 20, lost 13}
+\end{table}
+
+The likelihood function is 
+
+
+
+<<>>=
+jj <- read.table("stockholm1962.txt",header=FALSE)
+results <- as.matrix(jj[,-(1:2)])
+players <- as.character(jj$V1)
+nationality <- as.character(jj$V2)
+rownames(results) <- players
+colnames(results) <- substr(players,1,1)
+results
+@ 
+
+(this taken from Wikipedia
+\url{https://en.wikipedia.org/wiki/World_Chess_Championship_1963}).
+In this dataset, "0" means a loss, "1" a draw and "2" a win.  Thus
+Fisher (row 1) beat Korchnoi (column 4).  As a consistency check we
+verify that the results table is antisymmetric:
+
+<<>>=
+
+all(t(results) == 2-results)
+which(results != 2-t(results),arr.ind=TRUE)
+@ 
+
+Thus Barcza vs Portisch is problematic.  Glossing over this
+
+
+
+\bibliography{hyper2}
+\end{document}
+ 
