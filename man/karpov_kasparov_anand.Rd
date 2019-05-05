@@ -5,6 +5,9 @@
 \alias{white_wins}
 \alias{drawn_games}
 \alias{black_wins}
+\alias{plays_white_wins}
+\alias{plays_white_draws}
+\alias{plays_white_loses}
 \alias{kka_array}
 \docType{data}
 \title{Karpov, Kasparov, Anand}
@@ -37,10 +40,10 @@ of game results}
   we have a total of 18 games between Karpov and Kasparov in which
   Karpov played white and beat Kasparov.
 
-  The three matrices \code{white_wins}, \code{drawn_games}, and
-  \code{black_wins} tabulate this information in a coherent way; and
-  array \code{kka_array} presents the same information in a 3D array
-  (but the names of the dimnames are lost).
+  The three matrices \code{plays_white_wins}, \code{plays_white_draws},
+  and \code{plays_white_loses} tabulate this information in a coherent
+  way; and array \code{kka_array} presents the same information in a 3D
+  array (but the names of the dimnames are lost).
 
   All data drawn from chessgames.com, specifically
 
