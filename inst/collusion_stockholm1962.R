@@ -130,3 +130,35 @@ for(i in seq_len(nrow(restab))){
 ## results [from the square matrix] and results2 [from the 3-column
 ## dataframe] should match:
 stopifnot(all(results[!is.na(results)] == results2[!is.na(results2)]))
+small <- 0.01
+
+
+maxlike_free <- maxp(Hbwcoll,startp=c(small,small,small/2,rep(small,22)),give=TRUE)
+print("l")
+dput(maxlike_free$value)
+
+jj <- maxlike_free$par
+maxlike_free <- maxp(Hbwcoll,startp=jj,give=TRUE)
+dput(maxlike_free$value)
+
+jj <- maxlike_free$par
+maxlike_free <- maxp(Hbwcoll,startp=jj,give=TRUE,hessian=TRUE)
+dput(maxlike_free$value)
+
+
+freemp <- maxlike_free$par
+freemp[2:3] <- mean(freemp[3:2]) +c(small,-small)*0.7
+
+startp <- freemp
+
+for(i in 1:2){
+    maxlike_constrained <-
+        maxp(Hbwcoll,startp=startp,fcm=c(0,1,-1,rep(0,22)),fcv=0,give=TRUE)
+    startp <- maxlike_constrained$par
+    dput(maxlike_constrained$value)
+}
+
+maxlike_constrained <-
+    maxp(Hbwcoll,startp=startp,fcm=c(0,1,-1,rep(0,22)),fcv=0,give=TRUE)
+
+print(maxlike_constrained$value - maxlike_free$value)
