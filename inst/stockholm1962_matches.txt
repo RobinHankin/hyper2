@@ -253,6 +253,4 @@ Schweber   Filip 1/2-1/2
 Yanofsky   Korchnoi 1/2-1/2
 Gligoric   Stein 0-1
 Stein   Benko 1/2-1/2
-Benko   Gligoric  1-0
-Benko   Stein 1/2-1/2
 Stein   Gligoric 1-0
