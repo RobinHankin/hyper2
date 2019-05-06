@@ -14,54 +14,11 @@ rownames(results) <- players
 colnames(results) <- players
 points <- rowSums(results,na.rm=TRUE)
 
-H <- hyper2(pnames=c("draw","collusion",players))
-
-for(i in seq_len(nrow(results)-1)){  # i=row
-    for(j in seq(from=i+1,to=ncol(results))){ # j = col
-        o <- results[i,j]
-        if((nationality[i]=="USSR") & (nationality[j]=="USSR")){
-            monster <- "collusion"
-        } else {
-            monster <- "draw" 
-        }
-        if(o==2){ # row player wins
-            H[players[i]] %<>% inc(1)
-        } else if(o==0){  # col player wins
-            H[players[j]] %<>% inc(1)
-        } else if(o==1){ # game drawn
-            H[monster] %<>% inc(1)
-        } else {
-            stop("this cannot happen")
-        }
-        H[c(players[i],players[j],monster)] %<>% dec(1)
-    }  # j loop closes
-} # i loop closes
-
-## Now some optimization.  First optimize freely:
-max_support_free <- maxp(H,give=TRUE)$value
-ml_p   <- maxp(H)
-
-s <- indep(equalp(H))
-small <- 1e-3
-s[1] <- s[1] + small
-s[2] <- s[2] - small
-
-## Perform the constrained optimization:
-ml_p_constrained <- maxp(H,fcm=c(1,-1,rep(0,22)),fcv=0,startp=s)
-max_support_constrained <- loglik(H,indep(ml_p_constrained))
-
-support <- max_support_free - max_support_constrained
-
-print(paste("support = ", support,sep=""))
-if(support>2){print("two units of support criterion exceeded: strong evidence that the Soviets colluded")}
-
-print(paste("p-value = ",pchisq(2*support,df=1,lower.tail=FALSE)))
-
 
 ## Now some comparison between stockholm1962.txt (results) and
 ## stockholm1962_matches.txt (results2)
-Hbw <- hyper2(pnames=c("white","draw",players))
-Hbwcoll <- hyper2(pnames=c("white","draw","collusion",players))
+H <- hyper2(pnames=c("white","draw",players))
+H_coll <- hyper2(pnames=c("white","draw","collusion",players))
 
 restab <- read.table("stockholm1962_matches.txt",header=FALSE)
 stopifnot(all(unique(sort(c(as.character(restab$V1),as.character(restab$V2)))) == sort(players)))
@@ -82,42 +39,42 @@ for(i in seq_len(nrow(restab))){
         results2[nw,nb] <- 2
         results2[nb,nw] <- 0
 
-        Hbw[c(white_player             ,"white"       )] %<>% inc()
-        Hbw[c(white_player,black_player,"white","draw")] %<>% dec()
+        H[c(white_player             ,"white"       )] %<>% inc()
+        H[c(white_player,black_player,"white","draw")] %<>% dec()
 
         if(nationality[nw]=="USSR" & nationality[nb]=="USSR"){
-            Hbwcoll[c(white_player             ,"white"       )] %<>% inc()
-            Hbwcoll[c(white_player,black_player,"white","collusion")] %<>% dec()
+            H_coll[c(white_player             ,"white"       )] %<>% inc()
+            H_coll[c(white_player,black_player,"white","collusion")] %<>% dec()
         } else {
-            Hbwcoll[c(white_player             ,"white"       )] %<>% inc()
-            Hbwcoll[c(white_player,black_player,"white","draw")] %<>% dec()
+            H_coll[c(white_player             ,"white"       )] %<>% inc()
+            H_coll[c(white_player,black_player,"white","draw")] %<>% dec()
         }
     } else if(match_result == "0-1"){ # black wins
         results2[nw,nb] <- 0
         results2[nb,nw] <- 2
-        Hbw[c(             black_player               )] %<>% inc()
-        Hbw[c(white_player,black_player,"white","draw")] %<>% dec()
+        H[c(             black_player               )] %<>% inc()
+        H[c(white_player,black_player,"white","draw")] %<>% dec()
 
         if(nationality[nw]=="USSR" & nationality[nb]=="USSR"){
-            Hbwcoll[c(             black_player                    )] %<>% inc()
-            Hbwcoll[c(white_player,black_player,"white","collusion")] %<>% dec()
+            H_coll[c(             black_player                    )] %<>% inc()
+            H_coll[c(white_player,black_player,"white","collusion")] %<>% dec()
         } else {  # collusion not playing
-            Hbwcoll[c(             black_player               )] %<>% inc()
-            Hbwcoll[c(white_player,black_player,"white","draw")] %<>% dec()
+            H_coll[c(             black_player               )] %<>% inc()
+            H_coll[c(white_player,black_player,"white","draw")] %<>% dec()
         }
 
     } else if (match_result == "1/2-1/2"){ # draw
         results2[nw,nb] <- 1
         results2[nb,nw] <- 1
-        Hbw[c(                                  "draw")] %<>% inc()
-        Hbw[c(white_player,black_player,"white","draw")] %<>% dec()
+        H[c(                                  "draw")] %<>% inc()
+        H[c(white_player,black_player,"white","draw")] %<>% dec()
 
         if(nationality[nw]=="USSR" & nationality[nb]=="USSR"){
-            Hbwcoll[c(                                  "collusion")] %<>% inc()
-            Hbwcoll[c(white_player,black_player,"white","collusion")] %<>% dec()
+            H_coll[c(                                  "collusion")] %<>% inc()
+            H_coll[c(white_player,black_player,"white","collusion")] %<>% dec()
         } else {  # collusion not playing
-            Hbwcoll[c(                                  "draw")] %<>% inc()
-            Hbwcoll[c(white_player,black_player,"white","draw")] %<>% dec()
+            H_coll[c(                                  "draw")] %<>% inc()
+            H_coll[c(white_player,black_player,"white","draw")] %<>% dec()
         }
 
 
@@ -133,16 +90,16 @@ stopifnot(all(results[!is.na(results)] == results2[!is.na(results2)]))
 small <- 0.01
 
 
-maxlike_free <- maxp(Hbwcoll,startp=c(small,small,small/2,rep(small,22)),give=TRUE)
+maxlike_free <- maxp(H_coll,startp=c(small,small,small/2,rep(small,22)),give=TRUE)
 print("l")
 dput(maxlike_free$value)
 
 jj <- maxlike_free$par
-maxlike_free <- maxp(Hbwcoll,startp=jj,give=TRUE)
+maxlike_free <- maxp(H_coll,startp=jj,give=TRUE)
 dput(maxlike_free$value)
 
 jj <- maxlike_free$par
-maxlike_free <- maxp(Hbwcoll,startp=jj,give=TRUE,hessian=TRUE)
+maxlike_free <- maxp(H_coll,startp=jj,give=TRUE,hessian=TRUE)
 dput(maxlike_free$value)
 
 
@@ -153,12 +110,13 @@ startp <- freemp
 
 for(i in 1:2){
     maxlike_constrained <-
-        maxp(Hbwcoll,startp=startp,fcm=c(0,1,-1,rep(0,22)),fcv=0,give=TRUE)
+        maxp(H_coll,startp=startp,fcm=c(0,1,-1,rep(0,22)),fcv=0,give=TRUE)
     startp <- maxlike_constrained$par
     dput(maxlike_constrained$value)
 }
 
 maxlike_constrained <-
-    maxp(Hbwcoll,startp=startp,fcm=c(0,1,-1,rep(0,22)),fcv=0,give=TRUE)
+    maxp(H_coll,startp=startp,fcm=c(0,1,-1,rep(0,22)),fcv=0,give=TRUE)
 
-print(maxlike_constrained$value - maxlike_free$value)
+print(maxlike_free$value - maxlike_constrained$value)
+print(paste("pvalue = ", pchisq(2*(maxlike_free$value - maxlike_constrained$value),df=1,lower.tail=FALSE)))
