@@ -12,7 +12,7 @@ players <- as.character(jj$V1)
 nationality <- as.character(jj$V2)
 rownames(results) <- players
 colnames(results) <- players
-
+points <- rowSums(results,na.rm=TRUE)
 
 H <- hyper2(pnames=c("draw","collusion",players))
 
@@ -56,3 +56,77 @@ print(paste("support = ", support,sep=""))
 if(support>2){print("two units of support criterion exceeded: strong evidence that the Soviets colluded")}
 
 print(paste("p-value = ",pchisq(2*support,df=1,lower.tail=FALSE)))
+
+
+## Now some comparison between stockholm1962.txt (results) and
+## stockholm1962_matches.txt (results2)
+Hbw <- hyper2(pnames=c("white","draw",players))
+Hbwcoll <- hyper2(pnames=c("white","draw","collusion",players))
+
+restab <- read.table("stockholm1962_matches.txt",header=FALSE)
+stopifnot(all(unique(sort(c(as.character(restab$V1),as.character(restab$V2)))) == sort(players)))
+results2 <- matrix(0,length(players),length(players))
+rownames(results2) <- players
+colnames(results2) <- players
+diag(results2) <- NA
+
+for(i in seq_len(nrow(restab))){
+    white_player <- as.character(restab[i,1])
+    black_player <- as.character(restab[i,2])
+    match_result <- as.character(restab[i,3])
+
+    nw <- which(players==white_player)
+    nb <- which(players==black_player)
+
+    if(match_result == "1-0"){ # white win
+        results2[nw,nb] <- 2
+        results2[nb,nw] <- 0
+
+        Hbw[c(white_player             ,"white"       )] %<>% inc()
+        Hbw[c(white_player,black_player,"white","draw")] %<>% dec()
+
+        if(nationality[nw]=="USSR" & nationality[nb]=="USSR"){
+            Hbwcoll[c(white_player             ,"white"       )] %<>% inc()
+            Hbwcoll[c(white_player,black_player,"white","collusion")] %<>% dec()
+        } else {
+            Hbwcoll[c(white_player             ,"white"       )] %<>% inc()
+            Hbwcoll[c(white_player,black_player,"white","draw")] %<>% dec()
+        }
+    } else if(match_result == "0-1"){ # black wins
+        results2[nw,nb] <- 0
+        results2[nb,nw] <- 2
+        Hbw[c(             black_player               )] %<>% inc()
+        Hbw[c(white_player,black_player,"white","draw")] %<>% dec()
+
+        if(nationality[nw]=="USSR" & nationality[nb]=="USSR"){
+            Hbwcoll[c(             black_player                    )] %<>% inc()
+            Hbwcoll[c(white_player,black_player,"white","collusion")] %<>% dec()
+        } else {  # collusion not playing
+            Hbwcoll[c(             black_player               )] %<>% inc()
+            Hbwcoll[c(white_player,black_player,"white","draw")] %<>% dec()
+        }
+
+    } else if (match_result == "1/2-1/2"){ # draw
+        results2[nw,nb] <- 1
+        results2[nb,nw] <- 1
+        Hbw[c(                                  "draw")] %<>% inc()
+        Hbw[c(white_player,black_player,"white","draw")] %<>% dec()
+
+        if(nationality[nw]=="USSR" & nationality[nb]=="USSR"){
+            Hbwcoll[c(                                  "collusion")] %<>% inc()
+            Hbwcoll[c(white_player,black_player,"white","collusion")] %<>% dec()
+        } else {  # collusion not playing
+            Hbwcoll[c(                                  "draw")] %<>% inc()
+            Hbwcoll[c(white_player,black_player,"white","draw")] %<>% dec()
+        }
+
+
+
+    } else {
+        stop("not possible")
+    }
+}
+
+## results [from the square matrix] and results2 [from the 3-column
+## dataframe] should match:
+stopifnot(all(results[!is.na(results)] == results2[!is.na(results2)]))
