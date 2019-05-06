@@ -11,7 +11,7 @@ Portisch   HUN  0  0  1  2  1  1  1  0  2 NA  1  1  1  1  1  2  2  2  0  2  2  2
 Pomar      ESP  1  2  0  0  1  1  1  1  0  1 NA  1  0  0  2  1  2  1  2  1  2  2  2 
 Olafsson   ISL  0  1  0  0  1  0  2  2  0  1  1 NA  1  0  1  1  1  2  2  2  2  2  2 
 Bolbochan  ARG  0  0  1  1  0  1  1  0  1  1  2  1 NA  1  1  1  2  1  2  1  1  2  2 
-Barcza     HUN  0  1  1  0  0  0  1  1  2  2  2  2  1 NA  1  1  1  1  1  1  2  0  2 
+Barcza     HUN  0  1  1  0  0  0  1  1  2  1  2  2  1 NA  1  1  1  1  1  1  2  0  2
 Bilek      HUN  0  0  0  0  1  2  0  1  0  1  0  1  1  1 NA  1  2  1  2  2  2  2  2 
 Bisguier   USA  0  0  1  1  1  0  0  0  0  0  1  1  1  1  1 NA  1  1  2  1  2  2  2 
 Yanofsky   CAN  0  0  1  1  0  0  2  0  2  0  0  1  0  1  0  1 NA  1  2  1  1  0  1 
