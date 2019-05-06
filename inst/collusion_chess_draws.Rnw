@@ -8,6 +8,7 @@
 \usepackage{amssymb}
 \usepackage{yfonts}
 \usepackage{booktabs}
+\usepackage{units}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -215,8 +216,8 @@ using the \code{maxp()}``` functionality of the software:
 maxp(karpov_kasparov_anand)
 @ 
 
-We see that $\widehat{p_D}\simeq 0.53$, compare the naive estimate of
-$\frac{224}{365}\simeq 0.61$ given by observing 224 draws among 265
+We see that $\widehat{p_D}\simeq 0.53$, compare the na\"ive estimate
+of $\frac{224}{365}\simeq 0.61$ given by observing 224 draws among 265
 matches.  Secondly, we may make inferences about $p_W$.  It is
 conceivable that $p_W=0$ as this term does not appear on its own in
 the numerator of any term.  We may test $H_0\colon p_W=0$ using the
@@ -240,10 +241,93 @@ maxp(karpov_kasparov_anand,give=TRUE)$value
 
 that is, well over 7 units of support, exceeding Edwards's
 two-units-of-support per degree of freedom and we can reject $p_W=0$.
-
-One very natural hypothesis would be $H_{A=K=K}\colon
+One very natural hypothesis would be $H_{A=Kr=Ks}\colon
 p_\mathrm{Karpov}=p_\mathrm{Kasparov}=p_\mathrm{Anand}$.  This too is
 readily testable:
+
+
+<<>>=
+objective <- function(V){
+  x <- V[1]  # strength of all three players
+  w <- V[2]  # white player advantage
+  D <- 1-3*x-w  # Draw monster
+  return(  
+      -loglik(karpov_kasparov_anand,c(x,x,x,w))  # negative as we minimize
+  )
+}
+
+jj <-
+constrOptim(
+    theta=c(0.1,0.4),
+    f=objective,
+    grad=NULL,
+    ui = rbind(diag(2),-diag(2),c(-3,-1)),
+    ci = c(0,0,-1,-1,-1)
+)
+jj
+
+(unconstrained <- maxp(karpov_kasparov_anand,give=TRUE)$value)
+(constrained <- jj$value)
+
+(extra_support <-   unconstrained + constrained)  # negative used
+
+pchisq(2*extra_support,df=2,lower.tail=FALSE)
+@
+
+highly significant.  We can justifiably assert that the players do
+indeed have different strengths, even if we account for white
+advantage and the proclivity to draw.
+
+\subsection{Each player has a draw monster}
+
+<<>>=
+objective <- function(V){
+  karpov <- V[1]
+  kasparov <- V[2]
+  anand <- V[3]
+  white <- V[4]
+
+  draw <- (1-karpov-kasparov-anand-white)/3
+
+    return(  
+        -loglik(kka_3draws,
+                c(karpov,kasparov,anand,white,draw,draw)
+                )
+        )
+}
+
+jj <-
+constrOptim(
+    theta=c(0.1,0.1,0.1,0.1),
+    f=objective,
+    grad=NULL,
+    ui <- rbind(
+        diag(nrow=4),
+        c(-1,-1,-1,-1)
+        ),
+    ci = c(
+        rep(0,4),
+        -1
+        )
+)
+jj
+
+(unconstrained <- maxp(kka_3draws,give=TRUE)$value)
+(constrained <- jj$value)
+
+(extra_support <-   unconstrained + constrained)
+
+pchisq(2*extra_support,df=2,lower.tail=FALSE)
+
+@ 
+
+Significant according to Edwards but not Fisher!
+
+
+\section{Chess collusion}
+
+
+
 
 <<>>=
 jj <- read.table("stockholm1962.txt",header=FALSE)
@@ -269,6 +353,24 @@ which(results != 2-t(results),arr.ind=TRUE)
 
 Thus Barcza vs Portisch is problematic.  Glossing over this
 
+\newcommand{\half}{$\nicefrac{1}{2}$}
+
+\begin{table}
+\centering
+\begin{tabular}{l|ccccc}
+& \rotatebox{-90}{Fisher} 
+&\rotatebox{-90}{Geller} 
+&\rotatebox{-90}{Petrosian} 
+&\rotatebox{-90}{Korchnoi} 
+&\rotatebox{-90}{Filip} 
+\\ \hline
+  Fisher       & - & \half&\half& 1&\half\\
+Geller &\half&-&\half&\half&\half\\
+Petrosian &\half&\half&-&\half&\half\\
+Korchnoi &0&\half&\half&-&1\\
+Filip &\half&\half&\half&0\\
+\end{tabular}
+\end{table}
 
 
 \bibliography{hyper2}
