@@ -329,46 +329,26 @@ Significant according to Edwards but not Fisher!
 
 
 
-<<>>=
-jj <- read.table("stockholm1962.txt",header=FALSE)
-results <- as.matrix(jj[,-(1:2)])
-players <- as.character(jj$V1)
-nationality <- as.character(jj$V2)
-rownames(results) <- players
-colnames(results) <- substr(players,1,1)
-results
-@ 
-
-(this taken from Wikipedia
-\url{https://en.wikipedia.org/wiki/World_Chess_Championship_1963}).
-In this dataset, "0" means a loss, "1" a draw and "2" a win.  Thus
-Fisher (row 1) beat Korchnoi (column 4).  As a consistency check we
-verify that the results table is antisymmetric:
-
-<<>>=
-
-all(t(results) == 2-results)
-which(results != 2-t(results),arr.ind=TRUE)
-@ 
-
-Thus Barcza vs Portisch is problematic.  Glossing over this
 
 \newcommand{\half}{$\nicefrac{1}{2}$}
 
 \begin{table}
 \centering
-\begin{tabular}{l|ccccc}
+\begin{tabular}{l|cccccc}
 & \rotatebox{-90}{Fisher} 
 &\rotatebox{-90}{Geller} 
-&\rotatebox{-90}{Petrosian} 
+&\rotatebox{-90}{Petrosian\ }
 &\rotatebox{-90}{Korchnoi} 
-&\rotatebox{-90}{Filip} 
+&\rotatebox{-90}{Filip}
+& $\cdots$
 \\ \hline
-  Fisher       & - & \half&\half& 1&\half\\
-Geller &\half&-&\half&\half&\half\\
-Petrosian &\half&\half&-&\half&\half\\
-Korchnoi &0&\half&\half&-&1\\
-Filip &\half&\half&\half&0\\
+  Fisher   (USA)    & - & \half&\half& 1&\half&\\
+Geller (USSR) &\half&-&\half&\half&\half&\\
+Petrosian (USSR) &\half&\half&-&\half&\half&\\
+Korchnoi (USSR) &0&\half&\half&-&1&\\
+Filip (TCH)&\half&\half&\half&0&\\
+$\vdots$&&&&&\\
+
 \end{tabular}
 \end{table}
 
