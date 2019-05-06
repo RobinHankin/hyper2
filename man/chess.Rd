@@ -9,6 +9,9 @@ Topalov, Anand, Karpov
 \usage{data(chess)}
 \details{
 
+  This is a very simple dataset that can be used for illustration of
+  \code{hyper2} idiom.
+  
   The players are:
   \itemize{
     \item Grandmaster Veselin Topalov. FIDE world champion 2005-2006;
@@ -20,15 +23,20 @@ Topalov, Anand, Karpov
   }
 
   Observe that Topalov beats Anand, Anand beats Karpov, and Karpov beats
-  Topalov (here, \dQuote{beats} means \dQuote{wins more games than}).
+  Topalov (where \dQuote{beats} means \dQuote{wins more games than}).
 
-The games thus resemble a noisy version of \dQuote{rock paper scissors}.
+  The games thus resemble a noisy version of \dQuote{rock paper scissors}.
+
+  The likelihood function does not record who played white; see
+  \code{karpov_kasparov_anand} for such a dataset.
+
 }
 \references{
   \itemize{
     \item \url{http://www.chessbase.com/}
   }
 }
+\seealso{\code{\link{karpov_kasparov_anand}}}
 \examples{
 data(chess)
 maxp(chess)
