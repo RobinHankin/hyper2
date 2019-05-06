@@ -47,7 +47,7 @@ Barcza   Bisguier 1/2-1/2
 Benko   Schweber 1-0
 Bertok   Cuellar 1-0
 Bilek   Fischer 0-1
- Bolbochan   Olaffson 1/2-1/2
+Bolbochan   Olaffson 1/2-1/2
 Filip   Stein  1-0
 Korchnoi   Petrosian 1/2-1/2
 Portisch    Salamanca 1/2-1/2
@@ -60,7 +60,7 @@ German   Teschner 1/2-1/2
 Gligoric   Portisch 1/2-1/2
 Olaffson   Bertok 1-0
 Petrosian   Filip 1/2-1/2
- Salamanca   Bilek  1-0
+Salamanca   Bilek  1-0
 Schweber   Aaron 1/2-1/2
 Stein    Bolbochan  1-0
 Yanofsky   Benko 1-0
@@ -70,7 +70,7 @@ Benko   German 1-0
 Bertok   Stein 1/2-1/2
 Bilek   Gligoric  1-0
 Bisguier   Fischer 0-1
- Bolbochan   Petrosian 1/2-1/2
+Bolbochan   Petrosian 1/2-1/2
 Filip   Geller 1/2-1/2
 Portisch   Schweber  1-0
 Teschner   Cuellar 1-0
@@ -82,7 +82,7 @@ Gligoric   Barcza  1-0
 Korchnoi   Filip  1-0
 Olaffson   Teschner 1-0
 Petrosian   Bertok  1-0
- Salamanca   Bisguier 1/2-1/2
+Salamanca   Bisguier 1/2-1/2
 Schweber   Bilek 0-1
 Stein   Uhlmann 0-1
 Yanofsky   Portisch 0-1
@@ -92,7 +92,7 @@ Benko   Olaffson 0-1
 Bertok   Geller 1/2-1/2
 Bilek   Yanofsky 1-0
 Bisguier   Gligoric 0-1
- Bolbochan   Korchnoi 1/2-1/2
+Bolbochan   Korchnoi 1/2-1/2
 Fischer    Salamanca 1/2-1/2
 Portisch   German 0-1
 Teschner   Stein 0-1
@@ -115,11 +115,11 @@ Bertok   Filip 1/2-1/2
 Bilek   Cuellar 1-0
 Bisguier   Yanofsky 1/2-1/2
 Fischer   Schweber  1-0
- Salamanca   Gligoric 1/2-1/2
+Salamanca   Gligoric 1/2-1/2
 Portisch   Olaffson 1/2-1/2
 Teschner   Geller 0-1
 Uhlmann   Korchnoi 1/2-1/2
- Bolbochan   Bertok 1/2-1/2
+Bolbochan   Bertok 1/2-1/2
 Cuellar   Barcza  1-0
 Filip   Uhlmann 0-1
 Geller   Benko  1-0
@@ -137,7 +137,7 @@ Bilek   Stein 1/2-1/2
 Bisguier   Cuellar 1-0
 Fischer   German  1-0
 Gligoric   Schweber 1-0
- Salamanca   Yanofsky 1-0
+Salamanca   Yanofsky 1-0
 Portisch   Petrosian 1/2-1/2
 Teschner   Filip 0-1
 Uhlmann    Bolbochan 1/2-1/2
@@ -159,12 +159,12 @@ Bilek   Geller 0-1
 Bisguier   Stein 0-1
 Fischer   Olaffson  1-0
 Gligoric   German 1/2-1/2
- Salamanca   Cuellar 1-0
+Salamanca   Cuellar 1-0
 Portisch   Korchnoi  1-0
 Schweber   Yanofsky 1/2-1/2
 Teschner   Bertok 1/2-1/2
 Bertok   Benko 0-1
- Bolbochan   Aaron 1-0
+Bolbochan   Aaron 1-0
 Cuellar   Gligoric 0-1
 Filip   Portisch 1/2-1/2
 Geller   Barcza 1/2-1/2
@@ -181,12 +181,12 @@ Bilek   Filip 1/2-1/2
 Bisguier   Geller 0-1
 Fischer   Petrosian 1/2-1/2
 Gligoric   Olaffson 1-0
- Salamanca   Stein 1/2-1/2
+Salamanca   Stein 1/2-1/2
 Portisch    Bolbochan 1/2-1/2
 Schweber   Cuellar 1/2-1/2
 Yanofsky   German 1-0
 Bertok   Portisch 0-1
- Bolbochan   Bilek 1/2-1/2
+Bolbochan   Bilek 1/2-1/2
 Cuellar   Yanofsky  1-0
 Filip   Barcza  1-0
 Geller   Fischer 1/2-1/2
@@ -203,13 +203,13 @@ Bisguier   Filip 1/2-1/2
 Fischer   Korchnoi  1-0
 German   Cuellar 1-0
 Gligoric   Petrosian 1/2-1/2
- Salamanca   Geller  1-0
+Salamanca   Geller  1-0
 Portisch   Uhlmann  1-0
 Schweber   Stein 0-1
 Yanofsky   Olaffson 1/2-1/2
 Benko   Aaron 1-0
 Bertok   Barcza 1/2-1/2
- Bolbochan   Bisguier 1/2-1/2
+Bolbochan   Bisguier 1/2-1/2
 Filip   Fischer 1/2-1/2
 Geller   Gligoric 1/2-1/2
 Korchnoi    Salamanca  1-0
@@ -225,14 +225,14 @@ Cuellar   Olaffson 0-1
 Fischer    Bolbochan   1-0
 German   Stein 1/2-1/2
 Gligoric   Korchnoi 1/2-1/2
- Salamanca   Filip 1/2-1/2
+Salamanca   Filip 1/2-1/2
 Portisch   Benko 1/2-1/2
 Schweber   Geller 1/2-1/2
 Yanofsky   Petrosian 1/2-1/2
 Aaron   Portisch  1-0
 Benko   Bilek  1-0
 Bertok   Fischer 0-1
- Bolbochan    Salamanca  1-0
+Bolbochan    Salamanca  1-0
 Filip   Gligoric 1/2-1/2
 Geller   Yanofsky  1-0
 Korchnoi   Schweber  1-0
@@ -248,7 +248,7 @@ Fischer   Uhlmann 1/2-1/2
 German   Geller 1/2-1/2
 Gligoric    Bolbochan 1/2-1/2
 Olaffson   Stein  1-0
- Salamanca   Bertok 1/2-1/2
+Salamanca   Bertok 1/2-1/2
 Schweber   Filip 1/2-1/2
 Yanofsky   Korchnoi 1/2-1/2
 Gligoric   Stein 0-1
