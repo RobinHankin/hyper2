@@ -18,11 +18,9 @@
 
 %% just as usual
 \author{Robin K. S. Hankin\\Auckland University of Technology}
-\title{Partial rank data with the \pkg{hyper2} package: likelihood
-  functions for generalized Bradley-Terry models}
+\title{A generalization of the Bradley-Terry model for draws in chess}
 
-
-%\VignetteIndexEntry{The hyper2 package}
+%\VignetteIndexEntry{chess draws}
 
 %% for pretty printing and a nice hypersummary also set:
 \Plainauthor{Robin K. S. Hankin}
@@ -91,9 +89,8 @@ options("width" = 90)
 
 \section{Introduction: the Bradley-Terry model}
 
-
 In inference problems where the dataset is outcomes of paired
-comparisons, such as chess, The Bradley-Terry model can be augmented
+comparisons, such as chess, the Bradley-Terry model can be augmented
 to accommodate draws in a number of ways.  Here I present a new
 augmentation of Bradley-Terry in which a drawn chess match is regarded
 as a three-way competition between the players and an entity that wins
@@ -102,7 +99,10 @@ optimised numerically and I present a number of results.
 
 Consider first the standard Bradley-Terry model for $n$ players.
 First we ignore the effect of playing white.  We wish to find numbers
-(``strengths") $p_i$ for $1\leqslant i\leqslant n$ with $p_i\geqslant 0, \sum p_i=1$ such that the probability of $i$ beating $j\neq i$ is $\frac{p_i}{p_i+p_j}$.  A suitable likelihood function, on the assumption of independence of trials, would be
+(``strengths") $p_i$ for $1\leqslant i\leqslant n$ with $p_i\geqslant
+0, \sum p_i=1$ such that the probability of $i$ beating $j\neq i$ is
+$\frac{p_i}{p_i+p_j}$.  A suitable likelihood function, on the
+assumption of independence of trials, would be
 
 $$
 \prod_{i<j}
@@ -136,7 +136,7 @@ added to the white player.
 \prod_{i<j}&{}
 \left(\frac{p_i+p_W}{p_i+p_j+p_D+p_W}\right)^{W_{ij}^\mathrm{white}}
 \left(\frac{p_j}{p_i+p_j+p_D+p_W    }\right)^{L_{ij}^\mathrm{white}}\\
-&{} \left(\frac{p_i}{p_i+p_j+p_D+p_W}\right)^{W_{ij}^\mathrm{black}}\label{likelihood_kka}
+&{} \left(\frac{p_i}{p_i+p_j+p_D+p_W}\right)^{W_{ij}^\mathrm{black}}\label{likelihood_WD}
 \left(\frac{p_j+p_W}{p_i+p_j+p_D+p_W    }\right)^{L_{ij}^\mathrm{black}}\\
 &{} \left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}}
 \nonumber
@@ -153,14 +153,24 @@ equal to
 \end{equation}
 
 which might be preferable on grounds of clarity.  We now apply this
-likelihood model to real datasets.
+likelihood model to real chess datasets.  The general approach to
+testing any hypothesis $H$ on any likelihood function $\mathcal{L}$ is
+first to identify the constraint on hypothesis space corresponding to
+$H$.  One then finds the unconstrained maximum likelihood
+$\mathcal{L}_\mathrm{free}$ and compares it with the maximum
+likelihood $\mathcal{L}_\mathrm{cons}$ when the optimization is
+constrained by $H$.  The test statistic is then the likelihood ratio
+$\mathcal{L}_\mathrm{free}/\mathcal{L}_\mathrm{cons}$ or, equivalently
+the support $\mathcal{S}=\log\mathcal{R}$.  Wilks's theorem states
+that the asymptotic distribution of $2\mathcal{S}$ is $\chi^2_n$ where
+$n$ is the number of degrees of freedom implemented by $H$.
 
 
 \section{Anand, Karpov, Kasparov}
 
 Grandmasters Anand, Karpov, Kasparov have long-standing rivalry and
 have played many matches amongst themselves.  A summary may be found
-in Table~\ref{kka}.
+in Table~\ref{kka}.  Equation~\ref{likelihood_WD} becomes
 
 \begin{table}
 \centering
@@ -197,7 +207,6 @@ in Table~\ref{kka}.
   times and won 18, drew 20, lost 13}
 \end{table}
 
-
 \begin{equation}\label{kka_likelihood}
 \mathcal{L}\left(p_\mathrm{An},p_\mathrm{Kr},p_\mathrm{Ks},W,D\right)=
 \frac{
@@ -228,16 +237,16 @@ maxp(karpov_kasparov_anand)
 dotchart(maxp(karpov_kasparov_anand),pch=16,xlim=c(0,0.55))
 @
 \caption{Maximum likelihood estimate for the strengths of the 3 Grandmasters in Table~\ref{kka} 
-\label{maxp_karpov_kasparov_anand} under a likelihood defined as Equation~\ref{likelihood_kka}}
+\label{maxp_karpov_kasparov_anand} under a likelihood defined as Equation~\ref{likelihood_WD}}
   \end{center}
 \end{figure}
 
-and this is show visually in figure~\ref{maxp_karpov_kasparov_anand},
+and this is shown visually in figure~\ref{maxp_karpov_kasparov_anand},
 which suggests a number of interesting and testable statistical
 hypotheses.  Firstly, we observe that $D=0$ cannot possibly be the
-case: the likelihood would be identically zero, owing to the nonzero
-term in the numerator of the last term of
-Equation~\ref{likelihood_kka}.  However, we see that the maximum
+case: the likelihood for this hypothesis would be identically zero,
+owing to the nonzero term in the numerator of the last term of
+Equation~\ref{likelihood_WD}.  However, we see that the maximum
 likelihood estimate for Draw strength $\hat{D}\simeq 0.53$: compare
 the na\"ive estimate of $\frac{224}{365}\simeq 0.61$ given by
 observing 224 draws among 265 matches.  The MLE is lower because the
@@ -260,11 +269,11 @@ e <- function(white){
         startp=c(1/3-small,1/3-small,1/3-small,small),
         fcm=-cbind(0, 0, 0, 1),fcv= -white,give=TRUE)$value
 }
-e(0.001)
-e(0.002)
-e(0.003)
-maxp(karpov_kasparov_anand,give=TRUE)$value
-328.2975-335.6025
+ignore1 <- e(0.001)
+ignore2 <- e(0.002)
+ignore3 <- e(0.003)
+ignore4 <- maxp(karpov_kasparov_anand,give=TRUE)$value
+support <- 328.2975-335.6025
 @ 
 
 
@@ -283,14 +292,8 @@ probability $\frac{532}{64+104+148+532}\simeq 0.625$, and lose with
 probability $\simeq 0.174$ (compare $+0.075\,=0.627-0.297$ playing
 black).
 
-One very natural hypothesis would be that the players are of equal
-strength and we migth write $H_=\colon
-p_\mathrm{Kr}=p_\mathrm{Ks}=p_\mathrm{An}$.  This too is readily
-testable by the device of calculating the maximum support over the
-region in which $p_\mathrm{Kr}=p_\mathrm{Ks}=p_\mathrm{An}$.
 
-
-<<print=FALSE,echo=FALSE>>=
+<<kka_equal_strength, print=FALSE,echo=FALSE>>=
 objective <- function(V){
   x <- V[1]  # strength of all three players
   w <- V[2]  # white player advantage
@@ -314,19 +317,27 @@ unconstrained <- maxp(karpov_kasparov_anand,give=TRUE)$value
 constrained <- jj$value
 
 extra_support <-   unconstrained + constrained  # negative used
-
-pchisq(2*extra_support,df=2,lower.tail=FALSE)
+pvalue <- pchisq(2*extra_support,df=2,lower.tail=FALSE)
 @
 
-In this case the extra support in going from the constrained to the
-free optimization is about 4.93.  However, this time the constraint
-corresponds to a loss of {\em two} degrees of freedom so we would need
-4 units of support, which is attained in this case.  Alternatively we
-might follow Wilks, and observe that the value of
-$2\Lambda=2*4.92=9.84$ lies in the tail region of its asymptotic
-distribution with a p-value of about 0.0072.  We can justifiably
-assert that the players do indeed have different strengths, even if we
-account for white advantage and the proclivity to draw.
+might write $H_=\colon\mathbf{Kr}=\colon\mathbf{Ks}=\colon\mathbf{An}$
+
+One very natural and interesting hypothesis would be that the three
+players are of equal strength
+%equal_strength_is_assessed_in_chunk_kka_equal_strength_above and we
+might write $H_=\colon p_\mathrm{Kr}=p_\mathrm{Ks}=p_\mathrm{An}$.
+This too is readily testable by the device of calculating the maximum
+support over the region in which
+$p_\mathrm{Kr}=p_\mathrm{Ks}=p_\mathrm{An}$.  In this case the extra
+support in going from the constrained to the free optimization is
+about 4.93.  However, this time the constraint corresponds to a loss
+of {\em two} degrees of freedom so we would need 4 units of support,
+which is attained in this case.  Alternatively we might follow Wilks,
+and observe that the value of $2\mathcal{S}=2*4.92=9.84$ lies in the
+tail region of its asymptotic distribution with a p-value of about
+0.0072.  We can justifiably assert that the players do indeed have
+different strengths, even if we account for white advantage and the
+proclivity to draw.
 
 \subsection{Each player has a draw monster}
 
@@ -509,8 +520,65 @@ dotchart(maxp(collusion),pch=16)
 \end{figure}
 
 In figure~\ref{collusion_fig}, note the high estimate for $D_s$ (also
-note
-Fischer's dominance).  The maximum likelihood estimate is $D\simeq 0.043, D_s=0.354$; a constrained maximization gives a likelihood ratio of about 5096, or a $p$-value of about $3.6\times 10^{-5}$.  Indeed we could go further and plot a profile likelihood curve for the log-odds ratio $\ln\left(D_s/D\right)$ which, if Dirichlet, would be approximately Gaussian CITEKENDALANDSTUARTHERE.  This is illustrated in Figure~\ref{DOESNOTEXIST}, that shows a credible interval of about HAVENOTDONETHISET.
+note Fischer's dominance).  The maximum likelihood estimate is
+$D\simeq 0.043, D_s=0.354$; a constrained maximization gives a
+likelihood ratio of about 5096, or a $p$-value of about $3.6\times
+10^{-5}$.  Indeed we could go further and plot a profile likelihood
+curve for the log-odds ratio $\ln\left(D_s/D\right)$ which, if
+Dirichlet, would be approximately Gaussian CITEKENDALANDSTUARTHERE.
+This is illustrated in Figure~\ref{DOESNOTEXIST}, that shows a
+credible interval of about HAVENOTDONETHISET.
+
+
+<<echo=FALSE,print=FALSE>>=
+do_from_scratch  <- FALSE  # set to TRUE to recalculate (slow, maybe 2 mins)
+hotstart <- indep(maxp(collusion))
+
+f <- function(LO,give=FALSE){
+    small <- 1e-5
+
+    eq <- hotstart
+    m <- sum(eq[2:3])
+    a <- exp(LO)
+    eq[2:3] <- m/(1+a)*c(1,a)  # exact
+
+    eq[2:3] <- eq[2:3] + c(-small,small)
+    
+    out <-
+        maxp(collusion,
+             startp=eq,
+             fcm=c(0, -1, exp(LO),rep(0,22)),
+             fcv=0,
+             give=TRUE)
+
+    if(give){return(out)}else{return(out$value)}
+}
+
+x <- seq(from= 1.5,to = 2.7,len=32)
+if(do_from_scratch){
+    jj <- sapply(x,f)
+} else {
+    jj <-
+        c(-246.6939, -245.7192, -244.7981, -243.9319, -243.1223, -242.3704, 
+          -241.6776, -241.0452, -240.4744, -239.9661, -239.5216, -239.1417, 
+          -238.8274, -238.5795, -238.3987, -238.2858, -238.2414, -238.2660, 
+          -238.3601, -238.5240, -238.7582, -239.0629, -239.4382, -239.8843, 
+          -240.4013, -240.9891, -241.6476, -242.3767, -243.1762, -244.0458, 
+          -244.9853, -245.9941)
+}
+@ 
+
+
+\begin{figure}[htbp]
+\begin{center}
+<<proflike,echo=TRUE,fig=TRUE>>=
+plot(x,jj-max(jj),type='b',xlab="log-odds",ylab="support")
+abline(h=c(0,-2))
+@
+\caption{Profile likelihood \label{proflike} for odds ratio
+  $\log\left(D_s/D\right)$}
+  \end{center}
+\end{figure}
 
 
 
