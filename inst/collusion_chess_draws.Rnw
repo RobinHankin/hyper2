@@ -9,6 +9,7 @@
 \usepackage{yfonts}
 \usepackage{booktabs}
 \usepackage{units}
+\usepackage{xcolor}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -101,10 +102,7 @@ optimised numerically and I present a number of results.
 
 Consider first the standard Bradley-Terry model for $n$ players.
 First we ignore the effect of playing white.  We wish to find numbers
-("strengths") $p_i,1\leqslant i\leqslant n$ with $p_i\geqslant 0, \sum
-p_i=1$ such that the probability of $i$ beating $j\neq i$ is
-$\frac{p_i}{p_i+p_j}$.  A suitable likelihood function, on the
-assumption of independence of trials, would be
+(``strengths") $p_i$ for $1\leqslant i\leqslant n$ with $p_i\geqslant 0, \sum p_i=1$ such that the probability of $i$ beating $j\neq i$ is $\frac{p_i}{p_i+p_j}$.  A suitable likelihood function, on the assumption of independence of trials, would be
 
 $$
 \prod_{i<j}
@@ -155,20 +153,14 @@ equal to
 \end{equation}
 
 which might be preferable on grounds of clarity.  We now apply this
-likelihood model to a real dataset, shown in table~\ref{kka}.  The
-likelihood function is easily maximized,
-figure~\ref{maxp_karpov_kasparov_anand}.
+likelihood model to real datasets.
 
-\begin{figure}[htbp]
-\begin{center}
-<<rowing_maxp,echo=TRUE,fig=TRUE>>=
-dotchart(maxp(karpov_kasparov_anand),pch=16,xlim=c(0,0.55))
-@
-\caption{Maximum likelihood estimate for the strengths of the 3 Grandmasters in Table~\ref{kka} 
-\label{maxp_karpov_kasparov_anand} under a likelihood defined as Equation~\ref{likelihood_kka}}
-  \end{center}
-\end{figure}
 
+\section{Anand, Karpov, Kasparov}
+
+Grandmasters Anand, Karpov, Kasparov have long-standing rivalry and
+have played many matches amongst themselves.  A summary may be found
+in Table~\ref{kka}.
 
 \begin{table}
 \centering
@@ -205,25 +197,61 @@ dotchart(maxp(karpov_kasparov_anand),pch=16,xlim=c(0,0.55))
   times and won 18, drew 20, lost 13}
 \end{table}
 
-Figure~\ref{kka} suggests a number of interesting hypotheses.
-Firstly, we observe that $p_D=0$ cannot possibly be the case: the
-likelihood would be identically zero, owing to the nonzero term in the
-numerator of the last term of Equation~\ref{likelihood_kka}.  Indeed,
-we can give a maximum likelihood estimate for the various strengths
-using the \code{maxp()}``` functionality of the software:
 
+\begin{equation}\label{kka_likelihood}
+\mathcal{L}\left(p_\mathrm{An},p_\mathrm{Kr},p_\mathrm{Ks},W,D\right)=
+\frac{
+p_\mathrm{An}^{15}
+p_\mathrm{Kr}^{12} 
+p_\mathrm{Ks}^{20}
+D^{224}
+\left(p_\mathrm{Kr} + W\right)^{25}
+\left(p_\mathrm{Ks} + W\right)^{45}
+\left(p_\mathrm{An} + W\right)^{24}
+}{
+\left(p_\mathrm{Kr} + p_\mathrm{Ks} + W + D\right)^{193}
+\left(p_\mathrm{Kr} + p_\mathrm{An} + W + D\right)^{92}
+\left(p_\mathrm{Ks} + p_\mathrm{An} + W + D\right)^{80}
+}
+\end{equation}
+
+This likelihood function is easily maximized:
+                                    
 <<>>=
 maxp(karpov_kasparov_anand)
 @ 
+                                    
 
-We see that $\widehat{p_D}\simeq 0.53$, compare the na\"ive estimate
-of $\frac{224}{365}\simeq 0.61$ given by observing 224 draws among 265
-matches.  Secondly, we may make inferences about $p_W$.  It is
-conceivable that $p_W=0$ as this term does not appear on its own in
-the numerator of any term.  We may test $H_0\colon p_W=0$ using the
-method of support.
+\begin{figure}[htbp]
+\begin{center}
+<<ddc,echo=TRUE,fig=TRUE>>=
+dotchart(maxp(karpov_kasparov_anand),pch=16,xlim=c(0,0.55))
+@
+\caption{Maximum likelihood estimate for the strengths of the 3 Grandmasters in Table~\ref{kka} 
+\label{maxp_karpov_kasparov_anand} under a likelihood defined as Equation~\ref{likelihood_kka}}
+  \end{center}
+\end{figure}
 
-<<>>=
+and this is show visually in figure~\ref{maxp_karpov_kasparov_anand},
+which suggests a number of interesting and testable statistical
+hypotheses.  Firstly, we observe that $D=0$ cannot possibly be the
+case: the likelihood would be identically zero, owing to the nonzero
+term in the numerator of the last term of
+Equation~\ref{likelihood_kka}.  However, we see that the maximum
+likelihood estimate for Draw strength $\hat{D}\simeq 0.53$: compare
+the na\"ive estimate of $\frac{224}{365}\simeq 0.61$ given by
+observing 224 draws among 265 matches.  The MLE is lower because the
+maximization process automatically adjusts for the different players'
+strengths.  Secondly, we may make inferences about $W$, the extra
+strength conferred by playing White: it is conceivable that $W=0$ as
+this term does not appear on its own in the numerator of any term.  We
+may test $H_0\colon W=0$ using the method of support by maximizing the
+likelihood subject the constraint $W=0$ and comparing with the
+likelihood when the optimization is free.
+
+
+
+<<echo=FALSE>>=
 small <- 1e-4
 
 e <- function(white){
@@ -239,14 +267,30 @@ maxp(karpov_kasparov_anand,give=TRUE)$value
 328.2975-335.6025
 @ 
 
-that is, well over 7 units of support, exceeding Edwards's
-two-units-of-support per degree of freedom and we can reject $p_W=0$.
-One very natural hypothesis would be $H_{A=Kr=Ks}\colon
-p_\mathrm{Karpov}=p_\mathrm{Kasparov}=p_\mathrm{Anand}$.  This too is
-readily testable:
+
+The result of numerical optimization is 7.304, that is, well over the
+two-units-of-support per degree of freedom suggested by Edwards; we
+can convincingly reject the hypothesis that $W=0$ and infer that
+playing white confers a significant advantage.  Of course, this is
+nothing new CITATION NEEDED, but it is now possible to go
+significantly beyond mere existence of the effect and to quantify it.
+Taking the MLE above, and considering a match between say Karpov and
+Anand, the strengths are Karpov=0.064, Anand=0.151, white =0.104 and
+draw =0.53.  Thus we would estimate that Karpov playing white against
+Kasparov would win with probability
+$\frac{0.064+0.104}{0.064+0.104+0.148+0.532}\simeq 0.198$, draw with
+probability $\frac{532}{64+104+148+532}\simeq 0.625$, and lose with
+probability $\simeq 0.174$ (compare $+0.075\,=0.627-0.297$ playing
+black).
+
+One very natural hypothesis would be that the players are of equal
+strength and we migth write $H_=\colon
+p_\mathrm{Kr}=p_\mathrm{Ks}=p_\mathrm{An}$.  This too is readily
+testable by the device of calculating the maximum support over the
+region in which $p_\mathrm{Kr}=p_\mathrm{Ks}=p_\mathrm{An}$.
 
 
-<<>>=
+<<print=FALSE,echo=FALSE>>=
 objective <- function(V){
   x <- V[1]  # strength of all three players
   w <- V[2]  # white player advantage
@@ -264,23 +308,84 @@ constrOptim(
     ui = rbind(diag(2),-diag(2),c(-3,-1)),
     ci = c(0,0,-1,-1,-1)
 )
-jj
 
-(unconstrained <- maxp(karpov_kasparov_anand,give=TRUE)$value)
-(constrained <- jj$value)
 
-(extra_support <-   unconstrained + constrained)  # negative used
+unconstrained <- maxp(karpov_kasparov_anand,give=TRUE)$value
+constrained <- jj$value
+
+extra_support <-   unconstrained + constrained  # negative used
 
 pchisq(2*extra_support,df=2,lower.tail=FALSE)
 @
 
-highly significant.  We can justifiably assert that the players do
-indeed have different strengths, even if we account for white
-advantage and the proclivity to draw.
+In this case the extra support in going from the constrained to the
+free optimization is about 4.93.  However, this time the constraint
+corresponds to a loss of {\em two} degrees of freedom so we would need
+4 units of support, which is attained in this case.  Alternatively we
+might follow Wilks, and observe that the value of
+$2\Lambda=2*4.92=9.84$ lies in the tail region of its asymptotic
+distribution with a p-value of about 0.0072.  We can justifiably
+assert that the players do indeed have different strengths, even if we
+account for white advantage and the proclivity to draw.
 
 \subsection{Each player has a draw monster}
 
+Players with a cautious style tend to draw CITATION NEEDED and this is
+an important and interesting component of the game.  To investigate
+this we need a likelihood function that can account for possible
+differences in draw proclivity among the players.  This may be
+achieved by considering a match between two players to be a contest
+between five entities: the two real players, the white advantage, and
+two personalised draw entities, one per real player; a drawn match is
+counted as a win for either of the draw ghosts.  Under these
+assumptions, table~\ref{kka} translates into the following likelihood
+function:
+
+\begin{figure}[htbp]
+\begin{center}
+<<ddcc,echo=TRUE,fig=TRUE>>=
+pie(maxp(kka_3draws))
+@
+\caption{Maximum likelihood estimate for the strengths of the 3 Grandmasters in Table~\ref{kka} 
+under a likelihood function that admits differential proclivities to draw}
+  \end{center}
+\end{figure}
+
+\begin{equation}
+\mathcal{L}\left(
+p_\mathrm{An},p_\mathrm{Kr},p_\mathrm{Ks}
+,W,
+d_\mathrm{An},d_\mathrm{Kr},d_\mathrm{Ks}
+\right)=
+\frac{
+\parbox{3in}{$
+p_\mathrm{An}^{15}
+p_\mathrm{Kr}^{12}
+p_\mathrm{Ks}^{20}
+\left(p_\mathrm{Kr} + W\right)^{25}
+\left(p_\mathrm{Ks} + W\right)^{45} 
+\left(p_\mathrm{An} + W\right)^{24}\\ \rule{10mm}{0mm}
+\left(d_\mathrm{Kr} + d_\mathrm{Ks}\right)^{129}
+\left(d_\mathrm{Kr} + d_\mathrm{An}\right)^{49}
+\left(d_\mathrm{Ks} + d_\mathrm{An}\right)^{46}
+$}}{\parbox{3in}{$
+\left(p_\mathrm{Kr} + p_\mathrm{Ks} + W + d_\mathrm{Kr} + d_\mathrm{Ks}\right)^{193}\\ \rule{10mm}{0mm}
+\left(p_\mathrm{Kr} + p_\mathrm{An} + W + d_\mathrm{Kr} + d_\mathrm{An}\right)^{92}\\ \rule{20mm}{0mm}
+\left(p_\mathrm{Ks} + p_\mathrm{An} + W + d_\mathrm{Ks} + d_\mathrm{An}\right)^{80}
+$}}
+\end{equation}
+
 <<>>=
+round(maxp(kka_3draws),3)
+@ 
+
+We see considerable variability in proclivity to draw and again this
+may be tested with the Method of Support, which gives a $p$-value of
+about 0.039, borderline significant: an interesting result, given that
+in this case no
+player's draw monster appears alone anywhere in the likelihood function.
+
+<<echo=FALSE,print=FALSE>>=
 objective <- function(V){
   karpov <- V[1]
   kasparov <- V[2]
@@ -310,49 +415,109 @@ constrOptim(
         -1
         )
 )
-jj
 
-(unconstrained <- maxp(kka_3draws,give=TRUE)$value)
-(constrained <- jj$value)
-
-(extra_support <-   unconstrained + constrained)
-
+unconstrained <- maxp(kka_3draws,give=TRUE)$value
+constrained <- jj$value
+extra_support <-   unconstrained + constrained
 pchisq(2*extra_support,df=2,lower.tail=FALSE)
-
 @ 
-
-Significant according to Edwards but not Fisher!
 
 
 \section{Chess collusion}
 
-
-
-
-
-\newcommand{\half}{$\nicefrac{1}{2}$}
+\newcommand{\halfw}{$\nicefrac{1}{2}$}
+\newcommand{\halfb}{\colorbox{black}{\textcolor{white}{$\nicefrac{{\bf 1}}{{\bf 2}}$}}}
+\newcommand{\zerow}{$0$}
+\newcommand{\zerob}{\colorbox{black}{\textcolor{white}{$0$}}}
+\newcommand{\oneww}{$1$}
+\newcommand{\onebb}{\colorbox{black}{\textcolor{white}{$1$}}}
 
 \begin{table}
 \centering
 \begin{tabular}{l|cccccc}
-& \rotatebox{-90}{Fisher} 
+& \rotatebox{-90}{Fischer} 
 &\rotatebox{-90}{Geller} 
 &\rotatebox{-90}{Petrosian\ }
 &\rotatebox{-90}{Korchnoi} 
 &\rotatebox{-90}{Filip}
 & $\cdots$
-\\ \hline
-  Fisher   (USA)    & - & \half&\half& 1&\half&\\
-Geller (USSR) &\half&-&\half&\half&\half&\\
-Petrosian (USSR) &\half&\half&-&\half&\half&\\
-Korchnoi (USSR) &0&\half&\half&-&1&\\
-Filip (TCH)&\half&\half&\half&0&\\
+\\ \hline %       Fischer   Geller    Petrosian Korchnoi    Filip
+Fischer     (USA)  &   -     & \halfb  & \halfw  & \oneww    & \halfb   &\\
+Geller    (USSR)  & \halfw  &    -    & \halfb  & \halfw    & \halfw   &\\
+Petrosian (USSR)  & \halfb  & \halfw  &    -    & \halfb    & \halfw   &\\
+Korchnoi  (USSR)  & \zerob  & \halfb  & \halfw  &   -       & \oneww   &\\
+Filip      (TCH)  & \halfw  & \halfb  & \halfb  & \zerob    &  -       &\\
 $\vdots$&&&&&\\
-
-\end{tabular}
+\end{tabular}\label{interzonal}
+\caption{Subset of the Fifth Interzonal round-robin, Stockholm 1962.
+  Results (0,\halfw,1) and box colour refer to row player.  Thus, for
+  example, Fischer played black against Geller and drew}
 \end{table}
+
+
+For the results shown in table~\ref{interzonal}, we would have
+
+\begin{equation}
+\mathcal{L}\left(F,G,P,K,L,W,D\right)=
+%                D/(F+G+W+D)  (F+P+D)/(F+P+D+W)   (F+W)/(F+W+D+K)   D/(F+W+L+D)
+%                             D/(G+P+D+W)         D/(G+K+W+D)       D/(G+F+W+D)
+%                                                 D/(P+K+W+D)       D/(P+L+W+D)
+%                                                                   (K+W)/(K+L+W+D)
+\frac{
+  D^8(F+W)(K+W)
+}{\parbox{4in}{$
+    (F+G+W+D)(F+P+W+D)\\ \rule{10mm}{0mm}(F+K+W+D)  (F+L+W+D)\\ \rule{20mm}{0mm}
+         (G+P+W+D)  (G+K+W+D)\\ \rule{30mm}{0mm}(G+F+W+D)
+                    (P+K+W+D)\\ \rule{40mm}{0mm}(P+L+W+D)
+                               (K+L+W+D)
+ $}}
+\end{equation}
+
+\noindent (the numerator includes 8 draws and 2 wins, one for Fischer
+and one for Korchnoi, both playing White); but the full likelihood
+function for the interzonal has 297 terms, including $D^{110}$.  To
+investigate the possibility of Soviet collusion we introduce a new
+draw entity: a soviet Draw monster $D_s$, who wins when two Soviet
+players draw, and is inactive whenever a game with at least one
+non-Soviet player is drawn.  Then $H_N\colon D_s=D$ corresponds to no
+collusion and the likelihood function for table~\ref{interzonal} would
+be
+
+\begin{equation}\label{collusion}
+\mathcal{L}\left(F,G,P,K,L,W,D,D_s\right)=
+%                D/(F+G+W+D)  (F+P+D)/(F+P+D+W)   (F+W)/(F+W+D+K)   D/(F+W+L+D)
+%                             D/(G+P+D+W)         D/(G+K+W+D)       D/(G+F+W+D)
+%                                                 D/(P+K+W+D)       D/(P+L+W+D)
+%                                                                   (K+W)/(K+L+W+D)
+\frac{
+  D_s^3D^5(F+W)(K+W)
+}{\parbox{4in}{$
+    (F+G+W+D)(F+P+W+D)\\ \rule{10mm}{0mm}(F+K+W+D)  (F+L+W+D)\\ \rule{20mm}{0mm}
+         (G+P+W+D_s)  (G+K+W+D_s)\\ \rule{30mm}{0mm}(G+F+W+D)
+                    (P+K+W+D_s)\\ \rule{40mm}{0mm}(P+L+W+D)
+                               (K+L+W+D)
+ $}}
+\end{equation}
+
+\begin{figure}[htbp]
+\begin{center}
+<<collusion,echo=TRUE,fig=TRUE>>=
+dotchart(maxp(collusion),pch=16)
+@
+\caption{sds\label{collusion_fig}}
+  \end{center}
+\end{figure}
+
+In figure~\ref{collusion_fig}, note the high estimate for $D_s$ (also
+note
+Fischer's dominance).  The maximum likelihood estimate is $D\simeq 0.043, D_s=0.354$; a constrained maximization gives a likelihood ratio of about 5096, or a $p$-value of about $3.6\times 10^{-5}$.  Indeed we could go further and plot a profile likelihood curve for the log-odds ratio $\ln\left(D_s/D\right)$ which, if Dirichlet, would be approximately Gaussian CITEKENDALANDSTUARTHERE.  This is illustrated in Figure~\ref{DOESNOTEXIST}, that shows a credible interval of about HAVENOTDONETHISET.
+
+
+
 
 
 \bibliography{hyper2}
 \end{document}
  
+
+
