@@ -89,6 +89,23 @@ options("width" = 90)
 
 \section{Introduction: the Bradley-Terry model}
 
+\cite{moul2009}
+
+\cite{davidson1970}
+
+\cite{joe1990}
+
+\cite{moul2009}: for instance, a player may have the choice of more
+and less conservative strategies with different chances for a
+draw. Risk- averse players may pursue less aggressive strategies,
+trading expected payout for reduced variance
+
+\cite{moul2009}: the question of Soviet collusion during the period
+when the USSR dominated the struggle for the world championship has
+been one of the long-standing debates in the chess world. The
+best-known (but not unique) criticism was aired by Bobby Fischer some
+weeks after the 1962 Candidates Tournament in Curacao
+
 In inference problems where the dataset is outcomes of paired
 comparisons, such as chess, the Bradley-Terry model can be augmented
 to accommodate draws in a number of ways.  Here I present a new
@@ -150,6 +167,11 @@ equal to
 \prod_{i<j}
 \left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}^\mathrm{white}}
 \left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}^\mathrm{black}}
+\end{equation}
+
+\begin{equation}
+\prod_{i<j}
+\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}^\mathrm{white}+D_{ij}^\mathrm{black}}
 \end{equation}
 
 which might be preferable on grounds of clarity.  We now apply this
@@ -434,7 +456,33 @@ pchisq(2*extra_support,df=2,lower.tail=FALSE)
 @ 
 
 
-\section{Chess collusion}
+\section{Chess collusion: Cura\c{c}ao 1962}
+\begin{table}
+\centering
+\begin{tabular}{ll|cccccccc}
+ &
+&\rotatebox{-90}{Petrosian} 
+&\rotatebox{-90}{Keres} 
+&\rotatebox{-90}{Geller}
+&\rotatebox{-90}{Fischer} 
+&\rotatebox{-90}{Korchnoi}
+&\rotatebox{-90}{Benko}
+&\rotatebox{-90}{Tal}
+&\rotatebox{-90}{Filip}\\
+Petrosian &USSR    &             &DDDD    &DDDD   &DWDD   &DDWW   &DDWD   &WWD    &DWWD\\
+Keres     &USSR    &             &NA      &DDDD   &LDWD   &DDWD   &WWWL   &WDW    &DWWD\\
+Geller    &USSR    &             &NA      &NA     &WWDL   &DDWD   &DDDW   &DWW    &DWWD\\
+Fischer   &USA     &             &NA      &NA     &NA     &LWLD   &LWDW   &DWD    &WDWD\\
+Korchnoi  &USSR    &             &NA      &NA     &NA     &NA     &DDDL   &WLD    &WWWW\\
+Benko     &USA     &             &NA      &NA     &NA     &NA     &NA     &WLD    &LWWD\\
+Tal       &USSR    &             &NA      &NA     &NA     &NA     &NA     &NA     &WLD \\
+Filip     &TCH     &             &NA      &NA     &NA     &NA     &NA     &NA     &A \\
+\end{tabular}
+\caption{Curacao 1962 SPELLED WRONG}
+\end{table}
+
+
+\section{Chess collusion: interzonal Stockholm 1962}
 
 \newcommand{\halfw}{$\nicefrac{1}{2}$}
 \newcommand{\halfb}{\colorbox{black}{\textcolor{white}{$\nicefrac{{\bf 1}}{{\bf 2}}$}}}
@@ -446,14 +494,14 @@ pchisq(2*extra_support,df=2,lower.tail=FALSE)
 \begin{table}
 \centering
 \begin{tabular}{l|cccccc}
-& \rotatebox{-90}{Fischer} 
+&\rotatebox{-90}{Fischer} 
 &\rotatebox{-90}{Geller} 
 &\rotatebox{-90}{Petrosian\ }
 &\rotatebox{-90}{Korchnoi} 
 &\rotatebox{-90}{Filip}
 & $\cdots$
 \\ \hline %       Fischer   Geller    Petrosian Korchnoi    Filip
-Fischer     (USA)  &   -     & \halfb  & \halfw  & \oneww    & \halfb   &\\
+Fischer    (USA)  &   -     & \halfb  & \halfw  & \oneww    &\halfb    &\\
 Geller    (USSR)  & \halfw  &    -    & \halfb  & \halfw    & \halfw   &\\
 Petrosian (USSR)  & \halfb  & \halfw  &    -    & \halfb    & \halfw   &\\
 Korchnoi  (USSR)  & \zerob  & \halfb  & \halfw  &   -       & \oneww   &\\
@@ -520,14 +568,10 @@ dotchart(maxp(collusion),pch=16)
 \end{figure}
 
 In figure~\ref{collusion_fig}, note the high estimate for $D_s$ (also
-note Fischer's dominance).  The maximum likelihood estimate is
-$D\simeq 0.043, D_s=0.354$; a constrained maximization gives a
-likelihood ratio of about 5096, or a $p$-value of about $3.6\times
-10^{-5}$.  Indeed we could go further and plot a profile likelihood
-curve for the log-odds ratio $\ln\left(D_s/D\right)$ which, if
-Dirichlet, would be approximately Gaussian CITEKENDALANDSTUARTHERE.
-This is illustrated in Figure~\ref{DOESNOTEXIST}, that shows a
-credible interval of about HAVENOTDONETHISET.
+note
+Fischer's dominance).
+
+The maximum likelihood estimate is $D\simeq 0.043, D_s=0.354$; a constrained maximization gives a likelihood ratio of about 5096, or a $p$-value of about $3.6\times 10^{-5}$.  Indeed we could go further and plot a profile likelihood curve for the log-odds ratio $\ln\left(D_s/D\right)$ which, if Dirichlet, would be accurately parabolic over a wide range (OHAGAN AND FORSTER, p343).  This is illustrated in Figure~\ref{DOESNOTEXIST}, that shows a credible interval of about HAVENOTDONETHISET.
 
 
 <<echo=FALSE,print=FALSE>>=
@@ -576,15 +620,13 @@ plot(x,jj-max(jj),type='b',xlab="log-odds",ylab="support")
 abline(h=c(0,-2))
 @
 \caption{Profile likelihood \label{proflike} for odds ratio
-  $\log\left(D_s/D\right)$}
+  $\log\left(D_s/D\right)$: note the accurately parabolic figure in
+  the region plotted}
   \end{center}
 \end{figure}
 
 
-
-
-
-\bibliography{hyper2}
+\bibliography{chess}
 \end{document}
  
 
