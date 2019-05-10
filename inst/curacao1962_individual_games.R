@@ -16,7 +16,7 @@ white <- "white"
 draw <- "draw"
 sovdraw <- "sovdraw"
 
-H <- hyper2(pnames=c(white,draw,sovdraw,players))
+H <- hyper2(pnames=c(draw,sovdraw,white,players))
 
 
 for(i in seq_len(nrow(d))){
@@ -34,12 +34,12 @@ for(i in seq_len(nrow(d))){
   
   if(result == "1-0"){  # white victory
     winner <- white_player
-    loser <- black_player
+    loser  <- black_player
     H[c(winner,white                  )] %<>% inc
     H[c(winner,white,drawmonster,loser)] %<>% dec
   } else if(result == "0-1"){ # black victory
     winner <- black_player
-    loser <- white_player
+    loser <-  white_player
     H[c(winner                        )] %<>% inc
     H[c(winner,loser,white,drawmonster)] %<>% dec
   } else if(result == "1/2-1/2"){
@@ -50,8 +50,23 @@ for(i in seq_len(nrow(d))){
   }
 }  # i loop closes
 
+## First calculate maximum support for free optimization:
+support_free <- maxp(H,give=TRUE)$value
 
 
-    
+## Now calculate maximum support constrained so draw >= sovdraw:
+jj <- maxp(H,
+           startp=c(0.3,0.2,0.2,rep(0.3/8,7)),
+           give=TRUE,
+           fcm=c(1,-1,rep(0,8)),
+           fcv=0)
+support_constrained <- jj$value
 
- 
+## Difference in support:
+extra_support <- support_free-support_constrained
+print(extra_support)   # support
+print(exp(extra_support))  # likelihood ratio
+
+
+## Wilks:
+print(pchisq(2*extra_support, df=1, lower.tail=FALSE))
