@@ -2,7 +2,8 @@
 ## file karpov_kasparov_anand.R for details on the origin of the data.
 
 ## This is a more sophisticated version (with more parameters) than
-## inst/karpov_kasparov.R
+## inst/karpov_kasparov.R: it allows for each player to have a
+## distinct draw monster.
 
 ## This file creates likelihood function 'H' 
 
