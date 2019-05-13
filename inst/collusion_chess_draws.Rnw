@@ -97,8 +97,17 @@ options("width" = 90)
 
 \cite{moul2009}: for instance, a player may have the choice of more
 and less conservative strategies with different chances for a
-draw. Risk- averse players may pursue less aggressive strategies,
-trading expected payout for reduced variance
+draw.  Risk- averse players may pursue less aggressive strategies,
+trading expected payout for reduced variance.
+
+
+moul: White's relative advantage over Black will be dependent upon the
+comparative mastery of the two players.
+
+The most obvious issue regarding the threshold against which we compare
+this relative advantage of White is the inherent advantage of White's
+position in moving first. We correspondingly do not expect these base
+thresholds to be symmetric and impose no such restriction.
 
 \cite{moul2009}: the question of Soviet collusion during the period
 when the USSR dominated the struggle for the world championship has
@@ -107,12 +116,13 @@ best-known (but not unique) criticism was aired by Bobby Fischer some
 weeks after the 1962 Candidates Tournament in Curacao
 
 In inference problems where the dataset is outcomes of paired
-comparisons, such as chess, the Bradley-Terry model can be augmented
-to accommodate draws in a number of ways.  Here I present a new
-augmentation of Bradley-Terry in which a drawn chess match is regarded
-as a three-way competition between the players and an entity that wins
-if the match is drawn.  The resulting likelihood functions are easily
-optimised numerically and I present a number of results.
+comparisons, such as chess, the Bradley-Terry
+model~\citep{bradley1952} can be augmented to accommodate draws in a
+number of ways.  Here I present a new augmentation of Bradley-Terry in
+which a drawn chess match is regarded as a three-way competition
+between the players and an entity that wins if the match is drawn.
+The resulting likelihood functions are easily optimised numerically
+and I present a number of results.
 
 Consider first the standard Bradley-Terry model for $n$ players.
 First we ignore the effect of playing white.  We wish to find numbers
@@ -165,27 +175,34 @@ equal to
 
 \begin{equation}
 \prod_{i<j}
-\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}^\mathrm{white}}
-\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}^\mathrm{black}}
-\end{equation}
-
-\begin{equation}
+\left(\frac{p_D}{p_i+p_j+p_D+p_W}\right)^{D_{ij}^\mathrm{white}}
+\left(\frac{p_D}{p_i+p_j+p_D+p_W}\right)^{D_{ij}^\mathrm{black}}
+=
 \prod_{i<j}
 \left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}^\mathrm{white}+D_{ij}^\mathrm{black}}
 \end{equation}
 
 which might be preferable on grounds of clarity.  We now apply this
-likelihood model to real chess datasets.  The general approach to
-testing any hypothesis $H$ on any likelihood function $\mathcal{L}$ is
-first to identify the constraint on hypothesis space corresponding to
-$H$.  One then finds the unconstrained maximum likelihood
-$\mathcal{L}_\mathrm{free}$ and compares it with the maximum
-likelihood $\mathcal{L}_\mathrm{cons}$ when the optimization is
-constrained by $H$.  The test statistic is then the likelihood ratio
-$\mathcal{L}_\mathrm{free}/\mathcal{L}_\mathrm{cons}$ or, equivalently
-the support $\mathcal{S}=\log\mathcal{R}$.  Wilks's theorem states
-that the asymptotic distribution of $2\mathcal{S}$ is $\chi^2_n$ where
-$n$ is the number of degrees of freedom implemented by $H$.
+and related likelihood models to real chess datasets.  The general
+approach to testing any hypothesis $H$ on any likelihood function
+$\mathcal{L}$ is first to identify the constraint on hypothesis space
+corresponding to $H$.  One then finds the unconstrained maximum
+likelihood $\mathcal{L}_\mathrm{free}$ and compares it with the
+maximum likelihood $\mathcal{L}_\mathrm{cons}$ when the optimization
+is constrained by $H$.  The test statistic is then the likelihood
+ratio $\mathcal{L}_\mathrm{free}/\mathcal{L}_\mathrm{cons}$ or,
+equivalently the support $\mathcal{S}=\log\mathcal{R}$.  Wilks's
+theorem states that the asymptotic distribution of $2\mathcal{S}$ is
+$\chi^2_n$ where $n$ is the number of degrees of freedom implemented
+by $H$.
+
+\subsection{Discussion}
+
+The above likelihood functions are objective and reasonable
+representations of chess match results.  However, they differ markedly
+from previous likelihood functions of draws in that they include
+entities representing white player advantage ($p_W$), and the
+proclivity to draw $p_D$).   The $p_W$
 
 
 \section{Anand, Karpov, Kasparov}
@@ -219,9 +236,9 @@ in Table~\ref{kka}.  Equation~\ref{likelihood_WD} becomes
 \cmidrule(l){2-4}
 & An &  Kr & Ks        \\ 
 \midrule
-  An & -  &  13 &   2  \\
-  Kr &  5 &  -  &   7  \\
-  Ks & 11 &   9 &  -   \\
+  An & -  &   5 &   11  \\
+  Kr & 13 &  -  &    9  \\
+  Ks &  2 &   7 &  -   \\
 \end{tabular}
 \caption{Results of 365 chess matches \label{kka} between Grandmaster
   Anand, Grandmaster Karpov, and Grandmaster Kasparov.  Thus, for
@@ -384,7 +401,7 @@ under a likelihood function that admits differential proclivities to draw}
   \end{center}
 \end{figure}
 
-\begin{equation}
+\begin{equation}\label{KKA_personalised_drawmonster}
 \mathcal{L}\left(
 p_\mathrm{An},p_\mathrm{Kr},p_\mathrm{Ks}
 ,W,
@@ -415,8 +432,8 @@ round(maxp(kka_3draws),3)
 We see considerable variability in proclivity to draw and again this
 may be tested with the Method of Support, which gives a $p$-value of
 about 0.039, borderline significant: an interesting result, given that
-in this case no
-player's draw monster appears alone anywhere in the likelihood function.
+in this case no draw monster appears alone anywhere in the likelihood
+function.
 
 <<echo=FALSE,print=FALSE>>=
 objective <- function(V){
@@ -456,6 +473,47 @@ pchisq(2*extra_support,df=2,lower.tail=FALSE)
 @ 
 
 
+\subsection{Each player has a distinct White monster}
+
+We now consider the possibility that the strength conferred by playing
+White, is specific to each player and we denote this $w_\mathrm{An}$,
+$w_\mathrm{Kr}$ and $w_\mathrm{Ks}$.  The corresponding likelihood
+function would be
+
+\begin{equation}\label{KKA_personalised_whitemonster}
+%\mathcal{L}\left(
+%p_\mathrm{An},p_\mathrm{Kr},p_\mathrm{Ks},
+%w_\mathrm{An},w_\mathrm{Kr},w_\mathrm{Ks},D
+%\right)=
+\frac{
+%\parbox{3in}
+%       {$
+p_\mathrm{An}^{15}
+p_\mathrm{Kr}^{12}
+p_\mathrm{Ks}^{20}
+D^{224}
+\left(p_\mathrm{An} + w_\mathrm{An}\right)^{24}%\\ \rule{10mm}{1mm}
+\left(p_\mathrm{Kr} + w_\mathrm{Kr}\right)^{25}
+\left(p_\mathrm{Ks} + w_\mathrm{Ks}\right)^{45}
+%$}
+}{\parbox{4in}{$
+\left(p_\mathrm{An} + p_\mathrm{Kr} + w_\mathrm{An} +  D\right)^{43}
+\left(p_\mathrm{An} + p_\mathrm{Kr} + w_\mathrm{Kr} +  D\right)^{49}\\ \rule{10mm}{0mm}
+\left(p_\mathrm{An} + p_\mathrm{Ks} + w_\mathrm{An} +  D\right)^{37}
+\left(p_\mathrm{An} + p_\mathrm{Ks} + w_\mathrm{Ks} +  D\right)^{43}\\ \rule{20mm}{0mm}
+\left(p_\mathrm{Kr} + p_\mathrm{Ks} + w_\mathrm{Kr} +  D\right)^{99}
+\left(p_\mathrm{Kr} + p_\mathrm{Ks} + w_\mathrm{Ks} +  D\right)^{94}
+$}}
+\end{equation}
+
+In the likelihood function above we see, for example, that Anand won a
+total of $18+6=24$ matches playing White, $13+2=15$ games playing
+Black, and that Anand played white against Karpov a total of
+$18+20+5=43$ times.  We fail to reject the null of
+$w_\mathrm{An}=w_\mathrm{Kr}=w_\mathrm{Ks}$, having a likelihood ratio
+of $4.5$, or an asymptotic $p$-value of $0.076$.  There is no strong
+evidence that the players differ in regard to their white advantage.
+
 \section{Chess collusion: Cura\c{c}ao 1962}
 \begin{table}
 \centering
@@ -478,8 +536,10 @@ Benko     &USA     &             &NA      &NA     &NA     &NA     &NA     &WLD  
 Tal       &USSR    &             &NA      &NA     &NA     &NA     &NA     &NA     &WLD \\
 Filip     &TCH     &             &NA      &NA     &NA     &NA     &NA     &NA     &A \\
 \end{tabular}
-\caption{Curacao 1962 SPELLED WRONG}
+\caption{Cura\c{c}ao 1962 candidates matches, world championship 1963}
 \end{table}
+
+
 
 
 \section{Chess collusion: interzonal Stockholm 1962}
@@ -624,6 +684,17 @@ abline(h=c(0,-2))
   the region plotted}
   \end{center}
 \end{figure}
+
+\section{Conclusions}
+
+In this context we note, following \cite{langer2013}, that a player
+may well adopt a riskier strategy after a sequence of defeats,
+adopting a ``nothing-to-lose'' mentality.  Such a phenomenon would be
+detectable, at least in principle, by generalizing the personalised
+draw likelihood function \ref{KKA_personalised_drawmonster} and
+seeking evidence for the draw monster's strength changing as a
+tournament progresses: it would become stronger for a player on a
+winning streak, and weaker for a losing player.
 
 
 \bibliography{chess}
