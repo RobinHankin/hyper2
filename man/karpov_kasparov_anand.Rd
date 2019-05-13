@@ -2,6 +2,7 @@
 \alias{karpov_kasparov_anand}
 \alias{kka}
 \alias{kka_3draws}
+\alias{kka_3whites}
 \alias{white_wins}
 \alias{drawn_games}
 \alias{black_wins}
@@ -22,13 +23,14 @@ of game results}
   function allows one to estimate the players' strengths, propensity to
   draw, and also the additional strength conferred by playing white.
 
-  Likelihood functions \code{karpov_kasparov_karpov} and
-  \code{kka_3draws} are created by files
-  \code{inst/karpov_kasparov_anand.R} and \code{inst/kka_3draws}, which
-  are heavily documented and include some analysis.  Object
-  \code{karpov_kasparov_anand} assumes that the draw potential is the
-  same for all three players; likelihood function \code{kka_3draws}
-  allows the propensity to draw to differ between the three players.
+  Likelihood functions \code{karpov_kasparov_karpov}, \code{kka_3draws}
+  and \code{kka_3whites} are created by files
+  \code{inst/karpov_kasparov_anand.R}, \code{inst/kka_3draws} and
+  \code{inst/kka_3whites}, which are heavily documented and include some
+  analysis.  Object \code{karpov_kasparov_anand} assumes that the draw
+  potential is the same for all three players; likelihood function
+  \code{kka_3draws} allows the propensity to draw to differ between the
+  three players.
 
   The reason that the players are different from those in the
   \code{chess} dataset is that the original data does not seem to be

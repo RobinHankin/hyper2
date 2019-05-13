@@ -36,14 +36,23 @@ anand_plays_white_draws_karpov = 20
 )
 
 
-# Likelihood functions calculated in inst/kka_3draws.R follows:
+# Likelihood functions calculated in inst/karpov_kasparov_anand.R follows:
 `karpov_kasparov_anand` <-
 structure(list(brackets = list(1, c(1, 2, 4, 5), c(1, 3, 4, 5
 ), c(1, 4), 2, c(2, 3, 4, 5), c(2, 4), 3, c(3, 4), 5), powers = c(12, 
 -193, -92, 25, 20, -80, 45, 15, 24, 224), pnames = c("Karpov", 
 "Kasparov", "Anand", "white", "draw")), class = "hyper2")
 
-# Likelihood functions calculated in inst/karpov_kasparov_anand.R follows:
+# Likelihood functions calculated in inst/kka_3whites.R follows:
+`kka_3whites` <-
+structure(list(brackets = list(1, c(1, 2, 4, 7), c(1, 2, 5, 7
+), c(1, 3, 4, 7), c(1, 3, 6, 7), c(1, 4), 2, c(2, 3, 5, 7), c(2, 
+3, 6, 7), c(2, 5), 3, c(3, 6), 7), powers = c(12, -99, -94, -49, 
+-43, 25, 20, -43, -37, 45, 15, 24, 224), pnames = c("Karpov", 
+"Kasparov", "Anand", "Karpov_white", "Kasparov_white", "Anand_white", 
+"draw")), class = "hyper2")
+
+# Likelihood functions calculated in inst/kka_3draws.R follows:
 `kka_3draws` <-
 structure(list(brackets = list(1, c(1, 2, 4, 5, 6), c(1, 3, 4, 
 5, 7), c(1, 4), 2, c(2, 3, 4, 6, 7), c(2, 4), 3, c(3, 4), c(5, 
