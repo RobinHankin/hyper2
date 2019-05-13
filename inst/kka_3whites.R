@@ -5,7 +5,8 @@
 ## inst/karpov_kasparov.R: it allows each player to have a distinct
 ## white strength.
 
-## This file creates likelihood function 'H' 
+## This file creates likelihood function 'H', which is identical to
+## dataset kka_3whites in the package.
 
 
 library("hyper2")
@@ -48,7 +49,7 @@ H %<>% trial(D                             , anand_plays_white_vs_kasparov, anan
 
 detach(results)
 
-
+stopifnot(H == kka_3whites)
 
 
 ## Test the hypothesis that all three players have the same strength
