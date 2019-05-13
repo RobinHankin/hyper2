@@ -1,13 +1,32 @@
+# Likelihood functions for either Curacao 1962 or Zurich 1953
+
+
 library("hyper2")
-jj <- read.table("curacao1962_candidates.txt",header=FALSE)
 
-players <- 
-c("Petrosian", "Keres", "Geller", "Fischer", "Korchnoi", "Benko", "Tal", "Filip")
-names(players) <-   # nationality
-c("USSR", "USSR", "USSR", "USA", "USSR", "USA", "USSR", "TCH")
+curacao <- FALSE   # If FALSE, analyse Zurich 1953
+if(curacao){
+  jj <- read.table("curacao1962_candidates.txt",header=FALSE)
 
-d <- as.matrix(cbind(as.character(jj$V1),as.character(jj$V2)))
+  players <- 
+    c("Petrosian", "Keres", "Geller", "Fischer", "Korchnoi",
+      "Benko", "Tal", "Filip")
+  names(players) <-   # nationality
+    c("USSR", "USSR", "USSR", "USA", "USSR", "USA", "USSR", "TCH")
+  
+
+
+} else { # Zurich 1953
+  jj <- read.table("zurich1953_candidates.txt",header=FALSE)
+  
+  players <- c(USSR="Averbakh", USSR="Boleslavsky", USSR="Bronstein",
+               dutch="Euwe",USSR="Geller", serb="Gligoric", USSR="Keres",
+               USSR="Kotov", poland="Najdorf",
+               USSR="Petrosian", polish="Reshevsky", USSR="Smyslov", 
+               swedish="Stahlberg", hungarian="Szabo", USSR="Taimanov")
+}
+
 results <- as.character(jj$V3)
+d <- as.matrix(cbind(as.character(jj$V1),as.character(jj$V2)))
 colnames(d) <- c("white","black")
 
 stopifnot(all(c(d) %in% players))
@@ -56,9 +75,9 @@ support_free <- maxp(H,give=TRUE)$value
 
 ## Now calculate maximum support constrained so draw >= sovdraw:
 jj <- maxp(H,
-           startp=c(0.3,0.2,0.2,rep(0.3/8,7)),
+           startp=c(0.3,0.2,0.2,rep(0.3/(size(H)-3),size(H)-4)),
            give=TRUE,
-           fcm=c(1,-1,rep(0,8)),
+           fcm=c(1,-1,rep(0,size(H)-3)),
            fcv=0)
 support_constrained <- jj$value
 
