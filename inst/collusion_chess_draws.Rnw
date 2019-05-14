@@ -30,9 +30,23 @@
 %% an abstract and keywords
 \Abstract{
 
-Here I analyse chess games for draws using the hyper2 package.
-}
-
+In inference problems where the dataset is outcomes of paired
+comparisons, such as chess, the Bradley-Terry model can be augmented
+to chess-specific considerations in a number of ways.  Here I present
+a new generalization of Bradley-Terry in which a chess match is
+regarded as a three-way competition between the two players and an
+entity that wins if the match is drawn.  Bradley-Terry can be further
+modified to account for the White player advantage in a number of
+ways.  This methodology affords insight into players' strengths,
+response to playing Black or White, and risk-aversion as manifested by
+probability of drawing.  The likelihood functions arising are easily
+optimised numerically.  I analyse a number of datasets of chess
+results, including the infamous World Chess Championships 1963 in
+which the Soviets were accused of collusion.  I conclude that the
+scoreline of the Candidates Tournament (Cura\c{c}ao 1962) exhibits no
+evidence of collusion, in agreement with previous work.  However, I
+find strong evidence of increased Soviet proclivity to draw in the
+Interzonal Tournament, Stockholm 1962.}
 
 \Keywords{Dirichlet distribution, hyperdirichlet distribution,
   combinatorics, \proglang{R}, multinomial distribution, constrained
@@ -74,8 +88,6 @@ optimization, Bradley-Terry}
 \newcommand\headercell[1]{%
    \smash[b]{\begin{tabular}[t]{@{}c@{}} #1 \end{tabular}}}
 
-
-
 \SweaveOpts{}
 \begin{document}
 \section{Introduction}
@@ -95,11 +107,6 @@ options("width" = 90)
 
 \cite{joe1990}
 
-\cite{moul2009}: for instance, a player may have the choice of more
-and less conservative strategies with different chances for a
-draw.  Risk- averse players may pursue less aggressive strategies,
-trading expected payout for reduced variance.
-
 
 moul: White's relative advantage over Black will be dependent upon the
 comparative mastery of the two players.
@@ -115,28 +122,85 @@ been one of the long-standing debates in the chess world. The
 best-known (but not unique) criticism was aired by Bobby Fischer some
 weeks after the 1962 Candidates Tournament in Curacao
 
-In inference problems where the dataset is outcomes of paired
-comparisons, such as chess, the Bradley-Terry
-model~\citep{bradley1952} can be augmented to accommodate draws in a
-number of ways.  Here I present a new augmentation of Bradley-Terry in
-which a drawn chess match is regarded as a three-way competition
-between the players and an entity that wins if the match is drawn.
-The resulting likelihood functions are easily optimised numerically
-and I present a number of results.
+Many situations involve pairwise comparisons that amount to a
+Bernoulli trial.  The canonical application would be to two-way
+competitive situations such as tennis in which one or other player is
+idenfied as the winner, but the system has been applied to many
+non-competitive situations such mating preference~\cite{hankin_aylmer}
+and consumer behaviour.  The Bradley-Terry model~\citep{bradley1952}
+considers $n$ players and assigns non-negative numbers
+$p_1,\ldots,p_n$ with unit sum to each player.  Then player $i$ beats
+player $j$ with probability $\frac{p_i}{p_i+p_j}$.  This simple system
+has been modified and extended many times, for example to account for
+multi-way choices such as icon selection~\cite{hankinhyperdirichlet}.
 
-Consider first the standard Bradley-Terry model for $n$ players.
-First we ignore the effect of playing white.  We wish to find numbers
-(``strengths") $p_i$ for $1\leqslant i\leqslant n$ with $p_i\geqslant
-0, \sum p_i=1$ such that the probability of $i$ beating $j\neq i$ is
-$\frac{p_i}{p_i+p_j}$.  A suitable likelihood function, on the
-assumption of independence of trials, would be
+Bradley-Terry is not directly applicable to Chess for two reasons:
+firstly, the White player is at a considerable
+advantage~\cite{asdfasdffdsfds}; and secondly, many chess matches end
+in a draw.  Considering White advantage first, we find an overall mean
+of about $(+0.375=0.394-0.276)$.  However, interpretations of this
+statistic vary and the issue is hotly debated with opinions ranging
+from Rowson who compares first-move advantage to that of serving in
+tennis, to that of commentators such as \citeauthor{adorjan} who
+claims that White's advantage is a ``delusion''; and that Black can
+mount an intelligent and dynamic response to white: ``chess is a game
+of complete information, and Black's information is always
+greater---by one move!''.
 
-$$
+Chess games may be won by either player, or may be drawn. The
+implication of a draw is that neither player is better than the other.
+Before 1867, tournament games that were drawn were replayed and in
+this context we note that this procedure reduces a chess match to a
+Bernoulli trial, with probability one.  This system became unworkable
+due to the large number of draws, resulting in the modern practice of
+awarding each player of a drawn match half a point, rendering chess a
+zero-sum game.  Drawn games are generally considered to be undesirable
+as they are generally poorer in spectacular or striking elements such
+as sharp tactical combinations or sacrifice.  Excessive drawing
+dissuades sponsors, leaves spectators feeling cheated, and leaves
+commentators with material to discuss with the public.
+\cite{moul2009} concurs, conceptualising a player as being able to
+adopt a strategy on a spectrum ranging from conservative to
+aggressive, thus being able to control the probability of a draw.  He
+suggests that risk-averse players may pursue less vigorous strategies,
+trading expected payout for reduced variance.   
+
+such as chess, the Bradley-Terry model can
+be augmented to chess-specific considerations in a number of ways.
+Here I present a new generalization of Bradley-Terry in which a chess
+match is regarded as a three-way competition between the two players
+and an entity that wins if the match is drawn.  Bradley-Terry can be
+further modified to account for the White player advantage in a number
+of ways.  This methodology affords insight into players' strengths,
+response to playing Black or White, and risk-aversion as manifested by
+probability of drawing.  The likelihood functions arising are easily
+optimised numerically.  I analyse a number of datasets of chess
+results, including the infamous World Chess Championships 1963 in
+which the Soviets were accused of collusion.  I conclude that the
+scoreline of the Candidates Tournament (Cura\c{c}ao 1962) exhibits no
+evidence of collusion, in agreement with previous work.  However, I
+find strong evidence of increased Soviet proclivity to draw in the
+Interzonal Tournament, Stockholm 1962.
+
+
+
+
+
+
+
+
+Consider first the standard Bradley-Terry model for a finite number of
+chess players.  First we ignore the effect of playing white.  We wish
+to find numbers (``strengths") $p_i$ for $1\leqslant i\leqslant n$
+with $p_i\geqslant 0, \sum p_i=1$ such that the probability of $i$
+beating $j\neq i$ is $\frac{p_i}{p_i+p_j}$.  A suitable likelihood
+function, on the assumption of independence of trials, would be
+
+\begin{equation}
 \prod_{i<j}
 \left(\frac{p_i}{p_i+p_j}\right)^{w_{ij}}
 \left(\frac{p_j}{p_i+p_j}\right)^{l_{ij}}
-$$
-
+\end{equation}
 
 where $w_{ij}$ is the number of times $i$ beats $j$ and $l_{ij}$ is
 the number of times $i$ loses to $j$.  Incorporation of draws is
@@ -156,8 +220,10 @@ where $W_{ij}$ is the number of games won by $i$ when playing $j$,
 $L_{ij}$ is games lost and $D_{ij}$ is games drawn.  However, this
 approach ignores the extra strength conferred by playing white.  We
 thus consider a chess match between two players to be a three-way
-entity but with a friendly ghost with strength $p_W$ whose strength is
-added to the white player.
+competition between the two ``real'' players and the draw monster, but
+this time we interpret the white player as the combined strength of
+the player himself and another entity, the White monster, whose
+strength $p_W$ is added to the white player.
 
 \begin{align}\nonumber
 \prod_{i<j}&{}
