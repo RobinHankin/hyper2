@@ -46,7 +46,14 @@ which the Soviets were accused of collusion.  I conclude that the
 scoreline of the Candidates Tournament (Cura\c{c}ao 1962) exhibits no
 evidence of collusion, in agreement with previous work.  However, I
 find strong evidence of increased Soviet proclivity to draw in the
-Interzonal Tournament, Stockholm 1962.}
+Interzonal Tournament, Stockholm 1962.
+
+The likelihood functions arising are easily optimised numerically.  I
+analyse a number of datasets of chess results, including the infamous
+World Chess Championships 1963 in which the Soviets were accused of
+collusion.
+
+}
 
 \Keywords{Dirichlet distribution, hyperdirichlet distribution,
   combinatorics, \proglang{R}, multinomial distribution, constrained
@@ -101,38 +108,21 @@ options("width" = 90)
 
 \section{Introduction: the Bradley-Terry model}
 
-\cite{moul2009}
-
 \cite{davidson1970}
 
 \cite{joe1990}
-
-
-moul: White's relative advantage over Black will be dependent upon the
-comparative mastery of the two players.
-
-The most obvious issue regarding the threshold against which we compare
-this relative advantage of White is the inherent advantage of White's
-position in moving first. We correspondingly do not expect these base
-thresholds to be symmetric and impose no such restriction.
-
-\cite{moul2009}: the question of Soviet collusion during the period
-when the USSR dominated the struggle for the world championship has
-been one of the long-standing debates in the chess world. The
-best-known (but not unique) criticism was aired by Bobby Fischer some
-weeks after the 1962 Candidates Tournament in Curacao
 
 Many situations involve pairwise comparisons that amount to a
 Bernoulli trial.  The canonical application would be to two-way
 competitive situations such as tennis in which one or other player is
 idenfied as the winner, but the system has been applied to many
-non-competitive situations such mating preference~\cite{hankin_aylmer}
-and consumer behaviour.  The Bradley-Terry model~\citep{bradley1952}
+non-competitive situations such mating preference~\citep{west2008} and
+consumer behaviour.  The Bradley-Terry model~\citep{bradley1952}
 considers $n$ players and assigns non-negative numbers
 $p_1,\ldots,p_n$ with unit sum to each player.  Then player $i$ beats
 player $j$ with probability $\frac{p_i}{p_i+p_j}$.  This simple system
 has been modified and extended many times, for example to account for
-multi-way choices such as icon selection~\cite{hankinhyperdirichlet}.
+multi-way choices such as mating preferences~\citep{hankin2010}.
 
 Bradley-Terry is not directly applicable to Chess for two reasons:
 firstly, the White player is at a considerable
@@ -155,38 +145,35 @@ Bernoulli trial, with probability one.  This system became unworkable
 due to the large number of draws, resulting in the modern practice of
 awarding each player of a drawn match half a point, rendering chess a
 zero-sum game.  Drawn games are generally considered to be undesirable
-as they are generally poorer in spectacular or striking elements such
-as sharp tactical combinations or sacrifice.  Excessive drawing
-dissuades sponsors, leaves spectators feeling cheated, and leaves
-commentators with material to discuss with the public.
-\cite{moul2009} concurs, conceptualising a player as being able to
-adopt a strategy on a spectrum ranging from conservative to
-aggressive, thus being able to control the probability of a draw.  He
-suggests that risk-averse players may pursue less vigorous strategies,
-trading expected payout for reduced variance.   
+as they are usually poorer in spectacular or striking elements such as
+sharp tactical combinations or sacrifice.  Excessive drawing dissuades
+sponsors, leaves spectators feeling cheated, and gives commentators
+less material to discuss.  Players themselves do not seem to value
+draws in the wider context of the game: \citeauthor{fischer1969}, for
+example, includes only 8 draws in his compilation of 60 memorable
+games, surely not representative of tournament play in which about
+34\% of games are drawn ($\chi^2$, $p<3\times 10^{-6}$).
 
-such as chess, the Bradley-Terry model can
-be augmented to chess-specific considerations in a number of ways.
-Here I present a new generalization of Bradley-Terry in which a chess
-match is regarded as a three-way competition between the two players
-and an entity that wins if the match is drawn.  Bradley-Terry can be
-further modified to account for the White player advantage in a number
-of ways.  This methodology affords insight into players' strengths,
-response to playing Black or White, and risk-aversion as manifested by
-probability of drawing.  The likelihood functions arising are easily
-optimised numerically.  I analyse a number of datasets of chess
-results, including the infamous World Chess Championships 1963 in
-which the Soviets were accused of collusion.  I conclude that the
-scoreline of the Candidates Tournament (Cura\c{c}ao 1962) exhibits no
-evidence of collusion, in agreement with previous work.  However, I
-find strong evidence of increased Soviet proclivity to draw in the
-Interzonal Tournament, Stockholm 1962.
+\cite{moul2009} conceptualise a player as being able to adopt a
+strategy on a spectrum ranging from conservative to aggressive, thus
+being able to exert some control over the probability of a draw.  They
+suggest that risk-averse players may pursue less vigorous strategies,
+trading expected payout for reduced variance. \cite{langer2013} {\bf
+  cite something better here} point out that rational players in an
+ongoing competitive situation modify their strategies depending on
+whether they are leading or lagging: the lagging player will adopt
+higher risk strategy (`nothing to lose'), while the leading player is
+incentivised to protect the lead by lowering the risk of losing.  In a
+chess context, this means the leading player will aim for a draw.
 
-
+Such arguments suggest that considering a drawn chess match as a
+qualitatively different outcome from a win for either player: the play
+itself tends to be different, the drawing players have a different
+mindset, and drawn games have less value in the wider context of the
+game.
 
 
-
-
+\section{Bradley-Terry}
 
 
 Consider first the standard Bradley-Terry model for a finite number of
@@ -203,11 +190,18 @@ function, on the assumption of independence of trials, would be
 \end{equation}
 
 where $w_{ij}$ is the number of times $i$ beats $j$ and $l_{ij}$ is
-the number of times $i$ loses to $j$.  Incorporation of draws is
-straightforward: we consider a chess match to be a three-way trial
-between the two players and an entity that wins if the match is drawn.
-We thus seek a likelihood function for non-negative
-$p_1,\ldots,p_n,p_D$ with $p_D+\sum p_i=1$ and this would be
+the number of times $i$ loses to $j$.  Here I present a new
+generalization of Bradley-Terry in which a chess match is regarded as
+a three-way competition between the two players and an entity that
+wins if the match is drawn.  The system is further modified to account
+for first-move advantage by positing an entity whose strength is added
+to that of the White player.  This methodology affords insight into
+players' strengths, response to playing Black or White, and
+risk-aversion as manifested by probability of drawing.
+
+If we consider a chess match to be a three-way trial, we define a
+likelihood function for non-negative $p_1,\ldots,p_n,p_D$ with
+$p_D+\sum p_i=1$ and this would be
 
 \begin{equation}
 \prod_{i<j}
@@ -218,12 +212,26 @@ $p_1,\ldots,p_n,p_D$ with $p_D+\sum p_i=1$ and this would be
 
 where $W_{ij}$ is the number of games won by $i$ when playing $j$,
 $L_{ij}$ is games lost and $D_{ij}$ is games drawn.  However, this
-approach ignores the extra strength conferred by playing white.  We
-thus consider a chess match between two players to be a three-way
-competition between the two ``real'' players and the draw monster, but
-this time we interpret the white player as the combined strength of
-the player himself and another entity, the White monster, whose
-strength $p_W$ is added to the white player.
+approach ignores the extra strength conferred by the first-move
+advantage.  We thus consider another entity whose strength is added to
+the white player.  The strength of the white player is thus the sum of
+the player's strength and another entity, the White monster.
+Recalling that a game might be a draw, we obtain the probabilities as
+given in Table~\ref{probabilities}.  The corresponding likelihood
+function is given below in equation \ref{likelihood_WD}:
+
+\newcommand{\oo}{\vphantom{W^{W^W}}}
+
+\begin{table}
+\centering
+\begin{tabular}{l|cc}\\
+  &$i$ plays white & $j$ plays white\\ \hline
+$\Prob{(\mbox{$i$ wins})}$  & $\frac{p_i+p_W\oo}{p_i+p_j+p_W+D}$ & $\frac{p_i}{p_i+p_j+p_W+D}$  \\
+$\Prob{(\mbox{draw})}$      & $\frac{D\oo}{p_i+p_j+p_W+D}$       & $\frac{D}{p_i+p_j+p_W+D}$    \\
+$\Prob{(\mbox{$i$ loses})}$ & $\frac{p_j\oo}{p_i+p_j+p_W+D}$     & $\frac{p_j+p_W}{p_i+p_j+p_W+D}$\\
+\end{tabular}
+\caption{Probabilities of a win, draw, loss for the two players under a generalized Bradley-Terry model\label{probabilities}}
+\end{table}
 
 \begin{align}\nonumber
 \prod_{i<j}&{}
@@ -581,6 +589,16 @@ of $4.5$, or an asymptotic $p$-value of $0.076$.  There is no strong
 evidence that the players differ in regard to their white advantage.
 
 \section{Chess collusion: Cura\c{c}ao 1962}
+
+
+
+\cite{moul2009}: the question of Soviet collusion during the period
+when the USSR dominated the struggle for the world championship has
+been one of the long-standing debates in the chess world. The
+best-known (but not unique) criticism was aired by Bobby Fischer some
+weeks after the 1962 Candidates Tournament in Curacao
+
+
 \begin{table}
 \centering
 \begin{tabular}{ll|cccccccc}
