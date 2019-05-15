@@ -33,9 +33,9 @@
 In inference problems where the dataset is outcomes of paired
 comparisons, such as chess, the Bradley-Terry model can be augmented
 to chess-specific considerations in a number of ways.  Here I present
-a new generalization of Bradley-Terry in which a chess match is
+a new generalization of Bradley-Terry in which a chess game is
 regarded as a three-way competition between the two players and an
-entity that wins if the match is drawn.  Bradley-Terry can be further
+entity that wins if the game is drawn.  Bradley-Terry can be further
 modified to account for the white player advantage in a number of
 ways.  Such reification affords insight into players' strengths,
 response to playing black or white, and risk-aversion as manifested by
@@ -91,7 +91,6 @@ optimization, Bradley-Terry}
 
 \SweaveOpts{}
 \begin{document}
-\section{Introduction}
 
 
 <<echo=FALSE,print=FALSE>>=
@@ -120,55 +119,60 @@ multi-way choices such as mating preferences~\citep{hankin2010}.
 
 Bradley-Terry is not directly applicable to Chess for two reasons:
 firstly, the white player is at a considerable
-advantage~\cite{asdfasdffdsfds}; and secondly, many chess matches end
-in a draw.  Considering white advantage first, we find an overall mean
-of about $(+0.375=0.394-0.276)$.  However, interpretations of this
-statistic vary and the issue is hotly debated with opinions ranging
-from Rowson who compares first-move advantage to that of serving in
-tennis, to that of commentators such as \citeauthor{adorjan} who
-claims that white's advantage is a ``delusion''; and that Black can
-mount an intelligent and dynamic response to white: ``chess is a game
-of complete information, and Black's information is always
-greater---by one move!''.
+advantage~\cite{asdfasdffdsfds}; and secondly, many chess games end in
+a draw: white wins about $37.5\%$ of all games, black wins $27.6\%$,
+and about $39.4\%$ are drawn.  We consider the first-mover advantage
+first, then consider the effect of drawn games.
 
-Chess games may be won by either player, or may be drawn. The
-implication of a draw is that neither player is better than the other.
-Before 1867, tournament games that were drawn were replayed and in
-this context we note that this procedure reduces a chess match to a
-Bernoulli trial, with probability one.  This system became unworkable
-due to the large number of draws, resulting in the modern practice of
-awarding each player of a drawn match half a point, rendering chess a
-zero-sum game.  Drawn games are generally considered to be undesirable
-as they are usually poorer in spectacular or striking elements such as
-sharp tactical combinations or sacrifice.  Excessive drawing dissuades
-sponsors, leaves spectators feeling cheated, and gives commentators
-less material to discuss.  Players themselves do not seem to value
-draws in the wider context of the game: \citeauthor{fischer1969}, for
-example, includes only 8 draws in his compilation of 60 memorable
-games, surely not representative of tournament play in which about
-34\% of games are drawn ($\chi^2$, $p<3\times 10^{-6}$).
+\paragraph{First-mover advantage} Traditionally White moves first in
+any game, and this feature introduces an asymmetry into play.
+Historically, we see about 1.35 white wins for every black win.
+However, interpretations of this statistic vary and the issue is hotly
+debated with opinions ranging from Rowson who compares first-move
+advantage to that of serving in tennis, to that of commentators such
+as \citeauthor{adorjan} who claims that White's advantage is a
+``delusion''.  \cite{asdfasdasfd} goes further, asserting that Black
+can exploit the situation by mounting a directed response to White, of
+the type seen in analysis of sequential zero-sum games, in which the
+first-mover advantage can be positive or negative.
+
+\paragraph{Draws} Chess games may be won by either player, or may be
+drawn; the implication of a draw is that neither player is better than
+the other.  Before 1867, tournament games that were drawn were
+replayed and in this context we note that this procedure reduces a
+chess game to a Bernoulli trial, with probability one.  This system
+became unworkable due to the large number of draws, resulting in the
+modern practice of awarding each player of a drawn game half a point,
+rendering chess a zero-sum game.  Drawn games are generally considered
+to be undesirable as they are usually poorer in spectacular or
+striking elements such as sharp tactical combinations or sacrifice.
+Excessive drawing dissuades sponsors, leaves spectators feeling
+cheated, and gives commentators less material to discuss.  Players
+themselves do not seem to value draws in the wider context of the
+game: \citeauthor{fischer1969}, for example, includes only 8 draws in
+his compilation of 60 memorable games, surely not representative of
+tournament play in which about 39.4\% of games are drawn (binomial
+test, $p<10^{-5}$).
 
 \cite{moul2009} conceptualise a player as being able to adopt a
 strategy on a spectrum ranging from conservative to aggressive, thus
-being able to exert some control over the probability of a draw.  They
+being able to exert some control over the probability of a draw and
 suggest that risk-averse players may pursue less vigorous strategies,
-trading expected payout for reduced variance. \cite{langer2013} {\bf
-  cite something better here} point out that rational players in an
-ongoing competitive situation modify their strategies depending on
-whether they are leading or lagging: the lagging player will adopt
-higher risk strategy (`nothing to lose'), while the leading player is
+trading expected payout for reduced variance.  Further,
+\cite{langer2013} point out that rational players in an ongoing
+competitive situation modify their strategies depending on whether
+they are leading or lagging: the lagging player will adopt a higher
+risk strategy (`nothing to lose'), while the leading player is
 incentivised to protect the lead by lowering the risk of losing.  In a
 chess context, this means the leading player will aim for a draw.
 
-Such arguments suggest that considering a drawn chess match as a
-qualitatively different outcome from a win for either player: the play
-itself tends to be different, the drawing players have a different
-mindset, and drawn games have less value in the wider context of the
-game.
+Such arguments suggest considering a drawn chess game as a
+qualitatively different outcome from a statement of equality of skill:
+the play itself tends to be different, the drawing players have a
+different mindset, and drawn games have less value in the wider
+context of the game.
 
-
-\section{Bradley-Terry}
-
+\section{Generalized Bradley-Terry}
 
 Consider first the standard Bradley-Terry model for a finite number of
 chess players.  First we ignore the effect of playing white.  We wish
@@ -179,21 +183,21 @@ function, on the assumption of independence of trials, would be
 
 \begin{equation}
 \prod_{i<j}
-\left(\frac{p_i}{p_i+p_j}\right)^{w_{ij}}
-\left(\frac{p_j}{p_i+p_j}\right)^{l_{ij}}
+\left(\frac{p_i}{p_i+p_j}\right)^{W_{ij}}
+\left(\frac{p_j}{p_i+p_j}\right)^{L_{ij}}
 \end{equation}
 
-where $w_{ij}$ is the number of times $i$ beats $j$ and $l_{ij}$ is
+where $W_{ij}$ is the number of times $i$ beats $j$ and $L_{ij}$ is
 the number of times $i$ loses to $j$.  Here I present a new
-generalization of Bradley-Terry in which a chess match is regarded as
+generalization of Bradley-Terry in which a chess game is regarded as
 a three-way competition between the two players and an entity that
-wins if the match is drawn.  The system is further modified to account
+wins if the game is drawn.  The system is further modified to account
 for first-move advantage by positing an entity whose strength is added
 to that of the white player.  This methodology affords insight into
 players' strengths, response to playing black or white, and
 risk-aversion as manifested by probability of drawing.
 
-If we consider a chess match to be a three-way trial, we define a
+If we consider a chess game to be a three-way trial, we define a
 likelihood function for non-negative $p_1,\ldots,p_n,D$ with
 $D+\sum p_i=1$ and this would be
 
@@ -264,27 +268,25 @@ the support $\mathcal{S}=\log\mathcal{R}$.  Wilks's theorem states
 that the asymptotic distribution of $2\mathcal{S}$ is $\chi^2_n$ where
 $n$ is the number of degrees of freedom implemented by $H$.
 
-\subsection{Discussion}
-
 The above likelihood functions are objective and reasonable
-representations of chess match results.  However, they differ markedly
-from previous likelihood functions of draws in that they include
-entities representing proclivity to draw $D$, and first-mover
-advantage ($W$).
+representations of chess results.  However, they differ markedly from
+previous likelihood functions of draws in that they include entities
+representing proclivity to draw $D$, and first-mover advantage ($W$).
 
+\subsection{Numerical considerations}
 
-Considering white player a
-
-The method of \citet{Edwards1972} involves only
-numerical optimization (not integration which is computationally
-expensive), and because gradients are available convergence is
-generally rapid.
-
+The Method of Support \citep{edwards1972} involves only numerical
+optimization (not integration which is computationally expensive).
+The analysis presented here uses the framework of the \pkg{hyper2}
+package~\citep{hankin2017} as a convenient and unified interface.
+Because gradients are available, convergence is generally rapid and
+hypothesis-specific constraints on parameter space are, in general,
+straightforward to implement.
 
 \section{Anand, Karpov, Kasparov}
 
 Grandmasters Anand, Karpov, Kasparov have long-standing rivalry and
-have played many matches amongst themselves.  A summary may be found
+have played many games amongst themselves.  A summary may be found
 in Table~\ref{kka}.  Equation~\ref{likelihood_WD} becomes
 
 \begin{table}
@@ -316,7 +318,7 @@ in Table~\ref{kka}.  Equation~\ref{likelihood_WD} becomes
   Kr & 13 &  -  &    9  \\
   Ks &  2 &   7 &  -   \\
 \end{tabular}
-\caption{Results of 365 chess matches \label{kka} between Grandmaster
+\caption{Results of 365 chess games \label{kka} between Grandmaster
   Anand, Grandmaster Karpov, and Grandmaster Kasparov.  Thus, for
   example, Anand played white against Karpov a total of $18+20+13=51$
   times and won 18, drew 20, lost 13}
@@ -362,17 +364,16 @@ hypotheses.  Firstly, we observe that $D=0$ cannot possibly be the
 case: the likelihood for this hypothesis would be identically zero,
 owing to the nonzero term in the numerator of the last term of
 Equation~\ref{likelihood_WD}.  However, we see that the maximum
-likelihood estimate for Draw strength $\hat{D}\simeq 0.53$: compare
+likelihood estimate for draw strength $\hat{D}\simeq 0.53$: compare
 the na\"ive estimate of $\frac{224}{365}\simeq 0.61$ given by
-observing 224 draws among 265 matches.  The MLE is lower because the
+observing 224 draws among 265 games.  The MLE is lower because the
 maximization process automatically adjusts for the different players'
 strengths.  Secondly, we may make inferences about $W$, the extra
-strength conferred by playing White: it is conceivable that $W=0$ as
+strength conferred by playing white: it is conceivable that $W=0$ as
 this term does not appear on its own in the numerator of any term.  We
 may test $H_0\colon W=0$ using the method of support by maximizing the
 likelihood subject the constraint $W=0$ and comparing with the
 likelihood when the optimization is free.
-
 
 
 <<echo=FALSE>>=
@@ -391,22 +392,29 @@ ignore4 <- maxp(karpov_kasparov_anand,give=TRUE)$value
 support <- 328.2975-335.6025
 @ 
 
+<<>>=
+ignore3
+ignore4
+ignore3-ignore4
+@ 
 
-The result of numerical optimization is 7.304, that is, well over the
-two-units-of-support per degree of freedom suggested by
-\citeauthor{edwards1972}; we can convincingly reject the hypothesis that
-$W=0$ and infer that playing white confers a significant advantage.
-This is consistent with expectation, but it is now possible to go
-significantly beyond mere existence of the effect and to quantify it,
-accounting for the differential strengths of the players.  Taking the
-MLE above, and considering a match between say Karpov and Anand, the
-strengths are Karpov=0.064, Anand=0.151, white =0.104 and draw =0.53.
-Thus we would estimate that Karpov playing white against Kasparov
-would win with probability
+
+The result of numerical optimization is about 7.01 units of support,
+or a likelihood ratio of $e^{7.01}\simeq 1107.7$: that is, well over
+the two-units-of-support per degree of freedom suggested by
+\citeauthor{edwards1972}; we can convincingly reject the hypothesis
+that $W=0$ and infer that playing white confers a significant
+advantage.  This is consistent with expectation, but it is now
+possible to go significantly beyond mere existence of the effect and
+to quantify it, accounting for the differential strengths of the
+players.  Taking the MLE above, and considering a game between say
+Karpov and Anand, the strengths are Karpov=0.064, Anand=0.151, white
+=0.104 and draw =0.53.  Thus we would estimate that Karpov playing
+white against Kasparov would win with probability
 $\frac{0.064+0.104}{0.064+0.104+0.148+0.532}\simeq 0.198$, draw with
 probability $\frac{532}{64+104+148+532}\simeq 0.625$, and lose with
-probability $\simeq 0.174$ (compare $+0.075\,=0.627-0.297$ if Karpov
-plays black).
+probability $\simeq 0.174$ (compare $+0.075\ {=}0.627\ {-}0.297$ if
+Karpov plays black).
 
 
 <<kka_equal_strength, print=FALSE,echo=FALSE>>=
@@ -449,23 +457,23 @@ However, this time the constraint corresponds to a loss of {\em two}
 degrees of freedom so we would need 4 units of support, which is
 attained in this case.  Alternatively we might follow Wilks, and
 observe that the value of $2\mathcal{S}=2*4.92=9.84$ lies in the tail
-region of its asymptotic distribution with a p-value of about 0.0072.
-We can justifiably assert that the players do indeed have different
-strengths, even if we account for white advantage and the proclivity
-to draw.
+region of its asymptotic $\chi^2_2$ distribution with a $p$-value of
+about 0.0072.  We can justifiably assert that the players do indeed
+have different strengths, even if we account for white advantage and
+the proclivity to draw.
 
 \subsection{Each player has a draw monster}
 
-Players with a cautious style tend to draw CITATION NEEDED and this is
-an important and interesting component of the game.  To investigate
+As argued above, players with a cautious style tend to draw and this
+is an important and interesting component of the game.  To investigate
 this we need a likelihood function that can account for possible
 differences in draw proclivity among the players.  This may be
-achieved by considering a match between two players to be a contest
+achieved by considering a game between two players to be a contest
 between five entities: the two real players, the white advantage, and
-two personalised draw entities, one per real player; a drawn match is
-counted as a win for either of the draw ghosts.  Under these
-assumptions, table~\ref{kka} translates into the following likelihood
-function:
+two {\em personalised} draw entities, one for each real player; a
+drawn game is counted as a win for either of the draw ``ghosts''.  Under
+these assumptions, table~\ref{kka} translates into the following
+likelihood function:
 
 \begin{figure}[htbp]
 \begin{center}
@@ -548,7 +556,6 @@ extra_support <-   unconstrained + constrained
 pchisq(2*extra_support,df=2,lower.tail=FALSE)
 @ 
 
-
 \subsection{Each player has a distinct White Monster}
 
 We now consider the possibility that the strength conferred by playing
@@ -583,7 +590,7 @@ $}}
 \end{equation}
 
 In the likelihood function above we see, for example, that Anand won a
-total of $18+6=24$ matches playing white, $13+2=15$ games playing
+total of $18+6=24$ games playing white, $13+2=15$ games playing
 Black, and that Anand played white against Karpov a total of
 $18+20+5=43$ times.  We fail to reject the null of
 $w_\mathrm{An}=w_\mathrm{Kr}=w_\mathrm{Ks}$, having a likelihood ratio
@@ -592,39 +599,44 @@ evidence that the players differ in regard to their white advantage.
 
 \section{Chess collusion: Cura\c{c}ao 1962}
 
+The method of support allows one to account for proclivity to draw
+while accounting for players' strengths and first-move advantage.  We
+now consider one famous incident, the World Chess Championships 1963,
+in which Fischer famously and publicly claimed that the Soviet players
+colluded.  The accusation was that Soviet players agreed ahead of time
+to draw when playing one another, in order to conserve energy for
+subsequent matches~\citep{moul2009}.
 
 
-\cite{moul2009}: the question of Soviet collusion during the period
-when the USSR dominated the struggle for the world championship has
-been one of the long-standing debates in the chess world. The
-best-known (but not unique) criticism was aired by Bobby Fischer some
-weeks after the 1962 Candidates Tournament in Curacao
+%the question of Soviet collusion during the period when the USSR
+%dominated the struggle for the world championship has been one of the
+%long-standing debates in the chess world.  The best-known (but not
+%unique) criticism was aired by Bobby Fischer some weeks after the 1962
+%Candidates Tournament in Curacao
 
-\begin{table}
-\centering
-\begin{tabular}{ll|cccccccc}
- &
-&\rotatebox{-90}{Petrosian} 
-&\rotatebox{-90}{Keres} 
-&\rotatebox{-90}{Geller}
-&\rotatebox{-90}{Fischer} 
-&\rotatebox{-90}{Korchnoi}
-&\rotatebox{-90}{Benko}
-&\rotatebox{-90}{Tal}
-&\rotatebox{-90}{Filip}\\
-Petrosian &USSR    &             &DDDD    &DDDD   &DWDD   &DDWW   &DDWD   &WWD    &DWWD\\
-Keres     &USSR    &             &NA      &DDDD   &LDWD   &DDWD   &WWWL   &WDW    &DWWD\\
-Geller    &USSR    &             &NA      &NA     &WWDL   &DDWD   &DDDW   &DWW    &DWWD\\
-Fischer   &USA     &             &NA      &NA     &NA     &LWLD   &LWDW   &DWD    &WDWD\\
-Korchnoi  &USSR    &             &NA      &NA     &NA     &NA     &DDDL   &WLD    &WWWW\\
-Benko     &USA     &             &NA      &NA     &NA     &NA     &NA     &WLD    &LWWD\\
-Tal       &USSR    &             &NA      &NA     &NA     &NA     &NA     &NA     &WLD \\
-Filip     &TCH     &             &NA      &NA     &NA     &NA     &NA     &NA     &A \\
-\end{tabular}
-\caption{Cura\c{c}ao 1962 candidates matches, world championship 1963}
-\end{table}
-
-
+% \begin{table}
+% \centering
+% \begin{tabular}{ll|cccccccc}
+% &
+% &%\rotatebox{-90}{Petrosian} 
+% &\rotatebox{-90}{Keres} 
+% &\rotatebox{-90}{Geller}
+% &\rotatebox{-90}{Fischer} 
+% &\rotatebox{-90}{Korchnoi}
+% &\rotatebox{-90}{Benko}
+% &\rotatebox{-90}{Tal}
+% &\rotatebox{-90}{Filip}\\
+% Petrosian &USSR    &             &DDDD    &DDDD   &DWDD   &DDWW   &DDWD   &WWD    &DWWD\\
+% Keres     &USSR    &             &NA      &DDDD   &LDWD   &DDWD   &WWWL   &WDW    &DWWD\\
+% Geller    &USSR    &             &NA      &NA     &WWDL   &DDWD   &DDDW   &DWW    &DWWD\\
+% Fischer   &USA     &             &NA      &NA     &NA     &LWLD   &LWDW   &DWD    &WDWD\\
+% Korchnoi  &USSR    &             &NA      &NA     &NA     &NA     &DDDL   &WLD    &WWWW\\
+% Benko     &USA     &             &NA      &NA     &NA     &NA     &NA     &WLD    &LWWD\\
+% Tal       &USSR    &             &NA      &NA     &NA     &NA     &NA     &NA     &WLD \\
+% Filip     &TCH     &             &NA      &NA     &NA     &NA     &NA     &NA     &NA \\
+% \end{tabular}
+% \caption{Cura\c{c}ao 1962 candidates, world championship 1963}
+% \end{table}
 
 
 \section{Chess collusion: interzonal Stockholm 1962}
@@ -654,8 +666,8 @@ Filip      (TCH)  & \halfw  & \halfb  & \halfb  & \zerob    &  -       &\\
 $\vdots$&&&&&\\
 \end{tabular}\label{interzonal}
 \caption{Subset of the Fifth Interzonal round-robin, Stockholm 1962.
-  Results (0,\halfw,1) and box colour refer to row player.  Thus, for
-  example, Fischer played black against Geller and drew}
+  Results $\in\{0,\halfw,1\}$ and box colour refer to row
+  player.  Thus, for example, Fischer played black against Geller and drew}
 \end{table}
 
 
