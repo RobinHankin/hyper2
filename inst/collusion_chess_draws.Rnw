@@ -36,9 +36,9 @@ to chess-specific considerations in a number of ways.  Here I present
 a new generalization of Bradley-Terry in which a chess match is
 regarded as a three-way competition between the two players and an
 entity that wins if the match is drawn.  Bradley-Terry can be further
-modified to account for the White player advantage in a number of
-ways.  This methodology affords insight into players' strengths,
-response to playing Black or White, and risk-aversion as manifested by
+modified to account for the white player advantage in a number of
+ways.  Such reification affords insight into players' strengths,
+response to playing black or white, and risk-aversion as manifested by
 probability of drawing.  The likelihood functions arising are easily
 optimised numerically.  I analyse a number of datasets of chess
 results, including the infamous World Chess Championships 1963 in
@@ -47,12 +47,6 @@ scoreline of the Candidates Tournament (Cura\c{c}ao 1962) exhibits no
 evidence of collusion, in agreement with previous work.  However, I
 find strong evidence of increased Soviet proclivity to draw in the
 Interzonal Tournament, Stockholm 1962.
-
-The likelihood functions arising are easily optimised numerically.  I
-analyse a number of datasets of chess results, including the infamous
-World Chess Championships 1963 in which the Soviets were accused of
-collusion.
-
 }
 
 \Keywords{Dirichlet distribution, hyperdirichlet distribution,
@@ -125,14 +119,14 @@ has been modified and extended many times, for example to account for
 multi-way choices such as mating preferences~\citep{hankin2010}.
 
 Bradley-Terry is not directly applicable to Chess for two reasons:
-firstly, the White player is at a considerable
+firstly, the white player is at a considerable
 advantage~\cite{asdfasdffdsfds}; and secondly, many chess matches end
-in a draw.  Considering White advantage first, we find an overall mean
+in a draw.  Considering white advantage first, we find an overall mean
 of about $(+0.375=0.394-0.276)$.  However, interpretations of this
 statistic vary and the issue is hotly debated with opinions ranging
 from Rowson who compares first-move advantage to that of serving in
 tennis, to that of commentators such as \citeauthor{adorjan} who
-claims that White's advantage is a ``delusion''; and that Black can
+claims that white's advantage is a ``delusion''; and that Black can
 mount an intelligent and dynamic response to white: ``chess is a game
 of complete information, and Black's information is always
 greater---by one move!''.
@@ -195,19 +189,19 @@ generalization of Bradley-Terry in which a chess match is regarded as
 a three-way competition between the two players and an entity that
 wins if the match is drawn.  The system is further modified to account
 for first-move advantage by positing an entity whose strength is added
-to that of the White player.  This methodology affords insight into
-players' strengths, response to playing Black or White, and
+to that of the white player.  This methodology affords insight into
+players' strengths, response to playing black or white, and
 risk-aversion as manifested by probability of drawing.
 
 If we consider a chess match to be a three-way trial, we define a
-likelihood function for non-negative $p_1,\ldots,p_n,p_D$ with
-$p_D+\sum p_i=1$ and this would be
+likelihood function for non-negative $p_1,\ldots,p_n,D$ with
+$D+\sum p_i=1$ and this would be
 
 \begin{equation}
 \prod_{i<j}
-\left(\frac{p_i}{p_i+p_j+p_D}\right)^{W_{ij}}
-\left(\frac{p_j}{p_i+p_j+p_D}\right)^{L_{ij}}
-\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}}
+\left(\frac{p_i}{p_i+p_j+D}\right)^{W_{ij}}
+\left(\frac{p_j}{p_i+p_j+D}\right)^{L_{ij}}
+\left(\frac{D  }{p_i+p_j+D}\right)^{D_{ij}}
 \end{equation}
 
 where $W_{ij}$ is the number of games won by $i$ when playing $j$,
@@ -215,7 +209,7 @@ $L_{ij}$ is games lost and $D_{ij}$ is games drawn.  However, this
 approach ignores the extra strength conferred by the first-move
 advantage.  We thus consider another entity whose strength is added to
 the white player.  The strength of the white player is thus the sum of
-the player's strength and another entity, the White monster.
+the player's strength and another entity, the White Monster.
 Recalling that a game might be a draw, we obtain the probabilities as
 given in Table~\ref{probabilities}.  The corresponding likelihood
 function is given below in equation \ref{likelihood_WD}:
@@ -226,20 +220,20 @@ function is given below in equation \ref{likelihood_WD}:
 \centering
 \begin{tabular}{l|cc}\\
   &$i$ plays white & $j$ plays white\\ \hline
-$\Prob{(\mbox{$i$ wins})}$  & $\frac{p_i+p_W\oo}{p_i+p_j+p_W+D}$ & $\frac{p_i}{p_i+p_j+p_W+D}$  \\
-$\Prob{(\mbox{draw})}$      & $\frac{D\oo}{p_i+p_j+p_W+D}$       & $\frac{D}{p_i+p_j+p_W+D}$    \\
-$\Prob{(\mbox{$i$ loses})}$ & $\frac{p_j\oo}{p_i+p_j+p_W+D}$     & $\frac{p_j+p_W}{p_i+p_j+p_W+D}$\\
+$\Prob{(\mbox{$i$ wins})}$  & $\frac{p_i+W\oo}{p_i+p_j+W+D}$ & $\frac{p_i}{p_i+p_j+W+D}$  \\
+$\Prob{(\mbox{draw})}$      & $\frac{D\oo}{p_i+p_j+W+D}$     & $\frac{D}{p_i+p_j+W+D}$    \\
+$\Prob{(\mbox{$i$ loses})}$ & $\frac{p_j\oo}{p_i+p_j+W+D}$   & $\frac{p_j+W}{p_i+p_j+W+D}$\\
 \end{tabular}
 \caption{Probabilities of a win, draw, loss for the two players under a generalized Bradley-Terry model\label{probabilities}}
 \end{table}
 
 \begin{align}\nonumber
 \prod_{i<j}&{}
-\left(\frac{p_i+p_W}{p_i+p_j+p_D+p_W}\right)^{W_{ij}^\mathrm{white}}
-\left(\frac{p_j}{p_i+p_j+p_D+p_W    }\right)^{L_{ij}^\mathrm{white}}\\
-&{} \left(\frac{p_i}{p_i+p_j+p_D+p_W}\right)^{W_{ij}^\mathrm{black}}\label{likelihood_WD}
-\left(\frac{p_j+p_W}{p_i+p_j+p_D+p_W    }\right)^{L_{ij}^\mathrm{black}}\\
-&{} \left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}}
+\left(\frac{p_i+W}{p_i+p_j+D+W}  \right)^{W_{ij}^\mathrm{white}}
+\left(\frac{p_j}{p_i+p_j+D+W    }\right)^{L_{ij}^\mathrm{white}}\\
+&{} \left(\frac{p_i}{p_i+p_j+D+W}\right)^{W_{ij}^\mathrm{black}}\label{likelihood_WD}
+\left(\frac{p_j+W}{p_i+p_j+D+W  }\right)^{L_{ij}^\mathrm{black}}\\
+&{} \left(\frac{D}{p_i+p_j+D    }\right)^{D_{ij}}
 \nonumber
 \end{align}
 
@@ -249,34 +243,42 @@ equal to
 
 \begin{equation}
 \prod_{i<j}
-\left(\frac{p_D}{p_i+p_j+p_D+p_W}\right)^{D_{ij}^\mathrm{white}}
-\left(\frac{p_D}{p_i+p_j+p_D+p_W}\right)^{D_{ij}^\mathrm{black}}
+\left(\frac{D}{p_i+p_j+D+W}\right)^{D_{ij}^\mathrm{white}}
+\left(\frac{D}{p_i+p_j+D+W}\right)^{D_{ij}^\mathrm{black}}
 =
 \prod_{i<j}
-\left(\frac{p_D}{p_i+p_j+p_D}\right)^{D_{ij}^\mathrm{white}+D_{ij}^\mathrm{black}}
+\left(\frac{p_D}{p_i+p_j+D}\right)^{D_{ij}^\mathrm{white}+D_{ij}^\mathrm{black}}
 \end{equation}
 
 which might be preferable on grounds of clarity.  We now apply this
 and related likelihood models to real chess datasets.  The general
-approach to testing any hypothesis $H$ on any likelihood function
-$\mathcal{L}$ is first to identify the constraint on hypothesis space
-corresponding to $H$.  One then finds the unconstrained maximum
-likelihood $\mathcal{L}_\mathrm{free}$ and compares it with the
-maximum likelihood $\mathcal{L}_\mathrm{cons}$ when the optimization
-is constrained by $H$.  The test statistic is then the likelihood
-ratio $\mathcal{L}_\mathrm{free}/\mathcal{L}_\mathrm{cons}$ or,
-equivalently the support $\mathcal{S}=\log\mathcal{R}$.  Wilks's
-theorem states that the asymptotic distribution of $2\mathcal{S}$ is
-$\chi^2_n$ where $n$ is the number of degrees of freedom implemented
-by $H$.
+approach follows~\citet{edwards1972}.  To test any hypothesis $H$ on a
+likelihood function $\mathcal{L}$ one first identifies the constraint
+on hypothesis space corresponding to $H$.  One then finds the
+unconstrained maximum likelihood $\mathcal{L}_\mathrm{free}$ and
+compares it with the maximum likelihood $\mathcal{L}_\mathrm{cons}$
+when the optimization is constrained by $H$.  The test statistic is
+then the likelihood ratio
+$\mathcal{L}_\mathrm{free}/\mathcal{L}_\mathrm{cons}$ or, equivalently
+the support $\mathcal{S}=\log\mathcal{R}$.  Wilks's theorem states
+that the asymptotic distribution of $2\mathcal{S}$ is $\chi^2_n$ where
+$n$ is the number of degrees of freedom implemented by $H$.
 
 \subsection{Discussion}
 
 The above likelihood functions are objective and reasonable
 representations of chess match results.  However, they differ markedly
 from previous likelihood functions of draws in that they include
-entities representing white player advantage ($p_W$), and the
-proclivity to draw $p_D$).   The $p_W$
+entities representing proclivity to draw $D$, and first-mover
+advantage ($W$).
+
+
+Considering white player a
+
+The method of \citet{Edwards1972} involves only
+numerical optimization (not integration which is computationally
+expensive), and because gradients are available convergence is
+generally rapid.
 
 
 \section{Anand, Karpov, Kasparov}
@@ -391,19 +393,20 @@ support <- 328.2975-335.6025
 
 
 The result of numerical optimization is 7.304, that is, well over the
-two-units-of-support per degree of freedom suggested by Edwards; we
-can convincingly reject the hypothesis that $W=0$ and infer that
-playing white confers a significant advantage.  Of course, this is
-nothing new CITATION NEEDED, but it is now possible to go
-significantly beyond mere existence of the effect and to quantify it.
-Taking the MLE above, and considering a match between say Karpov and
-Anand, the strengths are Karpov=0.064, Anand=0.151, white =0.104 and
-draw =0.53.  Thus we would estimate that Karpov playing white against
-Kasparov would win with probability
+two-units-of-support per degree of freedom suggested by
+\citeauthor{edwards1972}; we can convincingly reject the hypothesis that
+$W=0$ and infer that playing white confers a significant advantage.
+This is consistent with expectation, but it is now possible to go
+significantly beyond mere existence of the effect and to quantify it,
+accounting for the differential strengths of the players.  Taking the
+MLE above, and considering a match between say Karpov and Anand, the
+strengths are Karpov=0.064, Anand=0.151, white =0.104 and draw =0.53.
+Thus we would estimate that Karpov playing white against Kasparov
+would win with probability
 $\frac{0.064+0.104}{0.064+0.104+0.148+0.532}\simeq 0.198$, draw with
 probability $\frac{532}{64+104+148+532}\simeq 0.625$, and lose with
-probability $\simeq 0.174$ (compare $+0.075\,=0.627-0.297$ playing
-black).
+probability $\simeq 0.174$ (compare $+0.075\,=0.627-0.297$ if Karpov
+plays black).
 
 
 <<kka_equal_strength, print=FALSE,echo=FALSE>>=
@@ -433,24 +436,23 @@ extra_support <-   unconstrained + constrained  # negative used
 pvalue <- pchisq(2*extra_support,df=2,lower.tail=FALSE)
 @
 
-might write $H_=\colon\mathbf{Kr}=\colon\mathbf{Ks}=\colon\mathbf{An}$
-
 One very natural and interesting hypothesis would be that the three
 players are of equal strength
-%equal_strength_is_assessed_in_chunk_kka_equal_strength_above and we
-might write $H_=\colon p_\mathrm{Kr}=p_\mathrm{Ks}=p_\mathrm{An}$.
-This too is readily testable by the device of calculating the maximum
-support over the region in which
-$p_\mathrm{Kr}=p_\mathrm{Ks}=p_\mathrm{An}$.  In this case the extra
-support in going from the constrained to the free optimization is
-about 4.93.  However, this time the constraint corresponds to a loss
-of {\em two} degrees of freedom so we would need 4 units of support,
-which is attained in this case.  Alternatively we might follow Wilks,
-and observe that the value of $2\mathcal{S}=2*4.92=9.84$ lies in the
-tail region of its asymptotic distribution with a p-value of about
-0.0072.  We can justifiably assert that the players do indeed have
-different strengths, even if we account for white advantage and the
-proclivity to draw.
+%equal_strength_is_assessed_in_chunk_kka_equal_strength_above____________
+and we might hypothesise that
+$p_\mathrm{Kr}=p_\mathrm{Ks}=p_\mathrm{An}$.  This too is readily
+testable by the device of maximizing the support, subject to the
+constraint that $p_\mathrm{Kr}=p_\mathrm{Ks}=p_\mathrm{An}$.  In this
+case the extra support in going from the constrained to the free
+optimization is about 4.93, or a likelihood ratio of about $138$.
+However, this time the constraint corresponds to a loss of {\em two}
+degrees of freedom so we would need 4 units of support, which is
+attained in this case.  Alternatively we might follow Wilks, and
+observe that the value of $2\mathcal{S}=2*4.92=9.84$ lies in the tail
+region of its asymptotic distribution with a p-value of about 0.0072.
+We can justifiably assert that the players do indeed have different
+strengths, even if we account for white advantage and the proclivity
+to draw.
 
 \subsection{Each player has a draw monster}
 
@@ -547,10 +549,10 @@ pchisq(2*extra_support,df=2,lower.tail=FALSE)
 @ 
 
 
-\subsection{Each player has a distinct White monster}
+\subsection{Each player has a distinct White Monster}
 
 We now consider the possibility that the strength conferred by playing
-White, is specific to each player and we denote this $w_\mathrm{An}$,
+white, is specific to each player and we denote this $w_\mathrm{An}$,
 $w_\mathrm{Kr}$ and $w_\mathrm{Ks}$.  The corresponding likelihood
 function would be
 
@@ -581,7 +583,7 @@ $}}
 \end{equation}
 
 In the likelihood function above we see, for example, that Anand won a
-total of $18+6=24$ matches playing White, $13+2=15$ games playing
+total of $18+6=24$ matches playing white, $13+2=15$ games playing
 Black, and that Anand played white against Karpov a total of
 $18+20+5=43$ times.  We fail to reject the null of
 $w_\mathrm{An}=w_\mathrm{Kr}=w_\mathrm{Ks}$, having a likelihood ratio
@@ -597,7 +599,6 @@ when the USSR dominated the struggle for the world championship has
 been one of the long-standing debates in the chess world. The
 best-known (but not unique) criticism was aired by Bobby Fischer some
 weeks after the 1962 Candidates Tournament in Curacao
-
 
 \begin{table}
 \centering
@@ -677,7 +678,7 @@ For the results shown in table~\ref{interzonal}, we would have
 \end{equation}
 
 \noindent (the numerator includes 8 draws and 2 wins, one for Fischer
-and one for Korchnoi, both playing White); but the full likelihood
+and one for Korchnoi, both playing white); but the full likelihood
 function for the interzonal has 297 terms, including $D^{110}$.  To
 investigate the possibility of Soviet collusion we introduce a new
 draw entity: a soviet Draw monster $D_s$, who wins when two Soviet
