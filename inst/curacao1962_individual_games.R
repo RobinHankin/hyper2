@@ -1,9 +1,14 @@
-# Likelihood functions for either Curacao 1962 or Zurich 1953
+# Likelihood functions for either Curacao 1962 or Zurich 1953: testing
+# Soviet collusion among [all the] Soviet players.
+
+# To analyse Curacao 1962 for the three accused players (Keres,
+# Petrosian, Geller), we need a different likelihood function.  This
+# is done in curacao1962_threeplayers.R
 
 
 library("hyper2")
 
-curacao <- FALSE   # If FALSE, analyse Zurich 1953
+curacao <- TRUE   # If FALSE, analyse Zurich 1953
 if(curacao){
   jj <- read.table("curacao1962_candidates.txt",header=FALSE)
 
@@ -12,7 +17,6 @@ if(curacao){
       "Benko", "Tal", "Filip")
   names(players) <-   # nationality
     c("USSR", "USSR", "USSR", "USA", "USSR", "USA", "USSR", "TCH")
-  
 
 
 } else { # Zurich 1953
