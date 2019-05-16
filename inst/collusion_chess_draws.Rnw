@@ -475,15 +475,15 @@ drawn game is counted as a win for either of the draw ``ghosts''.  Under
 these assumptions, table~\ref{kka} translates into the following
 likelihood function:
 
-\begin{figure}[htbp]
-\begin{center}
-<<ddcc,echo=TRUE,fig=TRUE>>=
-pie(maxp(kka_3draws))
-@
-\caption{Maximum likelihood estimate for the strengths of the 3 Grandmasters in Table~\ref{kka} 
-under a likelihood function that admits differential proclivities to draw}
-  \end{center}
-\end{figure}
+%\begin{figure}[htbp]
+%\begin{center}
+%<<ddcc,echo=TRUE,fig=TRUE>>=
+%pie(maxp(kka_3draws))
+%@
+%\caption{Maximum likelihood estimate for the strengths of the 3 Grandmasters in Table~\ref{kka} 
+%under a likelihood function that admits differential proclivities to draw}
+%  \end{center}
+%\end{figure}
 
 \begin{equation}\label{KKA_personalised_drawmonster}
 \mathcal{L}\left(
@@ -597,16 +597,21 @@ $w_\mathrm{An}=w_\mathrm{Kr}=w_\mathrm{Ks}$, having a likelihood ratio
 of $4.5$, or an asymptotic $p$-value of $0.076$.  There is no strong
 evidence that the players differ in regard to their white advantage.
 
-\section{Chess collusion: Cura\c{c}ao 1962}
+
+\section{Collusion in the World Chess Championship 1963}
 
 The method of support allows one to account for proclivity to draw
 while accounting for players' strengths and first-move advantage.  We
-now consider one famous incident, the World Chess Championships 1963,
-in which Fischer famously and publicly claimed that the Soviet players
-colluded.  The accusation was that Soviet players agreed ahead of time
-to draw when playing one another, in order to conserve energy for
-subsequent matches~\citep{moul2009}.
+now consider one famous incident, following the World Chess
+Championships 1963, in which Fischer famously and publicly claimed
+that the Soviet players colluded.  The accusation was that Soviet
+players agreed ahead of time to draw when playing one another, in
+order to conserve energy for subsequent matches~\citep{moul2009}.
 
+Here I analyse the original subject of the complaint, the Cura\c{c}ao
+1962 Candidates, Table~\ref{candidates}.  Fischer alleged that three
+of the Soviet players (Keres, Petrosian, and Geller) had agreed to
+draw amongst themselves.
 
 %the question of Soviet collusion during the period when the USSR
 %dominated the struggle for the world championship has been one of the
@@ -614,32 +619,32 @@ subsequent matches~\citep{moul2009}.
 %unique) criticism was aired by Bobby Fischer some weeks after the 1962
 %Candidates Tournament in Curacao
 
-% \begin{table}
-% \centering
-% \begin{tabular}{ll|cccccccc}
-% &
-% &%\rotatebox{-90}{Petrosian} 
-% &\rotatebox{-90}{Keres} 
-% &\rotatebox{-90}{Geller}
-% &\rotatebox{-90}{Fischer} 
-% &\rotatebox{-90}{Korchnoi}
-% &\rotatebox{-90}{Benko}
-% &\rotatebox{-90}{Tal}
-% &\rotatebox{-90}{Filip}\\
-% Petrosian &USSR    &             &DDDD    &DDDD   &DWDD   &DDWW   &DDWD   &WWD    &DWWD\\
-% Keres     &USSR    &             &NA      &DDDD   &LDWD   &DDWD   &WWWL   &WDW    &DWWD\\
-% Geller    &USSR    &             &NA      &NA     &WWDL   &DDWD   &DDDW   &DWW    &DWWD\\
-% Fischer   &USA     &             &NA      &NA     &NA     &LWLD   &LWDW   &DWD    &WDWD\\
-% Korchnoi  &USSR    &             &NA      &NA     &NA     &NA     &DDDL   &WLD    &WWWW\\
-% Benko     &USA     &             &NA      &NA     &NA     &NA     &NA     &WLD    &LWWD\\
-% Tal       &USSR    &             &NA      &NA     &NA     &NA     &NA     &NA     &WLD \\
-% Filip     &TCH     &             &NA      &NA     &NA     &NA     &NA     &NA     &NA \\
-% \end{tabular}
-% \caption{Cura\c{c}ao 1962 candidates, world championship 1963}
-% \end{table}
+ \begin{table}
+ \centering
+ \begin{tabular}{ll|cccccccc}
+ &
+ &%\rotatebox{-90}{Petrosian} 
+ &\rotatebox{-90}{Keres} 
+ &\rotatebox{-90}{Geller}
+ &\rotatebox{-90}{Fischer} 
+ &\rotatebox{-90}{Korchnoi}
+ &\rotatebox{-90}{Benko}
+ &\rotatebox{-90}{Tal}
+ &\rotatebox{-90}{Filip}\\
+ Petrosian &USSR    &             &DDDD    &DDDD   &DWDD   &DDWW   &DDWD   &WWD    &DWWD\\
+ Keres     &USSR    &             & -      &DDDD   &LDWD   &DDWD   &WWWL   &WDW    &DWWD\\
+ Geller    &USSR    &             & -      & -     &WWDL   &DDWD   &DDDW   &DWW    &DWWD\\
+ Fischer   &USA     &             & -      & -     & -     &LWLD   &LWDW   &DWD    &WDWD\\
+ Korchnoi  &USSR    &             & -      & -     & -     & -     &DDDL   &WLD    &WWWW\\
+ Benko     &USA     &             & -      & -     & -     & -     & -     &WLD    &LWWD\\
+ Tal       &USSR    &             & -      & -     & -     & -     & -     & -     &WLD \\
+ Filip     &TCH     &             & -      & -     & -     & -     & -     & -     & - \\
+ \end{tabular}
+ \caption{Cura\c{c}ao 1962 \label{candidates} Candidates, World Chess Championship 1963}
+ \end{table}
 
+\subsection{Chess collusion: interzonal Stockholm 1962}
 
-\section{Chess collusion: interzonal Stockholm 1962}
 
 \newcommand{\halfw}{$\nicefrac{1}{2}$}
 \newcommand{\halfb}{\colorbox{black}{\textcolor{white}{$\nicefrac{{\bf 1}}{{\bf 2}}$}}}
