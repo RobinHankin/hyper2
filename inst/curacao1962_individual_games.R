@@ -66,8 +66,8 @@ for(i in seq_len(nrow(d))){
     H[c(winner                        )] %<>% inc
     H[c(winner,loser,white,drawmonster)] %<>% dec
   } else if(result == "1/2-1/2"){
-    H[c(drawmonster                               )] %<>% inc
-    H[c(drawmonster,winner,loser,white,drawmonster)] %<>% dec
+    H[c(drawmonster                                )] %<>% inc
+    H[c(drawmonster,white_player,black_player,white)] %<>% dec
   } else {
     stop(paste("result = ", result, ". Should be 1-0, 0-1, or 1/2-1/2",sep=""))
   }
