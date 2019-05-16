@@ -3,6 +3,10 @@
 # statistical analysis of championship chess 1940-1978.  Journal of
 # Economic Behaviour and Organization 70(2009) 10-21
 
+# This file creates likelihood functions H and H_coll, which appear in
+# the package as `interzonal` and `collusion` respectively.
+
+
 
 library("hyper2")
 

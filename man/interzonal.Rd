@@ -3,6 +3,7 @@
 \alias{curacao}
 \alias{stockholm1962}
 \alias{collusion}
+\alias{interzonal_collusion}
 \docType{data}
 \title{1963 World Chess Championships}
 \description{
@@ -29,6 +30,6 @@ in Stockholm, 1962.
 data(interzonal)
 dotchart(maxp(interzonal))
 
-maxp(collusion)
+maxp(interzonal_collusion)
 }
 \keyword{datasets}
