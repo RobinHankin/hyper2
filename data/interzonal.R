@@ -1,6 +1,12 @@
-## See file inst/collusion_stockholm.R.  That file creates likelihood
-## functions 'H' and 'H_coll' which appear hear as `interzonal` and
-## `collusion` respectively.
+## Here, four likelihood functions are defined: `interzonal`,
+## `interzonal_conclusion`, `curacao`, and `curacao3`.
+
+## File inst/collusion_stockholm.R creates likelihood functions `H`
+## and `H_coll` which appear here as `interzonal` and
+## `interzonal_collusion` respectively.
+
+## File inst/curacao1962_threeplayers.R creates likelihood function
+## `H` which appears here as `curacao`.
 
 
 `interzonal` <-   
@@ -104,7 +110,7 @@ structure(list(brackets = list(c(1, 2, 3, 4), c(1, 2, 3, 5),
 "Bertok", "German", "Schweber", "Teschner", "Cuellar", "Aaron"
 )), class = "hyper2")
 
-`collusion` <-
+`interzonal_collusion` <-
  structure(list(brackets = list(c(1, 2, 4, 5), c(1, 2, 4, 6), 
     c(1, 2, 4, 7), c(1, 2, 4, 8), c(1, 2, 4, 9), c(1, 2, 4, 10
     ), c(1, 2, 4, 11), c(1, 2, 4, 12), c(1, 2, 4, 13), c(1, 2, 
@@ -204,3 +210,20 @@ structure(list(brackets = list(c(1, 2, 3, 4), c(1, 2, 3, 5),
 "Benko", "Stein", "Uhlmann", "Portisch", "Pomar", "Olafsson", 
 "Bolbochan", "Barcza", "Bilek", "Bisguier", "Yanofsky", "Bertok", 
 "German", "Schweber", "Teschner", "Cuellar", "Aaron")), class = "hyper2")
+
+`curacao` <-
+  structure(list(brackets = list(1, c(1, 3, 4, 7), c(1, 3, 4, 8
+), c(1, 3, 4, 9), c(1, 3, 4, 10), c(1, 3, 4, 11), c(1, 3, 5, 
+7), c(1, 3, 5, 8), c(1, 3, 5, 9), c(1, 3, 5, 10), c(1, 3, 5, 
+11), c(1, 3, 6, 7), c(1, 3, 6, 8), c(1, 3, 6, 9), c(1, 3, 6, 
+10), c(1, 3, 6, 11), c(1, 3, 7, 8), c(1, 3, 7, 9), c(1, 3, 7, 
+10), c(1, 3, 7, 11), c(1, 3, 8, 9), c(1, 3, 8, 10), c(1, 3, 8, 
+11), c(1, 3, 9, 10), c(1, 3, 9, 11), c(1, 3, 10, 11), 2, c(2, 
+3, 4, 5), c(2, 3, 4, 6), c(2, 3, 5, 6), c(3, 4), c(3, 5), c(3, 
+6), c(3, 7), c(3, 8), c(3, 9), c(3, 10), c(3, 11), 4, 5, 6, 7, 
+    8, 9, 10, 11), powers = c(42, -4, -4, -4, -3, -4, -4, -4, 
+-4, -3, -4, -4, -4, -4, -3, -4, -4, -4, -3, -4, -4, -3, -4, -3, 
+-4, -3, 12, -4, -4, -4, 3, 4, 4, 7, 2, 5, 1, 1, 5, 5, 4, 1, 5, 
+1, 2, 1), pnames = c("draw", "colldraw", "white", coll = "Petrosian", 
+coll = "Keres", coll = "Geller", USA = "Fischer", USSR = "Korchnoi", 
+USA = "Benko", USSR = "Tal", TCH = "Filip")), class = "hyper2")
