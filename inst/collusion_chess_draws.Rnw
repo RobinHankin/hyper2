@@ -218,7 +218,7 @@ Recalling that a game might be a draw, we obtain the probabilities as
 given in Table~\ref{probabilities}.  The corresponding likelihood
 function is given below in equation \ref{likelihood_WD}:
 
-\newcommand{\oo}{\vphantom{W^{W^W}}}
+\newcommand{\oo}{\vphantom{W^{W^{W^W}}}}
 
 \begin{table}
 \centering
@@ -608,17 +608,6 @@ that the Soviet players colluded.  The accusation was that Soviet
 players agreed ahead of time to draw when playing one another, in
 order to conserve energy for subsequent matches~\citep{moul2009}.
 
-Here I analyse the original subject of the complaint, the Cura\c{c}ao
-1962 Candidates, Table~\ref{candidates}.  Fischer alleged that three
-of the Soviet players (Keres, Petrosian, and Geller) had agreed to
-draw amongst themselves.
-
-%the question of Soviet collusion during the period when the USSR
-%dominated the struggle for the world championship has been one of the
-%long-standing debates in the chess world.  The best-known (but not
-%unique) criticism was aired by Bobby Fischer some weeks after the 1962
-%Candidates Tournament in Curacao
-
  \begin{table}
  \centering
  \begin{tabular}{ll|cccccccc}
@@ -638,13 +627,46 @@ draw amongst themselves.
  Korchnoi  &USSR    &             & -      & -     & -     & -     &DDDL   &WLD    &WWWW\\
  Benko     &USA     &             & -      & -     & -     & -     & -     &WLD    &LWWD\\
  Tal       &USSR    &             & -      & -     & -     & -     & -     & -     &WLD \\
- Filip     &TCH     &             & -      & -     & -     & -     & -     & -     & - \\
+ Filip     &TCH     &             & -      & -     & -     & -     & -     & -     & -  \\
  \end{tabular}
  \caption{Cura\c{c}ao 1962 \label{candidates} Candidates, World Chess Championship 1963}
  \end{table}
 
-\subsection{Chess collusion: interzonal Stockholm 1962}
+Here I analyse the original subject of the complaint, the Cura\c{c}ao
+1962 Candidates, Table~\ref{candidates}.  Fischer alleged that three
+of the Soviet players (Keres, Petrosian, and Geller) had agreed to
+draw amongst themselves.  Observe that all twelve of the games between
+the three accused players ended in a draw, a significant result given
+51 winning games and 54 draws (Fisher exact test, one-sided,
+$p=0.0079$).  The likelihood function for this dataset would have
 
+\begin{equation}
+\parbox{4in}{$
+P^5\,
+{Ke}^5\,
+G^4
+\mathit{Fis}\,  % Fischer, cf Filip
+\mathit{Ko}^5
+B
+T^2  % Tal
+\mathit{Fil}\,
+D^{42}C^{12}\oo\\ \rule{10mm}{0mm}
+\left(P+W\right)^3
+\left(\mathit{Ke}+W\right)^4
+\left(G+W\right)^4\
+\left(\mathit{Fis}+W\right)^7\oo\\ \rule{20mm}{0mm}
+\left(\mathit{Ko}+W\right)^2
+\left(B+W\right)^5
+\left(T+W\right)
+\left(\mathit{Fil}+W\right)\oo
+$}
+\end{equation}
+
+on the numerator (where $C$ is the strength of a collusive draw), and
+a total of 36 terms such as $\left(P + \mathit{Fis}+W+D\right)^{4}$
+and $\left(P + \mathit{Ke}+W+C\right)^{4}$ on the denominator.
+ 
+\subsection{Chess collusion: interzonal Stockholm 1962}
 
 \newcommand{\halfw}{$\nicefrac{1}{2}$}
 \newcommand{\halfb}{\colorbox{black}{\textcolor{white}{$\nicefrac{{\bf 1}}{{\bf 2}}$}}}
@@ -669,8 +691,8 @@ Petrosian (USSR)  & \halfb  & \halfw  &    -    & \halfb    & \halfw   &\\
 Korchnoi  (USSR)  & \zerob  & \halfb  & \halfw  &   -       & \oneww   &\\
 Filip      (TCH)  & \halfw  & \halfb  & \halfb  & \zerob    &  -       &\\
 $\vdots$&&&&&\\
-\end{tabular}\label{interzonal}
-\caption{Subset of the Fifth Interzonal round-robin, Stockholm 1962.
+\end{tabular}
+\caption{Subset of the Fifth Interzonal round-robin, Stockholm 1962.\label{interzonal}
   Results $\in\{0,\halfw,1\}$ and box colour refer to row
   player.  Thus, for example, Fischer played black against Geller and drew}
 \end{table}
