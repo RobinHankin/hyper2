@@ -42,12 +42,12 @@ response to playing black or white, and risk-aversion as manifested by
 probability of drawing.  The likelihood functions arising are easily
 optimised numerically.  I analyse a number of datasets of chess
 results, including the infamous World Chess Championships 1963 in
-which the Soviets were accused of collusion.  I conclude that the
-scoreline of the Candidates Tournament (Cura\c{c}ao 1962) exhibits no
-evidence of collusion, in agreement with previous work.  However, I
-find strong evidence of increased Soviet proclivity to draw in the
-Interzonal Tournament, Stockholm 1962.
-}
+which the Soviets were accused of collusion.  I conclude, on the basis
+of a dataset that includes only the scorelines at the event itself,
+that the scoreline of the Candidates Tournament (Cura\c{c}ao 1962)
+exhibits evidence of collusion ($p<10^{-5}$), in agreement with
+previous work that uses additional information such as historical
+results including number of moves.}
 
 \Keywords{Dirichlet distribution, hyperdirichlet distribution,
   combinatorics, \proglang{R}, multinomial distribution, constrained
@@ -139,20 +139,19 @@ first-mover advantage can be positive or negative.
 \paragraph{Draws} Chess games may be won by either player, or may be
 drawn; the implication of a draw is that neither player is better than
 the other.  Before 1867, tournament games that were drawn were
-replayed and in this context we note that this procedure reduces a
-chess game to a Bernoulli trial, with probability one.  This system
-became unworkable due to the large number of draws, resulting in the
-modern practice of awarding each player of a drawn game half a point,
-rendering chess a zero-sum game.  Drawn games are generally considered
-to be undesirable as they are usually poorer in spectacular or
-striking elements such as sharp tactical combinations or sacrifice.
-Excessive drawing dissuades sponsors, leaves spectators feeling
-cheated, and gives commentators less material to discuss.  Players
-themselves do not seem to value draws in the wider context of the
-game: \citeauthor{fischer1969}, for example, includes only 8 draws in
-his compilation of 60 memorable games, surely not representative of
-tournament play in which about 39.4\% of games are drawn (binomial
-test, $p<10^{-5}$).
+replayed until one or other player won, thus reducing chess game to a
+Bernoulli trial, almost surely.  This system became unworkable due to
+the large number of draws, resulting in the modern practice of
+awarding each player of a drawn game half a point, rendering chess a
+zero-sum game.  Drawn games are generally considered to be undesirable
+as they are usually poorer in spectacular or striking elements such as
+sharp tactical combinations or sacrifice.  Excessive drawing dissuades
+sponsors, leaves spectators feeling cheated, and gives commentators
+less material to discuss.  Players themselves do not seem to value
+draws in the wider context of the game: \citeauthor{fischer1969}, for
+example, includes only 8 draws in his compilation of 60 memorable
+games, surely not representative of tournament play in which about
+39.4\% of games are drawn (binomial test, $p<10^{-5}$).
 
 \cite{moul2009} conceptualise a player as being able to adopt a
 strategy on a spectrum ranging from conservative to aggressive, thus
@@ -270,8 +269,9 @@ $n$ is the number of degrees of freedom implemented by $H$.
 
 The above likelihood functions are objective and reasonable
 representations of chess results.  However, they differ markedly from
-previous likelihood functions of draws in that they include entities
-representing proclivity to draw $D$, and first-mover advantage ($W$).
+previous likelihood functions of draws in that they include reified
+entities representing proclivity to draw $D$, and white or first-mover
+advantage ($W$).
 
 \subsection{Numerical considerations}
 
@@ -302,7 +302,7 @@ in Table~\ref{kka}.  Equation~\ref{likelihood_WD} becomes
 \end{tabular}\quad
 \begin{tabular}{@{} *{4}{c} @{}}
 \headercell{\small{Plays W,}\\ \small{draws}} & \multicolumn{3}{c@{}}{\small{Plays black, draws}}\\
-\cmidrule(l){2-4}
+ \cmidrule(l){2-4}
 & An &  Kr & Ks        \\ 
 \midrule
   An & -  &  20 &  20  \\
@@ -640,8 +640,7 @@ the three accused players ended in a draw, a significant result given
 51 winning games and 54 draws (Fisher exact test, one-sided,
 $p=0.0079$).  The likelihood function for this dataset would have
 
-\begin{equation}
-\parbox{4in}{$
+\begin{equation}\parbox{4in}{$
 P^5\,
 {Ke}^5\,
 G^4
@@ -659,13 +658,19 @@ D^{42}C^{12}\oo\\ \rule{10mm}{0mm}
 \left(B+W\right)^5
 \left(T+W\right)
 \left(\mathit{Fil}+W\right)\oo
-$}
-\end{equation}
+$}\end{equation}
 
-on the numerator (where $C$ is the strength of a collusive draw), and
-a total of 36 terms such as $\left(P + \mathit{Fis}+W+D\right)^{4}$
-and $\left(P + \mathit{Ke}+W+C\right)^{4}$ on the denominator.
- 
+\noindent on the numerator (where $C$ is the strength of a collusive
+draw), and a total of 36 terms such as
+$\left(P+\mathit{Fis}+W+D\right)^{4}$ and
+$\left(P+\mathit{Ke}+W+C\right)^{4}$ on the denominator.  The
+likelihood ratio for the hypothesis that collusive draws have the same
+strength as regular draws isabout $e^{11.8}\simeq 10^5$: we conclude
+that the high number of draws among the three accused players was
+unlikely to be due to chance.
+
+One plausible explanation for the previ
+
 \subsection{Chess collusion: interzonal Stockholm 1962}
 
 \newcommand{\halfw}{$\nicefrac{1}{2}$}
@@ -696,7 +701,6 @@ $\vdots$&&&&&\\
   Results $\in\{0,\halfw,1\}$ and box colour refer to row
   player.  Thus, for example, Fischer played black against Geller and drew}
 \end{table}
-
 
 For the results shown in table~\ref{interzonal}, we would have
 
@@ -742,25 +746,20 @@ be
  $}}
 \end{equation}
 
-\begin{figure}[htbp]
-\begin{center}
-<<collusion,echo=TRUE,fig=TRUE>>=
-dotchart(maxp(collusion),pch=16)
-@
-\caption{sds\label{collusion_fig}}
-  \end{center}
-\end{figure}
 
-In figure~\ref{collusion_fig}, note the high estimate for $D_s$ (also
-note
-Fischer's dominance).
-
-The maximum likelihood estimate is $D\simeq 0.043, D_s=0.354$; a constrained maximization gives a likelihood ratio of about 5096, or a $p$-value of about $3.6\times 10^{-5}$.  Indeed we could go further and plot a profile likelihood curve for the log-odds ratio $\ln\left(D_s/D\right)$ which, if Dirichlet, would be accurately parabolic over a wide range (OHAGAN AND FORSTER, p343).  This is illustrated in Figure~\ref{DOESNOTEXIST}, that shows a credible interval of about HAVENOTDONETHISET.
+The maximum likelihood estimate is $D\simeq 0.043, D_s=0.354$; a
+constrained maximization gives a likelihood ratio of about 5096, or a
+$p$-value of about $3.6\times 10^{-5}$.  Indeed we could go further
+and plot a profile likelihood curve for the log-odds ratio
+$\ln\left(D_s/D\right)$ which, if Dirichlet, would be accurately
+parabolic over a wide range (OHAGAN AND FORSTER, p343).  This is
+illustrated in Figure~\ref{DOESNOTEXIST}, that shows a credible
+interval of about HAVENOTDONETHISET.
 
 
 <<echo=FALSE,print=FALSE>>=
 do_from_scratch  <- FALSE  # set to TRUE to recalculate (slow, maybe 2 mins)
-hotstart <- indep(maxp(collusion))
+hotstart <- indep(maxp(interzonal_collusion))
 
 f <- function(LO,give=FALSE){
     small <- 1e-5
@@ -796,7 +795,6 @@ if(do_from_scratch){
 }
 @ 
 
-
 \begin{figure}[htbp]
 \begin{center}
 <<proflike,echo=TRUE,fig=TRUE>>=
@@ -809,7 +807,14 @@ abline(h=c(0,-2))
   \end{center}
 \end{figure}
 
-\section{Conclusions}
+\section{Conclusions and further work}
+
+The present work details an approach to chess analysis based on
+reification of entities representing propensity to draw, and the
+first-mover (or white player) advantage.  Likelihood functions for the
+players' and reified entities' strengths are defined using only
+specific tournament outcomes; further, the analysis uses only game
+outcome, not length.
 
 In this context we note, following \cite{langer2013}, that a player
 may well adopt a riskier strategy after a sequence of defeats,
@@ -818,7 +823,13 @@ detectable, at least in principle, by generalizing the personalised
 draw likelihood function \ref{KKA_personalised_drawmonster} and
 seeking evidence for the draw monster's strength changing as a
 tournament progresses: it would become stronger for a player on a
-winning streak, and weaker for a losing player.
+winning streak, and weaker for a losing player. 
+
+\cite{moul2009} present detailed Monte Carlo simulations to assess the likely impact of any Soviet cartel on tournament outcomes.  In principle, the present system of likelihood and reified entities would admit such simulations and might be interesting to compare results.
+
+
+
+
 
 
 \bibliography{chess}
