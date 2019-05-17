@@ -19,7 +19,7 @@ in Stockholm, 1962.
   certain Soviet players had agreed in advance to draw all their games.
   The championship included an \dQuote{interzonal} tournament in which
   23 players competed in Stockholm; and a \dQuote{Candidates} tournament
-  in which 8 players competed in Cura\c{c}ao.
+  in which 8 players competed in Curacao.
 
   Likelihood functions \code{interzonal} and \code{interzonal_collusion}
   are created by files \code{inst/collusion_stockholm.R}, which are
