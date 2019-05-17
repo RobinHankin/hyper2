@@ -27,7 +27,7 @@
     \item
     \url{https://en.wikipedia.org/wiki/Figure_skating_at_the_2002_Winter_Olympics#Full_results_2}
     \item Robin Lock and Kari Frazer Lock, Winter
-    2003. "Judging Figure Skating Judges".  \emph{STATS 36}, ASA
+    2003. \dQuote{Judging Figure Skating Judges}.  \emph{STATS 36}, ASA
   }
 }
 \examples{
