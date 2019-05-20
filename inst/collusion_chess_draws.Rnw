@@ -1,15 +1,9 @@
 % -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
 \documentclass[nojss]{jss}
-\usepackage{dsfont}
-\usepackage{bbm}
-\usepackage{amsfonts}
 \usepackage{amsmath}
-\usepackage{wasysym}
 \usepackage{amssymb}
-\usepackage{yfonts}
 \usepackage{booktabs}
 \usepackage{units}
-\usepackage{xcolor}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -101,10 +95,6 @@ options("width" = 90)
 
 \section{Introduction: the Bradley-Terry model}
 
-\cite{davidson1970}
-
-\cite{joe1990}
-
 Many situations involve pairwise comparisons that amount to a
 Bernoulli trial.  The canonical application would be to two-way
 competitive situations such as tennis in which one or other player is
@@ -134,10 +124,10 @@ to play and win''---to~\citet{adorjan1988}---``black is OK!''.
 \paragraph{Draws} Chess games may be won by either player, or may be
 drawn; the implication of a draw is that neither player is better than
 the other.  Before 1867, tournament games that were drawn were
-replayed until one or other player won, thus reducing chess game to a
-Bernoulli trial, almost surely.  This system became unworkable due to
-the large number of draws, resulting in the modern practice of
-awarding each player of a drawn game half a point, rendering chess a
+replayed until one or other player won---reducing a chess game to a
+Bernoulli trial (with probability one).  This system became unworkable
+due to the large number of draws, resulting in the modern practice of
+awarding each player of a drawn game half a point, keeping chess a
 zero-sum game.  Drawn games are generally considered to be undesirable
 as they are usually poorer in spectacular or striking elements such as
 sharp tactical combinations or sacrifice.  Excessive drawing dissuades
@@ -273,10 +263,14 @@ advantage ($W$).
 \cite{davidson1970} uses a threshhold approach to interpret a draw as
 performance of the players the same to within a threshhold.  Using a
 logistic expression for the difference in players' performance, he
-effectively uses, in current notation, $D=\nu\sqrt{p_ip_j}$.  Here we
-note that such a model automatically give stronger players a higher
-draw potential, and also note that it is difficult to account for
-first-player advantage in this framework.  Such an approach is
+effectively uses, in current notation, $D=\nu\sqrt{p_ip_j}$.  However,
+\cite{joe1990} uses likelihood methods to show that this model does
+not fit data well.  Here we note that such a model automatically give
+stronger players a higher draw potential, and also note that it is
+difficult to account for first-player advantage in this framework.
+
+
+Such an approach is
 numerically challenging in the current framework as the unit-sum
 constraint becomes nonlinear and likelihood maximization becomes
 difficult.
@@ -523,7 +517,9 @@ $}}
 <<echo=FALSE,fig=TRUE>>=
 dotchart(maxp(kka_3draws),pch=16)
 @ 
-\caption{Maximum likelihood estimate for \label{kka_3draws} equation \ref{KKA_personalised_drawmonster} equation} 
+\caption{Maximum likelihood estimate for \label{kka_3draws} the support function given in
+  equation  \ref{KKA_personalised_drawmonster}
+} 
   \end{center}
 \end{figure}
 
@@ -615,24 +611,24 @@ evidence that the players differ in regard to their white advantage.
 
 \section{Collusion in the World Chess Championship 1963}
 
-The method of support allows one to account for proclivity to draw
-while accounting for players' strengths and first-move advantage.  We
-now consider one famous incident, following the World Chess
-Championships 1963, in which Fischer famously and publicly claimed
-that the Soviet players colluded.  The accusation was that Soviet
-players agreed ahead of time to draw when playing one another, in
-order to conserve energy for subsequent matches.
+The method of support allows one to estimate proclivity to draw while
+accounting for players' strengths and first-move advantage.  We now
+consider one famous incident, following the World Chess Championships
+1963, in which Fischer famously and publicly claimed that the Soviet
+players colluded.  The accusation was that Soviet players agreed ahead
+of time to draw when playing one another, in order to conserve energy
+for subsequent matches.
 
 \citet{moul2009} consider this accusation from a statistical
-perspective and present a detailed analysis of Cura\c{c}ao.  Unlike
-the present analysis, which uses a dataset restricted to game result
-(win/loss/draw), \citet{moul2009} included number of moves in each
-game\footnote{The reasoning was that hard-fought games that happened
-  to end in a draw are more likely to last longer than collusive or
-  pre-arranged draws.} in their analysis, and used a dataset of 7355
-games played in the period 1940-1978 to calibrate the ability of the
-players.  In contrast, the analysis presented uses a dataset
-restricted to game outcome (win-loss-draw) in the competition itself.
+perspective and present a detailed analysis.  Unlike the present work,
+which uses a dataset restricted to game result (win/loss/draw),
+\citet{moul2009} included number of moves in each game\footnote{The
+  reasoning was that hard-fought games that happened to end in a draw
+  are more likely to last longer than collusive or pre-arranged
+  draws.} in their analysis, and used a dataset of 7355 games played
+in the period 1940-1978 to calibrate the ability of the players.  In
+contrast, the analysis presented uses a dataset restricted to game
+outcome (win-loss-draw) in the competition itself.
 
 
  \begin{table}
@@ -660,12 +656,19 @@ restricted to game outcome (win-loss-draw) in the competition itself.
  \end{table}
 
 Here I analyse the original subject of the complaint, the Cura\c{c}ao
-1962 Candidates, Table~\ref{candidates}.  Fischer alleged that three
-of the Soviet players (Keres, Petrosian, and Geller) had agreed to
-draw amongst themselves.  Observe that all twelve of the games between
-the three accused players ended in a draw, a significant result given
-51 winning games and 54 draws (Fisher exact test, one-sided,
-$p=0.0079$).  The likelihood function for this dataset would have
+1962 Candidates (match results shown in Table~\ref{candidates}).
+Fischer alleged that three of the Soviet players (Keres, Petrosian,
+and Geller) had agreed to draw amongst themselves.  Observe that all
+twelve of the games between the three accused players ended in a draw,
+a significant result given 51 winning games and 54 draws (Fisher exact
+test, one-sided, $p=0.0079$).  
+
+To investigate the possibility of Soviet collusion we introduce a new
+draw entity: a soviet draw monster $C$, who wins when two colluding
+players draw, and is inactive whenever a game has at least one
+non-colluding player.  Then $H_N\colon C=D$ corresponds to no
+collusion and the likelihood function would be
+
 
 \begin{equation}\parbox{4in}{$
 P^5\,
@@ -688,18 +691,19 @@ D^{42}C^{12}\oo\\ \rule{10mm}{0mm}
 $}\end{equation}
 
 \noindent on the numerator (where $C$ is the strength of a collusive
-draw), and a total of 36 terms such as
+draw), and a total of 30 terms such as
 $\left(P+\mathit{Fis}+W+D\right)^{4}$ and
-$\left(P+\mathit{Ke}+W+C\right)^{4}$ on the denominator.  The
-likelihood ratio for the hypothesis that collusive draws have the same
-strength as regular draws isabout $e^{11.8}\simeq 10^5$: we conclude
-that the high number of draws among the three accused players was
-unlikely to be due to chance.
+$\left(P+\mathit{Ke}+W+C\right)^{4}$ [indicating that Petrosian played
+  Keres 4 times] on the denominator.  The likelihood ratio for the
+hypothesis that collusive draws have the same strength as regular
+draws is about $e^{11.8}\simeq 10^5$: we conclude that the high number
+of draws among the three accused players was unlikely to be due to
+chance.
 
-One plausible and charitable explanation for this result is that
-Soviet players have a higher propensity to draw than western players.
-We can investigate this by considering the interzonal tournament which
-took place in Stockholm in 1962.
+One plausible explanation for this result is that Soviet players have
+a higher propensity to draw than western players.  We can investigate
+this by considering the interzonal tournament which took place in
+Stockholm in 1962.
 
 \subsection{Chess collusion: interzonal Stockholm 1962}
 
@@ -732,7 +736,10 @@ $\vdots$&&&&&\\
   player.  Thus, for example, Fischer played black against Geller and drew}
 \end{table}
 
-For the results shown in table~\ref{interzonal}, we would have
+
+The fith interzonal took place in Stockholm in 1962, in the form of a
+23-player round-robin tournament.  For the results shown in
+table~\ref{interzonal}, we would have a likelihood function
 
 \begin{equation}
 \mathcal{L}\left(F,G,P,K,L,W,D\right)=
@@ -753,11 +760,11 @@ For the results shown in table~\ref{interzonal}, we would have
 \noindent (the numerator includes 8 draws and 2 wins, one for Fischer
 and one for Korchnoi, both playing white); but the full likelihood
 function for the interzonal has 297 terms, including $D^{110}$.  To
-investigate the possibility of Soviet collusion we introduce a new
-draw entity: a soviet Draw monster $D_s$, who wins when two Soviet
-players draw, and is inactive whenever a game has at least one
-non-Soviet player.  Then $H_N\colon D_s=D$ corresponds to no collusion
-and the likelihood function for table~\ref{interzonal} would be
+investigate the possibility of increased Soviet drawing proclivity, we
+introduce a Soviet draw monster $D_s$, who wins when two Soviet
+players draw, and is inactive if a game has at least one non-Soviet
+player.  Then $H_N\colon D_s=D$ corresponds to no collusion and the
+likelihood function for table~\ref{interzonal} would be
 
 \begin{equation}\label{collusion}
 \mathcal{L}\left(F,G,P,K,L,W,D,D_s\right)=
