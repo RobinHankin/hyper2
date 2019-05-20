@@ -24,24 +24,26 @@
 %% an abstract and keywords
 \Abstract{
 
-In inference problems where the dataset is outcomes of paired
-comparisons, such as chess, the Bradley-Terry model can be augmented
-to chess-specific considerations in a number of ways.  Here I present
-a new generalization of Bradley-Terry in which a chess game is
-regarded as a three-way competition between the two players and an
-entity that wins if the game is drawn.  Bradley-Terry can be further
-modified to account for the white player advantage in a number of
-ways.  Such reification affords insight into players' strengths,
-response to playing black or white, and risk-aversion as manifested by
-probability of drawing.  The likelihood functions arising are easily
-optimised numerically.  I analyse a number of datasets of chess
-results, including the infamous World Chess Championships 1963 in
-which the Soviets were accused of collusion.  I conclude, on the basis
-of a dataset that includes only the scorelines at the event itself,
-that the scoreline of the Candidates Tournament (Cura\c{c}ao 1962)
-exhibits evidence of collusion ($p<10^{-5}$), in agreement with
-previous work that uses additional information such as historical
-results including number of moves.}
+In inference problems where the dataset comprises Bernoulli outcomes
+of paired comparisons, the Bradley-Terry model offers a simple and
+easily interpreted framework.  However, it does not deal easily with
+chess because of the existence of draws, and the white player
+advantage.  Here I present a new generalization of Bradley-Terry in
+which a chess game is regarded as a three-way competition between the
+two players and an entity that wins if the game is drawn.
+Bradley-Terry is then further generalized to account for the white
+player advantage by positing an entity whose strength is added to that
+of the white player.  These techniques afford insight into players'
+strengths, response to playing black or white, and risk-aversion as
+manifested by probability of drawing.  The likelihood functions
+arising are easily optimised numerically.  I analyse a number of
+datasets of chess results, including the infamous World Chess
+Championships 1963 in which Fischer accused three Soviet players of
+collusion.  I conclude, on the basis of a dataset that includes only
+the scorelines at the event itself, that the Candidates Tournament
+(Cura\c{c}ao 1962) exhibits evidence of collusion ($p<10^{-5}$), in
+agreement with previous work that uses additional information such as
+historical results including number of moves.}
 
 \Keywords{Dirichlet distribution, hyperdirichlet distribution,
   combinatorics, \proglang{R}, multinomial distribution, constrained
@@ -98,14 +100,15 @@ options("width" = 90)
 Many situations involve pairwise comparisons that amount to a
 Bernoulli trial.  The canonical application would be to two-way
 competitive situations such as tennis in which one or other player is
-idenfied as the winner, but the system has been applied to many
-non-competitive situations such mating preference~\citep{west2008} and
-consumer behaviour.  The Bradley-Terry model~\citep{bradley1952}
-considers $n$ players and assigns non-negative numbers
+identified as the winner.  The Bradley-Terry model~\citep{bradley1952}
+considers~$n$ players and assigns non-negative numbers
 $p_1,\ldots,p_n$ with unit sum to each player.  Then player $i$ beats
 player $j$ with probability $\frac{p_i}{p_i+p_j}$.  This simple system
 has been modified and extended many times, for example to account for
-multi-way choices such as mating preferences~\citep{hankin2010}.
+multi-way competitions such as {\em MasterChef
+  Australia}~\citep{hankin2017}, and the system has been applied to
+many non-competitive situations such as consumer
+behaviour~\citep{hankin2010} and mating preference~\citep{west2008}.
 
 Bradley-Terry is not directly applicable to Chess for two reasons:
 firstly, the white player appears to be at a considerable advantage;
@@ -150,11 +153,10 @@ risk strategy (`nothing to lose'), while the leading player is
 incentivised to protect the lead by lowering the risk of losing.  In a
 chess context, this means the leading player will aim for a draw.
 
-Such arguments suggest considering a drawn chess game as a
-qualitatively different outcome from a statement of equality of skill:
-the play itself tends to be different, the drawing players have a
-different mindset, and drawn games have less value in the wider
-context of the game.
+Such arguments suggest that one should infer more from a drawn game
+than simple equality of skill: the play itself tends to be different
+and more cautious, the drawing players have a different mindset, and
+drawn games have less value in the wider context of the game.
 
 \section{Generalized Bradley-Terry}
 
@@ -173,17 +175,16 @@ function, on the assumption of independence of trials, would be
 
 where $W_{ij}$ is the number of times $i$ beats $j$ and $L_{ij}$ is
 the number of times $i$ loses to $j$.  Here I present a new
-generalization of Bradley-Terry in which a chess game is regarded as
-a three-way competition between the two players and an entity that
-wins if the game is drawn.  The system is further modified to account
-for first-move advantage by positing an entity whose strength is added
-to that of the white player.  This methodology affords insight into
+generalization of Bradley-Terry in which a chess game is regarded as a
+three-way competition between the two players and an entity that wins
+if the game is drawn.  The system is further modified to account for
+first-move advantage by positing an entity whose strength is added to
+that of the white player.  This methodology affords insight into
 players' strengths, response to playing black or white, and
-risk-aversion as manifested by probability of drawing.
-
-If we consider a chess game to be a three-way trial, we define a
-likelihood function for non-negative $p_1,\ldots,p_n,D$ with
-$D+\sum p_i=1$ and this would be
+risk-aversion as manifested by probability of drawing.  If we consider
+a chess game to be a three-way trial, an appropriate likelihood
+function for non-negative $p_1,\ldots,p_n,D$ with $D+\sum p_i=1$ would
+be
 
 \begin{equation}
 \prod_{i<j}
@@ -197,10 +198,10 @@ $L_{ij}$ is games lost and $D_{ij}$ is games drawn.  However, this
 approach ignores the extra strength conferred by the first-move
 advantage.  We thus consider another entity whose strength is added to
 the white player.  The strength of the white player is thus the sum of
-the player's strength and another entity, the White Monster.
-Recalling that a game might be a draw, we obtain the probabilities as
-given in Table~\ref{probabilities}.  The corresponding likelihood
-function is given below in equation \ref{likelihood_WD}:
+the player's strength and another entity with strength $W$.  Recalling
+that a game might be a draw, we obtain the probabilities as given in
+Table~\ref{probabilities}.  The corresponding likelihood function is
+given below in equation \ref{likelihood_WD}:
 
 \newcommand{\oo}{\vphantom{W^{W^{W^W}}}}
 
@@ -212,7 +213,8 @@ $\Prob{(\mbox{$i$ wins})}$  & $\frac{p_i+W\oo}{p_i+p_j+W+D}$ & $\frac{p_i}{p_i+p
 $\Prob{(\mbox{draw})}$      & $\frac{D\oo}{p_i+p_j+W+D}$     & $\frac{D}{p_i+p_j+W+D}$    \\
 $\Prob{(\mbox{$i$ loses})}$ & $\frac{p_j\oo}{p_i+p_j+W+D}$   & $\frac{p_j+W}{p_i+p_j+W+D}$\\
 \end{tabular}
-\caption{Probabilities of a win, draw, loss for the two players under a generalized Bradley-Terry model\label{probabilities}}
+\caption{Probabilities of a win, draw, loss for the two players under a generalized
+  Bradley-Terry model\label{probabilities}}
 \end{table}
 
 \begin{align}\nonumber
@@ -239,8 +241,8 @@ equal to
 \end{equation}
 
 which might be preferable on grounds of clarity.  We now apply this
-and related likelihood models to real chess datasets.  The general
-approach follows~\citet{edwards1972}.  To test any hypothesis $H$ on a
+and related likelihood models to real chess datasets using the Method
+of Support~\citet{edwards1972}.  To test any hypothesis $H$ on
 likelihood function $\mathcal{L}$ one first identifies the constraint
 on hypothesis space corresponding to $H$.  One then finds the
 unconstrained maximum likelihood $\mathcal{L}_\mathrm{free}$ and
@@ -359,21 +361,21 @@ dotchart(maxp(karpov_kasparov_anand),pch=16,xlim=c(0,0.55))
   \end{center}
 \end{figure}
 
-This likelihood function is easily maximized numerically
-and this is shown visually in figure~\ref{maxp_karpov_kasparov_anand},
-which suggests a number of interesting and testable statistical
-hypotheses.  Firstly, we observe that $D=0$ cannot possibly be the
-case: the likelihood for this hypothesis would be identically zero,
-owing to the nonzero term in the numerator of the last term of
-Equation~\ref{likelihood_WD}.  However, we see that the maximum
-likelihood estimate for draw strength $\hat{D}\simeq 0.53$: compare
-the na\"ive estimate of $\frac{224}{365}\simeq 0.61$ given by
-observing 224 draws among 265 games.  The MLE is lower because the
-maximization process automatically adjusts for the different players'
-strengths.  Secondly, we may make inferences about $W$, the extra
-strength conferred by playing white: it is conceivable that $W=0$ as
-this term does not appear on its own in the numerator of any term.  We
-may test $H_0\colon W=0$ using the method of support by maximizing the
+This likelihood function is easily maximized numerically and this is
+shown visually in figure~\ref{maxp_karpov_kasparov_anand}, which
+suggests a number of interesting and testable statistical hypotheses.
+Firstly, we observe that $D=0$ cannot possibly be the case: the
+likelihood for this hypothesis would be identically zero, owing to the
+nonzero term in the numerator of equation~\ref{kka_likelihood}.  From
+the figure, we see that the maximum likelihood estimate for draw
+strength $\hat{D}\simeq 0.53$: compare the na\"ive estimate of
+$\frac{224}{365}\simeq 0.61$ given by observing 224 draws among 265
+games.  The MLE is lower because the maximization process
+automatically adjusts for the different players' strengths.  Secondly,
+we may make inferences about $W$, the extra strength conferred by
+playing white: it is conceivable that $W=0$ as this term does not
+appear on its own in the numerator of any term.  We may test
+$H_0\colon W=0$ using the Method of Support by maximizing the
 likelihood subject the constraint $W=0$ and comparing with the
 likelihood when the optimization is free.
 
@@ -611,13 +613,13 @@ evidence that the players differ in regard to their white advantage.
 
 \section{Collusion in the World Chess Championship 1963}
 
-The method of support allows one to estimate proclivity to draw while
+The Method of Support allows one to estimate proclivity to draw while
 accounting for players' strengths and first-move advantage.  We now
 consider one famous incident, following the World Chess Championships
-1963, in which Fischer famously and publicly claimed that the Soviet
-players colluded.  The accusation was that Soviet players agreed ahead
-of time to draw when playing one another, in order to conserve energy
-for subsequent matches.
+1963, in which Fischer famously and publicly claimed that three of the
+Soviet players colluded.  The accusation was that Keres, Petrosian,
+and Geller agreed ahead of time to draw when playing one another, in
+order to conserve energy for subsequent matches.
 
 \citet{moul2009} consider this accusation from a statistical
 perspective and present a detailed analysis.  Unlike the present work,
@@ -655,20 +657,16 @@ outcome (win-loss-draw) in the competition itself.
  \caption{Cura\c{c}ao 1962 \label{candidates} Candidates, World Chess Championship 1963}
  \end{table}
 
-Here I analyse the original subject of the complaint, the Cura\c{c}ao
-1962 Candidates (match results shown in Table~\ref{candidates}).
-Fischer alleged that three of the Soviet players (Keres, Petrosian,
-and Geller) had agreed to draw amongst themselves.  Observe that all
-twelve of the games between the three accused players ended in a draw,
-a significant result given 51 winning games and 54 draws (Fisher exact
-test, one-sided, $p=0.0079$).  
-
-To investigate the possibility of Soviet collusion we introduce a new
-draw entity: a soviet draw monster $C$, who wins when two colluding
-players draw, and is inactive whenever a game has at least one
-non-colluding player.  Then $H_N\colon C=D$ corresponds to no
-collusion and the likelihood function would be
-
+Here I consider only the game results, reproduced in
+table~\ref{candidates}.  We see that all twelve of the games between
+the three accused players ended in a draw, a significant result given
+51 winning games and 54 draws (Fisher exact test, one-sided,
+$p=0.0079$).  To quantify such Soviet collusion, accounting for the
+player skills, we introduce a new draw entity: a collusive draw
+monster $C$, who wins when two colluding players draw, and is inactive
+whenever a game has at least one non-colluding player.  Then
+$H_N\colon C=D$ corresponds to no collusion and the likelihood
+function would have
 
 \begin{equation}\parbox{4in}{$
 P^5\,
@@ -692,7 +690,6 @@ $}\end{equation}
 
 \noindent on the numerator (where $C$ is the strength of a collusive
 draw), and a total of 30 terms such as
-$\left(P+\mathit{Fis}+W+D\right)^{4}$ and
 $\left(P+\mathit{Ke}+W+C\right)^{4}$ [indicating that Petrosian played
   Keres 4 times] on the denominator.  The likelihood ratio for the
 hypothesis that collusive draws have the same strength as regular
@@ -737,7 +734,7 @@ $\vdots$&&&&&\\
 \end{table}
 
 
-The fith interzonal took place in Stockholm in 1962, in the form of a
+The fifth Interzonal took place in Stockholm in 1962, in the form of a
 23-player round-robin tournament.  For the results shown in
 table~\ref{interzonal}, we would have a likelihood function
 
@@ -761,10 +758,10 @@ table~\ref{interzonal}, we would have a likelihood function
 and one for Korchnoi, both playing white); but the full likelihood
 function for the interzonal has 297 terms, including $D^{110}$.  To
 investigate the possibility of increased Soviet drawing proclivity, we
-introduce a Soviet draw monster $D_s$, who wins when two Soviet
-players draw, and is inactive if a game has at least one non-Soviet
-player.  Then $H_N\colon D_s=D$ corresponds to no collusion and the
-likelihood function for table~\ref{interzonal} would be
+introduce a Soviet draw monster with strength~$D_s$, who wins when two
+Soviet players draw, and is inactive if a game has at least one
+non-Soviet player.  Then $H_N\colon D_s=D$ corresponds to no collusion
+and the likelihood function for table~\ref{interzonal} would be
 
 \begin{equation}\label{collusion}
 \mathcal{L}\left(F,G,P,K,L,W,D,D_s\right)=
