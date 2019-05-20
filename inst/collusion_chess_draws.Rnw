@@ -118,23 +118,18 @@ has been modified and extended many times, for example to account for
 multi-way choices such as mating preferences~\citep{hankin2010}.
 
 Bradley-Terry is not directly applicable to Chess for two reasons:
-firstly, the white player is at a considerable
-advantage~\cite{asdfasdffdsfds}; and secondly, many chess games end in
-a draw: white wins about $37.5\%$ of all games, black wins $27.6\%$,
-and about $39.4\%$ are drawn.  We consider the first-mover advantage
-first, then consider the effect of drawn games.
+firstly, the white player appears to be at a considerable advantage;
+and secondly, many chess games end in a draw: white wins about
+$37.5\%$ of all games, black wins $27.6\%$, and about $39.4\%$ are
+drawn.  We consider the first-mover advantage first, then consider the
+effect of drawn games.
 
 \paragraph{First-mover advantage} Traditionally White moves first in
 any game, and this feature introduces an asymmetry into play.
 Historically, we see about 1.35 white wins for every black win.
 However, interpretations of this statistic vary and the issue is hotly
-debated with opinions ranging from Rowson who compares first-move
-advantage to that of serving in tennis, to that of commentators such
-as \citeauthor{adorjan} who claims that White's advantage is a
-``delusion''.  \cite{asdfasdasfd} goes further, asserting that Black
-can exploit the situation by mounting a directed response to White, of
-the type seen in analysis of sequential zero-sum games, in which the
-first-mover advantage can be positive or negative.
+debated with opinions ranging from that of~\cite{adams2007}---``white
+to play and win''---to~\citet{adorjan1988}---``black is OK!''.
 
 \paragraph{Draws} Chess games may be won by either player, or may be
 drawn; the implication of a draw is that neither player is better than
@@ -273,15 +268,28 @@ previous likelihood functions of draws in that they include reified
 entities representing proclivity to draw $D$, and white or first-mover
 advantage ($W$).
 
+\subsection{Previous work}
+
+\cite{davidson1970} uses a threshhold approach to interpret a draw as
+performance of the players the same to within a threshhold.  Using a
+logistic expression for the difference in players' performance, he
+effectively uses, in current notation, $D=\nu\sqrt{p_ip_j}$.  Here we
+note that such a model automatically give stronger players a higher
+draw potential, and also note that it is difficult to account for
+first-player advantage in this framework.  Such an approach is
+numerically challenging in the current framework as the unit-sum
+constraint becomes nonlinear and likelihood maximization becomes
+difficult.
+
 \subsection{Numerical considerations}
 
 The Method of Support \citep{edwards1972} involves only numerical
 optimization (not integration which is computationally expensive).
 The analysis presented here uses the framework of the \pkg{hyper2}
 package~\citep{hankin2017} as a convenient and unified interface.
-Because gradients are available, convergence is generally rapid and
-hypothesis-specific constraints on parameter space are, in general,
-straightforward to implement.
+Because gradients are available, convergence to the evaluate is
+generally rapid and hypothesis-specific constraints on parameter space
+are, in general, straightforward to implement.
 
 \section{Anand, Karpov, Kasparov}
 
@@ -341,16 +349,15 @@ D^{224}
 }
 \end{equation}
 
-This likelihood function is easily maximized:
+
                                     
-<<>>=
+<<echo=FALSE,print=FALSE,results=hide>>=
 maxp(karpov_kasparov_anand)
 @ 
-                                    
-
-\begin{figure}[htbp]
+                           
+\begin{figure}[t]
 \begin{center}
-<<ddc,echo=TRUE,fig=TRUE>>=
+<<ddc,echo=FALSE,fig=TRUE>>=
 dotchart(maxp(karpov_kasparov_anand),pch=16,xlim=c(0,0.55))
 @
 \caption{Maximum likelihood estimate for the strengths of the 3 Grandmasters in Table~\ref{kka} 
@@ -358,6 +365,7 @@ dotchart(maxp(karpov_kasparov_anand),pch=16,xlim=c(0,0.55))
   \end{center}
 \end{figure}
 
+This likelihood function is easily maximized numerically
 and this is shown visually in figure~\ref{maxp_karpov_kasparov_anand},
 which suggests a number of interesting and testable statistical
 hypotheses.  Firstly, we observe that $D=0$ cannot possibly be the
@@ -376,7 +384,7 @@ likelihood subject the constraint $W=0$ and comparing with the
 likelihood when the optimization is free.
 
 
-<<echo=FALSE>>=
+<<maxlikekka,echo=FALSE,print=FALSE,results=hide>>=
 small <- 1e-4
 
 e <- function(white){
@@ -392,7 +400,7 @@ ignore4 <- maxp(karpov_kasparov_anand,give=TRUE)$value
 support <- 328.2975-335.6025
 @ 
 
-<<>>=
+<<ignore34diff,echo=FALSE,print=FALSE,results=hide>>=
 ignore3
 ignore4
 ignore3-ignore4
@@ -509,17 +517,24 @@ $}}{\parbox{3in}{$
 $}}
 \end{equation}
 
-<<>>=
-round(maxp(kka_3draws),3)
+
+\begin{figure}[t]
+\begin{center}
+<<echo=FALSE,fig=TRUE>>=
+dotchart(maxp(kka_3draws),pch=16)
 @ 
+\caption{Maximum likelihood estimate for \label{kka_3draws} equation \ref{KKA_personalised_drawmonster} equation} 
+  \end{center}
+\end{figure}
 
-We see considerable variability in proclivity to draw and again this
-may be tested with the Method of Support, which gives a $p$-value of
-about 0.039, borderline significant: an interesting result, given that
-in this case no draw monster appears alone anywhere in the likelihood
-function.
 
-<<echo=FALSE,print=FALSE>>=
+In figure~\ref{kka_3draws}, we see considerable variability in
+proclivity to draw and again this may be tested with the Method of
+Support, which gives a $p$-value of about 0.039, borderline
+significant: an interesting result, given that in this case no draw
+monster appears alone anywhere in the likelihood function.
+
+<<echo=FALSE,print=FALSE,results=hide>>=
 objective <- function(V){
   karpov <- V[1]
   kasparov <- V[2]
@@ -606,7 +621,19 @@ now consider one famous incident, following the World Chess
 Championships 1963, in which Fischer famously and publicly claimed
 that the Soviet players colluded.  The accusation was that Soviet
 players agreed ahead of time to draw when playing one another, in
-order to conserve energy for subsequent matches~\citep{moul2009}.
+order to conserve energy for subsequent matches.
+
+\citet{moul2009} consider this accusation from a statistical
+perspective and present a detailed analysis of Cura\c{c}ao.  Unlike
+the present analysis, which uses a dataset restricted to game result
+(win/loss/draw), \citet{moul2009} included number of moves in each
+game\footnote{The reasoning was that hard-fought games that happened
+  to end in a draw are more likely to last longer than collusive or
+  pre-arranged draws.} in their analysis, and used a dataset of 7355
+games played in the period 1940-1978 to calibrate the ability of the
+players.  In contrast, the analysis presented uses a dataset
+restricted to game outcome (win-loss-draw) in the competition itself.
+
 
  \begin{table}
  \centering
@@ -669,7 +696,10 @@ strength as regular draws isabout $e^{11.8}\simeq 10^5$: we conclude
 that the high number of draws among the three accused players was
 unlikely to be due to chance.
 
-One plausible explanation for the previ
+One plausible and charitable explanation for this result is that
+Soviet players have a higher propensity to draw than western players.
+We can investigate this by considering the interzonal tournament which
+took place in Stockholm in 1962.
 
 \subsection{Chess collusion: interzonal Stockholm 1962}
 
@@ -725,10 +755,9 @@ and one for Korchnoi, both playing white); but the full likelihood
 function for the interzonal has 297 terms, including $D^{110}$.  To
 investigate the possibility of Soviet collusion we introduce a new
 draw entity: a soviet Draw monster $D_s$, who wins when two Soviet
-players draw, and is inactive whenever a game with at least one
-non-Soviet player is drawn.  Then $H_N\colon D_s=D$ corresponds to no
-collusion and the likelihood function for table~\ref{interzonal} would
-be
+players draw, and is inactive whenever a game has at least one
+non-Soviet player.  Then $H_N\colon D_s=D$ corresponds to no collusion
+and the likelihood function for table~\ref{interzonal} would be
 
 \begin{equation}\label{collusion}
 \mathcal{L}\left(F,G,P,K,L,W,D,D_s\right)=
@@ -752,9 +781,9 @@ constrained maximization gives a likelihood ratio of about 5096, or a
 $p$-value of about $3.6\times 10^{-5}$.  Indeed we could go further
 and plot a profile likelihood curve for the log-odds ratio
 $\ln\left(D_s/D\right)$ which, if Dirichlet, would be accurately
-parabolic over a wide range (OHAGAN AND FORSTER, p343).  This is
-illustrated in Figure~\ref{DOESNOTEXIST}, that shows a credible
-interval of about HAVENOTDONETHISET.
+parabolic over a wide range~\cite[page 343]{ohagan2004}.  This is
+illustrated in Figure~\ref{proflike}, that shows a credible interval
+of about 1.8-2.4.
 
 
 <<echo=FALSE,print=FALSE>>=
@@ -797,7 +826,7 @@ if(do_from_scratch){
 
 \begin{figure}[htbp]
 \begin{center}
-<<proflike,echo=TRUE,fig=TRUE>>=
+<<proflike,echo=FALSE,fig=TRUE>>=
 plot(x,jj-max(jj),type='b',xlab="log-odds",ylab="support")
 abline(h=c(0,-2))
 @
@@ -821,19 +850,15 @@ may well adopt a riskier strategy after a sequence of defeats,
 adopting a ``nothing-to-lose'' mentality.  Such a phenomenon would be
 detectable, at least in principle, by generalizing the personalised
 draw likelihood function \ref{KKA_personalised_drawmonster} and
-seeking evidence for the draw monster's strength changing as a
-tournament progresses: it would become stronger for a player on a
-winning streak, and weaker for a losing player. 
+seeking evidence for the draw strength changing as a tournament
+progresses: it would become stronger for a player on a winning streak,
+and weaker for a losing player.
 
-\cite{moul2009} present detailed Monte Carlo simulations to assess the likely impact of any Soviet cartel on tournament outcomes.  In principle, the present system of likelihood and reified entities would admit such simulations and might be interesting to compare results.
-
-
-
-
-
+\cite{moul2009} present detailed Monte Carlo simulations
+to assess the likely impact of any Soviet cartel on tournament outcomes.
+In principle, the present system of likelihood and reified entities
+would admit such simulations and might be interesting to compare results.
 
 \bibliography{chess}
 \end{document}
  
-
-
