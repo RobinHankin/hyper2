@@ -864,6 +864,11 @@ to assess the likely impact of any Soviet cartel on tournament outcomes.
 In principle, the present system of likelihood and reified entities
 would admit such simulations and might be interesting to compare results.
 
+\subsection*{Supplementary material}
+
+R code for all statistical analysis given here is available at
+\url{https://github.com/RobinHankin/hyper2}.
+
 \bibliography{chess}
 \end{document}
  
