@@ -11,7 +11,7 @@
 
 
 %% just as usual
-\author{Robin K. S. Hankin\\Auckland University of Technology}
+\author{Robin K. S. Hankin\\Department of Mathematical Sciences\\Auckland University of Technology}
 \title{A generalization of the Bradley-Terry model for draws in chess}
 
 %\VignetteIndexEntry{chess draws}
@@ -45,14 +45,12 @@ the scorelines at the event itself, that the Candidates Tournament
 agreement with previous work that uses additional information such as
 historical results including number of moves.}
 
-\Keywords{Dirichlet distribution, hyperdirichlet distribution,
-  combinatorics, \proglang{R}, multinomial distribution, constrained
-optimization, Bradley-Terry}
-\Plainkeywords{Dirichlet distribution, hyperdirichlet distribution,
-  combinatorics, R, multinomial distribution, constrained
-optimization, Bradley-Terry}
-  
-  
+\Keywords{Likelihood functions, method of support, \proglang{R},
+  constrained optimization, Bradley-Terry, Chess, Collusion, Chess
+  Draws}
+\Plainkeywords{Likelihood functions, method of support, R,
+  constrained optimization, Bradley-Terry, Chess, Collusion, Chess
+  Draws}
   
 %% publication information
 %% NOTE: This needs to filled out ONLY IF THE PAPER WAS ACCEPTED.
@@ -101,28 +99,21 @@ Many situations involve pairwise comparisons that amount to a
 Bernoulli trial.  The canonical application would be two-way
 competitive situations such as tennis in which one player is
 identified as the winner.  The Bradley-Terry model~\citep{bradley1952}
-considers~$n$ players and assigns non-negative numbers
-$p_1,\ldots,p_n$ with unit sum to each player.  Then player $i$ beats
-player $j$ with probability $\frac{p_i}{p_i+p_j}$.  This simple system
-has been modified and extended many times, for example to account for
-multi-way competitions such as {\em MasterChef
-  Australia}~\citep{hankin2017}, and non-competitive situations such
-as consumer behaviour~\citep{hankin2010} and mating
-preference~\citep{west2008}.
+considers~$n$ players and assigns non-negative number $p_i$ to player
+$i$, with $\sum p_i=1$.  Then player $i$ beats player $j$ with
+probability $\frac{p_i}{p_i+p_j}$.  This simple system has been
+modified and extended many times, for example to account for multi-way
+competitions such as {\em MasterChef Australia}~\citep{hankin2017},
+and non-competitive situations such as consumer
+behaviour~\citep{hankin2010} and mating preference~\citep{west2008}.
 
 Bradley-Terry is not directly applicable to chess for two reasons:
 firstly, the white player appears to be at a considerable advantage
-winning about 37.5\% of games (black wins 27.6\%); and secondly, many
-chess games, about 39.4\%, are drawn (figures from Chessbase).
+winning about 37.5\% of tournament games (black wins 27.6\%); and
+secondly, many chess games, about 39.4\%, are drawn (figures from
+Chessbase).
 
-\paragraph{First-mover advantage} Traditionally White moves first in
-any game, and this feature introduces an asymmetry into play.
-Historically, we see about 1.35 white wins for every black win.
-However, interpretations of this statistic vary and the issue is hotly
-debated with opinions ranging from that of~\cite{adams2007}---``white
-to play and win''---to~\citet{adorjan1988}---``black is OK!''.
-
-\paragraph{Draws} Chess games may be won by either player, or may be
+\subsection{Draws} Chess games may be won by either player, or may be
 drawn; the implication of a draw is that neither player is better than
 the other.  Before 1867, tournament games that were drawn were
 replayed until one or other player won---reducing a chess game to a
@@ -157,14 +148,23 @@ than simple equality of skill: the play itself tends to be different
 and more cautious, the drawing players have a different mindset, and
 drawn games have less value in the wider context of the game.
 
-\section{Generalized Bradley-Terry}
+\subsection{First-mover advantage} Traditionally White moves first in
+any game, and this feature introduces an asymmetry into play.
+Historically, we see about 1.35 white wins for every black win.
+However, interpretations of this statistic vary and the issue is hotly
+debated with opinions ranging from that of~\cite{adams2007}---``white
+to play and win''---to~\citet{adorjan1988}---``black is OK!''.
 
-Consider first the standard Bradley-Terry model for a finite number of
-chess players.  Ignoring the effect of playing white, we wish to find
-numbers (``strengths") $p_i$ for $1\leqslant i\leqslant n$ with
-$p_i\geqslant 0, \sum p_i=1$ such that the probability of $i$ beating
-$j\neq i$ is $\frac{p_i}{p_i+p_j}$.  A suitable likelihood function,
-on the assumption of independence of trials, would be
+\subsection{Generalized Bradley-Terry}
+
+Here I show how Bradley-Terry may be generalized ot account for the
+existence of draws and the first-mover advantage.  Consider first the
+standard Bradley-Terry model for a finite number of chess players.
+Ignoring the effect of playing white, we wish to find numbers
+(``strengths") $p_i$ for $1\leqslant i\leqslant n$ with $p_i\geqslant
+0, \sum p_i=1$ such that the probability of $i$ beating $j\neq i$ is
+$\frac{p_i}{p_i+p_j}$.  A suitable likelihood function, on the
+assumption of independence of trials, would be
 
 \begin{equation}
 \prod_{i<j}
@@ -237,7 +237,7 @@ equal to
 \left(\frac{D}{p_i+p_j+D+W}\right)^{D_{ij}^\mathrm{black}}
 =
 \prod_{i<j}
-\left(\frac{p_D}{p_i+p_j+D}\right)^{D_{ij}^\mathrm{white}+D_{ij}^\mathrm{black}}
+\left(\frac{D}{p_i+p_j+D}\right)^{D_{ij}^\mathrm{white}+D_{ij}^\mathrm{black}}
 \end{equation}
 
 which might be preferable on grounds of clarity.  We now apply this
@@ -623,15 +623,14 @@ Keres, Petrosian, and Geller agreed ahead of time to draw when playing
 one another, in order to conserve energy for subsequent matches.
 
 \citet{moul2009} consider this accusation from a statistical
-perspective and present a detailed analysis.  Unlike the present work,
-which uses a dataset restricted to game result (win/loss/draw),
-\citet{moul2009} included number of moves in each game\footnote{The
-  reasoning was that hard-fought games that happened to end in a draw
-  are more likely to last longer than collusive or pre-arranged
-  draws.} in their analysis, and used a dataset of 7355 games played
-in the period 1940-1978 to calibrate the ability of the players.  In
-contrast, the analysis presented uses a dataset restricted to game
-outcome (win-loss-draw) in the competition itself.
+perspective and present a detailed analysis based on number of moves
+in each game\footnote{The reasoning was that hard-fought games that
+  happened to end in a draw are more likely to last longer than
+  collusive or pre-arranged draws.}.  Their analysis incorporated a
+dataset of 7355 games played in the period 1940-1978, used to
+calibrate the ability of the players.  In contrast, the analysis
+presented here uses only outcome of games (win-loss-draw) in the
+competition itself.
 
 
  \begin{table}
@@ -658,8 +657,8 @@ outcome (win-loss-draw) in the competition itself.
  \caption{Cura\c{c}ao 1962 \label{candidates} Candidates, World Chess Championship 1963}
  \end{table}
 
-Here I consider only the game results, reproduced in
-table~\ref{candidates}.  We see that all twelve of the games between
+Here I consider game results from Cura\c{c}ao 1962, reproduced in
+Table~\ref{candidates}.  We see that all twelve of the games between
 the three accused players ended in a draw, a significant result given
 51 winning games and 54 draws (Fisher's exact test, one-sided,
 $p=0.0079$).  To quantify such Soviet collusion, accounting for the
