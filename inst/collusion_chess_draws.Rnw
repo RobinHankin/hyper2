@@ -103,7 +103,7 @@ Many situations involve pairwise comparisons that amount to a
 Bernoulli trial.  The canonical application would be two-way
 competitive situations such as tennis in which one player is
 identified as the winner.  The Bradley-Terry model~\citep{bradley1952}
-considers~$n$ players and assigns non-negative number $p_i$ to player
+considers~$n$ players and assigns a non-negative number $p_i$ to player
 $i$, with $\sum p_i=1$.  Then player $i$ beats player $j$ with
 probability $\frac{p_i}{p_i+p_j}$.  This simple system has been
 modified and extended many times, for example to account for multi-way
@@ -112,13 +112,13 @@ and non-competitive situations such as consumer
 behaviour~\citep{hankin2010} and mating preference~\citep{west2008}.
 
 Bradley-Terry is not directly applicable to chess for two reasons:
-firstly, the white player appears to be at a considerable advantage
+firstly, the white player appears to be at a considerable advantage,
 winning about 37.5\% of tournament games (black wins 27.6\%); and
 secondly, many chess games, about 39.4\%, are drawn (figures from
 Chessbase).
 
 \subsection{Draws} Chess games may be won by either player, or may be
-drawn; the implication of a draw is that neither player is better than
+drawn; one inference of a draw is that neither player is better than
 the other.  Before 1867, tournament games that were drawn were
 replayed until one or other player won---reducing a chess game to a
 Bernoulli trial (with probability one).  This system became unworkable
@@ -150,10 +150,10 @@ aim for a draw.
 Such arguments suggest that one should infer more from a drawn game
 than simple equality of skill: the play itself tends to be different
 and more cautious, the drawing players have a different mindset, and
-drawn games have less value in the wider context of the game.
+drawn games have less value in the wider context of chess.
 
 \subsection{First-mover advantage} Traditionally White moves first in
-any game, and this feature introduces an asymmetry into play.
+chess, and this feature introduces an asymmetry into play.
 Historically, we see about 1.35 white wins for every black win.
 However, interpretations of this statistic vary and the issue is hotly
 debated with opinions ranging from that of~\cite{adams2007}---``White
@@ -165,8 +165,8 @@ Here I show how Bradley-Terry may be generalized to account for the
 existence of draws and the first-mover advantage.  Consider first the
 standard Bradley-Terry model for a finite number of chess players.
 Ignoring the effect of playing white, we wish to find numbers
-(``strengths") $p_i$ for $1\leqslant i\leqslant n$ with $p_i\geqslant
-0, \sum p_i=1$ such that the probability of $i$ beating $j\neq i$ is
+(``strengths") $p_i\geqslant 0$ for $1\leqslant i\leqslant n$ with
+$\sum p_i=1$ such that the probability of $i$ beating $j\neq i$ is
 $\frac{p_i}{p_i+p_j}$.  A suitable likelihood function, on the
 assumption of independence of trials, would be
 
@@ -180,16 +180,16 @@ where $W_{ij}$ is the number of times $i$ beats $j$ and $L_{ij}$ is
 the number of times $i$ loses to $j$.  Here I present a new
 generalization of Bradley-Terry in which a chess game is regarded as a
 three-way competition between the two players and a third entity (a
-``draw monster'') that wins if the game is drawn.  The system is
+``draw monster'') that wins if the game is drawn.  The system may be
 further modified to account for first-move advantage by positing an
 entity whose strength is added to that of the white player.  This
 methodology affords insight into players' strengths, response to
 playing black or white, and risk-aversion as manifested by probability
-of drawing.  If we consider a chess game to be a three-way trial, an
-appropriate likelihood function would be for non-negative
-$p_1,\ldots,p_n,\draw$ (here \draw\ is the draw monster's strength,
-fraktur font being used for reified entities' strengths) with $\draw+\sum
-p_i=1$ and
+of drawing.  If we consider a chess game to be a three-way trial, we
+seek a likelihood function for non-negative $p_1,\ldots,p_n,\draw$
+(here \draw\ is the draw monster's strength, fraktur font being used
+for reified entities' strengths) with $\draw+\sum p_i=1$.  A suitable
+likelihood function would be
 
 \begin{equation}
 \prod_{i<j}
@@ -206,7 +206,8 @@ added to the white player.  The strength of the white player is thus
 the sum of the player's strength and \white.  Recalling that a game
 might be a draw, we obtain the probabilities as given in
 Table~\ref{probabilities}.  The corresponding likelihood function is
-given below in equation \ref{likelihood_WD}:
+defined on $\white+\draw+\sum p_i=1$, given below in equation
+\ref{likelihood_WD}:
 
 \newcommand{\oo}{\vphantom{W^{W^{W^W}}}}
 
@@ -228,32 +229,22 @@ $\Prob{(\mbox{$i$ loses})}$ & $\frac{p_j\oo}{p_i+p_j+\white+\draw}$   & $\frac{p
 \left(\frac{p_j}{p_i+p_j+\draw+\white    }\right)^{L_{ij}^\mathrm{white}}\\
 &{} \left(\frac{p_i}{p_i+p_j+\draw+\white}\right)^{W_{ij}^\mathrm{black}}\label{likelihood_WD}
 \left(\frac{p_j+\white}{p_i+p_j+\draw+\white  }\right)^{L_{ij}^\mathrm{black}}\\
-&{} \left(\frac{\draw}{p_i+p_j+\draw    }\right)^{D_{ij}}
+&{} \left(\frac{\draw }{p_i+p_j+\draw+\white  }\right)^{D_{ij}^\mathrm{white}+D_{ij}^\mathrm{black}}
 \nonumber
 \end{align}
 
 where $W_{ij}^\mathrm{white}$ is the number of games won by $i$ when
-playing white against $j$, and so on.  The final term is algebraically
-equal to
-
-\begin{equation}
-\prod_{i<j}
-\left(\frac{\draw}{p_i+p_j+\draw+\white}\right)^{D_{ij}^\mathrm{white}}
-\left(\frac{\draw}{p_i+p_j+\draw+\white}\right)^{D_{ij}^\mathrm{black}}
-=
-\prod_{i<j}
-\left(\frac{\draw}{p_i+p_j+\draw}\right)^{D_{ij}^\mathrm{white}+D_{ij}^\mathrm{black}}
-\end{equation}
-
-which might be preferable on grounds of clarity.  We now apply this
-and related likelihood models to real chess datasets using the Method
-of Support~\citep{edwards1972}.  To test any hypothesis $H$ on
-likelihood function $\mathcal{L}$ one first identifies the constraint
-on hypothesis space corresponding to $H$.  One then finds the
-unconstrained maximum likelihood $\mathcal{L}_\mathrm{free}$ and
-compares it with the maximum likelihood $\mathcal{L}_\mathrm{cons}$
-when the optimization is constrained by $H$.  The test statistic is
-then the likelihood ratio
+playing white against $j$, and so on.  Note that the power of the
+final term, $D_{ij}^\mathrm{white}+D_{ij}^\mathrm{black}$ is the total
+number of games drawn between $i$ and $j$ irrespective of colour.  We
+now apply this and related likelihood models to real chess datasets
+using the Method of Support~\citep{edwards1972}.  To test any
+hypothesis $H$ on likelihood function $\mathcal{L}$ one first
+identifies the constraint on hypothesis space corresponding to $H$.
+One then finds the unconstrained maximum likelihood
+$\mathcal{L}_\mathrm{free}$ and compares it with the maximum
+likelihood $\mathcal{L}_\mathrm{cons}$ when the optimization is
+constrained by $H$.  The test statistic is then the likelihood ratio
 $\mathcal{L}_\mathrm{free}/\mathcal{L}_\mathrm{cons}$ or, equivalently
 the support $\mathcal{S}=\log\mathcal{R}$.  Wilks's theorem states
 that the asymptotic distribution of $2\mathcal{S}$ is $\chi^2_n$ where
@@ -291,13 +282,14 @@ R~\citep{rcore2019} \pkg{hyper2} package~\citep{hankin2017} as a
 convenient and unified interface.  Because gradients are available,
 convergence to the evaluate is generally rapid and hypothesis-specific
 constraints on parameter space are, in general, linear and
-straightforward to implement.
+straightforward to implement.  The total runtime for all the tests
+presented here is less than a few seconds on a desktop PC.
 
 \section{Anand, Karpov, Kasparov}
 
 Grandmasters Anand, Karpov, and Kasparov have long-standing rivalry
 and have played many games amongst themselves.  A summary may be found
-in table~\ref{kka}.  Equation~\ref{likelihood_WD} becomes
+in Table~\ref{kka}.  Equation~\ref{likelihood_WD} becomes
 
 \begin{table}
 \centering
@@ -360,28 +352,29 @@ maxp(karpov_kasparov_anand)
 <<ddc,echo=FALSE,fig=TRUE>>=
 dotchart(maxp(karpov_kasparov_anand),pch=16,xlim=c(0,0.55))
 @
-\caption{Maximum likelihood estimate for the strengths of the 3 Grandmasters in table~\ref{kka} 
+\caption{Maximum likelihood estimate for the strengths of the 3 Grandmasters in Table~\ref{kka} 
 \label{maxp_karpov_kasparov_anand} under a likelihood defined as Equation~\ref{likelihood_WD}}
   \end{center}
 \end{figure}
 
 This likelihood function is easily maximized numerically and the
-evaluate is shown visually in figure~\ref{maxp_karpov_kasparov_anand},
+evaluate is shown visually in Figure~\ref{maxp_karpov_kasparov_anand},
 which suggests a number of interesting and testable statistical
 hypotheses.  Firstly, we observe that $\draw=0$ cannot possibly be the
 case: the likelihood for this hypothesis would be identically zero,
-owing to the nonzero term in the numerator of
+owing to the nonzero power of \draw\ in the numerator of
 equation~\ref{kka_likelihood}.  From the figure, we see that the
-maximum likelihood estimate for draw strength $\hat{\draw}\simeq 0.53$:
-compare the na\"ive estimate of $\frac{224}{365}\simeq 0.61$ given by
-observing 224 draws among 265 games.  The na\"{i}ve estimate is lower
-because the maximization process automatically adjusts for the
+maximum likelihood estimate for draw strength $\hat{\draw}\simeq
+0.53$: compare the na\"ive estimate of $\frac{224}{365}\simeq 0.61$
+given by observing 224 draws among 265 games.  The ML estimate is
+lower because the maximization process automatically adjusts for the
 different players' strengths.  Secondly, we may make inferences about
-$\white$, the extra strength conferred by playing white: it is conceivable
-that $\white=0$ as this term does not appear on its own in the numerator of
-any term.  We may test $H_0\colon \white=0$ using the Method of Support by
-maximizing the likelihood subject to the constraint $\white=0$ and
-comparing with the likelihood when the optimization is free.
+$\white$, the extra strength conferred by playing white: it is
+conceivable that $\white=0$ as this term does not appear on its own in
+the numerator of any term.  We may test $H_0\colon \white=0$ using the
+Method of Support by maximizing the likelihood subject to the
+constraint $\white=0$ and comparing with the likelihood when the
+optimization is free.
 
 
 <<maxlikekka,echo=FALSE,print=FALSE,results=hide>>=
@@ -473,15 +466,15 @@ the proclivity to draw.
 \subsection{Each player has a draw monster}
 
 As argued above, players with a cautious style tend to draw and this
-is an important and interesting component of the game.  To investigate
-this we need a likelihood function that can account for possible
-differences in draw proclivity among the players.  This may be
-achieved by considering a game between two players to be a contest
-between five entities: the two real players, the white advantage, and
-two {\em personalised} draw entities, one for each real player; a
-drawn game is counted as a win for either of the draw monsters.  Under
-these assumptions, table~\ref{kka} translates into the following
-likelihood function:
+is an important and interesting feature of the game (even if drawn
+games themselves are boring).  One line of investigation might be a
+likelihood function that can account for differences in draw
+proclivity among the players.  This may be achieved by considering a
+game between two players to be a contest between five entities: the
+two real players, the white advantage, and two {\em personalised} draw
+entities, one for each real player; a drawn game is counted as a win
+for either of the draw monsters.  Under these assumptions,
+Table~\ref{kka} translates into the following likelihood function:
 
 %\begin{figure}[htbp]
 %\begin{center}
@@ -665,12 +658,12 @@ Here I consider game results from Cura\c{c}ao 1962, reproduced in
 Table~\ref{candidates}.  We see that all twelve of the games between
 the three accused players ended in a draw, a significant result given
 51 winning games and 54 draws (Fisher's exact test, one-sided,
-$p=0.0079$).  To quantify such Soviet collusion, accounting for the
-player skills, we introduce a new draw entity: a collusive draw
-monster with strength \cdraw, who wins when two colluding players
-draw, and is inactive whenever a game has at least one non-colluding
-player.  Then $H_N\colon\cdraw=\draw$ corresponds to no collusion and
-the likelihood function would have
+$p=0.0079$).  To quantify the evidence for any such collusion,
+accounting for the player skills, we introduce a new draw entity: a
+collusive draw monster with strength \cdraw, who wins when two
+colluding players draw, and is inactive whenever a game has at least
+one non-colluding player.  Then $H_N\colon\cdraw=\draw$ corresponds to
+no collusion and the likelihood function would have
 
 \begin{equation}\parbox{4in}{$
 P^5\,
@@ -732,14 +725,16 @@ Korchnoi  (USSR)  & \zerob  & \halfb  & \halfw  &   -       & \oneww   &\\
 Filip      (TCH)  & \halfw  & \halfb  & \halfb  & \zerob    &  -       &\\
 $\vdots$&&&&&\\
 \end{tabular}
-\caption{Subset of the Fifth Interzonal round-robin, Stockholm 1962.\label{interzonal}
-  Results $\in\{0,\halfw,1\}$ and box colour refer to row
-  player.  Thus, for example, Fischer played black against Geller and drew}
+\caption{Subset of the Fifth Interzonal round-robin, Stockholm
+  1962.\label{interzonal} Results $\in\{0,\halfw,1\}$ and box colour
+  refer to row player.  Thus, for example, Fischer played black
+  against Geller and drew.  The full dataset, not shown here, has 23
+  players}
 \end{table}
 
 
 The fifth Interzonal took place in Stockholm in 1962, in the form of a
-23-player round-robin tournament.  For the results shown in
+23-player round-robin tournament.  For the 20 game results shown in
 Table~\ref{interzonal}, we would have a likelihood function
 
 \begin{equation}
@@ -760,12 +755,13 @@ Table~\ref{interzonal}, we would have a likelihood function
 
 \noindent (the numerator includes 8 draws and 2 wins, one for Fischer
 and one for Korchnoi, both playing white); but the full likelihood
-function for the interzonal has 297 terms, including $\draw^{110}$.  To
-investigate the possibility of increased Soviet drawing proclivity, we
-introduce a Soviet draw monster with strength~$\draw_s$, who wins when two
-Soviet players draw, and is inactive if a game has at least one
-non-Soviet player.  Then $H_N\colon \draw_s=\draw$ corresponds to no collusion
-and the likelihood function for Table~\ref{interzonal} would be
+function for the interzonal has 297 terms, including $\draw^{110}$.
+To investigate the possibility of increased Soviet drawing proclivity,
+we introduce a Soviet draw monster with strength~$\draw_s$, who wins
+when two Soviet players draw, and is inactive if a game has at least
+one non-Soviet player.  Then $H_N\colon \draw_s=\draw$ corresponds to
+no collusion and the likelihood function for the data of
+Table~\ref{interzonal} would be
 
 \begin{equation}\label{collusion}
 %\mathcal{L}\left(F,G,P,K,L,\white,\draw,\draw_s\right)=
@@ -783,14 +779,17 @@ and the likelihood function for Table~\ref{interzonal} would be
 \end{equation}
 
 
-The maximum likelihood estimate is $\draw\simeq 0.043, \draw_s=0.354$; a
-constrained maximization gives a likelihood ratio of about 5096, or a
-$p$-value of about $3.6\times 10^{-5}$.  Indeed we could go further
-and plot a profile likelihood curve for the log-odds ratio
-$\log\left(\draw_s/\draw\right)$ which, if Dirichlet, would be accurately
-parabolic over a wide range~\cite[page 343]{ohagan2004}.  This is
-illustrated in figure~\ref{proflike}, that shows a credible interval
-of about 1.8-2.4.
+The maximum likelihood estimate for the full 23-player dataset is
+$\draw\simeq 0.043, \draw_s=0.354$; a constrained maximization gives a
+likelihood ratio of about 5096, or a $p$-value of about $3.6\times
+10^{-5}$: there is strong evidence that Soviet players do indeed draw
+more frequently than non-Soviets.  Indeed we could go further and plot
+a profile likelihood curve for the log-odds ratio
+$\log\left(\draw_s/\draw\right)$ which, if Dirichlet, would be
+accurately parabolic over a wide range~\cite[page 343]{ohagan2004}.
+This is illustrated in figure~\ref{proflike}, that shows a credible
+interval of about 1.8-2.4: we can be reasonably sure that
+$\draw_s/\draw\geqslant e^{1.8}\simeq 6.05$.
 
 
 <<echo=FALSE,print=FALSE>>=
