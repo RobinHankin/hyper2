@@ -850,7 +850,8 @@ reification of entities representing propensity to draw, and the
 first-mover (or white player) advantage.  Likelihood functions for the
 players' and reified entities' strengths are defined using only
 specific tournament outcomes; further, the analysis uses only game
-outcome, not length.
+outcome, not length.  Many hypotheses of interest to the chess
+community may be analysed straightforwardly.
 
 In this context we note, following the observation of~\citet{moul2009}
 that a player may well adopt a riskier strategy after a sequence of
@@ -864,7 +865,7 @@ for a player on a winning streak, and weaker for a losing player.
 \cite{moul2009} present detailed Monte Carlo simulations
 to assess the likely impact of any Soviet cartel on tournament outcomes.
 In principle, the present system of likelihood and reified entities
-would admit such simulations and might be interesting to compare results.
+would admit such simulations and it might be interesting to compare results.
 
 \subsection*{Supplementary material}
 
