@@ -82,6 +82,10 @@ historical results including number of moves.}
 
 \newcommand\headercell[1]{%
    \smash[b]{\begin{tabular}[t]{@{}c@{}} #1 \end{tabular}}}
+\newcommand{\draw}{\ensuremath{\mathfrak{D}}}
+\newcommand{\cdraw}{\ensuremath{\mathfrak{C}}}
+\newcommand{\white}{\ensuremath{\mathfrak{W}}}
+
 
 \SweaveOpts{}
 \begin{document}
@@ -152,12 +156,12 @@ drawn games have less value in the wider context of the game.
 any game, and this feature introduces an asymmetry into play.
 Historically, we see about 1.35 white wins for every black win.
 However, interpretations of this statistic vary and the issue is hotly
-debated with opinions ranging from that of~\cite{adams2007}---``white
-to play and win''---to~\citet{adorjan1988}---``black is OK!''.
+debated with opinions ranging from that of~\cite{adams2007}---``White
+to play and win'' to~\citet{adorjan1988}---``Black is OK!''.
 
 \subsection{Generalized Bradley-Terry}
 
-Here I show how Bradley-Terry may be generalized ot account for the
+Here I show how Bradley-Terry may be generalized to account for the
 existence of draws and the first-mover advantage.  Consider first the
 standard Bradley-Terry model for a finite number of chess players.
 Ignoring the effect of playing white, we wish to find numbers
@@ -183,24 +187,25 @@ methodology affords insight into players' strengths, response to
 playing black or white, and risk-aversion as manifested by probability
 of drawing.  If we consider a chess game to be a three-way trial, an
 appropriate likelihood function would be for non-negative
-$p_1,\ldots,p_n,D$ ($D$ being the draw monster's strength), with
-$D+\sum p_i=1$ and
+$p_1,\ldots,p_n,\draw$ (here \draw\ is the draw monster's strength,
+fraktur font being used for reified entities' strengths) with $\draw+\sum
+p_i=1$ and
 
 \begin{equation}
 \prod_{i<j}
-\left(\frac{p_i}{p_i+p_j+D}\right)^{W_{ij}}
-\left(\frac{p_j}{p_i+p_j+D}\right)^{L_{ij}}
-\left(\frac{D  }{p_i+p_j+D}\right)^{D_{ij}}
+\left(\frac{p_i}{p_i+p_j+\draw}\right)^{W_{ij}}
+\left(\frac{p_j}{p_i+p_j+\draw}\right)^{L_{ij}}
+\left(\frac{\draw  }{p_i+p_j+\draw}\right)^{D_{ij}}
 \end{equation}
 
 where $W_{ij}$ is the number of games won by $i$ when playing $j$,
 $L_{ij}$ is games lost and $D_{ij}$ is games drawn.  However, this
 approach ignores the extra strength conferred by the first-move
-advantage.  We thus consider another entity whose strength $W$ is
+advantage.  We thus consider another entity whose strength \white\ is
 added to the white player.  The strength of the white player is thus
-the sum of the player's strength and $W$.  Recalling that a game might
-be a draw, we obtain the probabilities as given in
-table~\ref{probabilities}.  The corresponding likelihood function is
+the sum of the player's strength and \white.  Recalling that a game
+might be a draw, we obtain the probabilities as given in
+Table~\ref{probabilities}.  The corresponding likelihood function is
 given below in equation \ref{likelihood_WD}:
 
 \newcommand{\oo}{\vphantom{W^{W^{W^W}}}}
@@ -209,9 +214,9 @@ given below in equation \ref{likelihood_WD}:
 \centering
 \begin{tabular}{l|cc}\\
   &$i$ plays white & $j$ plays white\\ \hline
-$\Prob{(\mbox{$i$ wins})}$  & $\frac{p_i+W\oo}{p_i+p_j+W+D}$ & $\frac{p_i}{p_i+p_j+W+D}$  \\
-$\Prob{(\mbox{draw})}$      & $\frac{D\oo}{p_i+p_j+W+D}$     & $\frac{D}{p_i+p_j+W+D}$    \\
-$\Prob{(\mbox{$i$ loses})}$ & $\frac{p_j\oo}{p_i+p_j+W+D}$   & $\frac{p_j+W}{p_i+p_j+W+D}$\\
+$\Prob{(\mbox{$i$ wins})}$  & $\frac{p_i+\white\oo}{p_i+p_j+\white+\draw}$ & $\frac{p_i}{p_i+p_j+\white+\draw}$  \\
+$\Prob{(\mbox{draw})}$      & $\frac{\draw\oo}{p_i+p_j+\white+\draw}$     & $\frac{\draw}{p_i+p_j+\white+\draw}$    \\
+$\Prob{(\mbox{$i$ loses})}$ & $\frac{p_j\oo}{p_i+p_j+\white+\draw}$   & $\frac{p_j+\white}{p_i+p_j+\white+\draw}$\\
 \end{tabular}
 \caption{Probabilities of a win, draw, loss for the two players under a generalized
   Bradley-Terry model\label{probabilities}}
@@ -219,11 +224,11 @@ $\Prob{(\mbox{$i$ loses})}$ & $\frac{p_j\oo}{p_i+p_j+W+D}$   & $\frac{p_j+W}{p_i
 
 \begin{align}\nonumber
 \prod_{i<j}&{}
-\left(\frac{p_i+W}{p_i+p_j+D+W}  \right)^{W_{ij}^\mathrm{white}}
-\left(\frac{p_j}{p_i+p_j+D+W    }\right)^{L_{ij}^\mathrm{white}}\\
-&{} \left(\frac{p_i}{p_i+p_j+D+W}\right)^{W_{ij}^\mathrm{black}}\label{likelihood_WD}
-\left(\frac{p_j+W}{p_i+p_j+D+W  }\right)^{L_{ij}^\mathrm{black}}\\
-&{} \left(\frac{D}{p_i+p_j+D    }\right)^{D_{ij}}
+\left(\frac{p_i+\white}{p_i+p_j+\draw+\white}  \right)^{W_{ij}^\mathrm{white}}
+\left(\frac{p_j}{p_i+p_j+\draw+\white    }\right)^{L_{ij}^\mathrm{white}}\\
+&{} \left(\frac{p_i}{p_i+p_j+\draw+\white}\right)^{W_{ij}^\mathrm{black}}\label{likelihood_WD}
+\left(\frac{p_j+\white}{p_i+p_j+\draw+\white  }\right)^{L_{ij}^\mathrm{black}}\\
+&{} \left(\frac{\draw}{p_i+p_j+\draw    }\right)^{D_{ij}}
 \nonumber
 \end{align}
 
@@ -233,11 +238,11 @@ equal to
 
 \begin{equation}
 \prod_{i<j}
-\left(\frac{D}{p_i+p_j+D+W}\right)^{D_{ij}^\mathrm{white}}
-\left(\frac{D}{p_i+p_j+D+W}\right)^{D_{ij}^\mathrm{black}}
+\left(\frac{\draw}{p_i+p_j+\draw+\white}\right)^{D_{ij}^\mathrm{white}}
+\left(\frac{\draw}{p_i+p_j+\draw+\white}\right)^{D_{ij}^\mathrm{black}}
 =
 \prod_{i<j}
-\left(\frac{D}{p_i+p_j+D}\right)^{D_{ij}^\mathrm{white}+D_{ij}^\mathrm{black}}
+\left(\frac{\draw}{p_i+p_j+\draw}\right)^{D_{ij}^\mathrm{white}+D_{ij}^\mathrm{black}}
 \end{equation}
 
 which might be preferable on grounds of clarity.  We now apply this
@@ -257,8 +262,8 @@ $n$ is the number of degrees of freedom implemented by $H$.
 The above likelihood functions are objective and reasonable
 representations of chess game outcomes.  However, they differ markedly
 from previous likelihood functions of draws in that they include
-reified entities representing proclivity to draw $D$, and white or
-first-mover advantage ($W$).
+reified entities representing proclivity to draw \draw, and white or
+first-mover advantage \white.
 
 \subsection{Previous work}
 
@@ -266,7 +271,7 @@ first-mover advantage ($W$).
 From a chess draw, he infers that the performance of the players is
 identical, within a threshhold.  Using a logistic expression for the
 difference in players' performance he uses, in current notation,
-$D=\nu\sqrt{p_ip_j}$.  However, \cite{joe1990} uses likelihood methods
+$\draw=\nu\sqrt{p_ip_j}$.  However, \cite{joe1990} uses likelihood methods
 to show that this model does not fit data well.  Here we note that
 such a model automatically give stronger players a higher draw
 potential, and also note that it is difficult to account for
@@ -330,23 +335,21 @@ in table~\ref{kka}.  Equation~\ref{likelihood_WD} becomes
 \end{table}
 
 \begin{equation}\label{kka_likelihood}
-\mathcal{L}\left(p_\mathrm{An},p_\mathrm{Kr},p_\mathrm{Ks},W,D\right)=
+%\mathcal{L}\left(p_\mathrm{An},p_\mathrm{Kr},p_\mathrm{Ks},\white,\draw\right)=
 \frac{
 p_\mathrm{An}^{15}
 p_\mathrm{Kr}^{12} 
 p_\mathrm{Ks}^{20}
-D^{224}
-\left(p_\mathrm{Kr} + W\right)^{25}
-\left(p_\mathrm{Ks} + W\right)^{45}
-\left(p_\mathrm{An} + W\right)^{24}
+\draw^{224}
+\left(p_\mathrm{Kr} + \white\right)^{25}
+\left(p_\mathrm{Ks} + \white\right)^{45}
+\left(p_\mathrm{An} + \white\right)^{24}
 }{
-\left(p_\mathrm{Kr} + p_\mathrm{Ks} + W + D\right)^{193}
-\left(p_\mathrm{Kr} + p_\mathrm{An} + W + D\right)^{92}
-\left(p_\mathrm{Ks} + p_\mathrm{An} + W + D\right)^{80}
-}
+\left(p_\mathrm{Kr} + p_\mathrm{Ks} + \white + \draw\right)^{193}
+\left(p_\mathrm{Kr} + p_\mathrm{An} + \white + \draw\right)^{92}
+\left(p_\mathrm{Ks} + p_\mathrm{An} + \white + \draw\right)^{80}
+}.
 \end{equation}
-
-
                                     
 <<echo=FALSE,print=FALSE,results=hide>>=
 maxp(karpov_kasparov_anand)
@@ -365,19 +368,19 @@ dotchart(maxp(karpov_kasparov_anand),pch=16,xlim=c(0,0.55))
 This likelihood function is easily maximized numerically and the
 evaluate is shown visually in figure~\ref{maxp_karpov_kasparov_anand},
 which suggests a number of interesting and testable statistical
-hypotheses.  Firstly, we observe that $D=0$ cannot possibly be the
+hypotheses.  Firstly, we observe that $\draw=0$ cannot possibly be the
 case: the likelihood for this hypothesis would be identically zero,
 owing to the nonzero term in the numerator of
 equation~\ref{kka_likelihood}.  From the figure, we see that the
-maximum likelihood estimate for draw strength $\hat{D}\simeq 0.53$:
+maximum likelihood estimate for draw strength $\hat{\draw}\simeq 0.53$:
 compare the na\"ive estimate of $\frac{224}{365}\simeq 0.61$ given by
 observing 224 draws among 265 games.  The na\"{i}ve estimate is lower
 because the maximization process automatically adjusts for the
 different players' strengths.  Secondly, we may make inferences about
-$W$, the extra strength conferred by playing white: it is conceivable
-that $W=0$ as this term does not appear on its own in the numerator of
-any term.  We may test $H_0\colon W=0$ using the Method of Support by
-maximizing the likelihood subject to the constraint $W=0$ and
+$\white$, the extra strength conferred by playing white: it is conceivable
+that $\white=0$ as this term does not appear on its own in the numerator of
+any term.  We may test $H_0\colon \white=0$ using the Method of Support by
+maximizing the likelihood subject to the constraint $\white=0$ and
 comparing with the likelihood when the optimization is free.
 
 
@@ -408,13 +411,13 @@ The result of numerical optimization is about 7.01 units of support,
 or a likelihood ratio of $e^{7.01}\simeq 1107.7$: that is, well over
 the two-units-of-support per degree of freedom suggested by
 \citeauthor{edwards1972}; we can convincingly reject the hypothesis
-that $W=0$ and infer that playing white confers a significant
+that $\white=0$ and infer that playing white confers a significant
 advantage.  This is consistent with expectation, but it is now
 possible to go significantly beyond mere existence of the effect and
 to quantify it, accounting for the differential strengths of the
 players.  Taking the MLE above, and considering a game between say
-Karpov and Anand, the strengths are Karpov=0.064, Anand=0.151, white
-=0.104 and draw =0.53.  Thus we would estimate that Karpov playing
+Karpov and Anand, the strengths are Karpov=0.064, Anand=0.151, \white
+=0.104 and \draw =0.532.  Thus we would estimate that Karpov playing
 white against Kasparov would win with probability
 $\frac{0.064+0.104}{0.064+0.104+0.148+0.532}\simeq 0.198$, draw with
 probability $\frac{532}{64+104+148+532}\simeq 0.625$, and lose with
@@ -476,7 +479,7 @@ differences in draw proclivity among the players.  This may be
 achieved by considering a game between two players to be a contest
 between five entities: the two real players, the white advantage, and
 two {\em personalised} draw entities, one for each real player; a
-drawn game is counted as a win for either of the draw ``ghosts''.  Under
+drawn game is counted as a win for either of the draw monsters.  Under
 these assumptions, table~\ref{kka} translates into the following
 likelihood function:
 
@@ -491,26 +494,26 @@ likelihood function:
 %\end{figure}
 
 \begin{equation}\label{KKA_personalised_drawmonster}
-\mathcal{L}\left(
-p_\mathrm{An},p_\mathrm{Kr},p_\mathrm{Ks}
-,W,
-d_\mathrm{An},d_\mathrm{Kr},d_\mathrm{Ks}
-\right)=
+%\mathcal{L}\left(
+%p_\mathrm{An},p_\mathrm{Kr},p_\mathrm{Ks}
+%,\white,
+%\draw_\mathrm{An},\draw_\mathrm{Kr},\draw_\mathrm{Ks}
+%\right)=
 \frac{
 \parbox{3in}{$
 p_\mathrm{An}^{15}
 p_\mathrm{Kr}^{12}
 p_\mathrm{Ks}^{20}
-\left(p_\mathrm{Kr} + W\right)^{25}
-\left(p_\mathrm{Ks} + W\right)^{45} 
-\left(p_\mathrm{An} + W\right)^{24}\\ \rule{10mm}{0mm}
-\left(d_\mathrm{Kr} + d_\mathrm{Ks}\right)^{129}
-\left(d_\mathrm{Kr} + d_\mathrm{An}\right)^{49}
-\left(d_\mathrm{Ks} + d_\mathrm{An}\right)^{46}
+\left(p_\mathrm{Kr} + \white\right)^{25}
+\left(p_\mathrm{Ks} + \white\right)^{45} 
+\left(p_\mathrm{An} + \white\right)^{24}\\ \rule{10mm}{0mm}
+\left(\draw_\mathrm{Kr} + \draw_\mathrm{Ks}\right)^{129}
+\left(\draw_\mathrm{Kr} + \draw_\mathrm{An}\right)^{49}
+\left(\draw_\mathrm{Ks} + \draw_\mathrm{An}\right)^{46}
 $}}{\parbox{3in}{$
-\left(p_\mathrm{Kr} + p_\mathrm{Ks} + W + d_\mathrm{Kr} + d_\mathrm{Ks}\right)^{193}\\ \rule{10mm}{0mm}
-\left(p_\mathrm{Kr} + p_\mathrm{An} + W + d_\mathrm{Kr} + d_\mathrm{An}\right)^{92}\\ \rule{20mm}{0mm}
-\left(p_\mathrm{Ks} + p_\mathrm{An} + W + d_\mathrm{Ks} + d_\mathrm{An}\right)^{80}
+\left(p_\mathrm{Kr} + p_\mathrm{Ks} + \white + \draw_\mathrm{Kr} + \draw_\mathrm{Ks}\right)^{193}\\ \rule{10mm}{0mm}
+\left(p_\mathrm{Kr} + p_\mathrm{An} + \white + \draw_\mathrm{Kr} + \draw_\mathrm{An}\right)^{92}\\ \rule{20mm}{0mm}
+\left(p_\mathrm{Ks} + p_\mathrm{An} + \white + \draw_\mathrm{Ks} + \draw_\mathrm{An}\right)^{80}
 $}}
 \end{equation}
 
@@ -527,7 +530,7 @@ dotchart(maxp(kka_3draws),pch=16)
 \end{figure}
 
 
-In figure~\ref{kka_3draws}, we see considerable variability in
+In Figure~\ref{kka_3draws}, we see considerable variability in
 proclivity to draw.  Again this may be tested with the Method of
 Support, which gives a $p$-value of about 0.039, borderline
 significant: an interesting result, given that in this case no draw
@@ -570,17 +573,17 @@ extra_support <-   unconstrained + constrained
 pchisq(2*extra_support,df=2,lower.tail=FALSE)
 @ 
 
-\subsection{Each player has a distinct White Monster}
+\subsection{Each player has a distinct white monster}
 
 We now consider the possibility that the strength conferred by playing
-white, is specific to each player and we denote this $w_\mathrm{An}$,
-$w_\mathrm{Kr}$ and $w_\mathrm{Ks}$.  The corresponding likelihood
-function would be
+white is specific to each player and we denote the strengths
+$\white_\mathrm{An}$, $\white_\mathrm{Kr}$ and $\white_\mathrm{Ks}$.
+The corresponding likelihood function would be
 
 \begin{equation}\label{KKA_personalised_whitemonster}
 %\mathcal{L}\left(
 %p_\mathrm{An},p_\mathrm{Kr},p_\mathrm{Ks},
-%w_\mathrm{An},w_\mathrm{Kr},w_\mathrm{Ks},D
+%\white_\mathrm{An},\white_\mathrm{Kr},\white_\mathrm{Ks},\draw
 %\right)=
 \frac{
 %\parbox{3in}
@@ -588,28 +591,29 @@ function would be
 p_\mathrm{An}^{15}
 p_\mathrm{Kr}^{12}
 p_\mathrm{Ks}^{20}
-D^{224}
-\left(p_\mathrm{An} + w_\mathrm{An}\right)^{24}%\\ \rule{10mm}{1mm}
-\left(p_\mathrm{Kr} + w_\mathrm{Kr}\right)^{25}
-\left(p_\mathrm{Ks} + w_\mathrm{Ks}\right)^{45}
+\draw^{224}
+\left(p_\mathrm{An} + \white_\mathrm{An}\right)^{24}%\\ \rule{10mm}{1mm}
+\left(p_\mathrm{Kr} + \white_\mathrm{Kr}\right)^{25}
+\left(p_\mathrm{Ks} + \white_\mathrm{Ks}\right)^{45}
 %$}
 }{\parbox{4in}{$
-\left(p_\mathrm{An} + p_\mathrm{Kr} + w_\mathrm{An} +  D\right)^{43}
-\left(p_\mathrm{An} + p_\mathrm{Kr} + w_\mathrm{Kr} +  D\right)^{49}\\ \rule{10mm}{0mm}
-\left(p_\mathrm{An} + p_\mathrm{Ks} + w_\mathrm{An} +  D\right)^{37}
-\left(p_\mathrm{An} + p_\mathrm{Ks} + w_\mathrm{Ks} +  D\right)^{43}\\ \rule{20mm}{0mm}
-\left(p_\mathrm{Kr} + p_\mathrm{Ks} + w_\mathrm{Kr} +  D\right)^{99}
-\left(p_\mathrm{Kr} + p_\mathrm{Ks} + w_\mathrm{Ks} +  D\right)^{94}
+\left(p_\mathrm{An} + p_\mathrm{Kr} + \white_\mathrm{An} +  \draw\right)^{43}
+\left(p_\mathrm{An} + p_\mathrm{Kr} + \white_\mathrm{Kr} +  \draw\right)^{49}\\ \rule{10mm}{0mm}
+\left(p_\mathrm{An} + p_\mathrm{Ks} + \white_\mathrm{An} +  \draw\right)^{37}
+\left(p_\mathrm{An} + p_\mathrm{Ks} + \white_\mathrm{Ks} +  \draw\right)^{43}\\ \rule{20mm}{0mm}
+\left(p_\mathrm{Kr} + p_\mathrm{Ks} + \white_\mathrm{Kr} +  \draw\right)^{99}
+\left(p_\mathrm{Kr} + p_\mathrm{Ks} + \white_\mathrm{Ks} +  \draw\right)^{94}
 $}}
 \end{equation}
 
 In the likelihood function above we see, for example, that Anand won a
-total of $18+6=24$ games playing white, $13+2=15$ games playing
-Black, and that Anand played white against Karpov a total of
-$18+20+5=43$ times.  We fail to reject the null of
-$w_\mathrm{An}=w_\mathrm{Kr}=w_\mathrm{Ks}$, having a likelihood ratio
-of $4.5$, or an asymptotic $p$-value of $0.076$.  There is no strong
-evidence that the players differ in regard to their white advantage.
+total of $18+6=24$ games playing white, $13+2=15$ games playing Black,
+and that Anand played white against Karpov a total of $18+20+5=43$
+times.  We fail to reject the null of
+$\white_\mathrm{An}=\white_\mathrm{Kr}=\white_\mathrm{Ks}$, having a
+likelihood ratio of $4.5$, or an asymptotic $p$-value of $0.076$.
+There is no strong evidence that the players differ in regard to their
+white advantage.
 
 
 \section{Collusion in the World Chess Championship 1963}
@@ -663,10 +667,10 @@ the three accused players ended in a draw, a significant result given
 51 winning games and 54 draws (Fisher's exact test, one-sided,
 $p=0.0079$).  To quantify such Soviet collusion, accounting for the
 player skills, we introduce a new draw entity: a collusive draw
-monster $C$, who wins when two colluding players draw, and is inactive
-whenever a game has at least one non-colluding player.  Then
-$H_N\colon C=D$ corresponds to no collusion and the likelihood
-function would have
+monster with strength \cdraw, who wins when two colluding players
+draw, and is inactive whenever a game has at least one non-colluding
+player.  Then $H_N\colon\cdraw=\draw$ corresponds to no collusion and
+the likelihood function would have
 
 \begin{equation}\parbox{4in}{$
 P^5\,
@@ -674,23 +678,23 @@ P^5\,
 G^4
 \mathit{Fis}\,  % Fischer, cf Filip
 \mathit{Ko}^5
-B
+B\,
 T^2  % Tal
 \mathit{Fil}\,
-D^{42}C^{12}\oo\\ \rule{10mm}{0mm}
-\left(P+W\right)^3
-\left(\mathit{Ke}+W\right)^4
-\left(G+W\right)^4\
-\left(\mathit{Fis}+W\right)^7\oo\\ \rule{20mm}{0mm}
-\left(\mathit{Ko}+W\right)^2
-\left(B+W\right)^5
-\left(T+W\right)
-\left(\mathit{Fil}+W\right)\oo
+\draw^{42}\,\cdraw^{12}\oo\\ \rule{10mm}{0mm}
+\left(P+\white\right)^3
+\left(\mathit{Ke}+\white\right)^4
+\left(G+\white\right)^4\
+\left(\mathit{Fis}+\white\right)^7\oo\\ \rule{20mm}{0mm}
+\left(\mathit{Ko}+\white\right)^2
+\left(B+\white\right)^5
+\left(T+\white\right)
+\left(\mathit{Fil}+\white\right)\oo
 $}\end{equation}
 
-\noindent for the numerator (where $C$ is the strength of a collusive
+\noindent for the numerator (where \cdraw\ is the strength of a collusive
 draw), and a total of 30 terms such as
-$\left(P+\mathit{Ke}+W+C\right)^{4}$ [indicating that Petrosian played
+$\left(P+\mathit{Ke}+\white+\cdraw\right)^{4}$ [indicating that Petrosian played
   Keres 4 times] in the denominator.  The likelihood ratio for the
 hypothesis that collusive draws have the same strength as regular
 draws is about $e^{11.8}\simeq 10^5$: we conclude that the high number
@@ -702,7 +706,7 @@ a higher propensity to draw than western players.  We can investigate
 this by considering the interzonal tournament which took place in
 Stockholm in 1962.
 
-\subsection{Chess collusion: interzonal Stockholm 1962}
+\subsection{Soviet playing style in the interzonal Stockholm 1962}
 
 \newcommand{\halfw}{$\nicefrac{1}{2}$}
 \newcommand{\halfb}{\colorbox{black}{\textcolor{white}{$\nicefrac{{\bf 1}}{{\bf 2}}$}}}
@@ -736,55 +740,54 @@ $\vdots$&&&&&\\
 
 The fifth Interzonal took place in Stockholm in 1962, in the form of a
 23-player round-robin tournament.  For the results shown in
-table~\ref{interzonal}, we would have a likelihood function
+Table~\ref{interzonal}, we would have a likelihood function
 
 \begin{equation}
-\mathcal{L}\left(F,G,P,K,L,W,D\right)=
+%\mathcal{L}\left(F,G,P,K,L,\white,\draw\right)=
 %                D/(F+G+W+D)  (F+P+D)/(F+P+D+W)   (F+W)/(F+W+D+K)   D/(F+W+L+D)
 %                             D/(G+P+D+W)         D/(G+K+W+D)       D/(G+F+W+D)
 %                                                 D/(P+K+W+D)       D/(P+L+W+D)
 %                                                                   (K+W)/(K+L+W+D)
 \frac{
-  D^8(F+W)(K+W)
+  \draw^8(F+\white)(K+\white)
 }{\parbox{4in}{$
-    (F+G+W+D)(F+P+W+D)\\ \rule{10mm}{0mm}(F+K+W+D)  (F+L+W+D)\\ \rule{20mm}{0mm}
-         (G+P+W+D)  (G+K+W+D)\\ \rule{30mm}{0mm}(G+F+W+D)
-                    (P+K+W+D)\\ \rule{40mm}{0mm}(P+L+W+D)
-                               (K+L+W+D)
+    (F+G+\white+\draw)(F+P+\white+\draw)\\ \rule{10mm}{0mm}(F+K+\white+\draw)  (F+L+\white+\draw)\\ \rule{20mm}{0mm}
+         (G+P+\white+\draw)  (G+K+\white+\draw)\\ \rule{30mm}{0mm}(G+F+\white+\draw)
+                    (P+K+\white+\draw)\\ \rule{40mm}{0mm}(P+L+\white+\draw)
+                               (K+L+\white+\draw)
  $}}
 \end{equation}
 
 \noindent (the numerator includes 8 draws and 2 wins, one for Fischer
 and one for Korchnoi, both playing white); but the full likelihood
-function for the interzonal has 297 terms, including $D^{110}$.  To
+function for the interzonal has 297 terms, including $\draw^{110}$.  To
 investigate the possibility of increased Soviet drawing proclivity, we
-introduce a Soviet draw monster with strength~$D_s$, who wins when two
+introduce a Soviet draw monster with strength~$\draw_s$, who wins when two
 Soviet players draw, and is inactive if a game has at least one
-non-Soviet player.  Then $H_N\colon D_s=D$ corresponds to no collusion
-and the likelihood function for table~\ref{interzonal} would be
+non-Soviet player.  Then $H_N\colon \draw_s=\draw$ corresponds to no collusion
+and the likelihood function for Table~\ref{interzonal} would be
 
 \begin{equation}\label{collusion}
-\mathcal{L}\left(F,G,P,K,L,W,D,D_s\right)=
+%\mathcal{L}\left(F,G,P,K,L,\white,\draw,\draw_s\right)=
 %                D/(F+G+W+D)  (F+P+D)/(F+P+D+W)   (F+W)/(F+W+D+K)   D/(F+W+L+D)
 %                             D/(G+P+D+W)         D/(G+K+W+D)       D/(G+F+W+D)
 %                                                 D/(P+K+W+D)       D/(P+L+W+D)
 %                                                                   (K+W)/(K+L+W+D)
 \frac{
-  D_s^3D^5(F+W)(K+W)
-}{\parbox{4in}{$
-    (F+G+W+D)(F+P+W+D)\\ \rule{10mm}{0mm}(F+K+W+D)  (F+L+W+D)\\ \rule{20mm}{0mm}
-         (G+P+W+D_s)  (G+K+W+D_s)\\ \rule{30mm}{0mm}(G+F+W+D)
-                    (P+K+W+D_s)\\ \rule{40mm}{0mm}(P+L+W+D)
-                               (K+L+W+D)
+  \draw_s^3\draw^5(F+\white)(K+\white)
+}{\parbox{4in}{$    (F+G+\white+\draw)(F+P+\white+\draw)\\ \rule{10mm}{0mm}(F+K+\white+\draw)  (F+L+\white+\draw)\\ \rule{20mm}{0mm}
+         (G+P+\white+\draw_s)  (G+K+\white+\draw_s)\\ \rule{30mm}{0mm}(G+F+\white+\draw)
+                    (P+K+\white+\draw_s)\\ \rule{40mm}{0mm}(P+L+\white+\draw)
+                               (K+L+\white+\draw)
  $}}
 \end{equation}
 
 
-The maximum likelihood estimate is $D\simeq 0.043, D_s=0.354$; a
+The maximum likelihood estimate is $\draw\simeq 0.043, \draw_s=0.354$; a
 constrained maximization gives a likelihood ratio of about 5096, or a
 $p$-value of about $3.6\times 10^{-5}$.  Indeed we could go further
 and plot a profile likelihood curve for the log-odds ratio
-$\log\left(D_s/D\right)$ which, if Dirichlet, would be accurately
+$\log\left(\draw_s/\draw\right)$ which, if Dirichlet, would be accurately
 parabolic over a wide range~\cite[page 343]{ohagan2004}.  This is
 illustrated in figure~\ref{proflike}, that shows a credible interval
 of about 1.8-2.4.
@@ -835,7 +838,7 @@ plot(x,jj-max(jj),type='b',xlab="log-odds",ylab="support")
 abline(h=c(0,-2))
 @
 \caption{Profile likelihood \label{proflike} for odds ratio
-  $\log\left(D_s/D\right)$: note the accurately parabolic figure in
+  $\log\left(\draw_s/\draw\right)$: note the accurately parabolic figure in
   the region plotted}
   \end{center}
 \end{figure}
