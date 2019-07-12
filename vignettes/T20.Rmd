@@ -1,0 +1,132 @@
+---
+title: "The impact of winning the coin toss on the Indian Premier League"
+author: "Tanvi Chandel and Robin K. S. Hankin"
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{T20}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# The Indian Premier League
+
+This script creates and analyses hyper2 object ```T20``` which is a
+likelihood function for the strengths of the competitors in the Indian
+Premier League.
+
+
+```{r}
+library("hyper2",quietly=TRUE)
+head(T20_table)
+nrow(T20_table)
+```		
+
+Each row is a match; some details are given in the package help file
+```T20.Rd```; type ```?T20``` at the R prompt.  
+
+## One-way univariate analysis
+
+What is the probability of winning the match, given that you won the
+toss?
+
+```{r}
+x <- table(T20_table$toss_winner==T20_table$match_winner)
+x
+binom.test(x,alternative="less")$p.value
+```
+
+Not significant: no evidence to reject the hypothesis that probability
+of the toss-winners winning the match is greater than 0.5 Now we
+consider the decision (to bat first or to field first) made by the
+toss winner:
+
+```{r}
+table(T20_table$toss_decision)
+```
+
+a clear majority elect to field first. We can now ask what the
+probability of the batting team winning the match is:
+
+```{r}
+attach(T20_table)
+bat_first_wins <- 
+((toss_winner==match_winner)&(toss_decision=='bat'  )) | 
+((toss_winner!=match_winner)&(toss_decision=='field'))
+sum(bat_first_wins)
+field_first_wins <- 
+((toss_winner==match_winner)&(toss_decision=='field'  )) | 
+((toss_winner!=match_winner)&(toss_decision=='bat'))
+sum(field_first_wins)
+detach(T20_table)
+```
+
+as a consistency check we have
+
+```{r}
+sum(field_first_wins) + sum(bat_first_wins)
+nrow(T20_table)
+```
+agreeing as expected.
+
+## Two-way contingency tables
+
+We can do some contingency tables:
+
+```{r}
+M <- table(
+won_toss_won_match = T20_table$toss_winner==T20_table$match_winner,
+decision           = T20_table$toss_decision)
+dimnames(M) <- list(thing=c('won_toss_won_match','won_toss_lost_match'),decision=c('bat','field'))
+M
+```
+
+Significant?
+
+
+```{r}
+fisher.test(M)
+```
+
+Yes, significant.  But what does it mean?
+
+
+
+```{r}
+attach(lapply(T20_table[, ], as.vector))  # vector access to team1, etc
+
+T20 <- hyper2(pnames=c(levels(T20_table$team1)))
+for(i in seq_along(team1)){
+   T20[match_winner[i]] %<>% inc
+   T20[c(team1[i],team2[i])] %<>% dec
+      			     	  
+}		       
+T20
+```
+
+and maximization is straightforward:
+
+```{r}
+dotchart(maxp(T20))
+```
+
+We can now attempt to see if the toss makes a difference:
+
+```{r}
+T20_toss  <- hyper2(pnames=c('toss',levels(T20_table$team1)))
+for(i in seq_along(team1)){
+      players <- c(team1[i],team2[i])
+      if(toss_winner[i] == match_winner[i]){ # win toss, win match
+         T20_toss[c('toss',match_winner[i])] %<>% inc
+      } else { # win toss, lose match
+         T20_toss[match_winner[i]] %<>% inc
+      }			 
+   T20_toss[c('toss',players)] %<>% dec
+   T20_toss
+}			  
+```
+and again we can maximize the likelihood:
+
+```{r}
+dotchart(maxp(T20_toss))
+```
+Above, note the small estimated strength of the toss.
