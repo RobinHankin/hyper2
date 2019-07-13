@@ -17,7 +17,7 @@
   also includes a toss strength term.
 
   The likelihood functions are created \code{T20_table} and analysed in
-  \code{vignette/T20.Rmd}, which is itself based on Chandel and Hankin
+  \code{vignettes/T20.Rmd}, which is itself based on Chandel and Hankin
   2019.
 }
 \references{
