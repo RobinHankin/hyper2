@@ -11,10 +11,11 @@
 \details{
 
   Dataframe \code{T20_table} has one row for each T20 IPL match in the
-  period 2008-2017 with the exception of three drawn matches which were
-  removed.  Object \code{T20} is a likelihood function for the strengths
-  of the 13 teams, and \code{T20_toss} is a likelihood function that
-  also includes a toss strength term.
+  period 2008-2017 with the exception of seven drawn matches and three
+  no-result matches which were removed.  Object \code{T20} is a
+  likelihood function for the strengths of the 13 teams, and
+  \code{T20_toss} is a likelihood function that also includes a toss
+  strength term.
 
   The likelihood functions are created \code{T20_table} and analysed in
   \code{vignettes/T20.Rmd}, which is itself based on Chandel and Hankin
