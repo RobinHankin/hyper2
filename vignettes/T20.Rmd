@@ -142,7 +142,10 @@ pchisq(2*14.5,df=13,lower.tail=FALSE)
 ```
 
 showing a significant result although frankly Edwards's criterion is
-somewhat flaky in this context.  Wilks is actually applicable: file
+somewhat flaky in this context.  Wilks's theorem is only asymptotic
+and it is not clear that the actual sampling distribution is close to
+its asymptotic limit of $\chi^2$.  However, it turns out that the
+asymptotic approximation is good in this particular case:
 ```inst/T20_analysis.Rmd``` presents some analysis (it takes a very
 long time to run which is why it is not included in this vignette).
 
