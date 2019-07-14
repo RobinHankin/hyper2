@@ -21,13 +21,20 @@ head(T20_table)
 nrow(T20_table)
 ```		
 
-Each row is a match; some details are given in the package help file
-```T20.Rd```; type ```?T20``` at the R prompt.  
+Dataframe \code{T20_table} has one row for each T20 IPL match in the
+period 2008-2017 with the exception of three no-result matches and
+seven tied matches, which were removed.  Object \code{T20} is a
+likelihood function for the strengths of the 13 teams, and
+\code{T20_toss} is a likelihood function that also includes a toss
+strength term.
+
+some details are given in the package help file
+```T20.Rd``` (type ```?T20``` at the R prompt).
 
 ## One-way univariate analysis
 
-What is the probability of winning the match, given that you won the
-toss?
+What is the probability of a team winning the match, given that they
+won the toss?
 
 ```{r}
 x <- table(T20_table$toss_winner==T20_table$match_winner)
@@ -35,10 +42,10 @@ x
 binom.test(x,alternative="less")$p.value
 ```
 
-Not significant: no evidence to reject the hypothesis that probability
-of the toss-winners winning the match is greater than 0.5 Now we
-consider the decision (to bat first or to field first) made by the
-toss winner:
+Binomial test against a null of $p=0.5$ is thus not significant: there
+is no evidence that winning the toss increases one's probability of
+winning the match.  Now we consider the decision (to bat first or to
+field first) made by the toss winner:
 
 ```{r}
 table(T20_table$toss_decision)
@@ -80,20 +87,25 @@ dimnames(M) <- list(thing=c('won_toss_won_match','won_toss_lost_match'),decision
 M
 ```
 
-Significant?
-
+We may test a null of homogeneity of proportion using Fisher's exact
+test:
 
 ```{r}
 fisher.test(M)
 ```
 
-Yes, significant.  But what does it mean?
+Giving a significant result.
 
+
+# Strengths of the individual teams
+
+We can now consider the matches as Bernoulli trials and try to infer
+the teams' strengths.  The first step is to calculate a likelihood
+function for the strengths:
 
 
 ```{r}
 attach(lapply(T20_table[, ], as.vector))  # vector access to team1, etc
-
 T20 <- hyper2(pnames=c(levels(T20_table$team1)))
 for(i in seq_along(team1)){
    T20[match_winner[i]] %<>% inc
@@ -108,6 +120,33 @@ and maximization is straightforward:
 ```{r}
 dotchart(maxp(T20))
 ```
+
+So we can test the null that all the teams have the same strength:
+
+```{r}
+a1 <- maxp(T20,give=TRUE)$value        # likelihood at the evaluate
+a2 <- loglik(T20,indep(equalp(T20)))  # likelihood at p1=p2=...=p14
+a1-a2
+```
+
+and the above would correspond to a support $\Lambda$ of about 14.5,
+or a likelihood ratio of about $e^\Lambda\simeq 2\times 10^6$.  This
+is not significant by Edwards's criterion of two units of support per
+degree of freedom (we have 13df here).  Alternatively, we might
+observe that the statistic $2\Lambda$ is in the tail region of its
+asymptotic distribution $\chi^2_{13}$ given by Wilks, with a p-value
+of
+
+```{r}
+pchisq(2*14.5,df=13,lower.tail=FALSE)
+```
+
+showing a significant result although frankly Edwards's criterion is
+somewhat flaky in this context, and Wilks is of doubtful validity as
+it is not clear whether the asymptotic distribution is appropriate.
+
+
+# The effect of the toss
 
 We can now attempt to see if the toss makes a difference:
 
