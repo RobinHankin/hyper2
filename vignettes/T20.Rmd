@@ -142,8 +142,9 @@ pchisq(2*14.5,df=13,lower.tail=FALSE)
 ```
 
 showing a significant result although frankly Edwards's criterion is
-somewhat flaky in this context, and Wilks is of doubtful validity as
-it is not clear whether the asymptotic distribution is appropriate.
+somewhat flaky in this context.  Wilks is actually applicable: file
+```inst/T20_analysis.Rmd``` presents some analysis (it takes a very
+long time to run which is why it is not included in this vignette).
 
 
 # The effect of the toss
