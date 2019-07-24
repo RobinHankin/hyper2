@@ -21,11 +21,11 @@ head(T20_table)
 nrow(T20_table)
 ```		
 
-Dataframe \code{T20_table} has one row for each T20 IPL match in the
+Dataframe ```T20_table``` has one row for each T20 IPL match in the
 period 2008-2017 with the exception of three no-result matches and
-seven tied matches, which were removed.  Object \code{T20} is a
+seven tied matches, which were removed.  Object ```T20``` is a
 likelihood function for the strengths of the 13 teams, and
-\code{T20_toss} is a likelihood function that also includes a toss
+```T20_toss``` is a likelihood function that also includes a toss
 strength term.
 
 some details are given in the package help file
