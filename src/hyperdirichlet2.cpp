@@ -79,16 +79,15 @@ List addL(
     hyper2 h1 = prepareL(L1,p1);
     hyper2 h2 = prepareL(L2,p2);
     hyper2::const_iterator it;
-    bracket b;
     if(L1.size() > L2.size()){ // L1 is bigger, so iterate through L2
         for (it=h2.begin(); it != h2.end(); ++it){
-            b = it->first;
+            const bracket b = it->first;
             h1[b] += h2[b];  
         }
         return(retval(h1));
     } else {  // L2 is bigger
         for (it=h1.begin(); it != h1.end(); ++it){
-            b = it->first;
+            const bracket b = it->first;
             h2[b] += h1[b];  
         }
         return(retval(h2));
@@ -102,8 +101,7 @@ bool equality(  // modelled on spray_equality()
            ){
     hyper2 h1,h2;
     hyper2::const_iterator it;
-    bracket b;
-   
+    
     if(L1.size() != L2.size()){
         return false;
     }
@@ -112,7 +110,7 @@ bool equality(  // modelled on spray_equality()
     h2 = prepareL(L2,p2);
 
     for (it=h1.begin(); it != h1.end(); ++it){
-            b = it->first;
+            const bracket b = it->first;
             if(h1[b] != h2[b]){
                 return false;
             } else {
@@ -162,11 +160,10 @@ List overwrite(  // H1[] <- H2
 
           hyper2 h1=prepareL(L1,powers1);
     const hyper2 h2=prepareL(L2,powers2);
-    bracket b;
     hyper2::const_iterator it;
 
     for(it=h2.begin(); it != h2.end(); ++it){
-        b = it->first;
+        const bracket b = it->first;
         h1[b] = h2.at(b);
     }
     return retval(h1);
@@ -206,12 +203,11 @@ double evaluate(  // returns log-likelihood
     const hyper2 h = prepareL(L,powers);
     hyper2::const_iterator it;
     bracket::const_iterator ib;
-    bracket b;
     double out=0;
     double bracket_total=0;
     
     for (it=h.begin(); it != h.end(); ++it){
-        b = it->first;
+        const bracket b = it->first;
         bracket_total = 0;
         for (ib=b.begin(); ib != b.end(); ++ib){
             bracket_total += probs[*ib-1];  //NB off-by-one error!
@@ -238,10 +234,8 @@ double differentiate_single( // d(log-likelihod)/dp
 
     hyper2::const_iterator it;
     bracket::const_iterator ib;
-    bracket b;
     double out;
     double bracket_total;
-    double power;
     unsigned int no_of_diff_terms; // number of p_i terms in the bracket
     unsigned int no_of_fill_terms; // number of p_n terms (=fillup) in the bracket
 
@@ -251,7 +245,7 @@ double differentiate_single( // d(log-likelihod)/dp
 
     out = 0;
     for (it=h.begin(); it != h.end(); ++it){  // standard hyper2 loop
-        b = it->first;
+        const bracket b = it->first;
 
         no_of_diff_terms = b.count(i);
         no_of_fill_terms = b.count(n);
@@ -263,7 +257,7 @@ double differentiate_single( // d(log-likelihod)/dp
             bracket_total += probs[*ib-1];  //NB off-by-one error! ... p_1 == probs[0]
         }
 
-        power = it->second;
+        const double power = it->second;
         // the 'meat':
         out += no_of_diff_terms*power/bracket_total;
         out -= no_of_fill_terms*power/bracket_total; 
