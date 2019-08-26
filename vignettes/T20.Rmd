@@ -3,7 +3,9 @@ title: "The impact of winning the coin toss on the Indian Premier League"
 author: "Tanvi Chandel and Robin K. S. Hankin"
 date: "`r Sys.Date()`"
 vignette: |
-  %\VignetteIndexEntry{T20} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{T20}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 # The Indian Premier League
@@ -168,4 +170,5 @@ and again we can maximize the likelihood:
 ```{r}
 dotchart(maxp(T20_toss))
 ```
+
 Above, note the small estimated strength of the toss.
