@@ -1,0 +1,160 @@
+library("hyper2")
+
+H <- hyper2(
+    pnames=c("Rahul","Kim-Joy","Ruby","Briony","Manon","Jon",
+             "Dan","Karen","Terry","Antony","Luke","Imelda")
+
+
+      )  # NB game order: Rahul won, Kim-Joy runner-up, through to
+         # Imelda who was first to be eliminated.
+
+
+ ## variable 'doo' is a Boolean, with entries governing whether a
+ ## particular round is included in L or not.
+
+doo <- c(
+    week1 = TRUE, 
+    week2 = TRUE, 
+    week3 = TRUE, 
+    week4 = TRUE, 
+    week5 = TRUE, 
+    week6 = TRUE, 
+    week7 = TRUE, 
+    week8 = TRUE, 
+    week9 = TRUE, 
+    weekt = TRUE  # weekt = "week 10"
+)
+
+L <- list()  # overall list
+
+## In the following the key is:
+##
+## SB = star baker
+## FB = favourite baker
+## GT = got through
+## LF = least favourite
+## EL = eliminated
+
+
+if(doo[["week1"]]){
+    L$week1 <-
+        ggol(H,
+             SB = c("Manon"),  
+             FB = c("Briony"),
+             GT = c("Rahul","Kim-Joy","Jon","Dan","Karen","Antony","Luke"),
+             LF = c("Ruby","Terry"),
+             EL = c("Imelda")
+             )
+}
+
+if(doo[["week2"]]){
+    L$week2 <-
+        ggol(H,
+             SB = c("Rahul"),  
+             FB = c("Jon","Dan"),
+             GT = c("Kim-Joy","Ruby","Manon","Karen","Antony"),
+             LF = c("Briony","Terry"),
+             EL = c("Luke")
+             )
+}
+
+if(doo[["week3"]]){
+    L$week3 <-
+        ggol(H,
+             SB = c("Rahul"),  
+             FB = c("Dan"),
+             GT = c("Kim-Joy","Ruby","Manon","Jon","Karen","Terry"),
+             LF = c("Briony"),
+             EL = c("Antony")
+             )
+}
+
+if(doo[["week4"]]){
+    L$week4 <-
+        ggol(H,
+             SB = c("Dan"),  
+             FB = c("Rahul","Jon"),
+             GT = c("Kim-Joy","Ruby","Manon"),
+             LF = c("Briony","Karen")
+             ## NB: noone eliminated in week 4 (Terry was ill)
+             )
+}
+
+if(doo[["week5"]]){
+    L$week5 <-
+        ggol(H,
+             SB = c("Kim-Joy"),  
+             FB = c("Rahul"),
+             GT = c("Ruby","Manon","Dan"),
+             LF = c("Briony","Jon"),
+             EL = c("Karen","Terry")
+             )
+}
+
+if(doo[["week6"]]){
+    L$week6 <-
+        ggol(H,
+             SB = c("Briony"),  
+             FB = c("Rahul","Ruby"),
+             GT = c("Kim-Joy"),
+             LF = c("Manon"),
+             EL = c("Dan")
+             )
+}
+
+if(doo[["week7"]]){
+    L$week7 <-
+        ggol(H,
+             SB = c("Kim-Joy"),  
+             FB = c("Rahul"),
+             GT = c("Briony","Manon"),
+             LF = c("Ruby"),
+             EL = c("Jon")
+             )
+}
+
+if(doo[["week8"]]){
+    L$week8 <-
+        ggol(H,
+             SB = c("Ruby"),  
+             FB = c("Briony"),
+             ##   noone "got through" in week 8
+             LF = c("Rahul","Kim-Joy"),
+             EL = c("Manon")
+             )
+}
+
+if(doo[["week9"]]){
+    L$week9 <-
+        ggol(H,
+             SB = c("Ruby"),  
+             FB = c("Kim-Joy"),
+             ##   noone "got through" in week 9
+             LF = c("Rahul"),
+             EL = c("Briony")
+             )
+}
+if(doo[["weekt"]]){
+    L$weekt <-
+        ggol(H,
+             SB = c("Rahul"),  
+             ##  
+             ##   noone "got through" in week 9
+             ## 
+             EL = c("Kim-Joy","Ruby")
+             )
+}
+
+n <- 12   # 13 players; now specify constraints:
+UI <- rbind(diag(n-1),-1)
+CI <- c(rep(0,n-1),-1)
+
+ans_unconstrained <-   # takes about an hour to run without hotstart
+    constrOptim(
+        theta = indep(equalp(H)),
+        f = function(p){-like_series(p,L)},  # 'L' created sequentially above
+        grad = NULL,
+        ui = UI, ci=CI,
+        control=list(trace=100,maxit=100000)
+    )
+
