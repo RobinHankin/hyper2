@@ -1,0 +1,86 @@
+---
+title: "Order statistics and numerical optimization"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The `hyper2` package
+
+We consider the likelihood function given in section 5 (Men's sculling
+in the 2016 Olympics) of the package vignette.  Here we investigate
+some numerical problems arising from the use of `optim()` and
+`constrOptim()`.  We will consider $n=10$ competitors and without loss
+of generality, the competitors finish in order $1,2,3,\ldots,10$.  In
+the vignette we see a formula
+
+\[
+{\mathcal L}\left(p_1,\ldots,p_{10}\right)=
+\frac{p_1}{p_1+\cdots+p_{10}}\cdot
+\frac{p_2}{p_2+\cdots+p_{10}}\cdot
+\frac{p_3}{p_3+\cdots+p_{10}}\cdot
+\frac{p_4}{p_4+\cdots+p_{10}}\cdot
+\frac{p_5}{p_5+\cdots+p_{10}}\cdot\\
+\frac{p_6}{p_6+\cdots+p_{10}}\cdot
+\frac{p_7}{p_7+\cdots+p_{10}}\cdot
+\frac{p_8}{p_8+p_9+p_{10}}\cdot
+\frac{p_9}{p_9+p_{10}}\cdot
+\frac{p_{10}}{p_{10}}
+\]
+
+We can calculate the evaluate (that is, the maximum likelihood
+estimate) from the formula by inspection.  It is clear from the
+penultimate term that $p_{10}=0$.  Similarly from the preceding term
+it is easy to see that $p_9=0$ and so on.  The evaluate is thus
+$p=(1,0,\ldots,0)$.  Let's see if we can reproduce this using
+numerical methods.
+
+
+The `hyper2` idiom for creating a likelihood function is as follows:
+
+```{r defineH}
+library("hyper2")
+H <- order_likelihood(rbind(1:10))
+H
+```
+And then maximizing it is carried out using the `maxp()` function:
+	
+
+```{r}
+maxp(H)
+loglik(H,indep(maxp(H)))
+```
+
+```{r}
+dotchart(maxp(H))
+```
+
+So the numerics have not done a particularly good job in identifying
+the evaluate, presumably as a result of the difficulty of honouring
+the constraints.  However, if we give the system a hand by starting at
+a point closer to the evaluate we can do much better:
+
+```{r}
+f <- function(p,n){c(p,rep((1-p)/n,n-1))}
+sss <- f(0.9999,9)  # sensible start point, close to the evaluate
+maxp(H,startp=sss)
+loglik(H,indep(maxp(H,startp=sss)))
+```
+
+
+
+
+```{r}
+
+H <- hyper2(
+    pnames=c("Rahul","Kim-Joy","Ruby","Briony","Manon","Jon",
+             "Dan","Karen","Terry","Antony","Luke","Imelda")
+)
+H
+```
+
+```{r}
+	ranks <- c(Antony=12, Briony=2, Dan=4, Imelda=11, Jon=5, Karen=6, KimJoy=10, Luke=8, Manon=3, Rahul=7, Ruby=1, Terry=9)
+```
