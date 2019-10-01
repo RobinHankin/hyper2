@@ -1,0 +1,84 @@
+---
+title: "cooking"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Suppose there are five people in a family.  Each day for five days, one person cooks a meal.  After the fifth day, each person puts the meals in order of preference, but is not allowed to vote on their own meal.  This very short vignette shows how to apply generalized Bradley-Terry to this situation using the `hyper2` package.
+
+```{r cars}
+library(hyper2)
+H <- hyper2(pnames=letters[1:5])
+H
+```
+
+Now add some data:
+
+```{r}
+H <- H +
+    order_likelihood(c(5,2,3,4)) + # 1 cannot vote 
+    order_likelihood(c(1,5,3,4)) + # 2 cannot vote
+    order_likelihood(c(1,4,2,5)) + # 3 cannot vote
+    order_likelihood(c(1,2,3,5)) + # 4 cannot vote
+    order_likelihood(c(2,1,3,4))   # 5 cannot vote
+H
+```
+
+graphically:
+
+```{r maxlike, echo=FALSE}
+dotchart(maxp(H),main="probabilities")
+dotchart(log(maxp(H)),main="log probabilities")
+```
+
+Now we can assess the hypothesis that person `a` does in fact have the
+highest strength of the five.  We can follow the reasoning in the
+_icons_ demonstration:
+
+```{r}
+o <- function(Ul,Cl,startp,give=FALSE){
+    small <- 1e-5  #  ensure start at an interior point
+    if(missing(startp)){startp <- small*(1:4)+rep(0.1,4)}
+    out <- maxp(H, startp=small*(1:4)+rep(0.1,4), give=TRUE, fcm=Ul,fcv=Cl)
+		if(give){
+			return(out)
+		} else {
+			return(out$value)
+		}
+}
+
+p2max <- o(c(-1, 1, 0, 0), 0)
+p3max <- o(c(-1, 0, 1, 0), 0)
+p4max <- o(c(-1, 0, 0, 1), 0)
+p5max <- o(c(-2,-1,-1,-1),-1)
+```
+
+(the final line is different because `p5` is the fillup value).
+
+```{r}
+(likes <- c(p2max,p3max,p4max,p5max))
+max(likes)
+```
+
+(observe that the hypothesis with the maximum likelihood is
+$p_2\geqslant p_1$).  Compare with the unconstrained maximum:
+
+```{r}
+maxp(H,give=TRUE)$value
+```
+
+So the support loss by the constraint is
+
+```{r}
+(L <- maxp(H,give=TRUE)$value - max(likes))
+```
+
+short of Edwards's two-units-of-support criterion.
+
+
+
