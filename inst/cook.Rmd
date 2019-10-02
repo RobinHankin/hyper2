@@ -105,3 +105,32 @@ So the support loss by the constraint is
 short of Edwards's two-units-of-support criterion.  There is no strong
 evidence to support the assertion that person 1 is actually stronger
 than person 2 in the sense that $p_1>p_2$.
+
+## Suspect observation
+
+Suppose that we subsequently observe order statistic `5,4,3,2,1`, that
+is, person 5 is the best, 4 is the second best, and so on to 1 being
+the worst.  Is this observation consistent with the previous dataset?
+
+It is possible to perform a permutation test on this as follows.
+First, calculate the probability of each of the $5!=120$ possible
+observations (up to a constant):
+
+```{r}
+library(partitions)
+imH <- indep(maxp(H))
+f <- function(o){loglik(order_likelihood(o),imH,log=FALSE)}
+LL <- apply(perms(5),2,f)
+```
+
+Then calculate the pvalue as the probability of obtaining the
+observation or an observation more extreme:
+
+
+```{r}
+obs <- c(5,4,3,2,1)
+(pval <- sum(LL[LL <= f(obs)])/sum(LL))
+```
+
+
+
