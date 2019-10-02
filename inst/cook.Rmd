@@ -35,7 +35,12 @@ H
 
 Note that noone is allowed to vote for themselves.  We may find
 maximum likelihood estimate for the strengths,
-$\operatorname{argmax}\mathcal{L}\left(p_1,\ldots,p_5\right)$
+$\operatorname{argmax}\mathcal{L}\left(p_1,\ldots,p_5\right)$:
+
+```{r}
+maxp(H)
+```
+
 Graphically:
 
 ```{r maxlike, echo=FALSE}
@@ -81,8 +86,11 @@ p5max <- o(c(-2,-1,-1,-1),-1)
 max(likes)
 ```
 
-(observe that the hypothesis with the maximum likelihood is
-$p_2\geqslant p_1$).  Compare with the unconstrained maximum:
+Observe that the hypothesis with the maximum likelihood is
+$p_2\geqslant p_1$, as might be expected on the grounds that in the
+unconstrained case we have
+$\hat{p_2}>\max\left(\hat{p_3},\hat{p_4},\hat{p_5}\right)$.  Now
+compare the constrained maximum with the unconstrained maximum:
 
 ```{r}
 maxp(H,give=TRUE)$value
@@ -94,7 +102,6 @@ So the support loss by the constraint is
 (L <- maxp(H,give=TRUE)$value - max(likes))
 ```
 
-short of Edwards's two-units-of-support criterion.
-
-
-
+short of Edwards's two-units-of-support criterion.  There is no strong
+evidence to support the assertion that person 1 is actually stronger
+than person 2 in the sense that $p_1>p_2$.
