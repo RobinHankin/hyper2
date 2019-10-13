@@ -1,5 +1,4 @@
-library(hyper2)
-rm(list=ls())
+library("hyper2")
 
 Hall <-
     hyper2(pnames=c("Amy", "Ben", "Brendan", "Brent", "Byron",
