@@ -1,12 +1,12 @@
 library("hyper2")
 
-H <- hyper2(
-    pnames=c("Rahul","Kim-Joy","Ruby","Briony","Manon","Jon",
-             "Dan","Karen","Terry","Antony","Luke","Imelda")
+bakers <-
+  c("Rahul","Kim-Joy","Ruby","Briony","Manon","Jon",
+    "Dan","Karen","Terry","Antony","Luke","Imelda")
+ ## NB game order: Rahul won, Kim-Joy runner-up, through to Imelda who
+ ## was first to be eliminated.
 
-
-      )  # NB game order: Rahul won, Kim-Joy runner-up, through to
-         # Imelda who was first to be eliminated.
+H <- hyper2( pnames = bakers)
 
 
  ## variable 'doo' is a Boolean, with entries governing whether a
@@ -149,12 +149,22 @@ n <- 12   # 13 players; now specify constraints:
 UI <- rbind(diag(n-1),-1)
 CI <- c(rep(0,n-1),-1)
 
-ans_unconstrained <-   # takes about an hour to run without hotstart
+hotstart <- # Here is one I made earlier (takes about an hour)
+c(0.262994207219248, 0.151179869681624, 0.0819097491529236, 0.0484873812623128, 
+0.106987005779039, 0.0751548811388982, 0.181100160787176, 0.0347288257183941, 
+0.0151307039659374, 0.0308533385753615, 0.0114738763276801)
+## If hotstart not available, use theta = indep(equalp(H)) below
+
+ans_unconstrained <-   # takes about an hour to run without hotstart, 1 minute with hotstart
     constrOptim(
-        theta = indep(equalp(H)),
+        theta = hotstart,
         f = function(p){-like_series(p,L)},  # 'L' created sequentially above
         grad = NULL,
         ui = UI, ci=CI,
         control=list(trace=100,maxit=100000)
     )
 
+
+evaluate <- fillup(ans_unconstrained$par)
+names(evaluate) <- bakers
+dotchart(evaluate,pch=16)
