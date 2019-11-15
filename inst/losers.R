@@ -19,15 +19,14 @@
     return(H)
 }
 
-
-maxp2 <- function (H, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, ...){
+maxplist <- function (likeList, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, ...){
     SMALL <- 1e-06
-    n <- size(H[[1]])
+    n <- size(likeList[[1]])
     if (is.null(startp)) {
         startp <- rep(1/n, n - 1)
     }
     objective <- function(p) {
-        -like_single_list(p, H)
+        -like_single_list(p, likeList)
     }
     
     UI <- rbind(diag(nrow = n - 1), -1, fcm)
@@ -43,3 +42,11 @@ maxp2 <- function (H, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, ...){
         return(jj)
     }
 }
+
+
+
+
+o <- maxplist(elimination(players=1:4))  # 12 terms
+dotchart(o,pch=16)
+
+
