@@ -16,7 +16,7 @@ extern SEXP hyper2_equality(SEXP, SEXP, SEXP, SEXP);
 extern SEXP hyper2_evaluate(SEXP, SEXP, SEXP);
 extern SEXP hyper2_identityL(SEXP, SEXP);
 extern SEXP hyper2_overwrite(SEXP, SEXP, SEXP, SEXP);
-
+// following lines created automatically!
 static const R_CallMethodDef CallEntries[] = {
     {"hyper2_accessor",      (DL_FUNC) &hyper2_accessor,      3},
     {"hyper2_addL",          (DL_FUNC) &hyper2_addL,          4},
