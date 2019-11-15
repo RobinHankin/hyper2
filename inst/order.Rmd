@@ -9,12 +9,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## The `hyper2` package
 
-We consider the likelihood function given in section 5 (Men's sculling
-in the 2016 Olympics) of the package vignette.  Here we investigate
-some numerical problems arising from the use of `optim()` and
-`constrOptim()`.  We will consider $n=10$ competitors and without loss
-of generality, the competitors finish in order $1,2,3,\ldots,10$.  In
-the vignette we see a formula
+We consider the likelihood function given by a single observation of
+an order statistic.  Here we investigate some numerical problems
+arising from the use of `optim()` and `constrOptim()`.  We will
+consider $n=10$ competitors and without loss of generality, the
+competitors finish in order $1,2,3,\ldots,10$.  The likelihood
+function for this observation is:
 
 \[
 {\mathcal L}\left(p_1,\ldots,p_{10}\right)=
@@ -35,8 +35,26 @@ estimate) from the formula by inspection.  It is clear from the
 penultimate term that $p_{10}=0$.  Similarly from the preceding term
 it is easy to see that $p_9=0$ and so on.  The evaluate is thus
 $p=(1,0,\ldots,0)$.  Let's see if we can reproduce this using
-numerical methods.
+numerical methods.  Note that this is a highly pathological case; the
+likelihood is not defined at the evaluate.  Even considering limiting
+cases is not straightforward; consider two processes, approaching the
+evaluate in two different ways:
 
+\[
+\lim_{p\longrightarrow 0}
+{\mathcal L}(1-9p,p,p,p,p,p,p,p,p,p,p)=\frac{1}{8!}
+\]
+
+but 
+
+\[
+\lim_{p\longrightarrow 0}
+{\mathcal L}(\alpha,\alpha p,\alpha p^2,\ldots,\alpha p^9)=1
+\]
+
+where $\alpha=(1-p^{10})/(1-p)$ is a normalizing constant.  Thus the
+likelihood _at_ the evaluate is not defined, even as a limit (because
+it depends on the direction of approach).
 
 The `hyper2` idiom for creating a likelihood function is as follows:
 
@@ -49,38 +67,87 @@ And then maximizing it is carried out using the `maxp()` function:
 	
 
 ```{r}
-maxp(H)
-loglik(H,indep(maxp(H)))
+evaluate1 <- maxp(H)
+(maxlike1 <- loglik(H,indep(evaluate1)))
+dotchart(evaluate1,pch=16)
 ```
 
-```{r}
-dotchart(maxp(H))
-```
-
-So the numerics have not done a particularly good job in identifying
-the evaluate, presumably as a result of the difficulty of honouring
-the constraints.  However, if we give the system a hand by starting at
-a point closer to the evaluate we can do much better:
+Comparing the numerically determined maximum likelihood estimate with
+the exact MLE of $(1,0,\ldots,0)$ shows that the numerics have not
+done a particularly good job in identifying the evaluate, presumably
+as a result of the difficulty of honouring the constraints.  However,
+if we give the system a hand by starting at a point closer to the
+evaluate we can do much better:
 
 ```{r}
 f <- function(p,n){c(p,rep((1-p)/n,n-1))}
-sss <- f(0.9999,9)  # sensible start point, close to the evaluate
-maxp(H,startp=sss)
-loglik(H,indep(maxp(H,startp=sss)))
+sss <- f(0.9999,9)  # sensible start point, close (?) to the evaluate
+evaluate2 <- maxp(H,startp=sss)
+maxlike2 <- loglik(H,indep(evaluate2))
 ```
 
+Graphically:
 
+```{r}
+dotchart(evaluate2,pch=16)
+```
+
+So it is much better than the coldstart above in the sense that there
+is more probability on $p_1$ and less everywhere else.  We can compare
+the hotstart above to the coldstart:
+
+```{r}
+maxlike2-maxlike1
+```
+
+This is negative: the so-called "sensible start point" has produced an
+inferior solution.  This is because `sss` has $p_2=p_3=\ldots =
+p_{10}$, so predicts a draw between players $2,3,\ldots 10$, contrary
+to observation.
+
+
+
+A better way is to mimic the more appropriate of the two limiting processes above:
+
+```{r}
+vsssp <- function(x,n){
+  jj <- 1/x^seq_len(n)
+  indep(jj/sum(jj))
+}
+```
+
+Then
+
+```{r}
+evaluate3 <- maxp(H,vsssp(4,10))
+maxlike3 <- loglik(H,indep(evaluate3))
+dotchart(evaluate3,pch=16)
+```
+
+Observe that the likelihood at this point is marginally better than
+the `equalp()` start point:
 
 
 ```{r}
-
-H <- hyper2(
-    pnames=c("Rahul","Kim-Joy","Ruby","Briony","Manon","Jon",
-             "Dan","Karen","Terry","Antony","Luke","Imelda")
-)
-H
+maxlike3-maxlike2
 ```
 
-```{r}
-	ranks <- c(Antony=12, Briony=2, Dan=4, Imelda=11, Jon=5, Karen=6, KimJoy=10, Luke=8, Manon=3, Rahul=7, Ruby=1, Terry=9)
-```
+but the dotchart again shows a quite a lot of probability on
+$p_2,\ldots p_{10}$.
+
+
+# Discussion
+
+I am not sure how important these considerations are in practice.
+Firstly, the order statistic used here is extremely pathological, and
+perhaps it is unreasonable to expect any inferential tool to work
+under these circumstances.
+
+Secondly, and perhaps more importantly, likelihood is not defined at a
+point; likelihood is an equivalence class of functions whose domain is
+possible hypotheses.  We can only compare likelihoods for two
+different hypotheses [because likelihood is only defined up to a
+multiplicative constant].  And in this case, the evaluate
+$(1,0,\ldots,0)$ is not a hypothesis anyone would want a likelihood
+for: the likelihood is not defined at that point, and does not even
+have a well-defined limit there.
