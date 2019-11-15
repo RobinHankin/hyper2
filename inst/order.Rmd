@@ -147,7 +147,15 @@ Secondly, and perhaps more importantly, likelihood is not defined at a
 point; likelihood is an equivalence class of functions whose domain is
 possible hypotheses.  We can only compare likelihoods for two
 different hypotheses [because likelihood is only defined up to a
-multiplicative constant].  And in this case, the evaluate
-$(1,0,\ldots,0)$ is not a hypothesis anyone would want a likelihood
-for: the likelihood is not defined at that point, and does not even
-have a well-defined limit there.
+multiplicative constant].  And for the observation considered here,
+the evaluate $(1,0,\ldots,0)$ is not a hypothesis anyone would want a
+likelihood for: the likelihood is not defined at that point, and does
+not even have a well-defined limit there.
+
+To some extent this is not surprising: the numerics force one to have
+a strictly positive minimum value for each $p_i$ and the fillup value
+$p_{10}=1-\sum p_i$.  The likelihood maximization routine tries to
+maximize $p_9/p_{10}, p_8/p_9,\ldots,p_1/p_2$ simultaneously, all
+subject to the unit sum constraint $\sum p_i=1$.  And of course, if
+the ratio is too high then the unit sum constraint would be violated
+(given that $p_{10}$ is at its minimum value).
