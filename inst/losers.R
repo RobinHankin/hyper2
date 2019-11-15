@@ -1,4 +1,4 @@
-## Function losers() gives a likelihood function for situations where
+## Function elimination() gives a likelihood function for situations where
 ## the _weakest_ player is eliminated at each stage; it returns a
 ## list.  It is intended for situations like the Great British
 ## Bake-off and Masterchef.  Function maxp2(), which is very similar
@@ -6,7 +6,7 @@
 ## object.
 
 
-`losers` <- function(players){
+`elimination` <- function(players){
     H <- choose_losers(hyper2(pnames=players),players,players[length(players)])
     players <- players[-length(players)]
     while(length(players)>1){
