@@ -1,5 +1,6 @@
 \name{maxp}
 \alias{maxp}
+\alias{maxplist}
 \alias{equalp}
 \alias{allequal}
 \alias{equalprobs}
@@ -7,10 +8,12 @@
 \description{Find the maximum likelihood estimate for p, also equal probabilities}
 \usage{
 maxp(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, ...)
+maxplist(Hlist, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, ...)
 equalp(H)
 }
 \arguments{
   \item{H}{A \code{hyper2} object}
+  \item{Hlist}{A list with elements all \code{hyper2} objects}
   \item{startp}{A vector of probabilities}
   \item{give}{Boolean, with default \code{FALSE} meaning to return just
     the evaluate (including fillup), and \code{TRUE} meaning to return
@@ -22,18 +25,22 @@ equalp(H)
 \details{
   Function \code{maxp()} returns the maximum likelihood estimate for
   \code{p}, which has the unit sum constraint implemented.
-  The function does not work for the output of \code{ggol()} nor the
-  \code{masterchef_series6} dataset.  These require a bespoke
-  optimization as shown in the vignette.
+
+  Function \code{maxplist()} does the same but takes a list of
+  \code{hyper2} objects (for example, the output of \code{ggol()}).
+
+  The functions do not work for the \code{masterchef_series6} likelihood
+  function.  These require a bespoke optimization as shown in the
+  vignette.
 
   Function \code{equalp()} returns the value of \eqn{p} for which all
   elements are the same.
 
-  In function \code{maxp()}, arguments \code{fcm} and \code{fcv}
-  implement linear constraints to be passed to \code{constrOptim()}.
-  These constraints are in addition to the usual nonnegativity
-  constraints and unit-sum constraint.  Examples of their use are given
-  in the \dQuote{icons} vignette.
+  In functions \code{maxp()} and \code{maxplike()}, arguments \code{fcm}
+  and \code{fcv} implement linear constraints to be passed to
+  \code{constrOptim()}.  These constraints are in addition to the usual
+  nonnegativity constraints and unit-sum constraint.  Examples of their
+  use are given in the \dQuote{icons} vignette.
   
 
 }
