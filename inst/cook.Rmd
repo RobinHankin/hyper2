@@ -136,40 +136,51 @@ obs <- c(5,4,3,2,1)
 
 
 Now we are going to look at what happens when our observation is only
-the _loser_ (which is me).  We have two hypotheses
+the _loser_ (which is always me).  We have six competitors
+`a,b,c,d,e,f` with nonnegative strengths $p_1,p_2,p_3,p_4,p_5,p_6,
+\sum p_i=1$.  I am competitor `a` with strength $p_1$, and always
+lose.  We have two hypotheses:
 
-* $H_1: \mbox{I might very well be the worst chef in the family}$
-* $H_2: \mbox{I am not the worst chef in the family}$
+* $H_1\colon p_1=0$
+* $H_2\colon\exists i\neq 1 \mbox{ with } p_1\geq p_i>0$
 
-Observe that $H_2$ implies that someone is worse than me and this
-corresponds to a restricted parameter space.  The first step is to
-define a suitable likelihood function for our observation:
+(observe that $H_2$ implies that someone is worse than me).  Both
+hypotheses correspond to a restriction on allowable parameter space.
+The first step is to define a suitable likelihood function for our
+observation:
 
 ```{r}
 n <- 6 # number of people in the family
 H <- hyper2(pnames=letters[1:6])
 L <- ggol(H,letters[2:n],letters[1])
+length(L)
 L[[1]]
 L[[2]]
 ```
 
-In the above, `L` is a list of hyper2 objects corresponding to a
-possible order statistic (we see the first two).  Any order is
-permissible, so long as player `a` (me) is bottom.  Now we maximize
-the likelihood under $H_1$, that is, perform an unconstrained
-maximization:
+In the above, `L` is a list of hyper2 objects corresponding to all
+$5!=120$ possible observed order statistics (only the first two,
+`L[[1]]` and `L[[2]]`, are printed, which correspond to orders
+`bcdefa` and `bcdfea` respectively).  Any order is permissible, so
+long as player `a` (me) is bottom.  Now we maximize the likelihood
+under $H_1$, that is, perform an unconstrained maximization:
 
 ```{r}
 (ans_unconstrained <- maxplist(L,give=TRUE))
 ```
 
-The likelihood at the evaluate is 1 (technically, this is wrong
-because likelihood is defined only up to a multiplicative constant.  A
-correct statement is: the likelihood function evaluated by
+The constraint embodied in $H_1$ does not need to be enforced: the
+evaluate $\hat{p}$ has $p_1=0$, consistent with competitor `a` coming
+last; actually we have
+$\hat{p}=\left(0,\frac{1}{5},\frac{1}{5},\frac{1}{5},\frac{1}{5},\frac{1}{5}\right)$
+analytically, and the numerics are not too far from this.  The
+likelihood at the evaluate is 1 (technically, this is wrong because
+likelihood is defined only up to a multiplicative constant.  A correct
+statement is: the likelihood function evaluated by
 `like_single_list()` returns 1).  The next step is to perform a
 constrained maximization, the constraint being that I am better than
-at least one other person, here chosen to be person `b`:
-
+at least one other person, here chosen to be, without loss of
+generality, competitor `b`:
 
 ```{r}
 small <- 1e-2  # numerical necessity
@@ -178,10 +189,13 @@ maxplist(L,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,-1,rep(0,n-3))),fcv=0,
 ans_constrained
 ```
 
-We can see that the likelihood ratio ${\mathcal L}(H_2)/{\mathcal
-L}(H_1)$ is 0.5 for an observation that I come last.  This is exactly
-the same as the likelihood ratio for the following situation: we toss
-a coin which is either fair ($H_\mbox{fair}$) or two-headed
-($H_\mbox{2heads}$).  We observe a head.  Then ${\mathcal
+Observe that the constraint is active: $p_1=p_2$ in the numerical
+result.  Analytically, the evaluate is indeterminate in
+$p_3,p_4,p_5,p_6$, but has $p_1=p_2=0$ (numerically this means that
+$p_1=p_2=\epsilon$).  We can see that the likelihood ratio ${\mathcal
+L}(H_2)/{\mathcal L}(H_1)$ is 0.5 for an observation that I come last.
+This is exactly the same as the likelihood ratio for the following
+situation: we toss a coin which is either fair ($H_\mbox{fair}$) or
+two-headed ($H_\mbox{2heads}$).  We observe a head.  Then ${\mathcal
 L}(H_\mbox{2heads})/{\mathcal L}(H_\mbox{fair}) = 0.5$ as well (this
 is Edwards's valet and black and white ball thought experiment).
