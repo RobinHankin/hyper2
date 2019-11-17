@@ -1,5 +1,5 @@
 ---
-title: "cooking"
+title: "Domestic cooking and likelihood"
 output: html_document
 ---
 
@@ -7,15 +7,14 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
 Suppose there are five people in a family.  Each day for five days,
-one person cooks a meal.  After the fifth day, each person puts the
-meals in order of preference, but is not allowed to vote on their own
-meal.  This very short vignette shows how to apply generalized
-Bradley-Terry to this situation using the `hyper2` package.
+one person cooks a meal.  After the fifth day, each person considers
+the four meals cooked by other family members, and puts them in order
+of preference.  This very short vignette shows how to apply
+generalized Bradley-Terry to this situation using the `hyper2`
+package.
 
-```{r cars}
+```{r loadlib}
 library(hyper2)
 H <- hyper2(pnames=paste("p",1:5,sep=""))
 H
@@ -23,7 +22,7 @@ H
 
 Now add some data:
 
-```{r}
+```{r data}
 H <- H +
     order_likelihood(c(5,2,3,4)) + # person 1 says 5 is the best, 4 the worst.
     order_likelihood(c(1,5,3,4)) + # person 2 says 1 is the best, 4 the worst.
@@ -44,8 +43,8 @@ maxp(H)
 Graphically:
 
 ```{r maxlike, echo=FALSE}
-dotchart(maxp(H),main="probabilities")
-dotchart(log(maxp(H)),main="log probabilities")
+dotchart(maxp(H),pch=16,main="probabilities")
+dotchart(log(maxp(H)),pch=16,main="log probabilities")
 ```
 
 We can assess the hypothesis that all players have the same strength:
@@ -57,9 +56,10 @@ L2-L1
 pchisq(2*(L2-L1),df=1,lower.tail=FALSE) # p-value of asymptotic distribution
 ```
 
-Now we can assess the hypothesis that person `a` does in fact have the
-highest strength of the five.  We can follow the reasoning in the
-_icons_ demonstration:
+Thus we reject the hypothesis of equal strength.  Now we can assess
+the hypothesis that person `a` does in fact have the highest strength
+of the five.  We can follow the reasoning in the _icons_
+demonstration:
 
 ```{r}
 o <- function(Ul,Cl,startp,give=FALSE){
@@ -121,16 +121,25 @@ library(partitions)
 imH <- indep(maxp(H))
 f <- function(o){loglik(order_likelihood(o),imH,log=FALSE)}
 LL <- apply(perms(5),2,f)
+length(LL)
+sum(LL)
+head(LL)
 ```
 
-Then calculate the pvalue as the probability of obtaining the
-observation or an observation more extreme:
-
+So `LL` is the probability of observing each permutation of 5 objects.
+We then calculate the $p$-value as the probability of obtaining the
+observation or an observation more extreme; in this case we define a
+permutation to be "more extreme" if it has a smaller probability than
+the observed permutation of `5,4,3,2,1` (under the null).  This is
+easily calculated:
 
 ```{r}
 obs <- c(5,4,3,2,1)
 (pval <- sum(LL[LL <= f(obs)])/sum(LL))
 ```
 
+Thus it is reasonable to reject the hypothesis that this particular
+observation was drawn from the same distribution as the others, and
+infer that it was suspect.
 
 
