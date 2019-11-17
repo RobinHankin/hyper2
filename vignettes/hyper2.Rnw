@@ -141,7 +141,7 @@ then~$\frac{p_i}{p_i+p_j+p_k}$~\citep{luce1959}; but there is no
 simple way to translate this likelihood function into a GLM.  However,
 working directly with the likelihood function for~$\mathbf{p}$ has
 several advantages which are illustrated below.  The resulting
-likelihood functionss may readily be generalized to accommodate more
+likelihood functions may readily be generalized to accommodate more
 general order statistics, as in a race.  In addition, likelihood
 functions may be specified for partial order statistics; also,
 observations in which a \emph{loser} is identified may be given a
