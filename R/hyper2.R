@@ -556,6 +556,20 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   ggol(H,winners,losers)
 }
 
+`elimination` <- function(all_players){
+    all_players <- rev(all_players)
+    H <- choose_losers(hyper2(pnames=sort(all_players)),all_players,all_players[length(all_players)])
+    players <- all_players[-length(all_players)]
+    while(length(players)>1){
+        for(i in seq_along(H)){
+            H[[i]] <- choose_losers(H[[i]],players,players[length(players)])
+        }
+        H <- unlist(H,recursive=FALSE)
+        players <- players[-length(players)]
+    }
+    return(H)
+}
+
 `like_single_list` <- function(p,Lsub){;  # eg like_single(p,Lc)
   sum(unlist(lapply(Lsub,loglik,p=p,log=FALSE)))
   ## sum, because it can be any one of the orders specified in the
