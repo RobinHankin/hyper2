@@ -403,6 +403,30 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
 }
 
+`maxplist` <- function (Hlist, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, ...){
+    SMALL <- 1e-06
+    n <- size(Hlist[[1]])
+    if (is.null(startp)) {
+        startp <- rep(1/n, n - 1)
+    }
+    objective <- function(p) {
+        -like_single_list(p, Hlist)
+    }
+    
+    UI <- rbind(diag(nrow = n - 1), -1, fcm)
+    CI <- c(rep(SMALL, n - 1), -1 + SMALL, fcv)
+    out <- constrOptim(theta = startp, f = objective, grad = NULL, 
+        ui = UI, ci = CI, ...)
+    out$value <- -out$value
+    if (give) {
+        return(out)
+    }
+    else {
+        jj <- fillup(out$par)
+        return(jj)
+    }
+}
+
 `sum.hyper2` <- function(x, ..., na.rm=FALSE){
   if(nargs()==1){
     return(x)
