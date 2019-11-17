@@ -3,7 +3,6 @@ library("hyper2")
 allbakers <- c("Alice","Amelia","Dan","David","Helena","Henry",
              "Jamie","Michael","Michelle","Phil","Priya","Rosie","Steph")
 # NB alphabetical order
-H <- hyper2(pnames=allbakers)
 
 week01 <- c(Alice = 5, Amelia = 4, David = 10, Dan = 9, Helena = 12, Henry = 1, Jamie = 13, Michael = 11, Michelle = 6, Phil = 8, Priya = 7, Rosie = 2, Steph = 3)
 week02 <- c(Alice = 1, Amelia = 9, David =  2,          Helena = 12, Henry = 6, Jamie = 11, Michael =  4, Michelle = 8, Phil = 3, Priya = 7, Rosie = 5, Steph =10)
@@ -29,21 +28,10 @@ w09 <- c(David =  2, Alice = 4, Steph = 3, Rosie = 1)
 w10 <- c(David =  1, Alice = 2, Steph = 3)
 
 
+# Calculate H, the likelihood function for the observed ordering:
 f <- function(x){order_likelihood(char2num(names(sort(x)),allbakers))}
 
-H <- H + f(week01)
-H <- H + f(week02)
-H <- H + f(week03)
-H <- H + f(week04)
-H <- H + f(week05)
-H <- H + f(week06)
-H <- H + f(week07)
-H <- H + f(week08)
-H <- H + f(week09)
-H <- H + f(week10)
-H1 <- H
-
-H <- H <- hyper2(pnames=allbakers)
+H <- hyper2(pnames=allbakers)
 H <- H + f(w01)
 H <- H + f(w02)
 H <- H + f(w03)
@@ -54,18 +42,60 @@ H <- H + f(w07)
 H <- H + f(w08)
 H <- H + f(w09)
 H <- H + f(w10)
-H2 <- H
+
+## Now some observed statistics:
+mp_obs  <- maxp(H)
+X_obs <-  2*(loglik(H,indep(mp_obs)) - loglik(H,indep(equalp(H))))
+print(paste("asymptotic pvalue = ",pchisq(X_obs,df=12,lower.tail=FALSE)))
+m_obs <- names(which.max(mp_obs))
+name_maxlike_obs <- names(which.max(mp_obs))
 
 
-stopifnot(H1==H2)
+# Now some permutation tests:
+shuffle <- function(a){
+  out <- sample(a)
+  names(out) <- names(a)
+  return(out)
+}
 
 
-mp <- maxp(H1)
-dotchart(mp,pch=16)
+n <- 1000
+X <- rep(NA,n)
+m <- rep(NA,n)
+name_maxlike <- rep("",n)
+for(i in seq_len(n)){
+  print(i)
+  Hstar <- hyper2(pnames=allbakers)
+  Hstar <- Hstar + f(shuffle(w01))
+  Hstar <- Hstar + f(shuffle(w02))
+  Hstar <- Hstar + f(shuffle(w03))
+  Hstar <- Hstar + f(shuffle(w04))
+  Hstar <- Hstar + f(shuffle(w05))
+  Hstar <- Hstar + f(shuffle(w06))
+  Hstar <- Hstar + f(shuffle(w07))
+  Hstar <- Hstar + f(shuffle(w08))
+  Hstar <- Hstar + f(shuffle(w09))
+  Hstar <- Hstar + f(shuffle(w10))
+  
+  
+  mp <- maxp(Hstar)
+  X[i] <- 2*(loglik(Hstar,indep(mp)) - loglik(Hstar,indep(equalp(Hstar))))
+  m[i] <- max(mp)
+  name_maxlike[i] <- names(which.max(mp))
+}
 
 
-X <- 2*(loglik(H,indep(mp)) - loglik(H,indep(equalp(H))))
+## In theory, X should be distributed as chi-square with 13-1=12
+## degrees of freedom:
+hist(X)
+abline(v=X_obs,lwd=7)
 
-# calculate asymptotic p-value:
-print(pchisq(X,df=12,lower.tail=FALSE))
+# Check the asymptotic distribution:
+dev.new()
+par(pty='s')
+qqplot(rchisq(1e5,df=17),X,asp=1,pty='s',xlim=c(0,50),ylim=c(0,50))
+abline(0,1)
 
+
+
+ 
