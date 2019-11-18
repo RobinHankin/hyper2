@@ -20,7 +20,6 @@ Returns the \code{hyper2} object it was sent, invisibly.  Used mainly
 for its side-effect 
 }
 \author{Robin K. S. Hankin}
-\note{This is the only place that the \code{pnames} attribute is used}
 \examples{
 data(chess)
 chess
