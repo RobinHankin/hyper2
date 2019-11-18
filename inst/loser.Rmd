@@ -97,16 +97,16 @@ like_single_list(indep(equalp(L[[1]])),L)
 ```
 
 The likelihood can be shown to be $\frac{1}{n}$ (which is clear on
-intuitive grounds: $H_3$ says that all players are equivalent and if
-this is correct, then one would identify players `a` as the worst with
-a probability of $\frac{1}{n}$).  Note again that this is loose
-language as likelihood is only defined up to a multiplicative
-constant.
+intuitive grounds: $H_3$ says that all players are equivalent and the
+order statistic is totally random.  If this is correct, then one would
+identify player `a` as the worst with a probability $\frac{1}{n}$).
+Note again that this is loose language as likelihood is only defined
+up to a multiplicative constant.
 
 # Discussion
 
-We are now in a position to define a likelihood function for
-$H-1,H_2,H_3$:
+We are now in a position to define a likelihood function on the three
+hypotheses $H_1,H_2,H_3$:
 
 $$
 {\mathcal L}(H_1)=1\qquad
@@ -116,12 +116,12 @@ $$
 
 (recall that $n$ is the number of competitors).  We can see that the
 likelihood ratio ${\mathcal L}(H_2)/{\mathcal L}(H_1)$ is 0.5 for an
-observation that I come last.  This is exactly the same as the
-likelihood ratio for the following situation: we toss a coin which is
-either fair ($H_\mbox{fair}$) or two-headed ($H_\mbox{2heads}$).  We
-observe a head.  Then ${\mathcal L}(H_\mbox{2heads})/{\mathcal
-L}(H_\mbox{fair}) = 0.5$ as well (this is Edwards's valet and black
-and white ball thought experiment).
+observation that competitor `a` comes last.  This is exactly the same
+as the likelihood ratio for the following situation: we toss a coin
+which is either fair ($H_\mbox{fair}$) or two-headed
+($H_\mbox{2heads}$).  We observe a head.  Then ${\mathcal
+L}(H_\mbox{2heads})/{\mathcal L}(H_\mbox{fair}) = 0.5$ as well (this
+is Edwards's valet and black and white ball thought experiment).
 
 ## Repeated observations
 
