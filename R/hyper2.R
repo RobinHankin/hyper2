@@ -135,7 +135,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
   }
 
-  out <- ""
+  out <- "log("
   for(i in seq_along(b)){
     jj <- unlist(b[i])
     pp <- powers[i]
@@ -147,7 +147,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     if(i < length(b)){out <- paste(out," * ",sep="")}
   }
   
-  out <- paste(out,"\n",sep="")
+  out <- paste(out,")\n",sep="")
+  
   for(i in strwrap(out)){
     cat(noquote(i))
     cat("\n")

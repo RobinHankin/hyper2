@@ -14,9 +14,9 @@
   used for hyper2 objects.
 
   Specifically, \code{H1 + H2} implements addition of two log-likelihood
-  functions, corresponding to incorporation of new observational data;
-  and \code{n*H1} implements \code{H1+H1+...+H1}, corresponding to
-  repeated observations of the same data.
+  functions, corresponding to incorporation of additional independent
+  observational data; and \code{n*H1} implements \code{H1+H1+...+H1},
+  corresponding to repeated observations of the same data.
 
   There are no unary operations for this class.
 
@@ -39,6 +39,14 @@ hyper2_sum_numeric(H,r)
 }
 \details{
 
+  If two independent datasets have \code{hyper2} objects \code{H1} and
+  \code{H2}, then the R idiom for combining these would be \code{H1+H2};
+  the additive notation \dQuote{\code{+}} corresponds to addition of the
+  support (or multiplication of the likelihood).  So \code{hyper2}
+  objects are better thought of as support functions than likelihood
+  functions; this is reflected in the print method which explicitly
+  wraps the likelihood function in a \dQuote{\code{log()}}.
+    
   Testing for equality is not straightforward for two implementation
   reasons.  Firstly, the object itself is stored internally as a
   \code{stl} \code{map}, which does not store keys in any particular
