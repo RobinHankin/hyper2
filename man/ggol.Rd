@@ -4,6 +4,7 @@
 \alias{choose_winners}
 \alias{general_grouped_order_likelihood}
 \alias{order_likelihood}
+\alias{elimination}
 \title{Order statistics}
 \description{
   Various functions for calculating the likelihood function for order
