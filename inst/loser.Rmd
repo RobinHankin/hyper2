@@ -1,0 +1,158 @@
+---
+title: "Weakly informative observations: identifying the weakest player"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(hyper2)
+```
+
+
+# Partial rank observations: who lost?
+
+
+Now we are going to look at what happens when our observation is only
+the _loser_ (which is here taken to be player `a`).  We have six
+competitors `a,b,c,d,e,f` with nonnegative strengths
+$p_1,p_2,p_3,p_4,p_5,p_6, \sum p_i=1$.  Competitor `a` has strength
+$p_1$, and loses.  We are interested in how informative this
+observation is with regard to the hypothesis that `a` does in fact
+have zero strength.  We have three hypotheses:
+
+* $H_1\colon p_1=0$
+* $H_2\colon\exists i\neq 1 \mbox{ with } p_1\geq p_i>0$
+* $H_3\colon p_1=p_2=\ldots=p_n=\frac{1}{n}$
+
+(observe that $H_2$ implies that someone is worse than me).  All three
+hypotheses correspond to a restriction on allowable parameter space.
+The first step is to define a suitable likelihood function for our
+observation:
+
+```{r}
+n <- 6 # number of competitors
+H <- hyper2(pnames=letters[1:6])
+L <- ggol(H,letters[2:n],letters[1]) 
+length(L)
+L[[1]]
+L[[2]]
+```
+
+In the above, `L` is a likelihood function for the observation that
+competitor `a` came last.  In R idiom, it is a list of hyper2 objects
+corresponding to all $5!=120$ possible observed order statistics (only
+the first two, `L[[1]]` and `L[[2]]`, are printed, which correspond to
+orders `bcdefa` and `bcdfea` respectively).  Any order is permissible,
+so long as player `a` is bottom.
+
+
+## Hypothesis 1
+
+Now we maximize the likelihood
+under $H_1$, that is, perform an unconstrained maximization:
+
+```{r}
+(ans_unconstrained <- maxplist(L,give=TRUE))
+```
+
+The constraint embodied in $H_1$ does not need to be enforced: the
+evaluate $\hat{p}$ has $p_1=0$, consistent with competitor `a` coming
+last; actually we have
+$\hat{p}=\left(0,\frac{1}{5},\frac{1}{5},\frac{1}{5},\frac{1}{5},\frac{1}{5}\right)$
+analytically, and the numerics are not too far from this.  The
+likelihood at the evaluate is 1 (technically, this is wrong because
+likelihood is defined only up to a multiplicative constant.  A correct
+statement is: the likelihood function evaluated by
+`like_single_list()` returns 1 at $\hat{p}$ returns 1).
+
+
+## Hypothesis 2
+
+The next step is to perform a constrained maximization, the constraint
+being $H_2$.  This says that I am better than at least one other
+person, here chosen to be, without loss of generality, competitor `b`:
+
+```{r}
+small <- 1e-2  # numerical necessity
+ans_constrained <-
+maxplist(L,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,-1,rep(0,n-3))),fcv=0,give=TRUE)
+ans_constrained
+```
+
+Observe that the constraint is active: $p_1=p_2$ in the numerical
+result.  Analytically, the evaluate is indeterminate in
+$p_3,p_4,p_5,p_6$, but has $p_1=p_2=0$ (numerically this means that
+$p_1=p_2=\epsilon$, where $\epsilon$ is some small number chosen for
+smallness and numerical expediency).
+
+## Hypothesis 3
+
+Recall that $H_3\colon p_1=p_2=\ldots=p_n=\frac{1}{n}$; this is
+equivalent to a random chance.  Because this is a point hypothesis, we
+do not need to use any maximization techniques; it is sufficient to
+evaluate the likelihood at this point:
+
+```{r}
+like_single_list(indep(equalp(L[[1]])),L)
+```
+
+The likelihood can be shown to be $\frac{1}{n}$ (which is clear on
+intuitive grounds: $H_3$ says that all players are equivalent and if
+this is correct, then one would identify players `a` as the worst with
+a probability of $\frac{1}{n}$).  Note again that this is loose
+language as likelihood is only defined up to a multiplicative
+constant.
+
+# Discussion
+
+We are now in a position to define a likelihood function for
+$H-1,H_2,H_3$:
+
+$$
+{\mathcal L}(H_1)=1\qquad
+{\mathcal L}(H_2)=\frac{1}{2}\qquad
+{\mathcal L}(H_3)=\frac{1}{n}
+$$
+
+(recall that $n$ is the number of competitors).  We can see that the
+likelihood ratio ${\mathcal L}(H_2)/{\mathcal L}(H_1)$ is 0.5 for an
+observation that I come last.  This is exactly the same as the
+likelihood ratio for the following situation: we toss a coin which is
+either fair ($H_\mbox{fair}$) or two-headed ($H_\mbox{2heads}$).  We
+observe a head.  Then ${\mathcal L}(H_\mbox{2heads})/{\mathcal
+L}(H_\mbox{fair}) = 0.5$ as well (this is Edwards's valet and black
+and white ball thought experiment).
+
+## Repeated observations
+
+Suppose we make $r$ independent observations, all of which are that
+competitor `a` comes last.  Then the likelihood function becomes
+
+$$
+{\mathcal L}(H_1)=1\qquad
+{\mathcal L}(H_2)=\frac{1}{2^r}\qquad
+{\mathcal L}(H_3)=\frac{1}{n^r}
+$$
+
+
+The support for $H_1$ against $H_2$ would be $\log(2^r)=r\log 2$.  To
+exceed Edwards's criterion of 2 units of support per degree of freedom
+would require $2/\log(2)\simeq 2.9$ observations, or 3 rounded up;
+alternatively, we might require the log-likelihood to lie in the tail
+area of its asymptotic $\chi^2_1$ distribution, that is
+
+```{r}
+qchisq(0.95,1)
+```
+
+that is $2r\log 2\geq 3.84$ or $r\geq 2.77$.
+
+
+The support for $H_1$ against $H_3$ would be $r\log n$ but this time
+we need $n-1$ degrees of freedom.  The likelihood criterion would be
+$r\log n\geq 2(n-1)$, or $r\geq 2(n-1)/\log n$.  Alternatively we
+might adopt a frequentist view and require
+$2\log(n^r)\geq\chi^2_{n-1}(0.95)$, or $r\geq Q/(2\log n)$, where Q is
+the 95th percentile of the chi-square distribution with $n$ degrees of
+freedom, `qchisq(0.95,df=n)`.  It might be interesting to compare
+these two approaches.
