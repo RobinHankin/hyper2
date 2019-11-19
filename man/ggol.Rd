@@ -47,19 +47,19 @@ order_likelihood(M,times=1)
   list of \code{hyper2} objects.  The evaluate may be found with
   function \code{maxplist()}.
 
-
   Function elimination() gives a likelihood function for situations
   where the \emph{weakest} player is identified at each stage and
   subsequently eliminated from the competition.  It is intended for
   situations like the Great British Bake-off and Masterchef in which the
   observation is which player was chosen to leave the show.  In this
   function, argument \code{all_players} is sensitive to order, unlike
-  \code{choose_winners()} and \code{choose_losers()}.  Element \code{i}
-  of \code{all_players} is the \eqn{i^\mathrm{th}}{i-th} player to be
-  eliminated.  Thus the first element of \code{all_players} is the first
-  player to be eliminated (and would be expected to have the lowest
-  strength).  The final element of \code{all_players} is the last player
-  to be eliminated (or alternatively the only player not to be
+  \code{choose_winners()} and \code{choose_losers()} (an integer
+  \code{n} is interpreted as \code{letters[seq_len(n)]}).  Element
+  \code{i} of \code{all_players} is the \eqn{i^\mathrm{th}}{i-th} player
+  to be eliminated.  Thus the first element of \code{all_players} is the
+  first player to be eliminated (and would be expected to have the
+  lowest strength).  The final element of \code{all_players} is the last
+  player to be eliminated (or alternatively the only player not to be
   eliminated).
   
 

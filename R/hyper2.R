@@ -558,6 +558,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `elimination` <- function(all_players){
+    if(is.numeric(all_players) & (length(all_players)==1)){
+      all_players <- letters[seq_len(all_players)]
+    }
     all_players <- rev(all_players)
     H <- choose_losers(hyper2(pnames=sort(all_players)),all_players,all_players[length(all_players)])
     players <- all_players[-length(all_players)]
