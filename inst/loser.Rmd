@@ -52,7 +52,7 @@ Now we maximize the likelihood
 under $H_1$, that is, perform an unconstrained maximization:
 
 ```{r}
-(ans_unconstrained <- maxplist(L,give=TRUE))
+(ans_unconstrained <- maxp(L,give=TRUE))
 ```
 
 The constraint embodied in $H_1$ does not need to be enforced: the
@@ -75,7 +75,7 @@ person, here chosen to be, without loss of generality, competitor `b`:
 ```{r}
 small <- 1e-2  # numerical necessity
 ans_constrained <-
-maxplist(L,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,-1,rep(0,n-3))),fcv=0,give=TRUE)
+maxp(L,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,-1,rep(0,n-3))),fcv=0,give=TRUE)
 ans_constrained
 ```
 

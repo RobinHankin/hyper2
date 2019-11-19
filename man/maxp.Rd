@@ -29,6 +29,9 @@ equalp(H)
   Function \code{maxplist()} does the same but takes a list of
   \code{hyper2} objects (for example, the output of \code{ggol()}).
 
+  If function \code{maxp()} is given a \code{suplist} object it
+  dispatches to \code{maxplist()}.
+
   The functions do not work for the \code{masterchef_series6} likelihood
   function.  These require a bespoke optimization as shown in the
   vignette.
@@ -64,4 +67,10 @@ data(rowing)
 pchisq(2*(x1-x2),df=size(sculls2016)-1,lower.tail=FALSE)
 
 ## Note that Wilks's theorem is only asymptotic.
+
+
+W <- hyper2(pnames=letters[1:5])
+W1 <- ggol(W, 'a', letters[2:3],'d')  # W1 is a suplist object
+maxp(W1)
+
 }

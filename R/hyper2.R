@@ -366,6 +366,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `maxp` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, ...){
+    if(inherits(H,"suplist")){return(maxplist(Hlist=H,startp=startp,give=give,fcm=fcm,fcv=fcv,...))}
     SMALL <- 1e-6
     
     n <- size(H)
