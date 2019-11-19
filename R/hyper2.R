@@ -540,7 +540,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
     out <- mult_grid(lapply(dotargs, .allorders))[[1]]
     out <- apply(out,2,function(rank){H+order_likelihood(rank)})
-  return(out)
+  return(as.suplist(out))
 }
 
 `ggol` <- general_grouped_order_likelihood
@@ -571,7 +571,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         H <- unlist(H,recursive=FALSE)
         players <- players[-length(players)]
     }
-    return(H)
+    return(as.suplist(H))
 }
 
 `like_single_list` <- function(p,Lsub){;  # eg like_single(p,Lc)

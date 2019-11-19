@@ -34,3 +34,5 @@ S3method(print,hyper2)
 S3method(head,hyper2)
 S3method(length,hyper2)
 
+S3method(Ops,suplist)
+S3method(sum,suplist)
