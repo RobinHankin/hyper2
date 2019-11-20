@@ -23,18 +23,17 @@ karpov_vs_kasparov <- c("Karpov","Kasparov","white","draw")  # all "players", re
 
 H %<>% trial(c("Karpov"  ,"white"), karpov_vs_kasparov, karpov_plays_white_beats_kasparov)
 H %<>% trial(c("Kasparov","white"), karpov_vs_kasparov, kasparov_plays_white_beats_karpov)
-H %<>% trial(  "Karpov"           , karpov_vs_kasparov, karpov_plays_black_beats_kasparov)
-H %<>% trial(  "Kasparov"         , karpov_vs_kasparov, kasparov_plays_black_beats_karpov)
+H %<>% trial(  "Karpov"           , karpov_vs_kasparov, kasparov_plays_white_losesto_karpov)
+H %<>% trial(  "Kasparov"         , karpov_vs_kasparov, karpov_plays_white_losesto_kasparov)
 H %<>% trial(  "draw"             , karpov_vs_kasparov, karpov_plays_white_draws_kasparov)
 H %<>% trial(  "draw"             , karpov_vs_kasparov, kasparov_plays_white_draws_karpov)
-
 
 ## Kasparov vs Anand
 kasparov_vs_anand <- c("Kasparov","Anand","white","draw")
 H %<>% trial(c("Kasparov","white"), kasparov_vs_anand, kasparov_plays_white_beats_anand)
 H %<>% trial(c("Anand"   ,"white"), kasparov_vs_anand, anand_plays_white_beats_kasparov)
-H %<>% trial(c("Kasparov"        ), kasparov_vs_anand, kasparov_plays_black_beats_anand)
-H %<>% trial(c("Anand"           ), kasparov_vs_anand, anand_plays_black_beats_kasparov)
+H %<>% trial(c("Kasparov"        ), kasparov_vs_anand, anand_plays_white_losesto_kasparov)
+H %<>% trial(c("Anand"           ), kasparov_vs_anand, kasparov_plays_white_losesto_anand)
 H %<>% trial(  "draw"             , kasparov_vs_anand, kasparov_plays_white_draws_anand)
 H %<>% trial(  "draw"             , kasparov_vs_anand, anand_plays_white_draws_kasparov)
 
@@ -43,8 +42,8 @@ H %<>% trial(  "draw"             , kasparov_vs_anand, anand_plays_white_draws_k
 karpov_vs_anand <- c("Karpov","Anand","white","draw")
 H %<>% trial(c("Karpov","white"), karpov_vs_anand, karpov_plays_white_beats_anand)
 H %<>% trial(c("Anand" ,"white"), karpov_vs_anand, anand_plays_white_beats_karpov)
-H %<>% trial(  "Karpov"         , karpov_vs_anand, karpov_plays_black_beats_anand)
-H %<>% trial(  "Anand"          , karpov_vs_anand, anand_plays_black_beats_karpov)
+H %<>% trial(  "Karpov"         , karpov_vs_anand, anand_plays_white_losesto_karpov)
+H %<>% trial(  "Anand"          , karpov_vs_anand, karpov_plays_white_losesto_anand)
 H %<>% trial(  "draw"           , karpov_vs_anand, karpov_plays_white_draws_anand)
 H %<>% trial(  "draw"           , karpov_vs_anand, anand_plays_white_draws_karpov)
 
@@ -65,7 +64,7 @@ ml_p_free    <- maxp(H)
 objective <- function(x){
   p <- x[1]
   w <- x[2]
-  loglik(H,c(p,p,p,w))
+  loglik(c(p,p,p,w),H)
 }
 
 constrained_optimization <-
@@ -102,7 +101,7 @@ print(paste("p-value = ",pchisq(2*support_different_strengths,df=1,lower.tail=FA
 small <- 1e-4
 
 objective <- function(x){
-  loglik(H,c(x,small)) # draw is the fillup, white advantage set to 'small'
+  loglik(c(x,small),H) # draw is the fillup, white advantage set to 'small'
 }
 
 constrained_optimization <-
