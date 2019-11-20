@@ -103,7 +103,7 @@ cat("\n\n")
 small <- 1e-4
 
 objective <- function(x){
-  loglik(H,c(x[1:3],white=small,x[4:5])) # Anand_draw is the fillup, white advantage set to 'small'
+  loglik(c(x[1:3],white=small,x[4:5]),H) # Anand_draw is the fillup, white advantage set to 'small'
 }
 
 constrained_optimization_nowhite <-
