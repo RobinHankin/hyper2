@@ -45,7 +45,7 @@ H <- H + f(w10)
 
 ## Now some observed statistics:
 mp_obs  <- maxp(H)
-X_obs <-  2*(loglik(H,indep(mp_obs)) - loglik(H,indep(equalp(H))))
+X_obs <-  2*(loglik(indep(mp_obs),H) - loglik(indep(equalp(H)),H))
 print(paste("asymptotic pvalue = ",pchisq(X_obs,df=12,lower.tail=FALSE)))
 m_obs <- names(which.max(mp_obs))
 name_maxlike_obs <- names(which.max(mp_obs))
@@ -79,7 +79,7 @@ for(i in seq_len(n)){
   
   
   mp <- maxp(Hstar)
-  X[i] <- 2*(loglik(Hstar,indep(mp)) - loglik(Hstar,indep(equalp(Hstar))))
+  X[i] <- 2*(loglik(indep(mp),Hstar) - loglik(indep(equalp(Hstar)),Hstar))
   m[i] <- max(mp)
   name_maxlike[i] <- names(which.max(mp))
 }

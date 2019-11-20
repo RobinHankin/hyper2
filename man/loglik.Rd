@@ -9,7 +9,7 @@ Log likelihood functions
 Returns a log-likelihood for a given hyper2 object at a specific point
 }
 \usage{
-loglik(H, p, log = TRUE)
+loglik(p, H, log = TRUE)
 like_single_list(p,Lsub)
 like_series(p,L,log=TRUE)
 
@@ -54,7 +54,7 @@ intended for use with \code{ggol()}.
 \seealso{\code{\link{maxp}}}
 \examples{
 data(chess)
-loglik(chess,c(1/3,1/3))
+loglik(c(1/3,1/3),chess)
 
 data(masterchef)
 

@@ -52,7 +52,7 @@ s[2] %<>% `-`(small)
 
 ## Perform the constrained optimization:
 ml_p_constrained <- maxp(H,fcm=c(1,-1,rep(0,size(H)-3)),fcv=0,startp=s)
-max_support_constrained <- loglik(H,indep(ml_p_constrained))
+max_support_constrained <- loglik(indep(ml_p_constrained),H)
 
 support <- max_support_free - max_support_constrained
 

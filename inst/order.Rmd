@@ -68,7 +68,7 @@ And then maximizing it is carried out using the `maxp()` function:
 
 ```{r}
 evaluate1 <- maxp(H)
-(maxlike1 <- loglik(H,indep(evaluate1)))
+(maxlike1 <- loglik(indep(evaluate1),H))
 dotchart(evaluate1,pch=16)
 ```
 
@@ -83,7 +83,7 @@ evaluate we can do much better:
 f <- function(p,n){c(p,rep((1-p)/n,n-1))}
 sss <- f(0.9999,9)  # sensible start point, close (?) to the evaluate
 evaluate2 <- maxp(H,startp=sss)
-maxlike2 <- loglik(H,indep(evaluate2))
+maxlike2 <- loglik(indep(evaluate2),H)
 ```
 
 Graphically:
@@ -120,7 +120,7 @@ Then
 
 ```{r}
 evaluate3 <- maxp(H,vsssp(4,10))
-maxlike3 <- loglik(H,indep(evaluate3))
+maxlike3 <- loglik(indep(evaluate3),H)
 dotchart(evaluate3,pch=16)
 ```
 

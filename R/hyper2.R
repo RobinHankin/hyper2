@@ -174,15 +174,15 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(hyper2(out[[1]],out[[2]],pnames=jj))
 }
 
-`loglik` <- function(H,p,log=TRUE){
+`loglik` <- function(p,H,log=TRUE){
   if(is.matrix(p)){
-    return(apply(p,1,function(o){.loglik_single(H,p=o, log=log)}))
+    return(apply(p,1,function(o){.loglik_single(p=o,H, log=log)}))
   } else {
-    return(.loglik_single(H,p,log=log))
+    return(.loglik_single(p,H,log=log))
   }
 }
 
-`.loglik_single` <- function(H,p,log=TRUE){
+`.loglik_single` <- function(p,H,log=TRUE){
   stopifnot(length(p) == size(H)-1)
   stopifnot(all(p>=0))
   stopifnot(sum(p)<=1)
@@ -344,7 +344,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(hyper2(out[[1]],out[[2]],pnames=pnames(x)))
 }
 
-`gradient` <- function(H,probs){
+`gradient` <- function(probs,H){
   stopifnot(length(probs) == size(H)-1)
   differentiate(brackets(H), powers(H), fillup(probs), size(H))$grad_comp
 }
@@ -374,8 +374,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         startp <- rep(1/n,n-1)
         }
 
-    objective <- function(p){ -loglik(H,p) }
-    gradfun   <- function(p){ -(gradient(H,p))} #NB minus signs
+    objective <- function(p){ -loglik(p,H) }
+    gradfun   <- function(p){ -(gradient(p,H))} #NB minus signs
     
     UI <- rbind(
         diag(nrow=n-1),  # regular: p1 >=0, p2 >= 0, ..., p_{n-1} >= 0

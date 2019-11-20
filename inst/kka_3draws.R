@@ -64,7 +64,7 @@ ml_p_free    <- maxp(H)
 
 
 objective <- function(x){
-  loglik(H,c(x[1],x[1],x[1],x[2:4]))
+  loglik(c(x[1],x[1],x[1],x[2:4]),H)
 }
 
 constrained_optimization <-

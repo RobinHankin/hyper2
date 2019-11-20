@@ -31,7 +31,7 @@ function(e){
 
 `dhyper2` <- function(P,H,...){
   P <- rbind(P)
-  loglik(H,P,log=FALSE)/B(H,...)
+  loglik(P,H,log=FALSE)/B(H,...)
 }
 
 `dhyper2_e` <-  # analogous to dhyperdirichlet_e()
@@ -40,7 +40,7 @@ function(e, H, include.Jacobian=TRUE){
   e <- c(1,e)
   p <- e_to_p(e)
 
-  out <- loglik(H,indep(p),log=FALSE)
+  out <- loglik(indep(p),H,log=FALSE)
   if(include.Jacobian){out <- Jacobian(e)*out}
   return(out)
 }

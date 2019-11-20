@@ -58,8 +58,8 @@ maxp(chess)
 
 data(rowing)
 
-(x1 <- loglik(sculls2016,indep(maxp  (sculls2016))))
-(x2 <- loglik(sculls2016,indep(equalp(sculls2016))))
+(x1 <- loglik(indep(maxp  (sculls2016)),sculls2016))
+(x2 <- loglik(indep(equalp(sculls2016)),sculls2016))
 
 
 

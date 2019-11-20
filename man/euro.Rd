@@ -40,8 +40,8 @@ data(euro)
 
 dotchart(maxp(euro2009))
 
-x1 <- loglik(euro2009,indep(maxp  (euro2009)))
-x2 <- loglik(euro2009,indep(equalp(euro2009)))
+x1 <- loglik(indep(maxp  (euro2009)),euro2009)
+x2 <- loglik(indep(equalp(euro2009)),euro2009)
 
 ## if the competitors have equal strength, the asymptotic distribution
 ##   of 2*(x1-x2) is chi-square with 17 degrees of freedom:

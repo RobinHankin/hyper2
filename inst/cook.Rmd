@@ -50,8 +50,8 @@ dotchart(log(maxp(H)),pch=16,main="log probabilities")
 We can assess the hypothesis that all players have the same strength:
 
 ```{r} 
-L1 <- loglik(H,indep(equalp(H)))  # support at equal strengths
-L2 <- loglik(H,indep(maxp(H)))    # maximum support
+L1 <- loglik(indep(equalp(H)),H)  # support at equal strengths
+L2 <- loglik(indep(maxp(H)),H)    # maximum support
 L2-L1
 pchisq(2*(L2-L1),df=1,lower.tail=FALSE) # p-value of asymptotic distribution
 ```
@@ -119,7 +119,7 @@ observations (up to a constant):
 ```{r}
 library(partitions)
 imH <- indep(maxp(H))
-f <- function(o){loglik(order_likelihood(o),imH,log=FALSE)}
+f <- function(o){loglik(imH,order_likelihood(o),log=FALSE)}
 LL <- apply(perms(5),2,f)
 length(LL)
 sum(LL)

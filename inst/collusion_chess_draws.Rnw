@@ -424,7 +424,7 @@ objective <- function(V){
   w <- V[2]  # white player advantage
   D <- 1-3*x-w  # Draw monster
   return(  
-      -loglik(karpov_kasparov_anand,c(x,x,x,w))  # negative as we minimize
+      -loglik(c(x,x,x,w),karpov_kasparov_anand)  # negative as we minimize
   )
 }
 
@@ -539,8 +539,9 @@ objective <- function(V){
   draw <- (1-karpov-kasparov-anand-white)/3
 
     return(  
-        -loglik(kka_3draws,
-                c(karpov,kasparov,anand,white,draw,draw)
+        -loglik(
+                c(karpov,kasparov,anand,white,draw,draw),
+             kka_3draws
                 )
         )
 }

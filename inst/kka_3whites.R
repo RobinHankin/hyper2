@@ -61,7 +61,7 @@ ml_p_free    <- maxp(H)
 ## Now the constrained optimization.  
 
 objective <- function(x){ # p=Kr, Ks, An, KrW, KsW, AnW (draw is the fillup)
-  loglik(H,x[c(1,2,3,4,4,4)])
+  loglik(x[c(1,2,3,4,4,4)],H)
 }
 
 constrained_optimization <-

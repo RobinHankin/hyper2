@@ -12,7 +12,7 @@ library("hyper2")
 
 # Observed value of Lambda:
 Lambda_observed <-
-    maxp(T20,give=TRUE)$value-loglik(T20,indep(equalp(T20)))
+    maxp(T20,give=TRUE)$value-loglik(indep(equalp(T20)),T20)
 
 ## Function to choose a random team from two teams:
 randomteam <- function(team1,team2){
@@ -45,7 +45,7 @@ for(i in seq_len(n)){
         T20star[c(team1[j],team2[j])] %<>% dec
     }
     evaluate[i] <- maxp(T20star,give=TRUE)$value
-    equ[i] <- loglik(T20star,indep(equalp(T20star)))
+    equ[i] <- loglik(indep(equalp(T20star)),T20star)
     Lambda[i] <- evaluate[i] - equ[i]
     print(i)
 }		       

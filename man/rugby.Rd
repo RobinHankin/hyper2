@@ -32,8 +32,8 @@ Wikipedia contributors, \dQuote{2016 Super Rugby season,}
 \seealso{\code{\link{loglik}}}
 \examples{
 data(super_rugby)
-loglik(super2016,indep(maxp(super2016)))
-loglik(super2016g,indep(maxp(super2016g)))
+loglik(indep(maxp(super2016)),super2016)
+loglik(indep(maxp(super2016g)),super2016g)
 
 # differ by more than 2, ghost is signficant!
 }
