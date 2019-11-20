@@ -135,7 +135,7 @@ calculation which may be performed in the \pkg{hyper2} package as
 follows:
 
 <<>>=
-f <- function(p){loglik(chess,indep(p)) > loglik(chess,c(1,1)/3)}
+f <- function(p){loglik(indep(p),chess) > loglik(c(1,1)/3,chess)}
 probability(chess, disallowed=f,tol=0.01)
 @ 
 
@@ -368,8 +368,8 @@ free$value
 Then the constrained optimization:
 
 <<>>=
-obj <- function(p){-loglik(H,p)}   # objective func
-gr  <- function(p){-gradient(H,p)} # gradient, needed for speed
+obj <- function(p){-loglik(p,H)}   # objective func
+gr  <- function(p){-gradient(p,H)} # gradient, needed for speed
 UI <- rbind(diag(3),-1)           # UI and CI specify constraints
 CI <- c(rep(0,3),-1)              # p_i >= 0 and sum p_i <= 1
 @ 

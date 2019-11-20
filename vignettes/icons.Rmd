@@ -89,7 +89,7 @@ dotchart(mic,pch=16)
 We also need the log-likelihood at an unconstrained maximum:
 
 ```{r}
-L1 <- loglik(icons,indep(mic))
+L1 <- loglik(indep(mic),icons)
 L1
 ```
 

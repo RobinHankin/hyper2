@@ -108,7 +108,7 @@ p1
 And we can find the support at this point:
 
 ```{r}
-maxlike_free <- loglik(H,indep(p1))
+maxlike_free <- loglik(indep(p1),H)
 maxlike_free
 ```
 
@@ -223,7 +223,7 @@ proflike <- function(bc,give=FALSE){
   objective <- function(S){     #
 
     jj <- c(S,A=1-(S+B+C),B,C)  # B,C fixed
-    loglik(H,indep(jj))         # no minus: we use maximum=T in optimize()
+    loglik(indep(jj),H)         # no minus: we use maximum=T in optimize()
   }
   
   maxlike_constrained <-  # single DoF is S [B,C given, A is fillup]
