@@ -1,7 +1,8 @@
 ## This file creates hyper2 object 'euro2009'.
 
 ## The dataset wiki_matrix, defined below, is copied from "Eurovision
-## Song Contest 2009," Wikipedia, accessed May 13, 2018.
+## Song Contest 2009," Wikipedia, accessed May 13, 2018.  It refers to
+## semi-final 1.
 
 ## More documentation is given in euro.Rd [type help(euro2009) at the
 ## R prompt]
@@ -130,6 +131,13 @@ for(i in seq_len(nrow(preference))){   # cycle through the rows; each row is a v
 
 ## syntatic sugar:
 pnames(euro2009) <- competitors
+
+## check null of equal strengths:
+print(loglik(indep(maxp(euro2009)),euro2009))
+print(loglik(indep(equalp(euro2009)),euro2009))
+
+# Difference about 122 units of support, surely significant.
+
 
 ## plot points vs strength:
 plot(rowSums(wiki_matrix,na.rm=TRUE),maxp(euro2009),
