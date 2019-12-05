@@ -436,7 +436,7 @@ Series~6~\citep{wikipedia_masterchef_australia_series6} will be
 analysed; an extended discussion of the data used is given in the
 package at~\code{masterchef.Rd}.
 
-We wish to make inferences about the contestents' generalized
+We wish to make inferences about the contestants' generalized
 Bradley-Terry strengths~$p_1,\ldots,p_n$, $\sum p_i=1$.  One
 informative event was a team challenge in which the contestants were
 split randomly into two teams, red and blue:
@@ -613,7 +613,7 @@ total ordering of the competitors.
 
 A final example (taken from MasterChef series 8, week 10) is given as
 a generalization of the \citeauthor{luce1959} likelihood.  The format
-was as follows.  Eight contestents were split randomly into four teams
+was as follows.  Eight contestants were split randomly into four teams
 of two, the top two teams being declared safe.  Note that the
 likelihood interpretation differs from the previous team challenge, in
 which the observation was an unambiguous team ranking: here, there is
