@@ -1,0 +1,237 @@
+---
+title: "A statistical analysis of a counterstrike game: Boston 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("partitions") ## needed for perms()
+library("magrittr") 
+```
+# Abstract
+
+In this short vignette I use the `hyper2` package to analyse an
+influential Counter-Strike match between two professional teams (_FaZe
+Clan_ and _Cloud9_) in the major championships at Boston 2018.  I use
+likelihood methods to demonstrate that one player, Skadoodle, has a
+legitimate claim to be the strongest player on the field; but the data
+is indistinguishable from a null of equal player strength.
+Counter-strike dataset kindly supplied by Zachary Hankin.
+
+# Counterstrike
+
+E-sports are a form of competition using video games.  E-sports are
+becoming increasingly popular, with high-profile tournaments attracting
+over 400 million viewers, and prize pools exceeding US$20m.
+
+_Counter Strike: Global Offensive_ (CS-GO) is a multiplayer
+first-person shooter game in which two teams of five compete in an
+immersive virtual reality combat environment.  CS-GO is distinguished
+by the ability to download detailed gamefiles in which every (sic)
+aspect of an entire match is recorded, it being possible to replay the
+match at will.
+
+Statistical analysis of such gamefiles is extremely difficult,
+primarily due to complex gameplay features such as cooperative
+teamwork, within-team communication, and real-time strategic fluidity.
+
+
+
+## Boston 2018
+
+"ELEAGUE Major: Boston 2018", here denoted "Boston 2018", was a major
+championship held in Boston Massachusetts from 26-28 January 2018
+featuring 24 professional teams; the purse was US$1000000.  
+
+The final pitted _FaZe Clan_ against _Cloud9_, with _Cloud9_ beating
+favourites _FaZe Clan_ 2-1.  
+
+
+# Dataset
+
+The dataset used here is a list whose six elements correspond to six
+rounds of play, which are assumed to be statistically independent.
+The R idiom is:
+
+```{r, zachslist}
+zachslist <- list(
+    round1 =
+      c("Skadoodle","olofmeister","tarik",
+        "GuardiaN", "RUSH", "rain","Stewie2k",
+        "karrigan","autimatic","NiKo"
+        ),
+    round2 =
+      c("karrigan", "NiKo", "Stewie2K",
+        "RUSH", "rain", "GuardiaN",
+        "autimatic", "olofmeister"
+        ),
+    round3 =
+      c("rain","tarik","autimatic",
+        "karrigan","RUSH","GuardiaN",
+        "Stewie2K","NiKo","olofmeister"
+        ),
+    round4 =
+      c("rain","GuardiaN","karrigan",
+        "NiKo","olofmeister"
+        ),
+    round5 =
+      c("olofmeister","rain","karrigan",
+        "tarik","Stewie2K","autimatic"
+        ),
+    round6 =
+      c("GuardiaN","karrigan")
+)
+```
+
+(data kindly supplied by Zachary Hankin).  Thus in round 1, the death
+order was Skadoodle first, followed by olofmeister, then tarik.
+
+
+## Likelihood function for a simple deathorder statistic 
+
+Suppose `team1 = (a,b,c,d)` and `team2 = (x,y,z)`; suppose the
+deathorder were `(a,b,y,c)`.  Then the likelihood function for `a`'s
+death would be `(x+y+z)/(a+b+c+d+x+y+z)` [that is, the likelihood
+function for a Bernoulli trial between team `(x,y,z)` and
+`(a,b,c,d)`].  Note the appearance of (`a`) in the denominator: he
+[surely!] was on the losing team.  The likelihood function for the
+full deathorder is then
+
+```
+ (x+y+z)/(a+b+c+d+x+y+z) * (x+y+z)/(b+c+d+x+y+z) * (c+d)/(c+d+x+y+z) * (x+z)/(c+d+x+z)
+```
+
+where the four terms correspond to the deaths of `a,b,y,c`
+respectively.  See how the denominator gets shorter as the teams die
+one by one.
+
+
+# Likelihood function for the observed dataset
+
+
+```{r, teamsetup}
+team1  <- c("autimatic","tarik", "Skadoodle","Stewie2k","RUSH")   #Cloud9
+team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")  # FaZe Clan
+```
+
+Consider the following function:
+
+```{r, deffun}
+`counterstrike_maker` <- function(team1,team2,deathorder){
+
+  if(identical(sort(c(team1,team2)),sort(deathorder))){
+    deathorder <- deathorder[-length(deathorder)]  # last player not killed
+  }
+
+  H <- hyper2(pnames=c(team1,team2))
+  
+  for(killed_player in deathorder){
+    if(killed_player %in% team1){
+      H[team2] %<>% inc
+      H[c(team1,team2)] %<>% dec
+      team1 %<>% "["(team1 != killed_player)      
+    } else {
+      H[team1] %<>% inc
+      H[c(team1,team2)] %<>% dec
+      team2 %<>% "["(team2 != killed_player)      
+    }
+  }
+  return(H)
+}
+```
+
+Function `counterstrike_maker()` defined above returns a
+log-likelihood function for the strengths of the players in `team1`
+and `team2` above.  The function needs the identities of all players
+on each team.  It assumes that players are always killed by the
+opposing team; if a player is killed by his own team, function
+`counterstrike_maker()` may return an error.  The function does not
+have strong error-checking functionality.
+
+In the function, the `deathorder` argument specifies the order in
+which players were killed (the first element is the first player to be
+killed and so on).  Note that the identity of the killer is not needed
+as it is assumed that a death is due to the combined strength of the
+team, rather than the individual shooter who actually fired the shot.
+Note that it is not required for all the players to be killed;
+short rounds are OK (but are not as statistically informative).
+
+We can use it:
+
+
+```{r, useit}
+H <- hyper2(pnames=c(team1,team2))
+for(i in zachslist){
+  H <- H + counterstrike_maker(team1,team2, deathorder=i)
+}
+```
+
+then plot it:
+
+```{r, plotit}
+dotchart(maxp(H),pch=16,main='observed data')
+```
+
+showing that Skadoodle has the highest estimated strength.
+
+# Random data
+
+it is possible to analyse synthetic data generated randomly by
+function `rdeath()`:
+
+```{r, randomdata}
+
+`rdeath` <- function(team1,team2){
+  out <- NULL
+  while(length(team1)>0 & length(team2)>0){
+    if(runif(1)>length(team1)/(length(c(team1,team2)))){ ## killed person is on team1
+      killed_player <- sample(team1,1)
+      team1 %<>% "["(team1 != killed_player)      
+    } else { ## killed person is on team2
+      killed_player <- sample(team2,1)
+      team2 %<>% "["(team2 != killed_player) 
+    }
+    out <- c(out,killed_player)
+  }
+  return(out)
+}
+
+Hrand <- hyper2(pnames=c(team1,team2))
+for(i in 1:6){
+  pp <- rdeath(team1,team2)
+  Hrand <- Hrand + counterstrike_maker(team1,team2, pp)
+}
+
+dotchart(maxp(Hrand),pch=16,main='synthetic data')
+```
+
+We now run $n=1000$ trials on the assumption of equal player strength
+(that is, random deathorder) and for each trial calculate the
+log-likelihood ratio [for the hypothesis p=equal_strengths, vs the
+hypothesis p=maxp(Hrand)].  It then draws a histogram of the
+loglikelihood ratio thus obtained, and superimposes a line showing the
+observed loglikelihood ratio.
+
+
+```{r, random2}
+equalstrengths <- rep(0.1, 9)
+datapoint <- loglik(indep(maxp(H)),H) - loglik(equalstrengths,H)
+	
+n <- 100  # takes about 5 minutes for n=1000 trials
+distrib <- rep(0,n)
+for(i in seq_len(n)){
+  Hrand <- hyper2(pnames=c(team1,team2))
+  for(jj in 1:6){
+    pp <- rdeath(team1,team2)
+    Hrand <- Hrand + counterstrike_maker(team1,team2, pp)
+	}
+  distrib[i] <- loglik(indep(maxp(Hrand)),Hrand) - loglik(equalstrengths,Hrand)
+}
+
+hist(distrib)
+abline(v=datapoint,lwd=6)
+```
+
+Thus we can see that the observation is not significant: from this
+perspective, the deathorder may as well be totally random.
