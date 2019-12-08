@@ -12,13 +12,14 @@ library(hyper2)
 # Partial rank observations: who lost?
 
 
-Now we are going to look at what happens when our observation is only
-the _loser_ (which is here taken to be player `a`).  We have six
-competitors `a,b,c,d,e,f` with nonnegative strengths
-$p_1,p_2,p_3,p_4,p_5,p_6, \sum p_i=1$.  Competitor `a` has strength
-$p_1$, and loses.  We are interested in how informative this
-observation is with regard to the hypothesis that `a` does in fact
-have zero strength.  We have three hypotheses:
+Here we consider a situation in which we make only a rather
+uninformative observation: namely, the identity of the _loser_ (which
+is here taken to be me, player `a`).  We have six competitors
+`a,b,c,d,e,f` with nonnegative strengths $p_1,p_2,p_3,p_4,p_5,p_6,
+\sum p_i=1$.  Competitor `a` has strength $p_1$, and loses.  We are
+interested in how informative this observation is with regard to
+various assertions about the strength of `a`.  We have three
+hypotheses:
 
 * $H_1\colon p_1=0$
 * $H_2\colon\exists i\neq 1 \mbox{ with } p_1\geq p_i>0$
@@ -38,12 +39,12 @@ L[[1]]
 L[[2]]
 ```
 
-In the above, `L` is a likelihood function for the observation that
-competitor `a` came last.  In R idiom, it is a list of hyper2 objects
-corresponding to all $5!=120$ possible observed order statistics (only
-the first two, `L[[1]]` and `L[[2]]`, are printed, which correspond to
-orders `bcdefa` and `bcdfea` respectively).  Any order is permissible,
-so long as player `a` is bottom.
+In the above, `L` is a log-likelihood function for the observation
+that competitor `a` came last.  In R idiom, it is a list of hyper2
+objects corresponding to all $5!=120$ possible observed order
+statistics (only the first two, `L[[1]]` and `L[[2]]`, are printed,
+which correspond to orders `bcdefa` and `bcdfea` respectively).  Any
+order is permissible, so long as player `a` is bottom.
 
 
 ## Hypothesis 1
