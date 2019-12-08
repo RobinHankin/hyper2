@@ -73,12 +73,12 @@ team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")  # FaZe Clan
   
   for(killed_player in deathorder){
     if(killed_player %in% team1){
-      H[team2] <- H[team2] + 1
-      H[c(team1,team2)] <- H[c(team1,team2)] - 1
+      H[team2] %<>% inc
+      H[c(team1,team2)] %<>% dec
       team1 %<>% "["(team1 != killed_player)      
     } else {
-      H[team1] <- H[team1] + 1
-      H[c(team1,team2)] <- H[c(team1,team2)] - 1
+      H[team1] %<>% inc
+      H[c(team1,team2)] %<>% dec
       team2 %<>% "["(team2 != killed_player)      
     }
   }
