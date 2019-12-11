@@ -1,7 +1,7 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 before_install:
-    - tlmgr install scheme-full
+    - tlmgr update --all
     
 language: R
 cache: packages
