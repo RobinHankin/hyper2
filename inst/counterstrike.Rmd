@@ -56,31 +56,15 @@ The R idiom is:
 
 ```{r, zachslist}
 zachslist <- list(
-    round1 =
-      c("Skadoodle","olofmeister","tarik",
-        "GuardiaN", "RUSH", "rain","Stewie2k",
-        "karrigan","autimatic","NiKo"
-        ),
-    round2 =
-      c("karrigan", "NiKo", "Stewie2K",
-        "RUSH", "rain", "GuardiaN",
-        "autimatic", "olofmeister"
-        ),
-    round3 =
-      c("rain","tarik","autimatic",
-        "karrigan","RUSH","GuardiaN",
-        "Stewie2K","NiKo","olofmeister"
-        ),
-    round4 =
-      c("rain","GuardiaN","karrigan",
-        "NiKo","olofmeister"
-        ),
-    round5 =
-      c("olofmeister","rain","karrigan",
-        "tarik","Stewie2K","autimatic"
-        ),
-    round6 =
-      c("GuardiaN","karrigan")
+    round1 = c("Skadoodle","olofmeister","tarik","GuardiaN","RUSH",
+         "rain", "Stewie2k","karrigan","autimatic","NiKo"),
+    round2 = c("karrigan", "NiKo", "Stewie2K", "RUSH", "rain", "GuardiaN",
+         "autimatic", "olofmeister"),
+    round3 = c("rain","tarik","autimatic", "karrigan","RUSH","GuardiaN",
+         "Stewie2K","NiKo","olofmeister"),
+    round4 = c("rain","GuardiaN","karrigan", "NiKo","olofmeister"),
+    round5 = c("olofmeister","rain","karrigan", "tarik","Stewie2K","autimatic"),
+    round6 = c("GuardiaN","karrigan")
 )
 ```
 
