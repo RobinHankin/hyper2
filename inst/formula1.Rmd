@@ -1,0 +1,171 @@
+---
+title: "formula1"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+```
+
+## Formula 1
+
+Formula 1 racing is an important and prestigious motor sport.  Here I
+analyse a series of racing results using the `hyper` package which
+implements the Plackett-Luce likelihood function.
+
+Consider the following dataset, taken from Wikipedia:
+
+```{r cars}
+f2017 <- read.table("formula1_2017.txt",header=TRUE)
+head(f2017)
+```
+
+Each row is a driver and each column (after the first) a venue.  We
+see that Hamilton, the first row, came second in Australia, first in
+China, second in Bahrain, fourthin Russia, and so on.  In the first
+columnm, we see the result from Australia in which Hamilton came
+second, Vettel first, Bottas third, and so on.  Notation used also
+includes six different classes of no-score such as "Ret" for retired,
+"WD" for withdrawn, and so on.  I now define a bespoke R function that
+translates data of this type into a log-likelihood function using the
+`hyper2` package.  The function is similar to, but slightly different
+from, the analysis in `eurovision.R`.
+
+
+
+```{r,defF1}
+F1_likelihood <- function(wiki_table){
+
+  noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
+  first_and_last <- c(1,ncol(wiki_table))
+
+  racers <- wiki_table[,1]
+  venues <- colnames(wiki_table)[-first_and_last] 
+
+  ## Now create a numeric matrix, fmat.  Two steps: first, count
+  ## any no-score as zero:
+  
+  f <- function(x){
+    if(any(x %in% noscore)){x[x%in%noscore] <- 0}
+    return(x)
+  }
+
+  jj <- apply(wiki_table,2,f)
+  
+  ## Second, convert to numeric and strip out names; transpose of
+  ## wiki_table (because we want each row to be a venue):
+
+  fmat <- matrix(as.numeric(jj[,-first_and_last]),byrow=TRUE,ncol=nrow(wiki_table)) 
+  colnames(fmat) <- racers
+  rownames(fmat) <- venues
+
+  F1 <- hyper2(d=ncol(fmat))
+
+  ## Now cycle through the rows; each row is a venue [voter]
+  for(i in seq_len(nrow(fmat))){
+    d <- fmat[i,,drop=TRUE]
+    while(any(d>0)){
+      eligible <- which(d>=0)
+      
+      ## The first choice among eligible players has +1 power on the
+      ## numerator:
+      F1[which(d==1)] %<>% "+"(1)
+
+      ## denominator of all eligible players; power -1
+      F1[eligible] %<>% "-"(1)
+
+      ## once you've come first in the field, you are ineligible to be first again:
+      d[d==1] <- -1
+      
+      ## everyone moves down the list, so who *was* in second place
+      ## becomes first place, who *was* third place becomes second,
+      ## and so on:
+      d[d>0] %<>% "-"(1)
+
+    } # while() loop closes
+  } # i loop closes
+  
+  ## syntatic sugar:
+  pnames(F1) <- racers
+
+  return(F1)
+}
+```
+
+We can apply this to the dataset:
+
+```{r,applydata}
+L2017 <- F1_likelihood(f2017)
+head(L2017,3)
+```
+
+Above, we see a small part of the Placket-Luce likelihood function for
+the 2017 results.  We can find the maximum likelihood estimator by
+using the `maxp()` function:
+
+
+```{r,maxp2017}
+dotchart(maxp(L2017),pch=16,main='2017 Formula 1')
+dotchart(log(maxp(L2017)[1:23]),pch=16,main='2017 Formula 1, log scale')
+```
+
+# Likelihood scoring vs points scoring
+
+The championship winning order is determined by a points system: the
+winner is awarded 25 points, second place 18 points, and so on.  We
+can now check to see how the points total matches up with the
+likelihood estimation.
+
+```{r,likelihoodandscore}
+points <- f2017$points
+names(points) <- f2017$driver
+
+m <- maxp(L2017)
+ox <- order(points,decreasing=TRUE)
+oy <- order(m,decreasing=TRUE)
+par(pty='s') # square plot
+plot(ox,oy,asp=1,pty='s',xlim=c(0,25),ylim=c(0,25),pch=16,
+xlab="official order",ylab="my order",main='Formula 1, 2017 season')
+par(xpd=TRUE) # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(m)[ox[i]],pos=4,col='gray') }
+par(xpd=FALSE) # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+```
+
+# Analysis of nulls:
+
+## Null of equal strengths:
+
+```{r,equalstrength}
+L1 <- loglik(indep(equalp(L2017)),L2017)
+L2 <- loglik(indep(maxp(L2017)),L2017)
+pchisq(2*(L2-L1),df=1,lower.tail=FALSE)
+```
+
+highly signficant!
+
+## Null of Hamilton being average
+
+
+
+
+
+
+
+
+
+This script takes about a minute to run.  It creates hyper2 objects
+`F1_2014` through `F1_2017`, which are the likelihood functions for
+the F1 results table for each of the years.
+
+Function `F1_likelihood()` is defined here; this creates objects such as
+`F1_2017` by processing `formula1_2017.txt`.
+
+At the end of the script, hyper2 object `F1_total` is created, which
+is a likelihood function for all four years' data.  This object is
+called 'formula1' in the package.  File `F1_allyears.R` is functionally
+identical but uses slightly different R idiom.
+
+
