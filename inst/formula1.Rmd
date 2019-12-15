@@ -134,6 +134,12 @@ par(xpd=FALSE) # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
 
+In the graph above, we see that both systems consider Hamilton to be
+the best.  However, F1 points place Vettel second and Bottas third,
+while `hyper2` places Bottas second and Vettel third.  Overall, there
+is a high degree of correlation between the two, but differences in
+detail.
+
 # Analysis of nulls:
 
 ## Null of equal strengths:
@@ -141,19 +147,12 @@ abline(0,1)
 ```{r,equalstrength}
 L1 <- loglik(indep(equalp(L2017)),L2017)
 L2 <- loglik(indep(maxp(L2017)),L2017)
-pchisq(2*(L2-L1),df=1,lower.tail=FALSE)
+pchisq(2*(L2-L1),df=25-1,lower.tail=FALSE)
 ```
 
 highly signficant!
 
 ## Null of Hamilton being average
-
-
-
-
-
-
-
 
 
 This script takes about a minute to run.  It creates hyper2 objects
