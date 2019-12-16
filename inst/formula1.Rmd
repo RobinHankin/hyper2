@@ -111,6 +111,9 @@ dotchart(maxp(L2017),pch=16,main='2017 Formula 1')
 dotchart(log(maxp(L2017)[1:23]),pch=16,main='2017 Formula 1, log scale')
 ```
 
+(in the diagram above, we remove the bottom-ranked two players, Resta
+and Button, whose estimated strength is zero).
+
 # Likelihood scoring vs points scoring
 
 The championship winning order is determined by a points system: the
@@ -154,8 +157,61 @@ highly signficant!
 
 ## Null of Hamilton being average
 
+We can consider Hamilton and ask various questions about his playing
+strength.  One natural null would be that Hamilton's strength is equal
+to the mean strength, or $\frac{1}{25}$.  
 
-This script takes about a minute to run.  It creates hyper2 objects
+* $H_2\colon p_\mathrm{Hamilton}\geq\frac{1}{25}$
+* $H_3\colon p_\mathrm{Hamilton} < \frac{1}{25}$
+
+Noting that the evaluate for Hamilton's strength
+$\widehat{p_\mathrm{Hamilton}}$ is about 0.22, we may consider the
+likelihood for $H_2$ to be equal to the unconstrained maximum
+likelhood as in `L2` above.  The likelihood for $H_3$ requires a
+constrained optimization:
+
+```{r,constham}
+small <- 0.01
+L3 <- maxp(L2017, startp=c(small, rep((1-small)/24,23)),fcm=rbind(c(-1,rep(0,23))),fcv=-1/25,give=TRUE)
+L3
+```
+
+(note that the constrained maximum attains the constraint of
+$p_\mathrm{Hamilton}=\frac{1}{25}$).   The likelihood ratio test gives
+
+```{r,liktestivediff}
+L2 - L3$value 
+```
+
+or a p-value of 
+
+```{r,liktestive}
+pchisq(2*(L2 - L3$value),df=1,lower.tail=FALSE)
+```
+
+## Null of Hamilton being better than other players
+
+We may now test
+
+* $H_4\colon p_\mathrm{Hamilton} > \max_{i\neq\mathrm{Hamilton}} p_i$
+
+This is quite difficult to evaluate formally but we can evaluate it with no loss in accuracy by observing that the second strongest competitor is Bottas and considering instead
+
+* $H_4'\colon p_\mathrm{Hamilton} > p_\mathrm{Bottas}$.
+
+```{r,L4like}
+small <- 0.01
+L4 <- maxp(L2017, startp=c(small, rep((1-small)/24,23)),fcm=rbind(c(-1,1,rep(0,22))),fcv=0,give=TRUE)
+L4
+```
+
+Calculating the support and asymptotic p-values:
+```{r,l4val}
+L2 - L4$value 
+pchisq(2*(L2 - L4$value),df=1,lower.tail=FALSE)
+```
+
+this script takes about a minute to run.  It creates hyper2 objects
 `F1_2014` through `F1_2017`, which are the likelihood functions for
 the F1 results table for each of the years.
 
