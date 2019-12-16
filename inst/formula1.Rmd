@@ -230,7 +230,7 @@ F1_total %<>% add(change_pnames(F1_2015,alldrivers))
 F1_total %<>% add(change_pnames(F1_2016,alldrivers)) 
 F1_total %<>% add(change_pnames(F1_2017,alldrivers)) 
 
-(mallyears <- maxp(F1_total))
+mallyears <- maxp(F1_total)
 ```
 
 and the plot:
@@ -239,3 +239,4 @@ and the plot:
 dotchart(mallyears,pch=16,main='Formula 1, 2014-7')
 ```
 
+We see that Hamilton has the highest estimated strength.
