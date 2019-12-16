@@ -211,16 +211,31 @@ L2 - L4$value
 pchisq(2*(L2 - L4$value),df=1,lower.tail=FALSE)
 ```
 
-this script takes about a minute to run.  It creates hyper2 objects
-`F1_2014` through `F1_2017`, which are the likelihood functions for
-the F1 results table for each of the years.
+## All years data
 
-Function `F1_likelihood()` is defined here; this creates objects such as
-`F1_2017` by processing `formula1_2017.txt`.
+We will consider four years data:
 
-At the end of the script, hyper2 object `F1_total` is created, which
-is a likelihood function for all four years' data.  This object is
-called 'formula1' in the package.  File `F1_allyears.R` is functionally
-identical but uses slightly different R idiom.
+```{r,fouryearsdata}
+F1_2014 <- "formula1_2014.txt" %>% read.table(header=TRUE) %>% F1_likelihood
+F1_2015 <- "formula1_2015.txt" %>% read.table(header=TRUE) %>% F1_likelihood
+F1_2016 <- "formula1_2016.txt" %>% read.table(header=TRUE) %>% F1_likelihood
+F1_2017 <- "formula1_2017.txt" %>% read.table(header=TRUE) %>% F1_likelihood
+a <- list(F1_2014, F1_2015, F1_2016, F1_2017)
+alldrivers <- all_pnames(a)
 
+F1_total <- hyper2(pnames=alldrivers)
+
+F1_total %<>% add(change_pnames(F1_2014,alldrivers)) 
+F1_total %<>% add(change_pnames(F1_2015,alldrivers)) 
+F1_total %<>% add(change_pnames(F1_2016,alldrivers)) 
+F1_total %<>% add(change_pnames(F1_2017,alldrivers)) 
+
+(mallyears <- maxp(F1_total))
+```
+
+and the plot:
+
+```{r,allyearplot,fig.height=7}
+dotchart(mallyears,pch=16,main='Formula 1, 2014-7')
+```
 
