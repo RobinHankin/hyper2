@@ -71,10 +71,10 @@ F1_likelihood <- function(wiki_table){
       
       ## The first choice among eligible players has +1 power on the
       ## numerator:
-      F1[which(d==1)] %<>% "+"(1)
+      F1[which(d==1)] %<>% inc
 
       ## denominator of all eligible players; power -1
-      F1[eligible] %<>% "-"(1)
+      F1[eligible] %<>% dec
 
       ## once you've come first in the field, you are ineligible to be first again:
       d[d==1] <- -1
@@ -82,7 +82,7 @@ F1_likelihood <- function(wiki_table){
       ## everyone moves down the list, so who *was* in second place
       ## becomes first place, who *was* third place becomes second,
       ## and so on:
-      d[d>0] %<>% "-"(1)
+      d[d>0] %<>% dec
 
     } # while() loop closes
   } # i loop closes
