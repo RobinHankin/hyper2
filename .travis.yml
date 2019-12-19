@@ -4,6 +4,7 @@ before_install:
     - tlmgr install collection-latexrecommended
     - tlmgr install letltxmacro
     - tlmgr install wasysym
+    - tlmgr install yfonts
     - tlmgr update --self --all
     
 language: R
