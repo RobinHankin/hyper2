@@ -15,9 +15,11 @@ all_pnames(L)
 \author{Robin K. S. Hankin}
 \note{
 
-  Function \code{change_pnames()} is not a straightforward function.
-  The intent is to enable one to add hyper2 objects with non-identical
-  pnames attributes in a sensible way.
+  Function \code{change_pnames()} is not straightforward.  The intent is
+  to enable one to \dQuote{add} [that is, combine two log-likelihood
+  functions corresponding to two sets of independent observations into a
+  single log-likelihood function] \code{hyper2} objects with
+  non-identical pnames attributes in a sensible way.
 
   The standard use for \code{change_names()} is to add new players to a
   hyper2 object: so the new names must be a superset of the old,
@@ -26,40 +28,40 @@ all_pnames(L)
   Function \code{all_pnames()} returns the union of the pnames of the
   hyper2 objects sent to it
   
+  A non-trivial use-case is given in \code{inst/formula1.Rmd}.
+
 }
 \examples{
 
-x1 <- hyper2(list(1,1:2,1:3),1:3,pnames=letters[1:3])
-x2 <- x1
-pnames(x2) <- letters[3:1]
+##   H1 is binomial, a vs b, a wins 3, b wins 6.
+##   H2 is binomial, b vs c, b wins 2, c wins 4.
 
-x1
-x2
-# At this point, note that x1 and x2 are algebraically identical; but:
-x1==x2
+H1 <- hyper2(list(1,2,1:2),c(3,6,-9),pnames=letters[1:3])
+H2 <- hyper2(list(1,2,1:2),c(2,4,-6),pnames=letters[2:3])
 
-## Variables x1 and x2 are different!  This is by design. The pnames
-## attribute is just syntatic sugar, mathematically meaningless.
-
-## Also note that you cannot add x1 and x2 because to do so is bad weirdness:
 \dontrun{
-x1 + x2
+H1+H2  # fails: pnames differ
 }
 
-## Here is a sensible use-case:
+# Combine H1 and H2 assuming independence:
 
-x1 <- hyper2(list(1,1:2,1:3),1:3,pnames=letters[1:3])
-x2 <- hyper2(list(1,2),10:11,pnames=letters[4:5])
+H <- change_pnames(H1,letters[1:3]) + change_pnames(H2,letters[1:3])
 
-pnames(x1) <- letters[1:5]
-pnames(x2) <- letters[1:5]
-x1+x2
+## sometimes it is better to change in place, as in
+
+H1 \%<>\% change_pnames(letters[1:3])
 
 
-## NB:
+## changing pnames can have unexpected behaviour:
 
-pnames(x1) <- letters[5:1]
-x1
+H3 <- H1
+H3 \%<>\% change_pnames(letters[3:1])
 
+# H1 and H3  are algebraically identical; but:
+
+H1 == H3 # false
+
+## Variables H1 and H3 are different!  This is by design. The pnames
+## attribute is just syntatic sugar and mathematically meaningless.
 
 }
