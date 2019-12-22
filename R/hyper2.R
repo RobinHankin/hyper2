@@ -675,3 +675,27 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   H[players] %<>% `-`(val)
   return(H)
 }   
+
+`rhyper2` <- function(n=8, s=5,  pairs=TRUE, teams=TRUE, race=TRUE, pnames){
+  n <- n - n%%2  # Force 'n' to be even
+  H <- hyper2()
+  if(pairs){
+    M <- replicate(s,sample(n,2,replace=FALSE),simplify=TRUE)
+    H <- hyper2(split(M,rep(seq_len(ncol(M)),each=nrow(M))),-1)
+    H <- H + hyper2(as.list(M[1,]),1)
+  }
+
+  if(teams){
+    M <- replicate(s,sample(n))
+    H <- H+hyper2(split(M,rep(seq_len(ncol(M)),each=nrow(M)/2)),1)  # winners
+  }
+
+  if(race){
+    for(i in seq_len(s)){
+      H <- H + order_likelihood(sample(n))
+    }
+  }
+
+  if(missing(pnames)){pnames(H) <- letters[seq_len(size(H))]}
+  return(H)
+}
