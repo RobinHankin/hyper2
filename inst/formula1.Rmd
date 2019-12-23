@@ -126,14 +126,14 @@ points <- f2017$points
 names(points) <- f2017$driver
 
 m <- maxp(L2017)
-ox <- rank(-points)
-oy <- rank(-m)
-par(pty='s') # square plot
+ox <- rank(-points) # negative because number 1 = largest number of points
+oy <- rank(-m)      # negative because number 1 = largest strength
+par(pty='s')        # square plot
 plot(ox,oy,asp=1,pty='s',xlim=c(0,25),ylim=c(0,25),pch=16,
 xlab="official order",ylab="my order",main='Formula 1, 2017 season')
-par(xpd=TRUE) # allow drivers' names to appear outside plotting region
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
 for(i in seq_along(ox)){text(ox[i],oy[i],names(m)[oy[i]],pos=4,col='gray') }
-par(xpd=FALSE) # stop diagonal line from protruding beyond plotting region
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
 
