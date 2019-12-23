@@ -1,5 +1,5 @@
 ---
-title: "Eurovision Song Contest"
+title: "Eurovision Song Contest: semifinal 1, 2009"
 output: html_document
 ---
 
@@ -48,7 +48,10 @@ that the matrix is not square: the last two columns correspond to
 Germany and the UK, who were judges but not competitors.  I have
 removed the first column in the Wikipedia table (which gave the total
 of the points), replaced self-voting entries with `NA`, and replaced
-blanks with `00`; every entry is padded to two digits.
+blanks with `00`; every entry is padded to two digits.  Thus the first
+row corresponds to votes cast for `ME`, Montenegro.  We see that `BE`
+(Belgium) awarded them three points, `am` (Armenia) five points, and
+so on.
 
 
 ```{r,pointsforplaces}
@@ -108,13 +111,19 @@ preference
 ```
 
 Now, take the first row of 'preference'.  This represents the votes
-cast *by* (sic) Montenegro (`"ME"`).  Their favourite was [last column]
-Bosnia & Herzegovina (`"BH"`), who they gave rank 1 to.  Their second
-favourite was Macedonia, their third was Turkey, and so on.  They were
-not allowed to vote for themselves, which is why the first column is
-`NA`.  So the order was: `bh`, `mc`, `tu`, `ic`, `ro`, `is`, `ar`,
-`fi`, `br`, `ma`.
+cast *by* (sic) Montenegro (`"ME"`).  Their favourite was [last
+column] Bosnia & Herzegovina (`"BA"`), who they gave rank 1 to.  Their
+second favourite was Macedonia, their third was Turkey, and so on.
+They were not allowed to vote for themselves, which is why the first
+column is `NA`.  So the order was: `BA` (1), `MK` (2) , `TR` (3), `IS`
+(4), `RO` (5), `IL` (6), `AM` (7), `FI` (8), `BY` (9), `MT` (10).  The
+other countries (`CZ`, `BE`, `SW`, `CH`, `BG`, `PT`) did not receive
+any points from Montenegro.
 
+
+We need to convert matrix `preference` into a likelihood function,
+here `euro2009`:
+ 
 ```{r,morestuff}
 euro2009 <- hyper2(d=18)
 
@@ -156,7 +165,25 @@ print(loglik(indep(equalp(euro2009)),euro2009))
 Thus the difference is about 122 units of support, surely significant.
 
 
-```{r,plotdiffstrength}
-plot(rowSums(wiki_matrix,na.rm=TRUE),maxp(euro2009),
+```{r,orderplot}
+m <- maxp(euro2009)  # likelihoods
+points_scored <- rowSums(wiki_matrix,na.rm=TRUE)  # points
+ox <- rank(-points_scored)
+oy <- rank(-m)
+par(pty='s') # square plot
+plot(ox,oy,asp=1,pty='s',xlim=c(0,18),ylim=c(0,18),pch=16,
+xlab="official order",ylab="my order",main="Eurovision 2009")
+par(xpd=TRUE) # allow country names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(m)[i],pos=4,col='gray') }
+par(xpd=FALSE) # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+```
+
+In the graph above, we see that both systems agree on the first four places.
+We can also plot the numerical values:
+
+```{r}
+plot(log(rowSums(wiki_matrix,na.rm=TRUE)),log(maxp(euro2009)),
      pch=16,xlab="points scored",ylab="MLE strength")
 ```
+
