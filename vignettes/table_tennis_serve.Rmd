@@ -115,7 +115,7 @@ maxlike_free
 Now find the MLE conditional on the serve having zero strength:
 
 ```{r}
-small <- 1e-4
+small <- 1e-3
 maxlike_constrained <-
     maxp(
         H,
