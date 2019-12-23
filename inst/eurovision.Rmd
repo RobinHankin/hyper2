@@ -174,7 +174,7 @@ par(pty='s') # square plot
 plot(ox,oy,asp=1,pty='s',xlim=c(0,18),ylim=c(0,18),pch=16,
 xlab="official order",ylab="my order",main="Eurovision 2009")
 par(xpd=TRUE) # allow country names to appear outside plotting region
-for(i in seq_along(ox)){text(ox[i],oy[i],names(m)[i],pos=4,col='gray') }
+for(i in seq_along(ox)){text(ox[i],oy[i],names(m)[ox[i]],pos=4,col='gray') }
 par(xpd=FALSE) # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
