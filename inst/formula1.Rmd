@@ -132,13 +132,13 @@ par(pty='s') # square plot
 plot(ox,oy,asp=1,pty='s',xlim=c(0,25),ylim=c(0,25),pch=16,
 xlab="official order",ylab="my order",main='Formula 1, 2017 season')
 par(xpd=TRUE) # allow drivers' names to appear outside plotting region
-for(i in seq_along(ox)){text(ox[i],oy[i],names(m)[ox[i]],pos=4,col='gray') }
+for(i in seq_along(ox)){text(ox[i],oy[i],names(m)[oy[i]],pos=4,col='gray') }
 par(xpd=FALSE) # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
 
-In the graph above, we see a certain amount of disagreement.  
-For example, using F1 points scored places Hamilton first and Vettel
+In the graph above, we see a certain amount of disagreement.  For
+example, using F1 points scored places Hamilton first and Vettel
 second; while `hyper2` places Vettel first and Hamilton second.  But
 overall there seems to be some degree of correlation between the two,
 and differences in detail.
