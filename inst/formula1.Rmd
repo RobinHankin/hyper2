@@ -126,8 +126,8 @@ points <- f2017$points
 names(points) <- f2017$driver
 
 m <- maxp(L2017)
-ox <- order(points,decreasing=TRUE)
-oy <- order(m,decreasing=TRUE)
+ox <- rank(-points)
+oy <- rank(-m)
 par(pty='s') # square plot
 plot(ox,oy,asp=1,pty='s',xlim=c(0,25),ylim=c(0,25),pch=16,
 xlab="official order",ylab="my order",main='Formula 1, 2017 season')
@@ -137,11 +137,11 @@ par(xpd=FALSE) # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
 
-In the graph above, we see that both systems consider Hamilton to be
-the best.  However, F1 points place Vettel second and Bottas third,
-while `hyper2` places Bottas second and Vettel third.  Overall, there
-is a high degree of correlation between the two, but differences in
-detail.
+In the graph above, we see a certain amount of disagreement.  
+For example, using F1 points scored places Hamilton first and Vettel
+second; while `hyper2` places Vettel first and Hamilton second.  But
+overall there seems to be some degree of correlation between the two,
+and differences in detail.
 
 # Analysis of nulls:
 
