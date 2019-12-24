@@ -50,8 +50,8 @@ be fourth best, slutskaya was judged to be the best, kwan third best,
 cohen second best, and so on.  Conversely, ```b``` means that the best
 competitor was number two [slutskaya], the second best number was
 number four [cohen], the third best was number three [kwan], the
-fourth best number 1 [hughes], and so on.  Note that this means the
-rows of ```skating_rank``` cannot be named.
+fourth best number 1 [hughes], and so on.  _Note that this means the
+rows of ```skating_rank``` cannot be named_.
 
 
 ```{r}
@@ -135,6 +135,7 @@ for(i in seq_len(nrow(problem_constraints))){
    out[i] <- jj$value
 }
 out
+maxp(skating,give=TRUE)$value  - out
 maxp(skating,give=TRUE)$value  - max(out)
 ```
 
@@ -175,4 +176,52 @@ explanation for this.  The likelihoods indicate that, if Suguri is
 *more* likely to be stronger than Hughes than to be stronger than
 Kwan, which is difficult to understand because Hughes has a higher
 estimated strength than Kwan.
+
+## Ranking methodologies.
+
+The maximum likelihood estimated strengths furnish an ordering for the competitors.
+We can compare ranking by strengths with the official point-tallying method:
+
+```{r,dpi=72}
+par(pty='s')
+lik <- order(maxp(skating),decreasing=TRUE)
+plot(1:23,lik,asp=1,pch=16,xlab='official order',ylab='likelihood order')
+text(1:23,lik,asp=1,pch=16,pos=c(rep(4,19),rep(2,4)),rownames(skating_table))
+abline(0,1)
+```
+
+In the above diagram, there is close agreement between the two methods
+in the large, but differences in detail.  For example, the official
+ordering is hughes first, then slutskaya second, then kwan third;
+likelihood winner is slutskya, followed by hughes and then kwan.
+
+We can gain some understanding of this result by looking at the raw
+judging results for the three medallists:
+
+```{r,threemedallists}
+head(skating_table,2)
+```
+
+and then calculating a table of the results:
+
+```{r, tableofresults}
+hughes    <- unlist(skating_table[1,])
+slutskaya <- unlist(skating_table[2,])
+table(hughes)
+table(slutskaya)
+```
+
+Looking at the above, we see that Hughes has five judges who gave her
+"1"s, while Slutskaya has only 4, which is why she was considered to
+be the top.  It seems that Hughes's two "4"s (compared with
+Slutskaya's one) have cost her more likelihood-based strength than her
+extra "1" gave her; note also that the two judges who placed Highes
+fourth (viz `J2` and `J4`) placed Slutskaya first.  Also:
+
+```{r,compareslutskayahughes}
+table(hughes < slutskaya)
+```
+(note that equality is disallowed) showing that five judges preferred Hughes
+to Slutskaya and four preferred Slutsakaya to Hughes.
+
 
