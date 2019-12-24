@@ -60,8 +60,33 @@ pnames(skating) <- rownames(skating_table)
 head(skating)
 ```
 
+Further, we might ask how many judges ranked each competitor first,
+second and so on:
+
+```{r,alljudgeorder}
+oo <- sapply(seq_len(23),function(i){rowSums(skating_table==i)})
+colnames(oo) <- rep(" ",23)  # nicer print
+oo
+```
+
+In the above, each row is a competitor and each column corresponds to
+a ranking.  Thus the first column corresponds to "first place" and
+	shows that five judges ranked Hughes first and four judges ranked
+Slutskaya first.  The second column corresponds to "second place" and
+shows that one judge gave Hughes second place, two judges placed
+Slutskaya second, five gave Kawn second, and one gave Cohen second.
+The formal ordering is, I think, to rank the competitors by number of
+first places, then second, then third , and so on.  Ties at level $n$
+are broken by considering $n+1$.
+
+
+# Data visualization
+
 Now some data visualization.  First the MLE for the strengths:
 
+```{r,maxshow}
+maxp(skating)
+```
 
 ```{r,dpi=72}
 dotchart(maxp(skating))
@@ -69,21 +94,10 @@ dotchart(log(maxp(skating)))
 ```
 
 
-Now compare my rating with the official point-tallying method:
-
-```{r,dpi=72}
-par(pty='s')
-lik <- order(maxp(skating),decreasing=TRUE)
-plot(1:23,lik,asp=1,pch=16,xlab='official order',ylab='likelihood order')
-text(1:23,lik,asp=1,pch=16,pos=c(rep(4,19),rep(2,4)),rownames(skating_table))
-abline(0,1)
-```
-
-
 
 ## Evidence for medal positions
 
-Looking at the figure, it seems that the medallists---Hughes (gold),
+Looking at the dotcharts, it seems that the medallists---Hughes (gold),
 Slutskya (silver), Kwan (bronze)---were considerably higher in
 strength than the rest of the field.  Here I will test the hypothesis
 that the medallists were in fact the strongest three competitors.
