@@ -365,9 +365,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
 }
 
-`maxp` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, ...){
+`maxp` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-5, ...){
     if(inherits(H,"suplist")){return(maxplist(Hlist=H,startp=startp,give=give,fcm=fcm,fcv=fcv,...))}
-    SMALL <- 1e-4
     
     n <- size(H)
     if(is.null(startp)){
@@ -405,8 +404,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
 }
 
-`maxplist` <- function (Hlist, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, ...){
-    SMALL <- 1e-06
+`maxplist` <- function (Hlist, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, SMALL=1e-5, ...){
     n <- size(Hlist[[1]])
     if (is.null(startp)) {
         startp <- rep(1/n, n - 1)

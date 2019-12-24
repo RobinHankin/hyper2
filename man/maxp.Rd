@@ -7,8 +7,8 @@
 \title{Maximum likelihood estimation}
 \description{Find the maximum likelihood estimate for p, also equal probabilities}
 \usage{
-maxp(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, ...)
-maxplist(Hlist, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, ...)
+maxp(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-5, ...)
+maxplist(Hlist, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-5, ...)
 equalp(H)
 }
 \arguments{
@@ -19,6 +19,7 @@ equalp(H)
     the evaluate (including fillup), and \code{TRUE} meaning to return
     the entire formal output of the optimization routine}
   \item{fcm,fcv}{Further problem-specific constraints}
+  \item{SMALL}{Numerical minimum for probabilities}
   \item{...}{Further arguments which \code{maxp()} passes to
     \code{constrOptim()}}
 }
