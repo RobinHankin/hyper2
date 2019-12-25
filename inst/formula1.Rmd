@@ -132,16 +132,24 @@ par(pty='s')        # square plot
 plot(ox,oy,asp=1,pty='s',xlim=c(0,25),ylim=c(0,25),pch=16,
 xlab="official order",ylab="my order",main='Formula 1, 2017 season')
 par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
-for(i in seq_along(ox)){text(ox[i],oy[i],names(m)[oy[i]],pos=4,col='gray') }
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray') }
 par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
 
 In the graph above, we see a certain amount of disagreement.  For
-example, using F1 points scored places Hamilton first and Vettel
-second; while `hyper2` places Vettel first and Hamilton second.  But
-overall there seems to be some degree of correlation between the two,
-and differences in detail.
+example, using F1 points scored places Hamilton first (363), Vettel
+second (317), and Bottas third (305); while `hyper2` places Hamilton
+first (0.29), Bottas second (0.17), and Vettel third (0.14).  Note
+also the large number of players with zero points (who rank equal 23rd
+by the F1 points system) but are nevertheless separated by
+Bradley-Terry.  These players appear as a line of points at $x=23$:
+Resta to Ericcson.  Note also Palmer and Alonso who managed to score a
+F1 point but rank below Ericcson according to Bradley-Terry.
+
+But overall there
+seems to be some degree of correlation between the two, and
+differences in detail.
 
 # Analysis of nulls:
 

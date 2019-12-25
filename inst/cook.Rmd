@@ -63,7 +63,7 @@ demonstration:
 
 ```{r}
 o <- function(Ul,Cl,startp,give=FALSE){
-    small <- 1e-5  #  ensure start at an interior point
+    small <- 1e-4  #  ensure start at an interior point
     if(missing(startp)){startp <- small*(1:4)+rep(0.1,4)}
     out <- maxp(H, startp=small*(1:4)+rep(0.1,4), give=TRUE, fcm=Ul,fcv=Cl)
 		if(give){

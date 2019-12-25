@@ -85,12 +85,12 @@ are broken by considering $n+1$.
 Now some data visualization.  First the MLE for the strengths:
 
 ```{r,maxshow}
-maxp(skating)
+(m <- maxp(skating))
 ```
 
 ```{r,dpi=72}
-dotchart(maxp(skating))
-dotchart(log(maxp(skating)))
+dotchart(m)
+dotchart(log(m))
 ```
 
 
@@ -135,23 +135,29 @@ for(i in seq_len(nrow(problem_constraints))){
    out[i] <- jj$value
 }
 out
-maxp(skating,give=TRUE)$value  - out
-maxp(skating,give=TRUE)$value  - max(out)
 ```
 
-that is, about 1 unit of support, falling short of the two units
-suggested by Edwards.  Observe that the maximum likelihood among the
-six alternative hypotheses is that of number 3, in which the
+Now compare these values with the unconstrained maximum likelihoods:
+
+```{r,unconstrainedlikes}
+mgv <- maxp(skating,give=TRUE)$value
+mgv  - out
+mgv  - max(out)
+```
+
+that is, a little over 1 unit of support, falling short of the two
+units suggested by Edwards.  Observe that the maximum likelihood among
+the six alternative hypotheses is that of number 3, in which the
 maximization was constrained to obey ```Kwan < Cohen```.
 
 If, instead, we ask whether there is evidence that Suguri should not
 have been a medallist, we find
 
 ```{r}
-maxp(skating,give=TRUE)$value  - max(out[4:5])
+mgv  - max(out[4:6])
 ```
 
-There is something odd going on:
+We can be more specific with the likelihoods:
 
 ```{r}
 plot(out,ylab="log likelihood",axes=FALSE)
@@ -164,18 +170,9 @@ axis(side=1,at=1:6,srt=45,labels=c(
 
 In the plot above, the vertical axis shows the support.  The six
 points on the x-axis correspond to the six rows of
-```problem_constraints```; names have been abbreviated to the first
-three letters.  Thus the first three points are maximum likelihoods
-for ```Hughes < Cohen```, ```Slutskya < Cohen```, and ```Kwan <
-Cohen``` respectively.  See how the likelihoods increase from the
-first to the third point; this indicates that ```Hughes < Cohen```, is
-the least likely option, and ```Kwan < Cohen``` the most likely
-option.  This makes sense because Cohen is the weakest of the three
-medallists.  Points 4-6 are in the reverse order, and I have no
-explanation for this.  The likelihoods indicate that, if Suguri is
-*more* likely to be stronger than Hughes than to be stronger than
-Kwan, which is difficult to understand because Hughes has a higher
-estimated strength than Kwan.
+`problem_constraints`; names have been abbreviated to the first three
+letters.  Thus the first three points are maximum likelihoods for
+`Hughes < Cohen`, `Slutskya < Cohen`, and `Kwan < Cohen` respectively.
 
 ## Ranking methodologies.
 
@@ -184,7 +181,7 @@ We can compare ranking by strengths with the official point-tallying method:
 
 ```{r,dpi=72}
 par(pty='s')
-lik <- order(maxp(skating),decreasing=TRUE)
+lik <- rank(-m)
 plot(1:23,lik,asp=1,pch=16,xlab='official order',ylab='likelihood order')
 text(1:23,lik,asp=1,pch=16,pos=c(rep(4,19),rep(2,4)),rownames(skating_table))
 abline(0,1)

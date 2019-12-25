@@ -158,7 +158,8 @@ pnames(euro2009) <- competitors
 Now we can check null of equal strengths:
 
 ```{r,checknull}
-print(loglik(indep(maxp(euro2009)),euro2009))
+m <- maxp(euro2009)  # MLE
+print(loglik(indep(m),euro2009))
 print(loglik(indep(equalp(euro2009)),euro2009))
 ```
 
@@ -166,10 +167,9 @@ Thus the difference is about 122 units of support, surely significant.
 
 
 ```{r,orderplot}
-m <- maxp(euro2009)  # likelihoods
 points_scored <- rowSums(wiki_matrix,na.rm=TRUE)  # points
 ox <- rank(-points_scored)
-oy <- rank(-m)
+oy <- rank(-m)   # m = MLE
 par(pty='s') # square plot
 plot(ox,oy,asp=1,pty='s',xlim=c(0,18),ylim=c(0,18),pch=16,
 xlab="official order",ylab="my order",main="Eurovision 2009")
@@ -183,7 +183,7 @@ In the graph above, we see that both systems agree on the first four places.
 We can also plot the numerical values:
 
 ```{r}
-plot(log(rowSums(wiki_matrix,na.rm=TRUE)),log(maxp(euro2009)),
+plot(log(rowSums(wiki_matrix,na.rm=TRUE)),log(m),
      pch=16,xlab="points scored",ylab="MLE strength")
 ```
 

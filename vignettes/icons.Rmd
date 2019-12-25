@@ -112,7 +112,7 @@ imposing additional constraints to the ```maxp()``` function via the
 
 
 ```{r}
-small <- 1e-6  #  ensure start at an interior point
+small <- 1e-4  #  ensure start at an interior point
 maxlike_constrained <- 
     maxp(icons, startp=indep(equalp(icons))-c(small,0,0,0,0),
          give=TRUE, fcm=c(-1,0,0,0,0),fcv= -1/6)
@@ -152,7 +152,7 @@ then choose the largest likelihood from the five.
 
 ```{r}
 o <- function(Ul,Cl,startp,give=FALSE){
-    small <- 1e-6  #  ensure start at an interior point
+    small <- 1e-4  #  ensure start at an interior point
     if(missing(startp)){startp <- small*(1:5)+rep(0.1,5)}			
     out <- maxp(icons, startp=small*(1:5)+rep(0.1,5), give=TRUE, fcm=Ul,fcv=Cl)
     if(give){

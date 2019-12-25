@@ -80,7 +80,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 `size` <- function(H){
   if(is.null(H)){return(0)}
-  
+  if(inherits(H,"suplist")){
+      return(max(sapply(seq_along(L),function(i){size(L[[i]])})))
+  }
   if(identical(pnames(H),NA)){
     return(max(c(brackets(H),recursive=TRUE)))
   } else {
@@ -365,21 +367,24 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
 }
 
-`maxp` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-5, n=10, show=TRUE, justlikes=FALSE, ...){
+`maxp` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-4, n=10, show=FALSE, justlikes=FALSE, ...){
+
     best_so_far <- -Inf # best (i.e. highest) likelihood found to date
-    if(justlikes){likes <- rep(NA,n)}
-    for(i in seq_len(n-1)){
-        jj <- maxp_single(H, startp=startp+rnorm(size(H)-1,sd=SMALL/10), give=TRUE, fcm=fcm, fcv=fcv, SMALL=SMALL, ...)
-        if(justlikes){likes[i] <- jj$value}
+    likes <- rep(NA,n)
+    if(is.null(startp)){ startp <- indep(equalp(H)) }
+
+    for(i in seq_len(n)){
+        jj <- maxp_single(H, startp=startp+runif(size(H)-1,max=SMALL/size(H)), give=TRUE, fcm=fcm, fcv=fcv, SMALL=SMALL, ...)
+        likes[i] <- jj$value
+        if(show){cat(paste(i,"; ", best_so_far, "  " , jj$value,"\n", sep=""))}
         if(jj$value > best_so_far){ # that is, if we have found something better
             out <- jj
             best_so_far <- jj$value
         }
-        if(show){cat(paste(i,"; ",best_so_far,"\n",sep=""))}
     }  # i loop closes
     if(justlikes){ return(likes) }
     if(give){
-        return(out)
+        return(c(out,likes=list(likes)))
     } else {
         out <- fillup(out$par)
         if(!identical(pnames(H),NA)){names(out) <- pnames(H)}
@@ -387,7 +392,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
 }  # maxp() closes
 
-`maxp_single` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-5, ...){
+`maxp_single` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-4, ...){
     if(inherits(H,"suplist")){return(maxplist(Hlist=H,startp=startp,give=give,fcm=fcm,fcv=fcv,...))}
     
     n <- size(H)
