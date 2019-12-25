@@ -113,9 +113,9 @@ argument:
 
 
 ```{r}
-small <- 1e-4
 f <- function(home){
-  maxp(H,startp=rep((1-small)/4,4),give=TRUE,fcm=t(rep(1,4)),fcv=1-home)$value
+	small <- 1e-3
+	maxp(H,startp=rep((1-small)/4,4),give=TRUE,fcm=t(rep(1,4)),fcv=1-home)$value
 }
 ```
 
@@ -126,7 +126,7 @@ less than argument ```home```.  Using this function, the likelihood
 ratio test is straightforward:
 
 ```{r}
-Lambda <- -2*(f(2e-4)-maxp(H,give=TRUE)$value)
+Lambda <- -2*(f(0.01)-maxp(H,give=TRUE)$value)
 Lambda
 ```
 
@@ -138,7 +138,8 @@ value:
 
 ```{r}
 g <- function(home){
-  maxp(H,startp=rep(small/4,4),give=TRUE,fcm=-t(rep(1,4)),fcv=home-1)$value
+	small <- 1e-3
+	maxp(H,startp=rep(small/4,4),give=TRUE,fcm=-t(rep(1,4)),fcv=home-1)$value
 }
 ```
 
