@@ -6,6 +6,7 @@
 \alias{powers.hyper2}
 \alias{pnames}
 \alias{pnames.hyper2}
+\alias{pnames.suplist}
 \alias{pnames<-}
 \alias{pnames<-.hyper2}
 \alias{size}
@@ -24,6 +25,7 @@ hyper2(L, d, pnames = NA)
 \method{brackets}{hyper2}(H)
 \method{powers}{hyper2}(H)
 \method{pnames}{hyper2}(H)
+\method{pnames}{suplist}(H)
 size(H)
 as.hyper2(L,d,pnames)
 is_valid_hyper2(L,d,pnames)
