@@ -8,7 +8,8 @@
 \title{Maximum likelihood estimation}
 \description{Find the maximum likelihood estimate for p, also equal probabilities}
 \usage{
-maxp(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-4, n=10, show=FALSE, justlikes=FALSE, ...)
+maxp(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-4, n=10,
+   show=FALSE, justlikes=FALSE, ...)
 maxplist(Hlist, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-5, ...)
 maxp_single(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-4, ...)
 equalp(H)
