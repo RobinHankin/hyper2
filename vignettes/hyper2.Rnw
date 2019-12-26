@@ -69,7 +69,6 @@ optimization, Bradley-Terry}
 %% Fax: +43/1/31336-734
 
 %% for those who use Sweave please include the following line (with % symbols):
-%% need no \usepackage{Sweave.sty}
 
 %% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
