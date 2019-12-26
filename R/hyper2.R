@@ -26,6 +26,7 @@ setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
 }
 
 `pnames.hyper2` <- function(H){ H$pnames }
+`pnames.suplist` <- function(H){pnames(H[[1]])}
 ## accessor methods end
 
 ## Following function is the only setter method in the package
@@ -81,7 +82,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `size` <- function(H){
   if(is.null(H)){return(0)}
   if(inherits(H,"suplist")){
-      return(max(sapply(seq_along(L),function(i){size(L[[i]])})))
+      return(max(sapply(seq_along(H),function(i){size(H[[i]])})))
   }
   if(identical(pnames(H),NA)){
     return(max(c(brackets(H),recursive=TRUE)))
