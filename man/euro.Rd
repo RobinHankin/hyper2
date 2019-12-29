@@ -38,9 +38,9 @@ likelihood function \code{euro2009} assumes their independence.
 \examples{
 data(euro)
 
-dotchart(maxp(euro2009))
+dotchart(maxp(euro2009,n=2)) # n=2 for speed
 
-x1 <- loglik(indep(maxp  (euro2009)),euro2009)
+x1 <- loglik(indep(maxp  (euro2009,n=2)),euro2009)  
 x2 <- loglik(indep(equalp(euro2009)),euro2009)
 
 ## if the competitors have equal strength, the asymptotic distribution

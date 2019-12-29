@@ -35,7 +35,7 @@ data(skating)
 dotchart(maxp(skating))
 
 par(pty='s')
-lik <- order(maxp(skating),decreasing=TRUE)
+lik <- order(maxp(skating,n=2),decreasing=TRUE)
 plot(1:23,lik,asp=1,pch=16,xlab='official order',ylab='likelihood order')
 text(1:23,lik,pos=c(rep(4,19),rep(2,4)),pnames(skating))
 abline(0,1)

@@ -57,7 +57,14 @@ equalp(H)
 
 }
 \author{Robin K. S. Hankin}
-\note{This functionality is peculiarly susceptible to off-by-one errors.}
+\note{
+
+  In manpages elsewhere, \code{n=2} is used for speed reasons.  Use the
+  default \code{n=10} or greater in production work.
+
+  This functionality is peculiarly susceptible to off-by-one errors.
+
+}
 \seealso{\code{\link{gradient}},\code{\link{fillup}}}
 \examples{
 

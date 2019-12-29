@@ -37,9 +37,9 @@ in Stockholm, 1962.
 \seealso{\code{\link{chess}},\code{\link{karpov_kasparov_anand}}}
 \examples{
 data(interzonal)
-dotchart(maxp(interzonal))
+dotchart(maxp(interzonal,n=2)) # n=2 for speed
 
-maxp(interzonal_collusion)
+maxp(interzonal_collusion,n=2)
 
 curacao
 }

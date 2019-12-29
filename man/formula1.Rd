@@ -30,6 +30,6 @@ code in \code{inst/formula1.R}, which is heavily documented.
 
 \examples{
 data(formula1)
-dotchart(maxp(formula1))
+dotchart(maxp(formula1,n=2))  #n=2 specified here for speed
 
 }
