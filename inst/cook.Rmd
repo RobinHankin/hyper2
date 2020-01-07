@@ -246,7 +246,18 @@ small <- 1e-4
 loglik(indep(ML_constrained),Htot)
 ```
 
-So the support for our alternative hypothesis would be
+[as a consistency check we can perform the same calculation with a
+slightly different value for `small`:
+
+
+```{r}
+small <- 2e-4  # cf 1e-4 previously
+ML_constrained <- maxp(Htot,startp=rep(0.2*(1-small*2.1),5),fcm=c(1,1,1,1,1),fcv=1-2*small)
+loglik(indep(ML_constrained),Htot) # cf -29.973 previously
+```
+
+and we can see that this is almost the same].  Thus, the support for
+our alternative hypothesis would be
 
 ```{r}
 loglik(indep(ML_unconstrained),Htot)-loglik(indep(ML_constrained),Htot)
