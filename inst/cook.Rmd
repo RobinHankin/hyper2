@@ -49,7 +49,7 @@ dotchart(log(maxp(H)),pch=16,main="log probabilities")
 
 We can assess the hypothesis that all players have the same strength:
 
-```{r} 
+```{r}
 L1 <- loglik(indep(equalp(H)),H)  # support at equal strengths
 L2 <- loglik(indep(maxp(H)),H)    # maximum support
 L2-L1
@@ -141,3 +141,117 @@ obs <- c(5,4,3,2,1)
 Thus it is reasonable to reject the hypothesis that this particular
 observation was drawn from the same distribution as the others, and
 infer that it was suspect.
+
+
+## Changes in cooking strength.
+
+We now consider a sequence of observations where one person, say
+person 1, is suspected of an increase in strength (perhaps they
+attended a domestic cookery course).  We make some observations before
+and after the training and seek evidence that it was effective.
+Unlike the previous cases, here we have a full order statistic without
+the complication of not being allowed to vote for oneself (perhaps a
+professional chef puts the dishes in order).  First, before:
+
+```{r,beforetraining}
+H <- hyper2(pnames=c(paste("p",1:5,sep=""),"t"))  # 't' the strength of training
+# observations before training:
+Hbefore <- H +
+    order_likelihood(c(5,2,3,4,1)) + #  5 is the best, 4 the worst.
+    order_likelihood(c(5,3,2,4,1)) + #  5 is the best, 1 the worst.
+    order_likelihood(c(4,5,3,2,1)) + #  4 is the best, 1 the worst.
+    order_likelihood(c(5,3,4,1,2)) + #  5 is the best, 2 the worst.
+    order_likelihood(c(2,5,3,1,4))   #  2 is the best, 4 the worst.
+Hbefore
+```
+
+Now, after the training we have two order observations: `1,2,3,4,5`
+and `3,1,5,2,4`.  Thus player 1 comes first and second (after player
+3) respectively.  The likelihood for the first would be
+
+\[
+\frac{p_1+t}{p_1+t+p_2+p_3+p_4+p_5}\cdot
+\frac{p_2  }{      p_2+p_3+p_4+p_5}\cdot
+\frac{p_3  }{          p_3+p_4+p_5}\cdot
+\frac{p_4  }{              p_4+p_5}\cdot
+\frac{p_5  }{                  p_5}\cdot
+\]
+
+and the likelihood for the second would be
+
+\[
+\frac{p_3  }{p_1+t+p_2+p_3+p_4+p_5}\cdot
+\frac{p_1+t}{p_1+t+p_2+    p_4+p_5}\cdot
+\frac{p_5  }{      p_2+    p_4+p_5}\cdot
+\frac{p_2  }{      p_2+    p_4    }\cdot
+\frac{p_4  }{              p_4    }\cdot
+\]
+
+
+We can translate these into package idiom by defining likelihood
+functions `H1after` and `H2after` for the two observations:
+
+
+```{r,aftertraining1}
+H1after <- H
+H1after[c("p1","t")] %<>% inc()
+H1after[  "p2"     ] %<>% inc()
+H1after[  "p3"     ] %<>% inc()
+H1after[  "p4"     ] %<>% inc()
+H1after[  "p5"     ] %<>% inc()
+H1after[c("p1","t","p2","p3","p4","p5")] %<>% dec()
+H1after[c(         "p2","p3","p4","p5")] %<>% dec()
+H1after[c(              "p3","p4","p5")] %<>% dec()
+H1after[c(                   "p4","p5")] %<>% dec()
+H1after[c(                        "p5")] %<>% dec()
+H1after
+```
+
+```{r,aftertraining2}
+H2after <- H
+H2after[  "p3"     ] %<>% inc()
+H2after[c("p1","t")] %<>% inc()
+H2after[  "p5"     ] %<>% inc()
+H2after[  "p2"     ] %<>% inc()
+H2after[  "p4"     ] %<>% inc()
+H2after[c("p1","t","p2","p3","p4","p5")] %<>% dec()
+H2after[c("p1","t","p2",     "p4","p5")] %<>% dec()
+H2after[c(         "p2",     "p4","p5")] %<>% dec()
+H2after[c(         "p2",     "p4"     )] %<>% dec()
+H2after[c(                   "p4"     )] %<>% dec()
+H2after
+```
+
+Combine:
+
+```{r,combineboth}
+(Htot <- Hbefore + H1after + H2after)  # observations are independent!
+(ML_unconstrained <- maxp(Htot))
+```
+
+We see the training entity has an estimated strength of about 0.63,
+higher than all real players combined.  At the evaluate the
+loglikelihood is
+
+```{r,loglikateval}
+loglik(indep(ML_unconstrained),Htot)
+```
+
+We can test the hypothesis that the training was ineffective by
+constraining the optimization to $t=0$:
+
+```{r}
+small <- 1e-4
+(ML_constrained <- maxp(Htot,startp=rep(0.2*(1-small*2.1),5),fcm=c(1,1,1,1,1),fcv=1-2*small))
+loglik(indep(ML_constrained),Htot)
+```
+
+So the support for our alternative hypothesis would be
+
+```{r}
+loglik(indep(ML_unconstrained),Htot)-loglik(indep(ML_constrained),Htot)
+```
+
+thus exceeding Edwards's two units of support.  We have strong
+evidence to suggest that the training was effective.
+
