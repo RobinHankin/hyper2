@@ -166,8 +166,9 @@ Hbefore
 ```
 
 Now, after the training we have two order observations: `1,2,3,4,5`
-and `3,1,5,2,4`.  Thus player 1 comes first and second (after player
-3) respectively.  The likelihood for the first would be
+and `3,1,5,2,4`.  Thus in the first observation, player 1 comes first
+and in the second observation, player 1 comes second second (after
+player 3).  The likelihood for the first observation would be
 
 \[
 \frac{p_1+t}{p_1+t+p_2+p_3+p_4+p_5}\cdot
@@ -177,7 +178,7 @@ and `3,1,5,2,4`.  Thus player 1 comes first and second (after player
 \frac{p_5  }{                  p_5}\cdot
 \]
 
-and the likelihood for the second would be
+and the likelihood for the second observation would be
 
 \[
 \frac{p_3  }{p_1+t+p_2+p_3+p_4+p_5}\cdot
