@@ -1,5 +1,5 @@
 ---
-title: "Order statistics and numerical optimization"
+title: "Order statistics and numerical optimization: the case of a single observation"
 output: html_document
 ---
 
@@ -41,20 +41,24 @@ cases is not straightforward; consider two processes, approaching the
 evaluate in two different ways:
 
 \[
-\lim_{p\longrightarrow 0}
-{\mathcal L}(1-9p,p,p,p,p,p,p,p,p,p,p)=\frac{1}{8!}
+\lim_{x\longrightarrow 0}
+{\mathcal L}(1-9x,x,x,x,x,x,x,x,x,x,x)=\frac{1}{8!};\qquad
+\lim_{x\longrightarrow 0}
+{\mathcal L}(\alpha,\alpha x,\alpha x^2,\ldots,\alpha x^9)=1
 \]
 
-but 
+where $\alpha=(1-x^{10})/(1-x)$ is a normalizing constant.  Thus the
+likelihood _at_ the evaluate is not defined, even as a limit (because
+it depends on the direction of approach).  However, it is reasonable
+to demand consistency in the limiting process.  Thus, writing
+$p_i(x),1\leq i\leq 10$, we require
 
 \[
-\lim_{p\longrightarrow 0}
-{\mathcal L}(\alpha,\alpha p,\alpha p^2,\ldots,\alpha p^9)=1
+\lim_{x\longrightarrow 0}\frac{p_i(x)}{p_{i+1}(x)}=0,\qquad i=1,\ldots,9
 \]
 
-where $\alpha=(1-p^{10})/(1-p)$ is a normalizing constant.  Thus the
-likelihood _at_ the evaluate is not defined, even as a limit (because
-it depends on the direction of approach).
+
+## Package idiom for likelihood functions
 
 The `hyper2` idiom for creating a likelihood function is as follows:
 
