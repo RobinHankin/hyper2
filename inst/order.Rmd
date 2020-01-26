@@ -57,6 +57,8 @@ $p_i(x),1\leq i\leq 10$, we require
 \lim_{x\longrightarrow 0}\frac{p_i(x)}{p_{i+1}(x)}=0,\qquad i=1,\ldots,9
 \]
 
+and if this is respected, then it is reasonable to say that the
+likelihood at the evaluate is 1, and the support 0.
 
 ## Package idiom for likelihood functions
 
@@ -94,24 +96,28 @@ Graphically:
 
 ```{r}
 dotchart(evaluate2,pch=16)
+par(pty='s')
+plot(evaluate1,evaluate2,asp=1,log='xy')
+abline(0,1)
 ```
 
-So it is much better than the coldstart above in the sense that there
-is more probability on $p_1$ and less everywhere else.  We can compare
-the hotstart above to the coldstart:
+So it is almost identical to the coldstart above in the sense that the
+two evaluates are very close.  We can compare the hotstart to the
+coldstart in terms of support:
 
 ```{r}
 maxlike2-maxlike1
 ```
 
-This is negative: the so-called "sensible start point" has produced an
-inferior solution.  This is because `sss` has $p_2=p_3=\ldots =
-p_{10}$, so predicts a draw between players $2,3,\ldots 10$, contrary
-to observation.
+This is almost exactly zero, but negative: the so-called "sensible
+start point" has produced an inferior solution.  This is because `sss`
+has $p_2=p_3=\ldots = p_{10}$, so predicts a draw between players
+$2,3,\ldots 10$, contrary to observation.
 
 
 
-A better way is to mimic the more appropriate of the two limiting processes above:
+Possibly, a better way is to mimic the more appropriate of the two
+limiting processes above:
 
 ```{r}
 vsssp <- function(x,n){
@@ -128,17 +134,12 @@ maxlike3 <- loglik(indep(evaluate3),H)
 dotchart(evaluate3,pch=16)
 ```
 
-Observe that the likelihood at this point is marginally better than
-the `equalp()` start point:
-
+Observe that the likelihood at this point is only very slightly better
+than the `equalp()` start point:
 
 ```{r}
 maxlike3-maxlike2
 ```
-
-but the dotchart again shows a quite a lot of probability on
-$p_2,\ldots p_{10}$.
-
 
 # Discussion
 
