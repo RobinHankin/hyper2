@@ -32,7 +32,7 @@
 }
 \examples{
 data(skating)
-dotchart(maxp(skating))
+dotchart(maxp(skating,n=2))
 
 par(pty='s')
 lik <- order(maxp(skating,n=2),decreasing=TRUE)
