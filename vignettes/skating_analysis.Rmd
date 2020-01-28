@@ -13,7 +13,7 @@ vignette: >
 This script creates and analyses hyper2 object "skating" which is a
 likelihood function for the strengths of the competitors in the
 Ladies' Figure Skating at the 2002 Winter Olympics.  Dataframe
-```skating_table``` is copied from Lock and Lock (see skating.Rd for
+`skating_table` is copied from Lock and Lock (see skating.Rd for
 more details).
 
 ```{r}
@@ -22,8 +22,8 @@ data("skating")
 skating_table
 ```		
 
-Object ```skating_table``` is structured so that each competitor is a
-row, and each judge is a column.  Function ```order_likelihood()```
+Object `skating_table` is structured so that each competitor is a
+row, and each judge is a column.  Function `order_likelihood()`
 considers each row to be a race [or a judge], so we need to take a
 transpose.  The following R idiom is plausible but incorrect:
 
@@ -41,17 +41,17 @@ skating_rank <- apply(skating_table,2,order)
 head(skating_rank)
 ```
 
-Column 1 of ```skating_table``` and column 1 of ```skating_rank``` are
+Column 1 of `skating_table` and column 1 of `skating_rank` are
 confusingly simular.  So consider column 2 instead, corresponding to
-judge number 2.  If ```a=skating_table[,2]``` and
-```b=skating_rank[,2]``` we have ```a=c(4,1,3,2, ...)``` and
-```b=c(2,4,3,1, ...)```.  Thus ```a``` means that hughes was judged to
+judge number 2.  If `a=skating_table[,2]` and
+`b=skating_rank[,2]` we have `a=c(4,1,3,2, ...)` and
+`b=c(2,4,3,1, ...)`.  Thus `a` means that hughes was judged to
 be fourth best, slutskaya was judged to be the best, kwan third best,
-cohen second best, and so on.  Conversely, ```b``` means that the best
+cohen second best, and so on.  Conversely, `b` means that the best
 competitor was number two [slutskaya], the second best number was
 number four [cohen], the third best was number three [kwan], the
 fourth best number 1 [hughes], and so on.  _Note that this means the
-rows of ```skating_rank``` cannot be named_.
+rows of `skating_rank` cannot be named_.
 
 
 ```{r}
@@ -148,7 +148,7 @@ mgv  - max(out)
 that is, a little over 1 unit of support, falling short of the two
 units suggested by Edwards.  Observe that the maximum likelihood among
 the six alternative hypotheses is that of number 3, in which the
-maximization was constrained to obey ```Kwan < Cohen```.
+maximization was constrained to obey `Kwan < Cohen`.
 
 If, instead, we ask whether there is evidence that Suguri should not
 have been a medallist, we find
@@ -218,6 +218,7 @@ fourth (viz `J2` and `J4`) placed Slutskaya first.  Also:
 ```{r,compareslutskayahughes}
 table(hughes < slutskaya)
 ```
+
 (note that equality is disallowed) showing that five judges preferred Hughes
 to Slutskaya and four preferred Slutsakaya to Hughes.
 
