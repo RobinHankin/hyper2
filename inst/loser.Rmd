@@ -104,7 +104,7 @@ identify player `a` as the worst with a probability $\frac{1}{n}$).
 Note again that this is loose language as likelihood is only defined
 up to a multiplicative constant.
 
-# Discussion
+# Discussion: repeated observations
 
 We are now in a position to define a likelihood function on the three
 hypotheses $H_1,H_2,H_3$:
@@ -123,8 +123,6 @@ which is either fair ($H_\mbox{fair}$) or two-headed
 ($H_\mbox{2heads}$).  We observe a head.  Then ${\mathcal
 L}(H_\mbox{2heads})/{\mathcal L}(H_\mbox{fair}) = 0.5$ as well (this
 is Edwards's valet and black and white ball thought experiment).
-
-## Repeated observations
 
 Suppose we make $r$ independent observations, all of which are that
 competitor `a` comes last.  Then the likelihood function becomes
@@ -148,7 +146,6 @@ qchisq(0.95,1)
 
 that is $2r\log 2\geq 3.84$ or $r\geq 2.77$.
 
-
 The support for $H_1$ against $H_3$ would be $r\log n$ but this time
 we need $n-1$ degrees of freedom.  The likelihood criterion would be
 $r\log n\geq 2(n-1)$, or $r\geq 2(n-1)/\log n$.  Alternatively we
@@ -157,3 +154,7 @@ $2\log(n^r)\geq\chi^2_{n-1}(0.95)$, or $r\geq Q/(2\log n)$, where Q is
 the 95th percentile of the chi-square distribution with $n$ degrees of
 freedom, `qchisq(0.95,df=n)`.  It might be interesting to compare
 these two approaches.
+
+Note carefully that the observation considered here is "I came last".
+This is different from the observation that "I did not win" which is
+considered separately in `inst/notthewinner.Rmd`.
