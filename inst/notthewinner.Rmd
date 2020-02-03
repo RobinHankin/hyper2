@@ -1,0 +1,133 @@
+---
+title: "Weakly informative observations: not the winner"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(hyper2)
+```
+
+
+# Partial rank observations: someone didn't win
+
+
+Here we consider a situation in which we make the observation that a
+particular player *does not* win.  We are ignorant of the order
+statistic except for the fact that (wlog) player 1 is not first
+placed.
+
+As in `loser.Rmd`, we have three hypotheses:
+
+* $H_1\colon p_1=0$
+* $H_2\colon\exists i\neq 1 \mbox{ with } p_1\geq p_i>0$
+* $H_3\colon p_1=p_2=\ldots=p_n=\frac{1}{n}$
+
+(observe that $H_2$ implies that someone is worse than me).  All three
+hypotheses correspond to a restriction on allowable parameter space.
+The first step is to define a suitable likelihood function for our
+observation.  Given that $P(D|H_1)=1$, $P(D|H_2)\leq\frac{1}{2}$ and
+$P(D|H_3) =\frac{n-1}{n}$, this gives us a likelihood function for our
+three hypotheses.
+
+What we will do is combine this observation with other, perhaps more
+informative, observations which we will take to be (conditionally)
+independent of one another.  Firstly we will consider some highly
+informative order statistics:
+
+
+```{r}
+(H <- hyper2(pnames=paste("p",1:5,sep="")) +
+    order_likelihood(c(5,2,1,4)) + 
+    order_likelihood(c(2,4,1)) + 
+    order_likelihood(c(4,3,1)) + 
+    order_likelihood(c(3,5)))
+(mH <- maxp(H))
+loglik(indep(mH),H)
+```
+
+Note the low estimated strength of `p1`.
+
+## Hypothesis 1
+
+```{r}
+small <- 1e-3
+(mH1 <- maxp(H, startp=rep(small/2,4),fcm=cbind(-1,0,0,0),fcv = -small))
+loglik(indep(mH1),H)
+```
+
+and for a consistency we will use slightly different values of `small`:
+
+```{r}
+small <- 5e-4
+(mH2 <- maxp(H, startp=rep(small/2,4),fcm=cbind(-1,0,0,0),fcv = -small))
+loglik(indep(mH2),H)
+```
+
+```{r}
+small <- 3e-4
+(mH2 <- maxp(H, startp=rep(small/2,4),fcm=cbind(-1,0,0,0),fcv = -small))
+loglik(indep(mH2),H)
+```
+
+Observe that decreasing the value of variable `small` corresponds to a
+more restrictive constraint on the likelihood.  And as the value of
+`small` decreases the likelihood at the evaluate decreases quite
+substantially (the constraint is active as we can see from the first
+element of the evaluate).  Usually this does not matter but in this
+case we can deduce using elementary arguments that the likelihood of
+$H_2$ is zero: if $p_1=0$, then $p_4=0$ from the first line, and then
+$p_1=0$ from line 2; then $p_3=0$ from line 3, $p_5=0$ from line 4 and
+finally $p+2=0$ from line 1.
+
+
+Thus we can say for sure that $H_1$ has zero likelihood and we may
+discount it.
+
+## Hypothesis 2
+
+```{r}
+n <- 5 # number of players
+small <- 1e-3  # numerical necessity
+(ans_constrained <-
+maxp(H,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,-1,rep(0,n-3))),fcv=0,give=TRUE)
+)
+small <- 5e-4
+(ans_constrained <-
+maxp(H,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,-1,rep(0,n-3))),fcv=0,give=TRUE)
+)
+```
+
+In the above, note that the value of `small` is immaterial and the
+evaluate has $p+1=p_2\neq 0$.
+
+
+## Hypothesis 3
+
+```{r}
+loglik(indep(equalp(H)),H)
+```
+
+The support for $H_2$ against $H_3$ is about $-6.846-(-7.455) = 1.391$.
+
+# Additional observation
+
+Suppose we now make another observation: person 1 did not win.  How
+does this change our relative support for $H_2$ and $H_1$?
+
+```{r}
+library("partitions")
+M <- perms(5)
+M <- M[,M[1,] != 1]
+SL <- list()
+for(i in seq_len(ncol(M))){
+	SL[[i]] <- H + order_likelihood(M[,i,drop=TRUE])
+}
+SL <- as.suplist(SL)
+1e4*like_single_list(indep(equalp(SL)),SL)
+1e4*like_single_list(indep(maxp(SL)),SL)
+```
+
+Something is very wrong here because the support should be very
+similar to the support applied to the order statistic without the
+additional observation.
