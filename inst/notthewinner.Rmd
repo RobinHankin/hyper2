@@ -99,7 +99,7 @@ maxp(H,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,-1,rep(0,n-3))),fcv=0,give
 ```
 
 In the above, note that the value of `small` is immaterial and the
-evaluate has $p+1=p_2\neq 0$.
+evaluate has $p_1=p_2\neq 0$.
 
 
 ## Hypothesis 3
@@ -118,7 +118,6 @@ does this change our relative support for $H_2$ and $H_1$?
 ```{r}
 library("partitions")
 M <- perms(5)
-M <- M[,M[1,] != 1]
 SL <- list()
 for(i in seq_len(ncol(M))){
 	SL[[i]] <- H + order_likelihood(M[,i,drop=TRUE])
