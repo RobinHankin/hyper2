@@ -11,26 +11,24 @@ library(hyper2)
 
 # Partial rank observations: someone didn't win
 
-
-Here we consider a situation in which we make the observation that a
-particular player *does not* win.  We are ignorant of the order
-statistic except for the fact that (wlog) player 1 is not first
-placed.
+Here we consider a situation in which we make an observation that is
+only very very weakly informative.  We consider the observation
+${\mathcal O}$ that a particular player *does not* win: the order
+statistic is unobserved and we know nothing about it except for the
+fact that (wlog) player 1 (aka "me") is not first placed.
 
 As in `loser.Rmd`, we have three hypotheses:
 
-* $H_1\colon p_1=0$
-* $H_2\colon\exists i\neq 1 \mbox{ with } p_1\geq p_i>0$
-* $H_3\colon p_1=p_2=\ldots=p_n=\frac{1}{n}$
+* $H_0\colon\sum p_i=1$  (that is, no restriction)
+* $H_1\colon\exists i\neq 1 \mbox{ with } p_1\geq p_i>0$
+* $H_2\colon p_1=p_2=\ldots=p_n=\frac{1}{n}$
 
-(observe that $H_2$ implies that someone is worse than me).  All three
-hypotheses correspond to a restriction on allowable parameter space.
-The first step is to define a suitable likelihood function for our
-observation.  Given that $P(D|H_1)=1$, $P(D|H_2)\leq\frac{1}{2}$ and
-$P(D|H_3) =\frac{n-1}{n}$, this gives us a likelihood function for our
-three hypotheses.
+(see how $H_1$ implies that someone is worse than me).  Observe that
+$H_1$ and $H_2$ correspond to a restriction on allowable parameter
+space.  The first step is to define a suitable likelihood function for
+our data.
 
-What we will do is combine this observation with other, perhaps more
+What we will do is combine ${\mathcal O}$ with other, perhaps more
 informative, observations which we will take to be (conditionally)
 independent of one another.  Firstly we will consider some highly
 informative order statistics:
@@ -42,91 +40,140 @@ informative order statistics:
     order_likelihood(c(2,4,1)) + 
     order_likelihood(c(4,3,1)) + 
     order_likelihood(c(3,5)))
-(mH <- maxp(H))
-loglik(indep(mH),H)
+(mH0 <- maxp(H))
+loglik(indep(mH0),H)
 ```
 
-Note the low estimated strength of `p1`.
+Above, `mH0` corresponds to $H_0$.  Note the low but nonzero estimated
+strength of `p1`.
+
+Observe in passing that we may reject $H_z\colon p_1=0$
+unconditionally: we can deduce using elementary arguments that the
+likelihood of $H_z$ is zero: if $p_1=0$, then $p_4=0$ from the first
+line, and then $p_1=0$ from line 2; then $p_3=0$ from line 3, $p_5=0$
+from line 4 and finally $p_2=0$ from line 1.  Thus we can say for sure
+that $H_z$ is incorrect and we may safely ignore it henceforth.
 
 ## Hypothesis 1
 
-```{r}
-small <- 1e-3
-(mH1 <- maxp(H, startp=rep(small/2,4),fcm=cbind(-1,0,0,0),fcv = -small))
-loglik(indep(mH1),H)
-```
-
-and for a consistency we will use slightly different values of `small`:
-
-```{r}
-small <- 5e-4
-(mH2 <- maxp(H, startp=rep(small/2,4),fcm=cbind(-1,0,0,0),fcv = -small))
-loglik(indep(mH2),H)
-```
-
-```{r}
-small <- 3e-4
-(mH2 <- maxp(H, startp=rep(small/2,4),fcm=cbind(-1,0,0,0),fcv = -small))
-loglik(indep(mH2),H)
-```
-
-Observe that decreasing the value of variable `small` corresponds to a
-more restrictive constraint on the likelihood.  And as the value of
-`small` decreases the likelihood at the evaluate decreases quite
-substantially (the constraint is active as we can see from the first
-element of the evaluate).  Usually this does not matter but in this
-case we can deduce using elementary arguments that the likelihood of
-$H_2$ is zero: if $p_1=0$, then $p_4=0$ from the first line, and then
-$p_1=0$ from line 2; then $p_3=0$ from line 3, $p_5=0$ from line 4 and
-finally $p+2=0$ from line 1.
-
-
-Thus we can say for sure that $H_1$ has zero likelihood and we may
-discount it.
-
-## Hypothesis 2
+Hypothesis 1 is rather tricky so we will use the ersatz $H_{1'}\colon
+p_1\geqslant p_4$ (we choose $p_4$ on the grounds of its low estimated
+value).  Then
 
 ```{r}
 n <- 5 # number of players
 small <- 1e-3  # numerical necessity
-(ans_constrained <-
-maxp(H,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,-1,rep(0,n-3))),fcv=0,give=TRUE)
-)
-small <- 5e-4
-(ans_constrained <-
-maxp(H,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,-1,rep(0,n-3))),fcv=0,give=TRUE)
-)
+(mH1 <- maxp(H,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,0,0,-1)),fcv=0))
+loglik(indep(mH1),H)
 ```
 
-In the above, note that the value of `small` is immaterial and the
-evaluate has $p_1=p_2\neq 0$.
+(the numerical value of `small` is immaterial).
 
-
-## Hypothesis 3
+## Hypothesis 2
 
 ```{r}
-loglik(indep(equalp(H)),H)
+mH2 <- equalp(H)
+loglik(indep(mH2),H)
 ```
 
-The support for $H_2$ against $H_3$ is about $-6.846-(-7.455) = 1.391$.
+## Support function
 
-# Additional observation
 
-Suppose we now make another observation: person 1 did not win.  How
-does this change our relative support for $H_2$ and $H_1$?
+We can present a support function for $H_0,H_1,H_2$:
 
-```{r}
+
+```{r,suppcalculator}
+Supp <- c(H0=loglik(indep(mH0),H), H1=loglik(indep(mH1),H), H2=loglik(indep(mH2),H)
+)
+Supp-max(Supp)
+```
+
+# Additional uninformative observation
+
+Suppose we now make a perfectly uninformative observation: in an
+independent trial, the order statistic for the five competitors was
+one of the $5!=120$ possible orders.  How does this change our
+relative support for $H_0$ against $H_1$ and $H_2$?  It should make no
+difference.
+
+```{r,uninformativesupportfunction}
 library("partitions")
-M <- perms(5)
+H # as before, here for convenience
+M <- perms(5)   # uninformative!
 SL <- list()
 for(i in seq_len(ncol(M))){
 	SL[[i]] <- H + order_likelihood(M[,i,drop=TRUE])
 }
 SL <- as.suplist(SL)
-1e4*like_single_list(indep(equalp(SL)),SL)
-1e4*like_single_list(indep(maxp(SL)),SL)
 ```
 
-Something is very wrong here because the support should be very
-similar to the support applied to the order statistic without the
-additional observation.
+So `SL` is a compound object that gives a likelihood function for the
+joint observation of the order statistics and the uninformative data a
+subsequent (independent) trial was in any of the $5!=120$ possible
+orders.  We can find the MLE for different observations:
+
+```{r,mls0}
+mSL0 <- maxp(SL)
+mSL1 <- maxp(SL,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,0,0,-1)),fcv=0)
+mSL2 <- equalp(SL)
+```
+
+We use `like_single_list()` to calculate the likelihoods at the
+different evaluates; note that this function returns likelihoods, not
+supports.
+
+```{r,supp2calc}
+Supp2 <-
+      log(c(
+      H0 = like_single_list(indep(mSL0),SL),
+      H1 = like_single_list(indep(mSL1),SL),
+      H2 = like_single_list(indep(mSL2),SL)))
+(Supp2 <- Supp2-max(Supp2))
+```
+
+which is identical to the previous support function.
+
+# Additional weakly informative observation
+
+Now we make another observation ${\mathcal O}$ that is weakly
+informative: that person `1` did not win:
+
+```{r,slacalc}
+M <- perms(5)
+M <- M[, M[1,]!=1]  # remove any column with "1" in first place
+SLa <- list()
+for(i in seq_len(ncol(M))){
+	SLa[[i]] <- H + order_likelihood(M[,i,drop=TRUE])
+}
+SLa <- as.suplist(SLa)
+```
+
+So `SLa` is a compound object that gives a likelihood function for the
+joint observation of the order statistics and ${\mathcal O}$.  We can
+find the MLE for different observations:
+
+```{r,mlsa}
+mSLa0 <- maxp(SLa)
+mSLa1 <- maxp(SLa,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,0,0,-1)),fcv=0)
+mSLa2 <- equalp(SLa)
+```
+
+
+```{r,suppacalc}
+Suppa <-
+      log(c(
+      H0 = like_single_list(indep(mSLa0),SLa),
+      H1 = like_single_list(indep(mSLa1),SLa),
+      H2 = like_single_list(indep(mSLa2),SLa)))
+(Suppa <- Suppa-max(Suppa))
+```
+
+To compare:
+
+```{r,comparesups}
+Supp2-Suppa
+```
+
+Thus ${\mathcal O}$ furnishes a tiny bit of extra evidence against
+$H_1$ (about $0.016$ units of support) and a little bit of extra
+evidence against $H_2$ (about $0.193$ units of support).
