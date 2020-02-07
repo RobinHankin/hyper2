@@ -25,14 +25,11 @@ As in `loser.Rmd`, we have three hypotheses:
 
 (see how $H_1$ implies that someone is worse than me).  Observe that
 $H_1$ and $H_2$ correspond to a restriction on allowable parameter
-space.  The first step is to define a suitable likelihood function for
-our data.
+space. 
 
-What we will do is combine ${\mathcal O}$ with other, perhaps more
-informative, observations which we will take to be (conditionally)
-independent of one another.  Firstly we will consider some highly
-informative order statistics:
-
+To understand the informativeness of ${\mathcal O}$, we will consider
+it in conjunction with some highly informative observations ${\mathcal
+I}$ which are order statistics:
 
 ```{r}
 (H <- hyper2(pnames=paste("p",1:5,sep="")) +
@@ -40,6 +37,15 @@ informative order statistics:
     order_likelihood(c(2,4,1)) + 
     order_likelihood(c(4,3,1)) + 
     order_likelihood(c(3,5)))
+	```
+	
+We will firstly consider these observations in isolation, then later
+combine them with ${\mathcal O}$ which we will take to be
+(conditionally) independent.  The first step is to define a suitable
+likelihood function for ${\mathcal I}$:q
+
+
+```{r}	
 (mH0 <- maxp(H))
 loglik(indep(mH0),H)
 ```
@@ -67,7 +73,8 @@ small <- 1e-3  # numerical necessity
 loglik(indep(mH1),H)
 ```
 
-(the numerical value of `small` is immaterial).
+See how the constraint of $H_1$ is active, for at the evaluate
+$p_1=p_4$ (the numerical value of `small` is immaterial).
 
 ## Hypothesis 2
 
@@ -79,8 +86,8 @@ loglik(indep(mH2),H)
 ## Support function
 
 
-We can present a support function for $H_0,H_1,H_2$:
-
+We can present a support function for $H_0,H_1,H_2$ for ${\mathcal
+I}$:
 
 ```{r,suppcalculator}
 Supp <- c(H0=loglik(indep(mH0),H), H1=loglik(indep(mH1),H), H2=loglik(indep(mH2),H)
@@ -136,7 +143,9 @@ which is identical to the previous support function.
 # Additional weakly informative observation
 
 Now we make another observation ${\mathcal O}$ that is weakly
-informative: that person `1` did not win:
+informative: person `1` did not win.  Package idiom is similar to the
+perfectly uninformative observation considered above, except that we
+remove every order that has person 1 winning:
 
 ```{r,slacalc}
 M <- perms(5)
@@ -148,16 +157,15 @@ for(i in seq_len(ncol(M))){
 SLa <- as.suplist(SLa)
 ```
 
-So `SLa` is a compound object that gives a likelihood function for the
-joint observation of the order statistics and ${\mathcal O}$.  We can
-find the MLE for different observations:
+So `SLa` is a compound object that gives a support function for the
+joint observation ${\mathcal I}$ and ${\mathcal O}$.  We can find the
+MLE:
 
 ```{r,mlsa}
 mSLa0 <- maxp(SLa)
 mSLa1 <- maxp(SLa,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,0,0,-1)),fcv=0)
 mSLa2 <- equalp(SLa)
 ```
-
 
 ```{r,suppacalc}
 Suppa <-
@@ -168,7 +176,8 @@ Suppa <-
 (Suppa <- Suppa-max(Suppa))
 ```
 
-To compare:
+We can now compare the support function for ${\mathcal I}$ with the
+support function for ${\mathcal I}$ and ${\mathcal H}$:
 
 ```{r,comparesups}
 Supp2-Suppa
