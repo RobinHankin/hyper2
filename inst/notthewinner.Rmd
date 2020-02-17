@@ -142,10 +142,11 @@ which is identical to the previous support function.
 
 # Additional weakly informative observation
 
-Now we make another observation ${\mathcal O}$ that is weakly
-informative: person `1` did not win.  Package idiom is similar to the
-perfectly uninformative observation considered above, except that we
-remove every order that has person 1 winning:
+Now we make another observation ${\mathcal O}$ which is independent of
+${\mathcal I}$: person `1` did not win.  It is clear that observation
+${\mathcal O}$ is only very weakly informative.  Package idiom is
+similar to the perfectly uninformative observation considered above,
+except that we remove every order that has person 1 winning:
 
 ```{r,slacalc}
 M <- perms(5)
