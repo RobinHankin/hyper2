@@ -127,7 +127,7 @@ likelihood estimation.
 points <- f2017$points
 names(points) <- f2017$driver
 
-m <- maxp(L2017)
+m <- mL2017   # maxp(L2017)
 ox <- rank(-points) # negative because number 1 = largest number of points
 oy <- rank(-m)      # negative because number 1 = largest strength
 par(pty='s')        # square plot
@@ -159,7 +159,7 @@ differences in detail.
 
 ```{r,equalstrength}
 L1 <- loglik(indep(equalp(L2017)),L2017)
-L2 <- loglik(indep(maxp(L2017)),L2017)
+L2 <- loglik(indep(mL2017),L2017)   # mL2017 == maxp(L2017)
 pchisq(2*(L2-L1),df=25-1,lower.tail=FALSE)
 ```
 
