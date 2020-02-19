@@ -368,7 +368,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
 }
 
-`maxp` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-4, n=10, show=FALSE, justlikes=FALSE, ...){
+`maxp` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, n=10, show=FALSE, justlikes=FALSE, ...){
 
     best_so_far <- -Inf # best (i.e. highest) likelihood found to date
     likes <- rep(NA,n)
@@ -393,7 +393,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
 }  # maxp() closes
 
-`maxp_single` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-4, ...){
+`maxp_single` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, ...){
     if(inherits(H,"suplist")){return(maxplist(Hlist=H,startp=startp,give=give,fcm=fcm,fcv=fcv,...))}
     
     n <- size(H)
@@ -432,7 +432,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
 }
 
-`maxplist` <- function (Hlist, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, SMALL=1e-5, ...){
+`maxplist` <- function (Hlist, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, SMALL=1e-6, ...){
     n <- size(Hlist[[1]])
     if (is.null(startp)) {
         startp <- rep(1/n, n - 1)
