@@ -4,6 +4,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+set.seed(0)
 knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 library("magrittr")
@@ -24,8 +25,8 @@ head(f2017)
 
 Each row is a driver and each column (after the first) a venue.  We
 see that Hamilton, the first row, came second in Australia, first in
-China, second in Bahrain, fourthin Russia, and so on.  In the first
-columnm, we see the result from Australia in which Hamilton came
+China, second in Bahrain, fourth in Russia, and so on.  In the first
+column, we see the result from Australia (AUS) in which Hamilton came
 second, Vettel first, Bottas third, and so on.  Notation used also
 includes six different classes of no-score such as "Ret" for retired,
 "WD" for withdrawn, and so on.  I now define a bespoke R function that
