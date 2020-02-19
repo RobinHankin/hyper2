@@ -38,15 +38,24 @@ appear as \dQuote{\code{c1, c2, ...}} which is intended to be read
 between \emph{rank} and \emph{order} can be confusing.
 
 \preformatted{
-R> x <- c( 3, 1, 2, 4.1)
-R> rank(x)
-[1] 3 1 2 4
-R> order(x)
+> x <- c(a=3.01, b=1.04, c=1.99, d=4.1)
+> x
+   a    b    c    d 
+3.01 1.04 1.99 4.10 
+> rank(x)
+a b c d 
+3 1 2 4 
+> order(x)
 [1] 2 3 1 4
-R> 
 }
 
-In the current context, we have:
+In the above, \code{rank()} shows us that element \code{a} of \code{x}
+(viz 3.01) is the third largest, element \code{b} (viz 1.04) is the
+smallest, and so on; \code{order(x)} shows us that the smallest element
+\code{x} is \code{x[2]}, the next smallest is \code{x[3]}, and so on.
+Thus \code{x[order(x)] == sort(x)}, and \code{rank(x)[order(x)] ==
+seq_along(x)}.  In the current context we want ranks not orders; we want
+to know who came first, who came second, and so on:
 
 \preformatted{
 R> rrank(2,ptrue)
@@ -56,31 +65,36 @@ R> rrank(2,ptrue)
 R> 
 }
 
-In the above, each row is a race; we have four runners.  In the first
-race, runner number 3 came first, runner 1 came second, runner 2 came
-third, and so on.  In the second race, runner 2 came first, etc.  Now
-consider the following R idiom which uses the first race:
+In the above, each row is a race; we have four runners and two races.
+In the first race (the top row), runner number 3 came first, runner 1
+came second, runner 2 came third, and so on.  In the second race (bottom
+row), runner 2 came first, etc.  Taking the first race as an example:
 
-\preformatted{
-R> p <- c(3,1,2,4)
-R> order(p)    # slicker to say p[p] <- 1:4 as in inverse_word_single()
-[1] 2 3 1 4
-R> 
+\strong{Rank:} who came first? runner 3.  Who came second? runner 1.
+Who came third? runner 2.  Who came fourth? runner 4.  Recall that the
+Placket-Luce likelihood for a race in which the rank statistic was
+\code{3124} (the first race) would be
+
+\deqn{
+\frac{p_3}{p_3+p_1+p_2+p_4}\cdot
+\frac{p_1}{p_1+p_2+p_4}\cdot
+\frac{p_2}{p_2+p_4}\cdot
+\frac{p_4}{p_4}\cdot
+}{
+  see PDF
 }
 
-This shows that runner 1 came second, runner 2 came third, runner 3 came
-first, and runner 4 came fourth.
+\strong{Order:} where did runner 1 come?  second.  Where did runner 2
+come?  third.  Where did runner 3 come?  first.  Where did runner 4
+come?  fourth.  For \code{order_likelihood()}, we need rank data, not
+order data.
 
-Take the first race as an example.
-
-Rank: who came first? runner 3.  Who came second? runner 1.  Who came
-third? runner 2.  Who came fourth? runner 4.
-
-Order: where did runner 1 come?  second.  Where did runner 2 come?
-third.  Where did runner 3 come?  first.  Where did runner 4 come?
-fourth.  For \code{order_likelihood()}, we need rank data, not order
-data.  See vignette \dQuote{\code{skating_analysis}} for more
+See vignette \dQuote{\code{skating_analysis}} for more
 discussion.
+
+Note that function \code{rrank()} returns an object of class
+\dQuote{\code{rrank}}, which has its own print method that returns
+\code{NA}, intentionally.  This can be confusing.
 
 }
 \author{Robin K. S. Hankin}
