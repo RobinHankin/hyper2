@@ -11,7 +11,7 @@ commonly used for many sports and package function
 \code{ranktable2supp()} translates such tables into a \code{hyper2}
 support function.
 
-The function interprets zero to mean \quote{Did not finish} (wikipedia
+The function interprets zero to mean \dQuote{Did not finish} (wikipedia
 usually signifies DNF as a blank).
 
 }
