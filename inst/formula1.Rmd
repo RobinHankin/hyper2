@@ -109,6 +109,7 @@ using the `maxp()` function:
 
 ```{r,maxp2017}
 mL2017 <- maxp(L2017)
+mL2017
 dotchart(mL2017,pch=16,main='2017 Formula 1')
 dotchart(log(mL2017)[1:23],pch=16,main='2017 Formula 1, log scale')
 ```
