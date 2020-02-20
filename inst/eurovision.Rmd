@@ -61,9 +61,10 @@ points <- c(12,10,8,7,6,5,4,3,2,1)
 Variable `points` gives the number of points awarded, under Eurovision
 rules, to voters' first, second, third, etc choice.  Points for any
 competitor are added and the winner is the competitor with the most
-points.  However, in this model, the numerical values themselves do
-not affect the likelihood function; only the order of the voters'
-preferences matters.
+points.  However, in the `hyper2` model, the numerical values
+themselves do not affect the likelihood function; only the order of
+the voters' preferences matters.  The following R idiom translates
+`wiki_matrix` into a form suitable for analysis with `hyper2`:
 
 ```{r,prefsetter}
 preference <- wiki_matrix*0  
@@ -110,7 +111,7 @@ preference <- t(preference)
 preference
 ```
 
-Now, take the first row of 'preference'.  This represents the votes
+Now, take the first row of `preference`.  This represents the votes
 cast *by* (sic) Montenegro (`"ME"`).  Their favourite was [last
 column] Bosnia & Herzegovina (`"BA"`), who they gave rank 1 to.  Their
 second favourite was Macedonia, their third was Turkey, and so on.
@@ -118,11 +119,8 @@ They were not allowed to vote for themselves, which is why the first
 column is `NA`.  So the order was: `BA` (1), `MK` (2) , `TR` (3), `IS`
 (4), `RO` (5), `IL` (6), `AM` (7), `FI` (8), `BY` (9), `MT` (10).  The
 other countries (`CZ`, `BE`, `SW`, `CH`, `BG`, `PT`) did not receive
-any points from Montenegro.
-
-
-We need to convert matrix `preference` into a likelihood function,
-here `euro2009`:
+any points from Montenegro.  We need to convert matrix `preference`
+into a likelihood function, here `euro2009`:
  
 ```{r,morestuff}
 euro2009 <- hyper2(d=18)
