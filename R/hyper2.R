@@ -725,3 +725,63 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   if(missing(pnames)){pnames(H) <- letters[seq_len(size(H))]}
   return(H)
 }
+
+`ranktable2supp` <- function(x, noscore, misslast=TRUE){
+    if(missing(noscore)){
+        noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
+    }
+
+    if(misslast){
+        first_and_last <- c(1,ncol(x))
+    } else {
+        first_and_last <- 1
+    }
+
+    racers <- x[,1]
+    venues <- colnames(x)[-first_and_last] 
+
+    ## Now create a numeric matrix, fmat.  Two steps: first, count
+    ## any no-score as zero:
+  
+  jj <- apply(x,2,function(y){
+      if(any(y %in% noscore)){y[y%in%noscore] <- 0}
+      return(y)
+  })
+    
+    ## Second, convert to numeric and strip out names; transpose of
+    ## x (because we want each row to be a venue):
+    
+    fmat <- matrix(as.numeric(jj[,-first_and_last]),byrow=TRUE,ncol=nrow(x)) 
+    colnames(fmat) <- racers
+    rownames(fmat) <- venues
+    
+    out <- hyper2(d=ncol(fmat))
+    
+    ## Now cycle through the rows; each row is a venue [voter]
+    for(i in seq_len(nrow(fmat))){
+        d <- fmat[i,,drop=TRUE]
+        while(any(d>0)){
+            eligible <- which(d>=0)  #NB inclusive inequality; zero is DNC etc who
+            
+            ## Increment numerator power of the first choice among eligible players:
+            out[which(d==1)] %<>% inc
+            
+            ## Power of set of all eligible players decrements:
+            out[eligible] %<>% dec
+            
+            ## once you've come first in the field, you are ineligible to be first again:
+            d[d==1] <- -1  # NB strictly <0
+            
+            ## Now, everyone moves down the list, so who *was* in
+            ## second place becomes first place, who *was* third place
+            ## becomes second, and so on:
+            
+            d[d>0] %<>% dec
+            
+        } # while() loop closes
+    } # i loop closes
+    
+    ## syntatic sugar:
+    pnames(out) <- racers
+    return(out)
+} 

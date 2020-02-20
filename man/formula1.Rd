@@ -4,6 +4,7 @@
 \alias{formula_one}
 \alias{F1}
 \alias{F1_2014}
+\alias{F1_table_2017}
 \alias{F1_2015}
 \alias{F1_2016}
 \alias{F1_2017}
@@ -18,7 +19,9 @@ Object \code{formula1} is a \code{hyper2} object that gives a likelihood
 function for the strengths of the competitors of the 2017 Formula One
 World Championship.  It is created from \code{inst/formula1_2017.txt} by
 the code in \code{inst/formula1.R} and \code{inst/formula1.Rmd}, which
-is heavily documented.
+is heavily documented.  See also function \code{ranktable2supp()}.
+
+Object \code{F1_table_2017} is a data frame with ranks from the 2
 
 }
 \references{
@@ -28,7 +31,7 @@ is heavily documented.
   \url{https://en.wikipedia.org/w/index.php?title=2017_Formula_One_World_Championship&oldid=839923210}
   [Online; accessed 14-May-2018]
   }
-
+\seealso{\code{\link{ranktable2supp}}}
 \examples{
 data(formula1)
 dotchart(maxp(formula1,n=2))  #n=2 specified here for speed
