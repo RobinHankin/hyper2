@@ -27,7 +27,7 @@ order_likelihood(M,times=1)
   \item{all_players,winners,losers}{Numeric or character vectors
     specifying competitors.  See details}
   \item{M}{In function \code{order_likelihood()}, a matrix with each
-    row corresponding to a race.  The columns
+    row corresponding to a race (or judge).  The columns
     correspond to the finishing order; thus \code{a=M[i,j]} means that
     competitor \code{a} finished in place \code{j} in race \code{i}}
   \item{times}{Vector specifiying the number of times each row is
@@ -47,7 +47,7 @@ order_likelihood(M,times=1)
   list of \code{hyper2} objects.  The evaluate may be found with
   function \code{maxplist()}.
 
-  Function elimination() gives a likelihood function for situations
+  Function \code{elimination()} gives a likelihood function for situations
   where the \emph{weakest} player is identified at each stage and
   subsequently eliminated from the competition.  It is intended for
   situations like the Great British Bake-off and Masterchef in which the
@@ -61,13 +61,19 @@ order_likelihood(M,times=1)
   lowest strength).  The final element of \code{all_players} is the last
   player to be eliminated (or alternatively the only player not to be
   eliminated).
-  
+
+  Function \code{order_likelihood()} takes a matrix \code{M} with rows
+  corresponding to a judges (or race); a vector is coerced to a one-row
+  matrix.  Each row of \code{M} is an order statistic: thus
+  \code{c(3,4,2,1)} means that person 3 came first, person 4 came
+  second, person 2 came third and person 1 came last.  Note that in data
+  frames like \code{motoGP2019_table}, each \emph{column} is a race.
 
   Function \code{addrank()} is now defunct.
   
 }
 \author{obin K. S. Hankin}
-\seealso{\code{\link{rrank}}}
+\seealso{\code{\link{rrank}},\code{\link{ranktable2supp}}}
 \examples{
 
 W <- hyper2(pnames=letters[1:7])
