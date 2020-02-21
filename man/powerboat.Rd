@@ -1,5 +1,5 @@
 \name{powerboat}
-\alias{powerboat
+\alias{powerboat}
 \alias{powerboat2018}
 \alias{powerboat_2018}
 \alias{powerboat2018_table}
@@ -43,3 +43,5 @@ jj <-
   read.table(system.file("powerboat2019.txt",package="hyper2"),header=TRUE)
 identical(jj,powerboat2019_table)  # should be TRUE
 }
+
+
