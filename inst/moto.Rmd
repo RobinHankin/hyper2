@@ -1,0 +1,97 @@
+---
+title: "Grand Prix motorcycle racing"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+options(width = 120)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+```
+
+## The 2019 FIM motoGP world championship
+
+
+Here I analyse a series of Grand Prix motorcycling race results using
+the `hyper` package which implements the Plackett-Luce likelihood
+function.  Consider the following dataset, taken from Wikipedia:
+
+```{r cars}
+data(motoGP)
+motoGP_2019_table
+```
+
+Each row is a driver (rider?) and each column (after the first) a
+venue.  Takin the first row we see that Marquez came second in Qatar,
+first in Argentina, retired in Austin, and so on.  In the first
+column, we see the result from Qatar (QAT) in which Marquez came
+second, Dovizioso first, Vinales third, and so on.  Notation used also
+includes six different classes of no-score such as "Ret" for retired,
+"WD" for withdrawn, and so on.  I now use bespoke R function
+\code{ranktable2supp()}, that translates data of this type into a
+log-likelihood.  The function is similar to, but slightly different
+from, the analysis in `eurovision.R`.
+
+```{r,applydata}
+head(motoGP_2019)
+```
+
+(object `motoGP_2019` is equivalent to
+`ranktable2supp(motoGP_2019_table)`.  Above, we see a small part of
+the Placket-Luce likelihood function for the 2019 results.  We can
+find the maximum likelihood estimator by using the `maxp()` function:
+
+```{r,maxp2017}
+options(width = 100)
+m <- maxp(motoGP_2019)
+m
+dotchart(m,pch=16)
+pie(m)
+```
+
+In the above, note the dominance of Marquez.  It is sometimes
+preferable to plot the estimated strengths on a log scale:
+
+```{r,maxp2017log}
+dotchart(log(m[1:27]),pch=16)
+```
+
+(in the diagram above, we remove the bottom-ranked player, Lecuona,
+whose estimated strength is zero).
+
+# Likelihood scoring vs points scoring
+
+The championship winning order is determined by a points system: the
+winner is awarded 25 points, second place 18 points, and so on.  We
+can now check to see how the points total matches up with the
+likelihood estimation.
+
+```{r,pointsforwinning}
+(points_awarded <- c(`1st`=25, `2nd`=20, `3rd`=16, `4th`=13, `5th`= 11,
+`6th`=10, `7th`= 9, `8th`=8,`9th`=7, `10th`=6, `11th`=5, `12th`=4,
+`13th`=3, `14th`=2, `15th`=1))
+```
+
+```{r,likelihoodandscore}
+points <- motoGP_2019_table$points
+names(points) <- motoGP_2019_table$driver
+
+ox <- rank(-points) # negative because number 1 = largest number of points
+oy <- rank(-m)      # negative because number 1 = largest strength
+par(pty='s')        # square plot
+plot(ox,oy,asp=1,pty='s',xlim=c(0,28),ylim=c(0,28),pch=16,
+xlab="official order",ylab="my order",main='motoGP, 2019 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray') }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+```
+
+In the graph above, we see a certain amount of disagreement.  Only the
+top two riders, Marquez and Dovizioso, have rankings common to
+likelihood system and points system.  Considering the next four
+players (Vinales, Rins, Quartaro, Petrucci) we see that the
+points-based order is Vinales, Rins, Petrucci, but the likelihood
+order is Petrucci, Vinales, Rins (Rossi), Quartararo.
