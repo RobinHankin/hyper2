@@ -58,39 +58,34 @@ seq_along(x)}.  In the current context we want ranks not orders; we want
 to know who came first, who came second, and so on:
 
 \preformatted{
-R> rrank(2,ptrue)
+R> rrank(2,(4:1)/10)
      c1 c2 c3 c4
-[1,]  3  1  2  4
-[2,]  2  3  4  1
+[1,]  2  3  1  4
+[2,]  1  3  2  4
 R> 
 }
 
 In the above, each row is a race; we have four runners and two races.
-In the first race (the top row), runner number 3 came first, runner 1
-came second, runner 2 came third, and so on.  In the second race (bottom
-row), runner 2 came first, etc.  Taking the first race as an example:
+In the first race (the top row), runner number 2 came first, runner 3
+came second, runner 1 came third, and so on.  In the second race (bottom
+row), runner 1 came first, etc.  Taking the first race as an example:
 
-\strong{Rank:} who came first? runner 3.  Who came second? runner 1.
-Who came third? runner 2.  Who came fourth? runner 4.  Recall that the
+\strong{Rank:} who came first? runner 2.  Who came second? runner 3.
+Who came third? runner 1.  Who came fourth? runner 4.  Recall that the
 Placket-Luce likelihood for a race in which the rank statistic was
-\code{3124} (the first race) would be
+\code{2314} (the first race) would be \eqn{
+\frac{p_2}{p_2+p_3+p_1+p_4}\cdot
+\frac{p_3}{p_3+p_1+p_4}\cdot
+\frac{p_1}{p_1+p_4}\cdot
+\frac{p_4}{p_4}}{?}.
 
-\deqn{
-\frac{p_3}{p_3+p_1+p_2+p_4}\cdot
-\frac{p_1}{p_1+p_2+p_4}\cdot
-\frac{p_2}{p_2+p_4}\cdot
-\frac{p_4}{p_4}\cdot
-}{
-  see PDF
-}
+\strong{Order:} where did runner 1 come?  third.  Where did runner 2
+come?  first.  Where did runner 3 come?  second.  Where did runner 4
+come?  fourth.  Thus the order statistic would be \code{3124}.
 
-\strong{Order:} where did runner 1 come?  second.  Where did runner 2
-come?  third.  Where did runner 3 come?  first.  Where did runner 4
-come?  fourth.  For \code{order_likelihood()}, we need rank data, not
-order data.
-
-See vignette \dQuote{\code{skating_analysis}} for more
-discussion.
+Function \code{rrank()} is designed for \code{order_likelihood()}, which
+needs rank data, not order data.  Vignette
+\dQuote{\code{skating_analysis}} gives another discussion.
 
 Note that function \code{rrank()} returns an object of class
 \dQuote{\code{rrank}}, which has its own print method that returns
