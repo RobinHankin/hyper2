@@ -726,6 +726,34 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(H)
 }
 
+`rankvec2supp` <- function(d,pnames){
+    nd <- names(d)
+    out <- hyper2(d=length(d))
+    while(any(d>0)){
+        eligible <- which(d>=0)  #NB inclusive inequality; zero is DNC etc who
+
+        ## Increment numerator power of the first choice among eligible players:
+        out[which(d==1)] %<>% inc
+        
+        ## Power of set of all eligible players decrements:
+        out[eligible] %<>% dec
+        
+        ## once you've come first in the field, you are ineligible to be first again:
+        d[d==1] <- -1  # NB strictly <0
+        
+        ## Now, everyone moves down the list, so who *was* in
+        ## second place becomes first place, who *was* third place
+        ## becomes second, and so on:
+        
+        d[d>0] %<>% dec
+        
+    } # while() loop closes
+
+    pnames(out) <- nd
+    if(!missing(pnames)){pnames(out) <- pnames}
+    return(out)
+}
+
 `ranktable2supp` <- function(x, noscore, misslast=TRUE){
     if(missing(noscore)){
         noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
@@ -759,29 +787,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     
     ## Now cycle through the rows; each row is a venue [voter]
     for(i in seq_len(nrow(fmat))){
-        d <- fmat[i,,drop=TRUE]
-        while(any(d>0)){
-            eligible <- which(d>=0)  #NB inclusive inequality; zero is DNC etc who
-            
-            ## Increment numerator power of the first choice among eligible players:
-            out[which(d==1)] %<>% inc
-            
-            ## Power of set of all eligible players decrements:
-            out[eligible] %<>% dec
-            
-            ## once you've come first in the field, you are ineligible to be first again:
-            d[d==1] <- -1  # NB strictly <0
-            
-            ## Now, everyone moves down the list, so who *was* in
-            ## second place becomes first place, who *was* third place
-            ## becomes second, and so on:
-            
-            d[d>0] %<>% dec
-            
-        } # while() loop closes
+        out %<>% `+`(rankvec2supp(fmat[i,,drop=TRUE]))
     } # i loop closes
-    
-    ## syntatic sugar:
-    pnames(out) <- racers
     return(out)
 } 

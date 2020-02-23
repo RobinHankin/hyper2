@@ -17,11 +17,10 @@
 
 Object \code{formula1} is a \code{hyper2} object that gives a likelihood
 function for the strengths of the competitors of the 2017 Formula One
-World Championship.  It is created from \code{inst/formula1_2017.txt} by
-the code in \code{inst/formula1.R} and \code{inst/formula1.Rmd}, which
-is heavily documented.  See also function \code{ranktable2supp()}.
-
-Object \code{F1_table_2017} is a data frame with ranks from the 2
+World Championship.  Object \code{F1_table_2017} is a data frame with
+rows being drivers and columns being ranks.  Object \code{formula1} is
+created from \code{inst/formula1_2017.txt} by
+\code{ranktable2supp(F1_table_2017)}.
 
 }
 \references{
