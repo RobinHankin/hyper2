@@ -1,4 +1,4 @@
-driver		QAT	ARG	AME	SPA	FRA	ITA	CAT	NED	GER	CZE	AUT	GBR	RSM	ARA	THA	JPN	AUS	MAL	VAL     points
+		QAT	ARG	AME	SPA	FRA	ITA	CAT	NED	GER	CZE	AUT	GBR	RSM	ARA	THA	JPN	AUS	MAL	VAL     points
 Marquez	    	2	1	Ret	1	1	2	1	2	1	1	2	2	1	1	1	1	1	2	1	420
 Dovizioso	1	3	4	4	2	3	Ret	4	5	2	1	Ret	6	2	4	3	7	3	4	269
 Vinales		7	Ret	11	3	Ret	6	Ret	1	2	10	5	3	3	4	3	4	Ret	1	6	211

@@ -1,4 +1,4 @@
-driver		AUS	BHR	CHN	RUS	ESP	MON	CAN	EUR	AUT	GBR	HUN	GER	BEL	ITA	SIN	MAL	JPN	USA	MEX	BRA	ABU	points
+		AUS	BHR	CHN	RUS	ESP	MON	CAN	EUR	AUT	GBR	HUN	GER	BEL	ITA	SIN	MAL	JPN	USA	MEX	BRA	ABU	points
  Rosberg 	1 	1 	1 	1 	Ret 	7 	5 	1 	4 	3 	2 	4 	1 	1 	1 	3 	1 	2 	2 	2 	2 	385
  Hamilton 	2 	3 	7 	2 	Ret 	1 	1 	5 	1 	1 	1 	1 	3 	2 	3 	Ret 	3 	1 	1 	1 	1 	380
  Ricciardo 	4 	4 	4 	11 	4 	2 	7 	7 	5 	4 	3 	2 	2 	5 	2 	1 	6 	3 	3 	8 	5 	256

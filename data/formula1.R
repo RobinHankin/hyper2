@@ -289,17 +289,10 @@ structure(list(brackets = list(1, c(1, 2, 3, 4, 5, 6, 7, 8, 9,
 ), class = "factor")), class = "hyper2")
 
 `F1_table_2017` <-
-structure(list(driver = structure(c(8L, 24L, 2L, 17L, 19L, 23L, 
-16L, 14L, 20L, 10L, 13L, 21L, 7L, 12L, 1L, 22L, 15L, 25L, 11L, 
-4L, 5L, 6L, 9L, 3L, 18L), .Label = c("Alonso", "Bottas", "Button", 
-"Ericsson", "Gasly", "Giovinazzi", "Grosjean", "Hamilton", "Hartley", 
-"Hulkenberg", "Kvyat", "Magnussen", "Massa", "Ocon", "Palmer", 
-"Perez", "Raikkanen", "Resta", "Ricciardo", "Sainz", "Stroll", 
-"Vandoorne", "Verstappen", "Vettel", "Wehrlein"), class = "factor"), 
-    AUS = structure(c(7L, 2L, 8L, 9L, 15L, 10L, 12L, 3L, 13L, 
-    4L, 11L, 15L, 15L, 15L, 15L, 6L, 15L, 16L, 14L, 15L, 1L, 
-    5L, 1L, 1L, 1L), .Label = c("0", "1", "10", "11", "12", "13", 
-    "2", "3", "4", "5", "6", "7", "8", "9", "Ret", "WD"), class = "factor"), 
+structure(list(AUS = structure(c(7L, 2L, 8L, 9L, 15L, 10L, 12L, 
+3L, 13L, 4L, 11L, 15L, 15L, 15L, 15L, 6L, 15L, 16L, 14L, 15L, 
+1L, 5L, 1L, 1L, 1L), .Label = c("0", "1", "10", "11", "12", "13", 
+"2", "3", "4", "5", "6", "7", "8", "9", "Ret", "WD"), class = "factor"), 
     CHN = structure(c(2L, 9L, 13L, 12L, 11L, 10L, 16L, 3L, 14L, 
     5L, 7L, 17L, 4L, 15L, 17L, 17L, 6L, 1L, 17L, 8L, 1L, 17L, 
     1L, 1L, 1L), .Label = c("0", "1", "10", "11", "12", "13", 
@@ -384,5 +377,9 @@ structure(list(driver = structure(c(8L, 24L, 2L, 17L, 19L, 23L,
     "14", "15", "16", "17", "18", "2", "3", "4", "5", "6", "7", 
     "8", "9", "Ret"), class = "factor"), points = c(363L, 317L, 
     305L, 205L, 200L, 168L, 100L, 87L, 54L, 43L, 43L, 40L, 28L, 
-    19L, 17L, 13L, 8L, 5L, 0L, 0L, 0L, 0L, 0L, 0L, 0L)),
-class = "data.frame", row.names = c(NA, -25L))
+    19L, 17L, 13L, 8L, 5L, 0L, 0L, 0L, 0L, 0L, 0L, 0L)), class = "data.frame", row.names = c("Hamilton", 
+"Vettel", "Bottas", "Raikkanen", "Ricciardo", "Verstappen", "Perez", 
+"Ocon", "Sainz", "Hulkenberg", "Massa", "Stroll", "Grosjean", 
+"Magnussen", "Alonso", "Vandoorne", "Palmer", "Wehrlein", "Kvyat", 
+"Ericsson", "Gasly", "Giovinazzi", "Hartley", "Button", "Resta"
+))

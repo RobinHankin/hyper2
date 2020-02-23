@@ -38,7 +38,7 @@ rankvec2supp(d,pnames)
   such as found at
   \url{https://en.wikipedia.org/wiki/2019_Moto3_season}.  A prepared
   text version is available at \code{inst/motoGP_2019.txt}; use
-  \code{read.table(header=TRUE)} to create a data frame.
+  \code{read.table()} to create a data frame.
 
 
 

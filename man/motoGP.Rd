@@ -19,7 +19,9 @@
   File \code{inst/moto2019.txt} is the source text file; to create
   \code{motoGP_2019_table} use
 
-  \code{read.table(system.file("motoGP_2019.txt",package="hyper2"),header=TRUE)}
+  \code{a <- read.table(system.file("motoGP_2019.txt",package="hyper2"))}
+
+  and then \code{ranktable2supp(a)} gives \code{motGP_2019}.
   
 }
 \references{

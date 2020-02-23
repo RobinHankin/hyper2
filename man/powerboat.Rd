@@ -20,7 +20,9 @@
   File \code{inst/powerboat2018.txt} is the source text file; to create
   \code{powerboat2018_table} use
 
-  \code{read.table(system.file("powerboat2018.txt",package="hyper2"),header=TRUE)}
+  \code{read.table(system.file("powerboat2018.txt",package="hyper2"))}
+
+  
   
 }
 \references{
@@ -40,7 +42,7 @@ Championship. In \emph{Wikipedia, The Free Encyclopedia}.  Retrieved
 \examples{
 data(powerboat)
 jj <-
-  read.table(system.file("powerboat2018.txt",package="hyper2"),header=TRUE)
+  read.table(system.file("powerboat2018.txt",package="hyper2"))
 identical(jj,powerboat2018_table)  # should be TRUE
 }
 

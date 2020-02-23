@@ -760,13 +760,10 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
 
     if(misslast){
-        first_and_last <- c(1,ncol(x))
+        venues <- colnames(x)[-ncol(x)]
     } else {
-        first_and_last <- 1
+        venues <- colnames(x)
     }
-
-    racers <- x[,1]
-    venues <- colnames(x)[-first_and_last] 
 
     ## Now create a numeric matrix, fmat.  Two steps: first, count
     ## any no-score as zero:
@@ -778,9 +775,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     
     ## Second, convert to numeric and strip out names; transpose of
     ## x (because we want each row to be a venue):
-    
-    fmat <- matrix(as.numeric(jj[,-first_and_last]),byrow=TRUE,ncol=nrow(x)) 
-    colnames(fmat) <- racers
+    if(misslast){jj <- jj[,-ncol(x)]}
+    fmat <- matrix(as.numeric(jj),byrow=TRUE,ncol=nrow(x)) 
+    colnames(fmat) <- rownames(x)
     rownames(fmat) <- venues
     
     out <- hyper2(d=ncol(fmat))

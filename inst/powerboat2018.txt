@@ -1,4 +1,4 @@
-driver		POR	GBR	FRA	CHN	IND	ABU	SHA	points
+		POR	GBR	FRA	CHN	IND	ABU	SHA	points
 Torrente	1	Ret	3	1	1	6	3	89
 Stark		10	1	1	3	3	Ret	1	85
 T_AlQamzi	2	4	2	2	Ret	1	Ret	74
