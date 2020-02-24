@@ -375,7 +375,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     if(is.null(startp)){ startp <- indep(equalp(H)) }
 
     for(i in seq_len(n)){
-        jj <- maxp_single(H, startp=startp+runif(size(H)-1,max=SMALL/size(H)), give=TRUE, fcm=fcm, fcv=fcv, SMALL=SMALL, ...)
+        if(i>1){startp <- startp+runif(size(H)-1,max=SMALL/size(H))}
+        jj <- maxp_single(H, startp=startp, give=TRUE, fcm=fcm, fcv=fcv, SMALL=SMALL, ...)
         likes[i] <- jj$value
         if(show){cat(paste(i,"; ", best_so_far, "  " , jj$value,"\n", sep=""))}
         if(jj$value > best_so_far){ # that is, if we have found something better
