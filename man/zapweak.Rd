@@ -20,16 +20,10 @@ Iteratively discards weak players using \code{discard()}.  Uses
 \code{maxp(..,n=1)} for efficiency.
 
 }
-\value{Returns a slimmed-down \code{hyper2} object.
+\value{Returns a slimmed-down \code{hyper2} object with weak players
+  removed.} 
 \author{Robin K. S. Hankin}
-\note{
-
-}
-
-\seealso{
-
-}
 \examples{
-
-
+data(karate)
+zapweak(karate)
 }
