@@ -31,14 +31,4 @@ for(i in seq_len(nrow(a))){
 }
 
 
-Hcut <- H
-for(i in 1:30){
-  print(paste("iteration ",i,", size(H) = ",size(Hcut),sep=""))
-  m <- maxp(Hcut)
-  too_small <- (m < 1e-3)
-  if(any(too_small)){
-    Hcut %<>% discard(names(m[too_small]))
-  } else {
-    break
-  }
-}
+Hcut <- zapweak(H)
