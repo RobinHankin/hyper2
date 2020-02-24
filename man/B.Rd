@@ -17,7 +17,7 @@ Uses numerical techniques for calculating the normalizing constant for the hyper
 B(H, disallowed=NULL, give=FALSE, ...)
 probability(H, disallowed=NULL, ...)
 mgf(H, powers, ...) 
-dhyper2(P,H,...)
+dhyper2(ip,H,...)
 dhyper2_e(e,H,include.Jacobian=TRUE)
 mean_hyper2(H, normalize=TRUE, ...)
 Jacobian(e)
@@ -32,8 +32,9 @@ p_to_e(p)
     over which to integrate; default \code{NULL} means to integrate over
     the whole simplex.  The integration proceeds over \code{p} with
     \code{disallowed(p)} evaluating to \code{FALSE}}
-  \item{e,p}{Vectors; see details}
-  \item{P}{A vector of probabilities with unit rowsums}
+  \item{e,p}{A vector; see details}
+  \item{ip}{A vector of probabilities corresponding to \code{indep(p)}
+    where \code{p} is vector with unit sum}
   \item{include.Jacobian}{Boolean, indicated whether or not to include
     the Jacobian transformation in the evaluation}
   \item{give}{Boolean, with default \code{FALSE} meaning to return the
@@ -46,10 +47,16 @@ p_to_e(p)
 \details{
   \itemize{
 
-    \item Function \code{B()} returns the normalizing constant;
-    \code{dhyper2(p,H)/B(H)} is a probability density function.
-    Internally, \eqn{p} is converted to \code{e} (by \code{e_to_p()})
-    and the integral proceeds over a hypercube.
+    \item Function \code{B()} returns the normalizing constant of a
+    hyperdirichlet likelihood function.  Internally, \eqn{p} is
+    converted to \code{e} (by \code{e_to_p()}) and the integral proceeds
+    over a hypercube.  This function can be very slow, especially if
+    \code{disallowed} is used.
+
+    \item Function \code{dhyper2(ip,H)} is a probability density
+    function on the independent components of a unit-sum vector, that
+    is, \code{ip=indep(p)}.  This function calls \code{B()} each time so
+    might be a performance bottleneck.
 
     \item Function \code{probability()} gives the probability of an
     observation from a hyperdirichlet distribution satisfying
@@ -71,7 +78,10 @@ p_to_e(p)
 }
 \value{
   \itemize{
-    \item Function \code{B()} returns a scalar: the normalization constant
+    \item Function \code{B()} returns a scalar: the normalization
+    constant
+    \item Function \code{dhyper2()} is a probability density function
+    over \code{indep(p)}
     \item Function \code{mean()} returns a \eqn{k}-tuple with unit sum
     \item Function \code{mgf()} returns a scalar equal to the expectation of
     \code{p^power}

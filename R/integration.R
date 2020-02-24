@@ -29,9 +29,9 @@ function(e){
   prod(cumprod(1-e))*e1^n
 }
 
-`dhyper2` <- function(P,H,...){
-  P <- rbind(P)
-  loglik(P,H,log=FALSE)/B(H,...)
+`dhyper2` <- function(ip,H,...){
+  ip <- rbind(ip)
+  loglik(ip,H,log=FALSE)/B(H,...)
 }
 
 `dhyper2_e` <-  # analogous to dhyperdirichlet_e()
