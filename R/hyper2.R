@@ -795,11 +795,12 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     cat(paste("iteration ",i,", size(H) = ",size(H),"\n",sep=""))
     m <- maxp(H,n=1,...)
     too_weak <- m < minstrength
+    browser()
     if(any(too_weak)){
       H %<>% discard(names(m[too_weak]))
     } else {
-      break
+      return(H)
     }
   }
-  return(H)
+  stop("control should not get here")
 }
