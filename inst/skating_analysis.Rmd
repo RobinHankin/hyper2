@@ -17,6 +17,7 @@ more details).
 
 ```{r}
 library("hyper2",quietly=TRUE)
+set.seed(0)
 data("skating")
 skating_table
 ```		
@@ -122,7 +123,7 @@ jj <-
 problem_constraints <-  # fill with zeros for other competitors
     cbind(jj,matrix(0,nrow(jj),size(skating)-ncol(jj)-1))
 
-small <-1e-4  # need a sensible start value satisfying the constraints
+small <- 1e-6  # need a sensible start value satisfying the constraints
 start <- c(rep(2*small,3),rep(3*small,2),rep(small,17))
 
 out <- rep(0,nrow(problem_constraints))
