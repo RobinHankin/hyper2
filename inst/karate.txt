@@ -7,7 +7,7 @@ rosiello       3 	tadissi 	 3 	repechage2
 ferreras       0 	zakaria 	 3 	repechage2
 rosiello       0 	elsawy 		 1 	repechage3
 zakaria        3 	mora 		 4 	repechage3
-elsawy 	       2 	almasafta 	 7 	repechage4
+elsawy 	       2 	almasatfa 	 7 	repechage4
 mora 	       5 	rolle 		 3 	repechage4
 almasatfa      2 	velozo 		 2 	bronze_medal
 mora 	       3 	derafshipour 	 6 	bronze_medal
