@@ -1,89 +1,87 @@
-velozo	     1 figueira 3
-dacosta      2 derafshipour 0
-figueira     5 dacosta 6
-rosiello     2 sabiecki 0
-rosiello     3 tadissi 3
-ferreras     0 zakaria 3
-rosiello     0 elsawy 1
-zakaria      3 mora 4
-elsawy 	     2 almasafta 7
-mora 	     5 rolle 3
-almasafta    2 velozo 2
-mora 	     3 derafshipour 6
-hollowood    1 avila 0
-karkkalainen 2 alhadharim 3
-pokorny      1 krautsou 3
-limam 	     0 gutierrez 8
-pak 	     1 shinohara 2
-hollowood    0 poshen 5
-alhadharim   0 alkhathami 4
-gidakos      4 nyoni 0
-karutsou     0 muratov 5
-gutierrez    1 daraghma 0
-shinohara    1 gorenc 0
-joksic 	     1 delgado 0
-velozo 	     1 poshen 0
-alkhathami   2 gidakos 1
-shinohara    0 joksic 1
-velozo 	     4 alkhathami 4
-gutierrez    5 joksic 5
-velozo 	     8 gutierrez 5
-rotionov     2 sijercic 3
-uzakov 	     1 toli 0
-loannides    2 gordillo 7
-elsawy 	     6 tawfik 2
-akondzo      1 kavanagh 3
-figueira     1 rosiello 0
-sijercic     0 zhiwei 2
-uzakov 	     2 petkov 1
-gordillo     0 almasatfa 8
-rodriguiez   0 bodrovs 6
-elsawy 	     5  mendez 0
-kavanagh     0 maresca 9
-figueira     2 sabiecki 0
-fillies      0 tadissi 2
-almasatfa    9 bodrovs 4
-elsawy 	     1 maresca 0
-figueira     4 tadissi 0
-uzakov 	     4 almasatfa 5
-elsawy 	     1 figueira 2
-almasatfa    0 figueira 1
-khani 	     4 lindelauf 0
-sawadogo     0 ngamphuenghpit 4
-mertel 	     0 mora 2
-balcius      1 narkiniemi 0
-zakaria      6 hodzic 2
-khani 	     2 noriega 3
-cenaj 	     1 suleimani 4
-ngamphuenghpit 3 rolle 6
-diouf 3 nievas 3
-mora 3 gudmundsson 2
-ferreras 0 dacosta 1
-noriega 2 suleimani 0
-rolle 2 nievas 1
-mora 1 hasanov 0
-zakaria 0 dacosta 2
-noriega 0 rolle 4
-mora 2 dacosta 3
-rolle 2 dacosta 3
-catro 0 oneil 4
-bouakel 7 teodorescu 1
-shafei 2 murtazaliev 6
-homola 0 sharma 3
-matthiasen 2 povrzenic 2
-
-
-oneil 0 derafshipour 1
-bouakel 1 galvez 3
-murtazaliev 3 cheung 3
-kuhn 4 dimitrov 0
-sharma 0 jihwan 3
-gill 0 pataridze 4
-matthiasen 0 hasanov 4
-uygur 1 thomas 0
-cheung 0 kuhn 5
-jihwan 1 pataridze 2
-hasanov 2 uygur 1
-pataridze 0 hasanov 1
-derafshipour 3 hasanov 1
-
+karateka1    wins1	karateka2	 wins2  group
+figueira       5 	dacosta   	 6 	finals
+velozo	       1 	figueira 	 3 	semifinal
+dacosta        2 	derafshipour 	 0 	semifinal
+rosiello       2 	sabiecki 	 0 	repechage
+rosiello       3 	tadissi 	 3 	repechage2
+ferreras       0 	zakaria 	 3 	repechage2
+rosiello       0 	elsawy 		 1 	repechage3
+zakaria        3 	mora 		 4 	repechage3
+elsawy 	       2 	almasafta 	 7 	repechage4
+mora 	       5 	rolle 		 3 	repechage4
+almasatfa      2 	velozo 		 2 	bronze_medal
+mora 	       3 	derafshipour 	 6 	bronze_medal
+hollowood      1 	avila 		 0 	pool_A_prelim
+karkkalainen   2 	alhadharim 	 3 	pool_A_prelim
+pokorny        1 	krautsou 	 3 	pool_A_prelim
+limam 	       0 	gutierrez 	 8 	pool_A_prelim
+pak 	       1 	shinohara 	 2 	pool_A_prelim
+hollowood      0 	poshen 		 5 	pool_A_round_1
+alhadharim     0 	alkhathami 	 4 	pool_A_round_1
+gidakos        4 	nyoni 		 0 	pool_A_round_1
+krautsou       0 	muratov 	 5 	pool_A_round_1
+gutierrez      1 	daraghma 	 0 	pool_A_round_1
+shinohara      1 	gorenc 		 0 	pool_A_round_1
+joksic 	       1 	delgado 	 0 	pool_A_round_1
+velozo 	       1 	poshen 		 0 	pool_A_round_2
+alkhathami     2 	gidakos 	 1 	pool_A_round_2
+shinohara      0 	joksic 		 1 	pool_A_round_2
+velozo 	       4 	alkhathami 	 4 	pool_A_round_3
+gutierrez      5 	joksic 		 5 	pool_A_round_3
+velozo 	       8 	gutierrez 	 5 	quarterfinal
+rodionov       2 	sijercic 	 3 	pool_B_prelim
+uzakov 	       1 	toli 		 0 	pool_B_prelim
+loannides      2 	gordillo 	 7 	pool_B_prelim
+elsawy 	       6 	tawfik 		 2 	pool_B_prelim
+akondzo        1 	kavanagh 	 3 	pool_B_prelim
+figueira       1 	rosiello 	 0 	pool_B_prelim
+sijercic       0 	zhiwei 		 2 	pool_B_round_1
+uzakov 	       2 	petkov 		 1 	pool_B_round_1
+gordillo       0 	almasatfa 	 8 	pool_B_round_1
+rodriguiez     0 	bodrovs 	 6 	pool_B_round_1
+elsawy 	       5 	mendez 		 0 	pool_B_round_1
+kavanagh       0 	maresca 	 9 	pool_B_round_1
+figueira       2 	sabiecki 	 0 	pool_B_round_1
+fillies        0 	tadissi 	 2 	pool_B_round_1
+almasatfa      9 	bodrovs 	 4 	pool_B_round_2
+elsawy 	       1 	maresca 	 0 	pool_B_round_2
+figueira       4 	tadissi 	 0 	pool_B_round_2
+uzakov 	       4 	almasatfa 	 5 	pool_B_round_3
+elsawy 	       1 	figueira 	 2 	pool_B_round_3
+almasatfa      0 	figueira 	 1 	quarterfinal
+khani 	       4 	lindelauf 	 0 	pool_C_prelim
+sawadogo       0 	ngamphuengphit 	 4 	pool_C_prelim
+mertel 	       0 	mora 		 2 	pool_C_prelim
+balcius        1 	narkiniemi 	 0 	pool_C_prelim
+zakaria        6 	hodzic 		 2 	pool_C_prelim
+khani 	       2 	noriega 	 3 	pool_C_round_1
+cenaj 	       1 	suleimani 	 4 	pool_C_round_1
+ngamphuengphit 3 	rolle 		 6  	pool_C_round_1
+diouf 	       3 	nievas 		 3 	pool_C_round_1
+mora 	       3 	gudmundsson 	 2 	pool_C_round_1
+ferreras       0 	dacosta 	 1 	pool_C_round_1
+noriega        2 	suleimani 	 0 	pool_C_round_2
+rolle 	       2 	nievas 		 1 	pool_C_round_2
+mora 	       1 	hasanov 	 0 	pool_C_round_2
+zakaria        0 	dacosta 	 2 	pool_C_round_2
+noriega        0 	rolle 		 4 	pool_C_round_3
+mora 	       2 	dacosta 	 3 	pool_C_round_3
+rolle 	       2 	dacosta 	 3 	quarterfinal
+catro 	       0 	oneil 		 4 	pool_D_prelim
+bouakel        7 	teodorescu 	 1 	pool_D_prelim
+shafei 	       2 	murtazaliev 	 6 	pool_D_prelim
+homola 	       0 	sharma 		 3 	pool_D_prelim
+matthiasen     2 	povrzenic 	 2 	pool_D_prelim
+oneil 	       0 	derafshipour 	 1 	pool_D_round_1
+bouakel        1 	galvez 		 3 	pool_D_round_1
+murtazaliev    3 	cheung 		 3 	pool_D_round_1
+kuhn 	       4 	dimitrov 	 0 	pool_D_round_1
+sharma 	       0 	jihwan 		 3 	pool_D_round_1
+gill 	       0 	pataridze 	 4 	pool_D_round_1
+matthiasen     0 	hasanov 	 4 	pool_D_round_1
+uygur 	       1 	thomas 		 0 	pool_D_round_1
+cheung 	       0 	kuhn 		 5 	pool_D_round_2
+jihwan 	       1 	pataridze 	 2 	pool_D_round_2
+hasanov        2 	uygur 		 1 	pool_D_round_2
+pataridze      0 	hasanov 	 1 	pool_D_round_3
+derafshipour   3 	hasanov 	 1 	quarterfinal
