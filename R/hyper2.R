@@ -788,3 +788,18 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     } # i loop closes
     return(out)
 } 
+
+`zapweak` <- function(H, minstrength=1e-5, maxit, ...){
+  if(missing(maxit)){maxit <- size(H)-1}
+  for(i in seq_len(maxit)){
+    cat(paste("iteration ",i,", size(H) = ",size(H),"\n",sep=""))
+    m <- maxp(H,n=1,...)
+    too_weak <- m < minstrength
+    if(any(too_weak)){
+      H %<>% discard(names(m[too_weak]))
+    } else {
+      break
+    }
+  }
+  return(H)
+}
