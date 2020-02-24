@@ -56,7 +56,7 @@ where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.  Note that function
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{Ops.hyper2}},\code{\link{Extract}},\code{\link{loglik}}}
+\seealso{\code{\link{Ops.hyper2}},\code{\link{Extract.hyper2}},\code{\link{loglik}}}
 \examples{
 hyper2(list(1,2,3,1:2,2:3),1:5)
 }
