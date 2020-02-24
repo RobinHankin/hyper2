@@ -7,7 +7,7 @@
  butyrskaya  06 05 08 07 12 05 08 07 06
  robinson    07 07 07 09 06 08 10 06 07
  sebestyen   08 10 12 08 07 06 12 08 08
- kettunen    09 09 13 06 12 10 07 11 14
+ kettunen    09 09 13 06 13 10 07 11 14
  volchkova   10 06 14 11 10 12 06 09 15
  maniachenko 13 12 11 12 16 11 11 10 09
  fontana     14 11 18 16 09 15 09 12 10

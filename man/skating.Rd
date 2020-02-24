@@ -21,6 +21,11 @@
   each judge is a column.  Function \code{order_likelihood()} requires a
   transpose of this to operate.
 
+  The data frame corrects what appears to be an error in Lock and Lock,
+  in which judge 5 ranked both Butyrskaya and Kettunen 12; there is no
+  13.  Using EM, I reckon that Butyrskaya should be ranked twelfth and
+  Kettunen thirteenth.
+
 }
 \references{
   \itemize{
