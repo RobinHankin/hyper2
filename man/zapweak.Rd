@@ -12,18 +12,28 @@ zapweak(H, minstrength = 1e-05, maxit, ...)
   \item{minstrength}{Strength below which to discard competitors}
   \item{maxit}{Maximum number of iterations; if missing, use
     \code{size(H)-1}}
-  \item{\dots}{Further arguments, passed to \code{}}
+  \item{\dots}{Further arguments, passed to \code{maxp()}}
 }
 \details{
-
-Iteratively discards weak players using \code{discard()}.  Uses
-\code{maxp(..,n=1)} for efficiency.
-
+Iteratively discards the weakest player (if the estimated strength is
+less than \code{minstrength}) using \code{discard()}.
+\code{maxp(..,n=1)} for efficiency.  
 }
 \value{Returns a slimmed-down \code{hyper2} object with weak players
-  removed.} 
+  removed.
+}
+\warning{
+  This function is experimental and appears to be overly
+  aggressive.  For some likelihood functions removes \strong{all} the
+  players.  I am investigating this.
+}
+
+\seealso{\code{\link{discard}},\code{\link{maxp}}}
 \author{Robin K. S. Hankin}
 \examples{
 data(karate)
-zapweak(karate)
+zapweak(karate) # seems to work
+
+# data(rowing)
+# zapweak(sculls2016) # removes everyone...
 }
