@@ -797,7 +797,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     m <- maxp(H,n=1,...)
     too_weak <- m < minstrength
     if(any(too_weak)){
-      H %<>% discard(names(m[too_weak]))
+      H %<>% discard(names(m[which.min(m)]))
     } else {
      break
     }
