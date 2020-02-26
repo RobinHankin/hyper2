@@ -16,7 +16,7 @@ Trask		14	6	12	Ret	Ret	Ret	8	8
 Marszalek	11	DNS	8	10	Ret	7	Ret	8
 Deguisne	12	9	10	11	Ret	9	9	7
 Benavente	7	10	11	Ret	Ret	11	DNS	5
-Schuft		15	Ret	DNS	DNS	9	13	11	2
+Schuft		15	Ret	DNS	DNS	9	12	11	2
 Sookbuangbon	0	0	0	13	10	DNP	Ret	1
 Bjerknaes	0	11	13	0	0	0	0	0
 R_AlQamzi	13	0	0	0	0	0	0 	0

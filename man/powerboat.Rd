@@ -22,7 +22,8 @@
 
   \code{read.table(system.file("powerboat2018.txt",package="hyper2"))}
 
-  
+  The dataset used here corrects an apparent typo in the wikipedia table
+  (see github issue 37).
   
 }
 \references{
