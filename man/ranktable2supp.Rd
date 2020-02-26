@@ -28,18 +28,22 @@ rankvec2supp(d,pnames)
     for a non-finishing status such as \dQuote{did not finish}
     or \dQuote{disqualified}.  A missing argument is interpreted as 
     \code{c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")}}
-  \item{misslast}{Boolean, specifying whether or not ignore the last
-    column (which is typically \dQuote{points scored})}
+  \item{misslast}{Boolean, specifying whether or not to ignore the
+    last column (which is typically \dQuote{points scored})}
   \item{pnames}{Optional list of names, see details}
 }
 \details{
 
   Function \code{ranktable2supp()} is intended for use on rank tables
   such as found at
-  \url{https://en.wikipedia.org/wiki/2019_Moto3_season}.  A prepared
-  text version is available at \code{inst/motoGP_2019.txt}; use
-  \code{read.table()} to create a data frame.
+  \url{https://en.wikipedia.org/wiki/2019_Moto3_season}.  This is a
+  common format, used for Formula 1, motoGP, and other racing sports.
+  Prepared text versions are available in the package in the
+  \code{inst/} directory, for example \code{inst/motoGP_2019.txt}.  Use
+  \code{read.table()} to create a data frame which can be interpreted by
+  \code{ranktable2supp()}.
 
+  
 
 
 }
