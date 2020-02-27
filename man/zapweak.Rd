@@ -22,10 +22,12 @@ less than \code{minstrength}) using \code{discard()}.
 \value{Returns a slimmed-down \code{hyper2} object with weak players
   removed.
 }
-\warning{
-  This function is experimental and appears to be overly
-  aggressive.  For some likelihood functions removes \strong{all} the
+\note{
+
+  This function is experimental and appears to be overly aggressive.
+  For some likelihood functions \code{zapweak()} removes \emph{all} the
   players.  I am investigating this.
+
 }
 
 \seealso{\code{\link{discard}},\code{\link{maxp}}}
