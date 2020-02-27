@@ -5,11 +5,14 @@ exportPattern("^[[:alpha:]]+")
 importFrom(Rcpp, evalCpp)
 importFrom("stats", "constrOptim")
 importFrom("stats", "runif")
+importFrom("stats", "rnorm")
 importFrom("utils", "head")
 importFrom("partitions","perms")
 
 importFrom("magrittr", "%>%", "%<>%")
 importFrom("cubature", "adaptIntegrate")
+
+importFrom("EMC","randomWalkMetropolis")
 
 import(methods)
 
