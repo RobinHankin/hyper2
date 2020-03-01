@@ -21,7 +21,7 @@ ordervec2supp(d,pnames)
 }
 \arguments{
   \item{x}{Data frame, see details}
-  \item{d}{A named numeric vector giving ranks; zero entries are
+  \item{d}{A named numeric vector giving order; zero entries are
     interpreted as that competitor coming last (due to, e.g., not
     finishing)}
   \item{noscore}{Character vector giving the abbreviations
@@ -34,7 +34,7 @@ ordervec2supp(d,pnames)
 }
 \details{
 
-  Function \code{ordertable2supp()} is intended for use on rank tables
+  Function \code{ordertable2supp()} is intended for use on order tables
   such as found at
   \url{https://en.wikipedia.org/wiki/2019_Moto3_season}.  This is a
   common format, used for Formula 1, motoGP, and other racing sports.
