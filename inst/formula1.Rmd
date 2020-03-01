@@ -30,12 +30,12 @@ column, we see the result from Australia (AUS) in which Hamilton came
 second, Vettel first, Bottas third, and so on.  Notation used also
 includes six different classes of no-score such as "Ret" for retired,
 "WD" for withdrawn, and so on.  I now use bespoke R function
-\code{ranktable2supp()}, that translates data of this type into a
+\code{ordertable2supp()}, that translates data of this type into a
 log-likelihood.  The function is similar to, but slightly different
 from, the analysis in `eurovision.R`.
 
 ```{r,applydata}
-L2017 <- ranktable2supp(f2017)
+L2017 <- ordertable2supp(f2017)
 head(L2017,3)
 ```
 
@@ -164,10 +164,10 @@ pchisq(2*(L2 - L4$value),df=1,lower.tail=FALSE)
 We will consider four years data:
 
 ```{r,fouryearsdata}
-F1_2014 <- "formula1_2014.txt" %>% read.table(header=TRUE) %>% ranktable2supp
-F1_2015 <- "formula1_2015.txt" %>% read.table(header=TRUE) %>% ranktable2supp
-F1_2016 <- "formula1_2016.txt" %>% read.table(header=TRUE) %>% ranktable2supp
-F1_2017 <- "formula1_2017.txt" %>% read.table(header=TRUE) %>% ranktable2supp
+F1_2014 <- "formula1_2014.txt" %>% read.table(header=TRUE) %>% ordertable2supp
+F1_2015 <- "formula1_2015.txt" %>% read.table(header=TRUE) %>% ordertable2supp
+F1_2016 <- "formula1_2016.txt" %>% read.table(header=TRUE) %>% ordertable2supp
+F1_2017 <- "formula1_2017.txt" %>% read.table(header=TRUE) %>% ordertable2supp
 a <- list(F1_2014, F1_2015, F1_2016, F1_2017)
 alldrivers <- all_pnames(a)
 

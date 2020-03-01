@@ -78,7 +78,7 @@ L <- list()  # overall list
 
 if(doo[["L1"]]){
 L$week1 <-  # 8 May 2014
-ggol(H,
+ggrl(H,
      top3       = c("Laura","Jamie","Sean"),
      btm21      = c("Emelia", "Tracy", "Sarah", "Colin", "Kira",
                     "Georgia", "Tash", "Byron", "Scott", "Emily",
@@ -91,7 +91,7 @@ ggol(H,
 
 if(doo[["L2a"]]){
 L$week2a <- # elimination 4 chosen 11 May; Deepali eliminated 12 May 2014
-ggol(H,
+ggrl(H,
             win = c("Sarah"),
              IN = c("Brent","Laura","Emelia","Tracy","Ben","Amy","Renae",
                     "Colin","Kira","Georgia","Tash","Byron","Sam","Rachael",
@@ -117,7 +117,7 @@ L$week2b[c( # winning team union losing team; 22 players
 }
 
 if(doo[["L2c"]]){  # 14 May
-L$week2c <- ggol(H,  # elimination, field of losing team from 13 May.
+L$week2c <- ggrl(H,  # elimination, field of losing team from 13 May.
             team_lose  = c("Laura","Amy","Tash","Rachael","Emily"),
             btm6       = c("Brent","Tracy","Byron","Steven","Scott"),
             eliminated = c("Nicole")
@@ -126,7 +126,7 @@ L$week2c <- ggol(H,  # elimination, field of losing team from 13 May.
 
 if(doo[["L3a"]]){
 L$week3a <-  # Nick eliminated 19 May, 
-    ggol(H,
+    ggrl(H,
          top3       = c("Laura","Tracy","Amy"),
          IN         = c("Brent","Emelia","Jamie","Ben","Renae","Colin",
                         "Kira","Georgia","Tash","Byron","Sam","Rachael",
@@ -150,7 +150,7 @@ L$week3b[c(  # winning team union losing team
 }
 
 if(doo[["L3c"]]){
-L$week3c <- ggol(H, # Emily eliminated 22 May
+L$week3c <- ggrl(H, # Emily eliminated 22 May
             team_lose  = c("Emelia","Tracy","Ben","Sam"),
             btm6       = c("Brent","Jamie","Georgia"),
             btm3       = c("Steven","Sean"),
@@ -159,7 +159,7 @@ L$week3c <- ggol(H, # Emily eliminated 22 May
 }
 
 if(doo[["L4a"]]){
-L$week4a <- ggol(H, # Scott eliminated 26 May
+L$week4a <- ggrl(H, # Scott eliminated 26 May
             top3       = c("Brent","Sarah","Tash"),
             IN         = c("Laura","Emelia","Tracy","Ben","Amy","Renae",
                            "Colin","Kira","Georgia","Byron","Sam",
@@ -184,7 +184,7 @@ L$week4b[c(  # winning team union losing team
 }
 
 if(doo[["L4c"]]){ # Sean eliminated 29 May; losing team chosen 28 May
-L$week4c <- ggol(H,
+L$week4c <- ggrl(H,
              team_lose  = c("Amy","Colin","Georgia",
                            "Tash","Sam","Rachael"),
              btm3       = c("Brent","Kira"),
@@ -193,7 +193,7 @@ L$week4c <- ggol(H,
 }
 
 if(doo[["L5a"]]){  # Steven eliminated 2 Jun; pressure test 1 Jun
-L$week5a <- ggol(H,
+L$week5a <- ggrl(H,
             top3       = c("Brent","Renae","Rachael"),
             IN         = c("Laura","Emelia","Jamie","Tracy",
                            "Amy","Colin","Kira","Georgia","Tash",
@@ -236,7 +236,7 @@ L$week5b[c(   # all players left after winning and second team sits
     "Tash","Rachael"
    )] <- -1 
 
-L$week5b <- ggol(L$week5b,  # Rachael eliminated 5 Jun
+L$week5b <- ggrl(L$week5b,  # Rachael eliminated 5 Jun
             btm4   = c("Brent","Ben","Tash"),
             eliminated = c("Rachel")
             )
@@ -245,7 +245,7 @@ L$week5b <- ggol(L$week5b,  # Rachael eliminated 5 Jun
 
 if(doo[["L6a"]]){
 L$week6a <- H  # Sam eliminated 9th Jun
-L$week6a <- ggol(H,
+L$week6a <- ggrl(H,
             top3       = c("Amy","Colin","Georgia"),
             IN         = c("Brent","Emelia","Jamie","Tracy",
                            "Ben","Renae","Sarah","Kira","Tash"),
@@ -266,7 +266,7 @@ L$week6b[c(   # all players (denominator)
     "Colin", "Kira","Georgia","Tash","Byron"
 )] <- 1
 
-L$week6b <- ggol(L$week6b,    # Sarah eliminated 12 June
+L$week6b <- ggrl(L$week6b,    # Sarah eliminated 12 June
             team_lose  = c("Brent","Emelia","Jamie","Byron"),
             btm3       = c("Tracy","Colin"),
             eliminated = c("Sarah")
@@ -274,7 +274,7 @@ L$week6b <- ggol(L$week6b,    # Sarah eliminated 12 June
 }
 
 if(doo[["L7a"]]){  # Byron eliminated 16 Jun;  
-L$week7a <- ggol(H,
+L$week7a <- ggrl(H,
             top3       = c("Laura", "Tracy","Ben"),
             IN         = c("Brent","Emelia","Jamie","Renae",
                            "Colin","Kira","Georgia"),
@@ -305,14 +305,14 @@ L$week7b[c(  # all players -=1
     "Georgia","Tash"
     )] <- -1
 
-L$week7b <- ggol(L$week7b,  # Tash eliminated 19 Jun; no Laura (she used her immunity pin)
+L$week7b <- ggrl(L$week7b,  # Tash eliminated 19 Jun; no Laura (she used her immunity pin)
             team_lose  = c("Brent","Emelia","Colin","Kira"),
             eliminated = c("Tash")
     )
 }
 
 if(doo[["L8a"]]){
-L$week8a <- ggol(H,  # Georgia eliminated 23 June
+L$week8a <- ggrl(H,  # Georgia eliminated 23 June
             win       = c("Tracy"),
             top3      = c("Brent","Emelia","Jamie"),
             IN        = c("Ben","Colin","Kira"),
@@ -369,7 +369,7 @@ L$week8e <- list(jj)
 }
 
 if(doo[["L9a"]]){    # Kira eliminated 30 Jun
-L$week9a <- ggol(H,  # NB: Tracy excluded due to the power apron
+L$week9a <- ggrl(H,  # NB: Tracy excluded due to the power apron
             IN         = c("Laura","Emelia","Amy","Renae","Sarah"),
             btm5       = c("Brent","Ben"),
             btm3       = c("Jamie","Colin"),
@@ -386,7 +386,7 @@ L$week9b[c(  # all contestants -= 1
 
 L$week9b[c("Emelia","Jamie","Tracy","Ben","Sarah")] <- -1    # Red team wins; +=1
 
-L$week9b <- ggol(L$week9b,   # Colin eliminated 3 July
+L$week9b <- ggrl(L$week9b,   # Colin eliminated 3 July
             team_lose = c("Brent","Laura","Amy"),
             btm2 = "Renae",
             eliminated = c("Colin")
@@ -394,7 +394,7 @@ L$week9b <- ggol(L$week9b,   # Colin eliminated 3 July
 }
 
 if(doo[["L10a"]]){  # Sarah eliminated 7 July
-L$week10a <- ggol(H,
+L$week10a <- ggrl(H,
              top3       = c("Laura","Ben","Amy"),
              IN         = c("Brent","Jamie"),
              btm4       = c("Renae"),
@@ -423,7 +423,7 @@ L$week10b <- list(jj)
 }
 
 if(doo[["L10c"]]){  # Renae eliminated 10 Jul
-L$week10c <- ggol(H,
+L$week10c <- ggrl(H,
              win        = c("Laura"),
              IN         = c("Brent","Tracy","Ben"),
              eliminated = c("Renae")
@@ -431,14 +431,14 @@ L$week10c <- ggol(H,
 }
 
 if(doo[["L11a"]]){
-L$week11a <- ggol(H,  # Heston week, 13 July part 1
+L$week11a <- ggrl(H,  # Heston week, 13 July part 1
              top3=c("Laura","Jamie","Ben"),
              IN = c("Brent","Emelia","Tracy")
              )
 } 
 
 if(doo[["L11b"]]){ # Heston week, 13 July part 2
-L$week11b <- ggol(H,
+L$week11b <- ggrl(H,
              win  = c("Brent"),
              IN   = c("Laura","Emelia","Jamie","Ben","Amy"),
              lose = c("Tracy")
@@ -446,7 +446,7 @@ L$week11b <- ggol(H,
 }
 
 if(doo[["L11c"]]){ # Heston week, 14 July
-L$week11c <- ggol(H,
+L$week11c <- ggrl(H,
              win = c("Amy"),
              IN  = c("Brent","Laura","Emelia","Jamie"),
              lose = c("Ben")
@@ -454,7 +454,7 @@ L$week11c <- ggol(H,
 }
 
 if(doo[["L11d"]]){
-L$week11d <- ggol(H,  # Heston week, 15 July
+L$week11d <- ggrl(H,  # Heston week, 15 July
              win  = c("Amy"),
              IN   = c("Laura","Emelia","Jamie"),
              lose = c("Brent")
@@ -462,7 +462,7 @@ L$week11d <- ggol(H,  # Heston week, 15 July
 }
 
 if(doo[["L11e"]]){  # Heston week, 16 July
-L$week11e <- ggol(H,
+L$week11e <- ggrl(H,
              win  = c("Laura"),
              IN   = c("Emelia","Jamie"),
              lose = c("Amy")
@@ -470,7 +470,7 @@ L$week11e <- ggol(H,
 }
 
 if(doo[["L11f"]]){
-L$week11f <- ggol(H,  # Amy eliminated 17 July
+L$week11f <- ggrl(H,  # Amy eliminated 17 July
                     win = c("Laura"),
                    top2 = c("Jamie"),
                    btm4 = c("Brent","Tracy","Ben"),
@@ -479,7 +479,7 @@ L$week11f <- ggol(H,  # Amy eliminated 17 July
 }
 
 if(doo[["L12a"]]){
-L$week12a <- ggol(H,  # Ben eliminated 20 July
+L$week12a <- ggrl(H,  # Ben eliminated 20 July
                     win = c("Brent","Laura","Emelia","Tracy"),
                    btm2 = c("Jamie"),
              eliminated = c("Ben")
@@ -487,7 +487,7 @@ L$week12a <- ggol(H,  # Ben eliminated 20 July
 }
 
 if(doo[["L12b"]]){
-L$week12b <- ggol(H, # Tracy eliminated 21 July
+L$week12b <- ggrl(H, # Tracy eliminated 21 July
                     win = c("Laura"),
                    top3 = c("Emelia","Jamie"),
                    btm2 = c("Brent"),
@@ -509,21 +509,21 @@ L$week12c <- list(jj)
 }
 
 if(doo[["L12d"]]){  # 23 July?
-L$week12d <- ggol(H,
+L$week12d <- ggrl(H,
              win = c("Brent"),
              IN = c("Emelia","Jamie")
              )
 }
 
 if(doo[["L12e"]]){ # Jamie eliminated 24 Jul
-L$week12e <- ggol(H,
+L$week12e <- ggrl(H,
              btm3       = c("Brent","Emelia"),
              eliminated = c("Jamie")
              )
 }
 
 if(doo[["L13a"]]){ # Emelia eliminated 27 Jul
-L$week13a <- ggol(H,
+L$week13a <- ggrl(H,
                     win = c("Laura"),
                    btm2 = c("Brent"),
              eliminated = c("Emelia")

@@ -30,7 +30,7 @@ column, we see the result from Qatar (QAT) in which Marquez came
 second, Dovizioso first, Vinales third, and so on.  Notation used also
 includes six different classes of no-score such as "Ret" for retired,
 "WD" for withdrawn, and so on.  I now use bespoke R function
-\code{ranktable2supp()}, that translates data of this type into a
+\code{ordertable2supp()}, that translates data of this type into a
 log-likelihood.  The function is similar to, but slightly different
 from, the analysis in `eurovision.R`.
 
@@ -39,7 +39,7 @@ head(motoGP_2019)
 ```
 
 (object `motoGP_2019` is equivalent to
-`ranktable2supp(motoGP_2019_table)`.  Above, we see a small part of
+`ordertable2supp(motoGP_2019_table)`.  Above, we see a small part of
 the Placket-Luce likelihood function for the 2019 results.  We can
 find the maximum likelihood estimator by using the `maxp()` function:
 

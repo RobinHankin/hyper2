@@ -38,7 +38,7 @@ L <- list()  # overall list
 
 if(doo[["week1"]]){
     L$week1 <-
-        ggol(H,
+        ggrl(H,
              SB = c("Manon"),  
              FB = c("Briony"),
              GT = c("Rahul","Kim-Joy","Jon","Dan","Karen","Antony","Luke"),
@@ -49,7 +49,7 @@ if(doo[["week1"]]){
 
 if(doo[["week2"]]){
     L$week2 <-
-        ggol(H,
+        ggrl(H,
              SB = c("Rahul"),  
              FB = c("Jon","Dan"),
              GT = c("Kim-Joy","Ruby","Manon","Karen","Antony"),
@@ -60,7 +60,7 @@ if(doo[["week2"]]){
 
 if(doo[["week3"]]){
     L$week3 <-
-        ggol(H,
+        ggrl(H,
              SB = c("Rahul"),  
              FB = c("Dan"),
              GT = c("Kim-Joy","Ruby","Manon","Jon","Karen","Terry"),
@@ -71,7 +71,7 @@ if(doo[["week3"]]){
 
 if(doo[["week4"]]){
     L$week4 <-
-        ggol(H,
+        ggrl(H,
              SB = c("Dan"),  
              FB = c("Rahul","Jon"),
              GT = c("Kim-Joy","Ruby","Manon"),
@@ -82,7 +82,7 @@ if(doo[["week4"]]){
 
 if(doo[["week5"]]){
     L$week5 <-
-        ggol(H,
+        ggrl(H,
              SB = c("Kim-Joy"),  
              FB = c("Rahul"),
              GT = c("Ruby","Manon","Dan"),
@@ -93,7 +93,7 @@ if(doo[["week5"]]){
 
 if(doo[["week6"]]){
     L$week6 <-
-        ggol(H,
+        ggrl(H,
              SB = c("Briony"),  
              FB = c("Rahul","Ruby"),
              GT = c("Kim-Joy"),
@@ -104,7 +104,7 @@ if(doo[["week6"]]){
 
 if(doo[["week7"]]){
     L$week7 <-
-        ggol(H,
+        ggrl(H,
              SB = c("Kim-Joy"),  
              FB = c("Rahul"),
              GT = c("Briony","Manon"),
@@ -115,7 +115,7 @@ if(doo[["week7"]]){
 
 if(doo[["week8"]]){
     L$week8 <-
-        ggol(H,
+        ggrl(H,
              SB = c("Ruby"),  
              FB = c("Briony"),
              ##   noone "got through" in week 8
@@ -126,7 +126,7 @@ if(doo[["week8"]]){
 
 if(doo[["week9"]]){
     L$week9 <-
-        ggol(H,
+        ggrl(H,
              SB = c("Ruby"),  
              FB = c("Kim-Joy"),
              ##   noone "got through" in week 9
@@ -136,7 +136,7 @@ if(doo[["week9"]]){
 }
 if(doo[["weekt"]]){
     L$weekt <-
-        ggol(H,
+        ggrl(H,
              SB = c("Rahul"),  
              ##  
              ##   noone "got through" in week 9

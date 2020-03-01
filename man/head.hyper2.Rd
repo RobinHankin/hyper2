@@ -12,7 +12,7 @@
 \author{Robin K. S. Hankin}
 \examples{
 
-H <- order_likelihood(rrank(100,p=(10:1)/55))
+H <- rank_likelihood(rrank(100,p=(10:1)/55))
 head(H)
 
 }

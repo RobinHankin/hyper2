@@ -24,7 +24,7 @@ for(v in o){
 
 I <- hyper2(pnames=rowers)
 for(v in o){
-  I <- I+order_likelihood(character_to_number(v,rowers))
+  I <- I + rank_likelihood(character_to_number(v,rowers))
 }
 
 

@@ -1,9 +1,11 @@
 \name{ggol}
 \alias{ggol}
+\alias{ggrl}
 \alias{choose_losers}
 \alias{choose_winners}
+\alias{general_grouped_rank_likelihood}
 \alias{general_grouped_order_likelihood}
-\alias{order_likelihood}
+\alias{rank_likelihood}
 \alias{elimination}
 \title{Order statistics}
 \description{
@@ -11,12 +13,12 @@
 statistics
 }
 \usage{
-ggol(H, ...)
-general_grouped_order_likelihood(H, ...)
+ggrl(H, ...)
+general_grouped_rank_likelihood(H, ...)
 choose_losers(H, all_players, losers)
 choose_winners(H, all_players, winners)
 elimination(all_players)
-order_likelihood(M,times=1)
+rank_likelihood(M,times=1)
 }
 
 \arguments{
@@ -26,7 +28,7 @@ order_likelihood(M,times=1)
     in the argument list}
   \item{all_players,winners,losers}{Numeric or character vectors
     specifying competitors.  See details}
-  \item{M}{In function \code{order_likelihood()}, a matrix with each
+  \item{M}{In function \code{rank_likelihood()}, a matrix with each
     row corresponding to a race (or judge).  The columns
     correspond to the finishing order; thus \code{a=M[i,j]} means that
     competitor \code{a} finished in place \code{j} in race \code{i}}
@@ -39,8 +41,8 @@ order_likelihood(M,times=1)
   form of lists of \code{hyper2()} objects, for typical order statistics
   such as the results of rowing heats or MasterChef tournaments.
 
-  Function \code{ggol()} is an easily-typed alias for
-  \code{general_grouped_order_likelihood()}.
+  Function \code{ggrl()} is an easily-typed alias for
+  \code{general_grouped_rank_likelihood()}.
 
   Functions \code{choose_winners()} and \code{choose_losers()} take a
   \code{hyper2} object \code{H} (a likelihood function) and return a
@@ -62,7 +64,7 @@ order_likelihood(M,times=1)
   player to be eliminated (or alternatively the only player not to be
   eliminated).
 
-  Function \code{order_likelihood()} takes a matrix \code{M} with rows
+  Function \code{rank_likelihood()} takes a matrix \code{M} with rows
   corresponding to a judges (or race); a vector is coerced to a one-row
   matrix.  Each row of \code{M} is an order statistic: thus
   \code{c(3,4,2,1)} means that person 3 came first, person 4 came
@@ -73,12 +75,12 @@ order_likelihood(M,times=1)
   
 }
 \author{obin K. S. Hankin}
-\seealso{\code{\link{rrank}},\code{\link{ranktable2supp}}}
+\seealso{\code{\link{rrank}},\code{\link{ordertable2supp}}}
 \examples{
 
 W <- hyper2(pnames=letters[1:7])
-W1 <- ggol(W, 'a', letters[2:6],'g')  # 24-element list
-W2 <- ggol(W, 'b', letters[3:7],'a')  # 24-element list
+W1 <- ggrl(W, 'a', letters[2:6],'g')  # 24-element list
+W2 <- ggrl(W, 'b', letters[3:7],'a')  # 24-element list
 
 like_single_list(rep(1/7,6),W1)
 like_series(rep(1/7,6),list(W1,W2))
@@ -88,10 +90,10 @@ r1 <- rrank(10,p=(7:1)/28)
 colnames(r1) <- letters[1:7]
 
 # Likelihood function for r1:
-W <- order_likelihood(r1)
+W <- rank_likelihood(r1)
 
 # Incorporate information from another (independent) observation:
-W <- W + order_likelihood(sample(7))
+W <- W + rank_likelihood(sample(7))
 
 
 H <- hyper2(pnames=letters[1:5])
@@ -105,7 +107,7 @@ maxplist(elimination(letters[1:4]))
 
 # consistency check:
 H <- hyper2(pnames=letters[1:5])
-H <- H + order_likelihood(rrank(100,5:1)) # probs = 5/15,4/15,...,1/15
+H <- H + rank_likelihood(rrank(100,5:1)) # probs = 5/15,4/15,...,1/15
 maxp(H)  # should be close to (5:1)/15
 
 

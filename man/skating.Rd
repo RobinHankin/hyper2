@@ -18,7 +18,7 @@
   workers, including Lock and Lock, for consistency between the judges.
 
   Note that file is structured so that each competitor is a row, and
-  each judge is a column.  Function \code{order_likelihood()} requires a
+  each judge is a column.  Function \code{rank_likelihood()} requires a
   transpose of this to operate.
 
   The data frame corrects what appears to be an error in Lock and Lock,

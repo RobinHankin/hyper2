@@ -33,10 +33,10 @@ I}$ which are order statistics:
 
 ```{r}
 (H <- hyper2(pnames=paste("p",1:5,sep="")) +
-    order_likelihood(c(5,2,1,4)) + 
-    order_likelihood(c(2,4,1)) + 
-    order_likelihood(c(4,3,1)) + 
-    order_likelihood(c(3,5)))
+    rank_likelihood(c(5,2,1,4)) + 
+    rank_likelihood(c(2,4,1)) + 
+    rank_likelihood(c(4,3,1)) + 
+    rank_likelihood(c(3,5)))
 	```
 	
 We will firstly consider these observations in isolation, then later
@@ -109,7 +109,7 @@ H # as before, here for convenience
 M <- perms(5)   # uninformative!
 SL <- list()
 for(i in seq_len(ncol(M))){
-	SL[[i]] <- H + order_likelihood(M[,i,drop=TRUE])
+	SL[[i]] <- H + rank_likelihood(M[,i,drop=TRUE])
 }
 SL <- as.suplist(SL)
 ```
@@ -153,7 +153,7 @@ M <- perms(5)
 M <- M[, M[1,]!=1]  # remove any column with "1" in first place
 SLa <- list()
 for(i in seq_len(ncol(M))){
-	SLa[[i]] <- H + order_likelihood(M[,i,drop=TRUE])
+	SLa[[i]] <- H + rank_likelihood(M[,i,drop=TRUE])
 }
 SLa <- as.suplist(SLa)
 ```

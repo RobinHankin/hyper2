@@ -9,7 +9,7 @@
 
   Basic functionality for lists of \code{hyper2} objects, allowing the
   user to concatenate independent observations which are themselves
-  composite objects such as returned by \code{ggol()}.
+  composite objects such as returned by \code{ggrl()}.
 
 }
 \usage{
@@ -71,9 +71,9 @@ Returns a \code{suplist} object.
 \examples{
 
 W <- hyper2(pnames=letters[1:5])
-W1 <- ggol(W, 'a', letters[2:3],'d')  # 2-element list
-W2 <- ggol(W, 'e', letters[1:3],'d')  # 6-element list
-W3 <- ggol(W, 'c', letters[4:5],'a')  # 2-element list
+W1 <- ggrl(W, 'a', letters[2:3],'d')  # 2-element list
+W2 <- ggrl(W, 'e', letters[1:3],'d')  # 6-element list
+W3 <- ggrl(W, 'c', letters[4:5],'a')  # 2-element list
 
 # likelihood function for indendent observations  W1,W2,W3:
 

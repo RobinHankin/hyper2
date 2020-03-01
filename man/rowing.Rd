@@ -33,7 +33,7 @@ players have a ML strength of zero.
   (accessed December 7, 2016).
   
 }
-\seealso{\code{\link{ggol}}}
+\seealso{\code{\link{ggrl}}}
 \examples{
 data(rowing)
 dotchart(maxp(sculls2016))

@@ -33,7 +33,7 @@ observation:
 ```{r}
 n <- 6 # number of competitors
 H <- hyper2(pnames=letters[1:6])
-L <- ggol(H,letters[2:n],letters[1]) 
+L <- ggrl(H,letters[2:n],letters[1]) 
 length(L)
 L[[1]]
 L[[2]]

@@ -38,7 +38,7 @@ where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.
 If \code{p} is a matrix, the rows are interpreted as probability points.
 
 Functions \code{like_single_list()} and \code{like_series()} are
-intended for use with \code{ggol()}.
+intended for use with \code{ggrl()}.
 
 
 }
@@ -66,8 +66,8 @@ like_series(a2,masterchef_series6)
 
 
 W <- hyper2(pnames=letters[1:6])
-W1 <- ggol(W, 'a', letters[2:5],'f')              # 24-element list
-W2 <- ggol(W, c('a','b'), c('c','d'),c('e','f'))  # 2^3=8 element list
+W1 <- ggrl(W, 'a', letters[2:5],'f')              # 24-element list
+W2 <- ggrl(W, c('a','b'), c('c','d'),c('e','f'))  # 2^3=8 element list
 
 like_single_list(rep(1/6,5),W1)      # information from first observation
 like_series(rep(1/6,5),list(W1,W2))  # information from both observations

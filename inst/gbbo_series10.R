@@ -29,7 +29,7 @@ w10 <- c(David =  1, Alice = 2, Steph = 3)
 
 
 # Calculate H, the likelihood function for the observed ordering:
-f <- function(x){order_likelihood(char2num(names(sort(x)),allbakers))}
+f <- function(x){rank_likelihood(char2num(names(sort(x)),allbakers))}
 
 H <- hyper2(pnames=allbakers)
 H <- H + f(w01)

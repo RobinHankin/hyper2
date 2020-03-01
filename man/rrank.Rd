@@ -84,7 +84,7 @@ Placket-Luce likelihood for a race in which the rank statistic was
 come?  first.  Where did runner 3 come?  second.  Where did runner 4
 come?  fourth.  Thus the order statistic would be \code{3124}.
 
-Function \code{rrank()} is designed for \code{order_likelihood()}, which
+Function \code{rrank()} is designed for \code{rank_likelihood()}, which
 needs rank data, not order data.  Vignette
 \dQuote{\code{skating_analysis}} gives another discussion.
 
@@ -94,7 +94,7 @@ Note that function \code{rrank()} returns an object of class
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ggol}},\code{\link{order_likelihood}},\code{\link{skating}}}
+\seealso{\code{\link{ggrl}},\code{\link{rank_likelihood}},\code{\link{skating}}}
 \examples{
 ptrue <- (4:1)/10
 rrank(100,p=ptrue)
@@ -102,10 +102,10 @@ rrank(100,p=ptrue)
 r1 <- rrank(100,p=ptrue)
 r2 <- rrank(10,p=ptrue)
 
-H <- order_likelihood(r1)
+H <- rank_likelihood(r1)
 maxp(H)   # should be close to ptrue
 
-H <- H + order_likelihood(rrank(100,maxp(H)))
+H <- H + rank_likelihood(rrank(100,maxp(H)))
 maxp(H)
 
 

@@ -16,7 +16,7 @@ likelihood function for the strengths of the competitors of the
 2014-2015 Volvo Ocean Race.  Object \code{volvo_table_2014} is a data
 frame with rows being teams and columns being legs.  Object
 \code{volvo2014} is created from \code{inst/volvo2014.txt} by
-\code{ranktable2supp(volvo_table_2014, noscore=c("DNF","DNS"))}.
+\code{ordertable2supp(volvo_table_2014, noscore=c("DNF","DNS"))}.
 
 }
 \references{
@@ -26,7 +26,7 @@ Retrieved 22:21, February 28, 2020.
 \url{https://en.wikipedia.org/w/index.php?title=2014\%E2\%80\%932015_Volvo_Ocean_Race&oldid=914916131},
 
   }
-\seealso{\code{\link{ranktable2supp}}}
+\seealso{\code{\link{ordertable2supp}}}
 \examples{
 data(volvo)
 dotchart(maxp(volvo2014))

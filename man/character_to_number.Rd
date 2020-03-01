@@ -17,7 +17,7 @@ char2num(char, pnames)
 }
 \details{
 
-The internal mechanism of functions such as \code{ggol()}, and all the
+The internal mechanism of functions such as \code{ggrl()}, and all the
 \code{C++} code, operates with the competitors labelled with a
 non-negative integer; it is then natural to refer to the competitors as
 \code{p1}, \code{p2}, etc.
@@ -34,17 +34,17 @@ Function \code{char2num()} is an easy-to-type synonym.
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{order_likelihood}}}
+\seealso{\code{\link{rank_likelihood}}}
 \examples{
 
 H <- hyper2(pnames=letters[1:9])
 
 # Use numbers:
-H + order_likelihood(sample(9))  
+H + rank_likelihood(sample(9))  
 
 
 # Use letters:
-H + order_likelihood(character_to_number(sample(letters[1:9]),pnames(H)))
+H + rank_likelihood(character_to_number(sample(letters[1:9]),pnames(H)))
 
 
 

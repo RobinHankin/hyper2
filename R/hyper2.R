@@ -468,7 +468,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 `head.hyper2` <- function(x,...){ x[head(brackets(x),...)] }
 
-`order_likelihood` <- function(M,times=1){
+`rank_likelihood` <- function(M,times=1){
   M <- rbind(M)  # deals with vectors
   times <- cbind(seq_len(nrow(M)),times)[,2]
   if(is.null(colnames(M))){
@@ -487,7 +487,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 #`addrank` <- function(H,ranks){
-#     .Defunct(new = 'order_likelihood',msg='use H <- H+order_likelihood(...)')
+#     .Defunct(new = 'rank_likelihood',msg='use H <- H+rank_likelihood(...)')
 #     ranks <- rbind(ranks)
 # 
 #     for(r in seq_len(nrow(ranks))){
@@ -554,8 +554,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
 }
 
-`general_grouped_order_likelihood` <- function(H, ...){
-  ## ggol(1:3,4,5:9) means group(1:3) came first, 4 in the middle, 5:9
+`general_grouped_rank_likelihood` <- function(H, ...){
+  ## ggrl(1:3,4,5:9) means group(1:3) came first, 4 in the middle, 5:9
   ## last
     dotargs <- list(...)
     if(any(unlist(lapply(dotargs, is.character)))){
@@ -567,22 +567,22 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
 
     out <- mult_grid(lapply(dotargs, .allorders))[[1]]
-    out <- apply(out,2,function(rank){H+order_likelihood(rank)})
+    out <- apply(out,2,function(rank){H+rank_likelihood(rank)})
   return(as.suplist(out))
 }
 
-`ggol` <- general_grouped_order_likelihood
+`ggrl` <- general_grouped_rank_likelihood
 
 `choose_losers` <- function(H,all_players,losers){
   stopifnot(losers %in% all_players)
   winners <- all_players[!all_players %in% losers]
-  ggol(H,winners,losers)
+  ggrl(H,winners,losers)
 }
 
 `choose_winners` <- function(H,all_players, winners){
   stopifnot(all(winners %in% all_players))
   losers <- all_players[!all_players %in% winners]
-  ggol(H,winners,losers)
+  ggrl(H,winners,losers)
 }
 
 `elimination` <- function(all_players){
@@ -719,7 +719,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
   if(race){
     for(i in seq_len(s)){
-      H <- H + order_likelihood(sample(n))
+      H <- H + rank_likelihood(sample(n))
     }
   }
 
@@ -727,7 +727,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(H)
 }
 
-`rankvec2supp` <- function(d,pnames){
+`ordervec2supp` <- function(d,pnames){
     nd <- names(d)
     out <- hyper2(d=length(d))
     while(any(d>0)){
@@ -755,7 +755,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
-`ranktable2supp` <- function(x, noscore, misslast=TRUE){
+`ordertable2supp` <- function(x, noscore, misslast=TRUE){
     if(missing(noscore)){
         noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
     }
@@ -785,7 +785,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     
     ## Now cycle through the rows; each row is a venue [voter]
     for(i in seq_len(nrow(fmat))){
-        out %<>% `+`(rankvec2supp(fmat[i,,drop=TRUE]))
+        out %<>% `+`(ordervec2supp(fmat[i,,drop=TRUE]))
     } # i loop closes
     return(out)
 } 

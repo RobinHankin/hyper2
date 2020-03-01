@@ -1,6 +1,6 @@
-\name{ranktable2supp}
-\alias{ranktable2supp}
-\alias{rankvec2supp}
+\name{ordertable2supp}
+\alias{ordertable2supp}
+\alias{ordervec2supp}
 \title{Translate a rank table to a support function}
 \description{
 
@@ -8,7 +8,7 @@ Wikipedia gives a nice summary in table form of Formula 1 racing results
 on pages like
 \url{https://en.wikipedia.org/wiki/2017_Formula_One_World_Championship}
 (at \emph{World Drivers' Championship standings}) but the data format is
-commonly used for many sports and function \code{ranktable2supp()}
+commonly used for many sports and function \code{ordertable2supp()}
 translates such tables into a \code{hyper2} support function.
 
 Both functions interpret zero to mean \dQuote{Did not finish} (wikipedia
@@ -16,8 +16,8 @@ usually signifies DNF as a blank).
 
 }
 \usage{
-ranktable2supp(x, noscore, misslast = TRUE)
-rankvec2supp(d,pnames)
+ordertable2supp(x, noscore, misslast = TRUE)
+ordervec2supp(d,pnames)
 }
 \arguments{
   \item{x}{Data frame, see details}
@@ -34,14 +34,14 @@ rankvec2supp(d,pnames)
 }
 \details{
 
-  Function \code{ranktable2supp()} is intended for use on rank tables
+  Function \code{ordertable2supp()} is intended for use on rank tables
   such as found at
   \url{https://en.wikipedia.org/wiki/2019_Moto3_season}.  This is a
   common format, used for Formula 1, motoGP, and other racing sports.
   Prepared text versions are available in the package in the
   \code{inst/} directory, for example \code{inst/motoGP_2019.txt}.  Use
   \code{read.table()} to create a data frame which can be interpreted by
-  \code{ranktable2supp()}.
+  \code{ordertable2supp()}.
 
   
 
@@ -52,7 +52,7 @@ rankvec2supp(d,pnames)
 \seealso{\code{\link{formula1}}}
 \examples{
 data(formula1)
-ranktable2supp(F1_table_2017)
+ordertable2supp(F1_table_2017)
 
 a1 <- c(a=2,b=3,c=1,d=5,e=4) # a: 2nd, b: 3rd, c: 1st, d: 5th, e: 4th
 a2 <- c(a=1,b=0,c=0,d=2,e=3) # a: 2nd, b: DNF, c: DNF, d: 2nd, e: 3rd
@@ -60,8 +60,8 @@ a3 <- c(a=1,b=3,c=2)         # a: 1st, b: 3rd, c: 2nd. NB only a,b,c competed
 a4 <- c(a=1,b=3,c=2,d=0,e=0) # a: 1st, b: 3rd, c: 2nd, d,e: DNF
 l <- letters[1:5]
 
-H1 <- rankvec2supp(a1) + rankvec2supp(a2) + rankvec2supp(a3,pnames=l)
-H2 <- rankvec2supp(a1) + rankvec2supp(a2) + rankvec2supp(a4)
+H1 <- ordervec2supp(a1) + ordervec2supp(a2) + ordervec2supp(a3,pnames=l)
+H2 <- ordervec2supp(a1) + ordervec2supp(a2) + ordervec2supp(a4)
 
 pmax(H1)
 pmax(H2)   # d,e not finishing affects their estimated strength
@@ -72,10 +72,10 @@ u1 <- c(a=2,b=3,c=1,d=4,e=5)
 u2 <- c(c=1,b=3,a=2,d=4,e=5)
 ## NB: u1,u2 correspond to the "same" statistic, but:
 
-rankvec2supp(u1) == rankvec2supp(u2)  # FALSE
+ordervec2supp(u1) == ordervec2supp(u2)  # FALSE
 ## (the pnames are different).  To get a more useful result:
 
-rankvec2supp(u1,pnames=l) == rankvec2supp(u1,pnames=l) # TRUE
+ordervec2supp(u1,pnames=l) == ordervec2supp(u1,pnames=l) # TRUE
 
 
 

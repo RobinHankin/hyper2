@@ -21,10 +21,10 @@ Function \code{pair_grid(a,b)} returns a matrix with each column of
 \code{a} \code{cbind()}-ed to each colum of \code{b}.
 
 Function \code{mult_grid()} takes a list of matrices; it is designed for
-use by \code{ggol()}.
+use by \code{ggrl()}.
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ggol}}}
+\seealso{\code{\link{ggrl}}}
 \examples{
 pair_grid(diag(2),diag(3))
 mult_grid(lapply(1:4,diag))

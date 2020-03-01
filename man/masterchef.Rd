@@ -38,7 +38,7 @@ The definitive source is the coloured table on the wiki page.
   (accessed January 5, 2017).
   
 }
-\seealso{\code{\link{ggol}}}
+\seealso{\code{\link{ggrl}}}
 \examples{
 data(masterchef)
 

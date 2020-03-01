@@ -385,7 +385,7 @@ the \code{order\_likelihood()} function:
 
 <<2016_olympics_heat1_first>>=
 heat1 <- c("fournier", "cabrera", "bhokanal", "saensuk", "kelmelis", "teilemb")
-H <- H + order_likelihood(char2num(heat1,allrowers))
+H <- H + rank_likelihood(char2num(heat1,allrowers))
 H
 @ 
 
@@ -584,7 +584,7 @@ function, following~\cite{plackett1975}, might be
     \cup
     p_1\succ p_2\succ p_4\succ p_3\succ p_5
     \cup\ldots
-  }\right)\\ \label{ggolmath}
+  }\right)\\ \label{ggrlmath}
   &=\Prob\left({\bigcup_{\left[{abc}\right]} p_1\succ p_a\succ p_b\succ p_c\succ p_5
   }\right)\\ \nonumber
   &=    \frac{p_1}{p_1+p_2+p_3+p_4+p_5}\cdot\frac{p_2}{p_2+p_3+p_4+p_5}\cdot\frac{p_3}{p_3+p_4+p_5}\cdot\frac{p_4}{p_4+p_5}\\ \nonumber
@@ -597,13 +597,13 @@ where Laura's strength is shown as~$p_1$ etc for brevity.  The
 \proglang{R} idiom is as follows:
 
 <<>>=
-L <- ggol(H, 
+L <- ggrl(H, 
           winner     = "Laura",
           btm4       = c("Brent", "Tracy","Ben"),
           eliminated = "Renae")
 @ 
 
-Arguments to \code{ggol()} are disjoint subsets of the players, the
+Arguments to \code{ggrl()} are disjoint subsets of the players, the
 subsets themselves being passed in competition order from best to
 worst.  Object \code{L} includes information from the team challenge
 (via first argument \code{H}) and the elimination results.  It is a
@@ -672,7 +672,7 @@ might be
 %    \left\{ {p_3, p_4}\right\}\succ 
 %    \left\{ {p_5, p_6}\right\}\succ 
 %    \left\{ {p_7, p_8}\right\}
-%  }\right)\\ \label{ggolmath}
+%  }\right)\\ \label{ggrlmath}
 %  &=\Prob\left({\bigcup_{\left[{abc}\right]} p_1\succ p_a\succ p_b\succ p_c\succ p_5
 %  }\right)\\ \nonumber
 %  &=    \frac{p_1}{p_1+p_2+p_3+p_4+p_5}\cdot\frac{p_2}{p_2+p_3+p_4+p_5}\cdot\frac{p_3}{p_3+p_4+p_5}\cdot\frac{p_4}{p_4+p_5}\\ \nonumber

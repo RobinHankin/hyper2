@@ -13,8 +13,8 @@
   Object \code{powerboat2018_table} is a dataframe of results showing
   ranks of 21 drivers in the 2018 F1 Powerboat World Championship.  The
   format is standard, that is, can be interpreted by function
-  \code{ranktable2supp()} and indeed
-  \code{ranktable2supp(powerboat2018_table)} gives the corresponding
+  \code{ordertable2supp()} and indeed
+  \code{ordertable2supp(powerboat2018_table)} gives the corresponding
   support function, \code{powerboat2018}.
 
   File \code{inst/powerboat2018.txt} is the source text file; to create
@@ -39,7 +39,7 @@ Championship. In \emph{Wikipedia, The Free Encyclopedia}.  Retrieved
   Many drivers have names with diacritics, which have been removed from
   the dataframe.
 }
-\seealso{\code{\link{ranktable2supp}}}
+\seealso{\code{\link{ordertable2supp}}}
 \examples{
 data(powerboat)
 jj <-

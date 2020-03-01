@@ -23,13 +23,13 @@ skating_table
 ```		
 
 Object `skating_table` is structured so that each competitor is a
-row, and each judge is a column.  Function `order_likelihood()`
+row, and each judge is a column.  Function `rank_likelihood()`
 considers each row to be a race [or a judge], so we need to take a
 transpose.  The following R idiom is plausible but incorrect:
 
 
 ```{r}
-skating_incorrect <- order_likelihood(t(skating_table))
+skating_incorrect <- rank_likelihood(t(skating_table))
 ```
 
 The above is incorrect because we want the ranks, and we have the
@@ -55,7 +55,7 @@ rows of `skating_rank` cannot be named_.
 
 
 ```{r}
-skating <- order_likelihood(t(skating_rank))
+skating <- rank_likelihood(t(skating_rank))
 pnames(skating) <- rownames(skating_table)
 head(skating)
 ```

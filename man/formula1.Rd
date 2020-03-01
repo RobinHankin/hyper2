@@ -20,7 +20,7 @@ function for the strengths of the competitors of the 2017 Formula One
 World Championship.  Object \code{F1_table_2017} is a data frame with
 rows being drivers and columns being ranks.  Object \code{formula1} is
 created from \code{inst/formula1_2017.txt} by
-\code{ranktable2supp(F1_table_2017)}.
+\code{ordertable2supp(F1_table_2017)}.
 
 }
 \references{
@@ -30,7 +30,7 @@ created from \code{inst/formula1_2017.txt} by
   \url{https://en.wikipedia.org/w/index.php?title=2017_Formula_One_World_Championship&oldid=839923210}
   [Online; accessed 14-May-2018]
   }
-\seealso{\code{\link{ranktable2supp}}}
+\seealso{\code{\link{ordertable2supp}}}
 \examples{
 data(formula1)
 dotchart(maxp(formula1,n=2))  #n=2 specified here for speed

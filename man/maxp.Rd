@@ -36,7 +36,7 @@ equalp(H)
   \code{p}, which has the unit sum constraint implemented.
 
   Function \code{maxplist()} does the same but takes a list of
-  \code{hyper2} objects (for example, the output of \code{ggol()}).
+  \code{hyper2} objects (for example, the output of \code{ggrl()}).
 
   If function \code{maxp()} is given a \code{suplist} object it
   dispatches to \code{maxplist()}.
@@ -86,7 +86,7 @@ pchisq(2*(x1-x2),df=size(sculls2016)-1,lower.tail=FALSE)
 
 
 W <- hyper2(pnames=letters[1:5])
-W1 <- ggol(W, 'a', letters[2:3],'d')  # W1 is a suplist object
+W1 <- ggrl(W, 'a', letters[2:3],'d')  # W1 is a suplist object
 maxp(W1)
 
 }

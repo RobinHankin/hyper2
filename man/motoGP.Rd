@@ -12,8 +12,8 @@
   Object \code{motoGP_2019_table} is a dataframe of results showing
   ranks of 28 drivers (riders?) in the 2019 FIM MotoGP World
   Championship.  The format is standard, that is, can be interpreted by
-  function \code{ranktable2supp()} and indeed
-  \code{ranktable2supp(motoGP_2019_table)} gives the corresponding
+  function \code{ordertable2supp()} and indeed
+  \code{ordertable2supp(motoGP_2019_table)} gives the corresponding
   support function, \code{motoGP_2019}.
 
   File \code{inst/moto2019.txt} is the source text file; to create
@@ -21,7 +21,7 @@
 
   \code{a <- read.table(system.file("motoGP_2019.txt",package="hyper2"))}
 
-  and then \code{ranktable2supp(a)} gives \code{motGP_2019}.
+  and then \code{ordertable2supp(a)} gives \code{motGP_2019}.
   
 }
 \references{
@@ -34,7 +34,7 @@ Wikipedia contributors. (2020, February 8). 2019 MotoGP season. In
   Many drivers have names with diacritics, which have been removed from
   the dataframe.
 }
-\seealso{\code{\link{ranktable2supp}}}
+\seealso{\code{\link{ordertable2supp}}}
 \examples{
 data(motoGP)
 }
