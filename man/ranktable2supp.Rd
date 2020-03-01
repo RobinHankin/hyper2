@@ -54,11 +54,10 @@ rankvec2supp(d,pnames)
 data(formula1)
 ranktable2supp(F1_table_2017)
 
-a1 <- c(a=1,b=2,c=5,d=4,e=3)
-a2 <- c(a=1,b=0,c=0,d=2,e=3)
-
-a3 <- c(a=1,b=3,c=2)         # only a,b,c competed
-a4 <- c(a=1,b=3,c=2,d=0,e=0) # a,b,c,d,e competed, only a,b,c finished
+a1 <- c(a=2,b=3,c=1,d=5,e=4) # a: 2nd, b: 3rd, c: 1st, d: 5th, e: 4th
+a2 <- c(a=1,b=0,c=0,d=2,e=3) # a: 2nd, b: DNF, c: DNF, d: 2nd, e: 3rd
+a3 <- c(a=1,b=3,c=2)         # a: 1st, b: 3rd, c: 2nd. NB only a,b,c competed
+a4 <- c(a=1,b=3,c=2,d=0,e=0) # a: 1st, b: 3rd, c: 2nd, d,e: DNF
 l <- letters[1:5]
 
 H1 <- rankvec2supp(a1) + rankvec2supp(a2) + rankvec2supp(a3,pnames=l)
@@ -66,4 +65,18 @@ H2 <- rankvec2supp(a1) + rankvec2supp(a2) + rankvec2supp(a4)
 
 pmax(H1)
 pmax(H2)   # d,e not finishing affects their estimated strength
+
+
+## Care!
+u1 <- c(a=2,b=3,c=1,d=4,e=5)
+u2 <- c(c=1,b=3,a=2,d=4,e=5)
+## NB: u1,u2 correspond to the "same" statistic, but:
+
+rankvec2supp(u1) == rankvec2supp(u2)  # FALSE
+## (the pnames are different).  To get a more useful result:
+
+rankvec2supp(u1,pnames=l) == rankvec2supp(u1,pnames=l) # TRUE
+
+
+
 }
