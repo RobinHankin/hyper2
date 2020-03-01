@@ -29,7 +29,8 @@ is a race in which the probability of competitor \eqn{i} coming first is
 competitors who have not already finished.
 
 If, say, the first row of \code{rrank()} is \code{c(2,5,1,3,4)}, then
-competitor 2 came first, competitor 5 came second, and so on.
+competitor 2 came first, competitor 5 came second, competitor 1 came
+third, and so on.
 
 Note that function \code{rrank()} returns an object of class
 \code{rrank}, which has its own special print method.  The column names
