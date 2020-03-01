@@ -749,8 +749,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         d[d>0] %<>% dec
         
     } # while() loop closes
-
-    pnames(out) <- nd
+    if(!is.null(nd)){ pnames(out) <- nd}
     if(!missing(pnames)){pnames(out) <- pnames}
     return(out)
 }
