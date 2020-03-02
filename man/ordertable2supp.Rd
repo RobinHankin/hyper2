@@ -74,9 +74,9 @@ u2 <- c(c=1,b=3,a=2,d=4,e=5)
 
 ordervec2supp(u1) == ordervec2supp(u2)  # FALSE
 ## (the pnames are different).  To get a more useful result:
-
 ordervec2supp(u1,pnames=l) == ordervec2supp(u1,pnames=l) # TRUE
 
 
-
+## Sometimes we need to add things to the 'did not finish' list:
+ordertable2supp(volvo_table_2014,noscore=c("DNF","DNS")) == volvo2014
 }
