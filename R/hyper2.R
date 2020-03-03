@@ -537,12 +537,18 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(NA) # sic: this is confusing!
 }
 
-`ranktable_to_ordertable` <- function(x){
-  out <- apply(x,1,order)
-  rownames(out) <- colnames(x)
+`ranktable_to_ordertable` <- function(xrank){
+  out <- apply(xrank,1,order)
+  rownames(out) <- colnames(xrank)
   return(out)
 }
 
+`ordertable_to_ranktable` <- function(xorder){
+  out <- t(apply(xorder,2,function(x){seq_len(nrow(xorder))[order(x)]}))
+  colnames(out) <- rownames(xorder)
+  class(out) <- "rrank"
+  return(out)
+}
 
 `.allorders` <- function(x){
   out <- perms(length(x))
