@@ -21,10 +21,10 @@
   each judge is a column.  Function \code{rank_likelihood()} requires a
   transpose of this to operate.
 
-  The data frame corrects what appears to be an error in Lock and Lock,
-  in which judge 5 ranked both Butyrskaya and Kettunen 12; there is no
-  13.  Using EM, I reckon that Butyrskaya should be ranked twelfth and
-  Kettunen thirteenth.
+  Object \code{skating_table} is an order table, taken from Lock and
+  Lock.  It corrects what appears to be an error in which judge 5 ranked
+  both Butyrskaya and Kettunen 12; there is no 13.  Using EM, I reckon
+  that Butyrskaya should be ranked twelfth and Kettunen thirteenth.
 
 }
 \references{
@@ -38,6 +38,9 @@
 \examples{
 data(skating)
 dotchart(maxp(skating,n=2))
+
+ordertable_to_ranktable(skating_table)
+
 
 par(pty='s')
 lik <- order(maxp(skating,n=2),decreasing=TRUE)
