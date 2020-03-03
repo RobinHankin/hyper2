@@ -515,6 +515,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 `rrank` <- function(n=1, p, pnames=NULL, fill=FALSE){
     if(fill){ p <- fillup(p) }
+    if(is.null(pnames)){pnames <- names(p)}
     out <- t(replicate(n, .rrank_single(p)))
     colnames(out) <- pnames
     class(out) <- "rrank"
