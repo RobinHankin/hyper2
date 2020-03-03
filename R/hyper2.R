@@ -513,11 +513,12 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(r)
 }
 
-`rrank` <- function(n=1, p, pnames=NULL, fill=FALSE){
+`rrank` <- function(n=1, p, pnames=NULL, fill=FALSE, rnames=NULL){
     if(fill){ p <- fillup(p) }
     if(is.null(pnames)){pnames <- names(p)}
     out <- t(replicate(n, .rrank_single(p)))
     colnames(out) <- pnames
+    rownames(out) <- rnames
     class(out) <- "rrank"
     return(drop(out))
 }
@@ -535,6 +536,13 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   print(thing)
   return(NA) # sic: this is confusing!
 }
+
+`ranktable_to_ordertable` <- function(x){
+  out <- apply(x,1,order)
+  rownames(out) <- colnames(x)
+  return(out)
+}
+
 
 `.allorders` <- function(x){
   out <- perms(length(x))

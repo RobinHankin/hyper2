@@ -7,13 +7,16 @@ A function for producing ranks randomly, consistent with a specified
 strength vector
 }
 \usage{
-rrank(n = 1, p, pnames=NULL, fill = FALSE)
+rrank(n = 1, p, pnames=NULL, fill = FALSE, rnames=NULL)
 \method{print}{rrank}(x, ...)
 }
 \arguments{
   \item{n}{Number of observations}
   \item{p}{Strength vector}
-  \item{pnames}{Character vector specifying names of the columns}
+  \item{pnames}{Character vector (\dQuote{player names}) specifying
+    names of the columns}
+  \item{rnames}{Character vector (\dQuote{row names} or \dQuote{race
+      names}) specifying names of the rows}mv
   \item{fill}{Boolean, with default \code{FALSE} meaning to interpret
     the elements of \code{p} as strengths, notionally summing to one;
     and \code{TRUE} meaning to augment \code{p} with a fillup value}

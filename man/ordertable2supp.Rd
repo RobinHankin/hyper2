@@ -1,7 +1,7 @@
 \name{ordertable2supp}
 \alias{ordertable2supp}
 \alias{ordervec2supp}
-\title{Translate a rank table to a support function}
+\title{Translate  rank tables}
 \description{
 
 Wikipedia gives a nice summary in table form of Formula 1 racing results
@@ -9,7 +9,8 @@ on pages like
 \url{https://en.wikipedia.org/wiki/2017_Formula_One_World_Championship}
 (at \emph{World Drivers' Championship standings}) but the data format is
 commonly used for many sports and function \code{ordertable2supp()}
-translates such tables into a \code{hyper2} support function.
+translates such tables into a \code{hyper2} support function and also a
+order table.
 
 Both functions interpret zero to mean \dQuote{Did not finish} (wikipedia
 usually signifies DNF as a blank).
