@@ -530,6 +530,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
   thing <- noquote(matrix(cn[x],ncol=ncol(x)))
   colnames(thing) <- paste("c",seq_len(ncol(x)),sep="")
+  rownames(thing) <- rownames(x)
   print(thing)
   return(NA) # sic: this is confusing!
 }
