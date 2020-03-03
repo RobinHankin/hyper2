@@ -522,6 +522,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `print.rrank` <- function(x, ...){
+  x <- rbind(x)
   if(is.null(colnames(x))){
     cn <- seq_len(ncol(x))
   } else {
