@@ -9,55 +9,50 @@ vignette: >
 
 # Ladies' figure skating in the 2002 Winter Olympics
 
-This script creates and analyses hyper2 object "skating" which is a
-likelihood function for the strengths of the competitors in the
-Ladies' Figure Skating at the 2002 Winter Olympics.  Dataframe
-`skating_table` is copied from Lock and Lock (see skating.Rd for
-more details).
-
-```{r}
+```{r, echo=T, results = 'hide', message= FALSE}
 library("hyper2",quietly=TRUE)
+```		
+
+This document analyses strengths of the competitors in the Ladies'
+Figure Skating at the 2002 Winter Olympics.  In the package, dataframe
+`skating_table` is copied from Lock and Lock (see skating.Rd for more
+details).
+
+```{r,showskating}
 set.seed(0)
 data("skating")
 skating_table
-```		
+```
 
-Object `skating_table` is structured so that each competitor is a
-row, and each judge is a column.  Function `rank_likelihood()`
-considers each row to be a race [or a judge], so we need to take a
-transpose.  The following R idiom is plausible but incorrect:
-
+Object `skating_table` is an **order table**.  It is structured so
+that each competitor is a row, and each judge is a column.  Function
+`rank_likelihood()` considers each row to be a race [or a judge], so
+we need to take a transpose.  The following R idiom is plausible but
+incorrect:
 
 ```{r}
 skating_incorrect <- rank_likelihood(t(skating_table))
 ```
 
-The above is incorrect because we want the ranks, and we have the
-order.  Correct analysis follows.
-
+The above is incorrect because we are applying a rank technique to an
+order table.  Correct analysis follows; firstly we coerce to a
+**rank** table:
 
 ```{r}
-skating_rank <- apply(skating_table,2,order)
-head(skating_rank)
+(skating_order <- ordertable_to_ranktable(skating_table))
 ```
 
-Column 1 of `skating_table` and column 1 of `skating_rank` are
-confusingly simular.  So consider column 2 instead, corresponding to
-judge number 2.  If `a=skating_table[,2]` and
-`b=skating_rank[,2]` we have `a=c(4,1,3,2, ...)` and
-`b=c(2,4,3,1, ...)`.  Thus `a` means that hughes was judged to
-be fourth best, slutskaya was judged to be the best, kwan third best,
-cohen second best, and so on.  Conversely, `b` means that the best
-competitor was number two [slutskaya], the second best number was
-number four [cohen], the third best was number three [kwan], the
-fourth best number 1 [hughes], and so on.  _Note that this means the
-rows of `skating_rank` cannot be named_.
+In the above, the column names should be read "came first" (`c1`),
+"came second" (`c2`) and so on to "came 23rd" (`c23`).  From the first
+column, we see that Hughes came first 5 times and Slutskya came first
+four times, and from the last column we see that all judges except
+`J3` awarded Luca last place.  File `man/rrank.Rd` has a detailed
+discussion of the differences between rank and order.
 
+We can coerce from an order table to a likelihood function:
 
 ```{r}
-skating <- rank_likelihood(t(skating_rank))
-pnames(skating) <- rownames(skating_table)
-head(skating)
+head(ordertable2supp(skating_order))
 ```
 
 Further, we might ask how many judges ranked each competitor first,
@@ -71,14 +66,28 @@ oo
 
 In the above, each row is a competitor and each column corresponds to
 a ranking.  Thus the first column corresponds to "first place" and
-	shows that five judges ranked Hughes first and four judges ranked
+shows that five judges ranked Hughes first and four judges ranked
 Slutskaya first.  The second column corresponds to "second place" and
 shows that one judge gave Hughes second place, two judges placed
 Slutskaya second, five gave Kawn second, and one gave Cohen second.
-The formal ordering is, I think, to rank the competitors by number of
-first places, then second, then third , and so on.  Ties at level $n$
-are broken by considering $n+1$.
 
+The formal ordering used in competition is, according to Lock and
+Lock, given by the median ordinal:
+
+```{r,medianordinal}
+apply(skating_table,1,median)
+```
+
+but with ties broken using a complicated hierarchy, the first of which
+is the "size of the majority":
+
+```{r,sizeofthemajority}
+rowSums(sweep(skating_table,1,seq_len(23))>=0)
+```
+
+which would suggest that Slutskaya beats Kwan (5-4), Butyrskaya draws
+with Robinson (7-7), and so on.  The rows of `skating_table` are in
+the order given by this system.
 
 # Data visualization
 
@@ -92,8 +101,6 @@ Now some data visualization.  First the MLE for the strengths:
 dotchart(m)
 dotchart(log(m))
 ```
-
-
 
 ## Evidence for medal positions
 
@@ -123,14 +130,14 @@ jj <-
 problem_constraints <-  # fill with zeros for other competitors
     cbind(jj,matrix(0,nrow(jj),size(skating)-ncol(jj)-1))
 
-small <- 1e-6  # need a sensible start value satisfying the constraints
+small <- 1e-4  # need a sensible start value satisfying the constraints
 start <- c(rep(2*small,3),rep(3*small,2),rep(small,17))
 
 out <- rep(0,nrow(problem_constraints))
 fullout <- list()
 
 for(i in seq_len(nrow(problem_constraints))){
-jj <- maxp(skating, startp=start, give=TRUE,fcm=problem_constraints[i,], fcv=0)
+  jj <- maxp(skating, startp=start, give=TRUE,fcm=problem_constraints[i,], fcv=0,n=1,SMALL=1e-5)
    fullout[[i]] <- jj
    out[i] <- jj$value
 }
@@ -140,7 +147,7 @@ out
 Now compare these values with the unconstrained maximum likelihoods:
 
 ```{r,unconstrainedlikes}
-mgv <- maxp(skating,give=TRUE)$value
+mgv <- maxp(skating, give=TRUE, n=2)$value
 mgv  - out
 mgv  - max(out)
 ```
