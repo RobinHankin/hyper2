@@ -34,6 +34,8 @@ xrank <- rrank(12,p,rnames=month.abb)
 ranktable_to_ordertable(xrank)
 xorder <- ordertable_to_ranktable(ranktable_to_ordertable(xrank))
 
+identical(xrank,ordertable_to_ranktable(ranktable_to_ordertable(xrank)))
+
 maxp(ordertable2supp(xorder))  # should be close to p
 
 ordertable_to_ranktable(skating_table)
