@@ -519,11 +519,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     out <- t(replicate(n, .rrank_single(p)))
     colnames(out) <- pnames
     rownames(out) <- rnames
-    class(out) <- "rrank"
+    class(out) <- "ranktable"
     return(drop(out))
 }
 
-`print.rrank` <- function(x, ...){
+`print.ranktable` <- function(x, ...){
   x <- rbind(x)
   if(is.null(colnames(x))){
     cn <- seq_len(ncol(x))
@@ -546,7 +546,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `ordertable_to_ranktable` <- function(xorder){
   out <- t(apply(xorder,2,function(x){seq_len(nrow(xorder))[order(x)]}))
   colnames(out) <- rownames(xorder)
-  class(out) <- "rrank"
+  class(out) <- "ranktable"
   return(out)
 }
 

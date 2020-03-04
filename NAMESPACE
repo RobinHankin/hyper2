@@ -28,7 +28,7 @@ S3method(pnames,hyper2)
 S3method(pnames,suplist)
 S3method("pnames<-",hyper2)
 
-S3method(print,rrank)
+S3method(print,ranktable)
 
 S3method("[", hyper2)
 S3method("[<-", hyper2)

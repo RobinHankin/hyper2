@@ -1,6 +1,6 @@
 \name{rrank}
 \alias{rrank}
-\alias{print.rrank}
+\alias{print.ranktable}
 \title{Random ranks}
 \description{
 A function for producing ranks randomly, consistent with a specified
@@ -8,7 +8,7 @@ strength vector
 }
 \usage{
 rrank(n = 1, p, pnames=NULL, fill = FALSE, rnames=NULL)
-\method{print}{rrank}(x, ...)
+\method{print}{ranktable}(x, ...)
 }
 \arguments{
   \item{n}{Number of observations}
@@ -36,8 +36,8 @@ competitor 2 came first, competitor 5 came second, competitor 1 came
 third, and so on.
 
 Note that function \code{rrank()} returns an object of class
-\code{rrank}, which has its own special print method.  The column names
-appear as \dQuote{\code{c1, c2, ...}} which is intended to be read
+\code{ranktable}, which has its own special print method.  The column
+names appear as \dQuote{\code{c1, c2, ...}} which is intended to be read
 \dQuote{came first}, \dQuote{came second}, and so on.  The difference
 between \emph{rank} and \emph{order} can be confusing.
 
