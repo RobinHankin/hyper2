@@ -28,7 +28,8 @@ Object \code{pentathlon_ordertable} is simply
 \url{https://en.wikipedia.org/w/index.php?title=Modern_pentathlon_at_the_2004_Summer_Olympics_\%E2\%80\%93_Men\%27s&oldid=833081611},
 [Online; accessed 5-March-2020]
 }
-\seealso{\code{\link{ordertable2supp}}}
+\note{Many of the competitors' names have diacritics, which I have removed.}
+\seealso{\code{\link{ordertable}}}
 \examples{
 data(pentathlon)
 dotchart(maxp(pentathlon,n=2))  #n=2 specified here for speed

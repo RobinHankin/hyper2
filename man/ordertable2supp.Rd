@@ -1,16 +1,16 @@
 \name{ordertable2supp}
 \alias{ordertable2supp}
 \alias{ordervec2supp}
-\title{Translate  rank tables}
+\title{Translate order tables to support functions}
 \description{
 
 Wikipedia gives a nice summary in table form of Formula 1 racing results
 on pages like
 \url{https://en.wikipedia.org/wiki/2017_Formula_One_World_Championship}
 (at \emph{World Drivers' Championship standings}) but the data format is
-commonly used for many sports and function \code{ordertable2supp()}
-translates such tables into a \code{hyper2} support function and also a
-order table.
+commonly used for many sports [see \code{ordertable.Rd}] and function
+\code{ordertable2supp()} translates such tables into a \code{hyper2}
+support function and also a order table.
 
 Both functions interpret zero to mean \dQuote{Did not finish} (wikipedia
 usually signifies DNF as a blank).
@@ -44,13 +44,10 @@ ordervec2supp(d,pnames)
   \code{read.table()} to create a data frame which can be interpreted by
   \code{ordertable2supp()}.
 
-  
-
-
 }
 \value{Returns a \code{hyper2} object}
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{formula1}}}
+\seealso{\code{\link{ordertable}}}
 \examples{
 data(formula1)
 ordertable2supp(F1_table_2017)
