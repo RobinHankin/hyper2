@@ -14,33 +14,14 @@ abbreviated <- TRUE  # change to FALSE for full names
 
 The dataset `wiki_matrix`, defined below, is copied from "Eurovision
 Song Contest 2009," Wikipedia, accessed May 13, 2018.  It refers to
-semi-final 1.  More documentation is given in `euro.Rd` [type
+semi-final 1.  More documentation is given in `eurovision.Rd` [type
 `help(euro2009)` at the `R` prompt].
 
 First we specify the matrix as appearing in the Wikipedia page:
 
 ```{r, specifymatrix}
-wiki_matrix <- matrix(c(
-#   ME  CZ  BE  BY  SW  AM  AD  CH  TR  IL  BG  IS  MK  RO  FI  PT  MT  BA  DE  UK
-    NA, 00, 00, 03, 00, 05, 01, 02, 05, 01, 00, 00, 08, 00, 00, 01, 06, 10, 02, 00, # ME
-    00, NA, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, # CZ
-    00, 00, NA, 00, 00, 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, # BE
-    02, 01, 00, NA, 01, 04, 00, 00, 00, 04, 01, 01, 06, 00, 04, 00, 01, 00, 00, 00, # BY
-    00, 06, 04, 07, NA, 08, 07, 04, 04, 07, 00, 10, 03, 04, 10, 08, 08, 04, 04, 07, # SW
-    04, 12, 10, 10, 05, NA, 00, 01, 10, 10, 08, 02, 02, 08, 01, 00, 00, 01, 10, 05, # AM
-    00, 00, 00, 00, 00, 00, NA, 00, 01, 00, 00, 00, 00, 00, 00, 04, 03, 00, 00, 00, # AD
-    00, 00, 00, 02, 02, 00, 02, NA, 00, 00, 00, 00, 00, 00, 05, 02, 00, 02, 00, 00, # CH
-    08, 05, 12, 06, 07, 10, 05, 12, NA, 06, 12, 07, 12, 12, 07, 05, 10, 12, 12, 12, # TR
-    05, 04, 03, 04, 06, 07, 08, 05, 03, NA, 04, 06, 01, 03, 06, 00, 04, 00, 05, 01, # IL
-    00, 00, 00, 00, 00, 00, 00, 00, 02, 00, NA, 00, 05, 00, 00, 00, 00, 00, 00, 00, # BG
-    07, 10, 07, 12, 12, 12, 10, 07, 08, 12, 06, NA, 04, 10, 12, 12, 12, 07, 06, 08, # IS
-    10, 03, 00, 00, 00, 00, 00, 06, 06, 00, 10, 00, NA, 02, 00, 00, 00, 08, 00, 00, # MK
-    06, 00, 02, 01, 00, 02, 04, 00, 07, 08, 05, 04, 07, NA, 00, 10, 02, 06, 01, 02, # RO
-    03, 00, 01, 00, 10, 00, 03, 00, 00, 00, 00, 12, 00, 01, NA, 03, 05, 00, 00, 04, # FI
-    00, 02, 06, 00, 03, 00, 12, 10, 00, 02, 02, 08, 00, 07, 02, NA, 00, 03, 07, 06, # PT
-    01, 07, 08, 08, 04, 03, 06, 03, 00, 05, 03, 05, 00, 06, 03, 06, NA, 05, 03, 10, # MT
-    12, 08, 05, 05, 08, 06, 00, 08, 12, 03, 07, 03, 10, 05, 08, 07, 07, NA, 08, 03) # BA
-, nrow=18,byrow=TRUE)
+data(eurovision)
+(wiki_matrix <- as.matrix(eurovision2009_votingtable))
 ```
 
 Each row corresponds to a competitor and each column to a judge.  Note
@@ -48,10 +29,9 @@ that the matrix is not square: the last two columns correspond to
 Germany and the UK, who were judges but not competitors.  I have
 removed the first column in the Wikipedia table (which gave the total
 of the points), replaced self-voting entries with `NA`, and replaced
-blanks with `00`; every entry is padded to two digits.  Thus the first
-row corresponds to votes cast for `ME`, Montenegro.  We see that `BE`
-(Belgium) awarded them three points, `am` (Armenia) five points, and
-so on.
+blanks with `0`.  Thus the first row corresponds to votes cast for
+`ME`, Montenegro.  We see that `BE` (Belgium) awarded them three
+points, `am` (Armenia) five points, and so on.
 
 
 ```{r,pointsforplaces}
@@ -120,22 +100,22 @@ column is `NA`.  So the order was: `BA` (1), `MK` (2) , `TR` (3), `IS`
 (4), `RO` (5), `IL` (6), `AM` (7), `FI` (8), `BY` (9), `MT` (10).  The
 other countries (`CZ`, `BE`, `SW`, `CH`, `BG`, `PT`) did not receive
 any points from Montenegro.  We need to convert matrix `preference`
-into a likelihood function, here `euro2009`:
+into a likelihood function, here `eurovision2009`:
  
 ```{r,morestuff}
-euro2009 <- hyper2(d=18)
+eurovision2009 <- hyper2(d=18)
 
 for(i in seq_len(nrow(preference))){   # cycle through the rows; each row is a voter
     d <- preference[i,,drop=TRUE]
     d[is.na(d)] <- -1  # kludge: make the voting country ineligible to vote.
     while(any(d>0)){
         eligible <- which(d>=0)   # This is why we set NA values to -1
-        euro2009[which(d==1)] %<>% "+"(1)
-                                        # The first choice among
-                                        # eligible players has +1
-                                        # power on the numerator
+        eurovision2009[which(d==1)] %<>% "+"(1)
+                                            # The first choice among
+                                             # eligible players has +1
+                                              # power on the numerator
         
-        euro2009[eligible] %<>% dec()   # denominator of all eligible players
+        eurovision2009[eligible] %<>% dec()   # denominator of all eligible players
 
         d[d==1] <- -1  # once you've won, you are ineligible to be chosen again
                        # NB, pipe idiom is ugly:  d %<>% `[<-`(. == 1, -1)
@@ -150,15 +130,15 @@ for(i in seq_len(nrow(preference))){   # cycle through the rows; each row is a v
 
 
 ## syntatic sugar:
-pnames(euro2009) <- competitors
+pnames(eurovision2009) <- competitors
 ```
 
 Now we can check null of equal strengths:
 
 ```{r,checknull}
-m <- maxp(euro2009)  # MLE
-print(loglik(indep(m),euro2009))
-print(loglik(indep(equalp(euro2009)),euro2009))
+m <- maxp(eurovision2009)  # MLE
+print(loglik(indep(m),eurovision2009))
+print(loglik(indep(equalp(eurovision2009)),eurovision2009))
 ```
 
 Thus the difference is about 122 units of support, surely significant.
