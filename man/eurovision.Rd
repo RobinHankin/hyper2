@@ -10,7 +10,7 @@
 \docType{data}
 \title{Eurovision Song contest dataset}
 \description{Voting patterns from Eurovision 2009}
-\usage{data(euro)}
+\usage{data(eurovision)}
 \format{
 A \code{hyper2} object that gives a likelihood
 function.
