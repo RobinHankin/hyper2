@@ -1,0 +1,8 @@
+		shooting	fencing	swimming	riding	running
+Moiseev		5		 1	1		6	 5
+Zadneprovskis	6		 2	5  		5	 1
+Capalini	4		 6	2		3	 4
+Cerkovskis	3		 3	7 		7	 2
+Meliakh		1		 7	4		1	 6
+Michalik	2		 4	6		2	 7	
+Walther		7		 5	3		4	 3
