@@ -21,11 +21,22 @@ Michalik             2       4        6      2       7
 Walther              7       5        3      4       3
 }
 
-This is a very simple order table.  Each row is a competitor, each
-column an event (venue, judge,\ldots).  The first row shows Moiseev's
-ranking in shooting (5th), fencing (1st), and so on.  The first column
-shows the ranks of the competitors in shooting.  Thus Moiseev came
-fifth, Zadneprovskis came 6th, and so on.
+Although \code{pentathlon_ordertable} is a dataset in the package, the
+source dataset is also included in the \code{inst/} directory as file
+\code{pentathlon.txt}; use idiom like
+\code{read.table("inst/pentathlon.txt")} to load the order table.
+
+Object \code{pentathlon_ordertable} is a representative example.  Each
+row is a competitor, each column an event (venue, judge, \ldots).  The
+first row shows Moiseev's ranking in shooting (5th), fencing (1st), and
+so on.  The first column shows the ranks of the competitors in shooting.
+Thus Moiseev came fifth, Zadneprovskis came 6th, and so on.
+
+However, to create a likelihood function we need ranks, not orders.  We
+need to know, for a given event, who came first, who came second, and so
+on (an extended discussion on the difference between rank and order is
+given at \code{rrank.Rd}).  We can convert from an order table to a rank
+table using \code{ordertable_to_ranktable()}:
 
 \preformatted{
 > ordertable_to_ranktable(pentathlon_ordertable)
@@ -43,47 +54,43 @@ riding   Moiseev       Cerkovskis
 running  Meliakh       Michalik  
 }
 
-We see the same data in a different format (a discussion is given in
-\code{rrank.Rd}).  The reason for this system is that we can generate
-synthetic datasets using estimated strengths:
+Above, we see the same data in a different format (an extended
+discussion on the difference between rank and order is given in
+\code{rrank.Rd}).
+
+Many of the order tables in the package include entries that correspond
+to some variation on \dQuote{did not finish}.  Consider the \code{volvo}
+dataset:
 
 \preformatted{
-> jj <- pentathlon_ordertable
-> p <- maxp(ordertable2supp(jj))
-> rrank(n=5,p=p,rnames=colnames(jj))
-         c1            c2       c3            c4            c5      
-shooting Michalik      Meliakh  Capalini      Zadneprovskis Moiseev 
-fencing  Zadneprovskis Moiseev  Capalini      Michalik      Meliakh 
-swimming Zadneprovskis Moiseev  Meliakh       Michalik      Capalini
-riding   Walther       Moiseev  Zadneprovskis Capalini      Michalik
-running  Meliakh       Capalini Moiseev       Cerkovskis    Walther 
-         c6            c7        
-shooting Walther       Cerkovskis
-fencing  Walther       Cerkovskis
-swimming Walther       Cerkovskis
-riding   Meliakh       Cerkovskis
-running  Zadneprovskis Michalik  
+> volvo_table_2014
+           leg1 leg2 leg3 leg4 leg5 leg6 leg7 leg8 leg9
+AbuDhabi      1    3    2    2    1    2    5    3    5
+Brunel        3    1    5    5    4    3    1    5    2
+Dongfeng      2    2    1    3  DNF    1    4    7    4
+MAPFRE        7    4    4    1    2    4    2    4    3
+Alvimedica    5    5    3    4    3    5    3    6    1
+SCA           6    6    6    6    5    6    6    1    7
+Vestas        4  DNF  DNS  DNS  DNS  DNS  DNS    2    6
 }
 
-Thus we can get a sense of the uncertainties in the estimates using a
-bootstrap technique:
+In the above, we have \code{DNF} for \dQuote{did not finish} and
+\code{DNS} for \dQuote{did not start}.  The \code{formula1} order table
+has other similar entries such as \code{DSQ} for \dQuote{disqualified}
+and a discussion is given at \code{ordertable2supp.Rd}.
 
-\preformatted{
-> maxp(ordertable2supp(ranktable_to_ordertable(rrank(n=5,p=p,rnames=colnames(jj)))))
-    Moiseev Zadneprovskis    Capalini   Cerkovskis     Meliakh    Michalik     Walther 
-   0.197907      0.186436    0.165188     0.155631    0.142261    0.131687    0.020887 
-> maxp(ordertable2supp(ranktable_to_ordertable(rrank(n=5,p=p,rnames=colnames(jj)))))
-    Moiseev Zadneprovskis    Capalini   Cerkovskis     Meliakh    Michalik     Walther 
-  0.0177932     0.0738328   0.0304596    0.0087066   0.0396660   0.7950458   0.0344957 
-> maxp(ordertable2supp(ranktable_to_ordertable(rrank(n=5,p=p,rnames=colnames(jj)))))
-    Moiseev Zadneprovskis    Capalini   Cerkovskis     Meliakh    Michalik     Walther 
-   0.094787      0.038043    0.085522     0.023408    0.651005    0.084016    0.023215 
-}
+Links are given below to all the order tables in the package.  Note that
+the table in \code{inst/eurovision.Rmd} (\code{wiki_matrix}) is not an
+order table because no country is allowed to vote for itself.
 
 
 }
 \author{Robin K. S Hankin}
-\seealso{\code{\link{ordertable2supp}}}
+\seealso{
+\code{\link{formula1}}, \code{\link{motoGP}}, \code{\link{pentathlon}},
+\code{\link{powerboat}}, \code{\link{skating}}, \code{\link{volvo}},
+\code{\link{ordertable2supp}},\code{\link{rrank}}
+}
 \examples{
-1+4
+2+2
 }
