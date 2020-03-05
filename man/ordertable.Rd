@@ -7,7 +7,7 @@
 
 The package makes extensive use of order tables and these are discussed
 here together with a list of order tables available in the package as
-data.  Consider the \code{pentathlon_ordertable}:
+data.  Consider \code{pentathlon_ordertable}:
 
 \preformatted{
  > pentathlon_ordertable
@@ -24,8 +24,8 @@ Walther              7       5        3      4       3
 This is a very simple order table.  Each row is a competitor, each
 column an event (venue, judge,\ldots).  The first row shows Moiseev's
 ranking in shooting (5th), fencing (1st), and so on.  The first column
-shows the ranks of the competitors in shooting .  Thus Moisieev came
-fifth, Zadnesprovskis cames 6th, and so on.
+shows the ranks of the competitors in shooting.  Thus Moiseev came
+fifth, Zadneprovskis came 6th, and so on.
 
 \preformatted{
 > ordertable_to_ranktable(pentathlon_ordertable)
@@ -70,18 +70,17 @@ bootstrap technique:
 
 \preformatted{
 > maxp(ordertable2supp(ranktable_to_ordertable(rrank(n=5,p=p,rnames=colnames(jj)))))
-      Moiseev Zadneprovskis      Capalini    Cerkovskis       Meliakh      Michalik       Walther 
-   0.19790755    0.18643631    0.16518800    0.15563143    0.14226130    0.13168772    0.02088768 
+    Moiseev Zadneprovskis    Capalini   Cerkovskis     Meliakh    Michalik     Walther 
+   0.197907      0.186436    0.165188     0.155631    0.142261    0.131687    0.020887 
 > maxp(ordertable2supp(ranktable_to_ordertable(rrank(n=5,p=p,rnames=colnames(jj)))))
-      Moiseev Zadneprovskis      Capalini    Cerkovskis       Meliakh      Michalik       Walther 
-  0.017793227   0.073832862   0.030459669   0.008706624   0.039666078   0.795045823   0.034495718 
+    Moiseev Zadneprovskis    Capalini   Cerkovskis     Meliakh    Michalik     Walther 
+  0.0177932     0.0738328   0.0304596    0.0087066   0.0396660   0.7950458   0.0344957 
 > maxp(ordertable2supp(ranktable_to_ordertable(rrank(n=5,p=p,rnames=colnames(jj)))))
-      Moiseev Zadneprovskis      Capalini    Cerkovskis       Meliakh      Michalik       Walther 
-   0.09478758    0.03804362    0.08552271    0.02340856    0.65100588    0.08401648    0.02321516 
+    Moiseev Zadneprovskis    Capalini   Cerkovskis     Meliakh    Michalik     Walther 
+   0.094787      0.038043    0.085522     0.023408    0.651005    0.084016    0.023215 
 }
 
 
-  
 }
 \author{Robin K. S Hankin}
 \seealso{\code{\link{ordertable2supp}}}
