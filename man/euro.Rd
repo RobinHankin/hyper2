@@ -18,7 +18,8 @@ function.
 Object \code{euro2009} is a \code{hyper2} object that gives a likelihood
 function for the skills of the 18 competitor countries in semi-final 1
 of the 2009 Eurovision Song contest.  It is created by the
-self-contained code in \code{inst/euro.R}, which is heavily documented.
+self-contained code in \code{inst/eurovision.Rmd}, which is heavily
+documented.
 
 The reason for choosing this particular dataset is that Pat Altham
 (Statistical Laboratory, Cambridge) considered it with a view to
