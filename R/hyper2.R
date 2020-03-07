@@ -820,3 +820,40 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
   return(H)
 }
+
+`equalp.test` <- function(H,...){
+    m <- maxp(H,...)
+    df <- size(H)-1
+    support_difference <-
+        loglik(indep(m),H)-loglik(indep(equalp(H)),H)
+    
+    pval <- pchisq(2*support_difference,df=df,lower.tail=FALSE)
+    dname <- deparse(substitute(H))
+    method <- "Constrained support maximization"
+    
+    rval <- list(
+        statistic = support_difference,
+        p.value = pval,
+        df = df,
+        estimate = maxp,
+        method = method, 
+        data.name = dname)
+    class(rval) <- "equalptest"
+    return(rval)
+}
+
+`print.equalptest` <- function(x,...){
+    cat("\n")
+    cat(strwrap(x$method, prefix = "\t"), sep = "\n")
+    cat("\n")
+    cat("data:  ", x$data.name, "\n", sep = "")
+    cat("degrees of freedom:  ", x$df, "\n", sep = "")
+    cat("null hypothesis: p_1 = p_2 = ... = p_n = 1/n\n")
+    cat("alternative hypothesis: sum p_i = 1\n")
+    cat("support difference = ", x$statistic, "\n",sep="")
+    cat("(criterion is 2 two units of support per degree of freedom)\n")
+    cat("p-value:  ", x$p.value, "\n", sep = "")
+    cat("\n")
+    return(invisible(x))
+}
+

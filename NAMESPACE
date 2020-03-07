@@ -6,6 +6,7 @@ importFrom(Rcpp, evalCpp)
 importFrom("stats", "constrOptim")
 importFrom("stats", "runif")
 importFrom("stats", "rnorm")
+importFrom("stats", "pchisq")
 importFrom("utils", "head")
 importFrom("partitions","perms")
 
@@ -29,6 +30,7 @@ S3method(pnames,suplist)
 S3method("pnames<-",hyper2)
 
 S3method(print,ranktable)
+S3method(print,equalptest)
 
 S3method("[", hyper2)
 S3method("[<-", hyper2)
