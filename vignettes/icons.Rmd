@@ -81,8 +81,8 @@ The first step is to find the maximum
 likelihood estimate for the ```icons``` likelihood:
 
 ```{r}
-mic <- maxp(icons)
-mic
+options("digits" = 4)
+(mic <- maxp(icons))
 dotchart(mic,pch=16)
 ```
 
@@ -101,10 +101,10 @@ relative sizes of $p_1$ through $p_6$.
 
 # Hypothesis testing.
 
-Below, I investigate a number of hypotheses about $p_1,\ldots, p_6$.
-The general analysis proceeds as follows; we can use $p_1>1/6$ as an
-example but the method applies to any observation with a natural
-one-sided alternative.
+Below, I investigate a number of inequality hypotheses about
+$p_1,\ldots, p_6$.  The general analysis proceeds as follows; we can
+use $p_1>1/6$ as an example but the method applies to any observation
+with a natural one-sided alternative.
 
 * We have an observation ${\mathcal O}$ 
 wish to quantify the strength of evidence to support this.
@@ -128,13 +128,30 @@ $\overline{H_A}\colon p_1\leqslant 1/6$.
 * Calculate the likelihood ratio
   $R={\mathcal L}_{H_0}/{\mathcal L}_{H_A}>1$ or equivalently the
   _support_ for $H_A$, $\Lambda = \log R>0$.
-* To assess $H_A$, we determine $d$, the number of degrees of freedom
-inherent in $H_A$.
 * We may either use Edwards's criterion of two units of support per
-  degree of freedom, or Wilks's theorem that, under the null,
-  $2\Lambda\sim\chi^2_d$.
+  degree of freedom, or Wilks's theorem:
+  $H_0\longrightarrow 2\Lambda\sim\chi^2_1$.  Here, because we are
+  considering inequality hypotheses, we have $d=1$. 
 * If the criterion is met we may reject $\overline{H_A}$ and infer
   that $H_A$ is the case.
+
+Note that the above protocol works only for inequality hypotheses; it
+is not applicable to hypotheses without natural one-sidedness.  For
+example, consider $H_0\colon p_1=p_2=p_3$.  The vector ${\mathbf p}\in
+\left\{\left.\left(p_1,\ldots,p_6\right)\right| \sum p_i=1\right\}$ is
+a point in a 5-dimensional manifold, and $H_0$ asserts that ${\mathbf
+p}\in \left\{\left.\left(p_1,p_1,p_1,p_4,p_5,p_6\right)\right|
+3p_1+p_4+p_5+p_6=1\right\}$, that is, a 3-dimensional manifold.  The
+most common example of this would be the hypothesis of player
+equality, specifically:
+
+\[
+H_E\colon p_1=p_2=\cdots=p_n=\frac{1}{n}.
+\]
+
+("E" for equal).  Testing $H_E$ is implemented in the package as
+`test.equalp()`.  Note that because $H_E$ is a point hypothesis we
+would have $n-1$ degrees of freedom (because $H_0$ has $n-1$ df).
 
 ## Hypothesis 1: $p_1 > 1/6$
 
