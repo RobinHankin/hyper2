@@ -101,9 +101,10 @@ relative sizes of $p_1$ through $p_6$.
 
 # Hypothesis testing.
 
-Below, I investigate a number of hypotheses about $p_1\ldots p_6$.
+Below, I investigate a number of hypotheses about $p_1,\ldots, p_6$.
 The general analysis proceeds as follows; we can use $p_1>1/6$ as an
-example but the method applies to any observation.
+example but the method applies to any observation with a natural
+one-sided alternative.
 
 * We have an observation ${\mathcal O}$ 
 wish to quantify the strength of evidence to support this.
@@ -135,7 +136,7 @@ inherent in $H_A$.
 * If the criterion is met we may reject $\overline{H_A}$ and infer
   that $H_A$ is the case.
 
-## Hypothesis 1: $p_1\geqslant 1/6$
+## Hypothesis 1: $p_1 > 1/6$
 
 Following the analysis in Hankin 2010, and restated above, we first
 observe that NB [the Norfolk Broads] is the icon with the largest
