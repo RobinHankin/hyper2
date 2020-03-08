@@ -26,18 +26,13 @@ follows:
 * A vs C, C serves, 1-2
 
 (note that B does not play C).  This dataset is easily analysed with
-the ```hyper2``` package although the model implicitly assumes that
-the serve strength does not depend on who is serving.
+the `hyper2` package although the model implicitly assumes that the
+serve strength does not depend on who is serving.  The first step is
+to define a `hyper2` object:
 
-```{r}
+```{r,message=FALSE}
 library("hyper2",quietly=TRUE)
-```
-
-The first step is to define a `hyper2` object:
-
-```{r}
-H <- hyper2(pnames=c("S","a","b","c"))
-H
+(H <- hyper2(pnames=c("S","a","b","c")))
 ```
 
 so the likelihood function is uniform, for the only term is raised to
@@ -97,7 +92,8 @@ proportional to
 \frac{(S+a)^9(S+b)^3(S+c)^2a^2bc}{(S+a+b)^{10}(S+a+c)^8}
 \]
 
-# Results 
+# Maximum likelihood estimate for the strengths
+
 We now find the unconstrained MLE:
 
 ```{r}
@@ -112,7 +108,10 @@ maxlike_free <- loglik(indep(p1),H)
 maxlike_free
 ```
 
-Now find the MLE conditional on the serve having zero strength:
+# Test hypothesis that serve strength S is zero
+
+To do this we follow the protocol in the `icons` vignette.  First find
+the MLE conditional on the serve having zero strength:
 
 ```{r}
 small <- 1e-3
@@ -154,6 +153,12 @@ pval
 Thus the tail area, pval, is about 0.022 which gives us a significant
 result: the serve has nonzero strength.
 
+
+
+## Assessment of equal player strength.
+
+We now assess the hypothesis that the three (real) players are of zero
+strength:  $H_E\colon p_A=p_B=p_C$.
 
 ## Assessment of B vs C
 
@@ -255,9 +260,9 @@ plot(x,y,cex=(support+6)/12,
    pch=16,asp=1,xlim=c(-0.1,1.1),ylim=c(-0.2,0.9),
    axes=FALSE,xlab="",ylab="",main="profile likelihood for B,C")
 polygon(x=c(0,1/2,1),y=c(0,sqrt(3)/2,0))
-text(0.07,-0.04,'B=0, C=0')
-text(0.50,+0.90,'B=1, C=0')
-text(0.93,-0.04,'B=0, C=1')
+text(0.07,-0.04,'A+S=1, B=0, C=0')
+text(0.50,+0.90,'A+S=0, B=1, C=0')
+text(0.93,-0.04,'A+S=0, B=0, C=1')
 ```
 
 
