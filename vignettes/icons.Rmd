@@ -99,17 +99,61 @@ hyperdirichlet package.
 The next step is to assess a number of hypotheses concerning the
 relative sizes of $p_1$ through $p_6$.
 
+# Hypothesis testing.
+
+Below, I investigate a number of hypotheses about $p_1\ldots p_6$.
+The general analysis proceeds as follows; we use $p_1>1/6$ as an
+example but the method applies to any observation.
+
+* We have an observation ${\mathcal O}$ that $\hat{p_1} > 1/6$ and
+wish to quantify the strength of evidence to support this.
+* Translate our observation into a hypothesis phrased in terms as a
+ restriction on parameter space.  In our example we would have simply
+ $p_1>1/6$.
+* Divide the parameter space into two exclusive and exhaustive regions,
+one of which corresponds to our statement and the other to its
+negation.  In this case we have $H_A\colon p_1>1/6$ and
+$\overline{H_A}\colon p_1\leqslant 1/6$.
+* Define a Null hypothesis corresponding to no restriction on the
+  probability simplex.  We write $H_0\colon\sum p_i=1$ and observe that
+  $H_0=H_A\cup \overline{H_A}$. 
+* We then attempt to reject $\overline{H_A}$:  to do this we perform two
+  likelihood maximizations: one unconstrained, corresponding
+  to $H_0$, and one constrained, corresponding to $\overline{H_A}$.
+* We calculate ${\mathcal L}_{H_0} :=\operatorname{argmax}_{p\in
+  H_0}{\mathcal L}(p)$ and ${\mathcal L}_{H_A} :=
+  \operatorname{argmax}_{p\in H_A}{\mathcal L}(p)$ and observe that 
+  ${\mathcal O}$ implies the strict inequality
+  ${\mathcal L}_{H_0} > {\mathcal L}_{H_A}$.
+* Calculate the likelihood ratio
+  $R={\mathcal L}_{H_0}/{\mathcal L}_{H_A}>1$ or equivalently the
+  _support_ for $H_A$, $\Lambda = \log R>0$.
+* To assess $H_A$, we determine $d$, the number of degrees of freedom
+inherent in $H_A$ (our example of $p_1>1/6$ has $d=1$).
+* We may either use Edwards's criterion of two units of support per
+  degree of freedom, or Wilks's theorem that, under the null,
+  $2\Lambda\sim\chi^2_d$.
+* If the criterion is met we may reject $\overline{H_A}$ and infer
+  that $H_A$ is the case.
+
 ## Hypothesis 1: $p_1\geqslant 1/6$
 
 Following the analysis in Hankin 2010, we first observe that NB [the
-Norfolk Broads] is the largest-probability icon (as expected on
-theoretical grounds by O'Neill).  This would suggest that $p_1$ is
-large, in some sense.  Consider the hypothesis that $p_1\leqslant 1/6$
-and to that end perform a constrained optimization, with (active)
-constraint that $p_1\leqslant 1/6$.  This is most easily done by
-imposing additional constraints to the ```maxp()``` function via the
-```fcm``` and ```fcv``` arguments:
+Norfolk Broads] is the icon with the largest estimated probability
+with $\hat{p_1}\simeq 0.25$ (O'Neill gives a number of theoretical
+reasons to expect $p_1$ to be large).  This would suggest that $p_1$
+is in fact large, in some sense, and here I show how to assess this
+statement statistically.  Consider the hypothesis that $p_1\leqslant
+1/6$ (which we will try to reject).  To that end, we perform a
+constrained optimization, with (active) constraint that $p_1\leqslant
+1/6$ and note the support at the evaluate.  We then compare this
+support with the support at the unconstrained evaluate; if the
+difference in support is large then this constitutes strong evidence
+that for
 
+The optimization is most easily done by imposing additional
+constraints to the `maxp()` function via the `fcm` and `fcv`
+arguments:
 
 ```{r}
 small <- 1e-4  #  ensure start at an interior point
