@@ -3,7 +3,9 @@ title: "Public perception of climate change"
 author: "Robin K. S. Hankin"
 date: "`r Sys.Date()`"
 vignette: |
-  %\VignetteIndexEntry{climate change} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{icons}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 
