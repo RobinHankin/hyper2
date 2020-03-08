@@ -11,10 +11,10 @@ vignette: >
 
 # The importance of serve in table tennis.
 
-(In this vignette, object ```H``` is created.  It is identical to
-object ```table_tennis``` in the package; to see it type
-```data(table_tennis)``` at the command line, and to see the help
-page, type ```help(table_tennis)```).
+(In this vignette, object `H` is created.  It is identical to
+object `table_tennis` in the package; to see it type
+`data(table_tennis)` at the command line, and to see the help
+page, type `help(table_tennis)`).
 
 Suppose we have three players, "A","B", and "C" who play table tennis.
 We seek to quantify the effect of the serve.  The scoreline is as
@@ -33,7 +33,7 @@ the serve strength does not depend on who is serving.
 library("hyper2",quietly=TRUE)
 ```
 
-The first step is to define a ```hyper2``` object:
+The first step is to define a `hyper2` object:
 
 ```{r}
 H <- hyper2(pnames=c("S","a","b","c"))
@@ -139,7 +139,7 @@ LR <- exp(delta_support)
 LR
 ```
 
-The difference in support, ```delta_support```, is about 2.62 which
+The difference in support, `delta_support`, is about 2.62 which
 exceeds Edwards's two-units-of-support criterion.  We can reject the
 null.  Alternatively, Wilks's theorem gives us that
 $\Lambda=2\log(LR)$ is distributed as chi-squared with one degree of
