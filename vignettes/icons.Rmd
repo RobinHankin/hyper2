@@ -266,11 +266,18 @@ highest strength, after $p_1$.
 
 ## Low frequency responses
 
-The next hypothesis was testing the smallness of $p_5+p_6$, and we
-suspected that $p_5+p_6 < \frac{1}{3}$.  This translates into
-optimizing subject to $p_5+p_6\geqslant\frac{1}{3}$, and the required
-constraint is $-p_1-p_2-p_3-p_4\geqslant-\frac{2}{3}$ (because
-$p_5+p_6=1-p_1-p_2-p_3-p_4$).  Dead easy:
+The next hypothesis follows from the observed smallness of $\hat{p_5}$
+(ocean acidification) and $\hat{p_6}$ (West Antarctic Ice Sheet) at
+0.111 and 0.069 respectively.  These two strengths correspond to
+"distant" concerns and O'Neill had reason to consider their sum (which
+she argued would be small).  Thus we specify H_A\colon p_5+p_6 <
+\frac{1}{3}$ and $\overline{H_A}\colon p_5+p+6\geqslant\frac{1}{3}$.
+
+
+The optimizing constraint of $p_5+p_6\geqslant\frac{1}{3}$ translates
+to an operational constraint of
+$-p_1-p_2-p_3-p_4\geqslant-\frac{2}{3}$ (because
+$p_5+p_6=1-p_1-p_2-p_3-p_4$):
 
 ```{r} 
 jj <- o(c(-1,-1,-1,-1,0) , -2/3, give=TRUE,start=indep((1:6)/21))$value
