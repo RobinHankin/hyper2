@@ -2,10 +2,8 @@
 title: "Public perception of climate change"
 author: "Robin K. S. Hankin"
 date: "`r Sys.Date()`"
-vignette: >
-  %\VignetteIndexEntry{climate change}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+vignette: |
+  %\VignetteIndexEntry{climate change} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
 ---
 
 
@@ -184,10 +182,31 @@ $p_1\leqslant 1/6$ and thereby infer $p_1>\frac{1}{6}$.
 ## Hypothesis 2: $p_1\geqslant\max\left(p_2,\ldots,p_6\right)$
 
 Another constrained likelihood maximization, although this one is not
-possible with convex constraints.  We have to compare ```L1``` against
-the maximum likelihood over the region defined by $p_1$ being greater
-than *at least one* of $p_2,\ldots,p_6$.  The union of convex sets is
-not necessarily convex (think two-way Venn diagrams).  As far as I can
+possible with convex constraints.  In the language of the generic
+procedure given above, we would have
+
+\[
+H_A\colon 
+(p_1 > p_2)\cap
+(p_1 > p_3)\cap
+(p_1 > p_4)\cap
+(p_1 > p_5)\cap
+(p_1 > p_6)
+\]
+
+\[
+\overline{H_A}\colon 
+(p_1\leqslant p_2)\cup
+(p_1\leqslant p_3)\cup
+(p_1\leqslant p_4)\cup
+(p_1\leqslant p_5)\cup
+(p_1\leqslant p_6)
+\]
+
+We have to compare `L1` against the maximum likelihood over the region
+defined by $\overline{H_A}$, that is, $p_1$ being greater than *at
+least one* of $p_2,\ldots,p_6$.  The union of convex sets is not
+necessarily convex (think two-way Venn diagrams).  As far as I can
 see, the only way to do it is to perform a sequence of five
 constrained optimizations: $p_1\leqslant p_2, p_1\leqslant p_3,
 p_1\leqslant p_4, p_1\leqslant p_5$.  The fillup constraint would be
@@ -295,14 +314,17 @@ so large).
 
 ## Final example
 
-The final example was
-$\max\left\{p_5,p_6\right\}\geqslant\min\left\{p_1,p_2,p_3,p_4\right\}$.
-This means the optimization is constrained so that *at least one* of
+The final example was motivated by the fact that both the distant
+icons $p_5$ and $p_6$ had lower strength than any of the local icons
+$p_1\ldots p_4$.  Thus we would have $H_A\colon
+\max\left\{p_5,p_6\right\}<\min\left\{p_1,p_2,p_3,p_4\right\}$.  This
+means the optimization is constrained so that *at least one* of
 $\left\{p_5,p_6\right\}$ exceeds *at least one* of
 $\left\{p_1,p_2,p_3,p_4\right\}$.  So we have the union of the various
 possibilities:
 
 \[
+\overline{H_A}\colon
 \bigcup_{j\in\left\{5,6\right\}\atop k\in\left\{1,2,3,4\right\}}
 \left\{\left(p_1,p_2,p_3,p_4,p_5,p_6\right)\left|\sum p_i=1,
 p_j\geqslant p_k\right.\right\}
