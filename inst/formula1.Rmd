@@ -188,3 +188,32 @@ dotchart(mallyears,pch=16,main='Formula 1, 2014-7')
 ```
 
 We see that Hamilton has the highest estimated strength.
+
+
+# Conditions
+
+Taking 2017 as an example:
+
+`
+venue pole conditions\
+AUS Hamilton   dry \
+CHN Hamilton   wet \
+BHR Bottas     dry \
+RUS Vettel     dry \
+ESP Hamilton   dry \
+MON Raikkonen  dry \
+CAN Hamilton   dry \
+AZE Hamilton   dry \
+AUT Bottas     dry \
+GBR Hamilton   dry \
+HUN Vettel     dry \
+BEL Hamilton   dry \
+ITA Hamilon    dry \
+SIN Vettel     wet \
+MAL Hamilton   dry \
+JPN Hamilton   dry \
+USA Hamilton   dry \
+MEX Vettel     dry \
+BRA Bottas     dry \
+ABU Bottas     dry \
+`
