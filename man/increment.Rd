@@ -95,7 +95,9 @@ in \code{inst/kka_draws.R}.
 \examples{
 data(chess)
 
-## Now suppose Topalov beats Anand. To  incoroprate this into the LF:
+## Now suppose we observe an additional match, in which Topalov beats
+## Anand.  To incorporate this observation into the LF:
+
 chess["Topalov"] \%<>\% inc
 chess[c("Topalov","Anand")] \%<>\% dec
 chess
