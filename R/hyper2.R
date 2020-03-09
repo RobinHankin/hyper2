@@ -857,3 +857,24 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(invisible(x))
 }
 
+`pwa` <- function(H,pwa,chameleon='S'){  # idea is pwa(ordervec2supp(a,...),c("a","b"))
+
+  if(is.character(pwa)){
+    stopifnot(pwa %in% pnames(H))
+    pwa <- which(pnames(H) %in% pwa)
+  }  # now pwa is numeric
+
+  if(!isTRUE(is.na(pnames(H)))){            # that is, if H has pnames() then ...
+    stopifnot(!chameleon %in% pnames(H))  # ... check that the chameleon isn't already a competitor, and
+    pnames(H) <- c(pnames(H),chameleon)     # add the chameleon's name to pnames
+  }
+  
+  B <- brackets(H)
+  ## overwrite B in place:
+  for(i in seq_along(B)){
+    if(any(pwa %in% B[[i]])){  # person with advantage 
+      B[[i]] <- c(B[[i]],size(H))  # NB off-by-one error
+    } 
+  }
+  return(hyper2(B,powers(H),pnames=pnames(H)))
+}
