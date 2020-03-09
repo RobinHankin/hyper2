@@ -44,6 +44,14 @@ ordervec2supp(d,pnames)
   \code{read.table()} to create a data frame which can be interpreted by
   \code{ordertable2supp()}.
 
+  Function \code{ordervec2supp()} takes an order vector \code{d} and
+  returns the corresponding Plackett-Luce loglikelihood function as a
+  \code{hyper2} object.  It can take a named vector; names of the
+  elements are interpreted as names of the players.  Use argument
+  \code{pnames} to supply the players' names (see the examples).
+
+
+
 }
 \value{Returns a \code{hyper2} object}
 \author{Robin K. S. Hankin}
