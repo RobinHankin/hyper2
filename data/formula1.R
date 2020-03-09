@@ -279,14 +279,12 @@ structure(list(brackets = list(1, c(1, 2, 3, 4, 5, 6, 7, 8, 9,
 19, -2, -1, -1, -1, -2, -1, -1, -1, -1, -1, -1, -1, 19, -1, -1, 
 -1, -1, -1, -1, -1, -1, 12, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
 -1, -1, -1, 14, -1, -1, -1, -1, 17, -1, -1, 16, -1, 17, -1, 15, 
-11, -1, -1, 14, -1, 11, 15, 11, 14, 5, 1, 2), pnames = structure(c(8L, 
-24L, 2L, 17L, 19L, 23L, 16L, 14L, 20L, 10L, 13L, 21L, 7L, 12L, 
-1L, 22L, 15L, 25L, 11L, 4L, 5L, 6L, 9L, 3L, 18L), .Label = c("Alonso", 
-"Bottas", "Button", "Ericsson", "Gasly", "Giovinazzi", "Grosjean", 
-"Hamilton", "Hartley", "Hulkenberg", "Kvyat", "Magnussen", "Massa", 
-"Ocon", "Palmer", "Perez", "Raikkanen", "Resta", "Ricciardo", 
-"Sainz", "Stroll", "Vandoorne", "Verstappen", "Vettel", "Wehrlein"
-), class = "factor")), class = "hyper2")
+11, -1, -1, 14, -1, 11, 15, 11, 14, 5, 1, 2), pnames = c("Hamilton", 
+"Vettel", "Bottas", "Raikkanen", "Ricciardo", "Verstappen", "Perez", 
+"Ocon", "Sainz", "Hulkenberg", "Massa", "Stroll", "Grosjean", 
+"Magnussen", "Alonso", "Vandoorne", "Palmer", "Wehrlein", "Kvyat", 
+"Ericsson", "Gasly", "Giovinazzi", "Hartley", "Button", "Resta"
+)), class = "hyper2")
 
 `F1_table_2017` <-
 structure(list(AUS = structure(c(7L, 2L, 8L, 9L, 15L, 10L, 12L, 

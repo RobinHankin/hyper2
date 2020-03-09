@@ -49,6 +49,9 @@ H <- ordervec2supp(c(a = 2, b = 3, c = 1, d = 5, e = 4))
 pwa(H,'a')
 
 
+formula1 \%>\% pwa("Hamilton","pole")
+
+
 ## Three five-way races:
 H1 <- ordervec2supp(c(a = 1, b = 5, c = 3, d = 4, e = 2))
 H2 <- ordervec2supp(c(a = 2, b = 3, c = 1, d = 4, e = 5))
