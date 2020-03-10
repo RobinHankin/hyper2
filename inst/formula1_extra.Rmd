@@ -1,0 +1,85 @@
+---
+title: "formula1: further tests"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+```
+
+## Formula 1
+
+(this document follows on from `formula1.Rmd`).
+
+Here I analyse results from the 2017 series of Formula 1 motor racing
+for two interesting hypotheses: that Lewis Hamilton does indeed
+perform better in the wet, and also whether pole position makes a
+difference.
+
+Consider the following dataset, taken from Wikipedia:
+
+```{r readformula1}
+f2017 <- read.table("formula1_2017.txt",header=TRUE)
+head(f2017)
+```
+
+Thus, reading the top row, Hamilton placed second in Australia, first
+in China, second in Bahrain, and so on.  Reading the first column, we
+see that in Australia, Hamilton came second, Vettel first, and so on.
+
+```{r,readcond}
+(cond <- read.table("formula1_conditions.txt",header=TRUE))
+```
+
+Thus from the fourth row, for example, we see that in Russia the
+conditions were dry and Vettel drove in pole position.  We might ask whether 
+
+```{r dotable}
+TT <- table(wins=as.vector(f2017[1,1:20]==1),pole=cond$pole == "Hamilton")
+fisher.test(TT)
+```
+
+
+We are going to use a generalization of function
+\code{ordertable2supp()} that incorporates pole position and condition
+information:
+
+```{r,applydata}
+```
+
+See how the rows of `a2017` correspond to the columns of `f2017`.  In
+the following, we will define a `hyper2` object `H` which has a
+reified player `pole` whose strength represents the advantage
+conferred by driving pole position.
+
+```{r definegeneralizedordertable2supp}
+f2017 <- read.table("formula1_2017.txt",header=TRUE)
+cond <- read.table("formula1_conditions.txt",header=TRUE)
+
+x <- read.table("formula1_2017.txt",header=TRUE)
+noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
+venues <- as.vector(colnames(x)[-ncol(x)])
+jj <- apply(x[,-ncol(x)], 2, function(y){`[<-`(y,y %in% noscore,0)})
+
+
+fmat <- matrix(as.numeric(jj), byrow = TRUE, ncol = nrow(x))
+colnames(fmat) <- rownames(x)
+rownames(fmat) <- venues
+
+out <- hyper2(pnames = c(colnames(fmat),"pole"))
+
+for(i in seq_len(nrow(fmat))){
+  jj1 <- ordervec2supp(fmat[i,, drop=TRUE])
+  pwa(jj1,as.vector(cond$pole[i]),"pole")
+  out  <- out + pwa(jj1,as.vector(cond$pole[i]),"pole")
+}
+(mo <- maxp(out))
+pie(mo)
+```
+
+Now we can use it to create a profile likelihood curve along the same
+lines as table tennis
+    
