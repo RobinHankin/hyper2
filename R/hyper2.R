@@ -865,7 +865,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }  # now pwa is numeric
 
   if(!isTRUE(is.na(pnames(H)))){            # that is, if H has pnames() then ...
-    stopifnot(!chameleon %in% pnames(H))  # ... check that the chameleon isn't already a competitor, and
+    stopifnot(!(chameleon %in% pnames(H)))  # ... check that the chameleon isn't already a competitor, and
     pnames(H) <- c(pnames(H),chameleon)     # add the chameleon's name to pnames
   }
   
