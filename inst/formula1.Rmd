@@ -23,16 +23,28 @@ f2017 <- read.table("formula1_2017.txt",header=TRUE)
 head(f2017)
 ```
 
-Each row is a driver and each column (after the first) a venue.  We
-see that Hamilton, the first row, came second in Australia, first in
-China, second in Bahrain, fourth in Russia, and so on.  In the first
-column, we see the result from Australia (AUS) in which Hamilton came
-second, Vettel first, Bottas third, and so on.  Notation used also
-includes six different classes of no-score such as "Ret" for retired,
-"WD" for withdrawn, and so on.  I now use bespoke R function
-\code{ordertable2supp()}, that translates data of this type into a
-log-likelihood.  The function is similar to, but slightly different
-from, the analysis in `eurovision.R`.
+(in the package this is object `F1_table_2017`).  Each row is a driver
+and each column (after the first) a venue.  We see that Hamilton, the
+first row, came second in Australia, first in China, second in
+Bahrain, fourth in Russia, and so on.  In the first column, we see the
+result from Australia (AUS) in which Hamilton came second, Vettel
+first, Bottas third, and so on.  Notation used also includes six
+different classes of no-score such as "Ret" for retired, "WD" for
+withdrawn, and so on.
+
+We can represent this data in a different form using
+`wikitable_to_ranktable()`:
+
+```{r}
+wikitable_to_ranktable(f2017)
+```
+
+Looking at the first column ("c1" is read "came first") we see who
+came first at each venue: Vettel in Australia (AUS), Hamilton in China
+(CHN), Vettel in Bahrain (BHR), and so on.  I now use bespoke R
+function \code{ordertable2supp()}, that translates data of this type
+into a log-likelihood.  The function is similar to, but slightly
+different from, the analysis in `eurovision.R`.
 
 ```{r,applydata}
 L2017 <- ordertable2supp(f2017)
@@ -178,6 +190,15 @@ F1_total %<>% add(change_pnames(F1_2015,alldrivers))
 F1_total %<>% add(change_pnames(F1_2016,alldrivers)) 
 F1_total %<>% add(change_pnames(F1_2017,alldrivers)) 
 
+head(F1_total)
+```
+
+So object `F1_total` is a likelihood function for all four years data,
+on the assumption of independent observations and in this case driver
+strength being independent of year.  We can find the evaluate in the same way:
+
+
+```{r,findmallyears}
 mallyears <- maxp(F1_total)
 ```
 
