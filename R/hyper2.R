@@ -879,3 +879,22 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
   return(hyper2(B,powers(H),pnames=pnames(H)))
 }
+
+`wikitable_to_ranktable`  <- function(wikitable, points=TRUE, strict=FALSE){
+  if(points){wikitable <- wikitable[,-ncol(wikitable)]}
+
+  f <- function(x){  # deal with DNF etc and zero
+    suppressWarnings(out <- as.numeric(as.vector(x)))
+    DNF <- is.na(out) | (out==0)
+    if(sum(DNF)>1 & strict){
+      warning("more than one competitor did not place.  EM algorithm used")
+    }
+    out[DNF] <- max(out[!DNF]) + seq_len(sum(DNF))
+    return(out)
+  }
+
+  xx <- apply(wikitable,2,f)
+  rownames(xx) <- rownames(wikitable)
+  ordertable_to_ranktable(xx)
+}
+
