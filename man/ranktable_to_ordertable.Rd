@@ -19,10 +19,14 @@ Function \code{ranktable_to_ordertable()} is trivial;
 \code{ordertable_to_ranktable()} less so.  The prototype for order
 tables would be \code{skating_table}. 
 
+Function \code{ordertable_to_ranktable(x)} checks for each column being
+a permutation of \code{seq_len(nrow(x))} and, if not, stops.
+
 Note that DNF entries are out of scope for
 \code{ordertable_to_ranktable()}.  For example,
 \code{ordertable_to_ranktable(F1_table_2017)} silently produces
-incorrect output.
+incorrect output.  Function \code{ordertable2supp(F1_table_2017)} can be
+used to coerce to a likelihood function.
 
 }
 \value{An order table or rank table}

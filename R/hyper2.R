@@ -544,6 +544,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `ordertable_to_ranktable` <- function(xorder){
+  stopifnot(all(apply(xorder,2,function(x){all(sort(x)==seq_along(x))})))
   out <- t(apply(xorder,2,function(x){seq_len(nrow(xorder))[order(x)]}))
   colnames(out) <- rownames(xorder)
   class(out) <- "ranktable"
