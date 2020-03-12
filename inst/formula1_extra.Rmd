@@ -30,25 +30,59 @@ Thus, reading the top row, Hamilton placed second in Australia, first
 in China, second in Bahrain, and so on.  Reading the first column, we
 see that in Australia, Hamilton came second, Vettel first, and so on.
 
+Now we can consider only the strongest say 8 competitors.  There are
+two ways to proceed.  Firstly, we can retain just the 8 strongest
+competitors as estimated from the full likelihood function:
+
+```{r,strongestnineanotherapproach,cache=TRUE}
+mo8a <- sort(mo,decreasing=TRUE)[seq_len(8)]
+pie(mo8a)
+```
+
+Or secondly, we can simply erase everyone but the first 8 from the
+likelihood function `out`  and use that:
+
+```{r,strongestnine,cache=TRUE}
+out8 <- keep(out,seq_len(8))
+head(out8)
+mo8 <- maxp(out8)
+dotchart(log(mo8))
+pie(mo8)
+```
+
+Note how the two approaches are not equivalent: the second approach
+has redistributed the estimated strengths and, for example, Ricciardo
+has an estimated strength of essentially zero (because he consistently
+loses to the other 7 players).
+
+
+
+# Pole position
+
+Driving pole position is an important thing:
+
 ```{r,readcond}
 (cond <- read.table("formula1_conditions.txt",header=TRUE))
 ```
 
 Thus from the fourth row, for example, we see that in Russia the
-conditions were dry and Vettel drove in pole position.  We might ask whether 
+conditions were dry and Vettel drove in pole position.  We might ask
+whether Hamilton's winning is associated with his driving at pole
+position:
 
-```{r dotable}
-TT <- table(wins=as.vector(f2017[1,1:20]==1),pole=cond$pole == "Hamilton")
+```{r makehamiltontable}
+(TT <- table(wins=as.vector(f2017[1,1:20]==1),pole=cond$pole == "Hamilton"))
+```
+
+Thus from the above we see that, of Hamilton's 9 wins, 8 of them were
+from pole; conversely, of his 11 pole races, he lost only 3.
+
+```{r,fishertestpoleham}
 fisher.test(TT)
 ```
 
-
-We are going to use a generalization of function
-\code{ordertable2supp()} that incorporates pole position and condition
-information:
-
-```{r,applydata}
-```
+We are going to use a generalization of function `ordertable2supp()`
+that incorporates pole position and condition information:
 
 See how the rows of `a2017` correspond to the columns of `f2017`.  In
 the following, we will define a `hyper2` object `H` which has a
@@ -71,15 +105,27 @@ rownames(fmat) <- venues
 
 out <- hyper2(pnames = c(colnames(fmat),"pole"))
 
-for(i in seq_len(nrow(fmat))){
-  jj1 <- ordervec2supp(fmat[i,, drop=TRUE])
-  pwa(jj1,as.vector(cond$pole[i]),"pole")
-  out  <- out + pwa(jj1,as.vector(cond$pole[i]),"pole")
+for(i in seq_len(nrow(fmat))){  # iterate through the races
+  jj1 <- ordervec2supp(fmat[i,, drop=TRUE])      # jj1 is a LF for a single race...
+  jj2 <- pwa(jj1,as.vector(cond$pole[i]),"pole") # jj2 includes a pole ghost racer
+  out  <- out + jj2                              # now increment 'out' with ghost LF 
 }
+head(out)
+```
+
+In the above, we see ghost driver `pole`.
+
+```{r,maximizeoutandpie,cache=TRUE}
 (mo <- maxp(out))
 pie(mo)
 ```
 
+# Profile likelihood of pole strength
+
 Now we can use it to create a profile likelihood curve along the same
-lines as table tennis
-    
+lines as table tennis, but for simplicity we will keep just the
+strongest 9 competitors:
+
+```{r,justnine}
+4+5
+```
