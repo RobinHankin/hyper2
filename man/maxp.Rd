@@ -48,12 +48,26 @@ equalp(H)
   Function \code{equalp()} returns the value of \eqn{p} for which all
   elements are the same.
 
-  In functions \code{maxp()} and \code{maxplike()}, arguments \code{fcm}
-  and \code{fcv} implement linear constraints to be passed to
-  \code{constrOptim()}.  These constraints are in addition to the usual
-  nonnegativity constraints and unit-sum constraint.  Examples of their
-  use are given in the \dQuote{icons} vignette.
-  
+  In functions \code{maxp()} etc, arguments \code{fcm} and \code{fcv}
+  implement linear constraints to be passed to \code{constrOptim()}.
+  These constraints are in addition to the usual nonnegativity
+  constraints and unit-sum constraint, and are added to the \code{ui}
+  and \code{ci} arguments of \code{constrOptim()} with \code{rbind()}
+  and \code{c()} respectively.  The operative lines are in
+  \code{maxp_single()}:
+
+  \preformatted{
+    UI <- rbind(diag(nrow = n - 1), -1, fcm)
+    CI <- c(rep(SMALL, n - 1), -1 + SMALL, fcv)
+  }
+
+  where in \code{UI}, the first \eqn{n-1} rows enforce nonnegativity of
+  \eqn{p_i}, \eqn{1\leq p < n}{1<=i<n}; row \eqn{n} enforces
+  nonnegativity of the fillup value \eqn{p_n}; and the remaining
+  (optional) rows enforce additional linear constraints.  Argument
+  \code{CI} is a vector with corresponding elements.
+
+  Examples of their use are given in the \dQuote{icons} vignette.
 
 }
 \author{Robin K. S. Hankin}
