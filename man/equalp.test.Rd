@@ -2,17 +2,18 @@
 \alias{equalp.test}
 \alias{specificp.test}
 \alias{print.equalptest}
+\alias{print.hyper2test}
 \title{Test for random outcomes}
 \description{Tests the null of equal Plackett-Luce strengths.}
 \usage{
 equalp.test(H, ...)
-\method{print}{equalptest}(x,...)
+\method{print}{hyper2test}(x,...)
 specificp.test(H, i, specificp, details=FALSE, ...)
 }
 \arguments{
   \item{H}{A likelihood function, an object of class \code{hyper2}}
   \item{...}{Further arguments passed by \code{equalp.test()} to
-    \code{maxp()} and ignored by \code{print.equalptest()}}
+    \code{maxp()} and ignored by \code{print.hyper2test()}}
   \item{i,specificp}{Function \code{specificp.test()} tests the
     hypothesis that \eqn{p_i} is equal to \code{specificp}}
   \item{details}{Boolean, with \code{TRUE} meaning to return the result of
@@ -30,13 +31,13 @@ the same strength.  This null is tested against a free alternative.
 An extended discussion is presented in vignette \dQuote{\code{hyper2}}.
 
 Function \code{test.equalp()} returns an object with class
-\code{equalptest}, which has its own print method.
+\code{hyper2test}, which has its own print method.
 
 }
 
 \value{
-  A list with class \code{"equalptest"} containing the following
-  components:
+  The test functions return a list with class \code{"hyper2test"}
+  containing the following components:
   \item{statistic}{the difference in support between the null and
     alternative.}
   \item{p.value}{the (asymptotic) p-value for the test, based on Wilks's
@@ -53,4 +54,6 @@ Function \code{test.equalp()} returns an object with class
 
 data(volvo)
 equalp.test(volvo2014)
+
+specificp.test(volvo2014,1,0.1)
 }

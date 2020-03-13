@@ -836,20 +836,24 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         statistic = support_difference,
         p.value = pval,
         df = df,
+        null = "p_1 = p_2 = ... = p_n = 1/n",
         estimate = maxp,
         method = method, 
         data.name = dname)
-    class(rval) <- "equalptest"
+    class(rval) <- "hyper2test"
     return(rval)
 }
 
 `specificp.test` <- function(H, i, specificp, details=FALSE, ...){
-    if(is.character(i)){i <- which(pnames(H)==i)}
+    if(is.character(i)){
+        i <- which(pnames(H)==i)
+        null <- paste(i, " = ", specificp,sep="")
+    } else {
+        null <- paste("p_",i, " = ", specificp,sep="")
+    }
     delta <- 1e-3
-    m_null <- maxp(H, ..., give=TRUE)
-    df <- 1
+
     n <- size(H)
-    support_null <- m_null$value
     
     if(i<size(H)){  # regular, non-fillup value
         UI <- rep(0,n-1)
@@ -871,24 +875,42 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     ## in the above, 'm_min' interprets specificp as a minimum (that
     ## is, a lower bound) and 'm_max' interprets specificp as a
     ## maximum (that is, an upper bound).
+
+    m_null <- maxp(H, ..., give=TRUE)  # free optimization
+    support_null <- m_null$value
     
     if(details){return(list(m_null,m_min,m_max))} 
     support_alternative <- min(m_max$value,m_min$value)
-    support_difference <- support_alternative - support_null
-    return(support_difference)
+
+    df <- 1
+    estimate <- fillup(m_null$par)
+    names(estimate) <- pnames(H)
+    support_difference <- support_null - support_alternative
+
+    rval <- list(
+        statistic = support_difference,
+        p.value = pchisq(2*support_difference,df=df,lower.tail=FALSE),
+        df = df,
+        null = null,
+        estimate = estimate,
+        method = "Constrained support maximization",
+        data.name = deparse(substitute(H))
+        )
+    class(rval) <- "hyper2test"
+    return(rval)
 }
 
-`print.equalptest` <- function(x,...){
+`print.hyper2test` <- function(x,...){
     cat("\n")
     cat(strwrap(x$method, prefix = "\t"), sep = "\n")
     cat("\n")
     cat("data:  ", x$data.name, "\n", sep = "")
     cat("degrees of freedom:  ", x$df, "\n", sep = "")
-    cat("null hypothesis: p_1 = p_2 = ... = p_n = 1/n\n")
+    cat("null hypothesis: ", x$null, "\n", sep="")
     cat("alternative hypothesis: sum p_i = 1\n")
     cat("support difference = ", x$statistic, "\n",sep="")
     cat("(criterion is 2 two units of support per degree of freedom)\n")
-    cat("p-value:  ", x$p.value, "\n", sep = "")
+    cat("p-value: ", x$p.value, "\n", sep = "")
     cat("\n")
     return(invisible(x))
 }
