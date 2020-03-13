@@ -858,6 +858,44 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(invisible(x))
 }
 
+`specificp.test` <- function(H, i, specificp, give=TRUE, ...){
+  delta <- 1e-3
+  m_null <- maxp(H, ..., give=TRUE)
+  df <- 1
+  n <- size(H)
+  support_null <- m_null$value
+
+  if(i<size(H)){  # regular, non-fillup value
+    UI <- rep(0,n-1)
+    UI[i] <- 1
+    CI <- specificp
+    start_min <- rep(delta,n-1)
+    start_min[i] <- 1-n*delta
+    start_max <- rep(1/n-delta/n,n-1)
+    start_max[i] <- delta
+  } else {   # fillup tested
+    UI <- rep(-1,size(H)-1)
+    CI <- specificp-1
+    start_min <- rep
+    start_min[i] <- 1
+    start_max <- rep
+    start_max[i] <- delta
+  }
+
+
+    
+    m_min <- maxp(H,startp=start_min, fcm=-UI, FCV=-CI, ..., give=TRUE) # p_i >= specificp
+    m_max <- maxp(H,startp=start_max, fcm=+UI, FCV=+CI, ..., give=TRUE) # p_i <= specificp
+    ## in the above, 'm_min' interprets specificp as a minimum (that
+    ## is, a lower bound) and 'm_min' interprets specificp as a
+    ## maximum (that is, an upper bound).
+
+    if(give){return(list(m_null,m_min,m_max))} 
+    support_alternative <- min(m_max$value,m_min$value)
+    support_difference <- support_null - support_alternative
+    return(support_difference)
+}
+
 `pwa` <- function(H,pwa,chameleon='S'){  # idea is pwa(ordervec2supp(a,...),c("a","b"))
 
   if(is.character(pwa)){
