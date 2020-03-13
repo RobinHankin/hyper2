@@ -1,17 +1,23 @@
 \name{equalp.test}
 \alias{equalp.test}
+\alias{specificp.test}
 \alias{print.equalptest}
 \title{Test for random outcomes}
-\description{Tests the null of equal Plackett-Luce strengths.
-}
+\description{Tests the null of equal Plackett-Luce strengths.}
 \usage{
 equalp.test(H, ...)
 \method{print}{equalptest}(x,...)
+specificp.test(H, i, specificp, details=FALSE, ...)
 }
 \arguments{
   \item{H}{A likelihood function, an object of class \code{hyper2}}
   \item{...}{Further arguments passed by \code{equalp.test()} to
     \code{maxp()} and ignored by \code{print.equalptest()}}
+  \item{i,specificp}{Function \code{specificp.test()} tests the
+    hypothesis that \eqn{p_i} is equal to \code{specificp}}
+  \item{details}{Boolean, with \code{TRUE} meaning to return the result of
+    three separate \code{maxp()} calls, and \code{FALSE} meaning to return
+    an object of class \code{equalp.test}}
   \item{x}{Object of class \code{equalp.test}, the result of
     \code{equalp.test()}}
 }
