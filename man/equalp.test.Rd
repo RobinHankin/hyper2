@@ -1,24 +1,29 @@
 \name{equalp.test}
 \alias{equalp.test}
 \alias{specificp.test}
+\alias{samep.test}
 \alias{print.equalptest}
 \alias{print.hyper2test}
-\title{Test for random outcomes}
-\description{Tests the null of equal Plackett-Luce strengths.}
+\title{Hypothesis testing}
+\description{Tests different nulls against a free alternative}
 \usage{
 equalp.test(H, ...)
-\method{print}{hyper2test}(x,...)
+\method{print}{hyper2test}(x, ...)
 specificp.test(H, i, specificp, details=FALSE, ...)
+samep.test(H, i, give=FALSE, ...)
 }
 \arguments{
   \item{H}{A likelihood function, an object of class \code{hyper2}}
   \item{...}{Further arguments passed by \code{equalp.test()} to
     \code{maxp()} and ignored by \code{print.hyper2test()}}
   \item{i,specificp}{Function \code{specificp.test()} tests the
-    hypothesis that \eqn{p_i} is equal to \code{specificp}}
-  \item{details}{Boolean, with \code{TRUE} meaning to return the result of
-    three separate \code{maxp()} calls, and \code{FALSE} meaning to return
-    an object of class \code{equalp.test}}
+    hypothesis that \eqn{p_i} is equal to \code{specificp}.  Function
+    \code{samep.test()} has \code{i} an integer vector of strengths.
+    The null is that \code{p[i[1]] == p[i[2]] == ... == p[i[r]]}}
+  \item{give, details}{Boolean, with \code{TRUE} meaning to return more
+    detailed debugging information, and default \code{FALSE} meaning to
+    return a more user-friendly object of class \code{equalp.test},
+    which has its own print method}
   \item{x}{Object of class \code{equalp.test}, the result of
     \code{equalp.test()}}
 }
