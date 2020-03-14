@@ -37,6 +37,8 @@ equalp(H)
 
   Function \code{maxplist()} does the same but takes a list of
   \code{hyper2} objects (for example, the output of \code{ggrl()}).
+  Note that \code{maxplist()} does not have access to the gradient of
+  the objective function, which makes it slow.
 
   If function \code{maxp()} is given a \code{suplist} object it
   dispatches to \code{maxplist()}.
