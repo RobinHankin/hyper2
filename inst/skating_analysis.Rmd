@@ -93,7 +93,7 @@ the order given by this system.
 
 Now some data visualization.  First the MLE for the strengths:
 
-```{r,maxshow}
+```{r,maxshow, cache = TRUE}
 (m <- maxp(skating))
 ```
 
@@ -146,8 +146,8 @@ out
 
 Now compare these values with the unconstrained maximum likelihoods:
 
-```{r,unconstrainedlikes}
-mgv <- maxp(skating, give=TRUE, n=2)$value
+```{r,unconstrainedlikes, cache=TRUE}
+mgv <- maxp(skating, give=TRUE, n=10)$value
 mgv  - out
 mgv  - max(out)
 ```
