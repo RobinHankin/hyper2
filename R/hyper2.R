@@ -871,7 +871,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     } else {
         null_hypothesis <- paste("p_",i, " = ", specificp,sep="")
     }
-    delta <- 1e-3
+    delta <- 1e-4
+    specificp <- max(delta,specificp)
 
     n <- size(H)
     # Do the null first:
