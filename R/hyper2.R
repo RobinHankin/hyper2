@@ -887,8 +887,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     } else {   # fillup tested
         UI <- rep(-1,size(H)-1)
         CI <- specificp-1
-        start_min <- c(delta/n,n-1)     # all regular values small, fillup 1-d
-        start_max <- rep(1/n-delta,n-1) # all regular values small, fillup 1-d
+        start_min <- rep(delta/n,n-1)     # all regular values small, fillup 1-d
+        start_max <- rep((1-delta)/(n-1),n-1) # all regular values big, fillup d
     }
 
     m_min <- maxp(H,startp=start_min, fcm=+UI, fcv=+CI, ..., give=TRUE) # p_i >= specificp
