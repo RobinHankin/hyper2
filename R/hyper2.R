@@ -838,10 +838,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     null_estimate <- jj
 
     support_difference <- alternative_support-null_support
-    
-
-    dname <- deparse(substitute(H))
-    method <- "Constrained support maximization"
 
     jj <- paste(paste("p_",seq_len(n)," = ",sep=""),collapse="")
     null_hypothesis <- substr(jj,1,nchar(jj)-3)
@@ -860,8 +856,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         )
     class(rval) <- "hyper2test"
     return(rval)
-
-
 }
 
 `specificp.test` <- function(H, i, specificp, details=FALSE, ...){
@@ -875,7 +869,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     specificp <- max(delta,specificp)
 
     n <- size(H)
-    # Do the null first:
+    # Do the null (restricted optimization) first:
 
     if(i<size(H)){  # regular, non-fillup value
         UI <- rep(0,n-1)
@@ -888,8 +882,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     } else {   # fillup tested
         UI <- rep(-1,size(H)-1)
         CI <- specificp-1
-        start_min <- rep(delta/n,n-1)     # all regular values small, fillup 1-d
-        start_max <- rep((1-delta)/(n-1),n-1) # all regular values big, fillup d
+        start_min <- rep(delta/n,n-1)         # all regular values small, fillup 1-delta
+        start_max <- rep((1-delta)/(n-1),n-1) # all regular values big, fillup delta
     }
 
     m_min <- maxp(H,startp=start_min, fcm=+UI, fcv=+CI, ..., give=TRUE) # p_i >= specificp
