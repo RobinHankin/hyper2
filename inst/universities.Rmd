@@ -1,0 +1,87 @@
+---
+title: "universities"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library("hyper2")
+library("magrittr")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## University ranking data
+
+First load the data:
+
+```{r cars}
+a <- read.table("universities.txt",header=TRUE)
+head(a,12)
+```
+
+Each row corresponds to a ranking in the THE ranking system.  Thus the
+first row refers to The University of Auckland 2012, and we see that
+they scored 28.3 for their teaching, 25.0 for their research, and so
+on; rows 3 and 4 show that AUT and Lincoln were not given rankings
+that year.  Rows 1-8 give results for 2012, rows 9-16 give 2013, and
+so on to 2020.
+
+We can coerce each year to a `hyper2` likelihood function by
+converting to an order table with `order()`, thence to a support function:
+
+```{r, coerceem}
+f <- function(y,supp=TRUE,...){
+  jj <- as.data.frame(a)
+  jj <- subset(jj,jj$year==y)
+  o <- function(v){
+  good <- v != "DNP"
+     v[good] <- order(v[good],decreasing=TRUE)
+     return(v)
+     }	
+  x <- apply(jj,2,o)
+  rownames(x) <- jj[,1]
+  x <- x[,3:6]
+  if(supp){
+    return(ordertable2supp(x,...))
+  } else {
+  return(as.data.frame(x))
+  }		
+}
+f(2012)
+```
+
+Now:
+```{r,playerwithadvantage}
+H <- f(2013) + f(2014) + f(2015)                          # pre  2016
+H1 <- H + f(2016) + f(2017) + f(2018) + f(2019) + f(2020) # post 2016
+```
+
+Object `H1` is simply the support function for the universities'
+strenghts for observations (assumed to be independent) 2013-2020:
+
+```{r}
+maxp(H)
+```
+
+Note the dominance of Auckland (UoA).  We observe that AUT has
+increased its strength since 2016 and we can test whether this
+increase is significant:
+
+```{r}
+pnames(H) <- c(pnames(H),"S")
+H2 <- H + pwa(f(2016),"AUT") + pwa(f(2017),"AUT") +
+          pwa(f(2018),"AUT") + pwa(f(2019),"AUT") +
+  	  pwa(f(2020),"AUT")
+head(H2)
+```
+
+Object `H2` is a support function for the Bradley-Terry strengths of
+the universities, but with AUT having extra strength `S` post-2016.
+We can test the null that `S=0` using package idiom
+\code{specificp.test()}:
+
+```{r}
+specificp.test(H2,"S",0)
+```
+
+See how we reject $H_0\colon S=0$ with a p-value of about 0.00676,
+significant at 1\%.
