@@ -34,7 +34,7 @@
     return(rval)
 }
 
-`specificp.test` <- function(H, i, specificp, details=FALSE, ...){
+`specificp.test` <- function(H, i, specificp, ...){
     if(is.character(i)){
       null_hypothesis <- paste(i, " = ", specificp,sep="")
       i <- which(pnames(H)==i)
@@ -86,7 +86,8 @@
     names(jj) <- pnames(H)
     alternative_estimate <- jj
 
-    if(details){return(list(m_alternative,m_min,m_max))} 
+    ## For debugging, this is a good place to uncomment the following line
+    ## browser()
 
     df <- 1
     support_difference <- alternative_support - null_support
