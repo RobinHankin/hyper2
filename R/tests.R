@@ -36,14 +36,14 @@
 
 `specificp.test` <- function(H, i, specificp, details=FALSE, ...){
     if(is.character(i)){
-        i <- which(pnames(H)==i)
-        null_hypothesis <- paste(i, " = ", specificp,sep="")
+      null_hypothesis <- paste(i, " = ", specificp,sep="")
+      i <- which(pnames(H)==i)
     } else {
-        null_hypothesis <- paste("p_",i, " = ", specificp,sep="")
+      null_hypothesis <- paste("p_",i, " = ", specificp,sep="")
     }
     delta <- 1e-4
     specificp <- max(delta,specificp)
-
+    
     n <- size(H)
     # Do the null (restricted optimization) first:
 
@@ -172,6 +172,8 @@
     class(rval) <- "hyper2test"
     return(rval)
 }
+
+    
 
 `print.hyper2test` <- function(x,...){
     cat("\n")
