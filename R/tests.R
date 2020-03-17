@@ -25,6 +25,8 @@
         null_hypothesis = null_hypothesis,
         null_estimate = null_estimate,
         null_support = null_support,
+
+        alternative_hypothesis = "sum p_i=1",
         alternative_estimate = alternative_estimate,
         alternative_support = alternative_support,
         method = "Constrained support maximization",
@@ -34,7 +36,20 @@
     return(rval)
 }
 
-`specificp.test` <- function(H, i, specificp, ...){
+`specificp.test` <- function(H, i, specificp, alternative = c("two.sided","less","greater"), ...){
+    alternative <- match.arg(alternative)
+    if(missing(specificp)){specificp <- 1/size(H)}
+
+    if(is.character(i)){i <- which(pnames(H)==i)}
+    return(switch(alternative,
+                  "two.sided" = specificp.ne.test(H=H, i=i, specificp, ...),
+                  "less"      = specificp.lt.test(H=H, i=i, specificp, ...),
+                  "greater"   = specificp.gt.test(H=H, i=i, specificp, ...)
+                  )
+           )
+}
+
+`specificp.ne.test` <- function(H, i, specificp, ...){
     if(is.character(i)){
       null_hypothesis <- paste(i, " = ", specificp,sep="")
       i <- which(pnames(H)==i)
@@ -99,9 +114,155 @@
         null_hypothesis = null_hypothesis,
         null_estimate = null_estimate,
         null_support = null_support,
+        alternative_hypothesis = "sum p_i=1",
         alternative_estimate = alternative_estimate,
         alternative_support = alternative_support,
         method = "Constrained support maximization",
+        sidedness = "two sided",
+        data.name = deparse(substitute(H))
+        )
+    class(rval) <- "hyper2test"
+    return(rval)
+}
+
+`specificp.gt.test` <- function(H, i, specificp, ...){  # alternative = "greater"
+    ## NB here we treat specificp as a *lower* bound for the
+    ## optimization, thus specificp <= p_i (or, operationally, p_i <=
+    ## specificp); the sense of 'greater' is that we suspect phat is
+    ## _greater than_ specificp and want to find evidence for this;
+    ## so, operationally, we try to reject the hypothesis that phat is
+    ## less than specificp
+
+    delta <- 1e-4
+    specificp <- min(max(delta,specificp),1-delta)
+    n <- size(H)
+  
+    # Do the null first: (restricted optimization, p <= specificp
+    null_hypothesis <- paste("p_",i, " = ", specificp,sep="")
+    if(i<size(H)){  # regular, non-fillup value
+        UI <- rep(0,n-1)
+        UI[i] <- 1
+        CI <- specificp
+        start_max <- rep(1/n-delta/n,n-1)
+        start_max[i] <- delta
+    } else {   # fillup tested
+        UI <- rep(-1,size(H)-1)
+        CI <- specificp-1
+        start_max <- rep((1-delta)/(n-1),n-1) # all regular values big, fillup delta
+    }
+
+    a <- maxp(H,startp=start_max, fcm=-UI, fcv=-CI, ..., give=TRUE) # p_i <= specificp
+    ## in the above, maxp() interprets specificp as a
+    ## maximum (that is, an upper bound).
+
+    jj <- fillup(a$par)
+    if(!identical(pnames(H),NA)){names(jj) <- pnames(H)}
+    null_estimate <- jj
+    null_support <- a$value
+        
+    ## Now the alternative, free optimization
+    m_alternative <- maxp(H, ..., give=TRUE)  # free optimization
+    alternative_support <- m_alternative$value
+    jj <- fillup(m_alternative$par)
+    if(!identical(pnames(H),NA)){names(jj) <- pnames(H)}
+    alternative_estimate <- jj
+  
+    if(!identical(pnames(H),NA)){
+      alternative_hypothesis <- paste( "sum p_i=1, ",pnames(H)[i], " <= ", specificp)
+    }  else {
+      alternative_hypothesis <- paste( "sum p_i=1, ",i, " <= ", specificp)
+    }
+
+    ## For debugging, this is a good place to uncomment the following line
+    ## browser()
+
+    df <- 1
+    support_difference <- alternative_support - null_support
+
+    rval <- list(
+        statistic = support_difference,
+        p.value = pchisq(2*support_difference,df=df,lower.tail=FALSE),
+        df = df,
+        null_hypothesis = null_hypothesis,
+        null_estimate = null_estimate,
+        null_support = null_support,
+        alternative_estimate = alternative_estimate,
+        alternative_support = alternative_support,
+        alternative_hypothesis = alternative_hypothesis,
+        method = "Constrained support maximization",
+        sidedness = "one-sided",
+        data.name = deparse(substitute(H))
+        )
+    class(rval) <- "hyper2test"
+    return(rval)
+}
+
+`specificp.lt.test` <- function(H, i, specificp, ...){  # alternative = "less"
+    ## NB here we treat specificp as an *upper* bound for the
+    ## optimization, thus specificp >= p_i (or, operationally, p_i >=
+    ## specificp); the sense of 'less' is that we suspect phat is
+    ## _less than_ specificp and want to find evidence for this;
+    ## so, operationally, we try to reject the hypothesis that phat is
+    ## greater than specificp
+
+    delta <- 1e-4
+    specificp <- min(max(delta,specificp),1-delta)
+    n <- size(H)
+  
+    # Do the null first: (restricted optimization, p <= specificp
+    null_hypothesis <- paste("p_",i, " = ", specificp,sep="")
+    if(i<size(H)){  # regular, non-fillup value
+        UI <- rep(0,n-1)
+        UI[i] <- 1
+        CI <- specificp
+        start_min <- rep(delta,n-1)
+        start_min[i] <- 1-n*delta
+    } else {   # fillup tested
+        UI <- rep(-1,size(H)-1)
+        CI <- specificp-1
+        start_min <- rep(delta/n,n-1)         # all regular values small, fillup 1-delta
+    }
+
+    a <- maxp(H,startp=start_min, fcm=+UI, fcv=+CI, ..., give=TRUE) # p_i >= specificp
+    ## in the above, maxp() interprets specificp as a
+    ## minimum (that is, a lower bound).
+
+    jj <- fillup(a$par)
+    if(!identical(pnames(H),NA)){names(jj) <- pnames(H)}
+    null_estimate <- jj
+    null_support <- a$value
+        
+    ## Now the alternative, free optimization
+    m_alternative <- maxp(H, ..., give=TRUE)  # free optimization
+    alternative_support <- m_alternative$value
+    jj <- fillup(m_alternative$par)
+    if(!identical(pnames(H),NA)){names(jj) <- pnames(H)}
+    alternative_estimate <- jj
+  
+    if(!identical(pnames(H),NA)){
+      alternative_hypothesis <- paste( "sum p_i=1, ",pnames(H)[i], " >= ", specificp)
+    }  else {
+      alternative_hypothesis <- paste( "sum p_i=1, ",i, " >= ", specificp)
+    }
+
+    ## For debugging, this is a good place to uncomment the following line
+    ## browser()
+
+    df <- 1
+    support_difference <- alternative_support - null_support
+
+    rval <- list(
+        statistic = support_difference,
+        p.value = pchisq(2*support_difference,df=df,lower.tail=FALSE),
+        df = df,
+        null_hypothesis = null_hypothesis,
+        null_estimate = null_estimate,
+        null_support = null_support,
+        alternative_estimate = alternative_estimate,
+        alternative_support = alternative_support,
+        alternative_hypothesis = alternative_hypothesis,
+        method = "Constrained support maximization",
+        sidedness = "one-sided",
         data.name = deparse(substitute(H))
         )
     class(rval) <- "hyper2test"
@@ -165,6 +326,7 @@
         null_hypothesis = null_hypothesis,
         null_estimate = null_estimate,
         null_support = null_support,
+        alternative_hypothesis = "sum p_i=1",
         alternative_estimate = alternative_estimate,
         alternative_support = alternative_support,
         method = "Constrained support maximization",
@@ -173,8 +335,6 @@
     class(rval) <- "hyper2test"
     return(rval)
 }
-
-    
 
 `print.hyper2test` <- function(x,...){
     cat("\n")
@@ -188,7 +348,7 @@
     cat("(argmax, constrained optimization)\n")
     cat("Support for null: ",x$null_support, "+ K\n\n")
 
-    cat("alternative hypothesis: sum p_i = 1\n")
+    cat("alternative hypothesis: ",x$alternative_hypothesis, "\n")
     cat("alternative estimate:\n")
     print(x$alternative_estimate)
     cat("(argmax, free optimization)\n")
@@ -197,7 +357,7 @@
     cat("degrees of freedom: ", x$df, "\n", sep = "")
     cat("support difference = ", x$statistic, "\n",sep="")
     cat("(criterion is 2 two units of support per degree of freedom)\n")
-    cat("p-value: ", x$p.value, "\n", sep = "")
+    cat("p-value: ", x$p.value, " (",x$sidedness, ")\n", sep = "")
     cat("\n")
     return(invisible(x))
 }

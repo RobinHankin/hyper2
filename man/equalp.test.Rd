@@ -4,12 +4,20 @@
 \alias{samep.test}
 \alias{print.equalptest}
 \alias{print.hyper2test}
+\alias{specificp.ne.test}
+\alias{specificp.gt.test}
+\alias{specificp.lt.test}
+\alias{specificp.ge.test}
+\alias{specificp.le.test}
 \title{Hypothesis testing}
 \description{Tests different nulls against a free alternative}
 \usage{
 equalp.test(H, ...)
 \method{print}{hyper2test}(x, ...)
-specificp.test(H, i, specificp, ...)
+specificp.test(H, i, specificp, alternative = c("two.sided","less","greater"),  ...)
+specificp.ne.test(H, i, specificp, ...)
+specificp.gt.test(H, i, specificp, ...)
+specificp.lt.test(H, i, specificp, ...)
 samep.test(H, i, give=FALSE, ...)
 }
 \arguments{
@@ -20,6 +28,10 @@ samep.test(H, i, give=FALSE, ...)
     hypothesis that \eqn{p_i} is equal to \code{specificp}.  Function
     \code{samep.test()} has \code{i} an integer vector of strengths.
     The null is that \code{p[i[1]] == p[i[2]] == ... == p[i[r]]}}
+  \item{alternative}{a character string specifying the alternative
+    hypothesis, must be one of \code{two.sided} (default),
+    \code{greater} or \code{less}.  You can specify just the initial
+    letter (taken from \code{t.test.Rd})}
   \item{give}{Boolean, with \code{TRUE} meaning to return more
     detailed debugging information, and default \code{FALSE} meaning to
     return a more user-friendly object of class \code{equalp.test},
@@ -35,8 +47,8 @@ Plackett-Luce, a random ordering is equivalent to the players all having
 the same strength.  This null is tested against a free alternative.
 An extended discussion is presented in vignette \dQuote{\code{hyper2}}.
 
-Function \code{test.equalp()} returns an object with class
-\code{hyper2test}, which has its own print method.
+The tests return an object with class \code{hyper2test}, which has its
+own print method.
 
 }
 
@@ -44,12 +56,12 @@ Function \code{test.equalp()} returns an object with class
   The test functions return a list with class \code{"hyper2test"}
   containing the following components:
   \item{statistic}{the difference in support between the null and
-    alternative.}
+    alternative}
   \item{p.value}{the (asymptotic) p-value for the test, based on Wilks's
     theorem} 
   \item{estimate}{the maximum likelihood estimate for \eqn{p}}
   \item{method}{a character string indicating what type of test was
-    performed.}
+    performed}
   \item{data.name}{a character string giving the name(s) of the data.}
 }
 \seealso{
