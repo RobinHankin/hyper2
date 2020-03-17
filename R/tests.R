@@ -118,7 +118,7 @@
         alternative_estimate = alternative_estimate,
         alternative_support = alternative_support,
         method = "Constrained support maximization",
-        sidedness = "two sided",
+        sidedness = "(two sided)",
         data.name = deparse(substitute(H))
         )
     class(rval) <- "hyper2test"
@@ -190,7 +190,7 @@
         alternative_support = alternative_support,
         alternative_hypothesis = alternative_hypothesis,
         method = "Constrained support maximization",
-        sidedness = "one-sided",
+        sidedness = "(one-sided)",
         data.name = deparse(substitute(H))
         )
     class(rval) <- "hyper2test"
@@ -262,7 +262,7 @@
         alternative_support = alternative_support,
         alternative_hypothesis = alternative_hypothesis,
         method = "Constrained support maximization",
-        sidedness = "one-sided",
+        sidedness = "(one-sided)",
         data.name = deparse(substitute(H))
         )
     class(rval) <- "hyper2test"
@@ -330,6 +330,7 @@
         alternative_estimate = alternative_estimate,
         alternative_support = alternative_support,
         method = "Constrained support maximization",
+        sidedness = "",
         data.name = deparse(substitute(H))
         )
     class(rval) <- "hyper2test"
@@ -357,7 +358,7 @@
     cat("degrees of freedom: ", x$df, "\n", sep = "")
     cat("support difference = ", x$statistic, "\n",sep="")
     cat("(criterion is 2 two units of support per degree of freedom)\n")
-    cat("p-value: ", x$p.value, " (",x$sidedness, ")\n", sep = "")
+    cat("p-value: ", x$p.value, " ",x$sidedness, "\n", sep = "")
     cat("\n")
     return(invisible(x))
 }
