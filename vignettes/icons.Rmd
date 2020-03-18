@@ -4,8 +4,8 @@ author: "Robin K. S. Hankin"
 date: "`r Sys.Date()`"
 vignette: |
   %\VignetteIndexEntry{icons}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 
@@ -103,57 +103,72 @@ relative sizes of $p_1$ through $p_6$.
 
 Below, I investigate a number of inequality hypotheses about
 $p_1,\ldots, p_6$.  The general analysis proceeds as follows; we can
-use $p_1>1/6$ as an example but the method applies to any observation
-with a natural one-sided alternative.
+use $H_0\colon p_1=1/6$ as an example but the method applies to any
+observation.  I consider the general case first, then modifications
+for one-sided hypotheses.
 
-* We have an observation ${\mathcal O}$ 
+* We have an observation ${\mathcal O}$  and 
 wish to quantify the strength of evidence to support this.
 * Translate our observation into a hypothesis phrased in terms as a
  restriction on parameter space.
-* Divide the parameter space into two exclusive and exhaustive regions,
-one of which corresponds to our statement and the other to its
-negation.  For example, we might have $H_A\colon p_1>1/6$ and
-$\overline{H_A}\colon p_1\leqslant 1/6$.
-* Define a Null hypothesis corresponding to no restriction on the
-  probability simplex.  We write $H_0\colon\sum p_i=1$ and observe that
-  $H_0=H_A\cup \overline{H_A}$. 
-* We then attempt to reject $\overline{H_A}$:  to do this we perform two
+* State a null hypothesis and alternative.  For example, we might
+  have $H_0\colon p_1=1/6$ and $H_A\colon p_1\neq 1/6$, and $H_A$ is the complement of $H_0$.
+  We sometimes write $H_A\colon\sum p_i=1$, ignoring the (measure zero) $H_0$.
+* We then attempt to reject $H_0$ and to do this we perform two
   likelihood maximizations: one unconstrained, corresponding
-  to $H_0$, and one constrained, corresponding to $\overline{H_A}$.
+  to $H_A$, and one constrained, corresponding to $H_0$.
 * We calculate ${\mathcal L}_{H_0} :=\operatorname{argmax}_{p\in
   H_0}{\mathcal L}(p)$ and ${\mathcal L}_{H_A} :=
-  \operatorname{argmax}_{p\in H_A}{\mathcal L}(p)$ and observe that 
+  \operatorname{argmax}_{p\in H_A}{\mathcal L}(p)$ and observe that, in general,
   ${\mathcal O}$ implies the strict inequality
-  ${\mathcal L}_{H_0} > {\mathcal L}_{H_A}$.
+  ${\mathcal L}_{H_A} > {\mathcal L}_{H_0}$.
 * Calculate the likelihood ratio
-  $R={\mathcal L}_{H_0}/{\mathcal L}_{H_A}>1$ or equivalently the
-  _support_ for $H_A$, $\Lambda = \log R>0$.
+  $R={\mathcal L}_{H_A}/{\mathcal L}_{H_0}>1$ or equivalently the
+  _support_ for $H_0$, $\Lambda = \log R>0$.
 * We may either use Edwards's criterion of two units of support per
   degree of freedom, or Wilks's theorem:
-  $H_0\longrightarrow 2\Lambda\sim\chi^2_1$.  Here, because we are
+  $H_0\longrightarrow 2\Lambda\sim\chi^2_d$.  If we are
   considering inequality hypotheses, we have $d=1$. 
-* If the criterion is met we may reject $\overline{H_A}$ and infer
+* If the criterion is met we may reject $H_0$ and infer
   that $H_A$ is the case.
 
-Note that the above protocol works only for inequality hypotheses; it
-is not applicable to hypotheses without natural one-sidedness.  For
-example, consider $H_0\colon p_1=p_2=p_3$.  The vector ${\mathbf p}\in
-\left\{\left.\left(p_1,\ldots,p_6\right)\right| \sum p_i=1\right\}$ is
-a point in a 5-dimensional manifold, and $H_0$ asserts that ${\mathbf
-p}\in \left\{\left.\left(p_1,p_1,p_1,p_4,p_5,p_6\right)\right|
+As another example, consider $H_0\colon p_1=p_2=p_3$.  The vector
+${\mathbf p}\in \left\{\left.\left(p_1,\ldots,p_6\right)\right| \sum
+p_i=1\right\}$ is a point in a 5-dimensional manifold, and $H_0$
+asserts that ${\mathbf p}\in
+\left\{\left.\left(p_1,p_1,p_1,p_4,p_5,p_6\right)\right|
 3p_1+p_4+p_5+p_6=1\right\}$, that is, a 3-dimensional manifold.  The
-most common example of this would be the hypothesis of player
+null imposes a loss of two degrees of freedom.
+
+The logic above operates for one-sided tests.  We might observe that
+$\hat{p_1}$ is the largest and wish to test a null of $p_1\leqslant
+1/6$ against an alternative of $p_1>1/6$.  Note that the one-sided
+p-value and likelihood ratio statistic are the same as the two-sided
+values.
+
+Below I will rework some of the hypotheses tested in the
+hyperdirichlet package, with consistent labelling of null and
+alternative hypotheses, and renumbering
+
+## Equality of strengths
+
+The most straightforward null would be the hypothesis of player
 equality, specifically:
 
 \[
 H_E\colon p_1=p_2=\cdots=p_n=\frac{1}{n}.
 \]
 
-("E" for equal).  Testing $H_E$ is implemented in the package as
+("E" for equal).  This was not carried out in Hankin 2010 because I
+had not thought of it.  Testing $H_E$ is implemented in the package as
 `test.equalp()`.  Note that because $H_E$ is a point hypothesis we
 would have $n-1$ degrees of freedom (because $H_0$ has $n-1$ df).
 
-## Hypothesis 1: $p_1 > 1/6$
+```{r}
+equalp.test(icons)
+```	
+
+## Hypothesis 1: $p_1 = 1/6$
 
 Following the analysis in Hankin 2010, and restated above, we first
 observe that NB [the Norfolk Broads] is the icon with the largest
@@ -161,61 +176,45 @@ estimated probability with $\hat{p_1}\simeq 0.25$ (O'Neill gives a
 number of theoretical reasons to expect $p_1$ to be large).  This
 would suggest that $p_1$ is in fact large, in some sense, and here I
 show how to assess this statement statistically.  Consider the
-hypothesis $H_A\colon p_1>1/6$, and as per the protocol above we will
-try to reject $\overline{H_A}\colon p_1\leqslant 1/6$.
+hypothesis $H_0\colon p_1=1/6$, and as per the protocol above we will
+try to reject it.
 
 To that end, we perform a constrained optimization, with (active)
-constraint that $p_1\leqslant 1/6$ and note the support at the
-evaluate.  We then compare this support with the support at the
-unconstrained evaluate; if the difference in support is large then
-this constitutes strong evidence for $H_A$ and then would conclude
-that $p_1 > 1/6$.  In package idiom, the optimization is most easily
-done by imposing additional constraints to the `maxp()` function via
-the `fcm` and `fcv` arguments:
+constraint that $p_1\leqslant 1/6$ (note that the inequality
+constraint allows us to use fast `maxp()`, which has access to
+derivatives).  We note the support at the evaluate and then compare
+this support with the support at the unconstrained evaluate; if the
+difference in support is large then this constitutes strong evidence
+for $H_A$ and then would conclude that $p_1 > 1/6$.  In package idiom,
+the optimization is implemented by the `specificp.test()` suite of
+functions; these work by imposing additional constraints to the
+`maxp()` function via the `fcm` and `fcv` arguments.  Using the
+defaults we have:
 
 ```{r}
-small <- 1e-4  #  ensure start at an interior point
-maxlike_constrained <- 
-    maxp(icons, startp=indep(equalp(icons))-c(small,0,0,0,0),
-         give=TRUE, fcm=c(-1,0,0,0,0),fcv= -1/6)
-maxlike_constrained	 
+specificp.test(icons,1)
 ```	
 
-Note that the value of $p_1$ is equal to $1/6$: the maximum is on the
-boundary of the admissible region.  The extra support is given by
+which tests a null of $p_1\leqslant\frac{1}{6}$; see how the evaluate
+under the null is on the boundary and we have $\hat{p_1}=\frac{1}{6}$.
+Compare the support of 2.607 with 2.608181 from the hyperdirichlet
+package.  This exceeds Edwards's two-units-of-support criterion; the
+$p$-value is obtained by applying Wilks's theorem on the asymptotic
+distribution of 2\log\Lambda.
 
-```{r}
-ES <- L1-maxlike_constrained$value 
-ES
-```
-
-(compare 2.608181 from the hyperdirichlet package).  This exceeds
-Edwards's two-units-of-support criterion; a $p$-value would be
-
-```{r}
-pchisq(2*ES,df=1,lower.tail=FALSE)
-```
-
-both of which would indicate that we may reject that hypothesis that
+Both these criteria indicate that we may reject that hypothesis that
 $p_1\leqslant 1/6$ and thereby infer $p_1>\frac{1}{6}$.
 
 ## Hypothesis 2: $p_1\geqslant\max\left(p_2,\ldots,p_6\right)$
 
-Another constrained likelihood maximization, although this one is not
+We observe that NB (the Norfolk Broads) has large strength, and
+hypothesise that it is in fact stronger than any other icon.  This is
+another constrained likelihood maximization, although this one is not
 possible with convex constraints.  In the language of the generic
 procedure given above, we would have
 
 \[
-H_A\colon 
-(p_1 > p_2)\cap
-(p_1 > p_3)\cap
-(p_1 > p_4)\cap
-(p_1 > p_5)\cap
-(p_1 > p_6)
-\]
-
-\[
-\overline{H_A}\colon 
+H_0\colon 
 (p_1\leqslant p_2)\cup
 (p_1\leqslant p_3)\cup
 (p_1\leqslant p_4)\cup
@@ -223,15 +222,31 @@ H_A\colon
 (p_1\leqslant p_6)
 \]
 
-We have to compare `L1` against the maximum likelihood over the region
-defined by $\overline{H_A}$, that is, $p_1$ being greater than *at
-least one* of $p_2,\ldots,p_6$.  The union of convex sets is not
-necessarily convex (think two-way Venn diagrams).  As far as I can
-see, the only way to do it is to perform a sequence of five
-constrained optimizations: $p_1\leqslant p_2, p_1\leqslant p_3,
-p_1\leqslant p_4, p_1\leqslant p_5$.  The fillup constraint would be
-$p_1\leqslant p_6\longrightarrow 2p_1+p_2+\ldots p_5\leqslant 1$.  We
-then choose the largest likelihood from the five.
+\[
+\overline{H_0}\colon 
+(p_1 > p_2)\cap
+(p_1 > p_3)\cap
+(p_1 > p_4)\cap
+(p_1 > p_5)\cap
+(p_1 > p_6)
+\]
+
+(although note that $H_0$ has nonzero measure).  In words, $H_0$
+states that $p_1$ is smaller than $p_2$, or $p_1$ is smaller than
+$p_3$, etc; while $\overline{H_0}$ states that $p_1$ is larger than
+$p_2$, and is larger than $p_3$, and so on.  Considering the evaluate,
+we see that ${\mathcal L}_{H_0} < {\mathcal L}_{\overline{H_0}}$, so
+optimizing over $\overline{H_0}$ is equivalent to unconstrained
+optimization [of course, the intrinsic constraints $p_i\geqslant 0,
+\sum p_i\leqslant 1$ have to be respected].  Here, $\overline{H_0}$ is
+regions of $(p_1,\ldots,p_6)$ with $p_1$ being greater than *at least
+one* of $p_2,\ldots,p_6$.  The union of convex sets is not necessarily
+convex (think two-way Venn diagrams).  As far as I can see, the only
+way to do it is to perform a sequence of five constrained
+optimizations: $p_1\leqslant p_2, p_1\leqslant p_3, p_1\leqslant p_4,
+p_1\leqslant p_5$.  The fillup constraint would be $p_1\leqslant
+p_6\longrightarrow 2p_1+p_2+\ldots p_5\leqslant 1$.  We then choose
+the largest likelihood from the five.
 
 ```{r}
 o <- function(Ul,Cl,startp,give=FALSE){
@@ -309,9 +324,8 @@ The next hypothesis follows from the observed smallness of $\hat{p_5}$
 (ocean acidification) and $\hat{p_6}$ (West Antarctic Ice Sheet) at
 0.111 and 0.069 respectively.  These two strengths correspond to
 "distant" concerns and O'Neill had reason to consider their sum (which
-she argued would be small).  Thus we specify H_A\colon p_5+p_6 <
-\frac{1}{3}$ and $\overline{H_A}\colon p_5+p+6\geqslant\frac{1}{3}$.
-
+she argued would be small).  Thus we specify $H_0\colon
+p_5+p_6\leqslant \frac{1}{3}$.
 
 The optimizing constraint of $p_5+p_6\geqslant\frac{1}{3}$ translates
 to an operational constraint of
@@ -336,10 +350,10 @@ so large).
 
 The final example was motivated by the fact that both the distant
 icons $p_5$ and $p_6$ had lower strength than any of the local icons
-$p_1\ldots p_4$.  Thus we would have $H_A\colon
-\max\left\{p_5,p_6\right\}<\min\left\{p_1,p_2,p_3,p_4\right\}$.  This
-means the optimization is constrained so that *at least one* of
-$\left\{p_5,p_6\right\}$ exceeds *at least one* of
+$p_1\ldots p_4$.  Thus we would have
+$H_0\colon\max\left\{p_5,p_6\right\}\geqslant\min\left\{p_1,p_2,p_3,p_4\right\}$.
+This means the null optimization is constrained so that *at least one*
+of $\left\{p_5,p_6\right\}$ exceeds *at least one* of
 $\left\{p_1,p_2,p_3,p_4\right\}$.  So we have the union of the various
 possibilities:
 
@@ -354,6 +368,7 @@ and of course $p_6\geqslant p_2$, say, translates to
 $-p_1-2p_2-p_3-p_4-p_5\geqslant -1$.
 
 ```{r}
+small <- 1e-4
 start <- indep(c(small,small,small,small,0.5-2*small,0.5-2*small))
 jj <- c(
    o(c(-1, 0, 0, 0, 1), 0,start=start),
