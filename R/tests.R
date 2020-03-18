@@ -40,7 +40,6 @@
     alternative <- match.arg(alternative)
     if(missing(specificp)){specificp <- 1/size(H)}
 
-    if(is.character(i)){i <- which(pnames(H)==i)}
     return(switch(alternative,
                   "two.sided" = specificp.ne.test(H=H, i=i, specificp, ...),
                   "less"      = specificp.lt.test(H=H, i=i, specificp, ...),
@@ -133,12 +132,18 @@
     ## so, operationally, we try to reject the hypothesis that phat is
     ## less than specificp
 
+    if(is.character(i)){
+      null_hypothesis <- paste(i, " = ", specificp,sep="")
+      i <- which(pnames(H)==i)
+    } else {
+      null_hypothesis <- paste("p_",i, " = ", specificp,sep="")
+    }
+
     delta <- 1e-4
     specificp <- min(max(delta,specificp),1-delta)
     n <- size(H)
   
     # Do the null first: (restricted optimization, p <= specificp
-    null_hypothesis <- paste("p_",i, " = ", specificp,sep="")
     if(i<size(H)){  # regular, non-fillup value
         UI <- rep(0,n-1)
         UI[i] <- 1
@@ -205,12 +210,18 @@
     ## so, operationally, we try to reject the hypothesis that phat is
     ## greater than specificp
 
+    if(is.character(i)){
+      null_hypothesis <- paste(i, " = ", specificp,sep="")
+      i <- which(pnames(H)==i)
+    } else {
+      null_hypothesis <- paste("p_",i, " = ", specificp,sep="")
+    }
+
     delta <- 1e-4
     specificp <- min(max(delta,specificp),1-delta)
     n <- size(H)
   
     # Do the null first: (restricted optimization, p <= specificp
-    null_hypothesis <- paste("p_",i, " = ", specificp,sep="")
     if(i<size(H)){  # regular, non-fillup value
         UI <- rep(0,n-1)
         UI[i] <- 1
