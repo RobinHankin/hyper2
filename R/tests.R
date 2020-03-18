@@ -49,11 +49,12 @@
 }
 
 `specificp.ne.test` <- function(H, i, specificp, ...){
+    rsp <- round(specificp,getOption("digits"))  # for printing purposes
     if(is.character(i)){
-      null_hypothesis <- paste(i, " = ", specificp,sep="")
+      null_hypothesis <- paste(i, " = ", rsp, sep="")
       i <- which(pnames(H)==i)
     } else {
-      null_hypothesis <- paste("p_",i, " = ", specificp,sep="")
+      null_hypothesis <- paste("p_",i, " = ", rsp, sep="")
     }
     delta <- 1e-4
     specificp <- max(delta,specificp)
@@ -132,11 +133,12 @@
     ## so, operationally, we try to reject the hypothesis that phat is
     ## less than specificp
 
+    rsp <- round(specificp,getOption("digits"))  # for printing purposes
     if(is.character(i)){
-      null_hypothesis <- paste(i, " = ", specificp,sep="")
+      null_hypothesis <- paste(i, " = ", rsp, sep="")
       i <- which(pnames(H)==i)
     } else {
-      null_hypothesis <- paste("p_",i, " = ", specificp,sep="")
+      null_hypothesis <- paste("p_",i, " = ", rsp, sep="")
     }
 
     delta <- 1e-4
@@ -210,11 +212,13 @@
     ## so, operationally, we try to reject the hypothesis that phat is
     ## greater than specificp
 
+
+    rsp <- round(specificp,getOption("digits"))  # for printing purposes
     if(is.character(i)){
-      null_hypothesis <- paste(i, " = ", specificp,sep="")
+      null_hypothesis <- paste(i, " = ", rsp, sep="")
       i <- which(pnames(H)==i)
     } else {
-      null_hypothesis <- paste("p_",i, " = ", specificp,sep="")
+      null_hypothesis <- paste("p_",i, " = ", rsp, sep="")
     }
 
     delta <- 1e-4
