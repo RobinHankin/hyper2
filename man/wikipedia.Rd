@@ -5,6 +5,8 @@
 \docType{data}
 \title{Wikipedia refdesk usage statistics}
 \description{
+  Order table of questions asked in the different wikipedia refdesks,
+  split by year.}
 \usage{data(universities)}
 \format{A \code{hyper2} object that gives a likelihood function for
   ranking of NZ universities}
