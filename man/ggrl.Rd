@@ -74,7 +74,7 @@ rank_likelihood(M,times=1)
   Function \code{addrank()} is now defunct.
   
 }
-\author{obin K. S. Hankin}
+\author{Robin K. S. Hankin}
 \seealso{\code{\link{rrank}},\code{\link{ordertable2supp}}}
 \examples{
 
