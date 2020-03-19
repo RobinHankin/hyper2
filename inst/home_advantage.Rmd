@@ -16,9 +16,7 @@ First load the package:
 library(hyper2)
 ```
 
-
 Now generate the dataset:
-
 
 ```{r}
 home_games_won <- matrix(c(
@@ -36,10 +34,8 @@ away_games_won <- matrix(c(
     nrow=4,ncol=4,byrow=TRUE)
 
 teams <- LETTERS[1:4]
-rownames(home_games_won) <- teams
-colnames(home_games_won) <- teams
-rownames(away_games_won) <- teams
-colnames(away_games_won) <- teams
+dimnames(home_games_won) <- list("@home" = teams,"@away"=teams)
+dimnames(away_games_won) <- list("@home" = teams,"@away"=teams)
 
 home_games_won
 away_games_won
