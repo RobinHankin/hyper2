@@ -1,0 +1,69 @@
+---
+title: "Soling at the 2000 Summer Olympics"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The Soling is a type of boat raced in the 2000 Summer Olympics.  Here I analyse race data taken from
+
+  \url{https://en.wikipedia.org/w/index.php?title=Sailing_at_the_2000_Summer_Olympics_\%E2\%80\%93_Soling&oldid=945362535}
+
+using a Plackett-Luce extension of the Bradley-Terry model.
+
+
+
+```{r loadlib}
+library("hyper2")
+data(soling)
+soling_table_2000
+ordertable_to_ranktable(soling_table_2000)
+head(soling2000)
+```
+
+We can also consider observations from the round robins and quarter finals:
+
+```{r,rrqf}
+soling2000_rr1
+soling2000_rr2
+soling2000_qf
+```
+
+Thus, for example, taking `soling2000_rr1[1,2] == TRUE` we see that
+Germany beat Sweden in round robin 1.  To incorporate this information
+we need a little bespoke function:
+
+```{r, definef}
+rr <- function(H,M){
+	for(i in seq_len(nrow(M)-1)){
+		for(j in (i+1):ncol(M)){
+			if(M[i,j]){
+				winner <- i
+				loser  <- j
+			} else {
+				winner <- j
+				loser <- i
+			}
+			H[winner] %<>% inc
+			H[c(winner,loser)] %<>% dec
+		}
+	}
+	return(H)
+}
+```
+
+
+now
+
+```{r}
+before <- maxp(soling2000)
+soling2000 %<>% rr(soling2000_rr1)
+soling2000 %<>% rr(soling2000_rr2)
+soling2000 %<>% rr(soling2000_qf)
+after <- maxp(soling2000)
+par(pty="s")
+plot(before,after,asp=1,pch=16,xlim=c(0,0.3),ylim=c(0,0.3))
+abline(0,1)
+```
