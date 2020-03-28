@@ -18,7 +18,7 @@ volley(M)
 The canonical example is the volleyball dataset.  Each row is a
 volleyball game; each column is a player.  An entry of 0 means
 \dQuote{on the losing side}, an entry of 1 means \dQuote{on the winning
-side}, and an entry of \code{NA} means \code{did not play}.
+side}, and an entry of \code{NA} means \dQuote{did not play}.
 }
 
 \author{Robin K. S. Hankin}
