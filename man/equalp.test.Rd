@@ -1,7 +1,7 @@
 \name{equalp.test}
 \alias{equalp.test}
-\alias{specificp.test}
 \alias{samep.test}
+\alias{specificp.test}
 \alias{print.equalptest}
 \alias{print.hyper2test}
 \alias{specificp.ne.test}
@@ -13,12 +13,12 @@
 \description{Tests different nulls against a free alternative}
 \usage{
 equalp.test(H, ...)
-\method{print}{hyper2test}(x, ...)
+samep.test(H, i, give=FALSE, ...)
 specificp.test(H, i, specificp, alternative = c("two.sided","less","greater"),  ...)
 specificp.ne.test(H, i, specificp, ...)
 specificp.gt.test(H, i, specificp, ...)
 specificp.lt.test(H, i, specificp, ...)
-samep.test(H, i, give=FALSE, ...)
+\method{print}{hyper2test}(x, ...)
 }
 \arguments{
   \item{H}{A likelihood function, an object of class \code{hyper2}}
@@ -50,6 +50,19 @@ An extended discussion is presented in vignette \dQuote{\code{hyper2}}.
 The tests return an object with class \code{hyper2test}, which has its
 own print method.
 
+\itemize{
+  \item Function \code{equalp.test()} tests
+  \eqn{H_0\colon p_1=p_2=\cdots=p_n=\frac{1}{n}}{omitted, see PDF}
+  \item Function \code{specificp.test(H,i,p)} tests
+  \eqn{H_0\colon p_i=p}{omitted}
+  \item Function \code{samep.test()} tests \eqn{H_0\colon
+  p_{i_1}=p_{i_2}=\cdots=p_{i_k}}{omitted}.
+  \item Functions \code{specificp.ne.test(H,i,p)},
+  \code{specificp.ne.test(H,i,p)}, and \code{specificp.ne.test(H,i,p)}
+  are low-level helper functions that implement one- or two-sided versions
+  of \code{specificp.test()} via the \code{alternative} argument,
+  following \code{t.test()}
+}
 }
 
 \value{
