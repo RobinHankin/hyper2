@@ -1,4 +1,4 @@
-\name{equalp.test}
+\name{tests}
 \alias{equalp.test}
 \alias{samep.test}
 \alias{specificp.test}
