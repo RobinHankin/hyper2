@@ -14,12 +14,12 @@ Topalov, Anand, Karpov
   
   The players are:
   \itemize{
-    \item Grandmaster Veselin Topalov. FIDE world champion 2005-2006;
-    peak rating 2813
-    \item Grandmaster Viswanathan Anand.  FIDE world champion 2000-2002,
-    2008; peak rating 2799
-    \item Grandmaster Anatoly Karpov.  FIDE world champion 1993-1999;
-    peak rating 2780
+    \item Grandmaster Veselin Topalov.  \acronym{FIDE} world
+    champion 2005-2006; peak rating 2813
+    \item Grandmaster Viswanathan Anand.  \acronym{FIDE} world
+    champion 2000-2002, 2008; peak rating 2799
+    \item Grandmaster Anatoly Karpov.  \acronym{FIDE} world
+    champion 1993-1999; peak rating 2780
   }
 
   Observe that Topalov beats Anand, Anand beats Karpov, and Karpov beats
