@@ -127,11 +127,13 @@
 
 `specificp.gt.test` <- function(H, i, specificp, ...){  # alternative = "greater"
     ## NB here we treat specificp as a *lower* bound for the
-    ## optimization, thus specificp <= p_i (or, operationally, p_i <=
-    ## specificp); the sense of 'greater' is that we suspect phat is
-    ## _greater than_ specificp and want to find evidence for this;
-    ## so, operationally, we try to reject the hypothesis that phat is
-    ## less than specificp
+    ## optimization, the constraint being 'specificp <= p_i' (or,
+    ## operationally, p_i <= specificp); the sense of 'greater'---as
+    ## in, why the function is ".gt." rather than ".lt."---is that we
+    ## suspect p_i is _greater than_ specificp and want to find
+    ## evidence for this; so, operationally, we try to reject the
+    ## hypothesis that p_i is less than specificp (and infer that p_i
+    ## is indeed greater than specificp).
 
     rsp <- round(specificp,getOption("digits"))  # for printing purposes
     if(is.character(i)){
@@ -206,11 +208,13 @@
 
 `specificp.lt.test` <- function(H, i, specificp, ...){  # alternative = "less"
     ## NB here we treat specificp as an *upper* bound for the
-    ## optimization, thus specificp >= p_i (or, operationally, p_i >=
-    ## specificp); the sense of 'less' is that we suspect phat is
-    ## _less than_ specificp and want to find evidence for this;
-    ## so, operationally, we try to reject the hypothesis that phat is
-    ## greater than specificp
+    ## optimization, the constraint being 'specificp >= p_i' (or,
+    ## operationally, p_i >= specificp); the sense of 'less'---as
+    ## in, why the function is ".lt." rather than ".gt."---is that we
+    ## suspect p_i is _less than_ specificp and want to find
+    ## evidence for this; so, operationally, we try to reject the
+    ## hypothesis that p_i is greater than specificp (and infer that p_i
+    ## is indeed less than specificp).
 
 
     rsp <- round(specificp,getOption("digits"))  # for printing purposes
