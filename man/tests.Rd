@@ -14,10 +14,10 @@
 \usage{
 equalp.test(H, ...)
 samep.test(H, i, give=FALSE, ...)
-specificp.test(H, i, specificp, alternative = c("two.sided","less","greater"),  ...)
-specificp.ne.test(H, i, specificp, ...)
-specificp.gt.test(H, i, specificp, ...)
-specificp.lt.test(H, i, specificp, ...)
+specificp.test(H, i, specificp=1/size(H), alternative = c("two.sided","less","greater"),  ...)
+specificp.ne.test(H, i, specificp=1/size(H), ...)
+specificp.gt.test(H, i, specificp=1/size(H), ...)
+specificp.lt.test(H, i, specificp=1/size(H), ...)
 \method{print}{hyper2test}(x, ...)
 }
 \arguments{

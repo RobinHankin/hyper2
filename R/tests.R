@@ -36,9 +36,8 @@
     return(rval)
 }
 
-`specificp.test` <- function(H, i, specificp, alternative = c("two.sided","less","greater"), ...){
+`specificp.test` <- function(H, i, specificp=1/size(H), alternative = c("two.sided","less","greater"), ...){
     alternative <- match.arg(alternative)
-    if(missing(specificp)){specificp <- 1/size(H)}
 
     return(switch(alternative,
                   "two.sided" = specificp.ne.test(H=H, i=i, specificp, ...),
@@ -48,7 +47,7 @@
            )
 }
 
-`specificp.ne.test` <- function(H, i, specificp, ...){
+`specificp.ne.test` <- function(H, i, specificp=1/size(H), ...){
     rsp <- round(specificp,getOption("digits"))  # for printing purposes
     if(is.character(i)){
       null_hypothesis <- paste(i, " = ", rsp, sep="")
@@ -125,7 +124,7 @@
     return(rval)
 }
 
-`specificp.gt.test` <- function(H, i, specificp, ...){  # alternative = "greater"
+`specificp.gt.test` <- function(H, i, specificp=1/size(H), ...){  # alternative = "greater"
     ## NB here we treat specificp as a *lower* bound for the
     ## optimization, the constraint being 'specificp <= p_i' (or,
     ## operationally, p_i <= specificp); the sense of 'greater'---as
@@ -206,7 +205,7 @@
     return(rval)
 }
 
-`specificp.lt.test` <- function(H, i, specificp, ...){  # alternative = "less"
+`specificp.lt.test` <- function(H, i, specificp=1/size(H), ...){  # alternative = "less"
     ## NB here we treat specificp as an *upper* bound for the
     ## optimization, the constraint being 'specificp >= p_i' (or,
     ## operationally, p_i >= specificp); the sense of 'less'---as
