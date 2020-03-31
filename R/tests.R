@@ -65,10 +65,10 @@
         UI <- rep(0,n-1)
         UI[i] <- 1
         CI <- specificp
-        start_min <- rep(delta,n-1)
-        start_min[i] <- 1-n*delta
-        start_max <- rep(1/n-delta/n,n-1)
-        start_max[i] <- delta
+        start_min <- rep((1-specificp-delta)/(n-1),n-1)
+        start_min[i] <- specificp+delta ## so p > specificp
+        start_max <-  rep((1-specificp+delta)/(n-1),n-1)
+        start_max[i] <- specificp-delta ## so p < specificp
     } else {   # fillup tested
         UI <- rep(-1,size(H)-1)
         CI <- specificp-1
@@ -151,12 +151,12 @@
         UI <- rep(0,n-1)
         UI[i] <- 1
         CI <- specificp
-        start_max <- rep(1/n-delta/n,n-1)
-        start_max[i] <- delta
+        start_max <- rep((1-specificp+delta)/(n-1),n-1)
+        start_max[i] <- specificp-delta ## so p < specificp
     } else {   # fillup tested
         UI <- rep(-1,size(H)-1)
         CI <- specificp-1
-        start_max <- rep((1-delta)/(n-1),n-1) # all regular values big, fillup delta
+        start_max <- rep((1-specificp+delta)/(n-1),n-1) 
     }
 
     a <- maxp(H,startp=start_max, fcm=-UI, fcv=-CI, ..., give=TRUE) # p_i <= specificp
@@ -228,17 +228,17 @@
     specificp <- min(max(delta,specificp),1-delta)
     n <- size(H)
   
-    # Do the null first: (restricted optimization, p <= specificp
+    # Do the null first: (restricted optimization, p >= specificp
     if(i<size(H)){  # regular, non-fillup value
         UI <- rep(0,n-1)
         UI[i] <- 1
         CI <- specificp
-        start_min <- rep(delta,n-1)
-        start_min[i] <- 1-n*delta
+        start_min <- rep((1-specificp-delta)/(n-1),n-1)
+        start_min[i] <- specificp+delta ## so p > specificp
     } else {   # fillup tested
         UI <- rep(-1,size(H)-1)
         CI <- specificp-1
-        start_min <- rep(delta/n,n-1)         # all regular values small, fillup 1-delta
+        start_min <- rep((1-specificp-delta)/(n-1),n-1) 
     }
 
     a <- maxp(H,startp=start_min, fcm=+UI, fcv=+CI, ..., give=TRUE) # p_i >= specificp
