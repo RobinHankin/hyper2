@@ -786,10 +786,10 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     ## Now create a numeric matrix, fmat.  Two steps: first, count
     ## any no-score as zero:
   
-  jj <- apply(x,2,function(y){
-      if(any(y %in% noscore)){y[y%in%noscore] <- 0}
-      return(y)
-  })
+    jj <- apply(x,2,function(y){
+        if(any(y %in% noscore)){y[y%in%noscore] <- 0}
+        return(y)
+    })
     
     ## Second, convert to numeric and strip out names; transpose of
     ## x (because we want each row to be a venue):
