@@ -8,6 +8,7 @@ set.seed(0)
 knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 library("magrittr")
+options("digits" = 5)
 ```
 
 ## Formula 1
@@ -52,12 +53,15 @@ head(L2017,3)
 ```
 
 Above, we see a small part of the Placket-Luce likelihood function for
-the 2017 results.  We can find the maximum likelihood estimator by
-using the `maxp()` function:
+the 2017 results.  But from now on we will use built-in dataset
+`formula1`, which contains extra information including non-finishing
+competitors.  We can find the maximum likelihood estimator by using
+the `maxp()` function:
 
 
-```{r,maxp2017}
-mL2017 <- maxp(L2017)
+```{r,maxp2017,cache=TRUE}
+rm(L2017)
+mL2017 <- maxp(formula1)
 mL2017
 dotchart(mL2017,pch=16,main='2017 Formula 1')
 dotchart(log(mL2017)[1:23],pch=16,main='2017 Formula 1, log scale')
@@ -77,7 +81,7 @@ likelihood estimation.
 points <- f2017$points
 names(points) <- f2017$driver
 
-m <- mL2017   # maxp(L2017)
+m <- mL2017   # maxp(formula1)
 ox <- rank(-points) # negative because number 1 = largest number of points
 oy <- rank(-m)      # negative because number 1 = largest strength
 par(pty='s')        # square plot
@@ -105,12 +109,12 @@ differences in detail.
 
 # Analysis of nulls:
 
-## Null of equal strengths:
+## Hypothesis: all players have equal strengths
 
-```{r,equalstrength}
-L1 <- loglik(indep(equalp(L2017)),L2017)
-L2 <- loglik(indep(mL2017),L2017)   # mL2017 == maxp(L2017)
-pchisq(2*(L2-L1),df=25-1,lower.tail=FALSE)
+Here we write $H_0\colon p_1=p_2=\cdots =p_n=\frac{1}{n}$.
+
+```{r,equalstrength,cache=TRUE}
+equalp.test(formula1)
 ```
 
 highly signficant!
@@ -118,36 +122,23 @@ highly signficant!
 ## Null of Hamilton being average
 
 We can consider Hamilton and ask various questions about his playing
-strength.  One natural null would be that Hamilton's strength is equal
-to the mean strength, or $\frac{1}{25}$.  
+strength.  One natural hypothesis would be that Hamilton's strength is
+equal to the mean strength, or $\frac{1}{25}$.
 
-* $H_2\colon p_\mathrm{Hamilton}\geq\frac{1}{25}$
-* $H_3\colon p_\mathrm{Hamilton} < \frac{1}{25}$
+* $H_A\colon\sum p_i=1$
+* $H_0\colon p_\mathrm{Hamilton} < \frac{1}{25}$
 
-Noting that the evaluate for Hamilton's strength
-$\widehat{p_\mathrm{Hamilton}}$ is about 0.22, we may consider the
-likelihood for $H_2$ to be equal to the unconstrained maximum
-likelhood as in `L2` above.  The likelihood for $H_3$ requires a
-constrained optimization:
+(we attempt to reject the null $H_0$).  Noting that the evaluate for
+Hamilton's strength $\widehat{p_\mathrm{Hamilton}}$ is about 0.29, we
+ask how much support is lost, relative to the support at the
+unconstrained evaluate.
 
-```{r,constham}
-small <- 0.01
-L3 <- maxp(L2017, startp=c(small, rep((1-small)/24,23)),fcm=rbind(c(-1,rep(0,23))),fcv=-1/25,give=TRUE)
-L3
+```{r,specifichamiltonstrength,cache=TRUE}
+specificp.test(formula1,"Hamilton")  # default value is 1/25=0.04
 ```
 
-(note that the constrained maximum attains the constraint of
-$p_\mathrm{Hamilton}=\frac{1}{25}$).   The likelihood ratio test gives
-
-```{r,liktestivediff}
-L2 - L3$value 
-```
-
-or a p-value of 
-
-```{r,liktestive}
-pchisq(2*(L2 - L3$value),df=1,lower.tail=FALSE)
-```
+(note that the constrained maximum is on the boundary of the
+admissible region with $p_\mathrm{Hamilton}\approxequal\frac{1}{25}$).
 
 ## Null of Hamilton being better than other players
 
@@ -155,27 +146,30 @@ We may now test
 
 * $H_4\colon p_\mathrm{Hamilton} > \max_{i\neq\mathrm{Hamilton}} p_i$
 
-This is quite difficult to evaluate formally but we can evaluate it with no loss in accuracy by observing that the second strongest competitor is Bottas and considering instead
+This is quite difficult to evaluate formally but we can evaluate it
+with no loss in accuracy by observing that the second strongest
+competitor is Bottas and considering instead
 
 * $H_4'\colon p_\mathrm{Hamilton} > p_\mathrm{Bottas}$.
 
-```{r,L4like}
+```{r,L4like,cache=TRUE}
 small <- 0.01
-L4 <- maxp(L2017, startp=c(small, rep((1-small)/24,23)),fcm=rbind(c(-1,1,rep(0,22))),fcv=0,give=TRUE)
+L4 <- maxp(formula1, startp=c(small, rep((1-small)/24,23)),fcm=rbind(c(-1,1,rep(0,22))),fcv=0,give=TRUE)
 L4
 ```
 
 Calculating the support and asymptotic p-values:
 ```{r,l4val}
-L2 - L4$value 
-pchisq(2*(L2 - L4$value),df=1,lower.tail=FALSE)
+#L2 - L4$value 
+#pchisq(2*(L2 - L4$value),df=1,lower.tail=FALSE)
+2+3
 ```
 
 ## All years data
 
 We will consider four years data:
 
-```{r,fouryearsdata}
+```{r,fouryearsdata, cache=TRUE}
 F1_2014 <- "formula1_2014.txt" %>% read.table(header=TRUE) %>% ordertable2supp
 F1_2015 <- "formula1_2015.txt" %>% read.table(header=TRUE) %>% ordertable2supp
 F1_2016 <- "formula1_2016.txt" %>% read.table(header=TRUE) %>% ordertable2supp
@@ -198,7 +192,7 @@ on the assumption of independent observations and in this case driver
 strength being independent of year.  We can find the evaluate in the same way:
 
 
-```{r,findmallyears}
+```{r,findmallyears,cache=TRUE}
 mallyears <- maxp(F1_total)
 ```
 
@@ -210,31 +204,57 @@ dotchart(mallyears,pch=16,main='Formula 1, 2014-7')
 
 We see that Hamilton has the highest estimated strength.
 
-
 # Conditions
 
-Taking 2017 as an example:
+```{r,loadtable}
+(details <- read.table("formula1_conditions.txt",header=TRUE))
+drivers <- pnames(formula1)
+```
 
-`
-venue pole conditions\
-AUS Hamilton   dry \
-CHN Hamilton   wet \
-BHR Bottas     dry \
-RUS Vettel     dry \
-ESP Hamilton   dry \
-MON Raikkonen  dry \
-CAN Hamilton   dry \
-AZE Hamilton   dry \
-AUT Bottas     dry \
-GBR Hamilton   dry \
-HUN Vettel     dry \
-BEL Hamilton   dry \
-ITA Hamilon    dry \
-SIN Vettel     wet \
-MAL Hamilton   dry \
-JPN Hamilton   dry \
-USA Hamilton   dry \
-MEX Vettel     dry \
-BRA Bottas     dry \
-ABU Bottas     dry \
-`
+We cannot use `ordertable2supp()` here because we somehow need to
+incorporate pole position and conditions into our likelihood function.
+The first step is to modify `f2017` so that non-finishers have a zero
+position:
+
+
+At this point, we introduce a new player: `Ham_wet`, for
+"Hamilton in the wet", and we can test the hypothesis that the
+`Hamilton == Ham_wet`.  We will cycle through all the venues and,
+if it is wet (according to dataframe `conditions`) we will credit
+Hamilton's placing to `Ham_wet`.
+
+```{r,hamiltonwetanddry,cache=TRUE}
+f2017 <- read.table("formula1_2017.txt",header=TRUE)
+f2017 <- f2017[,-ncol(f2017)]
+details <- read.table("formula1_conditions.txt",header=TRUE)
+
+drivers <- rownames(f2017)
+alldrivers <- c("Ham_dry","Ham_wet",drivers[-1])
+
+L2017 <- hyper2(pnames=alldrivers) # uninformative
+for(i in seq_len(ncol(f2017))){
+	venue <- colnames(f2017)[i]
+	conditions <- details[which(details$venue == venue),4]
+	o <- f2017[,i]
+        suppressWarnings(o <- as.numeric(levels(o))[o])
+        o[is.na(o)] <- 0
+	names(o) <- rownames(f2017)
+	if(conditions == "wet"){
+	   names(o)[names(o) == "Hamilton"] <- "Ham_wet"
+	} else if(conditions == "dry"){
+	   names(o)[names(o) == "Hamilton"] <- "Ham_dry"
+	} else {
+	   stop("neither wet nor dry?")
+	}
+	L2017 <- order_obs(L2017,o)
+}  # for(i) loop closes
+head(L2017)
+```
+
+We can now test the hypothesis that Hamilton's performance in the wet
+is the same as his performance in the dry:
+
+```{r,hamwetdrytest,cache=TRUE}
+options(width = 80)
+samep.test(L2017,c("Ham_wet","Ham_dry"))
+```
