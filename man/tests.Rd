@@ -16,7 +16,7 @@ equalp.test(H, ...)
 samep.test(H, i, give=FALSE, ...)
 specificp.test(H, i, specificp=1/size(H), alternative = c("two.sided","less","greater"),  ...)
 specificp.ne.test(H, i, specificp=1/size(H), ...)
-specificp.gt.test(H, i, specificp=1/size(H), ...)
+specificp.gt.test(H, i, specificp=1/size(H), delta=1e-5, ...)
 specificp.lt.test(H, i, specificp=1/size(H), ...)
 \method{print}{hyper2test}(x, ...)
 }
@@ -38,6 +38,7 @@ specificp.lt.test(H, i, specificp=1/size(H), ...)
     which has its own print method}
   \item{x}{Object of class \code{equalp.test}, the result of
     \code{equalp.test()}}
+  \item{delta}{Small value for numerical stability}
 }
 \details{
 
@@ -58,11 +59,23 @@ own print method.
   \item Function \code{samep.test()} tests \eqn{H_0\colon
   p_{i_1}=p_{i_2}=\cdots=p_{i_k}}{omitted}.
   \item Functions \code{specificp.ne.test(H,i,p)},
-  \code{specificp.ne.test(H,i,p)}, and \code{specificp.ne.test(H,i,p)}
+  \code{specificp.gt.test(H,i,p)}, and \code{specificp.lt.test(H,i,p)}
   are low-level helper functions that implement one- or two-sided versions
   of \code{specificp.test()} via the \code{alternative} argument,
   following \code{t.test()}
 }
+
+Function \code{specificp.gt.test()} includes quite a bit of messing
+about to ensure that frequently-used idiom like
+\code{specificp.gt.test(icons,"NB",0)} works as expected, testing a null
+of \code{p_NB=0}.  In the case of testing a strength's being zero, the
+support function is often quite badly-behaved near the constraint [think
+tossing a coin twice, observing one head and one tail, and testing
+\code{p_NB=0}; the gradient of the support is infinite at the
+constraint].  Numerically, the code tests \code{p_NB=delta}.  Note that
+similar machinations are not required in \code{specificp.lt.test()}
+because a null of \code{p_NB=1} is unrealistic.
+
 }
 
 \value{

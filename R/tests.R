@@ -124,7 +124,7 @@
     return(rval)
 }
 
-`specificp.gt.test` <- function(H, i, specificp=1/size(H), ...){  # alternative = "greater"
+`specificp.gt.test` <- function(H, i, specificp=1/size(H), delta=1e-5, ...){  # alternative = "greater"
     ## NB here we treat specificp as a *lower* bound for the
     ## optimization, the constraint being 'specificp <= p_i' (or,
     ## operationally, p_i <= specificp); the sense of 'greater'---as
@@ -142,21 +142,30 @@
       null_hypothesis <- paste("p_",i, " = ", rsp, sep="")
     }
 
-    delta <- 1e-4
-    specificp <- min(max(delta,specificp),1-delta)
     n <- size(H)
   
     # Do the null first: (restricted optimization, p <= specificp
     if(i<size(H)){  # regular, non-fillup value
         UI <- rep(0,n-1)
         UI[i] <- 1
-        CI <- specificp
         start_max <- rep((1-specificp+delta)/(n-1),n-1)
-        start_max[i] <- specificp-delta ## so p < specificp
+        if(specificp==0){
+            CI <- delta
+            start_max[i] <- delta/2 ## so p < specificp
+        } else {
+            CI <- specificp
+            start_max[i] <- specificp-delta 
+        }
     } else {   # fillup tested
+        if(specificp==0){
+        UI <- rep(-1,size(H)-1)
+        CI <- delta-1
+        start_max <- rep((1-delta*(n-1)/n)/(n-1),n-1)
+        } else {
         UI <- rep(-1,size(H)-1)
         CI <- specificp-1
-        start_max <- rep((1-specificp+delta)/(n-1),n-1) 
+        start_max <- rep((1-specificp+delta)/(n-1),n-1)
+        }
     }
 
     a <- maxp(H,startp=start_max, fcm=-UI, fcv=-CI, ..., give=TRUE) # p_i <= specificp
@@ -176,11 +185,13 @@
     alternative_estimate <- jj
   
     if(!identical(pnames(H),NA)){
-      alternative_hypothesis <- paste( "sum p_i=1, ",pnames(H)[i], " <= ", specificp)
+      alternative_hypothesis <- paste("sum p_i=1, ",pnames(H)[i], " <= ", specificp)
     }  else {
-      alternative_hypothesis <- paste( "sum p_i=1, ",i, " <= ", specificp)
+      alternative_hypothesis <- paste("sum p_i=1, ",i, " <= ", specificp)
     }
-
+    if(specificp==0){
+        alternative_hypothesis <- paste(alternative_hypothesis, " (notional)")
+    }
     ## For debugging, this is a good place to uncomment the following line
     ## browser()
 
