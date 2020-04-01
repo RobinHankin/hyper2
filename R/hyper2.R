@@ -746,6 +746,10 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `ordervec2supp` <- function(d,pnames){
+    wanted <- d!=0
+    if(any(sort(d[wanted]) != seq_len(sum(wanted)))){
+        stop("nonzero elements of d should be 1,2,3,4...,n")
+    }
     nd <- names(d)
     out <- hyper2(d=length(d))
     while(any(d>0)){
@@ -779,6 +783,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     ## same algorithm as ordervec2supp() but is based on names.
     
     stopifnot(all(names(d) %in% pnames(H)))
+
+    wanted <- d!=0
+    if(any(sort(d[wanted]) != seq_len(sum(wanted)))){
+        stop("nonzero elements of d should be 1,2,3,4...,n")
+    }
 
     while(any(d>0)){
         eligible <- which(d>=0)

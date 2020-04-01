@@ -55,7 +55,7 @@ formula1 \%>\% pwa("Hamilton","pole")
 ## Three five-way races:
 H1 <- ordervec2supp(c(a = 1, b = 5, c = 3, d = 4, e = 2))
 H2 <- ordervec2supp(c(a = 2, b = 3, c = 1, d = 4, e = 5))
-H3 <- ordervec2supp(c(a = 4, b = 3, c = 5, d = 1, e = 3))
+H3 <- ordervec2supp(c(a = 4, b = 3, c = 0, d = 1, e = 2))
 
 ## Now it is revealed that a,b,c had some advantage in races 1,2,3 respectively:
 Ht <- pwa(H1,'a') + pwa(H2,'b') + pwa(H2,'c')

@@ -48,10 +48,9 @@ incorrect output.
 p <- (5:1)/15
 names(p) <- letters[1:5]
 xrank <- rrank(12,p,rnames=month.abb)
+xorder <- ranktable_to_ordertable(xrank)
 
-ranktable_to_ordertable(xrank)
-xorder <- ordertable_to_ranktable(ranktable_to_ordertable(xrank))
-
+## Can convert back and forth:
 identical(xrank,ordertable_to_ranktable(ranktable_to_ordertable(xrank)))
 
 maxp(ordertable2supp(xorder))  # should be close to p
