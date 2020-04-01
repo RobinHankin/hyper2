@@ -27,7 +27,7 @@ row is a refdesk and each column a year.  Use
 \examples{
 
 data(wikipedia)
-dotchart(maxp(wikipedia),log="x")
-ordertable_to_ranktable(wikipedia)
+#dotchart(maxp(wikipedia),log="x")
+ordertable_to_ranktable(wikipedia_table)
 }
 
