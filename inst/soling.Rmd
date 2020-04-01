@@ -18,7 +18,7 @@ using a Plackett-Luce extension of the Bradley-Terry model.
 ```{r loadlib}
 library("hyper2")
 data(soling)
-soling_table_2000
+H <- soling_table_2000
 ordertable_to_ranktable(soling_table_2000)
 head(soling2000)
 ```
@@ -54,16 +54,27 @@ rr <- function(H,M){
 }
 ```
 
-
-now
+We can see the effect on the evaluate of incorporating the additional
+observations into the Plackett-Luce likelihoods:
 
 ```{r}
-before <- maxp(soling2000)
-soling2000 %<>% rr(soling2000_rr1)
-soling2000 %<>% rr(soling2000_rr2)
-soling2000 %<>% rr(soling2000_qf)
-after <- maxp(soling2000)
+H <- soling2000
+before <- maxp(H)
+H %<>% rr(soling2000_rr1)
+H %<>% rr(soling2000_rr2)
+H %<>% rr(soling2000_qf)
+after <- maxp(H)
 par(pty="s")
 plot(before,after,asp=1,pch=16,xlim=c(0,0.3),ylim=c(0,0.3))
 abline(0,1)
 ```
+
+The diagram above shows a modest change.  We might ask whether the
+additional observations are consistent with the original Placket-Luce
+likelihood:
+
+```{r}
+(H2 <- H + (-1)*soling2000)
+```
+
+
