@@ -77,4 +77,12 @@ likelihood:
 (H2 <- H + (-1)*soling2000)
 ```
 
+So `H2` is the _difference_ between `H`--- which is `soling2000` plus
+the observations from the roundrobins and quarter finals---and
+`soling2000`.  In other words, `H2` is the simply the information in
+the roundrobins and quarter finals. 
+
+```{r,testH2equalp}
+equalp.test(H2)
+```
 
