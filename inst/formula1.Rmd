@@ -246,7 +246,7 @@ for(i in seq_len(ncol(f2017))){
 	} else {
 	   stop("neither wet nor dry?")
 	}
-	L2017 <- order_obs(L2017,o)
+	L2017 %<>% order_obs(o)
 }  # for(i) loop closes
 head(L2017)
 ```
