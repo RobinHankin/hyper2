@@ -4,14 +4,15 @@
 \alias{heptathlon_ordertable}
 \docType{data}
 \title{Heptathlon dataset}
-\description{Results from the 2019 World Atheltics Championships, Women's heptathlon}
+\description{Results from the 2019 World Athletics Championships,
+  Women's heptathlon}
 \usage{data(heptathlon)}
 \format{An order table and a \code{hyper2} object that gives a support function}
 \details{
 
 Object \code{heptathlon} is a \code{hyper2} object that gives a
 likelihood function for the strengths of the finishing competitors of
-the Women's heptathlon at the 2019 World Atheltics Championships.
+the Women's heptathlon at the 2019 World Athletics Championships.
 Object \code{heptathlon_ordertable} is an order table: a data frame with
 rows being competitors, columns being events, and entries being being
 places.  Thus looking at the first row, first column we see that Annie

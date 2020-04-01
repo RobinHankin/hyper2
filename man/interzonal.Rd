@@ -15,14 +15,14 @@ in Stockholm, 1962.
 \details{
 
   The 1963 World Chess Championship was notable for allegations of
-  Soviet collusion.  Specifically, Fischer publicly alledged that
+  Soviet collusion.  Specifically, Fischer publicly alleged that
   certain Soviet players had agreed in advance to draw all their games.
   The championship included an \dQuote{interzonal} tournament in which
   23 players competed in Stockholm; and a \dQuote{Candidates} tournament
   in which 8 players competed in Curacao.
 
   Likelihood functions \code{interzonal} and \code{interzonal_collusion}
-  are created by files \code{inst/collusion_stockholm.R}, which are
+  are created by files \file{inst/collusion_stockholm.R}, which are
   heavily documented and include some analysis.  Object
   \code{interzonal} includes a term for drawing, (\dQuote{\code{draw}}),
   assumed to be the same for all players; object
@@ -30,7 +30,7 @@ in Stockholm, 1962.
   term for the drawing in Soviet-Soviet matches, \dQuote{\code{coll}}.
 
   Likelihood function \code{curacao} is created in heavily documented
-  file \code{inst/curacao11962_threeplayers.R}.  The function includes a
+  file \file{inst/curacao11962_threeplayers.R}.  The function includes a
   term for drawing, and a term for collusive drawing, \code{colldraw}.
 
 }
