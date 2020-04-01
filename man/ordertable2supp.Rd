@@ -1,7 +1,9 @@
 \name{ordertable2supp}
 \alias{ordertable2supp}
 \alias{ordervec2supp}
-\title{Translate order tables to support functions}
+\alias{ordervec2supp}
+\alias{order_obs}
+  \title{Translate order tables to support functions}
 \description{
 
 Wikipedia gives a nice summary in table form of Formula 1 racing results
@@ -19,6 +21,7 @@ usually signifies DNF as a blank).
 \usage{
 ordertable2supp(x, noscore, misslast = TRUE)
 ordervec2supp(d,pnames)
+order_obs(H,d)
 }
 \arguments{
   \item{x}{Data frame, see details}
@@ -32,6 +35,8 @@ ordervec2supp(d,pnames)
   \item{misslast}{Boolean, specifying whether or not to ignore the
     last column (which is typically \dQuote{points scored})}
   \item{pnames}{Optional list of names, see details}
+  \item{H}{Object of class \code{hyper2}}
+
 }
 \details{
 
@@ -50,8 +55,13 @@ ordervec2supp(d,pnames)
   elements are interpreted as names of the players.  Use argument
   \code{pnames} to supply the players' names (see the examples).
 
-
-
+  Function \code{order_obs()} is the same as \code{ordervec2supp()} but
+  is based on \code{pnames} rather than integers, and increments its
+  first argument; the idea is that one can write \code{H \%>\%
+  order_obs(o)}.  Indeed \code{H \%<>\% order_obs(o)} is arguably
+  marginally more natural than \code{H \%<>\%
+  `+`(ordertable2supp(o,pnames=pnames(H)))}.
+  
 }
 \value{Returns a \code{hyper2} object}
 \author{Robin K. S. Hankin}
@@ -78,10 +88,20 @@ u1 <- c(a=2,b=3,c=1,d=4,e=5)
 u2 <- c(c=1,b=3,a=2,d=4,e=5)
 ## NB: u1,u2 correspond to the "same" statistic, but:
 
-ordervec2supp(u1) == ordervec2supp(u2)  # FALSE
-## (the pnames are different).  To get a more useful result:
-ordervec2supp(u1,pnames=l) == ordervec2supp(u1,pnames=l) # TRUE
+ordervec2supp(u1) == ordervec2supp(u2)                   # FALSE
+## (the pnames are different).
 
+
+## To get a more useful result, either specify the pnames explicitly, or
+## use order_obs():
+
+ordervec2supp(u1,pnames=l) == ordervec2supp(u1,pnames=l)   # TRUE
+order_obs(H1,u1) == order_obs(H1,u2)                       # TRUE
+
+f <- function(a=3){`names<-`(sample(seq_len(a)),sample(letters[seq_len(9)],a))}
+
+H0 <- hyper2(pnames=letters[1:9])
+H0 \%<>\% order_obs(f()) \%>\% order_obs(f())
 
 ## Sometimes we need to add things to the 'did not finish' list:
 ordertable2supp(volvo_table_2014,noscore=c("DNF","DNS")) == volvo2014
