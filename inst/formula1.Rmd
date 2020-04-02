@@ -289,7 +289,14 @@ for(i in seq_len(ncol(f2017))){
 } # i loop closes
 head(H)
 maxp(H)
-#specificp.test(H,"S",0)
+```
+
+Now we can test the hypothesis that Hamilton's wet strength `S` is zero:
+
+```{r,testwetstrengthzero}
+pnames(H)
+H9 <- keep(H,c("S",pnames(H)[1:8]))
+specificp.gt.test(H9,"S",0)
 ```
 
 see this

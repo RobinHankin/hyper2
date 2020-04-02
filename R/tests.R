@@ -50,10 +50,10 @@
 `specificp.ne.test` <- function(H, i, specificp=1/size(H), ...){
     rsp <- round(specificp,getOption("digits"))  # for printing purposes
     if(is.character(i)){
-      null_hypothesis <- paste(i, " = ", rsp, sep="")
+      null_hypothesis <- paste("sum p_i=1, ",i, " = ", rsp, sep="")
       i <- which(pnames(H)==i)
     } else {
-      null_hypothesis <- paste("p_",i, " = ", rsp, sep="")
+      null_hypothesis <- paste("sum p_i=1, p_",i, " = ", rsp, sep="")
     }
     delta <- 1e-4
     specificp <- max(delta,specificp)
