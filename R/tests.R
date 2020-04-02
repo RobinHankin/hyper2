@@ -136,12 +136,12 @@
 
     rsp <- round(specificp,getOption("digits"))  # for printing purposes
     if(is.character(i)){
-      null_hypothesis <- paste(i, " = ", rsp, sep="")
+      null_hypothesis <- paste("sum p_i=1, ", i, " <= ", rsp, sep="")
       i <- which(pnames(H)==i)
     } else {
-      null_hypothesis <- paste("p_",i, " = ", rsp, sep="")
+      null_hypothesis <- paste("sum p_i=1, p_",i, " = ", rsp, sep="")
     }
-
+    if(specificp==0){null_hypothesis <- c(null_hypothesis, " (notional)")}
     n <- size(H)
   
     # Do the null first: (restricted optimization, p <= specificp
@@ -184,14 +184,7 @@
     if(!identical(pnames(H),NA)){names(jj) <- pnames(H)}
     alternative_estimate <- jj
   
-    if(!identical(pnames(H),NA)){
-      alternative_hypothesis <- paste("sum p_i=1, ",pnames(H)[i], " <= ", specificp)
-    }  else {
-      alternative_hypothesis <- paste("sum p_i=1, ",i, " <= ", specificp)
-    }
-    if(specificp==0){
-        alternative_hypothesis <- paste(alternative_hypothesis, " (notional)")
-    }
+    alternative_hypothesis <- "sum p_i=1"
     ## For debugging, this is a good place to uncomment the following line
     ## browser()
 
@@ -229,10 +222,10 @@
 
     rsp <- round(specificp,getOption("digits"))  # for printing purposes
     if(is.character(i)){
-      null_hypothesis <- paste(i, " = ", rsp, sep="")
+      null_hypothesis <- paste("sum p_i=1, ",i, " >= ", rsp, sep="")
       i <- which(pnames(H)==i)
     } else {
-      null_hypothesis <- paste("p_",i, " = ", rsp, sep="")
+      null_hypothesis <- paste("sum p_i=1, p_",i, " = ", rsp, sep="")
     }
 
     delta <- 1e-4
@@ -268,11 +261,7 @@
     if(!identical(pnames(H),NA)){names(jj) <- pnames(H)}
     alternative_estimate <- jj
   
-    if(!identical(pnames(H),NA)){
-      alternative_hypothesis <- paste( "sum p_i=1, ",pnames(H)[i], " >= ", specificp)
-    }  else {
-      alternative_hypothesis <- paste( "sum p_i=1, ",i, " >= ", specificp)
-    }
+    alternative_hypothesis <- "sum p_i=1"
 
     ## For debugging, this is a good place to uncomment the following line
     ## browser()
