@@ -55,7 +55,7 @@ are interpreted as names of the players.  Use argument \code{pnames} to
 supply the players' names (see the examples).
 
 Function \code{order_obs()} is the same as \code{ordervec2supp()} but is
-based on \code{pnames} rather than integers, and increments its first
+based on \code{pnames} rather than integers, and augments its first
 argument; the idea is that one can write \code{H \%>\% order_obs(o)}.
 Indeed \code{H \%<>\% order_obs(o)} is arguably marginally more natural
 than \code{H \%<>\% `+`(ordertable2supp(o,pnames=pnames(H)))}.
