@@ -5,6 +5,8 @@
 \alias{F1}
 \alias{F1_2014}
 \alias{F1_table_2017}
+\alias{formula1_table_2017}
+\alias{formula1_2017_table}
 \alias{F1_2015}
 \alias{F1_2016}
 \alias{F1_2017}
