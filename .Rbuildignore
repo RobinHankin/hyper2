@@ -3,3 +3,5 @@
 ^README.Rmd$
 ^\.travis.yml$
 .gitignore
+^inst/formula1_cache$
+^inst/formula1_files$
