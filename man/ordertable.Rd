@@ -36,7 +36,8 @@ However, to create a likelihood function we need ranks, not orders.  We
 need to know, for a given event, who came first, who came second, and so
 on (an extended discussion on the difference between rank and order is
 given at \code{rrank.Rd}).  We can convert from an order table to a rank
-table using \code{ordertable_to_ranktable()}:
+table using \code{ordertable_to_ranktable()} (see also
+\code{ranktable.Rd}:
 
 \preformatted{
 > ordertable_to_ranktable(pentathlon_ordertable)
@@ -74,10 +75,11 @@ SCA           6    6    6    6    5    6    6    1    7
 Vestas        4  DNF  DNS  DNS  DNS  DNS  DNS    2    6
 }
 
-In the above, we have \code{DNF} for \dQuote{did not finish} and
-\code{DNS} for \dQuote{did not start}.  The \code{formula1} order table
-has other similar entries such as \code{DSQ} for \dQuote{disqualified}
-and a discussion is given at \code{ordertable2supp.Rd}.
+In the above order table, we have \code{DNF} for \dQuote{did not finish}
+and \code{DNS} for \dQuote{did not start}.  The \code{formula1} order
+table has other similar entries such as \code{DSQ} for
+\dQuote{disqualified} and a discussion is given at
+\code{ordertable2supp.Rd}.
 
 Links are given below to all the order tables in the package.  Note that
 the table in \code{inst/eurovision.Rmd} (\code{wiki_matrix}) is not an
@@ -87,9 +89,7 @@ order table because no country is allowed to vote for itself.
 }
 \author{Robin K. S Hankin}
 \seealso{
-\code{\link{formula1}}, \code{\link{motoGP}}, \code{\link{pentathlon}},
-\code{\link{powerboat}}, \code{\link{skating}}, \code{\link{volvo}},
-\code{\link{ordertable2supp}},\code{\link{rrank}}
+\code{\link{ordertable2supp}},\code{\link{rrank}},\code{\link{ranktable}}
 }
 \examples{
 2+2

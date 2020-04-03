@@ -30,6 +30,7 @@ S3method(pnames,suplist)
 S3method("pnames<-",hyper2)
 
 S3method(print,ranktable)
+S3method(print,ranktablesummary)
 S3method(print,hyper2test)
 
 S3method("[", hyper2)
@@ -40,6 +41,7 @@ S3method(sum,hyper2)
 S3method(print,hyper2)
 S3method(head,hyper2)
 S3method(length,hyper2)
+S3method(summary,ranktable)
 
 S3method(Ops,suplist)
 S3method(sum,suplist)
