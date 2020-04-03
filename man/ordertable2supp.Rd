@@ -40,27 +40,25 @@ order_obs(H,d)
 }
 \details{
 
-  Function \code{ordertable2supp()} is intended for use on order tables
-  such as found at
-  \url{https://en.wikipedia.org/wiki/2019_Moto3_season}.  This is a
-  common format, used for Formula 1, motoGP, and other racing sports.
-  Prepared text versions are available in the package in the
-  \code{inst/} directory, for example \code{inst/motoGP_2019.txt}.  Use
-  \code{read.table()} to create a data frame which can be interpreted by
-  \code{ordertable2supp()}.
+Function \code{ordertable2supp()} is intended for use on order tables
+such as found at \url{https://en.wikipedia.org/wiki/2019_Moto3_season}.
+This is a common format, used for Formula 1, motoGP, and other racing
+sports.  Prepared text versions are available in the package in the
+\code{inst/} directory, for example \code{inst/motoGP_2019.txt}.  Use
+\code{read.table()} to create a data frame which can be interpreted by
+\code{ordertable2supp()}.
 
-  Function \code{ordervec2supp()} takes an order vector \code{d} and
-  returns the corresponding Plackett-Luce loglikelihood function as a
-  \code{hyper2} object.  It can take a named vector; names of the
-  elements are interpreted as names of the players.  Use argument
-  \code{pnames} to supply the players' names (see the examples).
+Function \code{ordervec2supp()} takes an order vector \code{d} and
+returns the corresponding Plackett-Luce loglikelihood function as a
+\code{hyper2} object.  It can take a named vector; names of the elements
+are interpreted as names of the players.  Use argument \code{pnames} to
+supply the players' names (see the examples).
 
-  Function \code{order_obs()} is the same as \code{ordervec2supp()} but
-  is based on \code{pnames} rather than integers, and increments its
-  first argument; the idea is that one can write \code{H \%>\%
-  order_obs(o)}.  Indeed \code{H \%<>\% order_obs(o)} is arguably
-  marginally more natural than \code{H \%<>\%
-  `+`(ordertable2supp(o,pnames=pnames(H)))}.
+Function \code{order_obs()} is the same as \code{ordervec2supp()} but is
+based on \code{pnames} rather than integers, and increments its first
+argument; the idea is that one can write \code{H \%>\% order_obs(o)}.
+Indeed \code{H \%<>\% order_obs(o)} is arguably marginally more natural
+than \code{H \%<>\% `+`(ordertable2supp(o,pnames=pnames(H)))}.
   
 }
 \value{Returns a \code{hyper2} object}
