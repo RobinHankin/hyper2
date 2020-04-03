@@ -47,7 +47,12 @@ man/*.Rd~
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
-
+inst/*.html
 
 src/*.o
 src/*.so
+
+
+# cached files
+inst/formula1_cache/
+inst/formula1_files/
