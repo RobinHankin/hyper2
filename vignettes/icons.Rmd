@@ -16,7 +16,7 @@ Software*, 33:11] but using the hyper2 package instead.  Lay
 perception of climate change is a complex and interesting process^[SC
 Moser and L Dilling 2007.  "Creating a climate for change:
 communicating climate change and facilitating social change".
-Cambridge University Press] here we assess the engagement of
+Cambridge University Press] and here we assess the engagement of
 non-experts by the use of "icons" (this word is standard in this
 context.  An icon is a "representative symbol") that illustrate
 different impacts of climate change.
