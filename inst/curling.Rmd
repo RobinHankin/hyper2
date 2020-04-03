@@ -1,0 +1,46 @@
+---
+title: "curling"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+## Curling
+
+
+Curling is a sport with stones and brooms.  Following dataset taken
+from [wikipedia](https://www.google.com "Google's Homepage"), women's
+tournament:
+
+```{r readcurlingtable}
+a <- read.table("curling.txt",header=TRUE)
+a
+```
+
+Thus we see that Canada came first in 1998, third in 2002, and so on;
+in 1998, Canada came first, China did not compete [`NA` meaning did
+not compete], Denmark came second, and so on.  Note that `NA` entries
+are different from the `DNF` category used in formula 1: the inference
+from a `DNF` entry is that the player came last, but here we can make
+no such inference as the team did not compete.  This means that
+function `wikitable_to_ranktable()` is not appropriate and we need to use a different method:
+
+```{r,makehyper2curling}
+H <- hyper2(pnames=rownames(a))
+
+for(i in seq_len(ncol(a))){
+    x <- a[,i]
+    names(x) <- rownames(a)
+    H %<>% order_obs(x[!is.na(x)])
+}
+head(H)
+(mH <- maxp(H))
+pie(mH)
+```
+
