@@ -19,28 +19,67 @@ from [wikipedia](https://www.google.com "Google's Homepage"), women's
 tournament:
 
 ```{r readcurlingtable}
-a <- read.table("curling.txt",header=TRUE)
-a
+curling_table  <- read.table("curling.txt",header=TRUE)
+curling_table
 ```
 
 Thus we see that Canada came first in 1998, third in 2002, and so on;
 in 1998, Canada came first, China did not compete [`NA` meaning did
-not compete], Denmark came second, and so on.  Note that `NA` entries
-are different from the `DNF` category used in formula 1: the inference
-from a `DNF` entry is that the player came last, but here we can make
-no such inference as the team did not compete.  This means that
-function `wikitable_to_ranktable()` is not appropriate and we need to use a different method:
+not compete], Denmark came second, and so on.
 
-```{r,makehyper2curling}
-H <- hyper2(pnames=rownames(a))
+First we will interpret `NA` in the same way as `DNS` in the context
+of formula 1 motor racing.  We need to define a new data frame, `b`:
 
-for(i in seq_len(ncol(a))){
-    x <- a[,i]
-    names(x) <- rownames(a)
-    H %<>% order_obs(x[!is.na(x)])
-}
-head(H)
-(mH <- maxp(H))
-pie(mH)
+```{r,defineb}
+ct <- curling_table
+ct[is.na(ct)] <- "DNS"
+ct
 ```
 
+In this form we can easily convert to a support function:
+
+```{r,definsupportb}
+H1 <- ordertable2supp(ct)
+head(H1)
+(mH1 <- maxp(H1))
+pie(mH1)
+```
+
+## Interpretation of `NA`
+
+There is a different interpretation of `NA` entries.  We might hold
+that no inference should be made from a team's entry being `NA` entry
+because that that team did not compete.  This means that function
+`ordertable2supp()` is not appropriate and we need to use a different
+method:
+
+```{r,makehyper2curling}
+H2 <- hyper2(pnames=rownames(curling_table))
+
+for(i in seq_len(ncol(curling_table))){
+    x <- curling_table[,i]
+    names(x) <- rownames(curling_table)
+    H2 %<>% order_obs(x[!is.na(x)])
+}
+head(H2)
+(mH2 <- maxp(H2))
+pie(mH2)
+```
+
+
+##  Comparison
+
+```{r,plotcomplog}
+par(pty="s")
+plot(log10(mH1),log10(mH2),asp=1,pch=16,xlim=c(-2.6,0),ylim=c(-2.6,0))
+posn <- c(Canada=1, China=2, Denmark=4, Germany=4, GB=4, Italy=1, Japan=4, Norway=4,
+          Russia=2, South_Korea=4, Sweden=2, Switzerland=2, US=4)
+for(i in seq_len(nrow(curling_table))){
+	text(log10(mH1)[i],log10(mH2)[i],rownames(curling_table)[i],col="gray",pos=posn[i])
+}
+abline(0,1)
+grid()
+```
+
+Note that the two strongest competitors, Canada and Sweden, switch
+between first and second in the two systems.
