@@ -171,7 +171,7 @@ and in the second observation, player 1 comes second second (after
 player 3).  The likelihood for the first observation would be
 
 \[
-\frac{p_1+t}{p_1+t+p_2+p_3+p_4+p_5}\cdot
+\frac{p_1+S}{p_1+S+p_2+p_3+p_4+p_5}\cdot
 \frac{p_2  }{      p_2+p_3+p_4+p_5}\cdot
 \frac{p_3  }{          p_3+p_4+p_5}\cdot
 \frac{p_4  }{              p_4+p_5}\cdot
@@ -181,18 +181,17 @@ player 3).  The likelihood for the first observation would be
 and the likelihood for the second observation would be
 
 \[
-\frac{p_3  }{p_1+t+p_2+p_3+p_4+p_5}\cdot
-\frac{p_1+t}{p_1+t+p_2+    p_4+p_5}\cdot
+\frac{p_3  }{p_1+S+p_2+p_3+p_4+p_5}\cdot
+\frac{p_1+S}{p_1+S+p_2+    p_4+p_5}\cdot
 \frac{p_5  }{      p_2+    p_4+p_5}\cdot
 \frac{p_2  }{      p_2+    p_4    }\cdot
 \frac{p_4  }{              p_4    }\cdot
 \]
 
+We can translate these into package idiom with function `pwa()`
+("person with advantage"):
 
-We can translate these into package idiom with
-function `pwa()` ("person with advantage"):
-
-```{r}
+```{r,usepwafortraining}
 Hafter <- rank_likelihood(1:5)+rank_likelihood(c(3,1,5,2,4))
 pnames(Hafter) <- pnames(Hbefore)
 Hafter %<>%  pwa("p1")
@@ -202,17 +201,18 @@ Hafter
 In the above, the additional strength conferred by the training is
 represented by `S`.  We can estimate the effect of training:
 
-```{r}
+```{r,addbeforeandafter}
 pnames(Hbefore) <- c(pnames(Hbefore),"S")
-maxp(Hbefore + Hafter)
+maxp(Hbefore+Hafter)
 ```
 
-The above suggesting that the training had a sizable effect; and we
-may test the null that the training had no effect:
+[In the above, note the use of the overloaded "`+`", meaning to add
+two likelihood functions for independent observations].  The evaluate
+suggests that the training had a sizable effect; we may use
+\code{specficp.gt.test()} to test a null of zero strength:
 
-
-```{r}
-specificp.gt.test(Hbefore + Hafter,"S",0)
+```{r,testnullzerotrainingeffect}
+specificp.gt.test(Hbefore+Hafter, "S", 0)
 ```
 
 thus we have strong evidence for the training being effective.
