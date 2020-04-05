@@ -13,7 +13,6 @@ importFrom("partitions","perms")
 importFrom("magrittr", "%>%", "%<>%")
 importFrom("cubature", "adaptIntegrate")
 
-importFrom("EMC","randomWalkMetropolis")
 
 import(methods)
 

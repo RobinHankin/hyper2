@@ -26,12 +26,12 @@
   if(is.null(startp)){startp <- indep(maxp(H))}
   out <-
     with(myfunc(),
-         randomWalkMetropolis(nIters         = n,
-                              startingVal    = startp,
-                              logTarDensFunc = logTarDensFunc,
-                              propNewFunc    = propNewFunc,
-                              verboseLevel   = 0))
-
+         EMC::randomWalkMetropolis(nIters         = n,
+                                   startingVal    = startp,
+                                   logTarDensFunc = logTarDensFunc,
+                                   propNewFunc    = propNewFunc,
+                                   verboseLevel   = 0))
+    
   out <- out$draws
   out <- cbind(out,1-rowSums(out))
   colnames(out) <- pnames(H)
