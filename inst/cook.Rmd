@@ -154,7 +154,7 @@ the complication of not being allowed to vote for oneself (perhaps a
 professional chef puts the dishes in order).  First, before:
 
 ```{r,beforetraining}
-H <- hyper2(pnames=c(paste("p",1:5,sep=""),"t"))  # 't' the strength of training
+H <- hyper2(pnames=c(paste("p",1:5,sep="")))  # 'S' the strength of training
 # observations before training:
 Hbefore <- H +
     rank_likelihood(c(5,2,3,4,1)) + #  5 is the best, 4 the worst.
@@ -189,83 +189,30 @@ and the likelihood for the second observation would be
 \]
 
 
-We can translate these into package idiom by defining likelihood
-functions `H1after` and `H2after` for the two observations:
-
-
-```{r,aftertraining1}
-H1after <- H
-H1after[c("p1","t")] %<>% inc()
-H1after[  "p2"     ] %<>% inc()
-H1after[  "p3"     ] %<>% inc()
-H1after[  "p4"     ] %<>% inc()
-H1after[  "p5"     ] %<>% inc()
-H1after[c("p1","t","p2","p3","p4","p5")] %<>% dec()
-H1after[c(         "p2","p3","p4","p5")] %<>% dec()
-H1after[c(              "p3","p4","p5")] %<>% dec()
-H1after[c(                   "p4","p5")] %<>% dec()
-H1after[c(                        "p5")] %<>% dec()
-H1after
-```
-
-```{r,aftertraining2}
-H2after <- H
-H2after[  "p3"     ] %<>% inc()
-H2after[c("p1","t")] %<>% inc()
-H2after[  "p5"     ] %<>% inc()
-H2after[  "p2"     ] %<>% inc()
-H2after[  "p4"     ] %<>% inc()
-H2after[c("p1","t","p2","p3","p4","p5")] %<>% dec()
-H2after[c("p1","t","p2",     "p4","p5")] %<>% dec()
-H2after[c(         "p2",     "p4","p5")] %<>% dec()
-H2after[c(         "p2",     "p4"     )] %<>% dec()
-H2after[c(                   "p4"     )] %<>% dec()
-H2after
-```
-
-Combine:
-
-```{r,combineboth}
-(Htot <- Hbefore + H1after + H2after)  # observations are independent!
-(ML_unconstrained <- maxp(Htot))
-```
-
-We see the training entity has an estimated strength of about 0.63,
-higher than all real players combined.  At the evaluate the
-loglikelihood is
-
-```{r,loglikateval}
-loglik(indep(ML_unconstrained),Htot)
-```
-
-We can test the hypothesis that the training was ineffective by
-constraining the optimization to $t=0$:
+We can translate these into package idiom with
+function `pwa()` ("person with advantage"):
 
 ```{r}
-small <- 1e-4
-(ML_constrained <- maxp(Htot,startp=rep(0.2*(1-small*2.1),5),fcm=c(1,1,1,1,1),fcv=1-2*small))
-loglik(indep(ML_constrained),Htot)
+Hafter <- rank_likelihood(1:5)+rank_likelihood(c(3,1,5,2,4))
+pnames(Hafter) <- pnames(Hbefore)
+Hafter %<>%  pwa("p1")
+Hafter
 ```
 
-See how the constraint is active: the strength of the training effect
-is almost exactly equal to its maximal value of `small` [as a
-consistency check we can perform the same calculation with a slightly
-different value for `small`:
+In the above, the additional strength conferred by the training is
+represented by `S`.  We can estimate the effect of training:
+
+```{r}
+pnames(Hbefore) <- c(pnames(Hbefore),"S")
+maxp(Hbefore + Hafter)
+```
+
+The above suggesting that the training had a sizable effect; and we
+may test the null that the training had no effect:
 
 
 ```{r}
-small <- 2e-4  # cf 1e-4 previously
-ML_constrained <- maxp(Htot,startp=rep(0.2*(1-small*2.1),5),fcm=c(1,1,1,1,1),fcv=1-2*small)
-loglik(indep(ML_constrained),Htot) # cf -29.973 previously
+specificp.gt.test(Hbefore + Hafter,"S",0)
 ```
 
-and we can see that this is almost the same].  Thus, the support for
-our alternative hypothesis would be
-
-```{r}
-loglik(indep(ML_unconstrained),Htot)-loglik(indep(ML_constrained),Htot)
-```
-
-thus exceeding Edwards's two units of support.  We have strong
-evidence to suggest that the training was effective.
-
+thus we have strong evidence for the training being effective.
