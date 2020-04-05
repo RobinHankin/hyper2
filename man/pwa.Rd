@@ -1,5 +1,11 @@
 \name{pwa}
 \alias{pwa}
+\alias{chameleon}
+\alias{extra_strength}
+\alias{additional_strength}
+\alias{training_strength}
+\alias{wet_strength}
+\alias{white_strength}
 \title{Player with advantage}
 \description{
 
@@ -28,8 +34,13 @@ replace every occurence of \code{a} with \code{a+S}, with \code{S}
 representing the extra strength conferred.
 
 However, the function also takes a vector of competitors.  If there is
-nmore than one competitor, the resulting likelihood function does not
+more than one competitor, the resulting likelihood function does not
 seem to instantiate any simple situation.  
+
+Nice examples of \code{pwa()} are given in \file{inst/cook.Rmd} and
+\file{inst/universities.Rmd}.
+
+
 }
 \value{Returns an object of class \code{hyper2}.}
 \author{Robin K. S. Hankin}
@@ -40,6 +51,10 @@ observations, presented as an example of \code{pwa()} with multiple
 advantaged competitors.  I removed it because the logic was flawed, but
 it featured a chameleon who could impersonate (and indeed eat) certain
 competitors, which is why the third argument is so named.
+
+The aliases commemorate some uses of the function in the vignettes and
+markdown files in the \file{inst/} directory.
+
 }
 
 \seealso{\code{\link{ordervec2supp}}}
