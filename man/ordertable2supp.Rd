@@ -74,8 +74,15 @@ a3 <- c(a=1,b=3,c=2)         # a: 1st, b: 3rd, c: 2nd. NB only a,b,c competed
 a4 <- c(a=1,b=3,c=2,d=0,e=0) # a: 1st, b: 3rd, c: 2nd, d,e: DNF
 l <- letters[1:5]
 
+
+## ordervec2supp() may be added [if the observations are independent]:
+
 H1 <- ordervec2supp(a1) + ordervec2supp(a2) + ordervec2supp(a3,pnames=l)
 H2 <- ordervec2supp(a1) + ordervec2supp(a2) + ordervec2supp(a4)
+
+## Thus H1 and H2 are identical except for the third race.  In H1, 'd'
+## and 'e' did not compete, but in H2, 'd' and 'e' did not finish (and
+## notionally came last):
 
 pmax(H1)
 pmax(H2)   # d,e not finishing affects their estimated strength
