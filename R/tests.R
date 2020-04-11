@@ -15,8 +15,7 @@
 
     support_difference <- alternative_support-null_support
 
-
-    if(is.na(pnames(H))){
+    if(identical(pnames(H),NA)){
         jj <- paste(paste("p_",seq_len(n)," = ",sep=""),collapse="")
         null_hypothesis <- substr(jj,1,nchar(jj)-3)
     } else {
