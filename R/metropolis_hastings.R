@@ -34,6 +34,8 @@
     
   out <- out$draws
   out <- cbind(out,1-rowSums(out))
-  colnames(out) <- pnames(H)
+  if(!identical(pnames(H),NA)){
+      colnames(out) <- pnames(H)
+  }
   return(out)
 }
