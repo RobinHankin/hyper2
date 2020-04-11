@@ -1,0 +1,54 @@
+---
+title: "Repeated incomplete rank observations"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Suppose there are five people in a family.  Each day for five days,
+one person cooks a meal.  After the fifth day, each person considers
+the four meals cooked by other family members, and puts them in order
+of preference.  This process is repeated and here I consider how to
+interpret such data.
+
+```{r loadlib}
+library(hyper2)
+H <- hyper2(pnames=paste("p",1:5,sep=""))
+H
+```
+
+Now add some data:
+
+```{r data}
+H <- H +
+	# 3 April 2020:
+    rank_likelihood(c(5,4,3,2)) + # person 1 says 5 is the best, 2 the worst.
+    rank_likelihood(c(2,5,1,4)) + # person 2 says 1 is the best, 4 the worst.
+    rank_likelihood(c(5,1,2,3)) + # person 3 says 1 is the best, 5 the worst.
+    rank_likelihood(c(3,5,4,1)) + # person 4 says 1 is the best, 5 the worst.
+    rank_likelihood(c(3,2,1,4)) + # person 5 says 2 is the best, 4 the worst.
+
+	# 10 April 2020:
+    rank_likelihood(c(5,3,4,1)) + # person 1 says 5 is the best, 4 the worst.
+    rank_likelihood(c(2,3,4,1)) + # person 2 says 1 is the best, 4 the worst.
+    rank_likelihood(c(3,5,2,1)) + # person 3 says 1 is the best, 5 the worst.
+    rank_likelihood(c(2,4,5,3)) + # person 4 says 1 is the best, 5 the worst.
+    rank_likelihood(c(2,5,4,1)) + # person 5 says 2 is the best, 4 the worst.
+
+H
+```
+
+Note that noone is allowed to vote for themselves.  There are
+$5\cdot4!=120$ distinct observations.  We may find maximum likelihood
+estimate for the strengths,
+$\operatorname{argmax}\mathcal{L}\left(p_1,\ldots,p_5\right)$:
+
+
+```{r}
+(mH <- maxp(H))
+pie(mH)
+```
+
+
