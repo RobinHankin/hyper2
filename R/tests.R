@@ -15,8 +15,13 @@
 
     support_difference <- alternative_support-null_support
 
-    jj <- paste(paste("p_",seq_len(n)," = ",sep=""),collapse="")
-    null_hypothesis <- substr(jj,1,nchar(jj)-3)
+
+    if(is.na(pnames(H))){
+        jj <- paste(paste("p_",seq_len(n)," = ",sep=""),collapse="")
+        null_hypothesis <- substr(jj,1,nchar(jj)-3)
+    } else {
+        null_hypothesis = paste(pnames(H),collapse=" = ")
+    }
 
     rval <- list(
         statistic = support_difference,
