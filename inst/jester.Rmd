@@ -1,0 +1,93 @@
+---
+title: "The Jester joke recommender system"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Goldberg et al present a dataset in which respondents rated a number
+of jokes.  Here, I analyse a small portion of this dataset using the
+`hyper2` package.  This document is intended to illustrate an
+extremely challenging application of the `hyper2` package and (without
+cache) takes a long time to process.  Goldberg's dataset has 24938
+lines, one per respondent, and 101 columns, one per joke (the first
+column shows the number of jokes rated by each respondent); here I use
+150 lines and 99 jokes (the 100th joke was not funny).
+
+
+```{r }
+library("hyper2",quietly=TRUE)
+a <- read.csv("jester-data-3.csv",head=FALSE) # File is 150 lines only
+a <- as.matrix(a[,-c(1,100)])
+a[a==99] <- NA
+colnames(a) <- paste("joke",sprintf("%02d",seq_len(ncol(a))),sep="")
+a[1,]
+```
+
+Row 1 of `a` is displayed and shows that the first respondent rated
+joke 5 at -1.65, joke 7 at -0.78, and so on; `NA` means that that
+respondent did not rank that joke.  We can perform some summary
+statistics of `a`:
+
+```{r}
+plot(rowSums(!is.na(a)),xlab="respondent")
+```
+
+The above plot shows how many jokes each of the 100 respondents rated.
+
+```{r}
+plot(colSums(!is.na(a)),xlab="joke index")
+```
+ 
+The above shows how many respondents rated each joke.  It would make
+sense to remove the jokes that were not rated:
+
+```{r}
+dim(a)
+a <- a[,colSums(!is.na(a))>1]
+dim(a)
+```
+
+showing that 91 jokes were rated by at least one respondent.  We need
+to transform the dataset:
+
+```{r}
+f <- function(x){
+    x <- x[!is.na(x)]
+    x[order(x,decreasing=TRUE)] <- seq_along(x)
+    return(x)
+}
+f(a[1,])
+```
+
+Thus we see that this respondent rated `joke08` to be the funniest, having rank 1.
+
+```{r,calculate_jester,cache=TRUE}
+jester <- hyper2(pnames=colnames(a))
+system.time(for(i in seq_len(nrow(a))){jester %<>% order_obs(f(a[i,]))})
+```
+
+now
+
+```{r,cache=TRUE}
+system.time(mjest <- maxp(jester,n=1))
+```
+
+and 
+
+```{r}
+mjest
+plot(mjest)
+```
+
+```{r,cache=TRUE}
+equalp.test(H,startp=indep(mjest))
+```
+
+## Reference
+
+Eigentaste: A Constant Time Collaborative Filtering Algorithm. Ken
+Goldberg, Theresa Roeder, Dhruv Gupta, and Chris Perkins. _Information
+Retrieval_, 4(2), 133-151. July 2001.
