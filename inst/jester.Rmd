@@ -7,6 +7,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+(this file creates objects `jester` and `maxjest`, which are datasets
+available in the `hyper2` package, and documented at `jester.Rd`.
+This file takes quite a long time to run).
+
 Goldberg et al present a dataset in which respondents rated a number
 of jokes.  Here, I analyse a small portion of this dataset using the
 `hyper2` package.  This document is intended to illustrate an
@@ -15,7 +19,6 @@ cache) takes a long time to process.  Goldberg's dataset has 24938
 lines, one per respondent, and 101 columns, one per joke (the first
 column shows the number of jokes rated by each respondent); here I use
 150 lines and 99 jokes (the 100th joke was not funny).
-
 
 ```{r }
 library("hyper2",quietly=TRUE)
