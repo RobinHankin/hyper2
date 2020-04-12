@@ -56,3 +56,5 @@ src/*.so
 # cached files
 inst/formula1_cache/
 inst/formula1_files/
+inst/jester_cache/
+inst/jester_files/
