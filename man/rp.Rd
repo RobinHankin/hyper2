@@ -22,12 +22,17 @@ rp(n, H, startp = NULL, fcm = NULL, fcv = NULL, SMALL = 1e-06, l=loglik,...)
 
   Uses the implementation of Metropolis-Hastings from the \code{MCE}
   package to sample from the posterior PDF of a \code{hyper2} object.
+
+  If the distribution is Dirichlet, use \code{rdirichlet()} to generate
+  random observations: it is much faster, and produces serially
+  independent samples.
+  
 }
 \value{
 Returns a matrix, each row being an unit-sum observation.
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{maxp}},\code{\link{loglik}}}
+\seealso{\code{\link{maxp}},\code{\link{loglik}},\code{\link{dirichlet}}}
 \examples{
 rp(10,icons)
 

@@ -7,6 +7,8 @@ importFrom("stats", "constrOptim")
 importFrom("stats", "runif")
 importFrom("stats", "rnorm")
 importFrom("stats", "pchisq")
+importFrom("stats", "rgamma")
+
 importFrom("utils", "head")
 importFrom("partitions","perms")
 

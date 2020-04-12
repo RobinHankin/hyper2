@@ -1,5 +1,7 @@
 \name{dirichlet}
 \alias{dirichlet}
+\alias{rdirichlet}
+\alias{is.dirichlet}
 \alias{gd}
 \alias{Dirichlet}
 \alias{gd}
@@ -18,6 +20,8 @@ generalized Dirichlet distribution due to Connor and Mosimann
 dirichlet(powers, alpha, pnames=NA)
 GD(alpha, beta, beta0=0, pnames=NA)
 GD_wong(alpha, beta, pnames=NA)
+rdirichlet(n,H)
+is.dirichlet(H)
 }
 \arguments{
   \item{powers}{In function \code{dirichlet()} a (named) vector of powers}
@@ -26,9 +30,21 @@ GD_wong(alpha, beta, pnames=NA)
   \item{beta0}{In function \code{GD()}, an arbitrary parameter}
   \item{pnames}{Optional; a character vector specifying the names of
     \eqn{p_1} through \eqn{p_n}}
+  \item{H}{Object of class \code{hyper2}}
+  \item{n}{Number of observations}
 }
 \details{
-These functions are really convenience functions.
+  These functions are really convenience functions.
+
+  Function \code{rdirichlet()} returns random samples drawn from a
+  Dirichlet distribution.  If second argument \code{H} is a
+  \code{hyper2} object, it is tested [with \code{is.dirichlet()}] for
+  being a Dirichlet distribution.  If so, samples from it are returned.
+  If not, (e.g. \code{icons}), then it is coerced to a \strong{uniform}
+  distribution and samples from that returned, with a warning.  If
+  \code{H} is not a \code{hyper2} object, it is interpreted as a vector
+  of parameters \eqn{\alpha}{alpha} [\strong{not} a vector of powers].
+  
 }
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{hyper2}}}
@@ -39,5 +55,9 @@ x2 <- dirichlet(c(c=3,d=4))
 
 
 # will not work: x1+x2  ## probably not what you wanted
+
+H <- dirichlet(alpha=c(a=1,b=2,c=3,d=4))
+rdirichlet(10,H)
+colMeans(rdirichlet(1e4,H))
 
 }

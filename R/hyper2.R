@@ -907,3 +907,31 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   rownames(xx) <- rownames(wikitable)
   ordertable_to_ranktable(xx)
 }
+
+`is.dirichlet` <- function(H){all(lapply(brackets(H),length)==1)}
+
+`rdirichlet` <- function(n, H){
+    if(is.hyper2(H)){
+        if(is.dirichlet(H)){
+            pn <- pnames(H)
+            s <- size(H)
+            alpha <- (
+                sapply(seq_len(s),function(i){powers(H[i])}) # NB not powers(H); zero powers are discarded!
+                +1  # sic: power_i = alpha_i+1
+                )
+        } else { # hyper2, but not dirichlet
+            warning("hyper2 object supplied but is not a Dirichlet distribution: sample from uniform distribution returned")
+            pn <- pnames(H)
+            s <- size(H)
+            alpha <- rep(1,s)
+        }
+    } else {   # H is vector of alpha
+        pn <- NA
+        s <- length(H)
+        alpha <- H
+    }
+    out <- t(apply(matrix(rgamma(n*s,shape=alpha),s,n),2,function(x){x/sum(x)}))
+    if(!identical(pn,NA)){colnames(out) <- pn}
+    return(out)
+}
+
