@@ -29,10 +29,14 @@ Eigentaste: A Constant Time Collaborative Filtering Algorithm.  Ken
 Goldberg, Theresa Roeder, Dhruv Gupta, and Chris
 Perkins. \emph{Information Retrieval}, 4(2), 133-151. July 2001.
 }
+
 \examples{
 
 data(jester)
 # maxp(jester)  # takes too long
+
+loglik(indep(maxjest),jester)
+
 }
 \keyword{datasets}
 
