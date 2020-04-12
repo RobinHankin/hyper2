@@ -30,4 +30,7 @@ Returns a matrix, each row being an unit-sum observation.
 \seealso{\code{\link{maxp}},\code{\link{loglik}}}
 \examples{
 rp(10,icons)
+
+plot(loglik(indep(rp(100,icons)),icons))
+
 }
