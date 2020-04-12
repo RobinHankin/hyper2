@@ -42,8 +42,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 ## setter methods end
 
+`is.hyper2` <- function(H){inherits(H,"hyper2")}
 `length.hyper2` <- function(x){length(x$brackets)}
-
 `change_pnames` <- function(H,new_pnames){  # new_pnames is a character vector, eg c('a', 'b')
   if(identical(pnames(H),NA)){return(hyper2(brackets(H),powers(H),pnames=new_pnames))}
   if(identical(new_pnames,NA)){return(hyper2(brackets(H),powers(H)))}
@@ -907,4 +907,3 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   rownames(xx) <- rownames(wikitable)
   ordertable_to_ranktable(xx)
 }
-

@@ -11,6 +11,7 @@
 \alias{pnames<-.hyper2}
 \alias{size}
 \alias{size.hyper2}
+\alias{is.hyper2}
 \alias{as.hyper2}
 \alias{is_valid_hyper2}
 \alias{is_constant}
@@ -28,6 +29,7 @@ hyper2(L, d, pnames = NA)
 \method{pnames}{suplist}(H)
 size(H)
 as.hyper2(L,d,pnames)
+is.hyper2(H)
 is_valid_hyper2(L,d,pnames)
 is_constant(H)
 }
