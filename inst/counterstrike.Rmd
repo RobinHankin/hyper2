@@ -197,7 +197,7 @@ hypothesis p=maxp(Hrand)].  It then draws a histogram of the
 loglikelihood ratio thus obtained, and superimposes a line showing the
 observed loglikelihood ratio.
 
-```{r, random2}
+```{r, random2,cache=TRUE}
 
 datapoint <- loglik(indep(maxp(H)),H) - loglik(indep(equalp(H)),H)
 	
