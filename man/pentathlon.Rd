@@ -3,7 +3,7 @@
 \alias{pentathlon_ordertable}
 \docType{data}
 \title{Formula 1 dataset}
-\description{Results from the Men's pentathlon at the 2004 SumMer Olympics}
+\description{Results from the Men's pentathlon at the 2004 Summer Olympics}
 \usage{data(pentathlon)}
 \format{A \code{hyper2} object that gives a likelihood function}
 \details{
