@@ -1,0 +1,196 @@
+---
+title: "formula1"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+options(width = 120)
+```
+
+## Formula 1
+
+Formula 1 racing is an important and prestigious motor sport.  Here I
+analyse a series of racing results using the `hyper` package which
+implements the Plackett-Luce likelihood function.
+
+Consider the following dataset, taken from Wikipedia:
+
+```{r cars}
+f2017 <- read.table("formula1_2017.txt",header=TRUE)
+f2017a <- f2017[1:9,]
+rm(f2017)
+f2017a
+```
+
+Now process it to give the ranks:
+
+```{r}
+f <- function(x){
+	noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
+	x <- as.character(x)
+	x[x %in% noscore] <-  "0"
+	x <- as.numeric(x)
+	wanted <- x != 0
+	xw <- x[wanted]
+	xw[order(xw,decreasing=FALSE)] <- seq_along(xw)
+	x[wanted] <- xw
+	x
+}
+o  <- apply(f2017a[,seq_len(20)],2,f)
+rownames(o) <- rownames(f2017a)
+(f2017a <- o)
+```
+
+Each row is a driver and each column (after the first) a venue.  We
+see that Hamilton, the first row, came second in Australia, first in
+China, second in Bahrain, fourth in Russia, and so on.  In the first
+column, we see the result from Australia (AUS) in which Hamilton came
+second, Vettel first, Bottas third, and so on.  Notation used also
+includes six different classes of no-score such as "Ret" for retired,
+"WD" for withdrawn, and so on.
+
+We can represent this data in a different form using
+`wikitable_to_ranktable()`:
+
+```{r}
+wikitable_to_ranktable(f2017a)
+```
+
+Looking at the first column ("c1" is read "came first") we see who
+came first at each venue: Vettel in Australia (AUS), Hamilton in China
+(CHN), Vettel in Bahrain (BHR), and so on.  Now create a likelihood
+function `H`:
+
+```{r,calcH,cache=TRUE}
+H <- hyper2(pnames=rownames(o))
+ for(i in seq_len(ncol(o))){
+	H <- H + ordervec2supp(o[,i])
+}
+head(H)
+```
+Above, we see a small part of the Placket-Luce likelihood function for
+the 2017 results, just the top 9 drivers.  We can find the maximum
+likelihood estimator by using the `maxp()` function:
+
+
+```{r,maxp2017,cache=TRUE}
+mL2017 <- maxp(H)
+mL2017
+dotchart(mL2017,pch=16,main='2017 Formula 1')
+pie(mL2017,main='2017 Formula 1')
+```
+
+We see Hamilton being the strongest, followed by Vettel and Bottas who
+are approximately equal.
+
+# Analysis of nulls:
+
+## Hypothesis: all players have equal strengths
+
+Here we write $H_0\colon p_1=p_2=\cdots =p_n=\frac{1}{n}$.
+
+```{r,equalstrength,cache=TRUE}
+equalp.test(H)
+```
+
+highly signficant!
+
+## Null of Hamilton being average
+
+We can consider Hamilton and ask various questions about his playing
+strength.  One natural null hypothesis would be that Hamilton's
+strength is equal to the mean strength, or $\frac{1}{9}$.  (we attempt
+to reject the null $H_0$ against the alternative of unconstrained
+$p$).  Noting that the evaluate for Hamilton's strength
+$\widehat{p_\mathrm{Hamilton}}$ is about 0.28, we ask how much support
+is lost, relative to the support at the unconstrained evaluate.
+
+```{r,specifichamiltonstrength,cache=TRUE}
+specificp.test(H,"Hamilton")  # default value is 1/9=11%
+```
+
+(note that the constrained maximum is on the boundary of the
+admissible region with $p_\mathrm{Hamilton}=\frac{1}{9}$).
+
+
+# Conditions
+
+```{r,loadtable}
+(details <- read.table("formula1_conditions.txt",header=TRUE))
+drivers <- pnames(formula1)
+```
+
+At this point, we introduce a new player: `Ham_wet`, for "Hamilton in
+the wet", and we can test the hypothesis that the `Hamilton ==
+Ham_wet`.  We will cycle through all the venues and, if it is wet
+(according to dataframe `conditions`) we will credit Hamilton's
+placing to `Ham_wet`.
+
+```{r,hamiltonwetanddry,cache=TRUE}
+details <- read.table("formula1_conditions.txt",header=TRUE)
+alldrivers <- c("Ham_dry","Ham_wet",rownames(f2017a)[-1])
+(L2017 <- hyper2(pnames=alldrivers)) # uninformative
+for(i in seq_len(ncol(f2017a))){
+	venue <- colnames(f2017a)[i]
+	conditions <- details[which(details$venue == venue),4]
+	o <- f2017a[,i]
+	names(o) <- rownames(f2017a)
+	if(conditions == "wet"){
+	   names(o)[names(o) == "Hamilton"] <- "Ham_wet"
+	} else if(conditions == "dry"){
+	   names(o)[names(o) == "Hamilton"] <- "Ham_dry"
+	} else {
+	   stop("neither wet nor dry?")
+	}
+	print(o)
+	L2017 %<>% order_obs(o)
+}  # for(i) loop closes
+L2017
+```
+
+We can now test the hypothesis that Hamilton's performance in the wet
+is the same as his performance in the dry:
+
+```{r,hamwetdrytest,cache=TRUE}
+samep.test(L2017,c("Ham_wet","Ham_dry"))
+```
+## Try the same thing but with function pwa()
+
+
+```{r,trypwa,cache=TRUE}
+
+details <- read.table("formula1_conditions.txt",header=TRUE)
+
+H <- hyper2(pnames=c(rownames(f2017a),"S"))
+noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
+
+for(i in seq_len(ncol(f2017a))){
+	y <- f2017a[,i]
+	cond <- details$conditions[i]
+        jj <- ordervec2supp(y)
+	if(cond == "dry"){
+            pnames(jj) <- pnames(H)  # do nothing!
+	} else if (cond == "wet"){
+            jj <- pwa(jj,"Hamilton")
+	} else {
+            stop("neither wet nor dry?")
+	}  # if wet closes
+        H <- H + jj
+} # i loop closes
+head(H)
+maxp(H)
+```
+Now we can test the hypothesis that Hamilton's wet strength `S` is zero:
+
+```{r,testwetstrengthzero}
+pnames(H)
+specificp.gt.test(H,"S",0)
+```
+
+see this
+
