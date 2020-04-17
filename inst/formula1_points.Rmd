@@ -1,0 +1,151 @@
+---
+title: "formula1: the points system"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+options(width = 140)
+```
+
+## Formula 1: top 9
+
+Formula 1 racing is an important and prestigious motor sport.  Here I
+analyse a series of racing results using the `hyper` package which
+implements the Plackett-Luce likelihood function.
+
+Consider the following dataset, taken from Wikipedia:
+
+```{r cars}
+f2017 <- read.table("formula1_2017.txt",header=TRUE)
+no_of_drivers <- 9  # top 9
+f2017 <- f2017[seq_len(no_of_drivers),]
+f2017
+```
+
+Now process it to give the ranks:
+
+```{r}
+f <- function(x){
+	noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
+	x <- as.character(x)
+	x[x %in% noscore] <-  "0"
+	x <- as.numeric(x)
+	wanted <- x != 0
+	xw <- x[wanted]
+	xw[order(xw,decreasing=FALSE)] <- seq_along(xw)
+	x[wanted] <- xw
+	x
+}
+o  <- apply(f2017[,seq_len(20)],2,f)
+rownames(o) <- rownames(f2017)
+(f2017 <- o)
+```
+
+Each row is a driver and each column (after the first) a venue.  We
+see that Hamilton, the first row, came second in Australia, first in
+China, second in Bahrain, fourth in Russia, and so on.  In the first
+column, we see the result from Australia (AUS) in which Hamilton came
+second, Vettel first, Bottas third, and so on.  Notation used also
+includes six different classes of no-score such as "Ret" for retired,
+"WD" for withdrawn, and so on.
+
+Now calculate points:
+
+```{r}
+points <- c(25,18,15,12,10,8,6,4,2,1,0,0,0,0,0,0,0,0,0,0)
+stopifnot(all(diff(points)<=0))
+points <- points/points[1]
+jj <- f2017
+jj[jj==0] <- length(points)
+jj[] <- points[jj]
+jj
+real_points <- rowSums(jj)
+real_points
+sort(real_points,decreasing=TRUE)
+names(sort(real_points,decreasing=TRUE))
+```
+
+Now do some random sampling.  First create a likelihood function:
+
+
+
+```{r,calcH,cache=TRUE}
+H <- hyper2(pnames=rownames(o))
+ for(i in seq_len(ncol(o))){
+	H <- H + ordervec2supp(o[,i])
+}
+head(H)
+mL2017 <- maxp(H)
+mL2017
+dotchart(mL2017,pch=16,main='2017 Formula 1')
+```
+
+
+Now use random sampling:
+
+
+```{r}
+random_table <- rrank(n=ncol(f2017), p=mL2017)
+rownames(random_table) <- colnames(f2017)
+random_table
+```
+
+then see how close it is to reality:
+
+```{r}
+maxp(rank_likelihood(random_table)) # should be close to mL2017
+```
+
+```{r}
+a <- random_table
+class(a) <- "matrix"
+a[] <- points[a]
+a
+p <- colSums(a)
+p
+rando <- order(p,decreasing=TRUE)
+rando
+```
+
+Thus we see that 
+
+```{r}
+jj <- sort(p,decreasing=TRUE)
+jj
+names(jj)
+```
+
+
+```{r,dothework,cache=TRUE}
+n <- 200
+goodness <- rep(-Inf,n)
+synthetic_winner_points     <- rep("",n)
+synthetic_winner_likelihood <- rep("",n)
+f <- function(x,y){sum(cumprod(x==y))}
+for(i in seq_len(n)){
+	a <- rrank(n=ncol(f2017), p=mL2017)
+	jj <- a
+	class(jj) <- "matrix"
+	jj[] <- points[jj]
+	p <- colSums(jj)  # synthetic points
+	names(p) <- names(mL2017)
+	synthetic_rank_points <- names(sort(p,decreasing=TRUE))
+	synthetic_winner_points[i] <- synthetic_rank_points[1]
+
+	mH <- maxp(rank_likelihood(a))
+	synthetic_rank_likelihood <- names(sort(mH,decreasing=TRUE))
+	synthetic_winner_likelihood[i] <- synthetic_rank_likelihood[1]
+
+	goodness[i] <- f(synthetic_rank_likelihood,synthetic_rank_points)
+}
+plot(table(goodness))
+table(synthetic_winner_likelihood,synthetic_winner_points)
+```
+
+So from the table we see about half the times the winner was correctly
+predicted by the points system.
