@@ -2,8 +2,6 @@
 \alias{table_tennis}
 \alias{table_tennis_serve}
 \alias{ping_pong}
-\alias{profile}
-\alias{profile_likelihood}
 \docType{data}
 \title{Match outcomes from repeated table tennis matches}
 \description{Match outcomes from repeated singles table tennis matches}
