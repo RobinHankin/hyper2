@@ -83,6 +83,7 @@ head(H)
 mL2017 <- maxp(H)
 mL2017
 dotchart(mL2017,pch=16,main='2017 Formula 1')
+pie(mL2017)
 ```
 
 

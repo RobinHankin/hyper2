@@ -299,5 +299,53 @@ H9 <- keep(H,c("S",pnames(H)[1:8]))
 specificp.gt.test(H9,"S",0)
 ```
 
-see this
+now profile likelihood:
 
+```{r,doproflikn,cache=TRUE}
+H9
+maxp(H9)
+p <- seq(from=0.11,to=0.13,len=50)
+u <- profsupp(H9,"Hamilton",p,n=14)
+plot(p,u)
+```
+
+# Pole position
+
+
+We now introduce another reified player, `pole`, whose strength helps
+the driver in pole position.
+
+
+```{r,polepositionlikelihood,cache=TRUE}
+HP <- hyper2(pnames=c(rownames(f2017),"pole"))
+noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
+
+for(i in seq_len(ncol(f2017))){
+	y <- f2017[,i]
+	if(any(y %in% noscore)){y[y%in%noscore] <- 0}
+	y <- as.numeric(levels(y)[y])
+	names(y) <- rownames(f2017)
+	HP <- HP + pwa(ordervec2supp(y),details$pole[i],"pole")
+} # i loop closes
+head(HP)
+(mHP <- maxp(HP))
+pie(mHP)
+```
+
+test Hamilton == bottas:
+
+```{r,dosometests,cache=TRUE}
+samep.test(HP,c("Hamilton","Vettel"))
+samep.test(HP,c("Hamilton","Bottas"))
+```
+
+
+Now profile likelihood for pole strength:
+
+```{r,profsupcalc,cache=TRUE}
+p <- seq(from=0.5,to=0.96,len=20)
+pnames(HP)
+u <- profsupp(HP,"Ricciardo",p,n=1)
+u
+plot(p,u-max(u))
+```

@@ -25,9 +25,9 @@ Consider the following dataset, taken from Wikipedia:
 
 ```{r cars}
 f2017 <- read.table("formula1_2017.txt",header=TRUE)
-f2017a <- f2017[1:9,]
-rm(f2017)
-f2017a
+n <- 9  # top 9
+f2017 <- f2017[seq_len(n),]
+f2017
 ```
 
 Now process it to give the ranks:
@@ -44,9 +44,9 @@ f <- function(x){
 	x[wanted] <- xw
 	x
 }
-o  <- apply(f2017a[,seq_len(20)],2,f)
-rownames(o) <- rownames(f2017a)
-(f2017a <- o)
+o  <- apply(f2017[,seq_len(20)],2,f)
+rownames(o) <- rownames(f2017)
+(f2017 <- o)
 ```
 
 Each row is a driver and each column (after the first) a venue.  We
@@ -61,7 +61,7 @@ We can represent this data in a different form using
 `wikitable_to_ranktable()`:
 
 ```{r}
-wikitable_to_ranktable(f2017a)
+wikitable_to_ranktable(f2017)
 ```
 
 Looking at the first column ("c1" is read "came first") we see who
@@ -136,13 +136,13 @@ placing to `Ham_wet`.
 
 ```{r,hamiltonwetanddry,cache=TRUE}
 details <- read.table("formula1_conditions.txt",header=TRUE)
-alldrivers <- c("Ham_dry","Ham_wet",rownames(f2017a)[-1])
+alldrivers <- c("Ham_dry","Ham_wet",rownames(f2017)[-1])
 (L2017 <- hyper2(pnames=alldrivers)) # uninformative
-for(i in seq_len(ncol(f2017a))){
-	venue <- colnames(f2017a)[i]
+for(i in seq_len(ncol(f2017))){
+	venue <- colnames(f2017)[i]
 	conditions <- details[which(details$venue == venue),4]
-	o <- f2017a[,i]
-	names(o) <- rownames(f2017a)
+	o <- f2017[,i]
+	names(o) <- rownames(f2017)
 	if(conditions == "wet"){
 	   names(o)[names(o) == "Hamilton"] <- "Ham_wet"
 	} else if(conditions == "dry"){
@@ -169,11 +169,11 @@ samep.test(L2017,c("Ham_wet","Ham_dry"))
 
 details <- read.table("formula1_conditions.txt",header=TRUE)
 
-H <- hyper2(pnames=c(rownames(f2017a),"S"))
+H <- hyper2(pnames=c(rownames(f2017),"S"))
 noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
 
-for(i in seq_len(ncol(f2017a))){
-	y <- f2017a[,i]
+for(i in seq_len(ncol(f2017))){
+	y <- f2017[,i]
 	cond <- details$conditions[i]
         jj <- ordervec2supp(y)
 	if(cond == "dry"){
