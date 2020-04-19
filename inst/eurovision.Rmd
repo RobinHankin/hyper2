@@ -67,7 +67,7 @@ if(abbreviated){
     jj <- countries$fullname
 }
 
-competitors <- jj[1:18]
+competitors <- as.character(jj[1:18])
 colnames(preference) <- jj      # voters; 20 countries (18 + DE + UK)
 rownames(preference) <- competitors  
 
