@@ -2,34 +2,38 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 identityL <- function(L, p) {
-    .Call('hyper2_identityL', PACKAGE = 'hyper2', L, p)
+    .Call(`_hyper2_identityL`, L, p)
 }
 
 addL <- function(L1, p1, L2, p2) {
-    .Call('hyper2_addL', PACKAGE = 'hyper2', L1, p1, L2, p2)
+    .Call(`_hyper2_addL`, L1, p1, L2, p2)
 }
 
 equality <- function(L1, p1, L2, p2) {
-    .Call('hyper2_equality', PACKAGE = 'hyper2', L1, p1, L2, p2)
+    .Call(`_hyper2_equality`, L1, p1, L2, p2)
 }
 
 accessor <- function(L, powers, Lwanted) {
-    .Call('hyper2_accessor', PACKAGE = 'hyper2', L, powers, Lwanted)
+    .Call(`_hyper2_accessor`, L, powers, Lwanted)
 }
 
 overwrite <- function(L1, powers1, L2, powers2) {
-    .Call('hyper2_overwrite', PACKAGE = 'hyper2', L1, powers1, L2, powers2)
+    .Call(`_hyper2_overwrite`, L1, powers1, L2, powers2)
 }
 
 assigner <- function(L, p, L2, value) {
-    .Call('hyper2_assigner', PACKAGE = 'hyper2', L, p, L2, value)
+    .Call(`_hyper2_assigner`, L, p, L2, value)
 }
 
 evaluate <- function(L, powers, probs) {
-    .Call('hyper2_evaluate', PACKAGE = 'hyper2', L, powers, probs)
+    .Call(`_hyper2_evaluate`, L, powers, probs)
+}
+
+hessian_lowlevel <- function(L, powers, probs, n) {
+    .Call(`_hyper2_hessian_lowlevel`, L, powers, probs, n)
 }
 
 differentiate <- function(L, powers, probs, n) {
-    .Call('hyper2_differentiate', PACKAGE = 'hyper2', L, powers, probs, n)
+    .Call(`_hyper2_differentiate`, L, powers, probs, n)
 }
 

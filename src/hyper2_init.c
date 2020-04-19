@@ -1,3 +1,12 @@
+/* RH:  created by
+
+ tools::package_native_routine_registration_skeleton("." , character_only=FALSE)
+
+but also edited below (see end)
+
+*/
+
+
 #include <R.h>
 #include <Rinternals.h>
 #include <stdlib.h> // for NULL
@@ -8,29 +17,37 @@
 */
 
 /* .Call calls */
-extern SEXP hyper2_accessor(SEXP, SEXP, SEXP);
-extern SEXP hyper2_addL(SEXP, SEXP, SEXP, SEXP);
-extern SEXP hyper2_assigner(SEXP, SEXP, SEXP, SEXP);
-extern SEXP hyper2_differentiate(SEXP, SEXP, SEXP, SEXP);
-extern SEXP hyper2_equality(SEXP, SEXP, SEXP, SEXP);
-extern SEXP hyper2_evaluate(SEXP, SEXP, SEXP);
-extern SEXP hyper2_identityL(SEXP, SEXP);
-extern SEXP hyper2_overwrite(SEXP, SEXP, SEXP, SEXP);
-// following lines created automatically!
+extern SEXP _hyper2_accessor(SEXP, SEXP, SEXP);
+extern SEXP _hyper2_addL(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _hyper2_assigner(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _hyper2_differentiate(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _hyper2_equality(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _hyper2_evaluate(SEXP, SEXP, SEXP);
+extern SEXP _hyper2_hessian_lowlevel(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _hyper2_identityL(SEXP, SEXP);
+extern SEXP _hyper2_overwrite(SEXP, SEXP, SEXP, SEXP);
+
 static const R_CallMethodDef CallEntries[] = {
-    {"hyper2_accessor",      (DL_FUNC) &hyper2_accessor,      3},
-    {"hyper2_addL",          (DL_FUNC) &hyper2_addL,          4},
-    {"hyper2_assigner",      (DL_FUNC) &hyper2_assigner,      4},
-    {"hyper2_differentiate", (DL_FUNC) &hyper2_differentiate, 4},
-    {"hyper2_equality",      (DL_FUNC) &hyper2_equality,      4},
-    {"hyper2_evaluate",      (DL_FUNC) &hyper2_evaluate,      3},
-    {"hyper2_identityL",     (DL_FUNC) &hyper2_identityL,     2},
-    {"hyper2_overwrite",     (DL_FUNC) &hyper2_overwrite,     4},
+    {"_hyper2_accessor",         (DL_FUNC) &_hyper2_accessor,         3},
+    {"_hyper2_addL",             (DL_FUNC) &_hyper2_addL,             4},
+    {"_hyper2_assigner",         (DL_FUNC) &_hyper2_assigner,         4},
+    {"_hyper2_differentiate",    (DL_FUNC) &_hyper2_differentiate,    4},
+    {"_hyper2_equality",         (DL_FUNC) &_hyper2_equality,         4},
+    {"_hyper2_evaluate",         (DL_FUNC) &_hyper2_evaluate,         3},
+    {"_hyper2_hessian_lowlevel", (DL_FUNC) &_hyper2_hessian_lowlevel, 4},
+    {"_hyper2_identityL",        (DL_FUNC) &_hyper2_identityL,        2},
+    {"_hyper2_overwrite",        (DL_FUNC) &_hyper2_overwrite,        4},
     {NULL, NULL, 0}
 };
+
+/*
+
+Following lines commented out because they are duplicated in
+RcppExports.cpp (which is created by compileAttributes())
 
 void R_init_hyper2(DllInfo *dll)
 {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }
+*/

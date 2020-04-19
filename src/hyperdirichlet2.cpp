@@ -265,6 +265,50 @@ double differentiate_single( // d(log-likelihod)/dp
     return out;
 }
 
+double second_derivative( // evaluate terms of the lower-right block of the bordered Hessian
+                 const hyper2 h,
+                 const int i,   // components to diff WRT
+                 const int j,   // components to diff WRT
+                 const NumericVector probs
+                      ){
+
+    hyper2::const_iterator it;
+    bracket::const_iterator ib;
+    double out=0;
+
+    for (it=h.begin(); it != h.end(); ++it){  // standard hyper2 loop
+        const bracket b = it->first;
+        if( (b.count(i)>0) && (b.count(j)>0) ){
+            double bracket_total=0;
+            for (ib=b.begin(); ib != b.end(); ++ib){
+                bracket_total += probs[*ib-1];
+            }
+            out -= (it->second)/(bracket_total*bracket_total);
+        }
+    }  // hyper2 iterator loop closes
+    return out;
+} // function second_derivative() closes
+
+//[[Rcpp::export]]
+List hessian_lowlevel(
+             const List L,
+             const NumericVector powers,
+             const NumericVector probs,
+             const int n
+               ){
+    
+    NumericVector out(n*n);
+    const hyper2 h=prepareL(L,powers);
+    int r=0;
+    
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            out[r++] = second_derivative(h,i+1,j+1,probs);
+        }
+    }
+    return List::create(Named("block_hessian_components") =  out);
+}
+
 //[[Rcpp::export]]
 List differentiate(  // returns gradient of log-likelihood
                 const List L,
