@@ -59,7 +59,7 @@
     } else {
       null_hypothesis <- paste("sum p_i=1, p_",i, " = ", rsp, sep="")
     }
-    delta <- 1e-4
+    delta <- 1e-5
     specificp <- max(delta,specificp)
     
     n <- size(H)
@@ -299,13 +299,15 @@
     
     if(is.character(i)){
         stopifnot(all(i %in% pnames(H)))
+        jj <- paste(paste(i," = ",sep=""),collapse="")
+        null_hypothesis <- substr(jj,1,nchar(jj)-3)
         i <- which(pnames(H) %in% i)
     } else {  # numeric
         stopifnot(all(i<=n))
+        jj <- paste(paste("p_",i," = ",sep=""),collapse="")
+        null_hypothesis <- substr(jj,1,nchar(jj)-3)
     }
     SMALL <- 1e-3
-    jj <- paste(paste("p_",i," = ",sep=""),collapse="")
-    null_hypothesis <- substr(jj,1,nchar(jj)-3)
 
     m_alternative <- maxp(H, ..., give=TRUE)  # free optimization
     alternative_support <- m_alternative$value
