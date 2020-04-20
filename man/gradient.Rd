@@ -6,7 +6,7 @@ The gradient of the log-likelihood of a hyper2 object, at a specific
 point in probability space
 }
 \usage{
-gradient(probs, H)
+gradient(H, probs=indep(maxp(H)))
 }
 \arguments{
   \item{H}{A \code{hyper2} object}
@@ -32,7 +32,7 @@ p <- c(1/2,1/3)
 delta <- rnorm(2)/1e5  # delta needs to be quite small
 
 deltaL  <- loglik(p+delta,chess) - loglik(p,chess)
-deltaLn <- sum(delta*gradient(p + delta/2,chess))   # numeric
+deltaLn <- sum(delta*gradient(chess,p + delta/2))   # numeric
 
 deltaL - deltaLn  # should be small
 

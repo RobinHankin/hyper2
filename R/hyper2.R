@@ -347,7 +347,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(hyper2(out[[1]],out[[2]],pnames=pnames(x)))
 }
 
-`gradient` <- function(probs,H){
+`gradient` <- function(H,probs=indep(maxp(H))){
   stopifnot(length(probs) == size(H)-1)
   differentiate(brackets(H), powers(H), fillup(probs), size(H))$grad_comp
 }
@@ -425,7 +425,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         }
 
     objective <- function(p){ -loglik(p,H) }
-    gradfun   <- function(p){ -(gradient(p,H))} #NB minus signs
+    gradfun   <- function(p){ -(gradient(H,p))} #NB minus signs
     
     UI <- rbind(
         diag(nrow=n-1),  # regular: p1 >=0, p2 >= 0, ..., p_{n-1} >= 0
