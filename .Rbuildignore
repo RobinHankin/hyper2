@@ -3,6 +3,8 @@
 ^README.Rmd$
 ^\.travis.yml$
 .gitignore
+^inst/counterstrike_cache$
+^inst/counterstrike_files$
 ^inst/formula1_points_cache$
 ^inst/formula1_points_files$
 ^inst/formula1_top9_cache$
