@@ -352,11 +352,12 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   differentiate(brackets(H), powers(H), fillup(probs), size(H))$grad_comp
 }
 
-`hessian` <- function(H, probs=indep(maxp(H))){
+`hessian` <- function(H, probs=indep(maxp(H)),border=TRUE){
     n <- size(H)
     stopifnot(length(probs) == n-1)
     out <- hessian_lowlevel(brackets(H),powers(H),fillup(probs),n)$block_hessian_components
     out <- matrix(out,n,n)
+    if(isFALSE(border)){return(out)}
     out <- rbind(c(0,rep(1,n)),cbind(1,out))
     if(!identical(pnames(H),NA)){
         jj <- c("usc",as.character(pnames(H))) # "usc" = unit sum constraint
@@ -374,11 +375,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     all((jj>0) == alt)
 }
 
-`fillup` <- function(x){
+`fillup` <- function(x,total=1){
   if(is.matrix(x)){
-    return(cbind(x,1-rowSums(x)))
+    return(cbind(x,total-rowSums(x)))
   } else {  # assumed to be a vector
-    return(c(x,1-sum(x)))
+    return(c(x,total-sum(x)))
   }
 }
 

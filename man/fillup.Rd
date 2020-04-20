@@ -12,14 +12,22 @@
   
 }
 \usage{
-fillup(x)
+fillup(x,total=1)
 indep(x)
 }
 \arguments{
   \item{x}{Numeric vector}
+  \item{total}{Total value for probability}
 }
+\details{
+  Usually you want the total to be one, to enforce the unit sum
+  constraint.  Passing \code{total=0} constrains the sum to be
+  zero.  This is useful when considering \eqn{\delta p}{dp}; see the
+  example at \code{gradient.Rd}.
+}
+  
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{equalp}}}
+\seealso{\code{\link{equalp}},\code{\link{gradient}}}
 \examples{
 fillup(c(1/2,1/3))
 

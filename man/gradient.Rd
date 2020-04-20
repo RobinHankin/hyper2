@@ -8,24 +8,26 @@
 \title{Differential calculus}
 \description{
 
-Given a a \code{hyper2} object, function \code{gradient()} returns the
-gradient of the log-likelihood as a function of
-\eqn{(p_1,\ldots,p_n)}{p_1,...,p_n}, and function \code{hessian()}
-returns the bordered Hessian matrix.  By default, both functions are
-evaluated at the maximum likelihood estimate for \eqn{p}, as given by
-\code{maxp()}.
+Given a a \code{hyper2} object and a point in probability space,
+function \code{gradient()} returns the gradient of the log-likelihood;
+function \code{hessian()} returns the bordered Hessian matrix.  By
+default, both functions are evaluated at the maximum likelihood estimate
+for \eqn{p}, as given by \code{maxp()}.
 
 }
 \usage{
 gradient(H, probs=indep(maxp(H)))
-hessian(H,probs=indep(maxp(H)))
+hessian(H,probs=indep(maxp(H)),border=TRUE)
 hessian_lowlevel(L, powers, probs, n) 
 is_ok_hessian(H)
 }
 \arguments{
   \item{H}{A \code{hyper2} object}
-  \item{L, powers, n}{Components of a \code{hyper2} object}
+  \item{L,powers,n}{Components of a \code{hyper2} object}
   \item{probs}{A vector of probabilities}
+  \item{border}{Boolean, with default \code{TRUE} meaning to return the
+    bordered Hessian and \code{FALSE} meaning to return the Hessian
+    (warning: this option does not respect the unit sum constraint)}
 }
 
 \details{
@@ -34,7 +36,7 @@ Function \code{gradient()} returns the gradient of the log-likelihood
 function.  If the \code{hyper2} object is of size \eqn{n}, then argument
 \code{probs} must be a vector of length \eqn{n-1}, and the returned
 gradient is also a vector of length \eqn{n-1}.  The hard part of this is
-accounting for the fillup value which may have a nonzero power.
+accounting for the fillup value.
 
 Function \code{hessian()} returns the \dfn{bordered Hessian}, a matrix
 of size \eqn{n+1\times n+1}{(n+1)*(n+1)}, which is useful when using
@@ -47,8 +49,8 @@ Constraint}.
 The unit sum constraint borders could have been added with idiom
 \code{magic::adiag(0,pad=1,hess)}, which might be preferable.
 
-Function \code{is_ok_hessian()} returns the result of the bordered
-second derivative test for the maximum likelihood estimate being a local
+Function \code{is_ok_hessian()} returns the result of the second
+derivative test for the maximum likelihood estimate being a local
 maximum on the constraint hypersurface.  This is a generalization of the
 usual unconstrained problem, for which the test is Hessian's being
 negative-definite.
@@ -59,11 +61,16 @@ calls the \code{C++} routine.
 }
 
 \value{
+
 Function \code{gradient()} returns a vector with entries being the
 gradient of the log-likelihood with respect to the \eqn{n-1} independent
-components of \eqn{p}.  Function \code{hessian()} returns an \eqn{n+1}
-by \eqn{n+1} matrix of second derivatives, bordered with constants
-corresponding to the unit sum constraint.
+components of \eqn{\left(p_1,\ldots,p_n\right)}{(p_1,...,p_n)}.
+
+Function \code{hessian()} returns an \eqn{n+1}-by-\eqn{n+1} matrix of
+second derivatives, bordered with constants corresponding to the unit
+sum constraint.  
+
+
 }
 
 \author{Robin K. S. Hankin}
@@ -76,9 +83,24 @@ delta <- rnorm(2)/1e5  # delta needs to be quite small
 deltaL  <- loglik(p+delta,chess) - loglik(p,chess)
 deltaLn <- sum(delta*gradient(chess,p + delta/2))   # numeric
 
-deltaL - deltaLn  # should be small
+deltaL - deltaLn  # should be small [zero to first order]
 
 hessian(icons)
 is_ok_hessian(icons)
+
+## Demostrate Hessian matrix of second derivatives:
+## First, exact calculations:
+p <- indep(equalp(icons))
+dp <- rnorm(5)*1e-2
+dpc <- fillup(dp,0)   # constrained dp
+dL <- loglik(p+dp,icons) - loglik(p,icons)
+hess <- hessian(icons,p,border=FALSE)
+
+dL1 <- sum(gradient(icons,p)*dp)              # first order
+dL2 <- dL1 + t(dpc) \%*\% hess \%*\% dpc/2    # second order
+## above should be emulator::quad.form(dpc,hess)
+
+print(c(exact_delta=dL,delta_1st_order=dL1,delta_2nd_order=dL2))
+print(dL-c(first_order_error=dL1,second_order_error= dL2))
 
 }
