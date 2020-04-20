@@ -14,7 +14,8 @@
 \usage{
 equalp.test(H, ...)
 samep.test(H, i, give=FALSE, ...)
-specificp.test(H, i, specificp=1/size(H), alternative = c("two.sided","less","greater"),  ...)
+specificp.test(H, i, specificp=1/size(H),
+         alternative = c("two.sided","less","greater"),  ...)
 specificp.ne.test(H, i, specificp=1/size(H), ...)
 specificp.gt.test(H, i, specificp=1/size(H), delta=1e-5, ...)
 specificp.lt.test(H, i, specificp=1/size(H), ...)
