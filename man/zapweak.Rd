@@ -33,8 +33,7 @@ less than \code{minstrength}) using \code{discard()}.
 \seealso{\code{\link{discard}},\code{\link{maxp}}}
 \author{Robin K. S. Hankin}
 \examples{
-data(karate)
-zapweak(karate) # seems to work
+zapweak(formula1) # seems to work
 
 # data(rowing)
 # zapweak(sculls2016) # removes everyone...
