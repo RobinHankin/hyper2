@@ -54,7 +54,15 @@ src/*.so
 
 
 # cached files
+inst/counterstrike_cache/
+inst/counterstrike_files/
 inst/formula1_cache/
 inst/formula1_files/
+inst/formula1_points_cache/
+inst/formula1_points_files/
+inst/formula1_top9_cache/
+inst/formula1_top9_files/
 inst/jester_cache/
 inst/jester_files/
+inst/notthewinner_cache/
+inst/notthewinner_files/
