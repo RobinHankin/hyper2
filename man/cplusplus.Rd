@@ -9,6 +9,7 @@
 \alias{identityL}
 \alias{evaluate}
 \alias{differentiate}
+\alias{differentiate_n}
 \alias{hyper2_accessor}
 \alias{hyper2_equal}
 \alias{hyper2_addL}
@@ -29,6 +30,7 @@ addL(L1,p1,L2,p2)
 identityL(L,p)
 evaluate(L,powers,probs)
 differentiate(L, powers, probs, n)
+differentiate_n(L, powers, probs, n)
 }
 
 \arguments{

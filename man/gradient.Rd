@@ -1,5 +1,6 @@
 \name{gradient}
 \alias{gradient}
+\alias{gradientn}
 \alias{hessian}
 \alias{hessian_lowlevel}
 \alias{is_ok_hessian}
@@ -36,7 +37,20 @@ Function \code{gradient()} returns the gradient of the log-likelihood
 function.  If the \code{hyper2} object is of size \eqn{n}, then argument
 \code{probs} must be a vector of length \eqn{n-1}, and the returned
 gradient is also a vector of length \eqn{n-1}.  The hard part of this is
-accounting for the fillup value.
+accounting for the fillup value.  The function returns the derivative of
+the loglikelihood with respect to the\eqn{n-1} independent components of
+\eqn{\left(p_1,\ldots,p_n\right)}{(p_1,...,p_n)}, namely
+\eqn{\left(p_1,\ldots,p_{n-1}\right)}{(p_1,...,p_n-1)}.  The fillup
+value \eqn{p_n} is calculated as
+\eqn{1-\left(p_1,\ldots,p_{n-1}\right)}{1-(p_1,...,p_n-1)}.
+
+Function \code{gradientn()} returns the gradient of the loglikelihood
+function but ignores the unit sum constraint.
+If the \code{hyper2} object is of size \eqn{n}, then argument
+\code{probs} must be a vector of length \eqn{n}, and the returned
+gradient is also a vector of length \eqn{n}.  The last element of the
+vector is not treated differently from the others; all \eqn{n} elements
+are treated as independent.  The sum need not equal one.
 
 Function \code{hessian()} returns the \dfn{bordered Hessian}, a matrix
 of size \eqn{n+1\times n+1}{(n+1)*(n+1)}, which is useful when using
@@ -62,9 +76,15 @@ calls the \code{C++} routine.
 
 \value{
 
-Function \code{gradient()} returns a vector with entries being the
-gradient of the log-likelihood with respect to the \eqn{n-1} independent
-components of \eqn{\left(p_1,\ldots,p_n\right)}{(p_1,...,p_n)}.
+Function \code{gradient()} returns a vector of length \eqn{n-1} with
+entries being the gradient of the log-likelihood with respect to the
+\eqn{n-1} independent components of
+\eqn{\left(p_1,\ldots,p_n\right)}{(p_1,...,p_n)}, namely
+\eqn{\left(p_1,\ldots,p_{n-1}\right)}{(p_1,...,p_n-1)}.  The fillup
+value \eqn{p_n} is calculated as
+\eqn{1-\left(p_1,\ldots,p_{n-1}\right)}{1-(p_1,...,p_n-1)}.
+
+
 
 Function \code{hessian()} returns an \eqn{n+1}-by-\eqn{n+1} matrix of
 second derivatives, bordered with constants corresponding to the unit

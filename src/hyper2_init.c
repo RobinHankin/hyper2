@@ -1,5 +1,8 @@
-/* RH:  created by
+/* RH:  created by the following R session:
 
+> getwd()
+[1] "/home/rhankin/rstudio/hyper2"
+> library(tools)
  tools::package_native_routine_registration_skeleton("." , character_only=FALSE)
 
 but also edited below (see end)
@@ -17,10 +20,12 @@ but also edited below (see end)
 */
 
 /* .Call calls */
+
 extern SEXP _hyper2_accessor(SEXP, SEXP, SEXP);
 extern SEXP _hyper2_addL(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _hyper2_assigner(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _hyper2_differentiate(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _hyper2_differentiate_n(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _hyper2_equality(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _hyper2_evaluate(SEXP, SEXP, SEXP);
 extern SEXP _hyper2_hessian_lowlevel(SEXP, SEXP, SEXP, SEXP);
@@ -32,6 +37,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_hyper2_addL",             (DL_FUNC) &_hyper2_addL,             4},
     {"_hyper2_assigner",         (DL_FUNC) &_hyper2_assigner,         4},
     {"_hyper2_differentiate",    (DL_FUNC) &_hyper2_differentiate,    4},
+    {"_hyper2_differentiate_n",  (DL_FUNC) &_hyper2_differentiate_n,  4},
     {"_hyper2_equality",         (DL_FUNC) &_hyper2_equality,         4},
     {"_hyper2_evaluate",         (DL_FUNC) &_hyper2_evaluate,         3},
     {"_hyper2_hessian_lowlevel", (DL_FUNC) &_hyper2_hessian_lowlevel, 4},
@@ -40,8 +46,8 @@ static const R_CallMethodDef CallEntries[] = {
     {NULL, NULL, 0}
 };
 
-/*
 
+/*
 Following lines commented out because they are duplicated in
 RcppExports.cpp (which is created by compileAttributes())
 

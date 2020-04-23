@@ -37,3 +37,7 @@ differentiate <- function(L, powers, probs, n) {
     .Call(`_hyper2_differentiate`, L, powers, probs, n)
 }
 
+differentiate_n <- function(L, powers, probs, n) {
+    .Call(`_hyper2_differentiate_n`, L, powers, probs, n)
+}
+

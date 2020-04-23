@@ -217,7 +217,7 @@ double evaluate(  // returns log-likelihood
     return out;
 }
 
-double differentiate_single( // d(log-likelihod)/dp
+double differentiate_single_independent( // d(log-likelihod)/dp
                  const hyper2 h,
                  unsigned int i,   // component to diff WRT
                  const unsigned int n,   // p_1 + ...+p_n = 1
@@ -261,6 +261,44 @@ double differentiate_single( // d(log-likelihod)/dp
         // the 'meat':
         out += no_of_diff_terms*power/bracket_total;
         out -= no_of_fill_terms*power/bracket_total; 
+    }
+    return out;
+}
+
+double differentiate_single_alln( // d(log-likelihod)/dp
+                 const hyper2 h,
+                 unsigned int i,   // component to diff WRT
+                 const unsigned int n,   // p_1 + ...+p_n = 1
+                 const NumericVector probs
+
+                 /* basically the same as
+                    differentiate_single_independent(), but we ignore
+                    the special nature of the fillup entry
+                 */
+                      ){
+
+    hyper2::const_iterator it;
+    bracket::const_iterator ib;
+    double out;
+    double bracket_total;
+
+    i++; // off-by-one
+    assert(i > 0); 
+    assert(i < n);
+    out = 0;
+    for (it=h.begin(); it != h.end(); ++it){  // standard hyper2 loop
+        const bracket b = it->first;
+        const int no_of_diff_terms = b.count(i);
+        bracket_total = 0;
+        if(no_of_diff_terms > 0){ // bracket has i in it
+            for (ib=b.begin(); ib != b.end(); ++ib){
+                bracket_total += probs[*ib-1]; // Off-by-one error: p_1 == probs[0]
+            }
+            
+            // the 'meat':
+            double power = it->second;
+            out += power/bracket_total;
+        }
     }
     return out;
 }
@@ -322,7 +360,24 @@ List differentiate(  // returns gradient of log-likelihood
     const hyper2 h=prepareL(L,powers);
 
     for(i=0; i<n-1; i++){
-        out[i] = differentiate_single(h,i,n,probs);
+        out[i] = differentiate_single_independent(h,i,n,probs);
+    }
+        return List::create(Named("grad_comp") =  out);
+}
+//[[Rcpp::export]]
+List differentiate_n(  // returns gradient of log-likelihood
+                const List L,
+                const NumericVector powers,
+                const NumericVector probs,
+                const unsigned int n
+                  ){
+
+    unsigned int i;
+    NumericVector out(n);  
+    const hyper2 h=prepareL(L,powers);
+
+    for(i=0; i<n; i++){  // differs from differentiate()
+        out[i] = differentiate_single_alln(h,i,n,probs);
     }
         return List::create(Named("grad_comp") =  out);
 }

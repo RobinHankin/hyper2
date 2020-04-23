@@ -352,6 +352,13 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   differentiate(brackets(H), powers(H), fillup(probs), size(H))$grad_comp
 }
 
+`gradientn` <- function(H,probs=maxp(H)){
+  stopifnot(length(probs) == size(H))
+  out <- differentiate_n(brackets(H), powers(H), probs, size(H))$grad_comp
+  if(!identical(pnames(H),NA)){names(out) <- pnames(H)}
+  return(out)
+}
+
 `hessian` <- function(H, probs=indep(maxp(H)),border=TRUE){
     n <- size(H)
     stopifnot(length(probs) == n-1)
