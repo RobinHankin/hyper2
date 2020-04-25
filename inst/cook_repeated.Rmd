@@ -50,7 +50,7 @@ H <- H +
     rank_likelihood(c(3,2,1,4)) + # person 2 says 1 is the best, 4 the worst.
     rank_likelihood(c(1,5,3,4)) + # person 3 says 1 is the best, 5 the worst.
     rank_likelihood(c(5,2,1,4)) + # person 4 says 1 is the best, 5 the worst.
-    rank_likelihood(c(2,3,4,5)) + # person 5 says 2 is the best, 4 the worst.
+    rank_likelihood(c(2,3,4,5))   # person 5 says 2 is the best, 4 the worst.
 
 
 
@@ -66,5 +66,3 @@ $\operatorname{argmax}\mathcal{L}\left(p_1,\ldots,p_5\right)$:
 (mH <- maxp(H))
 pie(mH)
 ```
-
-
