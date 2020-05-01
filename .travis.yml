@@ -9,6 +9,7 @@ before_install:
     - tlmgr update --self --all
     
 language: R
+latex: false
 cache: packages
 branches:
   only:
