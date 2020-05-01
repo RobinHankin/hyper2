@@ -6,7 +6,6 @@ before_install:
     - tlmgr install letltxmacro
     - tlmgr install wasysym
     - tlmgr install yfonts
-    - tlmgr update --self --all
     
 language: R
 cache: packages
