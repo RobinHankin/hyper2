@@ -1,0 +1,186 @@
+---
+title: "Numerical verification of function `gradientn()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2",quietly=TRUE)
+```
+
+We will numerically verify the `gradientn()` function for two `hyper2`
+objects.  
+
+## Chess dataset
+
+The chess dataset is as follows:
+
+```{r}
+chess
+```
+
+We will define two gradient functions: `chess_gradient_theoretical()`,
+which calculates the partial derivatives using straightforward algebra
+(specifically elementary calculus, $\partial(x+y)^n/\partial
+x=n(x+y)^{n-1}$), and `chess_gradient_theoretical()`, which uses `C` code:
+
+```{r}
+chess_gradient_theoretical <- function(x){
+    Topalov <- x[1]
+    Anand   <- x[2]
+    Karpov  <- x[3]
+
+    out <- c(
+        Topalov =  30/Topalov -35/(Topalov+Anand) -18/(Topalov+Karpov),
+        Anand   = -35/(Topalov+Anand) +36/Anand -35/(Anand+Karpov),
+        Karpov  = -18/(Topalov+Karpov) -35/(Anand+Karpov) +22/Karpov
+    )
+
+    names(out) <- pnames(chess)
+    out
+
+}
+chess_gradient_numerical  <- function(x){gradientn(chess,x)}
+```
+
+So in the above we have two ways of calculating the gardient: one
+theoretical and one numerical.  Do they agree?
+
+
+```{r}
+p_chess <- 
+	c(
+		Topalov = 0.5,
+		Anand   = 0.3,
+		Karpov  = 0.2
+	)
+chess_gradient_theoretical(p_chess) - chess_gradient_numerical(p_chess)
+```
+
+Yes, they agree
+
+
+# Icons
+
+The `icons` dataset is:
+
+
+```{r}
+icons
+```
+
+We can do the same thing but the algebra is more involved:
+
+
+```{r}
+icons_gradient_theoretical <- function(x){
+    NB <- x[1]
+    L <- x[2]
+    PB <- x[3]
+    THC <- x[4]
+    OA <- x[5]
+    WAIS <- x[6]
+
+	out <- c(
+		NB = (
+			+32/NB
+            -20/(NB + L + THC + OA)
+            -15/(NB + L + THC + WAIS)
+            -09/(NB + L + OA + WAIS)
+            -18/(NB + PB + THC + OA)
+            -18/(NB + PB + THC + WAIS)
+            -08/(NB + PB + OA + WAIS)
+        ),
+        L = (
+            -20/(NB + L + THC + OA)
+            -15/(NB + L + THC + WAIS)
+            -09/(NB + L + OA + WAIS)
+            +24/L
+            -11/(L + PB + THC + OA)
+            -16/(L + PB + THC + WAIS)
+            -18/(L + PB + OA + WAIS)
+        ),
+        PB = (
+            -18/(NB + PB + THC + OA)
+            -18/(NB + PB + THC + WAIS)
+            -08/(NB + PB + OA + WAIS)
+            -11/(L + PB + THC + OA)
+            -16/(L + PB + THC + WAIS)
+            -18/(L + PB + OA + WAIS)
+            +30/PB
+        ),
+        THC = (
+            -20/(NB + L + THC + OA)
+            -15/(NB + L + THC + WAIS)
+            -18/(NB + PB + THC + OA)
+            -18/(NB + PB + THC + WAIS)
+            -11/(L + PB + THC + OA)
+            -16/(L + PB + THC + WAIS)
+            +24/THC
+        ),
+        OA = (
+            -20/(NB + L + THC + OA)
+            -09/(NB + L + OA + WAIS)
+            -18/(NB + PB + THC + OA)
+            -08/(NB + PB + OA + WAIS)
+            -11/(L + PB + THC + OA)
+            -18/(L + PB + OA + WAIS)
+            +14/OA
+        ),
+        WAIS = (
+            -15/(NB + L + THC + WAIS)
+            -09/(NB + L + OA + WAIS)
+            -18/(NB + PB + THC + WAIS)
+            -08/(NB + PB + OA + WAIS)
+            -16/(L + PB + THC + WAIS)
+            -18/(L + PB + OA + WAIS)
+            +9/WAIS
+        )
+    )
+	names(out) <- pnames(icons)
+	return(out)
+}
+
+icons_gradient_numerical  <- function(x){gradientn(icons,x)}
+```
+
+Then 
+
+```{r}
+p_icons <- c(NB=0.3, L=0.1, PB=0.2, THC=0.15, OA=0.15, WAIS=0.1)
+```
+
+```{r}
+icons_gradient_theoretical(p_icons)
+icons_gradient_theoretical(p_icons) - icons_gradient_numerical(p_icons)
+```
+
+also agreeing.
+
+## Difference between `gradientn()` and `gradient()`
+
+
+Taking the chess dataset we have
+
+```{r}
+rbind(indep(p_chess), gradient(chess,indep(p_chess)))
+rbind(p_chess,gradientn(chess,p_chess))
+```
+
+Indeed, because the powers of `chess` sum to zero, we can test the
+fact that the derivative in the direction parallel to `p_chess` is
+zero:
+
+```{r}
+sum(powers(chess))
+sum(p_chess*gradientn(chess,p_chess))
+```
+
+which is correct to numerical precision.  Further, 
+
+```{r}
+sum(powers(icons))
+sum(p_icons*gradientn(icons,p_icons))
+```
+
+
