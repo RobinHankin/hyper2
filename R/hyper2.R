@@ -179,13 +179,13 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 `loglik` <- function(p,H,log=TRUE){
   if(is.matrix(p)){
-    return(apply(p,1,function(o){.loglik_single(p=o,H, log=log)}))
+    return(apply(p,1,function(o){loglik_single(p=o,H, log=log)}))
   } else {
-    return(.loglik_single(p,H,log=log))
+    return(loglik_single(p,H,log=log))
   }
 }
 
-`.loglik_single` <- function(p,H,log=TRUE){
+`loglik_single` <- function(p,H,log=TRUE){
   stopifnot(length(p) == size(H)-1)
   stopifnot(all(p>=0))
   stopifnot(sum(p)<=1)

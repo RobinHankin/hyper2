@@ -1,5 +1,6 @@
 \name{loglik}
 \alias{loglik}
+\alias{loglik_single}
 \alias{like_single_list}
 \alias{like_series}
 \title{
@@ -10,6 +11,7 @@ Returns a log-likelihood for a given hyper2 object at a specific point
 }
 \usage{
 loglik(p, H, log = TRUE)
+loglik_single(p,H,log=TRUE)
 like_single_list(p,Lsub)
 like_series(p,L,log=TRUE)
 
@@ -36,6 +38,9 @@ nonnegative vector \eqn{p=\left(p_1,\ldots,p_n\right)}{p=(p_1,...,p_n)}
 where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.
 
 If \code{p} is a matrix, the rows are interpreted as probability points.
+
+Function \code{loglik_single()} is a helper function that takes a single
+point in probability space.
 
 Functions \code{like_single_list()} and \code{like_series()} are
 intended for use with \code{ggrl()}.
