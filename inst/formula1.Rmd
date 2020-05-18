@@ -317,10 +317,12 @@ the driver in pole position.
 
 
 ```{r,polepositionlikelihood,cache=TRUE}
+f2017 <- read.table("formula1_2017.txt",header=TRUE)
+details <- read.table("formula1_conditions.txt",header=TRUE)
 HP <- hyper2(pnames=c(rownames(f2017),"pole"))
 noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
 
-for(i in seq_len(ncol(f2017))){
+for(i in seq_len(ncol(f2017)-1)){
 	y <- f2017[,i]
 	if(any(y %in% noscore)){y[y%in%noscore] <- 0}
 	y <- as.numeric(levels(y)[y])
