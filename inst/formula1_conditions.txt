@@ -11,7 +11,7 @@ year venue pole	conditions
 2017 GBR Hamilton   dry 
 2017 HUN Vettel     dry 
 2017 BEL Hamilton   dry 
-2017 ITA Hamilon    dry 
+2017 ITA Hamilton   dry 
 2017 SIN Vettel     wet 
 2017 MAL Hamilton   dry 
 2017 JPN Hamilton   dry 
