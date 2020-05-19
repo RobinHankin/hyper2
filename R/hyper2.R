@@ -424,13 +424,13 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
 }  # maxp() closes
 
-`maxp_single` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, ...){
+`maxp_single` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, maxtry=100, ...){
     if(inherits(H,"suplist")){return(maxplist(Hlist=H,startp=startp,give=give,fcm=fcm,fcv=fcv,...))}
     
     n <- size(H)
     if(is.null(startp)){
         startp <- rep(1/n,n-1)
-        }
+    }
 
     objective <- function(p){ -loglik(p,H) }
     gradfun   <- function(p){ -(gradient(H,p))} #NB minus signs
@@ -443,14 +443,30 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         rep(SMALL,n-1),  # regular
         -1+SMALL,        # fillup
         fcv)             # further contraint vector
-    
-    out <- constrOptim(
-        theta = startp,
-        f     = objective,
-        grad  = gradfun,
-        ui    = UI,
-        ci    = CI,
-        ...)
+
+    ## repeat until stupid wmmin bug does not occur...
+    teenytiny <- 1e-15
+    startp_try <- startp
+    for(i in seq_len(maxtry)){
+        out <- try(constrOptim(
+            theta = startp_try,
+            f     = objective,
+            grad  = gradfun,
+            ui    = UI,
+            ci    = CI,
+            ...))
+        if(!inherits(out, "try-error")){  # worked!
+            break
+        } else { # stupid wmmin bug occurs
+            cat("known R bug (bugzilla ID 17703; wmmin not finite).  Kludge:  maxp_single() will try  a slightly different start point\n")
+            startp_try <- startp + teenytiny*(runif(length(startp))-0.5)
+            teenytiny <- teenytiny * 1.1
+        }
+    }
+    if(i==maxtry){  # stupid wmmin bug occurs every time...
+        stop("known R bug (bugzilla ID 17703).  Try increasing maxtry.")
+    }
+        
 
     out$value <- -out$value # correct for -ve sign in objective()
     

@@ -11,7 +11,8 @@
 maxp(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, n=10,
    show=FALSE, justlikes=FALSE, ...)
 maxplist(Hlist, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, ...)
-maxp_single(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, ...)
+maxp_single(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6,
+   maxtry=100, ...)
 equalp(H)
 }
 \arguments{
@@ -26,8 +27,11 @@ equalp(H)
   \item{show}{Boolean, with \code{TRUE} meaning to show successive
     estimates}
   \item{justlikes}{Boolean, with \code{TRUE} meaning to return just a
-      vector of estimated likelihoods}
+    vector of estimated likelihoods}
   \item{SMALL}{Numerical minimum for probabilities}
+  \item{maxtry}{Integer specifying maximum number of times to try
+    \code{constrOptim()} with slightly differing start points, to avoid
+    the stupid \code{wmmin is not finite} bug, bugzilla id 17703}
   \item{...}{Further arguments which \code{maxp()} passes to
     \code{constrOptim()}}
 }
