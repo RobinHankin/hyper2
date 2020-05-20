@@ -258,23 +258,21 @@ is the same as his performance in the dry:
 options(width = 80)
 samep.test(L2017,c("Ham_wet","Ham_dry"))
 ```
-(the p-value seems to be too low to be believable).
 
 ## Try the same thing but with function pwa()
 
 
 ```{r,trypwa,cache=TRUE}
 f2017 <- read.table("formula1_2017.txt",header=TRUE)
-f2017 <- f2017[,-ncol(f2017)]
 details <- read.table("formula1_conditions.txt",header=TRUE)
 
 H <- hyper2(pnames=c(rownames(f2017),"S"))
 noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
 
-for(i in seq_len(ncol(f2017))){
+for(i in seq_len(ncol(f2017)-1)){
 	y <- f2017[,i]
 	if(any(y %in% noscore)){y[y%in%noscore] <- 0}
-	y <- as.numeric(levels(y)[y])
+	y <- as.numeric(y)
 	names(y) <- rownames(f2017)
 	cond <- details$conditions[i]
         jj <- ordervec2supp(y)
