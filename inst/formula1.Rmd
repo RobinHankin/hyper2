@@ -138,9 +138,9 @@ specificp.test(formula1,"Hamilton")  # default value is 1/25=0.04
 ```
 
 (note that the constrained maximum is on the boundary of the
-admissible region with $p_\mathrm{Hamilton}\approxequal\frac{1}{25}$).
+admissible region with $p_\mathrm{Hamilton}\approx\frac{1}{25}$).
 
-## Null of Hamilton being better than other players
+## Null of Hamilton being better than all other players
 
 We may now test
 
@@ -153,16 +153,7 @@ competitor is Bottas and considering instead
 * $H_4'\colon p_\mathrm{Hamilton} > p_\mathrm{Bottas}$.
 
 ```{r,L4like,cache=TRUE}
-small <- 0.01
-L4 <- maxp(formula1, startp=c(small, rep((1-small)/24,23)),fcm=rbind(c(-1,1,rep(0,22))),fcv=0,give=TRUE)
-L4
-```
-
-Calculating the support and asymptotic p-values:
-```{r,l4val}
-#L2 - L4$value 
-#pchisq(2*(L2 - L4$value),df=1,lower.tail=FALSE)
-2+3
+samep.test(formula1,c("Hamilton","Bottas"))
 ```
 
 ## All years data
@@ -330,7 +321,9 @@ for(i in seq_len(ncol(f2017)-1)){
 head(HP)
 (mHP <- maxp(HP))
 pie(mHP)
-loglik(indep(mHP),HP)
+mHP <- mHP[mHP > 1e-2]
+mHP
+pie(mHP)
 ```
 
 test Hamilton == bottas:
@@ -344,7 +337,10 @@ Now profile likelihood for pole strength:
 
 ```{r,profsupcalc,cache=TRUE}
 p <- seq(from=0.15,to=0.25,len=10)
-u <- profsupp(HP,"pole",p,n=27)
-u
-plot(p,u-max(u))
+u07 <- profsupp(HP,"pole",p,n=7)
+u07
+plot(p,u07-max(u07))
+u27 <- profsupp(HP,"pole",p,n=27)
+u27
+plot(p,u27-max(u27))
 ```
