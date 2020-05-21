@@ -28,8 +28,8 @@ profile_support_single(H, i, p, evaluate=FALSE, ...)
   \item{...}{Arguments passed to \code{maxp()}}
 }
 
-\value{Returns the support at a particular value of $p_i$,  or the
-  evaluate conditional on $p_i$}
+\value{Returns the support at a particular value of \eqn{p_i},  or the
+  evaluate conditional on \eqn{p_i$}.}
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{loglik}}}
 \examples{
