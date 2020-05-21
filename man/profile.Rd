@@ -12,7 +12,7 @@
 Given a support function, return a profile likelihood curve
 }
 \usage{
-profsupp(H, i, p, ...)
+profsupp(H, i, p, relative=TRUE, ...)
 profile_support_single(H, i, p, evaluate=FALSE, ...)
 }
 \arguments{
@@ -22,6 +22,9 @@ profile_support_single(H, i, p, evaluate=FALSE, ...)
   \item{evaluate}{Boolean, with default \code{FALSE} meaning to return
     the maximal support for \code{p_i=p} and \code{TRUE} meaning to
     return the evaluate}
+  \item{relative}{Boolean; if \code{TRUE} (default), return the support
+    relative to the maximum support attained; if false, return the
+    support as returned by \code{profile_support_single()}.}
   \item{...}{Arguments passed to \code{maxp()}}
 }
 

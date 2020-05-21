@@ -294,8 +294,12 @@ now profile likelihood:
 H9
 maxp(H9)
 p <- seq(from=0.11,to=0.13,len=50)
-u <- profsupp(H9,"Hamilton",p,n=14)
-plot(p,u)
+u01 <- profsupp(H9,"Hamilton",p,n=01)
+plot(p,u01)
+u20 <- profsupp(H9,"Hamilton",p,n=20)
+plot(p,u20)
+u50 <- profsupp(H9,"Hamilton",p,n=50)
+plot(p,u50)
 ```
 
 # Pole position

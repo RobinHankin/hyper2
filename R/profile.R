@@ -1,5 +1,7 @@
-`profsupp` <- function(H, i, p, ...){
-    sapply(p,function(x){profile_support_single(H=H, i=i, p=x, evaluate=FALSE, ...)})
+`profsupp` <- function(H, i, p, relative=TRUE, ...){
+    out <- sapply(p,function(x){profile_support_single(H=H, i=i, p=x, evaluate=FALSE, ...)})
+    if(relative){out <- out-max(out)}
+    return(out)
 }
     
 `profile_support_single` <- function(H, i, p, evaluate=FALSE, ...){
