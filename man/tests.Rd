@@ -66,17 +66,6 @@ own print method.
   following \code{t.test()}
 }
 
-Function \code{specificp.gt.test()} includes quite a bit of messing
-about to ensure that frequently-used idiom like
-\code{specificp.gt.test(icons,"NB",0)} works as expected, testing a null
-of \code{p_NB=0}.  In the case of testing a strength's being zero, the
-support function is often quite badly-behaved near the constraint [think
-tossing a coin twice, observing one head and one tail, and testing
-\code{p_NB=0}; the gradient of the support is infinite at the
-constraint].  Numerically, the code tests \code{p_NB=delta}.  Note that
-similar machinations are not required in \code{specificp.lt.test()}
-because a null of \code{p_NB=1} is unrealistic.
-
 }
 
 \value{
@@ -91,9 +80,25 @@ because a null of \code{p_NB=1} is unrealistic.
     performed}
   \item{data.name}{a character string giving the name(s) of the data.}
 }
-\seealso{
-  \code{\link{maxp}}
+\seealso{\code{\link{maxp}}}
+\note{
+Function \code{specificp.gt.test()} includes quite a bit of messing
+about to ensure that frequently-used idiom like
+\code{specificp.gt.test(icons,"NB",0)} works as expected, testing a null
+of \code{p_NB=0}.  In the case of testing a strength's being zero, the
+support function is often quite badly-behaved near the constraint [think
+tossing a coin twice, observing one head and one tail, and testing
+\code{p_NB=0}; the gradient of the support is infinite at the
+constraint].  Numerically, the code tests \code{p_NB=delta}.  Note that
+similar machinations are not required in \code{specificp.lt.test()}
+because a null of \code{p_NB=1} is unrealistic.
+
+Function \code{samep.test()} does not have access to gradient
+information so it is slow, inaccurate, and may fail completely for
+high-dimensional datasets.
+
 }
+
 \examples{
 
 data(volvo)
