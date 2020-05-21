@@ -300,6 +300,8 @@ u20 <- profsupp(H9,"Hamilton",p,n=20)
 plot(p,u20)
 u50 <- profsupp(H9,"Hamilton",p,n=50)
 plot(p,u50)
+uu <- pmax(u01,u20,u50)
+plot(p,uu)
 ```
 
 # Pole position
