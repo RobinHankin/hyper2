@@ -43,14 +43,14 @@ specificp.lt.test(H, i, specificp=1/size(H), ...)
 }
 \details{
 
-Given an order table, one natural question to ask is whether the results
-exhibit any structure or the ordering is totally random.  Under
-Plackett-Luce, a random ordering is equivalent to the players all having
-the same strength.  This null is tested against a free alternative.
-An extended discussion is presented in vignette \dQuote{\code{hyper2}}.
+  Given a \code{hyper2} likelihood function, there are a number of
+  natural questions to ask about the strengths of the players; see the
+  Hankin 2010 (JSS) for examples.  An extended discussion is presented
+  in vignette \dQuote{\code{hyper2}} and the functions documented here
+  cover most of the tests used in the vignette.
 
-The tests return an object with class \code{hyper2test}, which has its
-own print method.
+  The tests return an object with class \code{hyper2test}, which has its
+  own print method.
 
 \itemize{
   \item Function \code{equalp.test()} tests
@@ -81,6 +81,7 @@ own print method.
   \item{data.name}{a character string giving the name(s) of the data.}
 }
 \seealso{\code{\link{maxp}}}
+
 \note{
 Function \code{specificp.gt.test()} includes quite a bit of messing
 about to ensure that frequently-used idiom like

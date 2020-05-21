@@ -9,7 +9,7 @@
 \title{Differential calculus}
 \description{
 
-Given a a \code{hyper2} object and a point in probability space,
+Given a \code{hyper2} object and a point in probability space,
 function \code{gradient()} returns the gradient of the log-likelihood;
 function \code{hessian()} returns the bordered Hessian matrix.  By
 default, both functions are evaluated at the maximum likelihood estimate
@@ -35,10 +35,11 @@ is_ok_hessian(H)
 
 Function \code{gradient()} returns the gradient of the log-likelihood
 function.  If the \code{hyper2} object is of size \eqn{n}, then argument
-\code{probs} must be a vector of length \eqn{n-1}, and the returned
-gradient is also a vector of length \eqn{n-1}.  The hard part of this is
-accounting for the fillup value.  The function returns the derivative of
-the loglikelihood with respect to the\eqn{n-1} independent components of
+\code{probs} must be a vector of length \eqn{n-1}, typically
+\code{indep(p)}; and the returned gradient is also a vector of length
+\eqn{n-1}.  The hard part of this is accounting for the fillup value.
+The function returns the derivative of the loglikelihood with respect to
+the\eqn{n-1} independent components of
 \eqn{\left(p_1,\ldots,p_n\right)}{(p_1,...,p_n)}, namely
 \eqn{\left(p_1,\ldots,p_{n-1}\right)}{(p_1,...,p_n-1)}.  The fillup
 value \eqn{p_n} is calculated as
