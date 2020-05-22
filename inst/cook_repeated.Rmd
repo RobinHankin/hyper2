@@ -20,7 +20,7 @@ library(hyper2,quietly=TRUE)
 
 ```{r data}
 cooking_table <- as.matrix(read.table("cooking_weekly.txt", header=TRUE))
-head(cooking_table)
+cooking_table
 ```
 Thus from the first row we find that one judge considered Lesley to be
 fourth best, Alice third, Zac second and Annabel best (this must have
@@ -82,8 +82,86 @@ Standard techniques may be used:
 
 
 ```{r}
-pie(maxp(H))
 equalp.test(H)
+mH <- maxp(H)
+mH
+pie(mH)
 ```
 
 
+# Preferential voting
+
+
+It seems that the boys tend to prefer the boys' cooking and the girls
+prefer the girls' cooking.  But simple things first:
+
+```{r}
+a <- cooking_table # saves typing
+a <- a[a[,4]>0,]  # just lines where zac does not vote
+jj <- table(robin_votes=a[,1]==0,zac_last=a[,4]==4)
+jj
+```
+
+The table above shows that Robin cast a total of `r sum(jj[2,])` votes
+for Zac, and everyone else combined cast a total of `r sum(jj[1,])`
+votes for Zac.  Everyone else voted Zac last a total of `r jj[1,2]`
+times and higher than last `r jj[1,1]` times:
+
+```{r}
+fisher.test(jj,alternative="less")
+```
+
+So it looks like Robin is less likely to vote Zac last than everyone
+else.  Does he do likewise for me?
+
+```{r}
+a <- cooking_table # saves typing
+a <- a[a[,1]>0,]  # just lines where robin does not vote
+jj <- table(zac_votes=a[,4]==0,robin_last=a[,1]==4)
+jj
+fisher.test(jj,alternative="less")
+```
+
+No evidence for that.
+
+We can do slightly better, and test a more general hypothesis,
+specifically that the girls systematically vote other girls higher,
+and boys systematically vote boys higher, than warranted.  To test
+this hypothesis, we posit two reified entities, `girl` and `boy`.
+Entity `girl` helps a girl when another girl is voting for her, and
+entity `boy` helps a boy when another boy is voting for him.
+
+```{r}
+cooking_table <-
+	as.matrix(read.table("cooking_weekly.txt", header=TRUE))
+cooking_table <- cooking_table[rowSums(cooking_table==0)==1,]
+boys <-c("robin","zac")
+girls <- c("lesley","alice","annabel")
+cooks <- colnames(cooking_table)
+P <- hyper2(pnames=c(cooks,"boy","girl"))
+P0 <- hyper2(pnames=cooks)
+for(i in seq_len(nrow(cooking_table))){  # iterate over rows
+    x <- cooking_table[i,] 
+	print(x)
+	if(sum(x==0)>1){break}
+    names(x) <- cooks
+	if(names(x[x==0]) %in% boys){  # if the voter is a boy
+		x <- x[x>0]  # remove the voter
+		Pjj <- order_obs(P0,x) # order statistic
+		Pjj %<>% pwa(names(x)[names(x) %in% boys], chameleon="boy")
+		pnames(Pjj) <- c(cooks,"boy","girl")
+	} else if (names(x[x==0]) %in% girls){ # voter a girl
+		x <- x[x>0]
+		Pjj <- order_obs(P0,x)
+		Pjj %<>% pwa(names(x)[names(x) %in% girls], chameleon="girl")
+		pnames(Pjj) <- c(cooks,"boy","girl")
+	} else {
+		stop()
+	}
+    P <- P + Pjj
+}
+x
+Pjj
+P
+maxp(P)
+```
