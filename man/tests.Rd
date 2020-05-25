@@ -108,7 +108,7 @@ equalp.test(volvo2014)
 
 specificp.test(volvo2014,1,0.1)
 
-samep.test(icons,1:2) # -PNB == p_L
+samep.test(icons,1:2) # P_NB == p_L
 
 
 }
