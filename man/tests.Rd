@@ -88,9 +88,10 @@ about to ensure that frequently-used idiom like
 \code{specificp.gt.test(icons,"NB",0)} works as expected, testing a null
 of \code{p_NB=0}.  In the case of testing a strength's being zero, the
 support function is often quite badly-behaved near the constraint [think
-tossing a coin twice, observing one head and one tail, and testing
-\code{p_NB=0}; the gradient of the support is infinite at the
-constraint].  Numerically, the code tests \code{p_NB=delta}.  Note that
+tossing a coin with probability \eqn{p} twice, observing one head and
+one tail, and testing \eqn{p=0}; at the constraint, the likelihood is
+zero, the support negative infinity, and the gradient of the support is
+infinite].  Numerically, the code tests \code{p_NB=delta}.  Note that
 similar machinations are not required in \code{specificp.lt.test()}
 because a null of \code{p_NB=1} is unrealistic.
 
