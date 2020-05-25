@@ -70,6 +70,46 @@ dotchart(log(mL2017)[1:23],pch=16,main='2017 Formula 1, log scale')
 (in the diagram above, we remove the bottom-ranked two players, Resta
 and Button, whose estimated strength is zero).
 
+
+# Zipf's law
+
+
+Do the players follow Zipf's law?
+
+```{r,defzip}
+zipf <- function(n){
+	out <- 1/seq_len(n)
+	out/sum(out)
+}
+zipf(9)
+```
+
+Then there are two natural ways to proceed:
+
+```{r,cache=TRUE}
+mf <- maxp(formula1)
+l0 <- loglik(indep(mf),formula1)
+l1 <- loglik(indep(zipf(size(formula1))),formula1)
+c(l0,l1)
+pchisq(2*(l0-l1),df=size(formula1)-1,lower.tail=FALSE)
+```
+
+However, this uses Zipf's law according to the players' points rating,
+and it might be better to rank the players according to their
+likelihood rating.
+
+
+```{r}
+mf
+mf[rank(-mf)] <- zipf(size(formula1))
+mf
+l2 <- loglik(indep(mf),formula1)
+l2
+pchisq(2*(l0-l1),df=size(formula1)-1,lower.tail=FALSE)
+```
+
+which is even worse.
+
 # Likelihood scoring vs points scoring
 
 The championship winning order is determined by a points system: the
