@@ -229,3 +229,25 @@ table(hughes < slutskaya)
 (note that equality is disallowed) showing that five judges preferred Hughes
 to Slutskaya and four preferred Slutsakaya to Hughes.
 
+# Just the top seven competitors
+
+```{r}
+skating_table
+o <- ordertable_to_ranktable(skating_table)
+o
+class(o) <- "matrix"
+o
+o <- o[,1:7]
+o
+o <- t(apply(o,1,rank))
+colnames(o) <- rownames(skating_table)[1:7]
+o
+class(o) <- "ranktable"
+o
+o <- ranktable_to_ordertable(o)
+o
+o <- ordertable2supp(o)
+o
+o <- maxp(o)
+pie(o)
+```
