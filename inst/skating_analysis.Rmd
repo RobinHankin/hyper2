@@ -52,7 +52,7 @@ discussion of the differences between rank and order.
 We can convert an order table to a support function:
 
 ```{r,convertordertosupport}
-head(ordertable2supp(skating_table))
+head(ordertable2supp(skating_table,misslast=FALSE))
 ```
 
 Further, we might ask how many judges ranked each competitor first,
@@ -115,7 +115,7 @@ equivalent: optimize over the union of outcomes where either Cohen or
 Suguri (who placed fourth and fifth respectively) had higher strength
 than any of the medallists.
 
-```{r}
+```{r,longthing,cache=TRUE}
 jj <-
     matrix(c(
         -1, 0, 0,   1,0,  # Hughes   < Cohen
@@ -235,19 +235,50 @@ to Slutskaya and four preferred Slutsakaya to Hughes.
 skating_table
 o <- ordertable_to_ranktable(skating_table)
 o
+```
+
+```{r}
 class(o) <- "matrix"
 o
+```
+
+Select just the top seven:
+```{r}
 o <- o[,1:7]
 o
+```
+
+and now replace ranks with internal ranks (that is, rank among the top seven):
+
+```{r}
 o <- t(apply(o,1,rank))
 colnames(o) <- rownames(skating_table)[1:7]
 o
+```
+
+Now coece to a `ranktable`:
+
+```{r}
 class(o) <- "ranktable"
 o
+```
+
+Thence to an order table:
+
+```{r}
 o <- ranktable_to_ordertable(o)
 o
-o <- ordertable2supp(o)
+```
+
+Now create a likelihood function:
+
+```{r}
+o <- ordertable2supp(o,misslast=FALSE)
 o
+```
+and have some fun with it:
+
+```{r}
 o <- maxp(o)
 pie(o)
 ```

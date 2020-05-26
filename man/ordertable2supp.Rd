@@ -59,7 +59,14 @@ based on \code{pnames} rather than integers, and augments its first
 argument; the idea is that one can write \code{H \%>\% order_obs(o)}.
 Indeed \code{H \%<>\% order_obs(o)} is arguably marginally more natural
 than \code{H \%<>\% `+`(ordertable2supp(o,pnames=pnames(H)))}.
-  
+
+\strong{Note:} be sure to check that argument{misslast} is correct.  It
+defaults to \code{TRUE} because the last column is typically
+\dQuote{points scored} or some other summary statistic; but sometimes
+the last column is not special.  In \code{skating_table}, for example,
+one should use \code{misslast=FALSE}.  I am not certain that the package
+deals with this issue in the best way.
+
 }
 \value{Returns a \code{hyper2} object}
 \author{Robin K. S. Hankin}
