@@ -981,11 +981,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
-`keep` <- function(x, wanted){
+`keep` <- function(x, wanted, ...){
     if(is.character(wanted)){
         wanted <- which(rownames(x)==wanted)
     }
-    o <- wikitable_to_ranktable(x) # was o <- ordertable_to_ranktable(x)
+    o <- wikitable_to_ranktable(x,...) # was o <- ordertable_to_ranktable(x)
     class(o) <- "matrix"
     o <- t(apply(o[,wanted],1,rank))
     colnames(o) <- rownames(x)[wanted]
@@ -993,11 +993,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(ranktable_to_ordertable(o))
 }
 
-`discard` <- function(x, unwanted){
+`discard` <- function(x, unwanted,...){
     if(is.character(unwanted)){
         wanted <- !which(rownames(x)==unwanted)
     }
-    o <- wikitable_to_ranktable(x) # was   o <- ordertable_to_ranktable(x)
+    o <- wikitable_to_ranktable(x,...) # was   o <- ordertable_to_ranktable(x)
     class(o) <- "matrix"
     o <- t(apply(o[,unwanted],1,rank))
     colnames(o) <- rownames(x)[unwanted]
