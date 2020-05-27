@@ -21,22 +21,22 @@
   return(hyper2(bracketout,powerout,pout))
 }
 
-`keep` <- function(H, keep, tidy=TRUE){
+`keep_flawed` <- function(H, wanted, tidy=TRUE){
   p <- pnames(H)    # might be NA
-  if(is.character(keep)){
-    stopifnot(all(keep %in% p))
-    keep <- which(p %in% keep) # 'keep' now numeric
+  if(is.character(wanted)){
+    stopifnot(all(wanted %in% p))
+    wanted <- which(p %in% wanted) # 'wanted' now numeric
   } else {
     jj <- seq_len(size(H))
-    stopifnot(all(keep %in% jj))
-    keep <- which(jj %in% keep) # 'keep' now numeric
+    stopifnot(all(wanted %in% jj))
+    wanted <- which(jj %in% wanted) # 'wanted' now numeric
   }
 
   bracketout <- list()
   powerout <- NULL
   for(i in seq_along(H)){
     b <- brackets(H)[[i]]
-    jj <- b[b %in% keep]   # the meat
+    jj <- b[b %in% wanted]   # the meat
     if(length(jj)>0){
       bracketout <- c(bracketout, list(jj))
       powerout <- c(powerout, powers(H)[i])
@@ -47,15 +47,15 @@
   return(out)
 }
 
-`discard` <- function(H, discard, tidy=TRUE){
+`discard_flawed` <- function(H, unwanted, tidy=TRUE){
   p <- pnames(H)
-  if(is.character(discard)){
-    stopifnot(all(discard %in% p))
-    keep <- which(!(p %in% discard))
+  if(is.character(unwanted)){
+    stopifnot(all(unwanted %in% p))
+    wanted <- which(!(p %in% unwanted))
   } else {
-    jj <- seq_len(size(H))
-    stopifnot(all(discard %in% jj))
-    keep <- which(!(jj %in% discard))
+      jj <- seq_len(size(H))
+      stopifnot(all(unwanted %in% jj))
+      wanted <- which(!(jj %in% unwanted))
   }
-  return(keep(H,keep,tidy=tidy))  # the meat
+  return(keep_flawed(H,wanted=wanted, tidy=tidy))  # the meat
 }

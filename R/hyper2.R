@@ -906,7 +906,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     m <- maxp(H,n=1,...)
     too_weak <- m < minstrength
     if(any(too_weak)){
-      H %<>% discard(names(m[which.min(m)]))
+      H %<>% discard_flawed(names(m[which.min(m)]))
     } else {
      break
     }
@@ -981,11 +981,27 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
-`retain` <- function(x, wanted){
-    o <- ordertable_to_ranktable(x)
+`keep` <- function(x, wanted){
+    if(is.character(wanted)){
+        wanted <- which(rownames(x)==wanted)
+    }
+    o <- wikitable_to_ranktable(x) # was o <- ordertable_to_ranktable(x)
     class(o) <- "matrix"
     o <- t(apply(o[,wanted],1,rank))
     colnames(o) <- rownames(x)[wanted]
     class(o) <- "ranktable"
     return(ranktable_to_ordertable(o))
 }
+
+`discard` <- function(x, unwanted){
+    if(is.character(unwanted)){
+        wanted <- !which(rownames(x)==unwanted)
+    }
+    o <- wikitable_to_ranktable(x) # was   o <- ordertable_to_ranktable(x)
+    class(o) <- "matrix"
+    o <- t(apply(o[,unwanted],1,rank))
+    colnames(o) <- rownames(x)[unwanted]
+    class(o) <- "ranktable"
+    return(ranktable_to_ordertable(o))
+}
+

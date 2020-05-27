@@ -16,7 +16,7 @@ zapweak(H, minstrength = 1e-05, maxit, ...)
 }
 \details{
 Iteratively discards the weakest player (if the estimated strength is
-less than \code{minstrength}) using \code{discard()}.
+less than \code{minstrength}) using \code{discard_flawed()}.
 \code{maxp(..,n=1)} for efficiency.  
 }
 \value{Returns a slimmed-down \code{hyper2} object with weak players
@@ -30,7 +30,7 @@ less than \code{minstrength}) using \code{discard()}.
 
 }
 
-\seealso{\code{\link{discard}},\code{\link{maxp}}}
+\seealso{\code{\link{discard_flawed}},\code{\link{maxp}}}
 \author{Robin K. S. Hankin}
 \examples{
 zapweak(formula1) # seems to work
