@@ -936,8 +936,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(hyper2(B,powers(H),pnames=pnames(H)))
 }
 
-`wikitable_to_ranktable`  <- function(wikitable, points=TRUE, strict=FALSE){
-  if(points){wikitable <- wikitable[,-ncol(wikitable)]}
+`wikitable_to_ranktable`  <- function(wikitable, misslast=TRUE, strict=FALSE){
+  if(misslast){wikitable <- wikitable[,-ncol(wikitable)]}
 
   f <- function(x){  # deal with DNF etc and zero
     suppressWarnings(out <- as.numeric(as.vector(x)))

@@ -59,7 +59,7 @@ nevertheless interpreting joint strength term on the denominator [viz
 operates on order tables:
 
 ```{r}
-RA <- keep(a,1:2,points=FALSE)
+RA <- keep(a,1:2,misslast=FALSE)
 RA
 ```
 
