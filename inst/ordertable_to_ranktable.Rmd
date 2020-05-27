@@ -1,0 +1,61 @@
+---
+title: "The print method for class ranktable"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+## Rank tables
+
+
+Rank tables can be confusing, here is a tiny example that should
+clarify things.
+
+```{r}
+OT <- cbind(1:5,c(1,5,2:4))
+rownames(OT) <- letters[seq_len(nrow(OT))]
+colnames(OT) <- c("J1","J2")
+OT
+```
+
+Object `a` is a straightforward order table, just like
+`skating_table`; we see, for example, that both judges put competitor
+`a` first, but put `b` second and fifth respectively.  The judges
+second choice was `b` and `c` respectively.  We can coerce order table
+`OT` to a rank table `RT`:
+
+```{r}
+RT <- ordertable_to_ranktable(OT)
+RT
+```
+
+Object `RT` gives the same information but in a different form.  Note
+that above we see the print method in action, which uses
+`ranktable_to_printable_object()`.  However, it is possible to view
+`RT` directly by removing class `ranktable`:
+
+```{r}
+class(RT)
+class(RT) <- "matrix"  # removes "ranktable" from class list
+RT
+```
+
+Note carefully that the second row of `RT` (which corresponds to the
+second judge) does *not* match the second column of `OT`.  The way to
+read the second row of `RT` is as follows.  We see the entries `1 3 4
+5 2` indicating that the first choice was competitor 1 [viz `a`, the
+second choice competitor 3 [viz `c`], the third choice competitor 4
+[viz `d`], fourth choice competitor 5 [`e`] and fifth choice
+competitor 2 [`b`].  So the rows are *ranks* (see the discussion in
+`rrank.Rd`).  But it is very tempting to read the second row of `RT`
+as "judge 2 placed competitor `b` in third place", which is wrong
+because this is interpreting the row as an *order*.  This is why the
+print method is there.
+
+

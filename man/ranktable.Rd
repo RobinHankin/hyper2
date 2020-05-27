@@ -45,6 +45,8 @@ likelihood function.  Note that
 \code{ordertable_to_ranktable(F1_table_2017)} silently produces
 incorrect output.
 
+The print method is discussed in vignette
+\code{inst/ordertable_to_ranktable.Rmd}.
 
 }
 \value{An order table or rank table}
