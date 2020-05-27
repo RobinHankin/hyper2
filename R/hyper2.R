@@ -981,3 +981,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
+`retain` <- function(x, wanted){
+    o <- ordertable_to_ranktable(x)
+    class(o) <- "matrix"
+    o <- t(apply(o[,wanted],1,rank))
+    colnames(o) <- rownames(x)[wanted]
+    class(o) <- "ranktable"
+    return(ranktable_to_ordertable(o))
+}
