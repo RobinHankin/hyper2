@@ -150,3 +150,8 @@ table(synthetic_winner_likelihood,synthetic_winner_points)
 
 So from the table we see about half the times the winner was correctly
 predicted by the points system.
+
+
+# Now account for pole position
+
+Now do the same thing again but include pole position.
