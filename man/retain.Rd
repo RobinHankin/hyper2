@@ -11,7 +11,7 @@ retain(x, wanted)
 }
 \arguments{
   \item{x}{order table or wikitable}
-  \item{wanted,discard}{competitors to keep or discard}
+  \item{wanted}{competitors to keep or discard}
 }
 
 \details{
