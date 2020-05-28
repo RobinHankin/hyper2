@@ -324,7 +324,7 @@ Now we can test the hypothesis that Hamilton's wet strength `S` is zero:
 
 ```{r,testwetstrengthzero}
 pnames(H)
-H9 <- keep(H,c("S",pnames(H)[1:8]))
+H9 <- keep_flawed(H,c("S",pnames(H)[1:8]))
 specificp.gt.test(H9,"S",0)
 ```
 
