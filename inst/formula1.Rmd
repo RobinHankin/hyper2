@@ -21,6 +21,7 @@ Consider the following dataset, taken from Wikipedia:
 
 ```{r cars}
 f2017 <- read.table("formula1_2017.txt",header=TRUE)
+f2017 <- f2017[,1:20]  # final column is points
 head(f2017)
 ```
 
@@ -73,7 +74,6 @@ and Button, whose estimated strength is zero).
 
 # Zipf's law
 
-
 Do the players follow Zipf's law?
 
 ```{r,defzip}
@@ -118,8 +118,9 @@ can now check to see how the points total matches up with the
 likelihood estimation.
 
 ```{r,likelihoodandscore}
-points <- f2017$points
-names(points) <- f2017$driver
+jj <- read.table("formula1_2017.txt",header=TRUE)
+points <- jj[,21]
+names(points) <- rownames(jj)
 
 m <- mL2017   # maxp(formula1)
 ox <- rank(-points) # negative because number 1 = largest number of points

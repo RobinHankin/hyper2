@@ -37,14 +37,14 @@ ranked `a` first, `b` third, and `c` second.  We can coerce to a
 `hyper2` object with `ordertable2supp()`:
 
 ```{r}
-OT <- ordertable2supp(a,misslast=FALSE)
+OT <- ordertable2supp(a)
 OT
 ```
 
-[note carefully how `misslast=FALSE` is needed here].  Now suppose we
-are interested only in the first two competitors, `a` and `b`.  There
-are two ways to discard competitor `c`, namely `keep()` and
-`keep_flawed()`, which do slightly different things.  First, `keep()`:
+Now suppose we are interested only in the first two competitors, `a`
+and `b`.  There are two ways to discard competitor `c`, namely
+`keep()` and `keep_flawed()`, which do slightly different things.
+First, `keep()`:
 
 ```{r}
 keep_flawed(OT,1:2)
@@ -59,7 +59,7 @@ nevertheless interpreting joint strength term on the denominator [viz
 operates on order tables:
 
 ```{r}
-RA <- keep(a,1:2,misslast=FALSE)
+RA <- keep(a,1:2)
 RA
 ```
 
@@ -67,7 +67,7 @@ Looking at object `ra` we see six comparisons, of which `a` wins 5 and
 `b` wins 1.
 
 ```{r}
-OR <- ordertable2supp(RA,misslast=FALSE)
+OR <- ordertable2supp(RA)
 OR
 ```
 

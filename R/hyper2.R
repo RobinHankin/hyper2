@@ -864,16 +864,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(H)
 }
 
-`ordertable2supp` <- function(x, noscore, misslast=TRUE){
+`ordertable2supp` <- function(x, noscore){
     if(missing(noscore)){
         noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
     }
-
-    if(misslast){
-        venues <- colnames(x)[-ncol(x)]
-    } else {
-        venues <- colnames(x)
-    }
+    venues <- colnames(x)
 
     ## Now create a numeric matrix, fmat.  Two steps: first, count
     ## any no-score as zero:
@@ -885,7 +880,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     
     ## Second, convert to numeric and strip out names; transpose of
     ## x (because we want each row to be a venue):
-    if(misslast){jj <- jj[,-ncol(x)]}
     fmat <- matrix(as.numeric(jj),byrow=TRUE,ncol=nrow(x)) 
     colnames(fmat) <- rownames(x)
     rownames(fmat) <- venues
@@ -936,9 +930,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(hyper2(B,powers(H),pnames=pnames(H)))
 }
 
-`wikitable_to_ranktable`  <- function(wikitable, misslast=TRUE, strict=FALSE){
-  if(misslast){wikitable <- wikitable[,-ncol(wikitable)]}
-
+`wikitable_to_ranktable`  <- function(wikitable, strict=FALSE){
   f <- function(x){  # deal with DNF etc and zero
     suppressWarnings(out <- as.numeric(as.vector(x)))
     DNF <- is.na(out) | (out==0)

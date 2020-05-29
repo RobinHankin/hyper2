@@ -6,6 +6,8 @@
 \alias{F1_2014}
 \alias{F1_table_2017}
 \alias{formula1_table_2017}
+\alias{F1_points_2017}
+\alias{formula1_points_2017}
 \alias{formula1_2017_table}
 \alias{F1_2015}
 \alias{F1_2016}
@@ -24,9 +26,10 @@ data frame with rows being drivers, columns being venues, and entries
 being places.  Thus looking at the first row, first column we see that
 Hamilton placed second in Austria.
 
-Object \code{F1_table_2017} is simply
-\code{read.table(inst/formula1_2017.txt)} and \code{formula1} is
-\code{ordertable2supp(F1_table_2017)}.
+Object \code{F1_table_2017} is simply the first 20 columns of
+\code{read.table(inst/formula1_2017.txt)} and object
+\code{F1_points_2017} is column 21.  The likelihood function
+\code{formula1} is \code{ordertable2supp(F1_table_2017)}.
 
 }
 \references{
@@ -38,7 +41,7 @@ Object \code{F1_table_2017} is simply
   }
 \seealso{\code{\link{ordertable2supp}}}
 \examples{
-data(formula1)
+data(formula1)  # hyper2 object
 dotchart(maxp(formula1,n=2))  #n=2 specified here for speed
 
 }

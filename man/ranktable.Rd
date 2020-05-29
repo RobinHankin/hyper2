@@ -15,7 +15,7 @@
 \usage{
 ranktable_to_ordertable(xrank)
 ordertable_to_ranktable(xorder)
-wikitable_to_ranktable(wikitable, misslast=TRUE, strict=FALSE)
+wikitable_to_ranktable(wikitable, strict=FALSE)
 \method{summary}{ranktable}(object, ...)
 ranktable_to_printable_object(x)
 \method{print}{ranktablesummary}(x,...)
@@ -26,7 +26,7 @@ ranktable_to_printable_object(x)
   \item{xorder,wikitable}{Order tables.  Argument \code{wikitable}
     refers to a generalized order table which can include entries such
     as DNF signifying did not finish.}
-  \item{misslast,strict}{Controls for \code{wikitable_to_ranktable()}}
+  \item{strict}{Controls for \code{wikitable_to_ranktable()}}
   \item{...}{Further arguments (currently ignored)}  
 }
 \details{
