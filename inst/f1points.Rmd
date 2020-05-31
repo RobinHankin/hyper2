@@ -1,0 +1,196 @@
+---
+documentclass: jss
+author:
+  - name: Robin K. S. Hankin
+    affiliation: Auckland University of Technology
+    address: >
+      2-14 Wakefield Street
+      Auckland, New Zealand
+    email: \email{hankin.robin@gmail.com}
+    url: http://aut.ac.nz/
+title:
+  formatted: "An Objective Assessment of Points Scorings in Formula 1 Motor Racing"
+  plain:     "An Objective Assessment of Points Scorings in Formula 1 Motor Racing"
+  # For running headers, if needed
+  short:     "Formula 1 Points Scoring"
+abstract: >
+  The points scoring system of Formula 1 motor racing is a long-standing
+  contention among fans and competitors, with changes to the points
+  scored occurring frequently.  Here, I apply generalized Plackett-Luce
+  likelihood functions to Formula 1 racing, and assess historical points
+  scoring systems objectively.  In a well-defined sense, the points
+  scoring system of 1985 is the best of the historical ones.  I make
+  similar observations about related competitive situations including
+  the Eurovision Song contest and XXX.
+keywords:
+  # at least one keyword must be supplied
+  formatted: [keywords, not capitalized, "\\proglang{Java}"]
+  plain:     [keywords, not capitalized, Java]
+preamble: >
+  \usepackage{amsmath}
+output: rticles::jss_article
+---
+
+# Introduction
+
+Formula 1 racing is an important and prestigious motor sport
+\citep{moul2009}.  Season ranking is based on a points system; points
+are awarded to drivers and teams based on race order, and accumulate
+additively.  The current points system, for example, is
+(25-18-15-12-10-8-6-4-2-1) [that is, the winner is awarded 25 points,
+second place 18 points, and so on], although since 2019 the fastest
+lap attracts one point.
+
+Given that racing is a zero-sum game---and that points are
+monotonically decreasing---each player will try to get as high a rank
+as possible regardless of the actual points system used.  However,
+there are other consistent interpretations.  \cite{bakhrankova2011},
+for example, considers the possibility of inter-driver collusion, a
+phenomenon not pursued here; and authors such as
+\citeauthor{mastromarco2009} suggest that the frequency of rule
+changes is driven by factors such as driver safety and revenue
+optimization.
+
+Points systems similar to that of Formula 1 are common in other sports
+and examples would include modern pentathlon, curling, chess, rowing,
+and figure skating; all have the common feature of interpretation of
+an order statistic to a points.  Further, we see points systems
+frequently in the wider context of competitive situations such as the
+Eurovision Song Contest, Australian MasterChef, University rankings,
+educational league tables, and car safety ratings.
+
+## Bradley-Terry and generalizations for rank statistics
+
+The Bradley-Terry model \citep{bradley1952} assigns non-negative
+strengths $p_1,\ldots, p_n$ to each of $n$ competitors in such a way
+that the probability of $i$ beating $j\neq i$ in pairwise competition
+is $\frac{p_i}{p_i+p_j}$; it is conventional to normalize so that
+$\sum p_i=1$.  Further, we use a generalization due to
+\citet{luce1959}, in which the probability of competitor $i$ winning
+in a field of $j=1,\ldots, n$ is $\frac{p_i}{p_1+\cdots +p_n}$.
+Noting that there is information in the whole of the finishing order,
+not just the first across the line, we can follow \cite{plackett1975}
+and consider the runner-up to be the winner among the remaining
+competitors; and so on down the finishing order.  Without loss of
+generality, if the order of finishing were $1,2,3,4$, then a suitable
+\citeauthor{plackett1975} likelihood function would be
+
+\begin{equation}\label{competitors_1_to_4_likelihood}
+\frac{p_1}{p_1+p_2+p_3+p_4}\cdot
+\frac{p_2}{p_2+p_3+p_4}\cdot
+\frac{p_3}{p_3+p_4}\cdot
+\frac{p_4}{p_4}\cdot
+\end{equation}
+
+We now use a technique due to \cite{hankin2010,hankin2017} and
+introduce fictional (reified) entities whose nonzero Bradley-Terry
+strength helps certain competitors or sets of competitors.  The
+canonical example would be the home-ground advantage in association
+football.  If players (teams) $1,2$ with strengths $p_1,p_2$ compete,
+and if our observation were $a$ home wins and $b$ away wins for team
+$1$, and $c$ home wins and $d$ away wins for team $2$, then a suitable
+likelihood function would be
+
+\[
+\left(\frac{p_1+p_H}{p_1+p_2+p_H}\right)^a
+\left(\frac{p_1}{p_1+p_2+p_H}\right)^b
+\left(\frac{p_2+p_H}{p_1+p_2+p_H}\right)^c
+\left(\frac{p_2+p_H}{p_1+p_2+p_H}\right)^d
+\]
+
+where $p_H$ is a quantification of the beneficial home ground effect.
+Similar techniques have been used to account for the first-move
+advantage in chess, and effective coordination between members of
+doubles tennis teams; we may use a similar device to account for pole
+position in Formula 1.  Here I analyse racing results from the 2017
+season using the `hyper2` package \citep{hankin2017} which implements
+the Plackett-Luce likelihood function with additional reified
+entities.
+
+# Formula 1 dataset
+
+
+Here we use the results from 2017:
+
+\small{
+\begin{CodeChunk}
+\begin{CodeOutput}
+           AUS CHN BHR RUS ESP MON CAN AZE AUT GBR HUN BEL ITA SIN MAL JPN USA MEX BRA ABU
+Hamilton     2   1   2   4   1   7   1   5   4   1   4   1   1   1   2   1   1   9   4   2
+Vettel       1   2   1   2   2   1   4   4   2   7   1   2   3 Ret   4 Ret   2   4   1   3
+Bottas       3   6   3   1 Ret   4   2   2   1   2   3   5   2   3   5   4   5   2   2   1
+Raikkonen    4   5   4   3 Ret   2   7  14   5   3   2   4   5 Ret DNS   5   3   3   3   4
+Ricciardo  Ret   4   5 Ret   3   3   3   1   3   5 Ret   3   4   2   3   3 Ret Ret   6 Ret
+...
+Hartley      0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  13 Ret Ret  15
+Button       0   0   0   0   0 Ret   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+Resta        0   0   0   0   0   0   0   0   0   0 Ret   0   0   0   0   0   0   0   0   0
+\end{CodeOutput}
+\end{CodeChunk}
+}
+
+Each row is a driver and each column (after the first) a venue.  We
+see that Hamilton, the first row, came second in Australia, first in
+China, second in Bahrain, fourth in Russia, and so on (Hartley,
+Button, and Resta placed last).  In the first column, we see the
+result from Australia (AUS) in which Hamilton came second, Vettel
+first, Bottas third, and so on.  Notation used also includes six
+different classes of no-score such as `Ret` for retired, `WD` for
+withdrawn, and so on; a zero entry means "did not finish".  It is
+straightforward to translate this table into a Plackett-Luce
+log-likelihood function using the `hyper2` package; for simplicity we
+will consider only the 10 top-ranked drivers\footnote{In the
+Plackett-Luce likelihood function, the performance of lower-ranked
+players can be informative about higher-ranked players' strengths.
+For example, we see that Vettel retired twice (in Singapore and
+Japan), so any player who placed in those venues will effectively
+``steal'' strength from Vettel, and generally ``give'' it to Hamilton
+or Bottas.}.  Although it has many terms, the first few are
+
+```{r,echo=FALSE,print=FALSE}
+library(hyper2,quietly=TRUE)
+H <- ordertable2supp(keep(F1_table_2017,1:10))
+head(H,5)
+```
+
+Finding the maximum likelihood estimate for the players' strengths is straightforward:
+
+```{r,echo=FALSE}
+mH <- maxp(H)
+print(mH)
+pie(maxp(H)[c(1,6,2,7,3,8,4,9,5,10)])
+```
+
+We see the that the top three players, Hamilton, Vettel, Bottas, are
+of roughly equal strength and indeed a likelihood ratio test
+[`samep.test()`] does not reject the null of equality ($p=0.72$).
+
+## Likelihood scoring vs points scoring
+
+The points scored by each driver give a ranking shown in the table;
+but Plackett-Luce likelihoods also give a ranking that us unencumbered
+by the arbitrary points given.  We can plot one ranking against the other:
+
+```{r,label=likevspoints,cache=TRUE}
+jj <- read.table("formula1_2017.txt",header=TRUE)
+points <- jj[,21]
+names(points) <- rownames(jj)
+
+mL2017 <- maxp(H)
+
+m <- mL2017   # maxp(H)
+ox <- round(rank(-points)[1:10]) # negative because number 1 = largest number of points
+oy <- rank(-m)      # negative because number 1 = largest strength
+par(pty='s')        # square plot
+plot(ox,oy,asp=1,pty='s',xlim=c(0,10.2),ylim=c(0,10.2),pch=16,
+xlab="official order",ylab="my order",main='Formula 1, 2017 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray') }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+grid()
+print(ox)
+print(oy)
+```
+
+\bibliography{chess}
