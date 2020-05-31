@@ -14,7 +14,7 @@ options("digits" = 5)
 ## Formula 1
 
 Formula 1 racing is an important and prestigious motor sport.  Here I
-analyse a series of racing results using the `hyper` package which
+analyse a series of racing results using the `hyper2` package which
 implements the Plackett-Luce likelihood function.
 
 Consider the following dataset, taken from Wikipedia:
