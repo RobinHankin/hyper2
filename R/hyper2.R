@@ -1015,3 +1015,13 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
+`ordertable2points` <- function(o,points,totals=TRUE){
+    points <- c(points,rep(0,1+max(o)-length(points)))
+    o[o==0] <- length(points)
+    o[] <- points[o]
+    if(totals){
+        return(rowSums(o))
+    } else {
+        return(o)
+    }
+}
