@@ -185,15 +185,21 @@ but Plackett-Luce likelihoods also give a ranking that does not depend
 on any arbitrary points system.  We can plot one ranking against the
 other:
 
-```{r,label=likevspoints,cache=TRUE,echo=FALSE}
-jj <- read.table("formula1_2017.txt",header=TRUE)
-points <- jj[,21]
-names(points) <- rownames(jj)
 
-mL2017 <- maxp(H)
-m <- mL2017   # maxp(H)
-ox <- round(rank(-points[seq_len(top)]))  # negative because number 1 = largest number of points
-oy <- rank(-m)                            # negative because number 1 = largest strength
+```{r,label=calcpoints}
+p <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
+dp <- ordertable2points(as.ordertable(F1_table_2017[seq_len(top),]),p)
+dp <- dp[order(-dp)]
+dp[] <- seq_along(dp)
+dp
+```
+nw:
+
+```{r,label=likevspoints,cache=TRUE,echo=FALSE}
+
+m <- maxp(H)  # just 'top' players
+ox <- dp
+oy <- rank(-m)                           # minus as number 1 = largest strength
 par(pty='s')        # square plot
 plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
     xlab="official order",ylab="my order",main='Formula 1, 2017 season')
@@ -203,7 +209,9 @@ par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
 
-From the above, we see that 
+From the above, we see that the first three drivers (Hamilton, Vettel,
+Bottas) are respectively first, second and third according to both
+ranking procedures.
 
 
 \bibliography{chess}
