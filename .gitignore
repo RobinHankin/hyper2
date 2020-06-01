@@ -48,6 +48,9 @@ man/*.Rd~
 *.utf8.md
 *.knit.md
 inst/*.html
+inst/*.pdf
+inst/*.tex
+inst/jsslogo.jpg
 
 src/*.o
 src/*.so
@@ -58,6 +61,8 @@ inst/counterstrike_cache/
 inst/counterstrike_files/
 inst/formula1_cache/
 inst/formula1_files/
+inst/f1points_cache/
+inst/f1points_files/
 inst/formula1_points_cache/
 inst/formula1_points_files/
 inst/formula1_top9_cache/
