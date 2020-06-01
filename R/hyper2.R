@@ -975,7 +975,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
-`keep` <- function(x, wanted, ...){
+`keep_flawed2` <- function(x, wanted, ...){
     if(is.character(wanted)){
         wanted <- which(rownames(x)==wanted)
     }
@@ -987,7 +987,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(ranktable_to_ordertable(o))
 }
 
-`discard` <- function(x, unwanted,...){
+`discard_flawed2` <- function(x, unwanted,...){
     if(is.character(unwanted)){
         wanted <- !which(rownames(x)==unwanted)
     }
@@ -997,5 +997,21 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     colnames(o) <- rownames(x)[unwanted]
     class(o) <- "ranktable"
     return(ranktable_to_ordertable(o))
+}
+
+`as.ordertable` <- function(w){
+    out <-
+        apply(w,2,    
+              function(x){ # 'x' is a column of w
+                  out <- suppressWarnings(as.numeric(x))  # 'ret' etc -> NA
+                  no <- is.na(out)
+                  o <- out[!no]
+                  o[o>0] <- order(o[o>0])
+                  out[!no] <- o
+                  out[no] <- 0
+                  return(out)
+              } )
+    rownames(out) <- rownames(w)
+    return(out)
 }
 

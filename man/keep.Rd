@@ -3,12 +3,14 @@
 \alias{discard}
 \alias{keep_flawed}
 \alias{discard_flawed}
+\alias{keep_flawed2}
+\alias{discard_flawed2}
 \title{Keep or discard players}
-\description{Functionality to keep or discard subsets of the players in
+\description{Flawed functionality to keep or discard subsets of the players in
   a \code{hyper2} object or order table.}
 \usage{
-keep(x,wanted,...)
-discard(x,unwanted,...)
+keep_flawed2(x,wanted,...)
+discard_flawed2(x,unwanted,...)
 keep_flawed(H, wanted, tidy=TRUE)
 discard_flawed(H, unwanted, tidy=TRUE)
 }
@@ -24,9 +26,12 @@ discard_flawed(H, unwanted, tidy=TRUE)
 }
 \details{
 
-  Functions \code{keep()} and \code{discard()} take an order table and
-  keep or discard specified rows, returning a reduced order table.  This
-  is not a trivial operation.
+  \strong{Do not use these functions.  They are here as object lessons
+  in poor thinking}.
+
+  Functions \code{keep_flawed2()} and \code{discard_flawed2()} take an
+  order table and keep or discard specified rows, returning a reduced
+  order table.  This is not a trivial operation.
   
   Functions \code{keep_flawed()} and \code{discard_flawed()} will either
   keep or discard players specified in the second argument.  It is not
@@ -35,7 +40,12 @@ discard_flawed(H, unwanted, tidy=TRUE)
 
   Given a wikitable or ordertable, it is possible to create a likelihood
   function based on a subset of rows using the \code{incomplete=TRUE}
-  argument; see the example at \code{?ordertable2supp}.
+  argument; see the example at \code{?ordertable2supp}.  But this method
+  is flawed too because it treats non-finishers as if they finished in
+  the order of their rows.
+
+  Function \code{as.ordertable()} is the correct way to consider a
+  subset of players in a wikitable.
   
 }
 \author{Robin K. S. Hankin}
@@ -51,6 +61,6 @@ data("skating")
 maxp(skating)[1:4]      # numbers work, keep the first four skaters
 maxp(keep_flawed(skating,1:4))
 
-pie(maxp(ordertable2supp(keep(F1_table_2017,1:9))))
+pie(maxp(ordertable2supp(keep_flawed2(F1_table_2017,1:9))))
 
 }

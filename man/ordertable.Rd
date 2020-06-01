@@ -85,11 +85,15 @@ Links are given below to all the order tables in the package.  Note that
 the table in \code{inst/eurovision.Rmd} (\code{wiki_matrix}) is not an
 order table because no country is allowed to vote for itself.
 
+To coerce a table like the Volvo dataset shown above into an order table
+[that is, replace \code{DNS} with zeros, and also force nonzero entries
+to be contiguous], use \code{as.ordertable()}.
 
 }
 \author{Robin K. S Hankin}
 \seealso{
-\code{\link{ordertable2supp}},\code{\link{rrank}},\code{\link{ranktable}}
+  \code{\link{ordertable2supp}},\code{\link{rrank}},
+  \code{\link{ranktable}},\code{\link{as.ordertable}}
 }
 \examples{
 2+2

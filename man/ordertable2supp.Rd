@@ -108,7 +108,8 @@ H0 <- hyper2(pnames=letters[1:9])
 H0 \%<>\% order_obs(f()) \%>\% order_obs(f())
 
 ## Use of "incomplete" argument:
-maxp(ordertable2supp(F1_table_2017[1:5,]))
+maxp(ordertable2supp(F1_table_2017[1:5,]))                # flawed reasoning
+maxp(ordertable2supp(as.ordertable(F1_table_2017[1:5,])))  # correct
 
 ## Sometimes we need to add things to the 'did not finish' list:
 ordertable2supp(volvo_table_2014,noscore=c("DNF","DNS")) == volvo2014
