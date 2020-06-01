@@ -864,7 +864,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(H)
 }
 
-`ordertable2supp` <- function(x, noscore){
+`ordertable2supp` <- function(x, noscore, incomplete=TRUE){
     if(missing(noscore)){
         noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
     }
@@ -888,7 +888,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     
     ## Now cycle through the rows; each row is a venue [voter]
     for(i in seq_len(nrow(fmat))){
-        out %<>% `+`(ordervec2supp(fmat[i,,drop=TRUE]))
+        o <- fmat[i,,drop=TRUE]
+        if(incomplete){ o[o>0] <- order(o[o>0]) }
+        out %<>% `+`(ordervec2supp(o))
     } # i loop closes
     return(out)
 } 

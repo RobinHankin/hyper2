@@ -112,7 +112,7 @@ entities.
 
 Here we use the results from 2017:
 
-\small{
+\small
 \begin{CodeChunk}
 \begin{CodeOutput}
            AUS CHN BHR RUS ESP MON CAN AZE AUT GBR HUN BEL ITA SIN MAL JPN USA MEX BRA ABU
@@ -127,7 +127,12 @@ Button       0   0   0   0   0 Ret   0   0   0   0   0   0   0   0   0   0   0  
 Resta        0   0   0   0   0   0   0   0   0   0 Ret   0   0   0   0   0   0   0   0   0
 \end{CodeOutput}
 \end{CodeChunk}
-}
+
+
+
+```{r,echo=FALSE,print=FALSE}
+top <- 11
+```
 
 Each row is a driver and each column (after the first) a venue.  We
 see that Hamilton, the first row, came second in Australia, first in
@@ -139,58 +144,66 @@ different classes of no-score such as `Ret` for retired, `WD` for
 withdrawn, and so on; a zero entry means "did not finish".  It is
 straightforward to translate this table into a Plackett-Luce
 log-likelihood function using the `hyper2` package; for simplicity we
-will consider only the 10 top-ranked drivers\footnote{In the
+will consider only the `r top` top-ranked drivers\footnote{In the
 Plackett-Luce likelihood function, the performance of lower-ranked
-players can be informative about higher-ranked players' strengths.
-For example, we see that Vettel retired twice (in Singapore and
-Japan), so any player who placed in those venues will effectively
-``steal'' strength from Vettel, and generally ``give'' it to Hamilton
-or Bottas.}.  Although it has many terms, the first few are
+players can be weakly informative about higher-ranked players'
+strengths.  For example, we see that Vettel retired twice (in
+Singapore and Japan), so any player who placed in those venues will
+effectively ``steal'' strength from Vettel, and generally ``give'' it
+to Hamilton or Bottas.}.  Although it has many terms, the first few
+are
 
 ```{r,echo=FALSE,print=FALSE}
 library(hyper2,quietly=TRUE)
-H <- ordertable2supp(keep(F1_table_2017,1:10))
+top <- 11
+H <- ordertable2supp(F1_table_2017[seq_len(top),])
 head(H,5)
 ```
 
-Finding the maximum likelihood estimate for the players' strengths is straightforward:
+Finding the maximum likelihood estimate for the players' strengths is
+straightforward:
 
 ```{r,echo=FALSE}
 mH <- maxp(H)
 print(mH)
-pie(maxp(H)[c(1,6,2,7,3,8,4,9,5,10)])
+pie(maxp(H)[c(1,6,11,2,7,3,8,4,9,5,10)])
 ```
 
-We see the that the top three players, Hamilton, Vettel, Bottas, are
+We see the that the top two players, Hamilton and Vettel
 of roughly equal strength and indeed a likelihood ratio test
-[`samep.test()`] does not reject the null of equality ($p=0.72$).
+[`samep.test()`] does not reject the null of equality ($p=0.09$).
+
+
+```{r,cache=TRUE}
+samep.test(H,1:2)
+```
 
 ## Likelihood scoring vs points scoring
 
 The points scored by each driver give a ranking shown in the table;
-but Plackett-Luce likelihoods also give a ranking that us unencumbered
-by the arbitrary points given.  We can plot one ranking against the other:
+but Plackett-Luce likelihoods also give a ranking that does not depend
+on any arbitrary points system.  We can plot one ranking against the
+other:
 
-```{r,label=likevspoints,cache=TRUE}
+```{r,label=likevspoints,cache=TRUE,echo=FALSE}
 jj <- read.table("formula1_2017.txt",header=TRUE)
 points <- jj[,21]
 names(points) <- rownames(jj)
 
 mL2017 <- maxp(H)
-
 m <- mL2017   # maxp(H)
-ox <- round(rank(-points)[1:10]) # negative because number 1 = largest number of points
-oy <- rank(-m)      # negative because number 1 = largest strength
+ox <- round(rank(-points[seq_len(top)]))  # negative because number 1 = largest number of points
+oy <- rank(-m)                            # negative because number 1 = largest strength
 par(pty='s')        # square plot
-plot(ox,oy,asp=1,pty='s',xlim=c(0,10.2),ylim=c(0,10.2),pch=16,
-xlab="official order",ylab="my order",main='Formula 1, 2017 season')
+plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
+    xlab="official order",ylab="my order",main='Formula 1, 2017 season')
 par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
 for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray') }
 par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
 abline(0,1)
-grid()
-print(ox)
-print(oy)
 ```
+
+From the above, we see that 
+
 
 \bibliography{chess}

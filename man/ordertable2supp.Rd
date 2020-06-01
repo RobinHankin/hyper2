@@ -3,7 +3,7 @@
 \alias{ordervec2supp}
 \alias{ordervec2supp}
 \alias{order_obs}
-  \title{Translate order tables to support functions}
+\title{Translate order tables to support functions}
 \description{
 
 Wikipedia gives a nice summary in table form of Formula 1 racing results
@@ -19,7 +19,7 @@ usually signifies DNF as a blank).
 
 }
 \usage{
-ordertable2supp(x, noscore)
+ordertable2supp(x, noscore, incomplete=TRUE)
 ordervec2supp(d,pnames)
 order_obs(H,d)
 }
@@ -28,13 +28,15 @@ order_obs(H,d)
   \item{d}{A named numeric vector giving order; zero entries are
     interpreted as that competitor coming last (due to, e.g., not
     finishing)}
+  \item{incomplete}{Boolean, with \code{FALSE} meaning to insist that
+    each rank \eqn{1,2,...,n} is present [zero meaning did not place]
+    and default \code{TRUE} allowing for gaps.  See examples.}
   \item{noscore}{Character vector giving the abbreviations
     for a non-finishing status such as \dQuote{did not finish}
     or \dQuote{disqualified}.  A missing argument is interpreted as 
     \code{c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")}}
   \item{pnames}{Optional list of names, see details}
   \item{H}{Object of class \code{hyper2}}
-
 }
 \details{
 
@@ -104,6 +106,9 @@ f <- function(a=3){`names<-`(sample(seq_len(a)),sample(letters[seq_len(9)],a))}
 
 H0 <- hyper2(pnames=letters[1:9])
 H0 \%<>\% order_obs(f()) \%>\% order_obs(f())
+
+## Use of "incomplete" argument:
+maxp(ordertable2supp(F1_table_2017[1:5,]))
 
 ## Sometimes we need to add things to the 'did not finish' list:
 ordertable2supp(volvo_table_2014,noscore=c("DNF","DNS")) == volvo2014

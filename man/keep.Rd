@@ -33,9 +33,14 @@ discard_flawed(H, unwanted, tidy=TRUE)
   clear to me that these functions have any reasonable probabilistic
   interpretation and file \code{inst/retain.Rmd} gives a discussion.
 
+  Given a wikitable or ordertable, it is possible to create a likelihood
+  function based on a subset of rows using the \code{incomplete=TRUE}
+  argument; see the example at \code{?ordertable2supp}.
+  
 }
 \author{Robin K. S. Hankin}
 \note{Function \code{tidy()} is very, very, inelegant}
+\seealso{\code{\link{ordertable2supp}}}
 \examples{
 
 data("oneill")
