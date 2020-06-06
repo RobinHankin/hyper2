@@ -202,8 +202,9 @@ other:
 p <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
 dp <- ordertable2points(as.ordertable(F1_table_2017[seq_len(top),]),p)
 dp
-dp <- dp[order(-dp)]
+dp <- sort(dp,decreasing=TRUE)
 dp[] <- seq_along(dp)
+dp
 ```
 now likelihood
 
