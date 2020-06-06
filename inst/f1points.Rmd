@@ -236,11 +236,12 @@ par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
 
-From the above, we see that the first four drivers (Hamilton, Vettel,
-Raikkonen, Bottas) are respectively first, second, third and fourth
-according to both ranking procedures.  The lower-ranked players,
-having estimated strengths of less than 0.03, are more scattered as
-one might expect.
+From the above, we see that the first two drivers (Hamilton, Vettel)
+are are respectively first and second according to both ranking
+ranking procedures; but Raikkonen and Bottas are third and fourth, and
+fourth and third, according to points and likelihood respectively.
+The degree of agreement between the two systems might be quantified as
+"two", for the positions of the top two drivers agree.
 
 We can use this observation to assess a given points system: using
 Monte-Carlo techniques we can generate an order table \emph{in
