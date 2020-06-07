@@ -271,16 +271,31 @@ m <- maxp(ordertable2supp(as.ordertable(f2017)))
 
 points1 <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
 points2 <- c(1, 0,0,0,0)
+points3 <- c(1, 1,1,1,1,1,0,0,0,0,0)
 
-o1 <- replicate(100,resampling(m,f2017,points=points1))
+o1 <- replicate(400,resampling(m,f2017,points=points1))
+o2 <- replicate(400,resampling(m,f2017,points=points2))
+o3 <- replicate(400,resampling(m,f2017,points=points3))
+
+
 plot(table(o1))
-
-o2 <- replicate(100,resampling(m,f2017,points=points2))
 plot(table(o2))
+plot(table(o3))
 
 table(o1)
 table(o2)
+table(o3)
 ```
 
 
+and, just for comparison, a stupid one:
+
+```{r,cache=TRUE}
+points4 <- c(1, 0,1,2,3,1,0,6,9,0,3)
+
+o4 <- replicate(400,resampling(m,f2017,points=points4))
+table(o4)
+```
+
 \bibliography{chess}
+
