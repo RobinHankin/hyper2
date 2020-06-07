@@ -243,7 +243,8 @@ m <- maxp(ordertable2supp(as.ordertable(f2017)))
 
 
 ## Now work on synthetic dataset generation:
-points <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
+points1 <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
+points2 <- c(1, 0,0,0,0)
 resampling <- function(m,f2017,points){
     random_table <- rrank(n=ncol(f2017), p=m)
     rownames(random_table) <- colnames(f2017)
@@ -263,8 +264,15 @@ resampling <- function(m,f2017,points){
     return(goodness)
 }
 
-o <- replicate(1000,resampling(m,f2017,points))
-plot(table(o))
+o1 <- replicate(100,resampling(m,f2017,points=points1))
+plot(table(o1))
+
+o2 <- replicate(100,resampling(m,f2017,points=points2))
+plot(table(o2))
+
+table(o1)
+table(o2)
+
 ```
 
 
