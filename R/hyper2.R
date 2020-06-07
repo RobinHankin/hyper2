@@ -1025,3 +1025,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         return(o)
     }
 }
+
+`ordertrans` <- function(x,players){
+    if(is.numeric(players)){players <- names(players)}
+    stopifnot(length(x) == length(players))
+    stopifnot(all(sort(names(x)) == sort(players)))
+    stopifnot(all(table(names(x))==1))
+    x[apply(outer(players,names(x),`==`),1,which)]
+}
