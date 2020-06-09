@@ -200,6 +200,7 @@ other:
 
 ```{r,label=calcpoints,echo=TRUE,cache=TRUE}
 p <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
+points_real <- p
 dp <- ordertable2points(as.ordertable(F1_table_2017[seq_len(top),]),p)
 dp <- sort(dp,decreasing=TRUE)
 dp[] <- seq_along(dp)
@@ -268,49 +269,83 @@ Now
 ```{r,label=montecarlosetup2, cache=TRUE}
 f2017 <- read.table("formula1_2017.txt",header=TRUE)[seq_len(top),1:20]
 m <- maxp(ordertable2supp(as.ordertable(f2017)))
-points1 <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
-points2 <- c(1, 0,0,0,0)
-points3 <- c(1, 1,1,1,1,1,0,0,0,0,0)
 ```
 
-```{r,label=montecarlo_doer1, cache=TRUE}
-o1 <- replicate(1000,resampling(m,f2017,points=points1))
+```{r,label=montecarlosetup3}
+points_real
+o_real <- function(n){replicate(n,resampling(m,f2017,points=points_real))}
 ```
 
-```{r,label=montecarlo_doer2, cache=TRUE}
-o2 <- replicate(1000,resampling(m,f2017,points=points2))
+now do it:
 
-```{r,label=montecarlo_doer3, cache=TRUE}
-o3 <- replicate(1000,resampling(m,f2017,points=points3))
+```{r,label=montecarlorealpointsdoer,cache=TRUE}
+or <- o_real(1000)
+```
+
+Now some more, top n:
+
+```{r,label=defineotop, cache = TRUE}
+o_top <- function(top,n=100){replicate(n,resampling(m,f2017,points=rep(1,top)))}
 ```
 
 
-```{r,label=montecarlo_shower}
-plot(table(o1))
-plot(table(o2))
-plot(table(o3))
+```{r,label=executeotop1, cache = TRUE}
+ot1 <- o_top(1,n=1000)
+```
 
-table(o1)
-table(o2)
-table(o3)
+```{r,label=executeotop2, cache = TRUE}
+ot2 <- o_top(2,n=1000)
+```
 
-mean(o1)
-mean(o2)
-mean(o3)
+```{r,label=executeotop3, cache = TRUE}
+ot3 <- o_top(3,n=1000)
+```
+
+```{r,label=executeotop4, cache = TRUE}
+ot4 <- o_top(4,n=1000)
+```
+
+```{r,label=executeotop5, cache = TRUE}
+ot5 <- o_top(5,n=1000)
+```
+
+now some other schemes:
+
+```{r,label=defineotherschemes}
+o_zip <- function(n=100){replicate(n,resampling(m,f2017,points=1/seq_len(top)))}
+o_exp <- function(p,n=100){replicate(n,resampling(m,f2017,points=p^seq_len(top)))}
+```
+
+and 
 
 
-M <- rbind(tabulate(o1+1),tabulate(o2+1),tabulate(o3+1))
-dimnames(M) <- list(system=LETTERS[1:3],correct=0:11)
+```{r,label=ozcalculator,cache=TRUE}
+oz <- o_zip(1000)
+```
+
+```{r,label=oecalculator,cache=TRUE}
+oe <- o_exp(0.5,1000)
+```
+
+
+look:
+
+
+```{r}
+M <- rbind(
+	tabulate(or +1,nbins=12),
+	tabulate(ot1+1,nbins=12),
+	tabulate(ot2+1,nbins=12),
+	tabulate(ot3+1,nbins=12),
+	tabulate(ot4+1,nbins=12),
+	tabulate(ot5+1,nbins=12),
+	tabulate(oz +1,nbins=12),
+	tabulate(oe +1,nbins=12)
+	)
+dimnames(M) <- list(system=c("real",paste("top",seq_len(5)),"oz","oe"),correct=0:11)
 M
 ```
 
-```{r}
-out <- data.frame(rbind(cbind("A",o1),cbind("B",o2),cbind("C",o3)))
-colnames(out) <- c("system","correct")
-head(out)
-tail(out)
-summary(lm(correct~system,data=out))
-```
 
 
 
