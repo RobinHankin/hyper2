@@ -374,13 +374,28 @@ m <- maxp(ordertable2supp(as.ordertable(f2017)))
 OO <- replicate(1000,resampling_multiple(m,f2017,pointslist=pointslist))
 ```
 
+
+Have a quick look at the result:
+
+```{r,label=quicklookatOO}
+dim(OO)
+rownames(OO) <- names(pointslist)
+plot(apply(OO,1,mean),ylab='mean number of ranks correct')
+```
+
+And more work:
+
+
 ```{r,label=multiplemontecarlotabulation,echo=FALSE}
 M3 <- t(apply(OO,1,function(o){tabulate(o+1,nbins=12)}))
 dimnames(M3) <- list(system=names(pointslist),correct=0:11)
-M3
-Mc <- t(apply(M3,1,cumsum))
-Mc
-Md <- t(apply(M3[,-1],1,cumsum))
+head(M3)
+```
+
+now cumulative:
+
+```{r,label=cummulttab,echo=FALSE}
+Md <- t(apply(M3,1,cumsum))
 colnames(Md) <- paste("<=",colnames(Md),sep="")
 Md
 ```
@@ -388,8 +403,10 @@ Md
 and visual:
 
 ```{r,label=plotcumulativeM,fig=TRUE}
-matplot(t(Mc),type="b",lty=1,pch=16,col=rainbow(nrow(Mc)))
-legend("bottomright",lty=1,pch=16,col=rainbow(nrow(Mc)),legend=letters[seq_len(nrow(Mc))])
+plot(Md[,1],ylab='number wrong')
+plot(1000-Md[,11],ylab='number perfect')
+matplot(t(Md),type="b",lty=1,pch=16,col=rainbow(nrow(Md)))
+legend("bottomright",lty=1,pch=16,col=rainbow(nrow(Md)),legend=letters[seq_len(nrow(Md))])
 plot(points_real)
 grid()
 ```
@@ -400,8 +417,16 @@ table(real_all=OO[1,]==11,wta_all=OO[3,]==11)
 write.csv(OO,file="~/f.txt")
 ```
 
+Consider the first column of the table above which shows the number of
+virtual races in which each scoring system gets the winner incorrect;
+a good points system has a low value here.  Note the peculiar finding
+that `top3` has by far the lowest number, a finding which I have no
+explanation for.
 
-# Discussion and conclusions
+however,
+
+
+
 
 
 `r sin(1)`
