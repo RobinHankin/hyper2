@@ -24,9 +24,14 @@ ordertable2points(o, points,totals=TRUE)
 \examples{
 
 points <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
-
 o <- as.ordertable(F1_table_2017)
-
 ordertable2points(o,points)
+
+
+ordertable2points(ranktable_to_ordertable(rrank(9,maxp(volvo2014))),1)
+
+
+
+
 
 }
