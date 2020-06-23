@@ -31,6 +31,8 @@ preamble: >
 output: rticles::jss_article
 ---
 
+
+
 # Introduction
 
 Formula 1 racing is an important and prestigious motor sport
@@ -136,9 +138,6 @@ season using the `hyper2` package \citep{hankin2017} which implements
 the Plackett-Luce likelihood function with additional reified
 entities.
 
-
-## Formula 1 racing: points systems
-
 # Formula 1 dataset
 
 
@@ -183,31 +182,56 @@ players can be weakly informative about higher-ranked players'
 strengths.  For example, we see that Vettel retired twice (in
 Singapore and Japan), so any player who placed in those venues will
 effectively ``steal'' strength from Vettel, and generally ``give'' it
-to Hamilton or Bottas.}.  Although it has many terms, the first few
-are
+to Hamilton or Bottas.}.  Although it has many terms, the overall loglikelihood 
+expression is of the general form
 
 ```{r,label=showanordertableandhead,echo=FALSE,print=FALSE}
 library(hyper2,quietly=TRUE)
 top <- 11
 H <- ordertable2supp(F1_table_2017[seq_len(top),])
-head(H,5)
 ```
 
+\newcommand{\pham}{p_\mathrm{Ham}}
+\newcommand{\pvet}{p_\mathrm{Vet}}
+\newcommand{\pbot}{p_\mathrm{Bot}}
+\newcommand{\prai}{p_\mathrm{Rai}}
+\newcommand{\pric}{p_\mathrm{Ric}}
+\newcommand{\pver}{p_\mathrm{Ver}}
+\newcommand{\pper}{p_\mathrm{Per}}
+\newcommand{\poco}{p_\mathrm{Oco}}
+\newcommand{\psai}{p_\mathrm{Sai}}
+\newcommand{\phul}{p_\mathrm{Hul}}
+\newcommand{\pmas}{p_\mathrm{Mas}}
+
+\begin{equation}
+\frac{\pham^{20}\,\pmas^{16}\,\pbot^{19}\ldots
+}{\parbox{4in}{$(\pper+\poco)(\pver+\pper+\psai+\phul+\pmas)\\
+\rule{10mm}{0mm}(\pric+\pper+\pmas)(\psai+\pmas)\\ \rule{20mm}{0mm}
+         (\pver + \pper+ \poco + \psai+ \phul)\ldots
+	 $}}
+ \end{equation}
+
+
+
 Finding the maximum likelihood estimate for the players' strengths is
-straightforward:
+straightforward.  The `hyper2` package includes a suite of numerical
+optimization routines, and because they have access to derivatives,
+convergence is rapid.
 
 ```{r,label=printapiechart,echo=FALSE}
 mH <- maxp(H)
-print(mH)
+mH
 pie(maxp(H)[c(1,6,11,2,7,3,8,4,9,5,10)])
 ```
 
-We see the Hamilton has the largest estimated strength, although it
-should be noted that a likelihood ratio test [`samep.test()`, supplied
-with the package] does not reject the null of
-$p_\mathrm{Hamilton}=p_\mathrm{Vettel}$ , with a likelihood ratio of
-$e^{1.5}\simeq 4.48$, corresponding to an asymptotic $p$-value of
-about $0.08$.
+We see the Hamilton has the largest estimated strength (at about
+0.39), followed by Vettel and then Bottas at about 0.2 and 0.13
+respectively.  However, it should be noted that a likelihood ratio
+test [`samep.test()`, supplied with the package] does not reject the
+null that Hamilton and Vettel have the same strength ($H_0\colon
+\pham= \pvet$) with a likelihood ratio of $e^{1.5}\simeq 4.48$,
+corresponding (by Wilks's theorem) to an asymptotic $p$-value of about
+$0.08$.
 
 ```{r,label=dosameptest, echo=FALSE, print=FALSE, cache=TRUE}
 ignore <- samep.test(H,1:2)
@@ -219,7 +243,6 @@ The points scored by each driver give a ranking shown in the table;
 but Plackett-Luce likelihoods also give a ranking that does not depend
 on any arbitrary points system.  We can plot one ranking against the
 other:
-
 
 ```{r, label=calcpoints, echo=FALSE, cache=TRUE}
 p <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
@@ -233,6 +256,11 @@ m <- sort(m,decreasing=TRUE)
 m[] <- seq_along(m)
 ```
 
+(note carefully that the historically correct points awarded to the
+drivers differs from that calculated here.  That is for two reasons:
+firstly, ``fastest lap'' points are not included here, and also the
+truncation of the order table to the first 11 drivers can increase the
+rank of a driver if non-first-11 drivers are placed).
 
 ```{r,label=likevspoints,cache=TRUE,echo=FALSE}
 par(pty='s')        # square plot
@@ -397,54 +425,46 @@ m <- maxp(ordertable2supp(as.ordertable(f2017)))
 OO <- replicate(1000,resampling_multiple(m,f2017,pointslist=pointslist))
 ```
 
+now some summaries:
 
-Have a quick look at the result:
-
-```{r,label=quicklookatOO}
-dim(OO)
-rownames(OO) <- names(pointslist)
-plot(apply(OO,1,mean),ylab='mean number of ranks correct')
+```{r,label=somesummaries}
+summarytable <- data.frame(
+means = apply(OO,1,mean),
+winner_correct = rowSums(OO>1),
+all_correct = rowSums(OO==top))
+rownames(summarytable) <- names(pointslist)
+summarytable
 ```
 
-And more work:
 
 
-```{r,label=multiplemontecarlotabulation,echo=FALSE}
-M3 <- t(apply(OO,1,function(o){tabulate(o+1,nbins=12)}))
-dimnames(M3) <- list(system=names(pointslist),correct=0:11)
-head(M3)
+```{r,fig=TRUE}
+typecol <- c(rep("red",2),rep("orange",10),rep("blue",11),rep("orange",1),rep("black",7),rep("gray",7))
+plot(summarytable[,1],ylab='mean',pch=16,col=typecol)
+plot(summarytable[,2],ylab='prob of winner correct',pch=16,col=typecol)
+plot(summarytable[,3],ylab='prob. of total rank order correct',pch=16,col=typecol)
 ```
 
-now cumulative:
-
-```{r,label=cummulttab,echo=FALSE}
-Md <- t(apply(M3,1,cumsum))
-colnames(Md) <- paste("<=",colnames(Md),sep="")
-Md
-```
 
 and visual:
 
 ```{r,label=plotcumulativeM,fig=TRUE}
-plot(Md[,1],ylab='number wrong')
-plot(1000-Md[,11],ylab='number perfect')
-matplot(t(Md),type="b",lty=1,pch=16,col=rainbow(nrow(Md)))
-legend("bottomright",lty=1,pch=16,col=rainbow(nrow(Md)),legend=letters[seq_len(nrow(Md))])
-plot(points_real)
-grid()
+o <- t(apply(1+OO,1,tabulate))
+#matplot(0:11,apply(o[,12:1],1,cumsum)/1e3,type='b',lty=1,pch=16,ylab='probability',axes=FALSE,xlab='number incorrect')
+jj <- c(0,2,4,6,8,11)
+#axis(1,pos=0,at=jj,labels=c("0",paste("<=",jj[-1],sep="")))
+#axis(2)
 ```
 
 ```{r,makeatable}
-table(real_winner_ok=OO[1,]>0,wta_winner_ok=OO[3,]>0)
-table(real_all=OO[1,]==11,wta_all=OO[3,]==11)
-write.csv(OO,file="~/f.txt")
+table(real_winner_ok=OO[1,]>0,top3_winner_ok=OO[3,]>0)
+save(OO,file="~/f.Rd")
 ```
 
 Consider the first column of the table above which shows the number of
 virtual races in which each scoring system gets the winner incorrect;
-a good points system has a low value here.  Note the peculiar finding
-that `top3` has by far the lowest number, a finding which I have no
-explanation for.
+a good points system has a low value here.  Note that `top3` has by
+far the lowest number, a finding which I have no explanation for.
 
 # Discussion
 
