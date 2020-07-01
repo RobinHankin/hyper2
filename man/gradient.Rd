@@ -43,7 +43,7 @@ the\eqn{n-1} independent components of
 \eqn{\left(p_1,\ldots,p_n\right)}{(p_1,...,p_n)}, namely
 \eqn{\left(p_1,\ldots,p_{n-1}\right)}{(p_1,...,p_n-1)}.  The fillup
 value \eqn{p_n} is calculated as
-\eqn{1-\left(p_1,\ldots,p_{n-1}\right)}{1-(p_1,...,p_n-1)}.
+\eqn{1-\left(p_1+\cdots + p_{n-1}\right)}{1-(p_1+...+p_n-1)}.
 
 Function \code{gradientn()} returns the gradient of the loglikelihood
 function but ignores the unit sum constraint.
