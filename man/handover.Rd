@@ -18,7 +18,8 @@
 }
 \usage{data(handover)}
 \details{
-  Details are provided in the integration vignette, and the cited papers.
+  Details are provided in the \dQuote{integration} vignette, and
+  the cited papers.
 }
 \references{
   \itemize{
