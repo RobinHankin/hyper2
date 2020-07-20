@@ -275,7 +275,7 @@ par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
 
-From figure \r=ef{orderingbypointsandlikelihood}, we see that the
+From figure \ref{orderingbypointsandlikelihood}, we see that the
 first two drivers (Hamilton, Vettel) are are respectively first and
 second according to both ranking ranking procedures; but
 R\"{a}ikk\"{o}nen YES I KNOW IT IS WRONG: RMARKDOWN IS DEFECTIVE and
