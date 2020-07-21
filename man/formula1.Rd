@@ -4,6 +4,7 @@
 \alias{formula_one}
 \alias{F1}
 \alias{F1_2014}
+\alias{F1_table_2016}
 \alias{F1_table_2017}
 \alias{formula1_table_2017}
 \alias{F1_points_2017}
