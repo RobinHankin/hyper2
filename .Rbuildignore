@@ -18,3 +18,5 @@
 ^inst/notthewinner_files$
 ^inst/skating_analysis_cache$
 ^inst/skating_analysis_files$
+^inst/f1points2016_cache$
+^inst/f1points2016_files$

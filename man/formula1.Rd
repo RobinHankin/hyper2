@@ -6,6 +6,8 @@
 \alias{F1_2014}
 \alias{F1_table_2016}
 \alias{F1_table_2017}
+\alias{F1_table_2018}
+\alias{F1_table_2019}
 \alias{formula1_table_2017}
 \alias{F1_points_2017}
 \alias{formula1_points_2017}
@@ -13,6 +15,8 @@
 \alias{F1_2015}
 \alias{F1_2016}
 \alias{F1_2017}
+\alias{F1_2018}
+\alias{F1_2019}
 \docType{data}
 \title{Formula 1 dataset}
 \description{Race results from 2017 Formula One World Championship}
