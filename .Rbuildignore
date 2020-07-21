@@ -20,3 +20,9 @@
 ^inst/skating_analysis_files$
 ^inst/f1points2016_cache$
 ^inst/f1points2016_files$
+^inst/f1points2017_cache$
+^inst/f1points2017_files$
+^inst/f1points2018_cache$
+^inst/f1points2018_files$
+^inst/f1points2019_cache$
+^inst/f1points2019_files$
