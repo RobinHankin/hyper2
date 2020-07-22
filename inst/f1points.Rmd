@@ -268,12 +268,12 @@ other:
 p <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
 points_real <- p
 points_inaugural <- c(8,6,4,3,2)
-dp <- ordertable2points(as.ordertable(F1_table_2017[seq_len(top),]),p)
-dp <- sort(dp,decreasing=TRUE)
-dp[] <- seq_along(dp)
-m <- maxp(H2017)
-m <- sort(m,decreasing=TRUE)
-m[] <- seq_along(m)
+dp2017 <- ordertable2points(as.ordertable(F1_table_2017[seq_len(top),]),p)
+dp2017 <- sort(dp2017,decreasing=TRUE)
+dp2017[] <- seq_along(dp2017)
+m2017 <- maxp(H2017)
+m2017 <- sort(m2017,decreasing=TRUE)
+m2017[] <- seq_along(m2017)
 ```
 
 (note carefully that the historically correct points awarded to the
@@ -284,8 +284,8 @@ rank of a driver if non-first-11 drivers are placed).
 
 ```{r,label=likevspoints,cache=TRUE,echo=FALSE,fig.cap="Ordering of the \\label{orderingbypointsandlikelihood} top-ranked 11 drivers in the 2017 Formula 1 season.  Horizontal axis gives official (points-based) order, and the vertical axis gives the likelihood horder.    Thus the points-based ordering would be Hamilton, Vettel, R\"{a}ikk\"{o}nen YES I KNOW IT IS WRONG: RMARKDOWN IS DEFECTIVE while the likelihood ordering is (reading vertically) Hamilton, Vettel, Bottas"}
 par(pty='s')        # square plot
-ox <- dp
-oy <- ordertrans(m,dp)
+ox <- dp2017
+oy <- ordertrans(m2017,dp2017)
 plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
     xlab="official order",ylab="my order",main='Formula 1, 2017 season')
 par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
