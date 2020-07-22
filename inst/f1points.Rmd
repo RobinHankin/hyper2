@@ -188,7 +188,10 @@ expression is of the general form
 ```{r,label=showanordertableandhead,echo=FALSE,print=FALSE}
 library(hyper2,quietly=TRUE)
 top <- 11
-H <- ordertable2supp(F1_table_2017[seq_len(top),])
+H2016 <- ordertable2supp(F1_table_2016[seq_len(top),])
+H2017 <- ordertable2supp(F1_table_2017[seq_len(top),])
+H2018 <- ordertable2supp(F1_table_2018[seq_len(top),])
+H2019 <- ordertable2supp(F1_table_2019[seq_len(top),])
 ```
 
 \newcommand{\pham}{p_\mathrm{Ham}}
@@ -219,23 +222,39 @@ optimization routines, and because they have access to derivatives,
 convergence is rapid.  A graphical illustration of the strengths is
 given in figure \ref{piechartstrength}
 
-```{r,label=printapiechart,echo=FALSE,fig.cap="Maximum likelihood estimates \\label{piechartstrength} of the strengths of the top-ranked 11 drivers in the 2017 Formula 1 season"}
-mH <- maxp(H)
-mH
-pie(maxp(H)[c(1,6,11,2,7,3,8,4,9,5,10)])
+```{r,label=maximumlikelihoodcalculations,cache=TRUE}
+mH2016 <- maxp(H2016)
+mH2017 <- maxp(H2017)
+mH2018 <- maxp(H2018)
+mH2019 <- maxp(H2019)
 ```
 
-We see the Hamilton has the largest estimated strength (at about
-0.39), followed by Vettel and then Bottas at about 0.2 and 0.13
-respectively.  However, it should be noted that a likelihood ratio
-test [`samep.test()`, supplied with the package] does not reject the
-null that Hamilton and Vettel have the same strength ($H_0\colon
-\pham= \pvet$) with a likelihood ratio of $e^{1.5}\simeq 4.48$,
-corresponding (by Wilks's theorem) to an asymptotic $p$-value of about
-$0.08$.
+```{r,label=printapiechart,echo=FALSE,fig.cap="Maximum likelihood estimates \\label{piechartstrength} of the strengths of the top-ranked 11 drivers in Formula 1 motor racing, seasons 2016-2019"}
+mH2016
+mH2017
+mH2018
+mH2019
+par(mfrow=c(2,2))
+par(mar = c(2,2,2,2)/2)
+pie(mH2016[c(1,6,11,2,7,3,8,4,9,5,10)],cex=0.7,main="2016")
+pie(mH2017[c(1,6,11,2,7,3,8,4,9,5,10)],cex=0.7,main="2017")
+pie(mH2018[c(1,6,11,2,7,3,8,4,9,5,10)],cex=0.7,main="2018")
+pie(mH2019[c(1,6,11,2,7,3,8,4,9,5,10)],cex=0.7,main="2019")
+```
+
+
+We see in figure \ref{piechartstrength} that the driver with the
+largest estimated strength was Rosberg in 2016 (at about 49\%) and in
+years 2017-8-9 was Hamilton (at about 29\% 35\% 50\ respectively).
+However, it should be noted that a likelihood ratio test
+[`samep.test()`, supplied with the package] does not reject, for
+example, the null that Hamilton and Vettel have the same strength in
+2017 ($H_0\colon \pham= \pvet$) with a likelihood ratio of
+$e^{1.5}\simeq 4.48$, corresponding (by Wilks's theorem) to an
+asymptotic $p$-value of about $0.08$.
 
 ```{r,label=dosameptest, echo=FALSE, print=FALSE, cache=TRUE}
-ignore <- samep.test(H,1:2)
+ignore <- samep.test(H2017,1:2)
 ```
 
 ## Likelihood scoring vs points scoring
@@ -252,7 +271,7 @@ points_inaugural <- c(8,6,4,3,2)
 dp <- ordertable2points(as.ordertable(F1_table_2017[seq_len(top),]),p)
 dp <- sort(dp,decreasing=TRUE)
 dp[] <- seq_along(dp)
-m <- maxp(H)
+m <- maxp(H2017)
 m <- sort(m,decreasing=TRUE)
 m[] <- seq_along(m)
 ```
@@ -341,7 +360,7 @@ awarded to Raikkonen under the F1 system and Ricciardo under Zipf.
 Now compare the likelihood ranking:
 
 ```{r,label=likelihoodrankingshower,echo=FALSE}
-jj <- mH
+jj <- mH2017
 jj <- sort(jj,decreasing=TRUE)
 jj[] <- seq_along(jj)
 jj
@@ -353,78 +372,7 @@ We now assess the various points systems discussed above, using 1000
 _in silico_ trials.
 
 ```{r,label=definemultiplemontecarlo, echo=FALSE}
-top <- 11
-f2017 <- read.table("formula1_2017.txt",header=TRUE)[seq_len(top),1:20]
-m <- maxp(ordertable2supp(as.ordertable(f2017)))
-
-## Now work on synthetic dataset generation:
-resampling_multiple <- function(m,f2017,pointslist){
-    random_table <- rrank(n=ncol(f2017), p=m)
-    rownames(random_table) <- colnames(f2017)
-    ## "random_table" is a random table; now calculate lstar and pstar for
-    ## likelihood ranks and points ranks respectively:
-
-    l_star <- maxp(ordertable2supp(ranktable_to_ordertable(random_table)))
-    l_star[] <- seq_along(l_star)
-    ## l_star is the likelihood order statistic.
-
-	goodnesses <- seq_along(pointslist)
-	for(i in seq_along(pointslist)){
-		p_star <- ordertable2points(as.ordertable(ranktable_to_ordertable(random_table)),pointslist[[i]])
-		p_star <- sort(p_star,decreasing=TRUE)
-		p_star[] <- seq_along(p_star)
-		goodness <- sum(cumprod(names(p_star)==names(l_star)))
-		goodnesses[i] <- goodness
-		}
-	return(goodnesses)
-}
-pointslist <- list(
-	real = points_real,
-	inau = points_inaugural,
-	top1 = rep(1,1),
-	top2 = rep(1,2),
-	top3 = rep(1,3),
-	top4 = rep(1,4),
-	top5 = rep(1,5),
-	top6 = rep(1,6),
-	top7 = rep(1,7),
-	top8 = rep(1,8),
-	top9 = rep(1,9),
-	topt = rep(1,10),  # effectively punishing the last finisher
-   	lin1 = 1,   # same as top1
-	lin2 = 2:1,
-	lin3 = 3:1,
-	lin4 = 4:1,
-	lin5 = 5:1,
-	lin6 = 6:1,
-	lin7 = 7:1,
-	lin8 = 8:1,
-	lin9 = 9:1,
-	lint = 10:1,
-	line = 11:1,
-	zipf = 1/seq_len(top),
-	expa = 1/1.01^seq_len(top),
-	expb = 1/1.10^seq_len(top),
-	expc = 1/1.20^seq_len(top),
-	expd = 1/1.50^seq_len(top),
-	exp2 = 1/2^seq_len(top),
-	exp3 = 1/3^seq_len(top),
-	exp4 = 1/4^seq_len(top),
-	fis1 = c(1,1,1),
-	fis2 = c(1,1,0.9),
-	fis3 = c(1,1,1,0.1),
-	fis4 = c(1,1,0.9,0.1),
-	fis5 = c(1,1,0.5),
-	fis6 = c(1,1,1,0.5),
-	fis7 = c(1,1,0.5,0.5)
-)
-```
-
-```{r,label=multiplemontecarloexecute, cache=TRUE,echo=FALSE}
-set.seed(9)
-f2017 <- read.table("formula1_2017.txt",header=TRUE)[seq_len(top),1:20]
-m <- maxp(ordertable2supp(as.ordertable(f2017)))
-OO <- replicate(1000,resampling_multiple(m,f2017,pointslist=pointslist))
+load("formula1_results_2017.rda") # this created by running f1points_Omaker.R; file contains R variables OO and pointslist
 ```
 
 now some summaries:
@@ -446,7 +394,6 @@ plot(summarytable[,1],ylab='mean',pch=16,col=typecol)
 plot(summarytable[,2],ylab='prob of winner correct',pch=16,col=typecol)
 plot(summarytable[,3],ylab='prob. of total rank order correct',pch=16,col=typecol)
 ```
-
 
 and visual:
 
