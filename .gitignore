@@ -41,8 +41,8 @@ tests/*.R~
 man/*.Rd~
 
 # knitr and R markdown default cache directories
-/*_cache/
-/cache/
+inst/*_cache/
+inst/cache/
 
 # Temporary files created by R markdown
 *.utf8.md
