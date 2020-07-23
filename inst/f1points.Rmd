@@ -466,7 +466,6 @@ jj <- c(0,2,4,6,8,11)
 
 ```{r,makeatable}
 table(real_winner_ok=OO[1,]>0,top3_winner_ok=OO[3,]>0)
-save(OO,file="~/rstudio/hyper2/inst/cache_results_2017.Rd")
 ```
 
 Consider the first column of the table above which shows the number of
