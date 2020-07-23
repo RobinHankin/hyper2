@@ -133,15 +133,13 @@ where $p_H$ is a quantification of the beneficial home ground effect.
 Similar techniques have been used to account for the first-move
 advantage in chess, and effective coordination between members of
 doubles tennis teams; we may use a similar device to account for pole
-position in Formula 1.  Here I analyse racing results from the 2017
-season using the `hyper2` package \citep{hankin2017} which implements
-the Plackett-Luce likelihood function with additional reified
-entities.
+position in Formula 1.  Here I analyse seasons 2016-2019 using the
+`hyper2` package \citep{hankin2017} which implements the Plackett-Luce
+likelihood function with additional reified entities.
 
 # Formula 1 dataset
 
-
-Here we use the results from 2017:
+Taking 2017 as an example, we see the rank table as follows:
 
 \small
 \begin{CodeChunk}
@@ -245,9 +243,9 @@ pie(mH2019[c(1,6,11,2,7,3,8,4,9,5,10)],cex=0.7,main="2019")
 
 We see in figure \ref{piechartstrength} that the driver with the
 largest estimated strength was Rosberg in 2016 (at about 49\%) and in
-years 2017-8-9 was Hamilton (at about 29\% 35\% 50\ respectively).
-However, it should be noted that a likelihood ratio test
-[`samep.test()`, supplied with the package] does not reject, for
+years 2017-8-9 was Hamilton (at about 29\%, 35\%, and 50\%
+respectively).  However, it should be noted that a likelihood ratio
+test [`samep.test()`, supplied with the package] does not reject, for
 example, the null that Hamilton and Vettel have the same strength in
 2017 ($H_0\colon \pham= \pvet$) with a likelihood ratio of
 $e^{1.5}\simeq 4.48$, corresponding (by Wilks's theorem) to an
@@ -268,12 +266,33 @@ other:
 p <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
 points_real <- p
 points_inaugural <- c(8,6,4,3,2)
+dp2016 <- ordertable2points(as.ordertable(F1_table_2016[seq_len(top),]),p)
+dp2016 <- sort(dp2016,decreasing=TRUE)
+dp2016[] <- seq_along(dp2016)
+m2016 <- maxp(H2016)
+m2016 <- sort(m2016,decreasing=TRUE)
+m2016[] <- seq_along(m2016)
+
 dp2017 <- ordertable2points(as.ordertable(F1_table_2017[seq_len(top),]),p)
 dp2017 <- sort(dp2017,decreasing=TRUE)
 dp2017[] <- seq_along(dp2017)
 m2017 <- maxp(H2017)
 m2017 <- sort(m2017,decreasing=TRUE)
 m2017[] <- seq_along(m2017)
+
+dp2018 <- ordertable2points(as.ordertable(F1_table_2018[seq_len(top),]),p)
+dp2018 <- sort(dp2018,decreasing=TRUE)
+dp2018[] <- seq_along(dp2018)
+m2018 <- maxp(H2018)
+m2018 <- sort(m2018,decreasing=TRUE)
+m2018[] <- seq_along(m2018)
+
+dp2019 <- ordertable2points(as.ordertable(F1_table_2019[seq_len(top),]),p)
+dp2019 <- sort(dp2019,decreasing=TRUE)
+dp2019[] <- seq_along(dp2019)
+m2019 <- maxp(H2019)
+m2019 <- sort(m2019,decreasing=TRUE)
+m2019[] <- seq_along(m2019)
 ```
 
 (note carefully that the historically correct points awarded to the
@@ -282,38 +301,61 @@ firstly, ``fastest lap'' points are not included here, and also the
 truncation of the order table to the first 11 drivers can increase the
 rank of a driver if non-first-11 drivers are placed).
 
-```{r,label=likevspoints,cache=TRUE,echo=FALSE,fig.cap="Ordering of the \\label{orderingbypointsandlikelihood} top-ranked 11 drivers in the 2017 Formula 1 season.  Horizontal axis gives official (points-based) order, and the vertical axis gives the likelihood horder.    Thus the points-based ordering would be Hamilton, Vettel, R\"{a}ikk\"{o}nen YES I KNOW IT IS WRONG: RMARKDOWN IS DEFECTIVE while the likelihood ordering is (reading vertically) Hamilton, Vettel, Bottas"}
+```{r,label=likevspoints,cache=TRUE,echo=FALSE,fig.cap="Ordering of the \\label{orderingbypointsandlikelihood} top-ranked 11 drivers in the 2017 Formula 1 season.  Horizontal axis gives official (points-based) order, and the vertical axis gives the likelihood horder.    Thus, taking 201 as an example,  the points-based ordering would be Hamilton first, then Vettel, then R\"{a}ikk\"{o}nen; YES I KNOW IT IS WRONG: RMARKDOWN IS DEFECTIVE while the likelihood ordering is (reading vertically) Hamilton, Vettel, Bottas ALSO R PLOTTING SUCKS HERE AND I WILL HAVE TO CHANGE THE PDF BY HAND WITH INKSCAPE TO MAKE IT LOOK GOOD"}
+par(mfrow=c(2,2))
+par(mar = c(3,3,3,3))
+
+
+par(pty='s')        # square plot
+ox <- dp2016
+oy <- ordertrans(m2016,dp2016)
+plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
+    xlab="points order",ylab="likelihood order",main='2016 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray',cex=0.6) }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+
 par(pty='s')        # square plot
 ox <- dp2017
 oy <- ordertrans(m2017,dp2017)
 plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
-    xlab="official order",ylab="my order",main='Formula 1, 2017 season')
+    xlab="points order",ylab="likelihood order",main='2017 season')
 par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
-for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray') }
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray', cex=0.6) }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+
+par(pty='s')        # square plot
+ox <- dp2018
+oy <- ordertrans(m2018,dp2018)
+plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
+    xlab="points order",ylab="likelihood order",main='2018 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray', cex=0.6) }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+
+par(pty='s')        # square plot
+ox <- dp2019
+oy <- ordertrans(m2019,dp2019)
+plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
+    xlab="points order",ylab="likelihood order",main='2019 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray',cex=0.6) }
 par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
 
-From figure \ref{orderingbypointsandlikelihood}, we see that the
-first two drivers (Hamilton, Vettel) are are respectively first and
-second according to both ranking ranking procedures; but
-R\"{a}ikk\"{o}nen YES I KNOW IT IS WRONG: RMARKDOWN IS DEFECTIVE and
-Bottas are third and fourth, and fourth and third, according to points
-and likelihood respectively.  The degree of agreement between the two
-systems might be quantified as "two", for the positions of the top two
-drivers agree.
-
-Observing that both the likelihood ranking and the points ranking are
-random variables suggests a method whereby we can objectively assess a
-given points system.  Using sampling techniques we can repeatedly
-generate an order table \emph{in silico}, using estimated driver
-strengths from the observed 2017 table.  For each of, say, 1000 such
-synthetic tables, calculate drivers' maximum likelihood
-\citeauthor{plackett1975} strengths, and also their points awarded
-according to any given points system.  We then compare rankings
-generated by the \citeauthor{plackett1975} strengths and the points
-awarded and note the degree of agreement between the two.  This
-furnishes an objective assessment of the points system used.
+From figure \ref{orderingbypointsandlikelihood}, we see a comparison
+between the two ordering systems.  Taking 2017 as an example, drivers
+Hamilton and Vettel are are respectively first and second according to
+both ranking ranking procedures; but R\"{a}ikk\"{o}nen YES I KNOW IT
+IS WRONG: RMARKDOWN IS DEFECTIVE and Bottas are third and fourth, and
+fourth and third, according to points and likelihood respectively.
+The degree of agreement between the two systems might be quantified as
+"2", as the positions of the top two drivers agree.  Thus the degree
+of agreement for the years 2016-9 would be 8,2,6, and 2 respectively.
 
 ## Points systems
 
@@ -343,11 +385,11 @@ real
 ```
 
 (this happens to be identical to the ranking after the extra point was
-awarded for fastest lap).  However, if we were to use Zipf's law, the
-ranking would be:
+awarded for fastest lap).  However, if we were award points according
+to Zipf's law we would have:
 
 ```{r,label=zipfpointsshower,echo=FALSE}
-zipf <- ordertable2points(ranktable_to_ordertable(wikitable_to_ranktable(F1_table_2017)),1/seq_len(top))
+zipf <- ordertable2points(ranktable_to_ordertable(wikitable_to_ranktable(F1_table_2017)),1)
 zipf <- round(zipf[seq_len(top)],2)
 zipf <- sort(zipf,decreasing=TRUE)
 zipf[] <- seq_along(zipf)
@@ -357,7 +399,6 @@ zipf
 Thus these two systems agree on the first three places but fourth is
 awarded to Raikkonen under the F1 system and Ricciardo under Zipf.
 
-Now compare the likelihood ranking:
 
 ```{r,label=likelihoodrankingshower,echo=FALSE}
 jj <- mH2017
@@ -365,6 +406,24 @@ jj <- sort(jj,decreasing=TRUE)
 jj[] <- seq_along(jj)
 jj
 ```
+
+Thus, for 2017 at least, we see that the current poionts system agrees
+with likelihood ranking for the top four places, while Zipf's law
+agrees to three.
+
+Observing that both the likelihood ranking and the points ranking are
+random variables in this paradigm suggests a method whereby we can
+objectively assess a given points system.  Using sampling techniques
+we can repeatedly generate an order table \emph{in silico}, using
+estimated driver strengths from the observed tables.  For each of,
+say, 1000 such synthetic tables, calculate drivers' maximum likelihood
+\citeauthor{plackett1975} strengths, and also their points awarded
+according to any given points system.  We then compare rankings
+generated by the \citeauthor{plackett1975} strengths and the points
+awarded and note the degree of agreement between the two.  This
+furnishes an objective assessment of the points system used.
+
+
 
 # Numerical results
 

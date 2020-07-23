@@ -61,7 +61,6 @@ jj <- sort(jj,decreasing=TRUE)
 jj[] <- seq_along(jj)
 jj
 
-
 f2017 <- read.table("formula1_2017.txt",header=TRUE)[seq_len(top),1:20]
 m <- maxp(ordertable2supp(as.ordertable(f2017)))
 
@@ -132,7 +131,7 @@ pointslist <- list(
 set.seed(9)
 f2017 <- read.table("formula1_2017.txt",header=TRUE)[seq_len(top),1:20]
 m <- maxp(ordertable2supp(as.ordertable(f2017)))
-OO <- replicate(100,resampling_multiple(m,f2017,pointslist=pointslist))
+OO <- replicate(howmany,resampling_multiple(m,f2017,pointslist=pointslist))
 
 
 summarytable <- data.frame(
