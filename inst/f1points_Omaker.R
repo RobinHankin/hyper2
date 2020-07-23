@@ -21,41 +21,12 @@ library(hyper2,quietly=TRUE)
 H <- ordertable2supp(F1_table_2017[seq_len(top),])
 
 
-mH <- maxp(H)
-mH
-
 
 p <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
 points_real <- p
+
 points_inaugural <- c(8,6,4,3,2)
-dp <- ordertable2points(as.ordertable(F1_table_2017[seq_len(top),]),p)
-dp <- sort(dp,decreasing=TRUE)
-dp[] <- seq_along(dp)
-m <- maxp(H)
-m <- sort(m,decreasing=TRUE)
-m[] <- seq_along(m)
 
-par(pty='s')        # square plot
-ox <- dp
-oy <- ordertrans(m,dp)
-
-
-real <- ordertable2points(ranktable_to_ordertable(wikitable_to_ranktable(F1_table_2017)),p)
-real <- round(real[seq_len(top)],2)
-real <- sort(real,decreasing=TRUE)
-real[] <- seq_along(real)
-real
-
-zipf <- ordertable2points(ranktable_to_ordertable(wikitable_to_ranktable(F1_table_2017)),1/seq_len(top))
-zipf <- round(zipf[seq_len(top)],2)
-zipf <- sort(zipf,decreasing=TRUE)
-zipf[] <- seq_along(zipf)
-zipf
-
-jj <- mH
-jj <- sort(jj,decreasing=TRUE)
-jj[] <- seq_along(jj)
-jj
 
 f2017 <- read.table("formula1_2017.txt",header=TRUE)[seq_len(top),1:20]
 m <- maxp(ordertable2supp(as.ordertable(f2017)))
