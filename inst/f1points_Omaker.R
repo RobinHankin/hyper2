@@ -5,13 +5,12 @@
 ## f1points.Rmd.  Some of the lines are redundant.
 
 ## The simulations take quite a long time to run and at the bottom the
-## results are saved to file
-"~/rstudio/hyper2/inst/formula1_results_2017.rda"
+## results are saved to file "~/rstudio/hyper2/inst/formula1_results_2017.rda"
 
 ## The "point" of this file is that you can open it in emacs and
 ## globally replace "2017" with "2018" and everything still works
 ## (note that this would save the results to file
-## "~/rstudio/hyper2/inst/formula1_results_2018.rda": the year in the
+## "~/rstudio/hyper2/inst/formula1_results_2017.rda": the year in the
 ## filename will change too.
 
 howmany <- 1000
@@ -24,10 +23,7 @@ H <- ordertable2supp(F1_table_2017[seq_len(top),])
 
 mH <- maxp(H)
 mH
-pie(maxp(H)[c(1,6,11,2,7,3,8,4,9,5,10)])
 
-
-ignore <- samep.test(H,1:2)
 
 p <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
 points_real <- p
@@ -129,9 +125,11 @@ pointslist <- list(
 
 
 set.seed(9)
-f2017 <- read.table("formula1_2017.txt",header=TRUE)[seq_len(top),1:20]
+f2017 <- read.table("formula1_2017.txt",header=TRUE)[seq_len(top),]
+f2017 <- f2017[,-ncol(f2017)]
 m <- maxp(ordertable2supp(as.ordertable(f2017)))
 OO <- replicate(howmany,resampling_multiple(m,f2017,pointslist=pointslist))
+rownames(OO) <- names(pointslist)
 
 
 summarytable <- data.frame(
