@@ -1,0 +1,42 @@
+`formula1_points_systems` <- function(top=11){
+  list(
+      real = c(25,18,15,12,10,8,6,4,2,1,0,0), # 1 (real)
+      inau = c(8,6,4,3,2), # 2, inaugural
+      top1 = rep(1,1), # 3
+      top2 = rep(1,2), # 4
+      top3 = rep(1,3), # 5
+      top4 = rep(1,4), # 6
+      top5 = rep(1,5), # 7
+      top6 = rep(1,6), # 8
+      top7 = rep(1,7), # 9
+      top8 = rep(1,8), #10
+      top9 = rep(1,9), #11
+      topt = rep(1,10), #12  # effectively punishing the last finisher
+      lin1 = 1,  #13  # same as top1
+      lin2 = 2:1, #14
+      lin3 = 3:1, #15
+      lin4 = 4:1, #16
+      lin5 = 5:1, #17
+      lin6 = 6:1, #18
+      lin7 = 7:1, #19
+      lin8 = 8:1, #20
+      lin9 = 9:1, #21
+      lint = 10:1, #22
+      line = 11:1, #23
+      zipf = 1/seq_len(top),  #24
+      expa = 1/1.01^seq_len(top), #25
+      expb = 1/1.10^seq_len(top), #26
+      expc = 1/1.20^seq_len(top), #27
+      expd = 1/1.50^seq_len(top), #28
+      exp2 = 1/2^seq_len(top),   #29
+      exp3 = 1/3^seq_len(top),  #30
+      exp4 = 1/4^seq_len(top), #31
+      fis1 = c(1,1,1),  #32
+      fis2 = c(1,1,0.9),  #33
+      fis3 = c(1,1,1,0.1), #34
+      fis4 = c(1,1,0.9,0.1), #35
+      fis5 = c(1,1,0.5),    #36
+      fis6 = c(1,1,1,0.5),  #37
+      fis7 = c(1,1,0.5,0.5) #38
+  )
+}

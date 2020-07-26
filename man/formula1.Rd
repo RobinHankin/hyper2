@@ -2,6 +2,7 @@
 \alias{formula1}
 \alias{formula_1}
 \alias{formula_one}
+\alias{formula1_points_systems}
 \alias{F1}
 \alias{F1_2014}
 \alias{F1_table_2016}
@@ -20,7 +21,14 @@
 \docType{data}
 \title{Formula 1 dataset}
 \description{Race results from 2017 Formula One World Championship}
-\usage{data(formula1)}
+\usage{
+data(formula1)
+formula1_points_systems(top=11)
+}
+\arguments{
+  \item{top}{Number of drivers to retain in
+    \code{formula1_points_systems()}}
+}
 \format{A \code{hyper2} object that gives a likelihood function}
 \details{
 
@@ -35,6 +43,9 @@ Object \code{F1_table_2017} is simply the first 20 columns of
 \code{read.table(inst/formula1_2017.txt)} and object
 \code{F1_points_2017} is column 21.  The likelihood function
 \code{formula1} is \code{ordertable2supp(F1_table_2017)}.
+
+Function \code{formula1_points_system()} gives various possible points
+systems for the winner, second, third, etc, placing drivers.  
 
 }
 \references{
