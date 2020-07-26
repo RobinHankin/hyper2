@@ -25,7 +25,8 @@ points_real <- p
 points_inaugural <- c(8,6,4,3,2)
 
 
-f2017 <- read.table("formula1_2017.txt",header=TRUE)[seq_len(top),1:20]
+f2017 <- read.table("formula1_2017.txt",header=TRUE)
+f2017 <- f2017[seq_len(top),seq_len(ncol(f2017)-1)]
 m <- maxp(ordertable2supp(as.ordertable(f2017)))
 
 
