@@ -18,9 +18,6 @@ top <- 11
 points_inaugural <- c(8,6,4,3,2)
 
 library(hyper2,quietly=TRUE)
-H <- ordertable2supp(F1_table_2017[seq_len(top),])
-
-
 
 p <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
 points_real <- p
