@@ -866,7 +866,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 `ordertable2supp` <- function(x, noscore, incomplete=TRUE){
     if(missing(noscore)){
-        noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
+        noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC", "DNQ")
     }
     venues <- colnames(x)
 
