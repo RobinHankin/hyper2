@@ -407,7 +407,7 @@ jj[] <- seq_along(jj)
 jj
 ```
 
-Thus, for 2017 at least, we see that the current poionts system agrees
+Thus, for 2017 at least, we see that the current points system agrees
 with likelihood ranking for the top four places, while Zipf's law
 agrees to three.
 
@@ -431,38 +431,69 @@ We now assess the various points systems discussed above, using 1000
 _in silico_ trials.
 
 ```{r,label=definemultiplemontecarlo, echo=FALSE}
+load("formula1_results_2016.rda") # this created by running f1points_Omaker.R; file contains R variables OO and pointslist
+OO2016 <- OO
+
 load("formula1_results_2017.rda") # this created by running f1points_Omaker.R; file contains R variables OO and pointslist
+OO2017 <- OO
+
+load("formula1_results_2018.rda") # this created by running f1points_Omaker.R; file contains R variables OO and pointslist
+OO2018 <- OO
+
+load("formula1_results_2019.rda") # this created by running f1points_Omaker.R; file contains R variables OO and pointslist
+OO2019 <- OO
 ```
 
 now some summaries:
 
 ```{r,label=somesummaries}
-summarytable <- data.frame(
-means = apply(OO,1,mean),
-winner_correct = rowSums(OO>1),
-all_correct = rowSums(OO==top))
-rownames(summarytable) <- names(pointslist)
-summarytable
+summarytablemaker <- function(OO){
+  out <- data.frame(
+      means = apply(OO,1,mean),
+      winner_correct = rowSums(OO>1)/ncol(OO),
+      all_correct = rowSums(OO==top)/ncol(OO)
+  )
+  rownames(out) <- names(pointslist)
+  return(out)
+}
+s2016 <- summarytablemaker(OO2016)
+s2017 <- summarytablemaker(OO2017)
+s2018 <- summarytablemaker(OO2018)
+s2019 <- summarytablemaker(OO2019)
 ```
-
 
 
 ```{r,fig=TRUE}
-typecol <- c(rep("red",2),rep("orange",10),rep("blue",11),rep("orange",1),rep("black",7),rep("gray",7))
-plot(summarytable[,1],ylab='mean',pch=16,col=typecol)
-plot(summarytable[,2],ylab='prob of winner correct',pch=16,col=typecol)
-plot(summarytable[,3],ylab='prob. of total rank order correct',pch=16,col=typecol)
+typecol <- c(rep("red",2),rep("orange",10),rep("yellow",11),rep("green",1),rep("blue",7),rep("purple",7))
+jj <- cbind(s2016[,1],s2017[,1],s2018[,1],s2019[,1])  # mean
+matplot(jj,type="n",xlab='points system',ylab='mean correct places')
+points(s2016[,1],col=typecol,pch=1)
+points(s2017[,1],col=typecol,pch=2)
+points(s2018[,1],col=typecol,pch=3)
+points(s2019[,1],col=typecol,pch=4)
+legend("topright",lty=0,pch=1:4,legend=c("2016","2017","2018","2019"))
 ```
 
-and visual:
-
-```{r,label=plotcumulativeM,fig=TRUE}
-o <- t(apply(1+OO,1,tabulate))
-#matplot(0:11,apply(o[,12:1],1,cumsum)/1e3,type='b',lty=1,pch=16,ylab='probability',axes=FALSE,xlab='number incorrect')
-jj <- c(0,2,4,6,8,11)
-#axis(1,pos=0,at=jj,labels=c("0",paste("<=",jj[-1],sep="")))
-#axis(2)
+```{r,fig=TRUE}
+jj <- cbind(s2016[,2],s2017[,2],s2018[,2],s2019[,2])  # prob of winner
+matplot(jj,type="n",xlab='points system',ylab='probability of winner correct')
+points(s2016[,2],col=typecol,pch=1)
+points(s2017[,2],col=typecol,pch=2)
+points(s2018[,2],col=typecol,pch=3)
+points(s2019[,2],col=typecol,pch=4)
+legend("topright",lty=0,pch=1:4,legend=c("2016","2017","2018","2019"))
 ```
+
+```{r,fig=TRUE}
+jj <- cbind(s2016[,3],s2017[,3],s2018[,3],s2019[,3])  # total rank order correct
+matplot(jj,type="n",xlab='points system',ylab='probability of total rank order correct')
+points(s2016[,3],col=typecol,pch=1)
+points(s2017[,3],col=typecol,pch=2)
+points(s2018[,3],col=typecol,pch=3)
+points(s2019[,3],col=typecol,pch=4)
+legend("topright",lty=0,pch=1:4,legend=c("2016","2017","2018","2019"))
+```
+
 
 ```{r,makeatable}
 table(real_winner_ok=OO[1,]>0,top3_winner_ok=OO[3,]>0)
