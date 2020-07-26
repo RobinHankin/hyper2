@@ -6,14 +6,41 @@
 
 ## The simulations take quite a long time to run and at the bottom the
 ## results are saved to file "~/rstudio/hyper2/inst/formula1_results_2017.rda"
+## and this file is needed by 'f1points.Rmd'.
 
-## The "point" of this file is that you can open it in emacs and
-## globally replace "2017" with "2018" and everything still works
+## The "point" of this file is that you can 
+## globally replace "2017" with "2018" and the R commands still work
 ## (note that this would save the results to file
-## "~/rstudio/hyper2/inst/formula1_results_2017.rda": the year in the
-## filename will change too.
+## "~/rstudio/hyper2/inst/formula1_results_2018.rda": the year in the
+## filename will change too).  The following shellscript:
 
-howmany <- 1000
+ignore <- '
+ cat f1points_Omaker.R | sed -e 's/2017/2012/g' > f2012.R
+ cat f1points_Omaker.R | sed -e 's/2017/2013/g' > f2013.R
+ cat f1points_Omaker.R | sed -e 's/2017/2014/g' > f2014.R
+ cat f1points_Omaker.R | sed -e 's/2017/2014/g' > f2015.R
+ cat f1points_Omaker.R | sed -e 's/2017/2015/g' > f2015.R
+ cat f1points_Omaker.R | sed -e 's/2017/2016/g' > f2016.R
+ cat f1points_Omaker.R | sed -e 's/2017/2017/g' > f2017.R
+ cat f1points_Omaker.R | sed -e 's/2017/2018/g' > f2018.R
+ cat f1points_Omaker.R | sed -e 's/2017/2019/g' > f2019.R
+
+ R CMD BATCH f2012.R
+ R CMD BATCH f2013.R
+ R CMD BATCH f2014.R
+ R CMD BATCH f2015.R
+ R CMD BATCH f2016.R
+ R CMD BATCH f2017.R
+ R CMD BATCH f2018.R
+ R CMD BATCH f2019.R
+'
+
+# creates all the different .rda files needed by f1points.Rmd.
+
+
+
+
+howmany <- 1000  # howmany=1000 takes about 15 minutes to run
 top <- 11
 points_inaugural <- c(8,6,4,3,2)
 
