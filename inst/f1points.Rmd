@@ -256,6 +256,46 @@ ignore <- samep.test(H2017,1:2)
 
 ## Likelihood scoring vs points scoring
 
+Applying the current points system, for example, to the 2017 results table we
+would rank the drivers as follows:
+
+```{r,label=realpointsshower,echo=FALSE}
+real <- ordertable2points(ranktable_to_ordertable(wikitable_to_ranktable(F1_table_2017)),formula1_points_systems(top)$real)
+real <- round(real[seq_len(top)],2)
+real <- sort(real,decreasing=TRUE)
+real[] <- seq_along(real)
+real
+```
+
+(this happens to be identical to the ranking after the extra point was
+awarded for fastest lap).  However, if we were award points according
+to Zipf's law we would have:
+
+```{r,label=zipfpointsshower,echo=FALSE}
+zipf <- ordertable2points(ranktable_to_ordertable(wikitable_to_ranktable(F1_table_2017)),formula1_points_systems(top)$zipf)
+zipf <- round(zipf[seq_len(top)],2)
+zipf <- sort(zipf,decreasing=TRUE)
+zipf[] <- seq_along(zipf)
+zipf
+```
+
+Thus these two systems agree on the first three places but fourth is
+awarded to Raikkonen under the F1 system and Ricciardo under Zipf.
+
+
+```{r,label=likelihoodrankingshower,echo=FALSE}
+jj <- mH2017
+jj <- sort(jj,decreasing=TRUE)
+jj[] <- seq_along(jj)
+jj
+```
+
+Thus, for 2017 at least, we see that the current points system agrees
+with likelihood ranking for the top four places, while Zipf's law
+agrees to three.
+
+
+
 ```{r, label=calcpoints_real, echo=FALSE, cache=TRUE}
 p <- formula1_points_systems()[[1]]   # real points system
 dp2016 <- ordertable2points(as.ordertable(F1_table_2016[seq_len(top),]),p)
@@ -333,15 +373,13 @@ par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
 
-The points scored by each driver give a ranking shown in the table;
-but Plackett-Luce likelihoods also give a ranking that does not depend
-on any arbitrary points system.  We can plot one ranking against the
-other, see Figure \ref{orderingbypointsandlikelihood}\footnote{The
-historically correct points awarded to the drivers differs from that
-calculated here.  That is for two reasons: firstly, ``fastest lap''
-points are not included here, and also the truncation of the order
-table to the first 11 drivers can increase the rank of a driver if
-non-first-11 drivers are placed}.  We thus see a comparison between
+We can plot one ranking against the other\footnote{The historically
+correct points awarded to the drivers differs from that calculated
+here.  That is for two reasons: firstly, ``fastest lap'' points are
+not included here, and also the truncation of the order table to the
+first 11 drivers can increase the rank of a driver if non-first-11
+drivers are placed} , shown in Figure
+\ref{orderingbypointsandlikelihood}.  We thus see a comparison between
 the two ordering systems.  Taking 2017 as an example, drivers Hamilton
 and Vettel are are respectively first and second according to both
 ranking ranking procedures; but R\"{a}ikk\"{o}nen YES I KNOW IT IS
@@ -361,34 +399,22 @@ and likelihood-based ranks.
 
 
 ```{r, label=calcpoints_zipf, echo=FALSE, cache=TRUE}
-p <- formula1_points_systems()$zipf
-dp2016 <- ordertable2points(as.ordertable(F1_table_2016[seq_len(top),]),p)
-dp2016 <- sort(dp2016,decreasing=TRUE)
-dp2016[] <- seq_along(dp2016)
-m2016 <- maxp(H2016)
-m2016 <- sort(m2016,decreasing=TRUE)
-m2016[] <- seq_along(m2016)
+pz <- formula1_points_systems()$zipf
+dp2016z <- ordertable2points(as.ordertable(F1_table_2016[seq_len(top),]),pz)
+dp2016z <- sort(dp2016z,decreasing=TRUE)
+dp2016z[] <- seq_along(dp2016z)
 
-dp2017 <- ordertable2points(as.ordertable(F1_table_2017[seq_len(top),]),p)
-dp2017 <- sort(dp2017,decreasing=TRUE)
-dp2017[] <- seq_along(dp2017)
-m2017 <- maxp(H2017)
-m2017 <- sort(m2017,decreasing=TRUE)
-m2017[] <- seq_along(m2017)
+dp2017z <- ordertable2points(as.ordertable(F1_table_2017[seq_len(top),]),pz)
+dp2017z <- sort(dp2017z,decreasing=TRUE)
+dp2017z[] <- seq_along(dp2017z)
 
-dp2018 <- ordertable2points(as.ordertable(F1_table_2018[seq_len(top),]),p)
-dp2018 <- sort(dp2018,decreasing=TRUE)
-dp2018[] <- seq_along(dp2018)
-m2018 <- maxp(H2018)
-m2018 <- sort(m2018,decreasing=TRUE)
-m2018[] <- seq_along(m2018)
+dp2018z <- ordertable2points(as.ordertable(F1_table_2018[seq_len(top),]),pz)
+dp2018z <- sort(dp2018z,decreasing=TRUE)
+dp2018z[] <- seq_along(dp2018z)
 
-dp2019 <- ordertable2points(as.ordertable(F1_table_2019[seq_len(top),]),p)
-dp2019 <- sort(dp2019,decreasing=TRUE)
-dp2019[] <- seq_along(dp2019)
-m2019 <- maxp(H2019)
-m2019 <- sort(m2019,decreasing=TRUE)
-m2019[] <- seq_along(m2019)
+dp2019z <- ordertable2points(as.ordertable(F1_table_2019[seq_len(top),]),pz)
+dp2019z <- sort(dp2019z,decreasing=TRUE)
+dp2019z[] <- seq_along(dp2019z)
 ```
 
 
@@ -398,8 +424,8 @@ par(mar = c(3,3,3,3))
 
 
 par(pty='s')        # square plot
-ox <- dp2016
-oy <- ordertrans(m2016,dp2016)
+ox <- dp2016z
+oy <- ordertrans(m2016,dp2016z)
 plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
     xlab="points order",ylab="likelihood order",main='2016 season')
 par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
@@ -408,8 +434,8 @@ par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 
 par(pty='s')        # square plot
-ox <- dp2017
-oy <- ordertrans(m2017,dp2017)
+ox <- dp2017z
+oy <- ordertrans(m2017,dp2017z)
 plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
     xlab="points order",ylab="likelihood order",main='2017 season')
 par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
@@ -418,8 +444,8 @@ par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 
 par(pty='s')        # square plot
-ox <- dp2018
-oy <- ordertrans(m2018,dp2018)
+ox <- dp2018z
+oy <- ordertrans(m2018,dp2018z)
 plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
     xlab="points order",ylab="likelihood order",main='2018 season')
 par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
@@ -428,8 +454,8 @@ par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 
 par(pty='s')        # square plot
-ox <- dp2019
-oy <- ordertrans(m2019,dp2019)
+ox <- dp2019z
+oy <- ordertrans(m2019,dp2019z)
 plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
     xlab="points order",ylab="likelihood order",main='2019 season')
 par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
@@ -439,12 +465,8 @@ abline(0,1)
 ```
 
 
+## Possible points systems
 
-
-
-## Points systems
-
-Here we follow the above protocol to assess different points systems.
 There are a number of plausible points systems that might be used:
 
 \begin{itemize}
@@ -458,43 +480,9 @@ $r=1$ corresponds to a ``winner takes all'' system
 \item The inaugural Formula 1 system $(8,6,4,3,2)$
 \end{itemize}
 
-Applying the current points system, for example, to the 2017 table we
-would rank the drivers as follows:
-
-```{r,label=realpointsshower,echo=FALSE}
-real <- ordertable2points(ranktable_to_ordertable(wikitable_to_ranktable(F1_table_2017)),p)
-real <- round(real[seq_len(top)],2)
-real <- sort(real,decreasing=TRUE)
-real[] <- seq_along(real)
-real
-```
-
-(this happens to be identical to the ranking after the extra point was
-awarded for fastest lap).  However, if we were award points according
-to Zipf's law we would have:
-
-```{r,label=zipfpointsshower,echo=FALSE}
-zipf <- ordertable2points(ranktable_to_ordertable(wikitable_to_ranktable(F1_table_2017)),1)
-zipf <- round(zipf[seq_len(top)],2)
-zipf <- sort(zipf,decreasing=TRUE)
-zipf[] <- seq_along(zipf)
-zipf
-```
-
-Thus these two systems agree on the first three places but fourth is
-awarded to Raikkonen under the F1 system and Ricciardo under Zipf.
 
 
-```{r,label=likelihoodrankingshower,echo=FALSE}
-jj <- mH2017
-jj <- sort(jj,decreasing=TRUE)
-jj[] <- seq_along(jj)
-jj
-```
 
-Thus, for 2017 at least, we see that the current points system agrees
-with likelihood ranking for the top four places, while Zipf's law
-agrees to three.
 
 Observing that both the likelihood ranking and the points ranking are
 random variables in this paradigm suggests a method whereby we can
