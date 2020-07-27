@@ -161,7 +161,6 @@ Resta        0   0   0   0   0   0   0   0   0   0 Ret   0   0   0   0   0   0  
 
 ```{r,echo=FALSE,print=FALSE}
 top <- 11
-points_inaugural <- c(8,6,4,3,2)
 ```
 
 Each row is a driver and each column (after the first) a venue.  We
@@ -263,9 +262,7 @@ on any arbitrary points system.  We can plot one ranking against the
 other:
 
 ```{r, label=calcpoints, echo=FALSE, cache=TRUE}
-p <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)
-points_real <- p
-points_inaugural <- c(8,6,4,3,2)
+p <- formula1_points_systems()[[1]]
 dp2016 <- ordertable2points(as.ordertable(F1_table_2016[seq_len(top),]),p)
 dp2016 <- sort(dp2016,decreasing=TRUE)
 dp2016[] <- seq_along(dp2016)
@@ -300,6 +297,7 @@ drivers differs from that calculated here.  That is for two reasons:
 firstly, ``fastest lap'' points are not included here, and also the
 truncation of the order table to the first 11 drivers can increase the
 rank of a driver if non-first-11 drivers are placed).
+
 
 ```{r,label=likevspoints,cache=TRUE,echo=FALSE,fig.cap="Ordering of the \\label{orderingbypointsandlikelihood} top-ranked 11 drivers in the 2017 Formula 1 season.  Horizontal axis gives official (points-based) order, and the vertical axis gives the likelihood horder.    Thus, taking 201 as an example,  the points-based ordering would be Hamilton first, then Vettel, then R\"{a}ikk\"{o}nen; YES I KNOW IT IS WRONG: RMARKDOWN IS DEFECTIVE while the likelihood ordering is (reading vertically) Hamilton, Vettel, Bottas ALSO R PLOTTING SUCKS HERE AND I WILL HAVE TO CHANGE THE PDF BY HAND WITH INKSCAPE TO MAKE IT LOOK GOOD"}
 par(mfrow=c(2,2))
