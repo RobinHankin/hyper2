@@ -267,6 +267,21 @@ real[] <- seq_along(real)
 real
 ```
 
+
+\begin{multline}
+\mbox{Hamilton}\succ
+\mbox{Vettel}\succ
+\mbox{Bottas}\succ
+\mbox{Raikkonen}\succ
+\mbox{Ricciardo}\succ
+\mbox{Verstappen}\succ\\
+\mbox{Perez1}\succ
+\mbox{Ocon}\succ
+\mbox{Sainz}\succ
+\mbox{Hulkenberg}\succ
+\mbox{Massa}
+\end{multline}
+
 (this happens to be identical to the ranking after the extra point was
 awarded for fastest lap).  However, if we were award points according
 to Zipf's law we would have:
@@ -278,6 +293,22 @@ zipf <- sort(zipf,decreasing=TRUE)
 zipf[] <- seq_along(zipf)
 zipf
 ```
+
+\begin{multline}
+\mbox{Hamilton}\succ
+\mbox{Vettel}\succ
+\mbox{Bottas}\succ
+\mbox{Ricciardo}\succ
+\mbox{Verstappen}\succ
+\mbox{Raikkonen}\succ\\
+\mbox{Perez}\succ
+\mbox{Ocon}\succ
+\mbox{Massa}\succ
+\mbox{Sainz}\succ
+\mbox{Hulkenberg}\succ
+\end{multline}
+
+
 
 Thus these two systems agree on the first three places but fourth is
 awarded to Raikkonen under the F1 system and Ricciardo under Zipf.
@@ -465,6 +496,7 @@ abline(0,1)
 ```
 
 
+
 ## Possible points systems
 
 There are a number of plausible points systems that might be used:
@@ -481,6 +513,58 @@ $r=1$ corresponds to a ``winner takes all'' system
 \end{itemize}
 
 
+
+
+We can now calculate number of places agreed for each of the points systems:
+
+```{r, label=calcpoints_allpointsystems, echo=FALSE, cache=TRUE}
+agreement2016 <- rep(NA,length(formula1_points_systems(top)))
+agreement2017 <- rep(NA,length(formula1_points_systems(top)))
+agreement2018 <- rep(NA,length(formula1_points_systems(top)))
+agreement2019 <- rep(NA,length(formula1_points_systems(top)))
+
+for(i in seq_along(formula1_points_systems(top))){
+
+  pa <- formula1_points_systems(top)[[i]]
+
+  dp2016a <- ordertable2points(as.ordertable(F1_table_2016[seq_len(top),]),pa)
+  dp2016a <- sort(dp2016a,decreasing=TRUE)
+  dp2016a[] <- seq_along(dp2016a)
+  agreement2016[i] <-  sum(cumprod(names(dp2016a) == names(m2016)))
+
+  dp2017a <- ordertable2points(as.ordertable(F1_table_2017[seq_len(top),]),pa)
+  dp2017a <- sort(dp2017a,decreasing=TRUE)
+  dp2017a[] <- seq_along(dp2017a)
+  agreement2017[i] <-  sum(cumprod(names(dp2017a) == names(m2017)))
+
+  dp2018a <- ordertable2points(as.ordertable(F1_table_2018[seq_len(top),]),pa)
+  dp2018a <- sort(dp2018a,decreasing=TRUE)
+  dp2018a[] <- seq_along(dp2018a)
+  agreement2018[i] <-  sum(cumprod(names(dp2018a) == names(m2018)))
+
+  dp2019a <- ordertable2points(as.ordertable(F1_table_2019[seq_len(top),]),pa)
+  dp2019a <- sort(dp2019a,decreasing=TRUE)
+  dp2019a[] <- seq_along(dp2019a)
+  agreement2019[i] <-  sum(cumprod(names(dp2019a) == names(m2019)))
+
+}  # i loop closes
+
+
+agreement4yearsallp <- cbind(
+    agreement2016,
+    agreement2017,
+    agreement2018,
+    agreement2019
+)
+
+rownames(agreement4yearsallp) <- names(formula1_points_systems(top))
+colnames(agreement4yearsallp) <- 2016:2019
+```
+
+
+```{r}
+agreement4yearsallp
+```
 
 
 
