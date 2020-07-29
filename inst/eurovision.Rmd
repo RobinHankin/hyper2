@@ -99,8 +99,13 @@ They were not allowed to vote for themselves, which is why the first
 column is `NA`.  So the order was: `BA` (1), `MK` (2) , `TR` (3), `IS`
 (4), `RO` (5), `IL` (6), `AM` (7), `FI` (8), `BY` (9), `MT` (10).  The
 other countries (`CZ`, `BE`, `SW`, `CH`, `BG`, `PT`) did not receive
-any points from Montenegro.  We need to convert matrix `preference`
-into a likelihood function, here `eurovision2009`:
+any points from Montenegro.  The rows show the votes cast by each
+country; note the final two rows corresponding to votes cast by
+Germany and the UK, who did not compete and therefore cast votes for
+all competitors.
+
+We need to convert matrix `preference` into a likelihood function,
+here `eurovision2009`:
  
 ```{r,morestuff}
 eurovision2009 <- hyper2(d=18)
