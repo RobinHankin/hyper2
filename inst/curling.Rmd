@@ -38,10 +38,10 @@ ct
 
 In this form we can easily convert to a support function:
 
-```{r,definsupportb}
-H1 <- ordertable2supp(ct)
-head(H1)
-(mH1 <- maxp(H1))
+```{r,definsupportb,cache=TRUE}
+H1 <- ordertable2supp(ranktable_to_ordertable(wikitable_to_ranktable(ct)))
+H1
+mH1 <- maxp(H1)
 pie(mH1)
 ```
 
@@ -72,8 +72,8 @@ pie(mH2)
 ```{r,plotcomplog}
 par(pty="s")
 plot(log10(mH1),log10(mH2),asp=1,pch=16,xlim=c(-2.6,0),ylim=c(-2.6,0))
-posn <- c(Canada=1, China=2, Denmark=4, Germany=4, GB=4, Italy=1, Japan=4, Norway=4,
-          Russia=2, South_Korea=4, Sweden=2, Switzerland=2, US=4)
+posn <- c(Canada=2, China=4, Denmark=4, Germany=4, GB=4, Italy=1, Japan=2, Norway=2,
+          Russia=4, South_Korea=4, Sweden=4, Switzerland=2, US=4)
 for(i in seq_len(nrow(curling_table))){
 	text(log10(mH1)[i],log10(mH2)[i],rownames(curling_table)[i],col="gray",pos=posn[i])
 }
@@ -81,5 +81,4 @@ abline(0,1)
 grid()
 ```
 
-Note that the two strongest competitors, Canada and Sweden, switch
-between first and second in the two systems.
+The two likelihood systems have very different evaluates.
