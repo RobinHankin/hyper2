@@ -3,7 +3,7 @@ documentclass: jss
 author:
   - name: Robin K. S. Hankin
     affiliation: Auckland University of Technology
-    address: >
+    address:
       2-14 Wakefield Street
       Auckland, New Zealand
     email: \email{hankin.robin@gmail.com}
@@ -14,20 +14,31 @@ title:
   # For running headers, if needed
   short:     "Formula 1 Points Scoring"
 abstract: >
-  The point scoring system of Formula 1 motor racing is a long-standing
-  contention among fans and competitors, with changes to the points
-  scored occurring frequently.  Here, I apply generalized Plackett-Luce
-  likelihood functions to Formula 1 racing, and assess historical points
-  scoring systems objectively.  In a well-defined sense, the points
-  scoring system of 1985 is the best of the historical ones.  I make
-  similar observations about related competitive situations including
-  the Eurovision Song contest and XXX.
-keywords:
+  The points scoring system of Formula 1 motor racing is a long-standing
+  contention among fans and competitors, with changes being controversial.
+  The inaugural points system, in use from 1950
+  to 1959 was $(8,6,4,3,2)$: 8 points to the winner, 6 to second
+  place, and so on.  In 2020 the points system was changed to
+  $(25,18,15,12,10,8,6,4,2,1)$.  The overall ranking of the
+  competitors is determined by summing points awarded over a season;
+  but this system suffers from the defect that the points system
+  itself is intrinsically arbitrary.  Here, I apply generalized
+  Plackett-Luce likelihood functions to Formula 1 motor racing, and
+  use maximum likelihood techniques to identify a ranking for the competitors;
+  this method includes no use of an arbitrary points system.
+  Using this methodology, I assess a number of reasonable points
+  scoring systems objectively.  In a well-defined statistical sense, a
+  ``winner-takes-all'' points system outperforms the other points
+  systems considered.
+keywords: 
   # at least one keyword must be supplied
-  formatted: [keywords, not capitalized, "\\proglang{Java}"]
-  plain:     [keywords, not capitalized, Java]
-preamble: 
+  formatted: [Bradley-Terry, Plackett-Luce, order statistics, rank
+    statistics, points systems, Formula 1]
+  plain:     [Bradley-Terry, Plackett-Luce, order statistics, rank
+    statistics, points systems, Formula 1]
+preamble:
   \usepackage{amsmath}
+  \usepackage{amssymb}
 output: rticles::jss_article
 ---
 
@@ -65,8 +76,6 @@ phenomenon not pursued here; and authors such as
 \citeauthor{mastromarco2009} suggest that the frequency of rule
 changes is driven by factors such as driver safety and revenue
 optimization.
-
-
 
 Points systems similar to that of Formula 1 are common in other sports
 and examples would include modern pentathlon, curling, chess, rowing,
@@ -712,28 +721,28 @@ correctly predicting the complete order statistic
 $\operatorname{Pr}(D=n)$.  These summaries are shown for each of the
 six points systems in figures \ref{simulated_mean},
 \ref{simulated_winner_correct} and \ref{simulated_complete_agreement}
-respectively.
+respectively.  These figures differ in detail but all have one
+feature: the winner-takes-all points system consistently outperforms
+the other systems.  This is particularly evident in figure
+\ref{simulated_complete_agreement}.
 
 
 # Discussion
 
-Points systems are a source of lively debate from many perspectives.
-The point of a point allocation system is to rank competitors in an
-objective way; but 
+Many competitive situations involve ranking competitors and one common
+method for combining repeated observations is to assign points for the
+winner, second place, third place, etc.  The overall ranking is
+decided on the basis of accumulated points.  However, statistical
+analysis made difficult by the arbitrary values of the points given.
 
-
+The points system used in Formula 1 motor racing is a source of lively
+debate from many perspectives, with changes being controversial.  
 Here I treat total points scored as a random variable and compare
-different point allocation schemes against both one another and
-
-
-but until now there is no objective way of comparing points systems.
-if one considers order tables to be a random variable.  Because the
-numerical value of points awarded for first, second, third etc, does
-not affect driver behaviour it is a reasonable requirement that
-
-Here, I assess
-several plausible points systems including the one actually used in
-Formula 1.  By several criteria, the 
+different point allocation schemes against objective Plackett-Luce
+ranks.  By several criteria, a ``winner takes all'' performs better
+than other reasonable points systems.  However, such a system
+furnishes little incentive for mid-ranking competitors and as such
+might result in duller races.
 
 
 
