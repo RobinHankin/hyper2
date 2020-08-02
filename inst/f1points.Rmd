@@ -96,11 +96,13 @@ $\sum p_i=1$.  Further, we use a generalization due to
 \citet{luce1959}, in which the probability of competitor $i$ winning
 in a field of $j=1,\ldots, n$ is $\frac{p_i}{p_1+\cdots +p_n}$.
 Noting that there is information in the whole of the finishing order,
-not just the first across the line, we can follow \cite{plackett1975}
-and consider the runner-up to be the winner among the remaining
-competitors; and so on down the finishing order.  Without loss of
-generality, if the order of finishing were $1,2,3,4,5$, then a suitable
-\citeauthor{plackett1975} likelihood function would be
+and not just the first across the line, we can follow
+\cite{plackett1975} and consider the runner-up to be the winner among
+the remaining competitors, and so on down the finishing order.
+Without loss of generality, if the order of finishing were
+$1,2,3,4,5$, then a suitable
+\citeauthor{plackett1975}-\citeauthor{luce1959} likelihood function
+would be
 
 \begin{equation}\label{competitors_1_to_5_likelihood}
 \frac{p_1}{p_1+p_2+p_3+p_4+p_5}\cdot
@@ -342,7 +344,7 @@ Thus, for 2017 at least, we see that the current points system agrees
 with likelihood ranking for the top four places, while Zipf's law
 agrees to three.
 
-
+```{r, label=calcpoints_real, echo=FALSE, cache=TRUE}
 ```{r, label=calcpoints_real, echo=FALSE, cache=TRUE}
 p <- formula1_points_systems()[[1]]   # real points system
 dp2016 <- ordertable2points(as.ordertable(F1_table_2016[seq_len(top),]),p)
@@ -469,7 +471,7 @@ dp2019z[] <- seq_along(dp2019z)
 ```
 
 
-```{r,label=likevspointszipf,cache=TRUE,echo=FALSE,fig.cap="As for figure \ref{orderingbypointsandlikelihood} \\label{orderingbypointsandlikelihood_zipf} but points ranking calculated by Zipf's law.  Note the generally poorer agreement between the two ranking systems ALSO R PLOTTING SUCKS HERE AND I WILL HAVE TO CHANGE THE PDF BY HAND WITH INKSCAPE TO MAKE IT LOOK GOOD"}
+	```{r,label=likevspointszipf,cache=TRUE,echo=FALSE,fig.cap="As for figure \ref{orderingbypointsandlikelihood} \\label{orderingbypointsandlikelihood_zipf} but points ranking calculated by Zipf's law. REF DOES NOT WORK HERE  Note the generally poorer agreement between the two ranking systems ALSO R PLOTTING SUCKS HERE AND I WILL HAVE TO CHANGE THE PDF BY HAND WITH INKSCAPE TO MAKE IT LOOK GOOD"}
 par(mfrow=c(2,2))
 par(mar = c(3,3,3,3))
 
@@ -647,16 +649,16 @@ jj <- cbind(s2016[,1],s2017[,1],s2018[,1],s2019[,1])  # mean
 matplot(jj[wanted,],type="n",xlab='points system',ylab='mean correct places',axes=FALSE)
 axis(1,at=1:6,labels=names(formula1_points_systems(top)[wanted]))
 axis(2,at=1:4)
-points(s2016[wanted,1],pch=1,type='b')
-points(s2017[wanted,1],pch=2,type='b')
-points(s2018[wanted,1],pch=3,type='b')
-points(s2019[wanted,1],pch=4,type='b')
+points(s2016[wanted,1],pch=1,type='b',col='red')
+points(s2017[wanted,1],pch=2,type='b',col='orange')
+points(s2018[wanted,1],pch=3,type='b',col='green')
+points(s2019[wanted,1],pch=4,type='b',col='blue')
 #legend("topright",lty=0,pch=1:4,legend=c("2016","2017","2018","2019"))
 par(xpd=TRUE)
-text(x=6,y=s2016[wanted[6],1],pos=4,"2016")
-text(x=6,y=s2017[wanted[6],1],pos=4,"2017")
-text(x=6,y=s2018[wanted[6],1],pos=4,"2018")
-text(x=6,y=s2019[wanted[6],1],pos=4,"2019")
+text(x=6,y=s2016[wanted[6],1],pos=4,"2016",col='red')
+text(x=6,y=s2017[wanted[6],1],pos=4,"2017",col='orange')
+text(x=6,y=s2018[wanted[6],1],pos=4,"2018",col='green')
+text(x=6,y=s2019[wanted[6],1],pos=4,"2019",col='blue')
 ```
 
 
@@ -672,16 +674,16 @@ jj <- cbind(s2016[,2],s2017[,2],s2018[,2],s2019[,2])  # prob of winner
 matplot(jj[wanted,],type="n",xlab='points system',ylab='probability of winner correct',axes=FALSE)
 axis(1,at=1:6,labels=names(formula1_points_systems(top)[wanted]))
 axis(2)
-points(s2016[wanted,2],pch=1,type='b')
-points(s2017[wanted,2],pch=2,type='b')
-points(s2018[wanted,2],pch=3,type='b')
-points(s2019[wanted,2],pch=4,type='b')
+points(s2016[wanted,2],pch=1,type='b',col='red')
+points(s2017[wanted,2],pch=2,type='b',col='orange')
+points(s2018[wanted,2],pch=3,type='b',col='green')
+points(s2019[wanted,2],pch=4,type='b',col='blue')
 #legend(x=3.4,y=0.67,lty=0,pch=1:4,legend=c("2016","2017","2018","2019"))
 par(xpd=TRUE)
-text(x=6,y=s2016[wanted[6],2],pos=4,"2016")
-text(x=6,y=s2017[wanted[6],2],pos=4,"2017")
-text(x=6,y=s2018[wanted[6],2],pos=4,"2018")
-text(x=6,y=s2019[wanted[6],2],pos=4,"2019")
+text(x=6,y=s2016[wanted[6],2],pos=4,"2016",col='red')
+text(x=6,y=s2017[wanted[6],2],pos=4,"2017",col='orange')
+text(x=6,y=s2018[wanted[6],2],pos=4,"2018",col='green')
+text(x=6,y=s2019[wanted[6],2],pos=4,"2019",col='blue')
 ```
 
 ```{r,label=alottaplotstotalrankorder,echo=FALSE,fig=TRUE,fig.cap="Simulated Formula 1 races, seasons 2016-2019: probability of complete agreement between Plackett-Luce ranks and ranks calculated by each of six points \\label{simulated_complete_agreement} systems"}
@@ -696,16 +698,16 @@ jj <- cbind(s2016[,3],s2017[,3],s2018[,3],s2019[,3])  # total rank order correct
 matplot(jj[wanted,],type="n",xlab='points system',ylab='probability of total rank order correct',axes=FALSE)
 axis(1,at=1:6,labels=names(formula1_points_systems(top)[wanted]))
 axis(2)
-points(s2016[wanted,3],pch=1,type='b')
-points(s2017[wanted,3],pch=2,type='b')
-points(s2018[wanted,3],pch=3,type='b')
-points(s2019[wanted,3],pch=4,type='b')
+points(s2016[wanted,3],pch=1,type='b',col='red')
+points(s2017[wanted,3],pch=2,type='b',col='orange')
+points(s2018[wanted,3],pch=3,type='b',col='green')
+points(s2019[wanted,3],pch=4,type='b',col='blue')
 #legend("topleft",lty=0,pch=1:4,legend=c("2016","2017","2018","2019"))
 par(xpd=TRUE)
-text(x=5,y=s2016[wanted[5],3],pos=3,"2016")
-text(x=5,y=s2017[wanted[5],3]-0.01,pos=1,"2017")
-text(x=5,y=s2018[wanted[5],3],pos=3,"2018")
-text(x=5,y=s2019[wanted[5],3],pos=3,"2019")
+text(x=5,y=s2016[wanted[5],3],pos=3,"2016",col='red')
+text(x=5,y=s2017[wanted[5],3],pos=1,"2017",col='orange')
+text(x=5,y=s2018[wanted[5],3],pos=3,"2018",col='green')
+text(x=5,y=s2019[wanted[5],3],pos=3,"2019",col='blue')
 ```
 
 We now assess the six points systems using the methodology outlined
