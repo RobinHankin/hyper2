@@ -23,9 +23,10 @@ curling_table  <- read.table("curling.txt",header=TRUE)
 curling_table
 ```
 
-Thus we see that Canada came first in 1998, third in 2002, and so on;
-in 1998, Canada came first, China did not compete [`NA` meaning did
-not compete], Denmark came second, and so on.
+Thus the first row shows that Canada came first in 1998, third in
+2002, and so on; the first column shows that in 1998, Canada came
+first, China did not compete [`NA` meaning did not compete], Denmark
+came second, and so on.
 
 First we will interpret `NA` in the same way as `DNS` in the context
 of formula 1 motor racing.  We need to define a new data frame, `b`:
