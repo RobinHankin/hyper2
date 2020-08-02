@@ -25,14 +25,14 @@ ignore <- "
  cat f1points_Omaker.R | sed -e 's/2017/2018/g' > f2018.R
  cat f1points_Omaker.R | sed -e 's/2017/2019/g' > f2019.R
 
- R CMD BATCH f2012.R
- R CMD BATCH f2013.R
- R CMD BATCH f2014.R
- R CMD BATCH f2015.R
- R CMD BATCH f2016.R
- R CMD BATCH f2017.R
- R CMD BATCH f2018.R
- R CMD BATCH f2019.R
+ R CMD BATCH f2012.R &
+ R CMD BATCH f2013.R &
+ R CMD BATCH f2014.R &
+ R CMD BATCH f2015.R &
+ R CMD BATCH f2016.R &
+ R CMD BATCH f2017.R &
+ R CMD BATCH f2018.R &
+ R CMD BATCH f2019.R &
 "
 
 # creates all the different .rda files needed by f1points.Rmd.
