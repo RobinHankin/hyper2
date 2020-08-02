@@ -889,7 +889,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     ## Now cycle through the rows; each row is a venue [voter]
     for(i in seq_len(nrow(fmat))){
         o <- fmat[i,,drop=TRUE]
-        if(incomplete){ o[o>0] <- order(o[o>0]) }
+        if(incomplete){ o[o>0] <- rank(o[o>0]) }
         out %<>% `+`(ordervec2supp(o))
     } # i loop closes
     return(out)
@@ -1006,7 +1006,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
                   out <- suppressWarnings(as.numeric(x))  # 'ret' etc -> NA
                   no <- is.na(out)
                   o <- out[!no]
-                  o[o>0] <- order(o[o>0])
+                  o[o>0] <- rank(o[o>0])
                   out[!no] <- o
                   out[no] <- 0
                   return(out)
