@@ -39,7 +39,7 @@ ct
 In this form we can easily convert to a support function:
 
 ```{r,definsupportb,cache=TRUE}
-H1 <- ordertable2supp(ranktable_to_ordertable(wikitable_to_ranktable(ct)))
+H1 <- ordertable2supp(ct)
 H1
 mH1 <- maxp(H1)
 pie(mH1)
