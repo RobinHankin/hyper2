@@ -22,14 +22,17 @@ abstract: >
   $(25,18,15,12,10,8,6,4,2,1)$.  The overall ranking of the
   competitors is determined by summing points awarded over a season;
   but this system suffers from the defect that the points system
-  itself is intrinsically arbitrary.  Here, I apply generalized
-  Plackett-Luce likelihood functions to Formula 1 motor racing, and
-  use maximum likelihood techniques to identify a ranking for the competitors;
-  this method includes no use of an arbitrary points system.
-  Using this methodology, I assess a number of reasonable points
-  scoring systems objectively.  In a well-defined statistical sense, a
-  ``winner-takes-all'' points system outperforms the other points
-  systems considered.
+  itself is intrinsically arbitrary: the points system does not affect
+  the competitors' behaviour but can change the overall ranking.
+  Here, I calculate generalized Plackett-Luce likelihood functions for
+  Formula 1 motor racing, and use maximum likelihood techniques to
+  identify a ranking for the competitors; this method includes no
+  arbitrary points system. Using this methodology, I assess a number
+  of reasonable points scoring systems  objectively,  by comparing
+  likelihood-based rankings with points-based rankings.  In one
+  well-defined statistical sense, a linear  points system outperforms
+  the other points systems considered, and in another the ``winner
+  takes all'' system is the best.
 keywords: 
   # at least one keyword must be supplied
   formatted: [Bradley-Terry, Plackett-Luce, order statistics, rank
@@ -43,11 +46,10 @@ output: rticles::jss_article
 ---
 
 
-
 # Introduction
 
 Formula 1 racing is an important and prestigious motor sport
-\citep{moul2009}.  Season ranking is based on a points allocation
+\citep{test}.  Season ranking is based on a points allocation
 system wherein competitors are awarded points based on race finishing
 order; points accumulate additively.  The overall competition winner
 is the competitor who accumulates the most points after the final
@@ -57,7 +59,7 @@ However, in the case of Formula 1 Motor Racing, the points system is
 the subject of much controversy, having changed often since the
 competition's inauguration in 1950 when the points allocation, used
 from 1950 to 1959 was $(8,6,4,3,2)$, thus crediting only the first
-five finishers.  As of 2020, the current system of
+five finishers.  As of 2020, the current points system of
 $(25,18,15,12,10,8,6,4,2,1)$ credits the first 10.  Arguably these two
 systems could introduce different rational behaviour under zero-sum
 assumptions: if, in a race, a driver knows he will place seventh under
@@ -65,7 +67,10 @@ a low-risk strategy but may place sixth by dint of driving more
 aggressively, the low-risk strategy might be rational under the first
 points system (which does not reward the extra ranking), but not under
 the second, which does.  Still, it is reasonable to assume that each
-driver strives to maximise his rank.
+driver strives to maximise his rank and this will be done here.  If
+this is so, then changing the points system might change the
+competitors' rankings but not their behaviour: surely a defect of
+using points to rank the competitors.
 
 Given that racing is a zero-sum game---and that points are
 monotonically decreasing---each player will try to get as high a rank
@@ -94,15 +99,14 @@ that the probability of $i$ beating $j\neq i$ in pairwise competition
 is $\frac{p_i}{p_i+p_j}$; it is conventional to normalize so that
 $\sum p_i=1$.  Further, we use a generalization due to
 \citet{luce1959}, in which the probability of competitor $i$ winning
-in a field of $j=1,\ldots, n$ is $\frac{p_i}{p_1+\cdots +p_n}$.
-Noting that there is information in the whole of the finishing order,
-and not just the first across the line, we can follow
-\cite{plackett1975} and consider the runner-up to be the winner among
-the remaining competitors, and so on down the finishing order.
-Without loss of generality, if the order of finishing were
-$1,2,3,4,5$, then a suitable
-\citeauthor{plackett1975}-\citeauthor{luce1959} likelihood function
-would be
+in a field of $1,\ldots, n$ is $\frac{p_i}{p_1+\cdots +p_n}$.  Noting
+that there is information in the whole of the finishing order, and not
+just the first across the line, we can follow \cite{plackett1975} and
+consider the runner-up to be the winner among the remaining
+competitors, and so on down the finishing order.  Without loss of
+generality, if the order of finishing were $1,2,3,4,5$, then a
+suitable \citeauthor{plackett1975}-\citeauthor{luce1959} likelihood
+function would be
 
 \begin{equation}\label{competitors_1_to_5_likelihood}
 \frac{p_1}{p_1+p_2+p_3+p_4+p_5}\cdot
@@ -248,19 +252,19 @@ pie(mH2019[c(1,6,11,2,7,3,8,4,9,5,10)],cex=0.7,main="2019")
 
 
 We see in figure \ref{piechartstrength} that the driver with the
-largest estimated strength was Rosberg in 2016 (at about 49\%) and in
-years 2017-8-9 was Hamilton (at about 29\%, 35\%, and 50\%
-respectively).  However, it should be noted that a likelihood ratio
-test [`samep.test()`, supplied with the package] does not reject, for
-example, the null that Hamilton and Vettel have the same strength in
-2017 ($H_0\colon \pham= \pvet$) with a likelihood ratio of
-$e^{1.5}\simeq 4.48$, corresponding (by Wilks's theorem) to an
-asymptotic $p$-value of about $0.08$.
+largest estimated strength was Rosberg in 2016 at about 30\%, and in
+years 2017-8-9 was Hamilton (at about 29\%, 37\%, and 42\%
+respectively).  As an illustration of the value of likelihood methods
+(as opposed to points-based methods), a likelihood ratio test
+[`samep.test()`, supplied with the package] rejects
+the null that Hamilton and Vettel have the same strength in
+2018 ($H_0\colon \pham= \pvet$) with a likelihood ratio of
+$e^{2.76}\simeq 15.8$, corresponding (by Wilks's theorem) to an
+asymptotic $p$-value of about $0.02$.
 
 ```{r,label=dosameptest, echo=FALSE, print=FALSE, cache=TRUE}
-ignore <- samep.test(H2017,1:2)
+ignore <- samep.test(H2018,c("Hamilton","Vettel"))
 ```
-
 ## Likelihood scoring vs points scoring
 
 Applying the current points system, for example, to the 2017 results table we
@@ -435,7 +439,7 @@ ranking ranking procedures; but R\"{a}ikk\"{o}nen YES I KNOW IT IS
 WRONG: RMARKDOWN IS DEFECTIVE and Bottas are third and fourth, and
 fourth and third, according to points and likelihood respectively.  We
 define the \emph{degree of agreement} between the two ranking systems
-as the maximal value of $n$ such that places $1,2,\ldots n$ all match.
+as the maximal value of $r$ such that places $1,2,\ldots r$ all match.
 Thus, from figure \ref{orderingbypointsandlikelihood}, the degree of
 agreement between likelihood ranking and points ranking for the years
 2016-2019 would be 8,2,6, and 2 respectively.
@@ -603,8 +607,6 @@ furnishes an objective assessment of the points system used.
 
 ## Numerical results
 
-
-
 ```{r,label=definemultiplemontecarlo, echo=FALSE}
 load("formula1_results_2016.rda") # this created by running f1points_Omaker.R; file contains R variables OO and pointslist
 OO2016 <- OO
@@ -723,30 +725,35 @@ correctly predicting the complete order statistic
 $\operatorname{Pr}(D=n)$.  These summaries are shown for each of the
 six points systems in figures \ref{simulated_mean},
 \ref{simulated_winner_correct} and \ref{simulated_complete_agreement}
-respectively.  These figures differ in detail but all have one
-feature: the winner-takes-all points system consistently outperforms
-the other systems.  This is particularly evident in figure
-\ref{simulated_complete_agreement}.
+respectively.
 
+We see that the linear points system $(n,n-1,n-2,\ldots,3,2,1)$ gives
+the highest mean number of places, and also the highest probability of
+correctly predicting the winner.  However, the probability of
+predicting the complete order statistic is maximized using the winnner
+takes all system $(1,0,0,\ldots)$.
 
 # Discussion
 
-Many competitive situations involve ranking competitors and one common
-method for combining repeated observations is to assign points for the
-winner, second place, third place, etc.  The overall ranking is
-decided on the basis of accumulated points.  However, statistical
-analysis made difficult by the arbitrary values of the points given.
+Many competitive situations involve a ranking of the participants and
+one common method for combining repeated observations is to assign
+points for the winner, second place, third place, etc.  The overall
+ranking is decided on the basis of accumulated points.  However,
+points systems are unavoidably arbitrary.  Assuming that participants
+attempt to optimize their placing means that the arbitrary
+nature of any points system.
+  
+Maximum likelihood estimation of participants' Plackett-Luce strengths
+furnishes a ranking system that does not suffer from the arbitrariness
+of a points system. 
 
 The points system used in Formula 1 motor racing is a source of lively
-debate from many perspectives, with changes being controversial.  
-Here I treat total points scored as a random variable and compare
-different point allocation schemes against objective Plackett-Luce
-ranks.  By several criteria, a ``winner takes all'' performs better
-than other reasonable points systems.  However, such a system
-furnishes little incentive for mid-ranking competitors and as such
-might result in duller races.
-
-
+debate from many perspectives, with changes being controversial.  Here
+I treat total points scored as a random variable and compare different
+point allocation schemes against objective Plackett-Luce ranks.  Of
+the six points systems considered here, a linear system or a
+winner-takes-all-system appear to be closest to objective
+Plackett-Luce, depending on the exact definition of ``closest''.
 
 
 \bibliography{chess}
