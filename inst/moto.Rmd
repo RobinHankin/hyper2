@@ -24,7 +24,7 @@ motoGP_2019_table
 ```
 
 Each row is a driver (rider?) and each column (after the first) a
-venue.  Takin the first row we see that Marquez came second in Qatar,
+venue.  Taking the first row we see that Marquez came second in Qatar,
 first in Argentina, retired in Austin, and so on.  In the first
 column, we see the result from Qatar (QAT) in which Marquez came
 second, Dovizioso first, Vinales third, and so on.  Notation used also
@@ -43,7 +43,7 @@ head(motoGP_2019)
 the Placket-Luce likelihood function for the 2019 results.  We can
 find the maximum likelihood estimator by using the `maxp()` function:
 
-```{r,maxp2017}
+```{r,maxp2017,cache=TRUE}
 options(width = 100)
 m <- maxp(motoGP_2019)
 m
