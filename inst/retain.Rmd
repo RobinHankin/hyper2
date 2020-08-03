@@ -14,9 +14,10 @@ options("digits" = 5)
 ## Functions keep() and keep_flawed()
 
 
-Functions `keep()` and `keep_flawed()` can be confusing, here is a
-tiny example that should clarify things.  We will use a subset of
-`skating_table`:
+Function `keep_flawed()` can be confusing.  Originally, the package
+included a function `keep()` but this used flawed logic, hence the
+name of its replacement.  Here is a tiny example that should clarify
+things.  We will use a subset of `skating_table`:
 
 ```{r}
 jj <- skating_table[1:3,1:6]
@@ -24,8 +25,12 @@ rownames(jj) <- letters[1:3]
 jj
 ```
 
-Object `jj` does not function as a rank table because the entries are
-not sequential.  We need to convert it:
+
+Above, rows of object `jj` correspond to competitors and columns to
+judges.  Object `jj` does not function as a rank table because the
+entries are not sequential. 
+
+We could convert explicitly:
 
 ```{r}
 a <- apply(jj,2,rank)
@@ -41,10 +46,10 @@ OT <- ordertable2supp(a)
 OT
 ```
 
-Now suppose we are interested only in the first two competitors, `a`
-and `b`.  There are two ways to discard competitor `c`, namely
-`keep()` and `keep_flawed()`, which do slightly different things.
-First, `keep()`:
+(function `ordertable2supp()` does this automatically, so
+`ordertable2supp(jj)` would have given the same result).  Now suppose
+we are interested only in the first two competitors, `a` and `b`,
+which are competitors 1 and 2.
 
 ```{r}
 keep_flawed(OT,1:2)
@@ -55,27 +60,12 @@ and then discarded the `c^5` term.  This process, while natural, has
 the effect of replacing `(a+c)^-4` with `a^-4`, which has no natural
 probabilistic interpretation: we are ignoring `c`'s victories but
 nevertheless interpreting joint strength term on the denominator [viz
-`a+c`] as a *loss* for `a`.  We will now use function `keep()`, which
-operates on order tables:
+`a+c`] as a *loss* for `a`.
+
+What happens if we keep only `a`?
 
 ```{r}
-RA <- keep(a,1:2)
-RA
-```
-
-Looking at object `ra` we see six comparisons, of which `a` wins 5 and
-`b` wins 1.
-
-```{r}
-OR <- ordertable2supp(RA)
-OR
-```
-
-Above, object `or` is a perfectly sensible likelihood function.  What
-happens if we keep only `a`?
-
-```{r}
-keep_flawed(OR,1)
+keep_flawed(OT,1)
 ```
 
 the above support function is meaningless (?) as, having set `b=0` we
