@@ -10,17 +10,19 @@ library(hyper2)
 
 # Partial rank observations: someone didn't win
 
-Here we consider a situation in which we make an observation that is
-only very very weakly informative.  We consider the observation
-${\mathcal O}$ that a particular player *does not* win: the order
-statistic is unobserved and we know nothing about it except for the
-fact that (wlog) player 1 ($p_1$, aka "me") is not first placed.  We
-consider whether there is evidence to support two different assertions:
+(see also `inst/loser.Rmd`).
+Here we consider a situation in which we make
+an observation that is only very very weakly informative.  We consider
+the observation ${\mathcal O}$ that a particular player *does not*
+win: the order statistic is unobserved and we know nothing about it
+except for the fact that (wlog) player 1 ($p_1$, aka "me") is not
+first placed.  We consider whether there is evidence to support two
+different assertions:
 
 * $H_1\colon p_1=p_2=\ldots=p_n=\frac{1}{n}$
 * $H_2\colon\exists i\neq 1 \mbox{ with } p_1\geq p_i>0$
 
-Our alternative would be that $(p_1,\ldots,p_n) is unconstrained
+Our alternative would be that $(p_1,\ldots,p_n)$ is unconstrained
 except for the unit sum constraint:
 
 * $H_0\colon\sum p_i=1$  (that is, no restriction)

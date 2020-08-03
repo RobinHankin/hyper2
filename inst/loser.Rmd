@@ -11,7 +11,7 @@ library(hyper2)
 
 # Partial rank observations: who lost?
 
-
+(see also `inst/notthewinner.Rmd`).
 Here we consider a situation in which we make only a rather
 uninformative observation: namely, the identity of the _loser_ (which
 is here taken to be me, player `a`).  We have six competitors
