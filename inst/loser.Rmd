@@ -30,7 +30,7 @@ hypotheses correspond to a restriction on allowable parameter space.
 The first step is to define a suitable likelihood function for our
 observation:
 
-```{r}
+```{r,label=useggrl}
 n <- 6 # number of competitors
 H <- hyper2(pnames=letters[1:6])
 L <- ggrl(H,letters[2:n],letters[1]) 
@@ -52,7 +52,7 @@ order is permissible, so long as player `a` is bottom.
 Now we maximize the likelihood
 under $H_1$, that is, perform an unconstrained maximization:
 
-```{r}
+```{r,label=executemaxp,cache=TRUE}
 (ans_unconstrained <- maxp(L,give=TRUE))
 ```
 
@@ -73,7 +73,7 @@ The next step is to perform a constrained maximization, the constraint
 being $H_2$.  This says that I am better than at least one other
 person, here chosen to be, without loss of generality, competitor `b`:
 
-```{r}
+```{r,label=constrainthething,cache=TRUE}
 small <- 1e-2  # numerical necessity
 ans_constrained <-
 maxp(L,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,-1,rep(0,n-3))),fcv=0,give=TRUE)
@@ -93,7 +93,7 @@ equivalent to a random chance.  Because this is a point hypothesis, we
 do not need to use any maximization techniques; it is sufficient to
 evaluate the likelihood at this point:
 
-```{r}
+```{r,label=likesingle}
 like_single_list(indep(equalp(L[[1]])),L)
 ```
 
@@ -140,7 +140,7 @@ would require $2/\log(2)\simeq 2.9$ observations, or 3 rounded up;
 alternatively, we might require the log-likelihood to lie in the tail
 area of its asymptotic $\chi^2_1$ distribution, that is
 
-```{r}
+```{r,label=useqchis}
 qchisq(0.95,1)
 ```
 
