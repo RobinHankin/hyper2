@@ -1033,3 +1033,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     stopifnot(all(table(names(x))==1))
     x[apply(outer(players,names(x),`==`),1,which)]
 }
+
+`combine` <- function(H1,H2){
+  p <- unique(c(pnames(H1),pnames(H2),recursive=TRUE))
+  change_pnames(H1,p) + change_pnames(H2,p)
+}
