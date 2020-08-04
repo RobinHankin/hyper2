@@ -19,6 +19,7 @@
 ^inst/skating_analysis_cache$
 ^inst/skating_analysis_files$
 ^inst/f1points_cache$
+^inst/f1points_files$
 ^inst/f1points2016_cache$
 ^inst/f1points2016_files$
 ^inst/f1points2017_cache$
@@ -27,3 +28,10 @@
 ^inst/f1points2018_files$
 ^inst/f1points2019_cache$
 ^inst/f1points2019_files$
+^inst/universities_cache$
+^inst/universities_files$
+^inst/moto_cache$
+^inst/moto_files$
+^inst/loser_cache$
+^inst/loser_files$
+
