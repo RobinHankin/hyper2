@@ -10,7 +10,8 @@
 \alias{specificp.ge.test}
 \alias{specificp.le.test}
 \title{Hypothesis testing}
-\description{Tests different nulls against a free alternative}
+\description{\loadmathjax
+  Tests different nulls against a free alternative}
 \usage{
 equalp.test(H, ...)
 samep.test(H, i, give=FALSE, ...)
@@ -54,10 +55,10 @@ specificp.lt.test(H, i, specificp=1/size(H), ...)
 
 \itemize{
   \item Function \code{equalp.test()} tests
-  \eqn{H_0\colon p_1=p_2=\cdots=p_n=\frac{1}{n}}{omitted, see PDF}
+  \mjeqn{H_0\colon p_1=p_2=\cdots=p_n=\frac{1}{n}}{H0: p1=p2=...=pn=1/n}
   \item Function \code{specificp.test(H,i,p)} tests
-  \eqn{H_0\colon p_i=p}{omitted}
-  \item Function \code{samep.test()} tests \eqn{H_0\colon
+  \mjeqn{H_0\colon p_i=p}{H0: p_i=p}
+  \item Function \code{samep.test()} tests \mjeqn{H_0\colon
   p_{i_1}=p_{i_2}=\cdots=p_{i_k}}{omitted}.
   \item Functions \code{specificp.ne.test(H,i,p)},
   \code{specificp.gt.test(H,i,p)}, and \code{specificp.lt.test(H,i,p)}
