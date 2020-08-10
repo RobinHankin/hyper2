@@ -28,60 +28,69 @@ so on to 2020.
 We can coerce each year to a `hyper2` likelihood function by
 converting to an order table with `order()`, thence to a support function:
 
-```{r, coerceem}
-f <- function(y,supp=TRUE,...){
-  jj <- as.data.frame(a)
-  jj <- subset(jj,jj$year==y)
-  o <- function(v){
-  good <- v != "DNP"
-     v[good] <- order(v[good],decreasing=TRUE)
-     return(v)
-     }	
-  x <- apply(jj,2,o)
-  rownames(x) <- jj[,1]
-  x <- x[,3:6]
-  if(supp){
-    return(ordertable2supp(x,...))
-  } else {
-  return(as.data.frame(x))
-  }		
+```{r, label=definehelperfunctionf}
+f <- function(a,y){
+  a <- subset(a,a$year==y)
+  o <- function(v){  # 'v' is a character vector
+    good <- v != "DNP"
+    v[good] <- rank(-as.numeric(v[good]),ties.method="last")
+    return(v)
+  }
+  out <- data.frame(o(a[,3]),o(a[,4]),o(a[,5]),o(a[,6]),o(a[,7]))
+  colnames(out) <- colnames(a)[3:7]
+  rownames(out) <- a[,1]
+  return(out)
 }
-f(2012)
+f(a,2012)
 ```
 
 Now:
 ```{r,playerwithadvantage}
-H <- f(2013) + f(2014) + f(2015)                          # pre  2016
-H1 <- H + f(2016) + f(2017) + f(2018) + f(2019) + f(2020) # post 2016
+H <- hyper2(pnames=a[1:8,1])
+for(i in 2013:2020){ H %<>% `+`(ordertable2supp(f(a,i)))}
+H
 ```
 
-Object `H1` is simply the support function for the universities'
-strenghts for observations (assumed to be independent) 2013-2020:
+Object `H` is simply the support function for the universities'
+strengths for all years' observations (assumed to be independent)
+2013-2020:
 
-```{r}
-maxp(H)
+```{r,label=maxpcalc,cache=TRUE}
+m <- maxp(H)
+m
+pie(m)
 ```
 
 Note the dominance of Auckland (UoA).  We observe that AUT has
 increased its strength since 2016 and we can test whether this
 increase is significant:
 
-```{r}
-pnames(H) <- c(pnames(H),"S")
-H2 <- H + pwa(f(2016),"AUT") + pwa(f(2017),"AUT") +
-          pwa(f(2018),"AUT") + pwa(f(2019),"AUT") +
-  	  pwa(f(2020),"AUT")
-head(H2)
+
+```{r,label=preandpost}
+
+H1 <- hyper2(pnames=c("AUT_pre",a[c(1:2,4:8),1]))
+for(i in 2012:2016){
+  b <- f(a,i)
+  rownames(b)[3] <- "AUT_pre"
+  H1 <- combine(H1,ordertable2supp(b))
+} # column loop closes
+
+
+H2 <- hyper2(pnames=c("AUT_post",a[c(1:2,4:8),1]))
+for(i in 2017:2020){
+  jj <- f(a,i)
+  rownames(jj)[3] <- "AUT_post"
+  H2 <- combine(H2,ordertable2supp(jj))
+}
+maxp(H2)
 ```
 
-Object `H2` is a support function for the Bradley-Terry strengths of
-the universities, but with AUT having extra strength `S` post-2016.
-We can test the null that `S=0` using package idiom
-\code{specificp.test()}:
-
-```{r}
-specificp.test(H2,"S",0)
-```
 
 See how we reject $H_0\colon S=0$ with a p-value of about 0.00676,
 significant at 1\%.
+
+```{r}
+H <- combine(H1,H2)
+maxp(H)
+samep.test(H,c(1,9))
+```
