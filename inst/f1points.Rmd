@@ -33,7 +33,7 @@ abstract: >
   well-defined statistical sense, a linear  points system outperforms
   the other points systems considered, and in another the ``winner
   takes all'' system is the best.
-keywords: 
+keywords:
   # at least one keyword must be supplied
   formatted: [Bradley-Terry, Plackett-Luce, order statistics, rank
     statistics, points systems, Formula 1]
@@ -49,11 +49,11 @@ output: rticles::jss_article
 # Introduction
 
 Formula 1 racing is an important and prestigious motor sport
-\citep{test}.  Season ranking is based on a points allocation
-system wherein competitors are awarded points based on race finishing
-order; points accumulate additively.  The overall competition winner
-is the competitor who accumulates the most points after the final
-race.
+\citep{codling2017,jenkins2010}.  Season ranking is based on a points
+allocation system wherein competitors are awarded points based on race
+finishing order; points accumulate additively.  The overall
+competition winner is the competitor who accumulates the most points
+after the final race.
 
 However, in the case of Formula 1 Motor Racing, the points system is
 the subject of much controversy, having changed often since the
@@ -116,9 +116,11 @@ function would be
 \frac{p_5}{p_5}
 \end{equation}
 
-and a slight generalization of this would allow the incorporation of
-non-finishers (DNF etc).  If, say, competitors 4 and 5 did not finish,
-we would have
+
+and this would be a forward ranking Plackett-Luce model in the
+terminology of \cite{johnson2020}.  A slight generalization allows the
+incorporation of non-finishers (DNF etc).  If, say, competitors 4 and
+5 did not finish, we would have
 
 \begin{equation}\label{competitors_1_to_3_only_finished}
 \frac{p_1}{p_1+p_2+p_3+p_4+p_5}\cdot
@@ -194,7 +196,7 @@ players can be weakly informative about higher-ranked players'
 strengths.  For example, we see that Vettel retired twice (in
 Singapore and Japan), so any player who placed in those venues will
 effectively ``steal'' strength from Vettel, and generally ``give'' it
-to Hamilton or Bottas.}.  Although it has many terms, the overall loglikelihood 
+to Hamilton or Bottas.}.  Although it has many terms, the overall loglikelihood
 expression is of the general form
 
 ```{r,label=showanordertableandhead,echo=FALSE,print=FALSE}
@@ -231,8 +233,8 @@ H2019 <- ordertable2supp(F1_table_2019[seq_len(top),])
 Finding the maximum likelihood estimate for the players' strengths is
 straightforward.  The `hyper2` package includes a suite of numerical
 optimization routines, and because they have access to derivatives,
-convergence is rapid.  A graphical illustration of the strengths is
-given in figure \ref{piechartstrength}
+convergence is rapid.  A graphical diagram of the strengths is given
+in figure \ref{piechartstrength}
 
 ```{r,label=maximumlikelihoodcalculations,cache=TRUE,echo=FALSE}
 mH2016 <- maxp(H2016)
@@ -256,11 +258,26 @@ largest estimated strength was Rosberg in 2016 at about 30\%, and in
 years 2017-8-9 was Hamilton (at about 29\%, 37\%, and 42\%
 respectively).  As an illustration of the value of likelihood methods
 (as opposed to points-based methods), a likelihood ratio test
-[`samep.test()`, supplied with the package] rejects
-the null that Hamilton and Vettel have the same strength in
-2018 ($H_0\colon \pham= \pvet$) with a likelihood ratio of
-$e^{2.76}\simeq 15.8$, corresponding (by Wilks's theorem) to an
-asymptotic $p$-value of about $0.02$.
+[`samep.test()`, supplied with the package] rejects the null that
+Hamilton and Vettel have the same strength in 2018 ($H_0\colon \pham=
+\pvet$) with a likelihood ratio of $e^{2.76}\simeq 15.8$,
+corresponding (by Wilks's theorem) to an asymptotic $p$-value of about
+$0.02$.  We may also use the reified entity concept to test the null
+hypothesis that Hamilton's strength remains constant 2016, where
+Rosberg had the highest estimated strength, and 2017-9, where Hamilton
+did; we fail to reject this null.
+
+```{r,label=combineallyearssetup,echo=FALSE,cache=TRUE}
+H2016a <- hyper2(brackets(H2016),d=powers(H2016),pnames=sub("Hamilton","Hamilton_pre", pnames(H2016)))
+H2017a <- hyper2(brackets(H2017),d=powers(H2017),pnames=sub("Hamilton","Hamilton_post",pnames(H2017)))
+H2018a <- hyper2(brackets(H2018),d=powers(H2018),pnames=sub("Hamilton","Hamilton_post",pnames(H2018)))
+H2019a <- hyper2(brackets(H2019),d=powers(H2019),pnames=sub("Hamilton","Hamilton_post",pnames(H2019)))
+Ha <- H2016a
+Ha <- combine(Ha,H2017a)
+Ha <- combine(Ha,H2018a) 
+Ha <- combine(Ha,H2019a)
+ignorethis <- samep.test(Ha,c("Hamilton_pre","Hamilton_post"))
+```
 
 ```{r,label=dosameptest, echo=FALSE, print=FALSE, cache=TRUE}
 ignore <- samep.test(H2018,c("Hamilton","Vettel"))
@@ -742,10 +759,10 @@ ranking is decided on the basis of accumulated points.  However,
 points systems are unavoidably arbitrary.  Assuming that participants
 attempt to optimize their placing means that the arbitrary
 nature of any points system.
-  
+
 Maximum likelihood estimation of participants' Plackett-Luce strengths
 furnishes a ranking system that does not suffer from the arbitrariness
-of a points system. 
+of a points system.
 
 The points system used in Formula 1 motor racing is a source of lively
 debate from many perspectives, with changes being controversial.  Here
