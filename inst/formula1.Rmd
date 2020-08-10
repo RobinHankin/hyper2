@@ -202,10 +202,21 @@ samep.test(formula1,c("Hamilton","Bottas"))
 We will consider four years data:
 
 ```{r,fouryearsdata, cache=TRUE}
-F1_2014 <- "formula1_2014.txt" %>% read.table(header=TRUE) %>% ordertable2supp
-F1_2015 <- "formula1_2015.txt" %>% read.table(header=TRUE) %>% ordertable2supp
-F1_2016 <- "formula1_2016.txt" %>% read.table(header=TRUE) %>% ordertable2supp
-F1_2017 <- "formula1_2017.txt" %>% read.table(header=TRUE) %>% ordertable2supp
+
+jj <- read.table("formula1_2014.txt",header=TRUE)
+F1_2014 <- ordertable2supp(jj[,seq_len(ncol(jj)-1)], incomplete = TRUE)
+
+jj <- read.table("formula1_2015.txt",header=TRUE)
+F1_2015 <- ordertable2supp(jj[,seq_len(ncol(jj)-1)], incomplete = TRUE)
+
+jj <- read.table("formula1_2016.txt",header=TRUE)
+F1_2016 <- ordertable2supp(jj[,seq_len(ncol(jj)-1)], incomplete = TRUE)
+
+jj <- read.table("formula1_2017.txt",header=TRUE)
+F1_2017 <- ordertable2supp(jj[,seq_len(ncol(jj)-1)], incomplete = TRUE)
+
+
+
 a <- list(F1_2014, F1_2015, F1_2016, F1_2017)
 alldrivers <- all_pnames(a)
 
