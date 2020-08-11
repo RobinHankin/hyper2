@@ -1,0 +1,96 @@
+---
+title: "Red bus, blue bus"
+output: pdf_document
+bibliography: chess.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The red bus-blue bus problem was originally stated by
+@davidson1970.  The other one was the holiday problem.
+
+A traveller has a choice of going to work by car or taking a bus.  The
+bus may be red or blue.  Here, we assume that the traveller has strong
+(but unknown) views on cars vs buses.  If considering a car or bus,
+the colour of the bus is of no importance to him.  
+However, when offered the choice between a red bus or a blue bus, the
+colour becomes important (having nothing else to guide his decision).
+
+A sensible likelihood function is shown in figure \ref{likefuncred}.
+
+\begin{table}[h]
+\centering
+\caption{Likelihoods\label{likefuncred} for red bus, blue bus problem}
+\begin{tabular}{|l|l|}
+\hline
+Choice set & likelihood  \\ \hline
+$\left\lbrace C,RB  \right\rbrace$ & $\left(\frac{p_C   }{p_C+p_{B}   }\right)^a \left(\frac{p_{B}}{p_C+p_{B}}\right)^b $ \\ \hline
+$\left\lbrace C,BB  \right\rbrace$ & $\left(\frac{p_C   }{p_C+p_{B}   }\right)^c \left(\frac{p_{B}}{p_C+p_{B}}\right)^d $ \\ \hline
+$\left\lbrace RB,BB \right\rbrace$ & $\left(\frac{1}{2}\right)^e 
+                                      \left(\frac{1}{2}\right)^f
+$ \\ \hline
+$\left\lbrace C,RB,BB\right\rbrace$ & $
+\left(\frac{p_C}{p_C + 2p_{B}}\right)^g
+\left(\frac{p_B}{p_C + 2p_{B}}\right)^h
+\left(\frac{p_B}{p_C + 2p_{B}}\right)^i
+$\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Likelihoods\label{likefuncredghost} for red bus, blue bus problem}
+\begin{tabular}{|l|l|}
+\hline
+Choice set & likelihood  \\ \hline
+$\left\lbrace C,RB  \right\rbrace$ & $\left(\frac{p_C   }{p_C+p_{B}   }\right)^a \left(\frac{p_{B}}{p_C+p_{B}}\right)^b $ \\ \hline
+$\left\lbrace C,BB  \right\rbrace$ & $\left(\frac{p_C   }{p_C+p_{B}   }\right)^c \left(\frac{p_{B}}{p_C+p_{B}}\right)^d $ \\ \hline
+$\left\lbrace RB,BB \right\rbrace$ & $\left(\frac{p_{B}+p_{RG}}{2p_{B}+p_{RG}}\right)^e 
+                                      \left(\frac{p_{B}       }{2p_{B}+p_{RG}}\right)^f
+$ \\ \hline
+$\left\lbrace C,RB,BB\right\rbrace$ & $
+\left(\frac{p_C       }{p_C + 2p_{B}+p_{RG}}\right)^g
+\left(\frac{p_B+p_{RG}}{p_C + 2p_{B}+p_{RG}}\right)^h
+\left(\frac{p_B       }{p_C + 2p_{B}+p_{RG}}\right)^i
+$\\ \hline
+\end{tabular}
+\end{table}
+
+
+
+ @debreu1960 offers:
+ 
+Let the set U have the following three elements: $D_c$, a recording of
+the Debussy quartet by the $C$ quartet, $B_F$, a recording of the
+eighth symphony of Beethoven by the $B$ orchestra conducted by $F$,
+$B_K$, a recording of the eighth symphony of Beethoven by the $B$
+orchestra conducted by $K$.  The subject will be presented with a
+subset of $U$, will be asked to choose an element in that subset, and
+will listen to the recording he has chosen.  When presented with
+$\left\lbrace D_c, B_F\right\rbrace$, he chooses $D_c$ with
+probability $\frac{3}{5}$.  When presented with $\lbrace BF,
+BK\rbrace$ he chooses $B_F$ with probability 1/2. When presented with
+$\left\lbrace DC, BK\right\rbrace$ he chooses $D_c$ with probability
+$\frac{3}{5}$.  What happens if he is presented with $\lbrace D_c,
+B_F, B_K\rbrace$?  According to the axiom, he must choose $D_c$ with
+probability 3/7.  Thus if he can choose between $D_c$ and $B_F$, he
+would rather have Debussy.  However if he can choose between $D_c$,
+$B_F$, and $B_K$, while being indifferent between $B_F$ and $B_K$, he
+would rather have Beethoven.
+
+
+
+THERE IS ALSO THE THING WITH THE HOLIDAY IN CALIFORNIA AND THE HOLIDAY
+IN FLORIDA AND THE HOLIDAY IN FLORIDA PLUS TEN BUCKS
+
+
+```{r loadlib}
+library("hyper2")
+2+4
+```
+
+
+
+# References
