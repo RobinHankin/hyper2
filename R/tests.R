@@ -316,13 +316,26 @@
     alternative_estimate <- jj
     
     o <- n-length(i) 
-    
-    `q_to_p` <- function(qq){   # NB 'i' in scope
-        out <- rep(0,n-1)
-        out[i] <- qq[1]
-        out[-i] <- qq[-1]
-        return(out)
-    }
+
+    if(any(i==n)){
+        `q_to_p` <- function(qq){   # NB 'i' in scope
+            ii <- i[i<n]  # ii is one shorter than i
+            out <- rep(NA,n-1)
+            out[ii] <- qq[1]
+            r <- max(which(!(seq_len(n-1) %in% ii)))
+            out[r] <- 1-qq[1]*length(i)-sum(qq[-1])  # ensures fillup correct
+            out[-c(i,r)] <- qq[-1]
+            return(out)
+        }
+    } else {
+        `q_to_p` <- function(qq){   # NB 'i' in scope
+            out <- rep(0,n-1)
+            out[i] <- qq[1]
+            out[-i] <- qq[-1]
+            return(out)
+        }
+    } # if(i==n) closes
+
     
     `objective` <- function(jj){ ## jj == c(v,p[-i])  (NB p[i]==v)
         -loglik(q_to_p(jj),H)

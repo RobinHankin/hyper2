@@ -98,7 +98,9 @@ because a null of \code{p_NB=1} is unrealistic.
 
 Function \code{samep.test()} does not have access to gradient
 information so it is slow, inaccurate, and may fail completely for
-high-dimensional datasets.
+high-dimensional datasets.  If \code{any(i==n)}, this constrains the
+fillup value; this makes no difference mathematically but the function
+idiom is involved.
 
 }
 
