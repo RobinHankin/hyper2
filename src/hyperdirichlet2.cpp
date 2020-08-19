@@ -11,7 +11,7 @@
 using namespace std;
 using namespace Rcpp;
 
-typedef set<unsigned int> bracket;
+typedef set<string> bracket;
 typedef map<bracket, long double> hyper2;
 
 // again it might be nice to use unsigned_map above, but this would
