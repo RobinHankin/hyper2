@@ -22,7 +22,7 @@
       lin8 = 8:1, #20
       lin9 = 9:1, #21
       lint = 10:1, #22
-      line = 11:1, #23
+      bord = 11:1, #23
       zipf = 1/seq_len(top),  #24
       expa = 1/1.01^seq_len(top), #25
       expb = 1/1.10^seq_len(top), #26
