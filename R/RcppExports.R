@@ -25,19 +25,19 @@ assigner <- function(L, p, L2, value) {
     .Call(`_hyper2_assigner`, L, p, L2, value)
 }
 
-evaluate <- function(L, powers, probs) {
-    .Call(`_hyper2_evaluate`, L, powers, probs)
+evaluate <- function(L, powers, probs, pnames) {
+    .Call(`_hyper2_evaluate`, L, powers, probs, pnames)
 }
 
-hessian_lowlevel <- function(L, powers, probs, n) {
-    .Call(`_hyper2_hessian_lowlevel`, L, powers, probs, n)
+hessian_lowlevel <- function(L, powers, probs, pnames, n) {
+    .Call(`_hyper2_hessian_lowlevel`, L, powers, probs, pnames, n)
 }
 
-differentiate <- function(L, powers, probs, n) {
-    .Call(`_hyper2_differentiate`, L, powers, probs, n)
+differentiate <- function(L, powers, probs, pnames, n) {
+    .Call(`_hyper2_differentiate`, L, powers, probs, pnames, n)
 }
 
-differentiate_n <- function(L, powers, probs, n) {
-    .Call(`_hyper2_differentiate_n`, L, powers, probs, n)
+differentiate_n <- function(L, powers, probs, pnames, n) {
+    .Call(`_hyper2_differentiate_n`, L, powers, probs, pnames, n)
 }
 

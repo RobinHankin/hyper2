@@ -87,57 +87,61 @@ BEGIN_RCPP
 END_RCPP
 }
 // evaluate
-double evaluate(const List L, const NumericVector powers, const NumericVector probs);
-RcppExport SEXP _hyper2_evaluate(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP) {
+double evaluate(const List L, const NumericVector powers, const NumericVector probs, const CharacterVector pnames);
+RcppExport SEXP _hyper2_evaluate(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP, SEXP pnamesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const List >::type L(LSEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type powers(powersSEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type probs(probsSEXP);
-    rcpp_result_gen = Rcpp::wrap(evaluate(L, powers, probs));
+    Rcpp::traits::input_parameter< const CharacterVector >::type pnames(pnamesSEXP);
+    rcpp_result_gen = Rcpp::wrap(evaluate(L, powers, probs, pnames));
     return rcpp_result_gen;
 END_RCPP
 }
 // hessian_lowlevel
-List hessian_lowlevel(const List L, const NumericVector powers, const NumericVector probs, const int n);
-RcppExport SEXP _hyper2_hessian_lowlevel(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP, SEXP nSEXP) {
+List hessian_lowlevel(const List L, const NumericVector powers, const NumericVector probs, const CharacterVector pnames, const int n);
+RcppExport SEXP _hyper2_hessian_lowlevel(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP, SEXP pnamesSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const List >::type L(LSEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type powers(powersSEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type probs(probsSEXP);
+    Rcpp::traits::input_parameter< const CharacterVector >::type pnames(pnamesSEXP);
     Rcpp::traits::input_parameter< const int >::type n(nSEXP);
-    rcpp_result_gen = Rcpp::wrap(hessian_lowlevel(L, powers, probs, n));
+    rcpp_result_gen = Rcpp::wrap(hessian_lowlevel(L, powers, probs, pnames, n));
     return rcpp_result_gen;
 END_RCPP
 }
 // differentiate
-List differentiate(const List L, const NumericVector powers, const NumericVector probs, const unsigned int n);
-RcppExport SEXP _hyper2_differentiate(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP, SEXP nSEXP) {
+List differentiate(const List L, const NumericVector powers, const NumericVector probs, const CharacterVector pnames, const unsigned int n);
+RcppExport SEXP _hyper2_differentiate(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP, SEXP pnamesSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const List >::type L(LSEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type powers(powersSEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type probs(probsSEXP);
+    Rcpp::traits::input_parameter< const CharacterVector >::type pnames(pnamesSEXP);
     Rcpp::traits::input_parameter< const unsigned int >::type n(nSEXP);
-    rcpp_result_gen = Rcpp::wrap(differentiate(L, powers, probs, n));
+    rcpp_result_gen = Rcpp::wrap(differentiate(L, powers, probs, pnames, n));
     return rcpp_result_gen;
 END_RCPP
 }
 // differentiate_n
-List differentiate_n(const List L, const NumericVector powers, const NumericVector probs, const unsigned int n);
-RcppExport SEXP _hyper2_differentiate_n(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP, SEXP nSEXP) {
+List differentiate_n(const List L, const NumericVector powers, const NumericVector probs, const CharacterVector pnames, const unsigned int n);
+RcppExport SEXP _hyper2_differentiate_n(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP, SEXP pnamesSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const List >::type L(LSEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type powers(powersSEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type probs(probsSEXP);
+    Rcpp::traits::input_parameter< const CharacterVector >::type pnames(pnamesSEXP);
     Rcpp::traits::input_parameter< const unsigned int >::type n(nSEXP);
-    rcpp_result_gen = Rcpp::wrap(differentiate_n(L, powers, probs, n));
+    rcpp_result_gen = Rcpp::wrap(differentiate_n(L, powers, probs, pnames, n));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -149,10 +153,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_hyper2_accessor", (DL_FUNC) &_hyper2_accessor, 3},
     {"_hyper2_overwrite", (DL_FUNC) &_hyper2_overwrite, 4},
     {"_hyper2_assigner", (DL_FUNC) &_hyper2_assigner, 4},
-    {"_hyper2_evaluate", (DL_FUNC) &_hyper2_evaluate, 3},
-    {"_hyper2_hessian_lowlevel", (DL_FUNC) &_hyper2_hessian_lowlevel, 4},
-    {"_hyper2_differentiate", (DL_FUNC) &_hyper2_differentiate, 4},
-    {"_hyper2_differentiate_n", (DL_FUNC) &_hyper2_differentiate_n, 4},
+    {"_hyper2_evaluate", (DL_FUNC) &_hyper2_evaluate, 4},
+    {"_hyper2_hessian_lowlevel", (DL_FUNC) &_hyper2_hessian_lowlevel, 5},
+    {"_hyper2_differentiate", (DL_FUNC) &_hyper2_differentiate, 5},
+    {"_hyper2_differentiate_n", (DL_FUNC) &_hyper2_differentiate_n, 5},
     {NULL, NULL, 0}
 };
 
