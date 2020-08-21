@@ -1,10 +1,25 @@
-`icons` <-
-structure(list(brackets = list(1, c(1, 2, 4, 5), c(1, 2, 4, 6
-), c(1, 2, 5, 6), c(1, 3, 4, 5), c(1, 3, 4, 6), c(1, 3, 5, 6), 
-    2, c(2, 3, 4, 5), c(2, 3, 4, 6), c(2, 3, 5, 6), 3, 4, 5, 
-    6), powers = c(32, -20, -15, -9, -18, -18, -8, 24, -11, -16, 
--18, 30, 24, 14, 9), pnames = c("NB", "L", "PB", "THC", "OA", 
-"WAIS")), .Names = c("brackets", "powers", "pnames"), class = "hyper2")
+
+`ic` <- c("NB", "L", "PB", "THC", "OA", "WAIS")
+icons <- 
+    structure(list(
+        brackets = list(ic[1], c(ic[1], ic[2], ic[4], ic[5]),
+                        c(ic[1], ic[2], ic[4], ic[6]),
+                        c(ic[1], ic[2], ic[5], ic[6]),
+                        c(ic[1], ic[3], ic[4], ic[5]),
+                        c(ic[1], ic[3], ic[4], ic[6]),
+                        c(ic[1], ic[3], ic[5], ic[6]),
+                        ic[2],
+                        c(ic[2], ic[3], ic[4], ic[5]),
+                        c(ic[2], ic[3], ic[4], ic[6]),
+                        c(ic[2], ic[3], ic[5], ic[6]),
+                        ic[3], ic[4], ic[5], ic[6]
+                        ),
+        powers = c(32, -20, -15, -9, -18, -18, -8, 24, -11, -16, 
+                   -18, 30, 24, 14, 9),
+        pnames = ic))
+
+class(icons) <- "hyper2"
+
 
 
 `icons_matrix` <- matrix(c(

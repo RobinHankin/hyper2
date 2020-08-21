@@ -35,7 +35,8 @@ is_constant(H)
 }
 \arguments{
   \item{H}{A hyper2 object}
-  \item{L}{A list whose elements specify the brackets of a hyper2 object}
+  \item{L}{A list of character vectors whose elements specify
+    the brackets of a hyper2 object}
   \item{d}{A vector of powers; \code{hyper2()} recycles \emph{only if}
     \code{d} is of length 1}
   \item{pnames}{
@@ -60,5 +61,7 @@ where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.  Note that function
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{Ops.hyper2}},\code{\link{Extract.hyper2}},\code{\link{loglik}}}
 \examples{
-hyper2(list(1,2,3,1:2,2:3),1:5)
+o <- hyper2(list("a","b","c",c("a","b"),letters[1:3]),1:5) 
+
+
 }

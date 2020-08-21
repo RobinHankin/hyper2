@@ -40,5 +40,8 @@ Topalov, Anand, Karpov
 \examples{
 data(chess)
 maxp(chess)
+
+ mgf(chess,c(Anand=2))
+
 }
 \keyword{datasets}

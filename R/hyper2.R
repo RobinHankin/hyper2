@@ -1,7 +1,7 @@
-`hyper2` <-  function(L=list(), d=0, pnames=NA){
-  if(length(d)==1){d <- rep(d,length(L))}  
+`hyper2` <-  function(L=list(), d=0, pnames){
+  if(length(d)==1){d <- rep(d,length(L))}
+  if(missing(pnames)){pnames <- sort(unique(c(L,recursive=TRUE)))}
   stopifnot(is_valid_hyper2(L,d,pnames))
-  L <- lapply(L,as.integer)
   out <- identityL(L,d)
   out$pnames <- pnames
   class(out) <- 'hyper2'  # This is the only class assignment in the package
@@ -32,33 +32,12 @@ setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
 ## Following function is the only setter method in the package
 setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `pnames<-` <- function(x,value){UseMethod("pnames<-")}
+`pnames<-.hyper2` <- function(x,value){hyper2(brackets(x),powers(x),pnames=value)}
 
-`pnames<-.hyper2` <- function(x,value){
-  if(identical(pnames(x),NA)){
-    return(hyper2(brackets(x),powers(x),pnames=value))
-  } else {
-    return(change_pnames(x,value))
-  }
-}
 ## setter methods end
 
 `is.hyper2` <- function(H){inherits(H,"hyper2")}
 `length.hyper2` <- function(x){length(x$brackets)}
-`change_pnames` <- function(H,new_pnames){  # new_pnames is a character vector, eg c('a', 'b')
-  if(identical(pnames(H),NA)){return(hyper2(brackets(H),powers(H),pnames=new_pnames))}
-  if(identical(new_pnames,NA)){return(hyper2(brackets(H),powers(H)))}
-
-  stopifnot(all(pnames(H) %in% new_pnames))
-  b <- brackets(H)
-  pn <- pnames(H)
-  pow <- powers(H)
-  out <- hyper2(pnames=new_pnames)
-  for(i in seq_along(b)){
-#    out[new_pnames[new_pnames %in% pn[b[[i]]]]]  <- pow[i]
-    out[which(new_pnames %in% pn[b[[i]]])]  <- pow[i]
-  }
-  return(out)
-}
 
 `is_constant` <- function(H){ length(H)==0 }
 
@@ -67,15 +46,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   stopifnot(is.vector(d))
   stopifnot(is.numeric(d))
   stopifnot(length(L) == length(d))
-  stopifnot(all(unlist(lapply(L,function(x){all(x==round(x))}))))
-  if(!identical(pnames,NA)){
-    if(length(L)==0){
-      hsize <- 0
-    } else {
-      hsize <- max(c(L,recursive=TRUE))
-    }
-    stopifnot(length(pnames) >= hsize)
-  }
+  stopifnot(all(unique(c(L,recursive=TRUE)) %in% pnames))
   return(TRUE)
 }
 
@@ -102,17 +73,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(hyper2(L,d,pnames))
 }
 
-`.print.helper` <- function(pnames,vec){
-  if(length(vec)==1){
-    out <- pnames[vec]
-  } else {
-    out <- paste("(",pnames[vec[1]],sep="")
-    
-    for(i in vec[-1]){
-      out <- paste(out," + ",pnames[i],sep="")
-    }
-    out <- paste(out,")",sep="")
-  }
+`.print.helper` <- function(cv){  # Character vector
+  if(length(cv)==1){return(cv)}
+  out <- paste("(",cv[1],sep="")
+  for(i in seq_along(cv)[-1]){ out <- paste(out," + ",cv[i],sep="") }
+  out <- paste(out,")",sep="")
   return(out)
 }
   
@@ -120,32 +85,16 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   b <- brackets(x)
   powers <- powers(x)
   if(length(b)==0){  # not is.null(b)
-    n <- 1
-    if(identical(pnames(x),NA)){
-      pn <- "1"
-    } else {  # empty but with specified pnames
-      pn <- pnames(x)
-    }
-    n <- length(pn)
-    b <- list(seq_len(n))
-  } else {  # non-empty
-    pn <- pnames(x)
-    n <- max(c(b,recursive=TRUE))   # b non-empty; n>0
-    if(identical(pnames(x),NA)){
-      pn <- paste("p",seq_len(n),sep="")
-    } else {
-      pn <- pnames(x)
-    }
+      out <- paste(.print.helper(pnames(x)),"^0",sep="")
   }
-
   out <- "log("
   for(i in seq_along(b)){
-    jj <- unlist(b[i])
+    pn <- unlist(b[i])
     pp <- powers[i]
     if(pp==1){
-      out <- paste(out, .print.helper(pn, jj))
+      out <- paste(out, .print.helper(pn))
     } else {
-      out <- paste(out, .print.helper(pn, jj), "^",pp,sep="")
+      out <- paste(out, .print.helper(pn), "^",pp,sep="")
     }
     if(i < length(b)){out <- paste(out," * ",sep="")}
   }
@@ -161,19 +110,15 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 `hyper2_add` <- function(e1,e2){
   out <- addL(brackets(e1),powers(e1),brackets(e2),powers(e2))
-
-  if(identical(pnames(e1),NA) & identical(pnames(e2),NA)){
-    jj <- NA
-  } else if(identical(pnames(e1),NA) & !identical(pnames(e2),NA)){
-    jj <- pnames(e2)
-  } else if(identical(pnames(e2),NA) & !identical(pnames(e1),NA)){
-    jj <- pnames(e1)
-  } else if(!identical(pnames(e2),NA) & !identical(pnames(e1),NA)){
-    stopifnot(identical(pnames(e1),pnames(e2)))
-    jj <- pnames(e1)
+  
+  if(all(pnames(e2) %in% pnames(e1))){
+      jj <- pnames(e1)
+  } else if(all(pnames(e1) %in% pnames(e2))){
+      jj <- pnames(e2)
   } else {
-    stop("this cannot happen")
+      jj <- sort(unique(c(brackets(e1),brackets(e2),recursive=TRUE)))
   }
+  
   return(hyper2(out[[1]],out[[2]],pnames=jj))
 }
 
@@ -190,7 +135,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   stopifnot(all(p>=0))
   stopifnot(sum(p)<=1)
 
-  out <- evaluate(brackets(H), powers(H), probs=fillup(p))
+  out <- evaluate(brackets(H), powers(H), probs=fillup(p),pnames=pnames(H))
   if(log){
     return(out)
   } else {
@@ -297,15 +242,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
       wanted <- dots
     }
 
-    if(any(unlist(lapply(wanted, is.character)))){
-        wanted <- lapply(wanted, character_to_number, pnames=pnames(x))
-    }
-    
     out <- accessor(x[[1]],x[[2]],wanted)
     return(hyper2(out[[1]],out[[2]],pnames=pnames(x)))
 }
 
-`.assign_lowlevel`<- function(x,index,value){ #H[index] <- value
+`assign_lowlevel`<- function(x,index,value){ #H[index] <- value
 
     stopifnot(class(x) == 'hyper2')
     
@@ -319,10 +260,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         stop("replacement index must be a list, a matrix, or a vector")
     }
 
-    if(any(unlist(lapply(index, is.character)))){
-        index <- lapply(index, character_to_number, pnames=pnames(x))
-    }
-
     stopifnot(is.numeric(value)) # coercion to integer is done in C
     stopifnot(is.vector(value))
     if(length(value)==1){
@@ -331,7 +268,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(assigner(brackets(x),powers(x),index,value))
 }
 
-`.overwrite_lowlevel` <- function(x,value){
+`overwrite_lowlevel` <- function(x,value){
   stopifnot(class(x)     == 'hyper2')
   stopifnot(class(value) == 'hyper2')
 
@@ -340,21 +277,21 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 `[<-.hyper2` <- function(x, index, ..., value){
   if(missing(index)){  # A[] <- B
-    out <- .overwrite_lowlevel(x,value)
+    out <- overwrite_lowlevel(x,value)
   } else {
-    out <- .assign_lowlevel(x,index,value)
+    out <- assign_lowlevel(x,index,value)
   }
     return(hyper2(out[[1]],out[[2]],pnames=pnames(x)))
 }
 
 `gradient` <- function(H,probs=indep(maxp(H))){
   stopifnot(length(probs) == size(H)-1)
-  differentiate(brackets(H), powers(H), fillup(probs), size(H))$grad_comp
+  differentiate(brackets(H), powers(H), fillup(probs), pnames(H), size(H))$grad_comp
 }
 
 `gradientn` <- function(H,probs=maxp(H)){
   stopifnot(length(probs) == size(H))
-  out <- differentiate_n(brackets(H), powers(H), probs, size(H))$grad_comp
+  out <- differentiate_n(brackets(H), powers(H), probs, pnames(H),size(H))$grad_comp
   if(!identical(pnames(H),NA)){names(out) <- pnames(H)}
   return(out)
 }
@@ -697,44 +634,44 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
-`dirichlet` <-  function(powers, alpha, pnames=NA){
+`dirichlet` <-  function(powers, alpha){
     if(!xor(missing(powers),missing(alpha))){
         stop("supply exactly one of powers, alpha")
     }
 
+    
     if(missing(powers)){
         powers <- alpha-1
     }
+
+    if(is.null(names(powers))){stop("supply a named vector")}
     
-    if(isTRUE(is.na(pnames)) & !is.null(names(powers))){
-        pnames <- names(powers)
-    }
-    hyper2(as.list(seq_along(powers)),d=powers,pnames=pnames)
+    hyper2(as.list(names(powers)),d=powers)
 }
 
-`GD` <- function(alpha, beta, beta0=0, pnames=NA){
+`GD` <- function(alpha, beta, beta0=0){
   k <- length(alpha)
   stopifnot(length(beta) == k-1)
   
-  H <- dirichlet(powers=alpha-1,pnames=pnames)
+  H <- dirichlet(powers=alpha-1)
   for(i in 2:(k-1)){
-    H[(i:k)] <- beta[i-1] -(alpha[i]+beta[i])
+    H[names(alpha)[i:k]] <- beta[i-1] -(alpha[i]+beta[i])
   }
 
-  H[k] <- beta[k-1]-1
-  H[seq_along(k)] <- beta0-(alpha[1]+beta[1])
+  H[names(alpha)[k]] <- beta[k-1]-1
+  H[names(alpha)] <- beta0-(alpha[1]+beta[1])
   return(H)   
 }
 
-`GD_wong` <- function(alpha, beta, pnames=NA){
+`GD_wong` <- function(alpha, beta){
   k <- length(alpha)
   stopifnot(length(beta) == k)
 
   gamma <- beta[-k]-(alpha[-1]+beta[-1])
   gamma <- c(gamma, beta[k]-1)
-  H <- dirichlet(powers=alpha-1,pnames=pnames)
+  H <- dirichlet(powers=alpha-1)
   for(i in 1:k){
-    H[(i+1):(k+1)] <- gamma[i]
+    H[names(alpha)[(i+1):(k+1)]] <- gamma[i]
   }
   return(H)   
 }
@@ -1034,7 +971,3 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     x[apply(outer(players,names(x),`==`),1,which)]
 }
 
-`combine` <- function(H1,H2){
-  p <- unique(c(pnames(H1),pnames(H2),recursive=TRUE))
-  change_pnames(H1,p) + change_pnames(H2,p)
-}

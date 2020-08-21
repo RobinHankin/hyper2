@@ -17,9 +17,9 @@ The Dirichlet distribution in likelihood (for p) form, including the
 generalized Dirichlet distribution due to Connor and Mosimann
 }
 \usage{
-dirichlet(powers, alpha, pnames=NA)
-GD(alpha, beta, beta0=0, pnames=NA)
-GD_wong(alpha, beta, pnames=NA)
+dirichlet(powers, alpha)
+GD(alpha, beta, beta0=0)
+GD_wong(alpha, beta)
 rdirichlet(n,H)
 is.dirichlet(H)
 }
@@ -28,8 +28,6 @@ is.dirichlet(H)
   \item{alpha,beta}{A vector of parameters for the Dirichlet or
     generalized Dirichlet distribution}
   \item{beta0}{In function \code{GD()}, an arbitrary parameter}
-  \item{pnames}{Optional; a character vector specifying the names of
-    \eqn{p_1} through \eqn{p_n}}
   \item{H}{Object of class \code{hyper2}}
   \item{n}{Number of observations}
 }
