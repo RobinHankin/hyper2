@@ -87,15 +87,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // evaluate
-double evaluate(const List L, const NumericVector powers, const NumericVector probs, const CharacterVector pnames);
+double evaluate(const List& L, const NumericVector& powers, const NumericVector& probs, const CharacterVector& pnames);
 RcppExport SEXP _hyper2_evaluate(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP, SEXP pnamesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type L(LSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type powers(powersSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type probs(probsSEXP);
-    Rcpp::traits::input_parameter< const CharacterVector >::type pnames(pnamesSEXP);
+    Rcpp::traits::input_parameter< const List& >::type L(LSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type powers(powersSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type probs(probsSEXP);
+    Rcpp::traits::input_parameter< const CharacterVector& >::type pnames(pnamesSEXP);
     rcpp_result_gen = Rcpp::wrap(evaluate(L, powers, probs, pnames));
     return rcpp_result_gen;
 END_RCPP
@@ -116,16 +116,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // differentiate
-List differentiate(const List L, const NumericVector powers, const NumericVector probs, const CharacterVector pnames, const unsigned int n);
+List differentiate(const List& L, const NumericVector& powers, const NumericVector& probs, const CharacterVector& pnames, const NumericVector& n);
 RcppExport SEXP _hyper2_differentiate(SEXP LSEXP, SEXP powersSEXP, SEXP probsSEXP, SEXP pnamesSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type L(LSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type powers(powersSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type probs(probsSEXP);
-    Rcpp::traits::input_parameter< const CharacterVector >::type pnames(pnamesSEXP);
-    Rcpp::traits::input_parameter< const unsigned int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const List& >::type L(LSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type powers(powersSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type probs(probsSEXP);
+    Rcpp::traits::input_parameter< const CharacterVector& >::type pnames(pnamesSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type n(nSEXP);
     rcpp_result_gen = Rcpp::wrap(differentiate(L, powers, probs, pnames, n));
     return rcpp_result_gen;
 END_RCPP

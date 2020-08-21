@@ -209,10 +209,10 @@ List assigner(  // H[L] <- v
                      
 //[[Rcpp::export]]
 double evaluate(  // returns log-likelihood
-                const List L,
-                const NumericVector powers,
-                const NumericVector probs,
-                const CharacterVector pnames
+                const List &L,
+                const NumericVector &powers,
+                const NumericVector &probs,
+                const CharacterVector &pnames
                   ){
 
     const hyper2 h = prepareL(L,powers);
@@ -376,19 +376,19 @@ List hessian_lowlevel(
 
 //[[Rcpp::export]]
 List differentiate(  // returns gradient of log-likelihood
-                const List L,
-                const NumericVector powers,
-                const NumericVector probs,
-                const CharacterVector pnames,
-                const unsigned int n
+                const List &L,
+                const NumericVector &powers,
+                const NumericVector &probs,
+                const CharacterVector &pnames,
+                const NumericVector &n
                   ){
 
     unsigned int i;
     NumericVector out(n-1);  
     const hyper2 h=prepareL(L,powers);
 
-    for(i=0; i<n-1; i++){
-        out[i] = differentiate_single_independent(h,i,n,probs,pnames);
+    for(i=0; i<n[0]-1; i++){
+        out[i] = differentiate_single_independent(h,i,n[0],probs,pnames);
     }
         return List::create(Named("grad_comp") =  out);
 }
