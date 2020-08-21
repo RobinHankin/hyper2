@@ -261,7 +261,6 @@ double differentiate_single_independent( // d(log-likelihod)/dp
 
     psub ps = preparepmap(probs,pnames);
     
-    i++; // off-by-one
     assert(i > 0); 
     assert(i < n);  // sic; strict
 
@@ -270,7 +269,7 @@ double differentiate_single_independent( // d(log-likelihod)/dp
         const bracket b = it->first;
 
         no_of_diff_terms = b.count((string) pnames[i]);
-        no_of_fill_terms = b.count((string) pnames[n]);
+        no_of_fill_terms = b.count((string) pnames[n-1]);
             
         if(no_of_diff_terms == no_of_fill_terms){continue;} // bracket has same number (maybe 0!) of diff and fillups
 
@@ -384,11 +383,12 @@ List differentiate(  // returns gradient of log-likelihood
                   ){
 
     unsigned int i;
-    NumericVector out(n-1);  
+    const unsigned int nn=n[0];
+    NumericVector out(nn-1);  
     const hyper2 h=prepareL(L,powers);
 
-    for(i=0; i<n[0]-1; i++){
-        out[i] = differentiate_single_independent(h,i,n[0],probs,pnames);
+    for(i=0; i<nn-1; i++){
+        out[i] = differentiate_single_independent(h,i,nn,probs,pnames);
     }
         return List::create(Named("grad_comp") =  out);
 }
