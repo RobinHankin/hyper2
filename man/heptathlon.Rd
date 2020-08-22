@@ -24,10 +24,12 @@ removed from the table.  The appropriate idiom is
 
 \preformatted{
   a <- read.table("inst/heptathlon.txt")
-  apply(a,2,function(x){`[<-`(x,order(x),seq_along(x))})
+  heptathlon_ordertable <-
+       apply(a,2,function(x){`[<-`(x,order(x),seq_along(x))})
 }
 
-and \code{heptathlon} is then \code{ordertable2supp(F1_table_2017)}.
+and \code{heptathlon} is then
+\code{ordertable2supp(heptathlon_ordertable)}.
 
 }
 \references{
