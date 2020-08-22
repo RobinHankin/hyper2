@@ -353,21 +353,22 @@ double second_derivative( // evaluate terms of the lower-right block of the bord
 
 //[[Rcpp::export]]
 List hessian_lowlevel(
-             const List L,
-             const NumericVector powers,
-             const NumericVector probs,
-             const CharacterVector pnames,
-             const int n
+             const List &L,
+             const NumericVector &powers,
+             const NumericVector &probs,
+             const CharacterVector &pnames,
+             const NumericVector &n
                ){
-    
-    NumericVector out(n*n);
+
+    const unsigned int nn=n[0];
+    NumericVector out(nn*nn);
     const hyper2 h=prepareL(L,powers);
     int r=0;
     psub ps = preparepmap(probs,pnames);
     
-    for(int i=0; i<n; i++){
-        for(int j=0; j<n; j++){
-            out[r++] = second_derivative(h,i+1,j+1,probs,pnames);
+    for(int i=0; i<nn-1; i++){
+        for(int j=0; j<nn-1; j++){
+            out[r++] = second_derivative(h,i,j,probs,pnames);
         }
     }
     return List::create(Named("block_hessian_components") =  out);

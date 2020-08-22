@@ -309,7 +309,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `hessian` <- function(H, probs=indep(maxp(H)),border=TRUE){
     n <- size(H)
     stopifnot(length(probs) == n-1)
-    out <- hessian_lowlevel(brackets(H),powers(H),fillup(probs),n)$block_hessian_components
+    out <- hessian_lowlevel(brackets(H),powers(H),fillup(probs),pnames(H),n)$block_hessian_components
     out <- matrix(out,n,n)
     if(isFALSE(border)){return(out)}
     out <- rbind(c(0,rep(1,n)),cbind(1,out))
