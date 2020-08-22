@@ -7,7 +7,6 @@ H <- hyper2(pnames= c(colnames(allplayers),"C_possession","W_possession"))
 ## The two final names are 'ghost' players (in the sense of Hankin
 ## 2010) whose strength is added to that of the real players.
 
-
 ## players 1-9 Cleveland
 ## players 10-19 (sic) Warriors:
 C_onpitch <- allplayers[,1:9]
