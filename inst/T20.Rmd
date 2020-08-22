@@ -10,7 +10,7 @@ vignette: |
 
 # The Indian Premier League
 
-This script creates and analyses hyper2 object ```T20``` which is a
+This script creates and analyses hyper2 object `T20` which is a
 likelihood function for the strengths of the competitors in the Indian
 Premier League.
 
@@ -21,15 +21,15 @@ head(T20_table)
 nrow(T20_table)
 ```		
 
-Dataframe ```T20_table``` has one row for each T20 IPL match in the
+Dataframe `T20_table` has one row for each T20 IPL match in the
 period 2008-2017 with the exception of three no-result matches and
-seven tied matches, which were removed.  Object ```T20``` is a
+seven tied matches, which were removed.  Object `T20` is a
 likelihood function for the strengths of the 13 teams, and
-```T20_toss``` is a likelihood function that also includes a toss
+`T20_toss` is a likelihood function that also includes a toss
 strength term.
 
 some details are given in the package help file
-```T20.Rd``` (type ```?T20``` at the R prompt).
+`T20.Rd` (type `?T20` at the R prompt).
 
 ## One-way univariate analysis
 
@@ -144,7 +144,7 @@ somewhat flaky in this context.  Wilks's theorem is only asymptotic
 and it is not clear that the actual sampling distribution is close to
 its asymptotic limit of $\chi^2$.  However, it turns out that the
 asymptotic approximation is good in this particular case:
-```inst/T20_analysis.Rmd``` presents some analysis (it takes a very
+`inst/T20_analysis.Rmd` presents some analysis (it takes a very
 long time to run which is why it is not included in this vignette).
 
 
