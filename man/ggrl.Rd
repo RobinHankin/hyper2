@@ -100,17 +100,4 @@ H <- hyper2(pnames=letters[1:5])
 H2 <- choose_losers(H,letters[1:4],letters[1:2])   # {a,b} vs {c,d}; {a,b} lost
 maxplist(H2)
 
-# Player 'a' eliminated first, then b,c,d:
-maxplist(elimination(letters[1:4])) 
-# Competitor 'a' has the lowest estimated strength.
-
-
-# consistency check:
-H <- hyper2(pnames=letters[1:5])
-H <- H + rank_likelihood(rrank(100,5:1)) # probs = 5/15,4/15,...,1/15
-maxp(H)  # should be close to (5:1)/15
-
-
-
-
 }
