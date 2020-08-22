@@ -51,6 +51,7 @@ function(e, H, include.Jacobian=TRUE){
   f <- function(i){
     jj <- rep(0,size(H))
     jj[i] <- 1
+    names(jj) <- pnames(H)
     return(mgf(H,jj, ...))
   }
 
