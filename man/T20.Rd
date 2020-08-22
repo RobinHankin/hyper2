@@ -18,7 +18,7 @@
   strength term.
 
   The likelihood functions are created \code{T20_table} and analysed in
-  \code{vignettes/T20.Rmd}, which is itself based on Chandel and Hankin
+  \code{inst/T20.Rmd}, which is itself based on Chandel and Hankin
   2019.
 }
 \references{

@@ -314,3 +314,46 @@ structure(list(brackets = list(" GL", c(" GL", "DD"), c(" GL",
 -15, -10, 15, -4, 63, -7, 42), pnames = c("CSK", "DC", "DD", 
 " GL", "KXIP", "KTK", "KKR", "MI", "PW", "RR", "RPS", "RCB", 
 "SH")), class = "hyper2")
+
+`T20_toss` <-
+structure(list(brackets = list(" GL", c(" GL", "DD", "toss"), 
+    c(" GL", "KKR", "toss"), c(" GL", "KXIP", "toss"), c(" GL", 
+    "MI", "toss"), c(" GL", "RCB", "toss"), c(" GL", "RPS", "toss"
+    ), c(" GL", "SH", "toss"), c(" GL", "toss"), "CSK", c("CSK", 
+    "DC", "toss"), c("CSK", "DD", "toss"), c("CSK", "KKR", "toss"
+    ), c("CSK", "KTK", "toss"), c("CSK", "KXIP", "toss"), c("CSK", 
+    "MI", "toss"), c("CSK", "PW", "toss"), c("CSK", "RCB", "toss"
+    ), c("CSK", "RR", "toss"), c("CSK", "SH", "toss"), c("CSK", 
+    "toss"), "DC", c("DC", "DD", "toss"), c("DC", "KKR", "toss"
+    ), c("DC", "KTK", "toss"), c("DC", "KXIP", "toss"), c("DC", 
+    "MI", "toss"), c("DC", "PW", "toss"), c("DC", "RCB", "toss"
+    ), c("DC", "RR", "toss"), c("DC", "toss"), "DD", c("DD", 
+    "KKR", "toss"), c("DD", "KTK", "toss"), c("DD", "KXIP", "toss"
+    ), c("DD", "MI", "toss"), c("DD", "PW", "toss"), c("DD", 
+    "RCB", "toss"), c("DD", "RPS", "toss"), c("DD", "RR", "toss"
+    ), c("DD", "SH", "toss"), c("DD", "toss"), "KKR", c("KKR", 
+    "KTK", "toss"), c("KKR", "KXIP", "toss"), c("KKR", "MI", 
+    "toss"), c("KKR", "PW", "toss"), c("KKR", "RCB", "toss"), 
+    c("KKR", "RPS", "toss"), c("KKR", "RR", "toss"), c("KKR", 
+    "SH", "toss"), c("KKR", "toss"), "KTK", c("KTK", "KXIP", 
+    "toss"), c("KTK", "MI", "toss"), c("KTK", "PW", "toss"), 
+    c("KTK", "RCB", "toss"), c("KTK", "RR", "toss"), c("KTK", 
+    "toss"), "KXIP", c("KXIP", "MI", "toss"), c("KXIP", "PW", 
+    "toss"), c("KXIP", "RCB", "toss"), c("KXIP", "RPS", "toss"
+    ), c("KXIP", "RR", "toss"), c("KXIP", "SH", "toss"), c("KXIP", 
+    "toss"), "MI", c("MI", "PW", "toss"), c("MI", "RCB", "toss"
+    ), c("MI", "RPS", "toss"), c("MI", "RR", "toss"), c("MI", 
+    "SH", "toss"), c("MI", "toss"), "PW", c("PW", "RCB", "toss"
+    ), c("PW", "RR", "toss"), c("PW", "SH", "toss"), c("PW", 
+    "toss"), "RCB", c("RCB", "RPS", "toss"), c("RCB", "RR", "toss"
+    ), c("RCB", "SH", "toss"), c("RCB", "toss"), "RPS", c("RPS", 
+    "SH", "toss"), c("RPS", "toss"), "RR", c("RR", "SH", "toss"
+    ), c("RR", "toss"), "SH", c("SH", "toss")), powers = c(3, 
+-4, -4, -4, -4, -5, -4, -5, 10, 37, -10, -16, -16, -2, -17, -22, 
+-6, -19, -17, -6, 42, 10, -11, -9, -1, -10, -10, -4, -11, -9, 
+19, 29, -19, -2, -20, -20, -5, -18, -4, -16, -10, 33, 33, -2, 
+-21, -21, -5, -20, -4, -15, -12, 44, 2, -1, -1, -1, -2, -2, 4, 
+42, -20, -6, -20, -4, -15, -10, 28, 44, -6, -21, -6, -16, -10, 
+48, 9, -5, -5, -2, 3, 38, -4, -15, -10, 35, 7, -4, 8, 29, -7, 
+34, 25, 17), pnames = c("toss", "CSK", "DC", "DD", " GL", "KXIP", 
+"KTK", "KKR", "MI", "PW", "RR", "RPS", "RCB", "SH")), class = "hyper2")
