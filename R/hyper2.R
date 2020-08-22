@@ -276,12 +276,22 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `[<-.hyper2` <- function(x, index, ..., value){
-  if(missing(index)){  # A[] <- B
-    out <- overwrite_lowlevel(x,value)
-  } else {
-    out <- assign_lowlevel(x,index,value)
-  }
-    return(hyper2(out[[1]],out[[2]],pnames=pnames(x)))
+    if(missing(index)){  # A[] <- B
+        jj <- overwrite_lowlevel(x,value)
+        if(all(pnames(value) %in% pnames(x))){
+            out <- hyper2(jj[[1]],jj[[2]],pnames=pnames(x))
+        } else {
+            out <- hyper2(jj[[1]],jj[[2]])
+        }
+    } else { # index supplied
+        jj <- assign_lowlevel(x,index,value)
+        if(all(c(index,recursive=TRUE) %in% pnames(x))){
+            out <- hyper2(jj[[1]],jj[[2]],pnames=pnames(x)) # do not change pnames
+        } else { # index introduces a new pname
+            out <- hyper2(jj[[1]],jj[[2]])
+        }
+    }
+    return(out)
 }
 
 `gradient` <- function(H,probs=indep(maxp(H))){

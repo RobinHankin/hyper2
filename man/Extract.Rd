@@ -67,19 +67,23 @@ Also see function \code{hyper2_sum_numeric()}.
 \examples{
 data(chess)
 
-chess[1]
-chess[c(1,2)]
-chess[list(1,1:2)]
-chess[1] <- 5
+chess["Topalov"]
+chess[c("Topalov","Anand")]
+chess[c("Anand","Topalov")]
 
-a <- hyper2(pnames=letters[1:8])
-a[sapply(seq_len(8),seq_len)] <- 1
-a
+# Topalov plays Anand and wins:
 
-b <- a
-b[1] <- 1000
-b[2] <- 2000
-b[] <- a      # b[1] overwritten; b[2] preserved
+chess["Topalov"] <- chess["Topalov"]+1 
+chess[c("Topalov","Anand")] <- chess[c("Topalov","Anand")]-1
 
+
+# Topalov plays *Kasparov* and wins:
+chess["Topalov"] \%<>\% inc
+chess[c("Topalov","Kasparov")] \%<>\% dec
+
+
+# overwriting idiom:
+H <- hyper2(list("Topalov","X"),6)
+chess[] <- H
 
 }
