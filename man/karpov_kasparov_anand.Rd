@@ -23,7 +23,7 @@ of game results}
   function allows one to estimate the players' strengths, propensity to
   draw, and also the additional strength conferred by playing white.
 
-  Likelihood functions \code{karpov_kasparov_karpov}, \code{kka_3draws}
+  Likelihood functions \code{karpov_kasparov_anand}, \code{kka_3draws}
   and \code{kka_3whites} are created by files
   \code{inst/karpov_kasparov_anand.R}, \code{inst/kka_3draws} and
   \code{inst/kka_3whites}, which are heavily documented and include some

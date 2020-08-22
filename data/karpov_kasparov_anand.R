@@ -38,28 +38,38 @@ anand_plays_white_draws_karpov = 20
 
 # Likelihood functions calculated in inst/karpov_kasparov_anand.R follows:
 `karpov_kasparov_anand` <-
-structure(list(brackets = list(1, c(1, 2, 4, 5), c(1, 3, 4, 5
-), c(1, 4), 2, c(2, 3, 4, 5), c(2, 4), 3, c(3, 4), 5), powers = c(12, 
--193, -92, 25, 20, -80, 45, 15, 24, 224), pnames = c("Karpov", 
-"Kasparov", "Anand", "white", "draw")), class = "hyper2")
+structure(list(brackets = list("Anand", c("Anand", "Karpov", 
+"draw", "white"), c("Anand", "Kasparov", "draw", "white"), c("Anand", 
+"white"), "Karpov", c("Karpov", "Kasparov", "draw", "white"), 
+    c("Karpov", "white"), "Kasparov", c("Kasparov", "white"), 
+    "draw"), powers = c(15, -92, -80, 24, 12, -193, 25, 20, 45, 
+224), pnames = c("Karpov", "Kasparov", "Anand", "white", "draw"
+)), class = "hyper2")
 
 # Likelihood functions calculated in inst/kka_3whites.R follows:
 `kka_3whites` <-
-structure(list(brackets = list(1, c(1, 2, 4, 7), c(1, 2, 5, 7
-), c(1, 3, 4, 7), c(1, 3, 6, 7), c(1, 4), 2, c(2, 3, 5, 7), c(2, 
-3, 6, 7), c(2, 5), 3, c(3, 6), 7), powers = c(12, -99, -94, -49, 
--43, 25, 20, -43, -37, 45, 15, 24, 224), pnames = c("Karpov", 
-"Kasparov", "Anand", "Karpov_white", "Kasparov_white", "Anand_white", 
-"draw")), class = "hyper2")
+structure(list(brackets = list("Anand", c("Anand", "Anand_white"
+), c("Anand", "Anand_white", "Karpov", "draw"), c("Anand", "Anand_white", 
+"Kasparov", "draw"), c("Anand", "Karpov", "Karpov_white", "draw"
+), c("Anand", "Kasparov", "Kasparov_white", "draw"), "Karpov", 
+    c("Karpov", "Karpov_white"), c("Karpov", "Karpov_white", 
+    "Kasparov", "draw"), c("Karpov", "Kasparov", "Kasparov_white", 
+    "draw"), "Kasparov", c("Kasparov", "Kasparov_white"), "draw"), 
+    powers = c(15, 24, -43, -37, -49, -43, 12, 25, -99, -94, 
+    20, 45, 224), pnames = c("Karpov", "Kasparov", "Anand", "Karpov_white", 
+    "Kasparov_white", "Anand_white", "draw")), class = "hyper2")
 
 # Likelihood functions calculated in inst/kka_3draws.R follows:
 `kka_3draws` <-
-structure(list(brackets = list(1, c(1, 2, 4, 5, 6), c(1, 3, 4, 
-5, 7), c(1, 4), 2, c(2, 3, 4, 6, 7), c(2, 4), 3, c(3, 4), c(5, 
-6), c(5, 7), c(6, 7)), powers = c(12, -193, -92, 25, 20, -80, 
-45, 15, 24, 129, 49, 46), pnames = c("Karpov", "Kasparov", "Anand", 
-"white", "Karpov_draw", "Kasparov_draw", "Anand_draw")), class = "hyper2")
-
+structure(list(brackets = list("Anand", c("Anand", "Anand_draw", 
+"Karpov", "Karpov_draw", "white"), c("Anand", "Anand_draw", "Kasparov", 
+"Kasparov_draw", "white"), c("Anand", "white"), c("Anand_draw", 
+"Karpov_draw"), c("Anand_draw", "Kasparov_draw"), "Karpov", c("Karpov", 
+"Karpov_draw", "Kasparov", "Kasparov_draw", "white"), c("Karpov", 
+"white"), c("Karpov_draw", "Kasparov_draw"), "Kasparov", c("Kasparov", 
+"white")), powers = c(15, -92, -80, 24, 49, 46, 12, -193, 25, 
+129, 20, 45), pnames = c("Karpov", "Kasparov", "Anand", "white", 
+"Karpov_draw", "Kasparov_draw", "Anand_draw")), class = "hyper2")
 
 ## Matrices of scorelines calculated in ist/kka_array.R follows:
 `plays_white_wins` <-
