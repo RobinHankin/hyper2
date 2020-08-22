@@ -757,21 +757,23 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(H)
 }
 
-`ordervec2supp` <- function(d,pnames){
+`ordervec2supp` <- function(d){
+    if(is.null(names(d))){stop("vector must be named")}
     wanted <- d!=0
     if(any(sort(d[wanted]) != seq_len(sum(wanted)))){
-        stop("nonzero elements of d should be 1,2,3,4...,n")
+        stop("nonzero elements of d should be 1,2,3,4,...,n")
     }
+    
     nd <- names(d)
-    out <- hyper2(d=length(d))
+    out <- hyper2()
     while(any(d>0)){
         eligible <- which(d>=0)  #NB inclusive inequality; zero is DNC etc who
 
         ## Increment numerator power of the first choice among eligible players:
-        out[which(d==1)] %<>% inc
+        out[nd[d==1]] %<>% inc
         
         ## Power of set of all eligible players decrements:
-        out[eligible] %<>% dec
+        out[nd[eligible]] %<>% dec
         
         ## once you've come first in the field, you are ineligible to be first again:
         d[d==1] <- -1  # NB strictly <0
@@ -783,8 +785,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         d[d>0] %<>% dec
         
     } # while() loop closes
-    if(!is.null(nd)){ pnames(out) <- nd}
-    if(!missing(pnames)){pnames(out) <- pnames}
     return(out)
 }
 
