@@ -24,15 +24,18 @@ data(eurovision)
 (wiki_matrix <- as.matrix(eurovision2009_votingtable))
 ```
 
-Each row corresponds to a competitor and each column to a judge.  Note
+Each row corresponds to a contestant and each column to a judge.  Note
 that the matrix is not square: the last two columns correspond to
 Germany and the UK, who were judges but not competitors.  I have
-removed the first column in the Wikipedia table (which gave the total
-of the points), replaced self-voting entries with `NA`, and replaced
-blanks with `0`.  Thus the first row corresponds to votes cast for
-`ME`, Montenegro.  We see that `BE` (Belgium) awarded them three
-points, `am` (Armenia) five points, and so on.
-
+removed the first column from the Wikipedia table (which gave the
+total of the points), replaced self-voting entries with `NA`, and
+replaced blanks with `0`.  Thus the first row corresponds to votes
+cast for `ME`, Montenegro.  We see that `BY` (Belarus) awarded them
+three points, `AM` (Armenia) five points, and so on.  The first column
+corresponds to the points awarded by Monetenegro.  We see that they
+placed gave Belarus (`BY`) two points, Armenia (`AM`) four points, and
+so on.  Their favourite was Bosnia and Herzegovina (`BA`) to whom they
+gave twelve points.  The points system used was:
 
 ```{r,pointsforplaces}
 points <- c(12,10,8,7,6,5,4,3,2,1)
@@ -75,75 +78,47 @@ rownames(wiki_matrix) <- jj[1:18]
 colnames(wiki_matrix) <- jj
 ```
 
-In the above, matrix `preference` records voters' first, second, third,
-etc choice.  A zero entry means no points (nul punkte!) and `NA` means
-that voter was forbidden from voting for that player (countries cannot
-vote for themselves).
+In the above, matrix `preference` records voters' first, second,
+third, etc choice.  A zero entry means no points (nul punkte!) and
+`NA` means that voter was forbidden from voting for that player
+(countries cannot vote for themselves).  The competitors were the
+first 18 countries (the last two countries,
+Germany and the UK, voted but did not compete).  
 
-The competitors were the first 18 countries (the last two countries,
-Germany and the UK, voted but did not compete).  We need the voters'
-choices to be the *rows* for consistency with the rest of the package
-(and, for that matter, the aylmer package and indeed the emulator
-package), so we take the transpose:
-
-```{r,taketranspose}
-preference <- t(preference)
+```{r}
 preference
 ```
-
-Now, take the first row of `preference`.  This represents the votes
-cast *by* (sic) Montenegro (`"ME"`).  Their favourite was [last
-column] Bosnia & Herzegovina (`"BA"`), who they gave rank 1 to.  Their
-second favourite was Macedonia, their third was Turkey, and so on.
-They were not allowed to vote for themselves, which is why the first
-column is `NA`.  So the order was: `BA` (1), `MK` (2) , `TR` (3), `IS`
-(4), `RO` (5), `IL` (6), `AM` (7), `FI` (8), `BY` (9), `MT` (10).  The
-other countries (`CZ`, `BE`, `SW`, `CH`, `BG`, `PT`) did not receive
-any points from Montenegro.  The rows show the votes cast by each
-country; note the final two rows corresponding to votes cast by
-Germany and the UK, who did not compete and therefore cast votes for
-all competitors.
+Now, take the first column of `preference`.  This represents the order
+of preferences of Montenegro (`ME`).  Their favourite was [last row]
+Bosnia & Herzegovina (`BA`), who they gave rank 1 to (that is, 12
+points).  Their second favourite was Macedonia (`MK`), their third was
+Turkey (`TR`), and so on.  They were not allowed to vote for themselves,
+which is why the first row is `NA`.  So the order was: `BA` (first),
+`MK` (second) , `TR` (third), `IS` (fourth), `RO` (fifth), `IL`
+(sixth), `AM` (seventh), `FI` (eigthth), `BY` (ninth), `MT` (tenth).
+The other countries (`CZ`, `BE`, `SW`, `CH`, `BG`, `PT`) came joint
+last and did not receive any points from Montenegro.  Note the final
+two rows corresponding to votes cast by Germany and the UK, who did
+not compete and therefore cast votes for all competitors.
 
 We need to convert matrix `preference` into a likelihood function,
 here `eurovision2009`:
  
 ```{r,morestuff}
-eurovision2009 <- hyper2(d=18)
+eurovision2009 <- hyper2()
 
-for(i in seq_len(nrow(preference))){   # cycle through the rows; each row is a voter
-    d <- preference[i,,drop=TRUE]
-    d[is.na(d)] <- -1  # kludge: make the voting country ineligible to vote.
-    while(any(d>0)){
-        eligible <- which(d>=0)   # This is why we set NA values to -1
-        eurovision2009[which(d==1)] %<>% "+"(1)
-                                            # The first choice among
-                                             # eligible players has +1
-                                              # power on the numerator
-        
-        eurovision2009[eligible] %<>% dec()   # denominator of all eligible players
-
-        d[d==1] <- -1  # once you've won, you are ineligible to be chosen again
-                       # NB, pipe idiom is ugly:  d %<>% `[<-`(. == 1, -1)
-
-        d[d>0] %<>% dec()  # everyone moves down the list, so who
-                            # *was* second choice becomes first
-                            # choice, who *was* third choice becomes
-                            # second, and so on.
-
-    } # while() loop closes
+for(i in seq_len(ncol(preference))){   # cycle through the rows; each row is a voter
+    d <- preference[,i,drop=TRUE]
+	eurovision2009 <- 	eurovision2009  + ordervec2supp(d[!is.na(d)])
 } # i loop closes
-
-
-## syntatic sugar:
-pnames(eurovision2009) <- competitors
 ```
 
 Now we can check null of equal strengths:
 
-```{r,checknull}
-m <- maxp(eurovision2009)  # MLE
-print(loglik(indep(m),eurovision2009))
-print(loglik(indep(equalp(eurovision2009)),eurovision2009))
+```{r,checknull,cache=TRUE}
+m <- maxp(eurovision2009)
+m
+equalp.test(eurovision2009)
 ```
 
 Thus the difference is about 122 units of support, surely significant.
@@ -153,20 +128,15 @@ Thus the difference is about 122 units of support, surely significant.
 points_scored <- rowSums(wiki_matrix,na.rm=TRUE)  # points
 ox <- rank(-points_scored)
 oy <- rank(-m)   # m = MLE
+oyp <- ordertrans(oy,names(ox))
+
 par(pty='s') # square plot
-plot(ox,oy,asp=1,pty='s',xlim=c(0,18),ylim=c(0,18),pch=16,
+plot(ox,oyp,asp=1,pty='s',xlim=c(0,18),ylim=c(0,18),pch=16,
 xlab="official order",ylab="my order",main="Eurovision 2009")
+
 par(xpd=TRUE) # allow country names to appear outside plotting region
-for(i in seq_along(ox)){text(ox[i],oy[i],names(m)[ox[i]],pos=4,col='gray') }
+for(i in seq_along(ox)){text(ox[i],oyp[i],names(ox)[i],pos=4,col='gray') }
 par(xpd=FALSE) # stop diagonal line from protruding beyond plotting region
 abline(0,1)
-```
-
-In the graph above, we see that both systems agree on the first four places.
-We can also plot the numerical values:
-
-```{r}
-plot(log(rowSums(wiki_matrix,na.rm=TRUE)),log(m),
-     pch=16,xlab="points scored",ylab="MLE strength")
 ```
 
