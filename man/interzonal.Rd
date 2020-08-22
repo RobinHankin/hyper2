@@ -22,7 +22,7 @@ in Stockholm, 1962.
   in which 8 players competed in Curacao.
 
   Likelihood functions \code{interzonal} and \code{interzonal_collusion}
-  are created by files \file{inst/collusion_stockholm.R}, which are
+  are created by files \file{inst/collusion_stockholm1962.R}, which are
   heavily documented and include some analysis.  Object
   \code{interzonal} includes a term for drawing, (\dQuote{\code{draw}}),
   assumed to be the same for all players; object
