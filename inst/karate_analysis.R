@@ -31,4 +31,4 @@ for(i in seq_len(nrow(a))){
 }
 
 
-Hcut <- zapweak(H)
+

@@ -41,8 +41,7 @@ structure(list(brackets = list(1, c(1, 36), 2, c(2, 3), c(2,
 "pokorny", "poshen", "povrzenic", "rodionov", "rodriguiez", "rolle", 
 "rosiello", "sabiecki", "sawadogo", "shafei", "sharma", "shinohara", 
 "sijercic", "suleimani", "tadissi", "tawfik", "teodorescu", "thomas", 
-"toli", "uygur", "uzakov", "velozo", "zakaria", "zhiwei")),
-class = "hyper2")
+"toli", "uygur", "uzakov", "velozo", "zakaria", "zhiwei")), class = "hyper2")
 
 `karate_table` <-
 structure(list(karateka1 = structure(c(15L, 54L, 10L, 46L, 46L, 
