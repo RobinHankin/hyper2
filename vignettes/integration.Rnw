@@ -339,8 +339,7 @@ Total & $y_{+1} + u_{+1}$ & $y_{+0} +u_{+0} $&$z_{++}$&&$n$ \\
 We may implement an appropriate likelihood function as follows:
 
 <<>>=
-H <- hyper2(d=4)
-pnames(H) <- c("t00","t10", "t01", "t11")
+H <- hyper2()
 H["t00"] <- 18
 H["t10"] <- 01
 H["t01"] <- 05
