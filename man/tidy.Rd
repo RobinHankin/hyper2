@@ -12,9 +12,9 @@
   do not appear in any bracket) removed.  Players about which \code{H}
   is uninformative are removed from the \code{pnames} attribute.
 
+  Note that idiom \code{pname(H) <- jj} also works.
 }
 \author{Robin K. S. Hankin}
-\note{Function \code{tidy()} is very, very, inelegant}
 \examples{
 
 

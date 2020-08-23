@@ -1,24 +1,6 @@
          
 `tidy` <- function(H){
-  wanted <- sort(unique(c(brackets(H),recursive=TRUE)))  # numeric
-
-  o <- order(wanted)  # == seq_along(wanted)
-
-  bracketout <- list()
-  powerout <- NULL
-  for(i in seq_along(H)){
-    b <- brackets(H)[[i]]  # numeric (not necessarily sorted)
-    if(any(b %in% wanted)){
-      bracketout <- c(bracketout, list(which(apply(outer(b,wanted,"=="),2,any)))) # easily the ugliest line in any of my code, anywhere
-      powerout <- c(powerout, powers(H)[i])
-    }
-  }
-  if(identical(pnames(H),NA)){
-    pout <- NA
-  } else {
-    pout <- pnames(H)[wanted]
-  }
-  return(hyper2(bracketout,powerout,pout))
+    hyper2(brackets(H),powers(H),pnames=sort(unique(c(brackets(H),recursive=TRUE))))
 }
 
 `keep_flawed` <- function(H, wanted){
