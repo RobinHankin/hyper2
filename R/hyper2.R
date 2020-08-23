@@ -837,26 +837,17 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(H)
 }
 
-`pwa` <- function(H,pwa,chameleon='S'){  # idea is pwa(ordervec2supp(a,...),c("a","b"))
+`pwa` <- function(H,pwa,chameleon='S'){  
 
-  if(is.character(pwa)){
     stopifnot(pwa %in% pnames(H))
-    pwa <- which(pnames(H) %in% pwa)
-  }  # now pwa is numeric
-
-  if(!isTRUE(is.na(pnames(H)))){            # that is, if H has pnames() then ...
     stopifnot(!(chameleon %in% pnames(H)))  # ... check that the chameleon isn't already a competitor, and
-    pnames(H) <- c(pnames(H),chameleon)     # add the chameleon's name to pnames
-  }
   
-  B <- brackets(H)
-  ## overwrite B in place:
-  for(i in seq_along(B)){
-    if(any(pwa %in% B[[i]])){  # person with advantage 
-      B[[i]] <- c(B[[i]],size(H))  # NB off-by-one error
-    } 
-  }
-  return(hyper2(B,powers(H),pnames=pnames(H)))
+    B <- brackets(H)
+    ## overwrite B in place:
+    for(i in seq_along(B)){
+        if(any(pwa %in% B[[i]])){ B[[i]] <- c(B[[i]],chameleon) }
+    }
+    return(hyper2(B,powers(H)))
 }
 
 `wikitable_to_ranktable`  <- function(wikitable, strict=FALSE){
@@ -887,10 +878,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
                 +1  # sic: power_i = alpha_i+1
                 )
         } else { # hyper2, but not dirichlet
-            warning("hyper2 object supplied but is not a Dirichlet distribution: sample from uniform distribution returned")
-            pn <- pnames(H)
-            s <- size(H)
-            alpha <- rep(1,s)
+            stop("hyper2 object supplied but is not a Dirichlet distribution: sample from uniform distribution returned")
         }
     } else {   # H is vector of alpha
         pn <- NA
