@@ -473,11 +473,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
   out <- hyper2(pnames=cn)
   for(i in seq_len(nrow(M))){
-    v <- rev(M[i,,drop=TRUE])
-    jj1 <- hyper2(as.list(v),times[i])   # numerators
-    jj2 <- hyper2(sapply(seq_along(v),function(i){v[seq_len(i)]}),-times[i]) # denominators
-    out <- out + jj1 + jj2
-  }  # i loop closes
+      out <- out + ordervec2supp(rev(M[i,,drop=TRUE]))
+  } 
   return(out)
 }
 
