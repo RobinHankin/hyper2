@@ -1,15 +1,31 @@
 `volvo2014` <- 
-structure(list(brackets = list(1, c(1, 2, 3, 4, 5), c(1, 2, 3, 
-4, 5, 6, 7), c(1, 2, 3, 4, 5, 7), c(1, 2, 3, 5, 6, 7), c(1, 2, 
-4, 5, 6, 7), c(1, 3, 4, 5, 6, 7), c(1, 3, 5, 6, 7), c(1, 3, 6, 
-7), c(1, 4, 5, 6, 7), c(1, 6, 7), 2, c(2, 3, 4, 5), c(2, 3, 4, 
-5, 6, 7), c(2, 3, 5), c(2, 3, 5, 6, 7), c(2, 3, 6, 7), c(2, 4, 
-5, 6, 7), c(2, 4, 6, 7), c(2, 5, 6, 7), c(2, 6, 7), 3, c(3, 5
-), c(3, 6, 7), 4, c(4, 5, 6), c(4, 5, 6, 7), c(4, 6), 5, c(5, 
-6, 7), 6, c(6, 7), 7), powers = c(8, -1, -8, -1, -1, -2, -2, 
--1, -1, -1, -1, 8, -1, -2, -1, -2, -1, -3, -1, -1, -2, 6, -1, 
--1, 7, -1, -3, -1, 8, -2, 8, -5, 2), pnames = c("AbuDhabi", "Brunel", 
-"Dongfeng", "MAPFRE", "Alvimedica", "SCA", "Vestas")), class = "hyper2")
+structure(list(brackets = list("AbuDhabi", c("AbuDhabi", "Alvimedica", 
+"Brunel", "Dongfeng", "MAPFRE"), c("AbuDhabi", "Alvimedica", 
+"Brunel", "Dongfeng", "MAPFRE", "SCA", "Vestas"), c("AbuDhabi", 
+"Alvimedica", "Brunel", "Dongfeng", "MAPFRE", "Vestas"), c("AbuDhabi", 
+"Alvimedica", "Brunel", "Dongfeng", "SCA", "Vestas"), c("AbuDhabi", 
+"Alvimedica", "Brunel", "MAPFRE", "SCA", "Vestas"), c("AbuDhabi", 
+"Alvimedica", "Dongfeng", "MAPFRE", "SCA", "Vestas"), c("AbuDhabi", 
+"Alvimedica", "Dongfeng", "SCA", "Vestas"), c("AbuDhabi", "Alvimedica", 
+"MAPFRE", "SCA", "Vestas"), c("AbuDhabi", "Brunel", "Dongfeng", 
+"MAPFRE", "SCA", "Vestas"), c("AbuDhabi", "Dongfeng", "MAPFRE", 
+"SCA", "Vestas"), c("AbuDhabi", "Dongfeng", "SCA", "Vestas"), 
+    c("AbuDhabi", "SCA", "Vestas"), "Alvimedica", c("Alvimedica", 
+    "Brunel", "Dongfeng"), c("Alvimedica", "Brunel", "Dongfeng", 
+    "MAPFRE"), c("Alvimedica", "Brunel", "Dongfeng", "MAPFRE", 
+    "SCA", "Vestas"), c("Alvimedica", "Brunel", "Dongfeng", "SCA", 
+    "Vestas"), c("Alvimedica", "Brunel", "MAPFRE", "SCA", "Vestas"
+    ), c("Alvimedica", "Brunel", "SCA", "Vestas"), c("Alvimedica", 
+    "Dongfeng"), c("Alvimedica", "MAPFRE", "SCA"), c("Alvimedica", 
+    "MAPFRE", "SCA", "Vestas"), c("Alvimedica", "SCA", "Vestas"
+    ), "Brunel", c("Brunel", "Dongfeng", "SCA", "Vestas"), c("Brunel", 
+    "MAPFRE", "SCA", "Vestas"), c("Brunel", "SCA", "Vestas"), 
+    "Dongfeng", c("Dongfeng", "SCA", "Vestas"), "MAPFRE", c("MAPFRE", 
+    "SCA"), "SCA", c("SCA", "Vestas"), "Vestas"), powers = c(9, 
+-1, -9, -1, -1, -2, -2, -1, -1, -1, -1, -2, -2, 9, -1, -1, -2, 
+-2, -3, -1, -1, -1, -3, -2, 9, -1, -1, -2, 7, -1, 8, -1, 8, -6, 
+3), pnames = c("AbuDhabi", "Alvimedica", "Brunel", "Dongfeng", 
+"MAPFRE", "SCA", "Vestas")), class = "hyper2")
 
 `volvo_table_2014` <-
 structure(list(leg1 = c(1L, 3L, 2L, 7L, 5L, 6L, 4L), leg2 = structure(c(3L, 
