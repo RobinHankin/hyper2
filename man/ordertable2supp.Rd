@@ -71,12 +71,11 @@ a1 <- c(a=2,b=3,c=1,d=5,e=4) # a: 2nd, b: 3rd, c: 1st, d: 5th, e: 4th
 a2 <- c(a=1,b=0,c=0,d=2,e=3) # a: 2nd, b: DNF, c: DNF, d: 2nd, e: 3rd
 a3 <- c(a=1,b=3,c=2)         # a: 1st, b: 3rd, c: 2nd. NB only a,b,c competed
 a4 <- c(a=1,b=3,c=2,d=0,e=0) # a: 1st, b: 3rd, c: 2nd, d,e: DNF
-l <- letters[1:5]
 
 
 ## ordervec2supp() may be added [if the observations are independent]:
 
-H1 <- ordervec2supp(a1) + ordervec2supp(a2) + ordervec2supp(a3,pnames=l)
+H1 <- ordervec2supp(a1) + ordervec2supp(a2) + ordervec2supp(a3)
 H2 <- ordervec2supp(a1) + ordervec2supp(a2) + ordervec2supp(a4)
 
 ## Thus H1 and H2 are identical except for the third race.  In H1, 'd'
@@ -86,31 +85,4 @@ H2 <- ordervec2supp(a1) + ordervec2supp(a2) + ordervec2supp(a4)
 pmax(H1)
 pmax(H2)   # d,e not finishing affects their estimated strength
 
-
-## Care!
-u1 <- c(a=2,b=3,c=1,d=4,e=5)
-u2 <- c(c=1,b=3,a=2,d=4,e=5)
-## NB: u1,u2 correspond to the "same" statistic, but:
-
-ordervec2supp(u1) == ordervec2supp(u2)                   # FALSE
-## (the pnames are different).
-
-
-## To get a more useful result, either specify the pnames explicitly, or
-## use order_obs():
-
-ordervec2supp(u1,pnames=l) == ordervec2supp(u1,pnames=l)   # TRUE
-order_obs(H1,u1) == order_obs(H1,u2)                       # TRUE
-
-f <- function(a=3){`names<-`(sample(seq_len(a)),sample(letters[seq_len(9)],a))}
-
-H0 <- hyper2(pnames=letters[1:9])
-H0 \%<>\% order_obs(f()) \%>\% order_obs(f())
-
-## Use of "incomplete" argument:
-maxp(ordertable2supp(F1_table_2017[1:5,]))                # flawed reasoning
-maxp(ordertable2supp(as.ordertable(F1_table_2017[1:5,])))  # correct
-
-## Sometimes we need to add things to the 'did not finish' list:
-ordertable2supp(volvo_table_2014,noscore=c("DNF","DNS")) == volvo2014
 }
