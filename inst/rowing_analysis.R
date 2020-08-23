@@ -22,12 +22,5 @@ for(v in o){
     }
 }
 
-I <- hyper2(pnames=rowers)
-for(v in o){
-  I <- I + rank_likelihood(character_to_number(v,rowers))
-}
-
-
 data("rowing")
 stopifnot(H == sculls2016)
-stopifnot(I == sculls2016)
