@@ -34,12 +34,12 @@ consider it in conjunction with some highly informative observations
 ${\mathcal I}$ which are order statistics:
 
 ```{r}
-(H <- hyper2(pnames=paste("p",1:5,sep="")) +
-    rank_likelihood(c(5,2,1,4)) + 
-    rank_likelihood(c(2,4,1)) + 
-    rank_likelihood(c(4,3,1)) + 
-    rank_likelihood(c(3,5)))
-	```
+(H <- 
+	rank_likelihood(c(a=3,c=2,b=1,d=4)) + 
+	rank_likelihood(c(b=2,c=3,d=1    )) + 
+	rank_likelihood(c(d=2,a=3,c=1    )) + 
+	rank_likelihood(c(b=1,d=2        )) )
+```
 	
 We will firstly consider these observations in isolation, then later
 combine them with ${\mathcal O}$ which we will take to be
@@ -75,11 +75,7 @@ alternative that $p_1\geqslant p_4$ (we choose $p_4$ on the grounds of
 its low estimated value).  Then
 
 ```{r}
-n <- 5 # number of players
-small <- 1e-3  # numerical necessity
-(mH1 <- maxp(H,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,0,0,-1)),fcv=0))
-loglik(indep(mH1),H)
-loglik(indep(mH0),H)-loglik(indep(mH1),H)   # support
+samep.test(H,c(1,4))
 ```
 
 There is no reason to reject our null that $p_1\geqslant p_4$, for the
@@ -101,7 +97,9 @@ H # as before, here for convenience
 M <- perms(5)   # uninformative!
 SL <- list()
 for(i in seq_len(ncol(M))){
-	SL[[i]] <- H + rank_likelihood(M[,i,drop=TRUE])
+	jj <- M[,i,drop=TRUE]
+	names(jj) <- letters[seq_along(jj)]
+	SL[[i]] <- H + rank_likelihood(jj)
 }
 SL <- as.suplist(SL)
 ```
@@ -112,8 +110,10 @@ subsequent (independent) trial was in any of the $5!=120$ possible
 orders.  We can find the MLE for different observations:
 
 ```{r,mls0,cache=TRUE}
-mSL0 <- maxp(SL)
-mSL1 <- maxp(SL,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,0,0,-1)),fcv=0)
+n <- 5 # number of players
+small <- 1e-4
+mSL0 <- maxplist(SL)
+mSL1 <- maxplist(SL,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,0,0,-1)),fcv=0)
 mSL2 <- equalp(SL)
 ```
 
@@ -134,50 +134,3 @@ which is identical to the previous support function for $H_1$ and
 $H_2$ (apart from a traditional sign) taken from `equalp.test()` and
 `mSL2` above.
 
-# Additional weakly informative observation
-
-Now we make another observation ${\mathcal O}$ which is independent of
-${\mathcal I}$: person `1` did not win.  It is clear that observation
-${\mathcal O}$ is only very weakly informative.  Package idiom is
-similar to the perfectly uninformative observation considered above,
-except that we remove every order that has person 1 winning:
-
-```{r,slacalc}
-M <- perms(5)
-M <- M[, M[1,]!=1]  # remove any column with "1" in first place
-SLa <- list()
-for(i in seq_len(ncol(M))){
-	SLa[[i]] <- H + rank_likelihood(M[,i,drop=TRUE])
-}
-SLa <- as.suplist(SLa)
-```
-
-So `SLa` is a compound object that gives a support function for the
-joint observation ${\mathcal I}$ and ${\mathcal O}$.  We can find the
-MLE:
-
-```{r,mlsa,cache=TRUE}
-mSLa0 <- maxp(SLa)
-mSLa1 <- maxp(SLa,startp=c(small*2,rep(small,n-2)),fcm=rbind(c(1,0,0,-1)),fcv=0)
-mSLa2 <- equalp(SLa)
-```
-
-```{r,suppacalc}
-Suppa <-
-      log(c(
-      H0 = like_single_list(indep(mSLa0),SLa),
-      H1 = like_single_list(indep(mSLa1),SLa),
-      H2 = like_single_list(indep(mSLa2),SLa)))
-(Suppa <- Suppa-max(Suppa))
-```
-
-We can now compare the support function for ${\mathcal I}$ with the
-support function for ${\mathcal I}$ and ${\mathcal H}$:
-
-```{r,comparesups}
-Supp2-Suppa
-```
-
-Thus ${\mathcal O}$ furnishes a tiny bit of extra evidence against
-$H_1$ (about $0.016$ units of support) and a little bit of extra
-evidence against $H_2$ (about $0.193$ units of support).
