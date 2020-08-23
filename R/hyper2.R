@@ -757,7 +757,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
   if(race){  # Plackett-Luce
       for(i in seq_len(s)){
-          H <- H + rank_likelihood(pnames[sample(n)])
+          H <- H + order_likelihood(pnames[sample(n)])
     }
   }
 
