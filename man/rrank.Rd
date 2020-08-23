@@ -2,7 +2,7 @@
 \alias{rrank}
 \alias{print.ranktable}
 \title{Random ranks}
-\description{
+\description{\loadmathjax
 A function for producing ranks randomly, consistent with a specified
 strength vector
 }
@@ -77,11 +77,11 @@ row), runner 1 came first, etc.  Taking the first race as an example:
 \strong{Rank:} who came first? runner 2.  Who came second? runner 3.
 Who came third? runner 1.  Who came fourth? runner 4.  Recall that the
 Placket-Luce likelihood for a race in which the rank statistic was
-\code{2314} (the first race) would be \eqn{
+\code{2314} (the first race) would be \mjeqn{
 \frac{p_2}{p_2+p_3+p_1+p_4}\cdot
 \frac{p_3}{p_3+p_1+p_4}\cdot
 \frac{p_1}{p_1+p_4}\cdot
-\frac{p_4}{p_4}}{?}.
+\frac{p_4}{p_4}}{omitted}.
 
 \strong{Order:} where did runner 1 come?  third.  Where did runner 2
 come?  first.  Where did runner 3 come?  second.  Where did runner 4
