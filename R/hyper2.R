@@ -871,22 +871,19 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `rdirichlet` <- function(n, H){
     if(is.hyper2(H)){
         if(is.dirichlet(H)){
+            alpha <- powers(H)
             pn <- pnames(H)
             s <- size(H)
-            alpha <- (
-                sapply(seq_len(s),function(i){powers(H[i])}) # NB not powers(H); zero powers are discarded!
-                +1  # sic: power_i = alpha_i+1
-                )
         } else { # hyper2, but not dirichlet
             stop("hyper2 object supplied but is not a Dirichlet distribution: sample from uniform distribution returned")
         }
     } else {   # H is vector of alpha
-        pn <- NA
+        pn <- names(H)
         s <- length(H)
         alpha <- H
     }
     out <- t(apply(matrix(rgamma(n*s,shape=alpha),s,n),2,function(x){x/sum(x)}))
-    if(!identical(pn,NA)){colnames(out) <- pn}
+    colnames(out) <- pn
     return(out)
 }
 
