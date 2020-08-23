@@ -40,11 +40,11 @@ rr <- function(H,M){
 	for(i in seq_len(nrow(M)-1)){
 		for(j in (i+1):ncol(M)){
 			if(M[i,j]){
-				winner <- i
-				loser  <- j
+				winner <- rownames(M)[i]
+				loser  <- rownames(M)[j]
 			} else {
-				winner <- j
-				loser <- i
+				winner <- rownames(M)[j]
+				loser <-  rownames(M)[i]
 			}
 			H[winner] %<>% inc
 			H[c(winner,loser)] %<>% dec
