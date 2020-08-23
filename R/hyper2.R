@@ -478,6 +478,12 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(out)
 }
 
+`order_likelihood` <- function(x){
+    jj <- seq_along(x)
+    names(jj)  <- x
+    return(rank_likelihood(jj))
+}
+
 #`addrank` <- function(H,ranks){
 #     .Defunct(new = 'rank_likelihood',msg='use H <- H+rank_likelihood(...)')
 #     ranks <- rbind(ranks)
@@ -597,7 +603,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
     out <- mult_grid(lapply(dotargs, .allorders))[[1]]
     out[] <- pnames(H)[out]
-    out <- apply(out,2,function(rank){H+rank_likelihood(rank)})
+    out <- apply(out,2,order_likelihood)
     return(as.suplist(out))
 }
 
