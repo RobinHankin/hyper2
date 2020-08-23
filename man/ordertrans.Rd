@@ -26,13 +26,15 @@ d a b c
 > o
 a b c d 
 3 1 4 2 
-    }
+> ordervec2supp(x) == ordervec2supp(o)
+> [1] TRUE
+}
 
-    In the above, we see \code{x} is an order vector showing that
-    \code{d} came second, \code{a} came third, \code{b} came first, and
-    \code{c} came fourth.  Object \code{o} contains the same information
-    but presented differently.  This says that \code{a} came third,
-    \code{b} came first, \code{c} came fourth, and \code{d} came second.
+In the above, we see \code{x} is an order vector showing that \code{d}
+came second, \code{a} came third, \code{b} came first, and \code{c} came
+fourth.  Object \code{o} contains the same information but presented
+differently.  This says that \code{a} came third, \code{b} came first,
+\code{c} came fourth, and \code{d} came second.
 }
 \value{Returns a named vector}
 \author{Robin K. S. Hankin}
