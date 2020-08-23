@@ -59,8 +59,8 @@ discard_flawed(icons,c("OA","WAIS"))
 
 data("skating")
 maxp(skating)[1:4]      # numbers work, keep the first four skaters
-maxp(keep_flawed(skating,1:4))
+maxp(keep_flawed(skating,pnames(skating)[1:4])) # differs!
 
-pie(maxp(ordertable2supp(keep_flawed2(F1_table_2017,1:9))))
+
 
 }
