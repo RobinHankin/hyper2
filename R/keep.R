@@ -21,16 +21,10 @@
   return(hyper2(bracketout,powerout,pout))
 }
 
-`keep_flawed` <- function(H, wanted, tidy=TRUE){
+`keep_flawed` <- function(H, wanted){
   p <- pnames(H)    # might be NA
-  if(is.character(wanted)){
-    stopifnot(all(wanted %in% p))
-    wanted <- which(p %in% wanted) # 'wanted' now numeric
-  } else {
-    jj <- seq_len(size(H))
-    stopifnot(all(wanted %in% jj))
-    wanted <- which(jj %in% wanted) # 'wanted' now numeric
-  }
+  stopifnot(is.character(wanted))
+  stopifnot(all(wanted %in% p))
 
   bracketout <- list()
   powerout <- NULL
@@ -42,20 +36,13 @@
       powerout <- c(powerout, powers(H)[i])
     }
   }
-  out <-hyper2(L=bracketout,d=powerout,pnames=p)
-  if(tidy){out <- tidy(out)}
-  return(out)
+  hyper2(L=bracketout,d=powerout,pnames=p)
 }
 
-`discard_flawed` <- function(H, unwanted, tidy=TRUE){
-  p <- pnames(H)
-  if(is.character(unwanted)){
+`discard_flawed` <- function(H, unwanted){
+    p <- pnames(H)
+    stopifnot(is.character(unwanted))
     stopifnot(all(unwanted %in% p))
-    wanted <- which(!(p %in% unwanted))
-  } else {
-      jj <- seq_len(size(H))
-      stopifnot(all(unwanted %in% jj))
-      wanted <- which(!(jj %in% unwanted))
-  }
-  return(keep_flawed(H,wanted=wanted, tidy=tidy))  # the meat
+    browser()
+    return(keep_flawed(H,wanted=p[!(p %in% unwanted)]))
 }

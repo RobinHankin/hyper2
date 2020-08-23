@@ -922,18 +922,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
-`keep_flawed2` <- function(x, wanted, ...){
-    if(is.character(wanted)){
-        wanted <- which(rownames(x)==wanted)
-    }
-    o <- wikitable_to_ranktable(x,...) # was o <- ordertable_to_ranktable(x)
-    class(o) <- "matrix"
-    o <- t(apply(o[,wanted],1,rank))
-    colnames(o) <- rownames(x)[wanted]
-    class(o) <- "ranktable"
-    return(ranktable_to_ordertable(o))
-}
-
 `discard_flawed2` <- function(x, unwanted,...){
     if(is.character(unwanted)){
         wanted <- !which(rownames(x)==unwanted)
