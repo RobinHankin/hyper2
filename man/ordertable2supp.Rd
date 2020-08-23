@@ -20,8 +20,7 @@ usually signifies DNF as a blank).
 }
 \usage{
 ordertable2supp(x, noscore, incomplete=TRUE)
-ordervec2supp(d,pnames)
-order_obs(H,d)
+ordervec2supp(d)
 }
 \arguments{
   \item{x}{Data frame, see details}
@@ -35,8 +34,6 @@ order_obs(H,d)
     for a non-finishing status such as \dQuote{did not finish}
     or \dQuote{disqualified}.  A missing argument is interpreted as 
     \code{c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")}}
-  \item{pnames}{Optional list of names, see details}
-  \item{H}{Object of class \code{hyper2}}
 }
 \details{
 
@@ -50,15 +47,31 @@ sports.  Prepared text versions are available in the package in the
 
 Function \code{ordervec2supp()} takes an order vector \code{d} and
 returns the corresponding Plackett-Luce loglikelihood function as a
-\code{hyper2} object.  It can take a named vector; names of the elements
+\code{hyper2} object.  It requires a named vector; names of the elements
 are interpreted as names of the players.  Use argument \code{pnames} to
 supply the players' names (see the examples).
 
-Function \code{order_obs()} is the same as \code{ordervec2supp()} but is
-based on \code{pnames} rather than integers, and augments its first
-argument; the idea is that one can write \code{H \%>\% order_obs(o)}.
-Indeed \code{H \%<>\% order_obs(o)} is arguably marginally more natural
-than \code{H \%<>\% `+`(ordertable2supp(o,pnames=pnames(H)))}.
+\preformatted{
+> x <- c(b=2,c=3,a=1,d=4,e=5) # a: 1st, b: 2nd, c: 3rd etc
+> ordervec2supp(x)
+log( a * (a + b + c + d + e)^-1 * (a + b + d + e)^-1 * b * (b + d +
+e)^-1 * c * (d + e)^-1 * e)
+}
+
+\mjdeqn{
+\frac{a}{a+b+c+d+e}\cdot
+\frac{b}{b+c+d+e}\cdot
+\frac{c}{c+d+e}\cdot
+\frac{d}{d+e}\cdot
+\frac{e}{e}
+}{
+  omitted
+}
+
+
+
+Function \code{order_obs()} was used in the integer-indexed paradigm but
+is obsolete in the name paradigm.
 }
 \value{Returns a \code{hyper2} object}
 \author{Robin K. S. Hankin}

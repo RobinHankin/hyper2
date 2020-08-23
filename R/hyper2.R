@@ -795,29 +795,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
-`order_obs` <- function(H,d){
-    ## 'd' is a named integer vector with c(a=1,b=0,c=2) meaning 'a'
-    ## came first, 'b' did not finish, and 'c' came second.  'H' is a
-    ## hyper2 object that must include all names of 'd'.  It uses the
-    ## same algorithm as ordervec2supp() but is based on names.
-    
-    stopifnot(all(names(d) %in% pnames(H)))
-
-    wanted <- d!=0
-    if(any(sort(d[wanted]) != seq_len(sum(wanted)))){
-        stop("nonzero elements of d should be 1,2,3,4...,n")
-    }
-
-    while(any(d>0)){
-        eligible <- which(d>=0)
-        H[names(d[d==1])] %<>% inc
-        H[names(d)[eligible]] %<>% dec
-        d[d==1] <- -1  # NB strictly <0
-        d[d>0] %<>% dec
-    } # while() loop closes
-    return(H)
-}
-
 `ordertable2supp` <- function(x, noscore, incomplete=TRUE){
     if(missing(noscore)){
         noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC", "DNQ")
