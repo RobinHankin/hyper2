@@ -1,8 +1,13 @@
+# Some work on the Great British Bake-Off.  The simulation takes about twenty minutes to run.
+
 library("hyper2")
 
 allbakers <- c("Alice","Amelia","Dan","David","Helena","Henry",
              "Jamie","Michael","Michelle","Phil","Priya","Rosie","Steph")
-# NB alphabetical order
+
+## NB alphabetical order.
+
+## Below, we define rank vectors week01-week10 in which the contestants appear in alphabetical order.
 
 week01 <- c(Alice = 5, Amelia = 4, David = 10, Dan = 9, Helena = 12, Henry = 1, Jamie = 13, Michael = 11, Michelle = 6, Phil = 8, Priya = 7, Rosie = 2, Steph = 3)
 week02 <- c(Alice = 1, Amelia = 9, David =  2,          Helena = 12, Henry = 6, Jamie = 11, Michael =  4, Michelle = 8, Phil = 3, Priya = 7, Rosie = 5, Steph =10)
@@ -16,6 +21,12 @@ week09 <- c(Alice = 4,             David =  2,                                  
 week10 <- c(Alice = 2,             David =  1,                                                                                                          Steph = 3)
 
 
+## Below, we define rank vectors w01-w10 which represent the same
+## information as week01-week10 but the contestants appear in the
+## (reverse) order in which they were eliminated.  Thus David is first
+## because he was eliminated last, and Dan is last because he was
+## eliminated first.
+
 w01 <- c(David = 10, Alice = 5, Steph = 3, Rosie = 2, Henry = 1, Michael = 11, Priya = 7, Michelle = 6, Helena = 12, Phil = 8, Amelia = 4, Jamie = 13, Dan = 9)
 w02 <- c(David =  2, Alice = 1, Steph =10, Rosie = 5, Henry = 6, Michael =  4, Priya = 7, Michelle = 8, Helena = 12, Phil = 3, Amelia = 9, Jamie = 11)
 w03 <- c(David =  2, Alice = 7, Steph = 3, Rosie = 9, Henry = 1, Michael =  6, Priya = 4, Michelle = 5, Helena =  8, Phil =10, Amelia =11)
@@ -28,34 +39,33 @@ w09 <- c(David =  2, Alice = 4, Steph = 3, Rosie = 1)
 w10 <- c(David =  1, Alice = 2, Steph = 3)
 
 
-# Calculate H, the likelihood function for the observed ordering:
-f <- function(x){rank_likelihood(char2num(names(sort(x)),allbakers))}
 
-H <- hyper2(pnames=allbakers)
-H <- H + f(w01)
-H <- H + f(w02)
-H <- H + f(w03)
-H <- H + f(w04)
-H <- H + f(w05)
-H <- H + f(w06)
-H <- H + f(w07)
-H <- H + f(w08)
-H <- H + f(w09)
-H <- H + f(w10)
+
+# Calculate H, the likelihood function for the observed ordering:
+
+H <- (
+    rank_likelihood(w01) +
+    rank_likelihood(w02) +
+    rank_likelihood(w03) +
+    rank_likelihood(w04) +
+    rank_likelihood(w05) +
+    rank_likelihood(w06) +
+    rank_likelihood(w07) +
+    rank_likelihood(w08) +
+    rank_likelihood(w09) +
+    rank_likelihood(w10) )
 
 ## Now some observed statistics:
 mp_obs  <- maxp(H)
-X_obs <-  2*(loglik(indep(mp_obs),H) - loglik(indep(equalp(H)),H))
-print(paste("asymptotic pvalue = ",pchisq(X_obs,df=12,lower.tail=FALSE)))
-m_obs <- names(which.max(mp_obs))
-name_maxlike_obs <- names(which.max(mp_obs))
+pie(mp_obs)
+
+equalp.test(H)
 
 
 # Now some permutation tests:
 shuffle <- function(a){
-  out <- sample(a)
-  names(out) <- names(a)
-  return(out)
+    a[] <- sample(a)
+    return(a)
 }
 
 
@@ -65,19 +75,18 @@ m <- rep(NA,n)
 name_maxlike <- rep("",n)
 for(i in seq_len(n)){
   print(i)
-  Hstar <- hyper2(pnames=allbakers)
-  Hstar <- Hstar + f(shuffle(w01))
-  Hstar <- Hstar + f(shuffle(w02))
-  Hstar <- Hstar + f(shuffle(w03))
-  Hstar <- Hstar + f(shuffle(w04))
-  Hstar <- Hstar + f(shuffle(w05))
-  Hstar <- Hstar + f(shuffle(w06))
-  Hstar <- Hstar + f(shuffle(w07))
-  Hstar <- Hstar + f(shuffle(w08))
-  Hstar <- Hstar + f(shuffle(w09))
-  Hstar <- Hstar + f(shuffle(w10))
-  
-  
+  Hstar <- (
+      rank_likelihood(shuffle(w01)) + 
+      rank_likelihood(shuffle(w02)) + 
+      rank_likelihood(shuffle(w03)) + 
+      rank_likelihood(shuffle(w04)) + 
+      rank_likelihood(shuffle(w05)) + 
+      rank_likelihood(shuffle(w06)) + 
+      rank_likelihood(shuffle(w07)) + 
+      rank_likelihood(shuffle(w08)) + 
+      rank_likelihood(shuffle(w09)) +
+      rank_likelihood(shuffle(w10)) )
+
   mp <- maxp(Hstar)
   X[i] <- 2*(loglik(indep(mp),Hstar) - loglik(indep(equalp(Hstar)),Hstar))
   m[i] <- max(mp)
@@ -88,14 +97,14 @@ for(i in seq_len(n)){
 ## In theory, X should be distributed as chi-square with 13-1=12
 ## degrees of freedom:
 hist(X)
-abline(v=X_obs,lwd=7)
+abline(v=equalp.test(H)$statistic,lwd=7)
+
+table(name_maxlike)
+chisq.test(table(name_maxlike))
+## highly significant, not sure why
 
 # Check the asymptotic distribution:
 dev.new()
 par(pty='s')
 qqplot(rchisq(1e5,df=17),X,asp=1,pty='s',xlim=c(0,50),ylim=c(0,50))
 abline(0,1)
-
-
-
- 
