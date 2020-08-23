@@ -72,7 +72,7 @@ H1 <- hyper2(pnames=c("AUT_pre",a[c(1:2,4:8),1]))
 for(i in 2012:2016){
   b <- f(a,i)
   rownames(b)[3] <- "AUT_pre"
-  H1 <- combine(H1,ordertable2supp(b))
+  H1 <- H1 + ordertable2supp(b)
 } # column loop closes
 
 
@@ -80,7 +80,7 @@ H2 <- hyper2(pnames=c("AUT_post",a[c(1:2,4:8),1]))
 for(i in 2017:2020){
   jj <- f(a,i)
   rownames(jj)[3] <- "AUT_post"
-  H2 <- combine(H2,ordertable2supp(jj))
+  H2 <- H2 + ordertable2supp(jj)
 }
 maxp(H2)
 ```
@@ -90,7 +90,7 @@ See how we reject $H_0\colon S=0$ with a p-value of about 0.00676,
 significant at 1\%.
 
 ```{r}
-H <- combine(H1,H2)
+H <- H1 + H2
 maxp(H)
 samep.test(H,c(1,9))
 ```

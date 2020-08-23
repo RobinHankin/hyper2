@@ -83,22 +83,78 @@ structure(list(uni = structure(c(6L, 5L, 1L, 2L, 3L, 4L, 7L,
 -72L))
 
 `universities` <- 
-structure(list(brackets = list(1, c(1, 2, 3, 4, 5, 6, 7, 8), 
-    c(1, 2, 4, 5, 6, 7, 8), c(1, 3, 4, 5, 6, 7, 8), c(1, 4, 5, 
-    6, 7, 8), 2, c(2, 3, 4, 5), c(2, 3, 4, 5, 6, 7, 8), c(2, 
-    3, 4, 5, 7, 8), c(2, 3, 4, 5, 8), c(2, 3, 5), c(2, 3, 5, 
-    6, 7, 8), c(2, 3, 5, 6, 8), 3, c(3, 4, 5), c(3, 4, 5, 6), 
-    c(3, 4, 5, 6, 7), c(3, 4, 5, 6, 7, 8), c(3, 4, 5, 6, 8), 
-    c(3, 4, 5, 7), c(3, 4, 5, 7, 8), c(3, 4, 5, 8), c(3, 4, 6, 
-    7), c(3, 4, 6, 7, 8), c(3, 5), c(3, 5, 6), c(3, 5, 6, 7), 
-    c(3, 5, 6, 7, 8), c(3, 5, 6, 8), c(3, 5, 7), c(3, 5, 8), 
-    c(3, 6, 7), c(3, 6, 7, 8), c(3, 7), 4, c(4, 5, 6, 7, 8), 
-    c(4, 5, 6, 8), c(4, 5, 7), c(4, 5, 7, 8), c(4, 6, 7), c(4, 
-    7), 5, c(5, 6), c(5, 6, 7), c(5, 6, 7, 8), c(5, 6, 8), c(5, 
-    7), 6, c(6, 8), 7, 8), powers = c(24, -24, -2, -4, -3, 24, 
--1, -18, -1, -1, -1, -2, -2, 14, -1, -1, -12, -18, -2, -2, -2, 
--1, -2, -1, -5, -1, -8, -1, -4, -5, -1, -2, -1, -2, 24, -3, -1, 
--1, -1, -1, -1, 6, -1, -3, -2, -2, -5, 17, -1, 20, 24), pnames = c("UoA", 
-"Otago", "AUT", "Canterbury", "Lincoln", "Massey", "Victoria", 
-"Waikato")), class = "hyper2")
-
+structure(list(brackets = list("AUT_post", c("AUT_post", "Canterbury"
+), c("AUT_post", "Canterbury", "Lincoln", "Massey"), c("AUT_post", 
+"Canterbury", "Lincoln", "Massey", "Otago", "UoA", "Victoria", 
+"Waikato"), c("AUT_post", "Canterbury", "Lincoln", "Massey", 
+"Otago", "Victoria", "Waikato"), c("AUT_post", "Canterbury", 
+"Lincoln", "Massey", "Otago", "Waikato"), c("AUT_post", "Canterbury", 
+"Lincoln", "Massey", "UoA", "Victoria", "Waikato"), c("AUT_post", 
+"Canterbury", "Lincoln", "Massey", "Victoria"), c("AUT_post", 
+"Canterbury", "Lincoln", "Massey", "Victoria", "Waikato"), c("AUT_post", 
+"Canterbury", "Lincoln", "Massey", "Waikato"), c("AUT_post", 
+"Canterbury", "Massey", "Otago"), c("AUT_post", "Canterbury", 
+"Massey", "Otago", "Waikato"), c("AUT_post", "Canterbury", "Massey", 
+"Victoria", "Waikato"), c("AUT_post", "Canterbury", "Massey", 
+"Waikato"), c("AUT_post", "Canterbury", "Otago"), c("AUT_post", 
+"Lincoln"), c("AUT_post", "Lincoln", "Massey"), c("AUT_post", 
+"Lincoln", "Massey", "Victoria"), c("AUT_post", "Lincoln", "Massey", 
+"Victoria", "Waikato"), c("AUT_post", "Lincoln", "Massey", "Waikato"
+), c("AUT_post", "Massey"), c("AUT_post", "Massey", "Otago", 
+"Waikato"), c("AUT_post", "Massey", "Victoria"), c("AUT_post", 
+"Massey", "Victoria", "Waikato"), c("AUT_post", "Massey", "Waikato"
+), c("AUT_post", "Otago"), c("AUT_post", "Otago", "Waikato"), 
+    c("AUT_post", "Waikato"), "AUT_pre", c("AUT_pre", "Canterbury", 
+    "Lincoln"), c("AUT_pre", "Canterbury", "Lincoln", "Massey"
+    ), c("AUT_pre", "Canterbury", "Lincoln", "Massey", "Otago"
+    ), c("AUT_pre", "Canterbury", "Lincoln", "Massey", "Otago", 
+    "UoA", "Victoria", "Waikato"), c("AUT_pre", "Canterbury", 
+    "Lincoln", "Massey", "Otago", "Victoria"), c("AUT_pre", "Canterbury", 
+    "Lincoln", "Massey", "Otago", "Victoria", "Waikato"), c("AUT_pre", 
+    "Canterbury", "Lincoln", "Massey", "Otago", "Waikato"), c("AUT_pre", 
+    "Canterbury", "Lincoln", "Massey", "UoA", "Victoria", "Waikato"
+    ), c("AUT_pre", "Canterbury", "Lincoln", "Massey", "Victoria"
+    ), c("AUT_pre", "Canterbury", "Lincoln", "Massey", "Victoria", 
+    "Waikato"), c("AUT_pre", "Canterbury", "Lincoln", "Massey", 
+    "Waikato"), c("AUT_pre", "Canterbury", "Lincoln", "Otago", 
+    "Victoria", "Waikato"), c("AUT_pre", "Canterbury", "Lincoln", 
+    "Victoria", "Waikato"), c("AUT_pre", "Lincoln"), c("AUT_pre", 
+    "Lincoln", "Massey"), c("AUT_pre", "Lincoln", "Massey", "Otago"
+    ), c("AUT_pre", "Lincoln", "Massey", "Otago", "UoA", "Victoria", 
+    "Waikato"), c("AUT_pre", "Lincoln", "Massey", "Otago", "Victoria"
+    ), c("AUT_pre", "Lincoln", "Massey", "Otago", "Victoria", 
+    "Waikato"), c("AUT_pre", "Lincoln", "Massey", "Otago", "Waikato"
+    ), c("AUT_pre", "Lincoln", "Massey", "Victoria"), c("AUT_pre", 
+    "Lincoln", "Massey", "Victoria", "Waikato"), c("AUT_pre", 
+    "Lincoln", "Massey", "Waikato"), c("AUT_pre", "Lincoln", 
+    "Otago", "Victoria", "Waikato"), c("AUT_pre", "Lincoln", 
+    "Otago", "Waikato"), c("AUT_pre", "Lincoln", "Victoria", 
+    "Waikato"), c("AUT_pre", "Lincoln", "Waikato"), "Canterbury", 
+    c("Canterbury", "Lincoln", "Massey", "Otago", "UoA", "Victoria", 
+    "Waikato"), c("Canterbury", "Lincoln", "Massey", "UoA", "Victoria", 
+    "Waikato"), c("Canterbury", "Lincoln", "Massey", "Victoria", 
+    "Waikato"), c("Canterbury", "Lincoln", "Otago", "UoA", "Victoria", 
+    "Waikato"), c("Canterbury", "Lincoln", "Otago", "Victoria", 
+    "Waikato"), c("Canterbury", "Massey", "Otago", "UoA", "Victoria", 
+    "Waikato"), c("Canterbury", "Massey", "Otago", "Victoria", 
+    "Waikato"), c("Canterbury", "Otago", "UoA", "Victoria", "Waikato"
+    ), "Lincoln", c("Lincoln", "Massey"), c("Lincoln", "Massey", 
+    "Otago", "UoA", "Victoria", "Waikato"), c("Lincoln", "Massey", 
+    "Otago", "Victoria", "Waikato"), c("Lincoln", "Massey", "Victoria"
+    ), c("Lincoln", "Massey", "Victoria", "Waikato"), c("Lincoln", 
+    "Massey", "Waikato"), c("Lincoln", "Otago", "Victoria"), 
+    c("Lincoln", "Otago", "Victoria", "Waikato"), c("Lincoln", 
+    "Otago", "Waikato"), c("Lincoln", "Victoria"), c("Lincoln", 
+    "Victoria", "Waikato"), c("Lincoln", "Waikato"), "Massey", 
+    c("Massey", "Otago", "Victoria", "Waikato"), "Otago", c("Otago", 
+    "UoA", "Victoria", "Waikato"), c("Otago", "Victoria", "Waikato"
+    ), "UoA", "Victoria", c("Victoria", "Waikato"), "Waikato"), 
+    powers = c(8, -1, -1, -20, -12, -5, -2, -1, -9, -6, -2, -3, 
+    -3, -2, -2, -2, -5, -1, -1, -4, -4, -1, -1, -3, -4, -1, -1, 
+    -5, 5, -1, -6, -2, -25, -3, -20, -4, -1, -2, -11, -11, -1, 
+    -1, -4, -6, -2, -3, -1, -5, -3, -1, -3, -12, -1, -2, -1, 
+    -6, 45, -7, -2, -2, -2, -2, -2, -1, -1, 16, -1, -1, -1, -2, 
+    -3, -1, -1, -2, -1, -4, -1, -1, 33, -1, 45, -1, -2, 45, 44, 
+    -2, 43), pnames = c("AUT_post", "AUT_pre", "Canterbury", 
+    "Lincoln", "Massey", "Otago", "UoA", "Victoria", "Waikato"
+    )), class = "hyper2")
