@@ -7,12 +7,28 @@
 "Walther"))
 
 `pentathlon` <-
-structure(list(brackets = list(1, c(1, 2, 3, 4, 5, 6, 7), c(1, 
-2, 3, 4, 6, 7), c(1, 2, 3, 4, 7), c(1, 2, 3, 7), c(1, 2, 4), 
-    c(1, 2, 4, 7), c(1, 2, 7), c(1, 4), 2, c(2, 3, 4, 5, 6, 7
-    ), c(2, 4, 5, 6), c(2, 4, 5, 6, 7), c(2, 4, 6), c(2, 7), 
-    3, c(3, 4, 5, 6, 7), c(3, 5), c(3, 5, 6, 7), c(3, 5, 7), 
-    4, c(4, 6), 5, 6, 7), powers = c(4, -4, -2, -2, -1, -1, -1, 
--1, -1, 4, -2, -1, -1, -1, -1, 4, -1, -1, -1, -1, 2, -1, 3, 4, 
-3), pnames = c("Moiseev", "Zadneprovskis", "Capalini", "Cerkovskis", 
-               "Meliakh", "Michalik", "Walther")), class = "hyper2")
+structure(list(brackets = list("Capalini", c("Capalini", "Cerkovskis", 
+"Meliakh", "Michalik", "Moiseev", "Walther"), c("Capalini", "Cerkovskis", 
+"Meliakh", "Michalik", "Moiseev", "Walther", "Zadneprovskis"), 
+    c("Capalini", "Cerkovskis", "Meliakh", "Michalik", "Walther"
+    ), c("Capalini", "Cerkovskis", "Meliakh", "Michalik", "Walther", 
+    "Zadneprovskis"), c("Capalini", "Cerkovskis", "Michalik", 
+    "Moiseev", "Walther", "Zadneprovskis"), c("Capalini", "Cerkovskis", 
+    "Moiseev", "Walther", "Zadneprovskis"), c("Capalini", "Meliakh"
+    ), c("Capalini", "Meliakh", "Michalik", "Moiseev"), c("Capalini", 
+    "Meliakh", "Michalik", "Moiseev", "Walther"), c("Capalini", 
+    "Meliakh", "Michalik", "Walther"), c("Capalini", "Meliakh", 
+    "Walther"), c("Capalini", "Moiseev", "Walther", "Zadneprovskis"
+    ), "Cerkovskis", c("Cerkovskis", "Meliakh", "Michalik", "Walther", 
+    "Zadneprovskis"), c("Cerkovskis", "Meliakh", "Michalik", 
+    "Zadneprovskis"), c("Cerkovskis", "Michalik"), c("Cerkovskis", 
+    "Michalik", "Zadneprovskis"), c("Cerkovskis", "Moiseev"), 
+    c("Cerkovskis", "Moiseev", "Walther", "Zadneprovskis"), c("Cerkovskis", 
+    "Moiseev", "Zadneprovskis"), "Meliakh", c("Meliakh", "Michalik"
+    ), c("Meliakh", "Michalik", "Moiseev"), "Michalik", "Moiseev", 
+    c("Moiseev", "Walther", "Zadneprovskis"), "Walther", c("Walther", 
+    "Zadneprovskis"), "Zadneprovskis"), powers = c(5, -1, -5, 
+-1, -2, -2, -2, -1, -1, -1, -1, -1, -1, 3, -1, -1, -1, -1, -1, 
+-1, -1, 4, -1, -1, 4, 5, -1, 4, -1, 5), pnames = c("Capalini", 
+"Cerkovskis", "Meliakh", "Michalik", "Moiseev", "Walther", "Zadneprovskis"
+)), class = "hyper2")
