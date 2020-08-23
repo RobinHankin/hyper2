@@ -1,3 +1,5 @@
+
+
 `hyper2` <-  function(L=list(), d=0, pnames){
   if(length(d)==1){d <- rep(d,length(L))}
   if(missing(pnames)){pnames <- sort(unique(c(L,recursive=TRUE)))}
@@ -597,8 +599,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
 
     out <- mult_grid(lapply(dotargs, .allorders))[[1]]
+    out[] <- pnames(H)[out]
     out <- apply(out,2,function(rank){H+rank_likelihood(rank)})
-  return(as.suplist(out))
+    return(as.suplist(out))
 }
 
 `ggrl` <- general_grouped_rank_likelihood
