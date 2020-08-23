@@ -6,6 +6,7 @@
 \alias{general_grouped_rank_likelihood}
 \alias{general_grouped_order_likelihood}
 \alias{rank_likelihood}
+\alias{rankvec_likelihood}
 \alias{elimination}
 \title{Order statistics}
 \description{
@@ -19,6 +20,7 @@ choose_losers(H, all_players, losers)
 choose_winners(H, all_players, winners)
 elimination(all_players)
 rank_likelihood(M,times=1)
+rankvec_likelihood(x)
 }
 
 \arguments{
@@ -33,7 +35,10 @@ rank_likelihood(M,times=1)
     correspond to the finishing order; thus \code{a=M[i,j]} means that
     competitor \code{a} finished in place \code{j} in race \code{i}}
   \item{times}{Vector specifiying the number of times each row is
-  observed}
+    observed}
+  \item{x}{A character vector specifying ranks.  Thus
+  \code{c("b","c","a")} means that \code{b} came first, \code{c} second,
+  and \code{a} third} 
 }
 \details{
 

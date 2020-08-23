@@ -478,7 +478,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(out)
 }
 
-`order_likelihood` <- function(x){
+`rankvec_likelihood` <- function(x){
     jj <- seq_along(x)
     names(jj)  <- x
     return(rank_likelihood(jj))
@@ -603,7 +603,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
     out <- mult_grid(lapply(dotargs, .allorders))[[1]]
     out[] <- pnames(H)[out]
-    out <- apply(out,2,order_likelihood)
+    out <- apply(out,2,rankvec_likelihood)
     return(as.suplist(out))
 }
 
@@ -757,7 +757,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
   if(race){  # Plackett-Luce
       for(i in seq_len(s)){
-          H <- H + order_likelihood(pnames[sample(n)])
+          H <- H + rankvec_likelihood(pnames[sample(n)])
     }
   }
 
