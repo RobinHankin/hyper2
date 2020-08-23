@@ -12,6 +12,8 @@
 \author{Robin K. S. Hankin}
 \examples{
 
+p <- (10:1)/55
+names(p) <- letters[1:10]
 H <- rank_likelihood(rrank(100,p=(10:1)/55))
 head(H)
 
