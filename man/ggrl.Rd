@@ -92,12 +92,11 @@ colnames(r1) <- letters[1:7]
 # Likelihood function for r1:
 W <- rank_likelihood(r1)
 
-# Incorporate information from another (independent) observation:
-W <- W + rank_likelihood(sample(7))
 
 
 H <- hyper2(pnames=letters[1:5])
 H2 <- choose_losers(H,letters[1:4],letters[1:2])   # {a,b} vs {c,d}; {a,b} lost
 maxplist(H2)
+
 
 }
