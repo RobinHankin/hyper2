@@ -82,16 +82,6 @@ W1+W2+W3 # 24-element list
 
 dotchart(maxplist(W1+W1+W3),pch=16)
 
-## Following shows two ways to evaluate the same thing:
-
-p <- indep(equalp(W1[[1]]))
-like_single_list(p,W1)*like_single_list(p,W2)*like_single_list(p,W3)
-like_single_list(p,W1+W2+W3)
-
-## Note that the first is *much* faster but the second is nicer R idiom
-
-
-
 
 }
 \keyword{symbolmath}
