@@ -17,10 +17,10 @@ char2num(char, pnames)
 }
 \details{
 
-The internal mechanism of functions such as \code{ggrl()}, and all the
-\code{C++} code, operates with the competitors labelled with a
-non-negative integer; it is then natural to refer to the competitors as
-\code{p1}, \code{p2}, etc.
+In earlier versions of this package, the internal mechanism of functions
+such as \code{ggrl()}, and all the \code{C++} code, operated with the
+competitors labelled with a non-negative integer; it is then natural to
+refer to the competitors as \code{p1}, \code{p2}, etc.
 
 However, sometimes the competitors have names (as in, for example, the
 \code{rowing} dataset).  If so, it is more natural to refer to the
@@ -32,20 +32,16 @@ returned.
 
 Function \code{char2num()} is an easy-to-type synonym.
 
+The function is here because it is used in \code{ggrl()}.
+
 }
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{rank_likelihood}}}
 \examples{
+ x <- sample(9)
+ names(x) <- sample(letters[1:9])
+ H <- rank_likelihood(x)
 
-H <- hyper2(pnames=letters[1:9])
-
-# Use numbers:
-H + rank_likelihood(sample(9))  
-
-
-# Use letters:
-H + rank_likelihood(character_to_number(sample(letters[1:9]),pnames(H)))
-
-
+character_to_number(letters[1:3],pnames(H))
 
 }
