@@ -733,27 +733,28 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(H)
 }   
 
-`rhyper2` <- function(n=8, s=5,  pairs=TRUE, teams=TRUE, race=TRUE, pnames){
+`rhyper2` <- function(n=8, s=5,  pairs=TRUE, teams=TRUE, race=TRUE, pnames=letters){
   n <- n - n%%2  # Force 'n' to be even
   H <- hyper2()
   if(pairs){
-    M <- replicate(s,sample(n,2,replace=FALSE),simplify=TRUE)
-    H <- hyper2(split(M,rep(seq_len(ncol(M)),each=nrow(M))),-1)
-    H <- H + hyper2(as.list(M[1,]),1)
+      M <- replicate(s,sample(n,2,replace=FALSE),simplify=TRUE)
+      M[] <- pnames[M]
+      H <- hyper2(split(M,rep(seq_len(ncol(M)),each=nrow(M))),-1)
+      H <- H + hyper2(as.list(M[1,]),1)
   }
 
   if(teams){
-    M <- replicate(s,sample(n))
-    H <- H+hyper2(split(M,rep(seq_len(ncol(M)),each=nrow(M)/2)),1)  # winners
+      M <- replicate(s,sample(n))
+      M[] <- pnames[M]
+      H <- H+hyper2(split(M,rep(seq_len(ncol(M)),each=nrow(M)/2)),1)  # winners
   }
 
-  if(race){
-    for(i in seq_len(s)){
-      H <- H + rank_likelihood(sample(n))
+  if(race){  # Plackett-Luce
+      for(i in seq_len(s)){
+          H <- H + rank_likelihood(pnames[sample(n)])
     }
   }
 
-  if(missing(pnames)){pnames(H) <- letters[seq_len(size(H))]}
   return(H)
 }
 
