@@ -29,7 +29,7 @@ rp(n, H, startp = NULL, fcm = NULL, fcv = NULL, SMALL = 1e-06, l=loglik,...)
   
 }
 \value{
-Returns a matrix, each row being an unit-sum observation.
+Returns a matrix, each row being a unit-sum observation.
 }
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{maxp}},\code{\link{loglik}},\code{\link{dirichlet}}}
