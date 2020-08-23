@@ -100,6 +100,7 @@ Note that function \code{rrank()} returns an object of class
 \seealso{\code{\link{ggrl}},\code{\link{rank_likelihood}},\code{\link{skating}}}
 \examples{
 ptrue <- (4:1)/10
+names(ptrue) <- letters[1:4]
 rrank(100,p=ptrue)
 
 r1 <- rrank(100,p=ptrue)
