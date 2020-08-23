@@ -91,6 +91,7 @@ optimization, Bradley-Terry}
 \section{Introduction}
 
 <<set_seed_chunk,echo=FALSE,print=FALSE>>=
+library("hyper2")
 set.seed(0)
 @ 
 
@@ -244,26 +245,17 @@ $p_1,p_2,p_3$ with~$p_1+p_2+p_3=1$.  A likelihood function might be
 \]
 
 Using the \pkg{hyper2} package, the \proglang{R} idiom to create this
-likelihood function would be a two-stage process.  The first step
-would be to implement the numerator, that is the number of games won
-by each player:
-
-<<setupchess>>=
-library("hyper2")
-chess <- hyper2(list(1,2,3),c(30,36,22))
-chess
-@ 
-
-Thus the \code{chess} object has the correct number of players
-(three), and has the numerator recorded correctly.  To specify the
-denominator, which indicates the number of matches played by each pair
-of players, the package allows the following natural idiom:
+likelihood function is as follows:
 
 
-<<chess_denominator>>=
-chess[c(1,2)] <- -35
-chess[c(2,3)] <- -35
-chess[c(1,3)] <- -18
+<<chess_setup>>=
+chess <- hyper2()
+chess["Topalov"] <- 30
+chess["Anand"  ] <- 36
+chess["Karpov" ] <- 22
+chess[c("Topalov","Anand" )] <- 35
+chess[c("Anand","Karpov"  )] <- 35
+chess[c("Karpov","Topalov")] <- 18
 chess
 @ 
 
@@ -273,9 +265,9 @@ standard template library (\proglang{STL}) of \proglang{C++}.  It is
 thus an unordered collection of (\emph{key}, \emph{value}) pairs.  In
 this case the \emph{value} is the power and the \emph{key} is the
 content of the bracket, which is a subset of
-$\left[3\right]=\left\{{1,2,3}\right\}$.  The \proglang{stl} provides
-a \proglang{set} class for efficient manipulation of such objects, and
-this is used in the package.
+$\left\lbrace\mbox{Topalov},\mbox{Anand},\mbox{Karpov}\right\rbrace$.
+The \proglang{stl} provides a \proglang{set} class for efficient
+manipulation of such objects, and this is used in the package.
 
 One side-effect of using this system is that the order of the
 bracket-power key-value pairs is not preserved; above, note how the
@@ -284,14 +276,9 @@ of the \proglang{set} class means that the \proglang{R} idiom is
 insensitive to the order of the terms within a bracket:
 
 <<use_chess>>=
-chess[c(2,1)]
-@ 
+chess[c("Karpov","Topalov")] 
+chess[c("Topalov","Karpov")] 
 
-It is sometimes desirable to name the elements explicitly:
-
-<<chess_pnames>>=
-pnames(chess) <- c("Topalov","Anand","Karpov")
-chess
 @ 
 
 The package can calculate log-likelihoods:
@@ -300,9 +287,9 @@ The package can calculate log-likelihoods:
 loglik(c(1/3,1/3),chess)
 @ 
 
-[the second argument of function \code{loglik()} is a vector of
-length 2, third element of $\boldp$ being the ``fillup''
-value~\citep{aitchison1986}]; the gradient of the log-likelihood is
+[the first argument of function \code{loglik()} is a vector of length
+  2, third element of $\boldp$ being the ``fillup''
+  value~\citep{aitchison1986}]; the gradient of the log-likelihood is
 given by function \code{gradient()}:
 
 <<gradientloglikelihoodchess>>=
@@ -365,33 +352,30 @@ Heat~1 as
 \mathrm{teilemb}
 \]
 
-(a full list of the finishing order for all~25 events is given in
-the package as \code{rowing.txt}).
-The first step to incorporating the whole finishing order into a
-likelihood function is to define a \code{hyper2} object which stores
-the names of the participants:
-  
-<<2016_olympics_heat1_setup>>=
-data("rowing")   # see rowing.Rd
-H <- hyper2(pnames=allrowers)
-H
-@ 
-
-Observe that the resulting likelihood function is uniform, as no
-information has as yet been included.  Incorporating the information
-from Heat~1 into a likelihood function corresponding to
+(a full list of the finishing order for all~25 events is given in the
+package as \code{rowing.txt}).  Incorporating the information from
+Heat~1 into a likelihood function corresponding to
 equation~\ref{competitors_1_to_6_likelihood} is straightforward using
-the \code{order\_likelihood()} function:
+the \code{rankvec\_likelihood()} function:
 
 <<2016_olympics_heat1_first>>=
 heat1 <- c("fournier", "cabrera", "bhokanal", "saensuk", "kelmelis", "teilemb")
-H <- H + rank_likelihood(char2num(heat1,allrowers))
+H <- rankvec_likelihood(heat1)
 H
 @ 
 
-(variable \code{heat1} shows the finishing order for Heat~1).  Again
-observe that object \code{H} includes its terms in no apparent order.
-Although it would be possible to incorporate information from
+(variable \code{heat1} shows the finishing order for Heat~1: Fournier
+came first, then Cabrera, etc).  We can add the information from
+heat~2 easily:
+
+<<2016_olympics_heat1_first>>=
+heat2 <- c("drysdale", "molnar", "esquivel", "garcia", "khafaji", "monasterio")
+H <- H + rankvec_likelihood(heat2)
+head(H)
+@ 
+
+Again observe that object \code{H} includes its terms in no apparent
+order.  Although it would be possible to incorporate information from
 subsequent heats in a similar manner, the package includes a
 ready-made dataset, \code{sculls2016}:
 
