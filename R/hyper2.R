@@ -697,10 +697,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     rep(1/n,n)
 }
 
-`all_pnames` <- function(L){  # needs a list
-  L %>% lapply(function(x){x %>% pnames %>% as.character}) %>% c(recursive=TRUE) %>% unique %>% sort
-}
-
 `saffy` <- function(M){
     out <- hyper2(pnames=colnames(M))
     for(i in seq_len(nrow(M))){
