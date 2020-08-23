@@ -690,7 +690,7 @@ may assess a number of related hypotheses using the package.  The
 first step is to calculate the likelihood for the hypothesis that all
 players are of equal strength:
  
-<<like_series>>=
+<<like_series1>>=
 data("masterchef")
 n <- 13   # 13 players
 equal_strengths <- rep(1/n,n-1)
@@ -729,7 +729,7 @@ The resulting maximum likelihood estimate, \code{pmax_masterchef6} in
 the package, is shown pictorially in Figure~\ref{masterchef6}.  The
 support at the precalculated evaluate is
 
-<<like_series>>=
+<<like_series2>>=
 like_series(indep(pmax_masterchef6), masterchef_series6)
 @ 
 
