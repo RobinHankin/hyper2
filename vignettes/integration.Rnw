@@ -187,12 +187,12 @@ distribution:
 where it is understood that the $p_i>0$ and $\sum p_i=1$; here
 $B=\frac{\Gamma\sum\alpha_i}{\prod\Gamma\alpha_i}$ is the
 normalization constant.  We can verify that \code{hyper2::B()} is
-operating as expected for the case $\alpha_1=1, \alpha_2=2,
-\alpha_3=3, \alpha_4=4$:
+operating as expected for the case $\alpha= (1,2,3,4)$:
 
 <<>>=
+x <- c(a=1,b=2,c=3,d=4)  # needs a named vector
+B(dirichlet(x))
 prod(gamma(1:4))/gamma(sum(1:4))
-B(dirichlet(alpha=1:4))
 @   
 
 Further, consider a Dirichlet distribution with
@@ -201,7 +201,7 @@ probability that $p_1<p_2$ should be exactly $\frac{1}{2}$:
 
 <<>>=
 f <- function(p){p[1]<p[2]}
-H <- dirichlet(alpha=rep(2,4))
+H <- dirichlet(alpha=c(a=3,b=3,c=3,d=3))
 probability(H,f,tol=0.1)
 @   
 
