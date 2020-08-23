@@ -1,5 +1,5 @@
+ic <- c("NB", "L", "PB", "THC", "OA", "WAIS")
 
-`ic` <- c("NB", "L", "PB", "THC", "OA", "WAIS")
 icons <- 
     structure(list(
         brackets = list(ic[1], c(ic[1], ic[2], ic[4], ic[5]),
@@ -20,8 +20,6 @@ icons <-
 
 class(icons) <- "hyper2"
 
-
-
 `icons_matrix` <- matrix(c(
     5 , 3 , NA,  4, NA,   3,
     3 , NA,  5,  8, NA,   2,
@@ -33,7 +31,9 @@ class(icons) <- "hyper2"
     5 , NA,  1, NA,  1,   1,
     NA,  9,  7, NA,  2,   0)
   , byrow=TRUE,ncol=6)
-colnames(icons_matrix) <- c("NB","L","PB","THC","OA","WAIS")
+colnames(icons_matrix) <- ic
+
+rm(ic)
 
 
 # NB icons == saffy(icons_matrix)

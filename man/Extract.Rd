@@ -2,6 +2,8 @@
 \alias{Extract.hyper2}
 \alias{extract}
 \alias{extractor}
+\alias{assign_lowlevel}
+\alias{overwrite_lowlevel}
 \alias{[.hyper2}
 \alias{[<-.hyper2}
 \title{
@@ -13,6 +15,9 @@ Extract or replace parts of a hyper2 object
 \usage{
 \method{[}{hyper2}(x, \dots)
 \method{[}{hyper2}(x, index, \dots) <- value
+assign_lowlevel(x,index,value)
+overwrite_lowlevel(x,value)
+
 }
 \arguments{
   \item{x}{An object of class \code{hyper2}}
@@ -46,6 +51,10 @@ Extract or replace parts of a hyper2 object
  is possible using idiom like \code{H[x] <- H[x] + 1}; this is
  documented at \code{Ops.hyper2}, specifically
  \code{hyper2_sum_numeric()}.
+ 
+ Functions \code{assign_lowlevel()} and \code{overwrite_lowlevel()} are
+ low-level helper functions and not really intended for the end-user.
+
 }
 
 \value{

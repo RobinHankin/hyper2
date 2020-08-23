@@ -22,7 +22,7 @@ Basic functions in the hyper2 package
 Basic functions in the hyper2 package
 }
 \usage{
-hyper2(L, d, pnames = NA)
+hyper2(L=list(), d=0, pnames)
 \method{brackets}{hyper2}(H)
 \method{powers}{hyper2}(H)
 \method{pnames}{hyper2}(H)

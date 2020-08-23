@@ -9,16 +9,13 @@
 \description{Flawed functionality to keep or discard subsets of the players in
   a \code{hyper2} object or order table.}
 \usage{
-keep_flawed2(x,wanted,...)
-discard_flawed2(x,unwanted,...)
-keep_flawed(H, wanted, tidy=TRUE)
-discard_flawed(H, unwanted, tidy=TRUE)
+discard_flawed2(x, unwanted,...)
+keep_flawed(H, wanted)
+discard_flawed(H, unwanted)
 }
 \arguments{
   \item{H}{A \code{hyper2} object}
   \item{x}{An order table}
-  \item{tidy}{Boolean, with default \code{TRUE} meaning to return a
-    mathematically identical, but tidied, likelihood function}
   \item{wanted,unwanted}{Players to keep or discard.  May be character
     or integer or logical}
   \item{...}{Further arguments passed to

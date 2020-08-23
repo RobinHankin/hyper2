@@ -28,20 +28,21 @@ accessor(L,powers,Lwanted)
 assigner(L,p,L2,value)
 addL(L1,p1,L2,p2)
 identityL(L,p)
-evaluate(L,powers,probs)
-differentiate(L, powers, probs, n)
-differentiate_n(L, powers, probs, n)
+evaluate(L, powers, probs, pnames)
+differentiate(L, powers, probs, pnames, n)
+differentiate_n(L, powers, probs, pnames, n)
 }
 
 \arguments{
   \item{L,L1,L2,Lwanted}{
-    Lists with integer vector elements, used to specify the brackets of
+    Lists with character vector elements, used to specify the brackets of
     the hyperdirichlet distribution}
   \item{p,p1,p2,powers,powers1,powers2}{
     A numeric vector specifying the powers to which the brackets are raised
   }
   \item{value}{RHS in assignment, a numeric vector}
   \item{probs}{Vector of probabilities for evaluation of log-likelihood}
+  \item{pnames}{Character vector of names}
   \item{n}{Integer specifying component to differentiate with respect to}
 }
 \details{

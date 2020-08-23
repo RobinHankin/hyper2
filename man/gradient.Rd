@@ -19,13 +19,14 @@ for \eqn{p}, as given by \code{maxp()}.
 \usage{
 gradient(H, probs=indep(maxp(H)))
 hessian(H,probs=indep(maxp(H)),border=TRUE)
-hessian_lowlevel(L, powers, probs, n) 
+hessian_lowlevel(L, powers, probs, pnames,n) 
 is_ok_hessian(H)
 }
 \arguments{
   \item{H}{A \code{hyper2} object}
   \item{L,powers,n}{Components of a \code{hyper2} object}
   \item{probs}{A vector of probabilities}
+  \item{pnames}{Character vector of names}
   \item{border}{Boolean, with default \code{TRUE} meaning to return the
     bordered Hessian and \code{FALSE} meaning to return the Hessian
     (warning: this option does not respect the unit sum constraint)}
