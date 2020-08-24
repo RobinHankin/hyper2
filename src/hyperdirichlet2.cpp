@@ -289,7 +289,7 @@ double differentiate_single_independent( // d(log-likelihod)/dp
 double differentiate_single_alln( // d(log-likelihod)/dp
                  const hyper2 h,
                  unsigned int i,   // component to diff WRT
-                 const unsigned int n,   // p_1 + ...+p_n = 1
+                 const unsigned int n,   // p_1 + ...+p_n  not necessarily =1
                  const NumericVector probs,
                  const CharacterVector pnames
                  /* basically the same as
@@ -304,7 +304,6 @@ double differentiate_single_alln( // d(log-likelihod)/dp
     double bracket_total;
     psub ps = preparepmap(probs,pnames);
 
-    i++; // off-by-one
     assert(i > 0); 
     assert(i < n);
     out = 0;
@@ -395,19 +394,21 @@ List differentiate(  // returns gradient of log-likelihood
 }
 //[[Rcpp::export]]
 List differentiate_n(  // returns gradient of log-likelihood
-                const List L,
-                const NumericVector powers,
-                const NumericVector probs,
-                const CharacterVector pnames,
-                const unsigned int n
+                const List &L,
+                const NumericVector &powers,
+                const NumericVector &probs,
+                const CharacterVector &pnames,
+                const NumericVector &n
                   ){
 
     unsigned int i;
-    NumericVector out(n);  
+    const unsigned int nn=n[0];
+    NumericVector out(nn);  
+
     const hyper2 h=prepareL(L,powers);
 
-    for(i=0; i<n; i++){  // differs from differentiate()
-        out[i] = differentiate_single_alln(h,i,n,probs,pnames);
+    for(i=0; i<nn; i++){  // differs from differentiate()
+        out[i] = differentiate_single_alln(h,i,nn,probs,pnames);
     }
         return List::create(Named("grad_comp") =  out);
 }
