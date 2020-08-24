@@ -68,8 +68,8 @@ f(a[1,])
 Thus we see that this respondent rated `joke08` to be the funniest, having rank 1.
 
 ```{r,label=calculate_jester,cache=TRUE}
-jester <- hyper2(pnames=colnames(a))
-system.time(for(i in seq_len(nrow(a))){jester %<>% order_obs(f(a[i,]))})
+jester <- hyper2()
+system.time(for(i in seq_len(nrow(a))){jester <- jester + rank_likelihood(f(a[i,]))})
 ```
 
 now
