@@ -4,7 +4,7 @@
 \alias{ordervec2supp}
 \alias{order_obs}
 \title{Translate order tables to support functions}
-\description{
+\description{\loadmathjax
 
 Wikipedia gives a nice summary in table form of Formula 1 racing results
 on pages like
@@ -68,11 +68,24 @@ e)^-1 * c * (d + e)^-1 * e)
   omitted
 }
 
+Note carefully the difference between \code{ordervec2supp()} and
+\code{rankvec_likelihood()}, which takes a character vector:
 
+\preformatted{
+>  names(sort(x))
+[1] "a" "b" "c" "d" "e"
+> rankvec_likelihood(names(sort(x)))
+log( a * (a + b + c + d + e)^-1 * b * (b + c + d + e)^-1 * c * (c + d +
+e)^-1 * d * (d + e)^-1)
+> rankvec_likelihood(names(sort(x))) == ordervec2supp(x)
+[1] TRUE
+> 
+}
 
 Function \code{order_obs()} was used in the integer-indexed paradigm but
 is obsolete in the name paradigm.
 }
+
 \value{Returns a \code{hyper2} object}
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{ordertable}}}
