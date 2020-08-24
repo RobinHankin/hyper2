@@ -6,7 +6,7 @@ bakers <-
  ## NB game order: Rahul won, Kim-Joy runner-up, through to Imelda who
  ## was first to be eliminated.
 
-H <- hyper2( pnames = bakers)
+H <- hyper2(pnames = bakers)
 
 
  ## variable 'doo' is a Boolean, with entries governing whether a

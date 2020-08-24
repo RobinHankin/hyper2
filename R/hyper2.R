@@ -603,6 +603,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     out <- mult_grid(lapply(dotargs, .allorders))[[1]]
     out[] <- pnames(H)[out]
     out <- apply(out,2,rankvec_likelihood)
+    for(i in seq_along(out)){
+        pnames(out[[i]]) <- pnames(H)
+    }
     return(as.suplist(out))
 }
 
