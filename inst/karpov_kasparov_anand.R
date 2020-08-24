@@ -15,37 +15,37 @@
 library("hyper2")
 results <- as.list(kka)
 attach(results)
-H <- hyper2(pnames=c("Karpov","Kasparov","Anand","white","draw"))
+H <- hyper2()
 
 
 ## Kasparov vs Karpov
 karpov_vs_kasparov <- c("Karpov","Kasparov","white","draw")  # all "players", real and imaginary
 
-H %<>% trial(c("Karpov"  ,"white"), karpov_vs_kasparov, karpov_plays_white_beats_kasparov)
-H %<>% trial(c("Kasparov","white"), karpov_vs_kasparov, kasparov_plays_white_beats_karpov)
-H %<>% trial(  "Karpov"           , karpov_vs_kasparov, kasparov_plays_white_losesto_karpov)
-H %<>% trial(  "Kasparov"         , karpov_vs_kasparov, karpov_plays_white_losesto_kasparov)
-H %<>% trial(  "draw"             , karpov_vs_kasparov, karpov_plays_white_draws_kasparov)
-H %<>% trial(  "draw"             , karpov_vs_kasparov, kasparov_plays_white_draws_karpov)
+H <- H + trial(c("Karpov"  ,"white"), karpov_vs_kasparov, karpov_plays_white_beats_kasparov)
+H <- H + trial(c("Kasparov","white"), karpov_vs_kasparov, kasparov_plays_white_beats_karpov)
+H <- H + trial(  "Karpov"           , karpov_vs_kasparov, kasparov_plays_white_losesto_karpov)
+H <- H + trial(  "Kasparov"         , karpov_vs_kasparov, karpov_plays_white_losesto_kasparov)
+H <- H + trial(  "draw"             , karpov_vs_kasparov, karpov_plays_white_draws_kasparov)
+H <- H + trial(  "draw"             , karpov_vs_kasparov, kasparov_plays_white_draws_karpov)
 
 ## Kasparov vs Anand
 kasparov_vs_anand <- c("Kasparov","Anand","white","draw")
-H %<>% trial(c("Kasparov","white"), kasparov_vs_anand, kasparov_plays_white_beats_anand)
-H %<>% trial(c("Anand"   ,"white"), kasparov_vs_anand, anand_plays_white_beats_kasparov)
-H %<>% trial(c("Kasparov"        ), kasparov_vs_anand, anand_plays_white_losesto_kasparov)
-H %<>% trial(c("Anand"           ), kasparov_vs_anand, kasparov_plays_white_losesto_anand)
-H %<>% trial(  "draw"             , kasparov_vs_anand, kasparov_plays_white_draws_anand)
-H %<>% trial(  "draw"             , kasparov_vs_anand, anand_plays_white_draws_kasparov)
+H <- H + trial(c("Kasparov","white"), kasparov_vs_anand, kasparov_plays_white_beats_anand)
+H <- H + trial(c("Anand"   ,"white"), kasparov_vs_anand, anand_plays_white_beats_kasparov)
+H <- H + trial(c("Kasparov"        ), kasparov_vs_anand, anand_plays_white_losesto_kasparov)
+H <- H + trial(c("Anand"           ), kasparov_vs_anand, kasparov_plays_white_losesto_anand)
+H <- H + trial(  "draw"             , kasparov_vs_anand, kasparov_plays_white_draws_anand)
+H <- H + trial(  "draw"             , kasparov_vs_anand, anand_plays_white_draws_kasparov)
 
 
 ## Karpov vs Anand
 karpov_vs_anand <- c("Karpov","Anand","white","draw")
-H %<>% trial(c("Karpov","white"), karpov_vs_anand, karpov_plays_white_beats_anand)
-H %<>% trial(c("Anand" ,"white"), karpov_vs_anand, anand_plays_white_beats_karpov)
-H %<>% trial(  "Karpov"         , karpov_vs_anand, anand_plays_white_losesto_karpov)
-H %<>% trial(  "Anand"          , karpov_vs_anand, karpov_plays_white_losesto_anand)
-H %<>% trial(  "draw"           , karpov_vs_anand, karpov_plays_white_draws_anand)
-H %<>% trial(  "draw"           , karpov_vs_anand, anand_plays_white_draws_karpov)
+H <- H + trial(c("Karpov","white"), karpov_vs_anand, karpov_plays_white_beats_anand)
+H <- H + trial(c("Anand" ,"white"), karpov_vs_anand, anand_plays_white_beats_karpov)
+H <- H + trial(  "Karpov"         , karpov_vs_anand, anand_plays_white_losesto_karpov)
+H <- H + trial(  "Anand"          , karpov_vs_anand, karpov_plays_white_losesto_anand)
+H <- H + trial(  "draw"           , karpov_vs_anand, karpov_plays_white_draws_anand)
+H <- H + trial(  "draw"           , karpov_vs_anand, anand_plays_white_draws_karpov)
 
 
 detach(results)
