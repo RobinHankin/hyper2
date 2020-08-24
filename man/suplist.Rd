@@ -50,9 +50,9 @@ as.suplist(L)
   \deqn{
     \mbox{Prob}(p|S_1+S_2) =
     \left(
-    \mbox{Prob}(p|I_1)
+    \mbox{Prob}(p|H_1)
     +\cdots+
-    \mbox{Prob}(p|I_s)
+    \mbox{Prob}(p|H_r)
     \right)\cdot\left(
     \mbox{Prob}(p|I_1)
     +\cdots+
@@ -62,9 +62,9 @@ as.suplist(L)
   \deqn{
     \log\mbox{Prob}(p|S_1+S_2) =
     \log\left(
-    \mbox{Prob}(p|I_1)
+    \mbox{Prob}(p|H_1)
     +\cdots+
-    \mbox{Prob}(p|I_s)
+    \mbox{Prob}(p|H_r)
     \right)+\log\left(
     \mbox{Prob}(p|I_1)
     +\cdots+
@@ -92,7 +92,9 @@ W3 <- ggrl(W, 'c', letters[4:5],'a')  # 2-element list
 
 # likelihood function for indendent observations  W1,W2,W3:
 
-W1+W2+W3 # 24-element list
+W1+W2+W3 # A 2*6*2=24-element list
+
+like_single_list(indep(equalp(W)),W1+W2+W3)
 
 
 dotchart(maxplist(W1+W1+W3),pch=16)
