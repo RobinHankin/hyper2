@@ -20,7 +20,8 @@ library(hyper2,quietly=TRUE)
 
 ```{r data}
 cooking_table <- as.matrix(read.table("cooking_weekly.txt", header=TRUE))
-cooking_table
+head(cooking_table)
+tail(cooking_table)
 ```
 Thus from the first row we find that one judge considered Lesley to be
 fourth best, Alice third, Zac second and Annabel best (this must have
@@ -34,45 +35,39 @@ method.  First we will consider the support function for the first row only:
 ### First row of the dataset
 
 ```{r}
-jj <- cooking_table[1,]
-H_row1 <- order_obs(hyper2(pnames=colnames(cooking_table)),jj[jj>0])
-H_row1
+(day1 <- cooking_table[1,])
+H_row1 <- rank_likelihood(day1[day1>0])
 ```
-
+ 
 In the above, we calculate the Plackett-Luce likelihood function;
 observe that it is uninformative about competitor number 1, which I
 show in two ways.  Firstly:
 
 ```{r}
-p1 <- rdirichlet(1,dirichlet(rep(10,5)))
+p <- c(0.3,0.2,0.1,0.3)
 # Now create p2 which is the same but competitor 1 is stronger:
-p2 <- p1
-p2[1] <- p2[1] + 0.1     # person 1 becomes stronger...
-p2[-1] <- p2[-1] - 0.1/4 # ...and everyone else becomes weaker
+p2 <- p
+alpha <- 1.3
+beta <- (1-alpha*p[1])/(1-p[1])
+p2[1] <- p2[1]*alpha   # person 1 becomes stronger...
+p2[-1] <- p2[-1]*beta  # ...and everyone else becomes weaker
 
-loglik(indep(p1),H_row1)
+loglik(indep(p),H_row1)
 loglik(indep(p2),H_row1)
 ```
 
-but more generally:
 
-```{r}
-(p <- rdirichlet(1,dirichlet(rep(1,5))))
-evaluate(brackets(H_row1), powers(H_row1), probs=p)
-evaluate(brackets(H_row1), powers(H_row1), probs=p*4)
-```
 
 ## Complete dataset
 
 It is easy to iterate over the rows of the dataset:
 
 ```{r}
-H <- hyper2(pnames=colnames(cooking_table))
+H <- hyper2()
 
 for(i in seq_len(nrow(cooking_table))){  # iterate over rows
-    x <- cooking_table[i,] 
-    names(x) <- colnames(cooking_table)
-    H %<>% order_obs(x[x>0])
+jj <- cooking_table[i,] 
+    H <- H + rank_likelihood(jj[jj>0])
 }
 H
 ```
@@ -131,37 +126,42 @@ this hypothesis, we posit two reified entities, `girl` and `boy`.
 Entity `girl` helps a girl when another girl is voting for her, and
 entity `boy` helps a boy when another boy is voting for him.
 
-```{r}
+```{r,cache=TRUE}
 cooking_table <-
 	as.matrix(read.table("cooking_weekly.txt", header=TRUE))
 cooking_table <- cooking_table[rowSums(cooking_table==0)==1,]
 boys <-c("robin","zac")
 girls <- c("lesley","alice","annabel")
 cooks <- colnames(cooking_table)
-P <- hyper2(pnames=c(cooks,"boy","girl"))
-P0 <- hyper2(pnames=cooks)
+P <- hyper2()
+P0 <- hyper2()
 for(i in seq_len(nrow(cooking_table))){  # iterate over rows
     x <- cooking_table[i,] 
-	print(x)
 	if(sum(x==0)>1){break}
     names(x) <- cooks
 	if(names(x[x==0]) %in% boys){  # if the voter is a boy
 		x <- x[x>0]  # remove the voter
-		Pjj <- order_obs(P0,x) # order statistic
-		Pjj %<>% pwa(names(x)[names(x) %in% boys], chameleon="boy")
-		pnames(Pjj) <- c(cooks,"boy","girl")
+		Pjj <- pwa(rank_likelihood(x),names(x)[names(x) %in% boys], chameleon="boy")
 	} else if (names(x[x==0]) %in% girls){ # voter a girl
 		x <- x[x>0]
-		Pjj <- order_obs(P0,x)
-		Pjj %<>% pwa(names(x)[names(x) %in% girls], chameleon="girl")
-		pnames(Pjj) <- c(cooks,"boy","girl")
+		Pjj <- pwa(rank_likelihood(x),names(x)[names(x) %in% girls], chameleon="girl")
 	} else {
 		stop()
 	}
     P <- P + Pjj
 }
-x
-Pjj
-P
-maxp(P)
+mP <- maxp(P)
 ```
+
+```{r}
+mP
+pie(mP)
+```
+
+
+Now test whether the girls preferentially vote:
+
+```{r,cache=TRUE}
+specificp.gt.test(P,"girl",0)
+```
+
