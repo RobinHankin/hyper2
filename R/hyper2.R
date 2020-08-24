@@ -729,10 +729,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `inc` <- function(H,val=1){ H %<>% `+`(val)}   # increment
 `dec` <- function(H,val=1){ H %<>% `-`(val)}   # decrement
 
-`trial` <- function(H,winners,players,val=1){
-  H[winners] %<>% `+`(val)
-  H[players] %<>% `-`(val)
-  return(H)
+`trial` <- function(winners,players,val=1){
+    H <- hyper2()
+    H[winners] %<>% `+`(val)
+    H[players] %<>% `-`(val)
+    return(H)
 }   
 
 `rhyper2` <- function(n=8, s=5,  pairs=TRUE, teams=TRUE, race=TRUE, pnames=letters){
