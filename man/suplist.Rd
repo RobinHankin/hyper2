@@ -32,14 +32,15 @@ as.suplist(L)
   incomplete rank observation \eqn{R}; the list elements are exclusive
   and exhaustive for \eqn{R}.  If \code{S} is a \code{suplist} object,
   and \code{S=list(H1,H2,...,Hn)} where the \code{Hi} are \code{hyper2}
-  objects, then a likelihood function for \code{p} would be
-  \eqn{\mbox{P}(p,H_1)+\cdots+\mbox{P}(p,H_n)}{P(p,H1)+...+P(p,Hn)}.
+  objects, then a likelihood function for \eqn{p} would be
+  \eqn{\mbox{Prob}(p,H_1)+\cdots+\mbox{Prob}(p,H_n)}{P(p,H1)+...+P(p,Hn)}.
   This is because the elements of a \code{suplist} object are disjoint
   alternatives.
   
   Functions \code{suplist_add()} and \code{sum.suplist()} implement
- \dQuote{\code{W1+W2}} as the likelihood function for independent
- observations \code{W1} and \code{W2}.
+ \dQuote{\code{S1+S2}} as the support function for independent
+ observations \code{S1} and \code{S2}.  The idea is that the support
+ functions add
 
   If \code{S1=list(H1,...,Hr)} and \code{S2=list(I1,...,Is)} where
   \code{Hx,Ix} are \code{hyper2} objects, then the likelihood function
@@ -47,20 +48,34 @@ as.suplist(L)
   followed by (independent) \code{S2}.  Formally
 
   \deqn{
-    \mbox{P}(p;S_1+S_2) =
+    \mbox{Prob}(p|S_1+S_2) =
     \left(
-    \mbox{P}(I_1|p)
+    \mbox{Prob}(p|I_1)
     +\cdots+
-    \mbox{P}(I_s|p)
+    \mbox{Prob}(p|I_s)
     \right)\cdot\left(
-    \mbox{P}(I_1|p)
+    \mbox{Prob}(p|I_1)
     +\cdots+
-    \mbox{P}(I_s|p)
+    \mbox{Prob}(p|I_s)
     \right)}{omitted; see PDF}
+
+  \deqn{
+    \log\mbox{Prob}(p|S_1+S_2) =
+    \log\left(
+    \mbox{Prob}(p|I_1)
+    +\cdots+
+    \mbox{Prob}(p|I_s)
+    \right)+\log\left(
+    \mbox{Prob}(p|I_1)
+    +\cdots+
+    \mbox{Prob}(p|I_s)
+    \right)}{omitted; see PDF}
+
+
   
-  However, \code{W1+W2} is typically a large and unwieldy object, and
-  can be very slow to evaluate.  These functions are here here because
-  they provide slick R idiom.
+  However, \code{S1+S2} is typically a large and unwieldy object, and
+  can be very slow to evaluate.  These functions are here because they
+  provide slick R idiom.
 
 }
 \value{
