@@ -35,9 +35,6 @@ Maintainer: \packageMaintainer{hyper2}
 }
 \keyword{ package }
 \examples{
-H  <- hyper2(list(1,2,3,1:2,2:3),1:5)
-
-data(chess)
-maxp(chess)
-
+icons
+maxp(icons)
 }
