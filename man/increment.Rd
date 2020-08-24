@@ -65,8 +65,9 @@ H[c("a","b")] \%<>\% inc(H["a"])
 
 
 The convenience function \code{trial()} takes this one step further and
-increments the \sQuote{winning team} and decrements the \sQuote{losing
-team}.  This function is intended to be used with magrittr pipes:
+increments the \sQuote{winning team} and decrements the bracket
+containing all players.  This function is intended to be used with
+magrittr pipes:
 
 
 \preformatted{
