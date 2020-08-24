@@ -28,11 +28,8 @@ competitors using their names rather than an arbitrary integer.
 
 Function \code{character_to_number()} converts the names to numbers.  If
 an element of \code{char} is not present in \code{pnames}, an error is
-returned.
-
-Function \code{char2num()} is an easy-to-type synonym.
-
-The function is here because it is used in \code{ggrl()}.
+returned (function \code{char2num()} is an easy-to-type synonym).  The
+function is here because it is used in \code{ggrl()}.
 
 }
 \author{Robin K. S. Hankin}
