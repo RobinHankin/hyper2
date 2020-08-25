@@ -53,9 +53,8 @@ as.suplist(L)
  Functions \code{suplist_add()} and \code{sum.suplist()} implement
   \dQuote{\code{S1+S2}} as the support function for independent
   observations \code{S1} and \code{S2}.  The idea is that the support
-  functions add
-
-  If \code{S1=list(H1,...,Hr)} and \code{S2=list(I1,...,Is)} where
+  functions \dQuote{add} in the following sense.  If
+  \code{S1=list(H1,...,Hr)} and \code{S2=list(I1,...,Is)} where
   \code{Hx,Ix} are \code{hyper2} objects, then the likelihood function
   for \dQuote{\code{S1+S2}} is the likelihood function for \code{S1}
   followed by (independent) \code{S2}.  Formally
