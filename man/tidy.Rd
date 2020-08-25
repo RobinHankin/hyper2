@@ -12,7 +12,10 @@
   do not appear in any bracket) removed.  Players about which \code{H}
   is uninformative are removed from the \code{pnames} attribute.
 
-  Note that idiom \code{pname(H) <- jj} also works.
+  Note that idiom \code{pnames(H) <- foo} can also be used to manipulate
+  the \code{pnames} attribute.
+
+
 }
 \author{Robin K. S. Hankin}
 \examples{
