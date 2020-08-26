@@ -723,8 +723,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         losing_side  <- onerow==0
         playing <- !is.na(onerow)
         if(any(playing) & any(winning_side) & any(losing_side)){
-          out[pn[winning_side]] %<>% inc
-          out[pn[playing]] %<>% dec
+          out[pn[which(winning_side)]] %<>% inc
+          out[pn[which(playing)]] %<>% dec
         }
     }
     return(out)
