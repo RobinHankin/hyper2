@@ -34,4 +34,6 @@
 ^inst/moto_files$
 ^inst/loser_cache$
 ^inst/loser_files$
+^inst/formula1_allyears_cache$
+^inst/loser_formula1_allyears_files$
 
