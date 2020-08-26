@@ -1,0 +1,64 @@
+---
+title: "formula1_allyears"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library("hyper2")
+```
+
+## Introduction
+
+Here I analyse Formula 1 results 2010-2019 using Plackett-Luce
+likelihoods as implemented in the `hyper2` package.  Files like
+`formula1_2017.txt` are directly copied from Wikipedia (with slight
+whitespace changes).
+
+
+```{r,label=f1yearsseparate,cache=TRUE}
+f <- function(M){M[,-ncol(M)]} # removes 'points' column
+o <- function(k){ordertable2supp(f(read.table(k)))}
+F1_2010 <- o("formula1_2010.txt")
+F1_2011 <- o("formula1_2011.txt")
+F1_2012 <- o("formula1_2012.txt")
+F1_2013 <- o("formula1_2013.txt")
+F1_2014 <- o("formula1_2014.txt")
+F1_2015 <- o("formula1_2015.txt")
+F1_2016 <- o("formula1_2016.txt")
+F1_2017 <- o("formula1_2017.txt")
+F1_2018 <- o("formula1_2018.txt")
+F1_2019 <- o("formula1_2019.txt")
+```
+
+```{r,label=combineallyears,cache=TRUE}
+F1_list<- list(F1_2010, F1_2011, F1_2012, F1_2013, F1_2014, F1_2015, F1_2016, F1_2017, F1_2018, F1_2019)
+F1_total <- F1_2010 + F1_2011 + F1_2012 + F1_2013 + F1_2014 + F1_2015 + F1_2016 + F1_2017 + F1_2018 + F1_2019
+```
+
+```{r,calculatemaxlikelhood,cache=TRUE}
+m <- maxp(F1_total)
+pie(m)
+dotchart(m,pch=16,main='Formula 1, 2012-9')
+```
+
+```{r,workwithM}
+M <- matrix(NA,length(pnames(F1_total)),2019-2010+1)
+rownames(M) <- pnames(F1_total)
+colnames(M) <- paste("y",10:19,sep="")
+
+for(i in seq_len(nrow(M))){
+    for(j in seq_len(ncol(M))){
+        if(rownames(M)[i] %in% pnames(F1_list[[j]])){M[i,j] <- 1}
+    }
+}
+jj <- order(rowSums(M,na.rm=T),decreasing=T)
+M <- M[jj,]
+
+image(x=2010:2019,y=seq_along(pnames(F1_total)),t(M))
+```
+
+
