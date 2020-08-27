@@ -25,6 +25,5 @@
     p <- pnames(H)
     stopifnot(is.character(unwanted))
     stopifnot(all(unwanted %in% p))
-    browser()
     return(keep_flawed(H,wanted=p[!(p %in% unwanted)]))
 }
