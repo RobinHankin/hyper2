@@ -36,4 +36,11 @@
 ^inst/loser_files$
 ^inst/formula1_allyears_cache$
 ^inst/loser_formula1_allyears_files$
+^inst/formula1_allyears_files$
+^inst/formula1_allyears_cache$
+^inst/eurovision_files$
+^inst/eurovision_cache$
+^inst/cook_repeated_files$
+^inst/cook_repeated_cache$
+
 
