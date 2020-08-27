@@ -46,3 +46,6 @@ S3method(summary,ranktable)
 
 S3method(Ops,suplist)
 S3method(sum,suplist)
+
+S3method("print",summary.hyper2)
+S3method("summary",hyper2)
