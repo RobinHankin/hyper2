@@ -1,0 +1,26 @@
+		AUS	MAL	BHR	SMR	ESP	MON	EUR	CAN	USA	FRA	GBR	GER	HUN	BEL	ITA	CHN	JPN	BRA	Points
+ Schumacher_M	1	1	1	1	1	Ret	1	1	1	1	1	1	1	2	2	12	1	7	148
+ Barrichello	2	4	2	6	2	3	2	2	2	3	3	12	2	3	1	1	Ret	3	114
+ Button		6	3	3	2	8	2	3	3	Ret	5	4	2	5	Ret	3	2	3	Ret	85
+ Alonso		3	7	6	4	4	Ret	5	Ret	Ret	2	10	3	3	Ret	Ret	4	5	4	59
+ Montoya	5	2	13	3	Ret	4	8	DSQ	DSQ	8	5	5	4	Ret	5	5	7	1	58
+ Trulli		7	5	4	5	3	1	4	Ret	4	4	Ret	11	Ret	9	10	0	11	12	46
+ Raikkonen	Ret	Ret	Ret	8	11	Ret	Ret	5	6	7	2	Ret	Ret	1	Ret	3	6	2	45
+ Sato		9	15	5	16	5	Ret	Ret	Ret	3	Ret	11	8	6	Ret	4	6	4	6	34
+ Schumacher_R	4	Ret	7	7	6	10	Ret	DSQ	Ret	0	0	0	0	0	0	Ret	2	5	24
+ Coulthard	8	6	Ret	12	10	Ret	Ret	6	7	6	7	4	9	7	6	9	Ret	11	24
+ Fisichella	10	11	11	9	7	Ret	6	4	9	12	6	9	8	5	8	7	8	9	22
+ Massa		Ret	8	12	10	9	5	9	Ret	Ret	13	9	13	Ret	4	12	8	9	8	12
+ Webber		Ret	Ret	8	13	12	Ret	7	Ret	Ret	9	8	6	10	Ret	9	10	Ret	Ret	7
+ Panis		13	12	9	11	Ret	8	11	DSQ	5	15	Ret	14	11	8	Ret	14	14	0	6
+ Pizzonia	0	0	0	0	0	0	0	0	0	0	0	7	7	Ret	7	0	0	0	6
+ Klien		11	10	14	14	Ret	Ret	12	9	Ret	11	14	10	13	6	13	Ret	12	14	3
+ Matta		12	9	10	Ret	13	6	Ret	DSQ	Ret	14	13	Ret	0	0	0	0	0	0	3
+ Heidfeld	Ret	Ret	15	Ret	Ret	7	10	8	Ret	16	15	Ret	12	11	14	13	13	Ret	3
+ Glock		0	0	0	0	0	0	0	7	0	0	0	0	0	0	0	15	15	15	2
+ Baumgartner	Ret	16	Ret	15	Ret	9	15	10	8	Ret	Ret	16	15	Ret	15	16	Ret	16	1
+ Villeneuve	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	11	10	10	0
+ Zonta		0	0	0	0	0	0	0	0	0	0	0	0	Ret	10	11	Ret	0	13	0
+ Gene		0	0	0	0	0	0	0	0	0	10	12	0	0	0	0	0	0	0	0
+ Pantano	14	13	16	Ret	Ret	Ret	13	0	Ret	17	Ret	15	Ret	Ret	Ret	0	0	0	0
+ Bruni		NC	14	17	Ret	Ret	Ret	14	Ret	Ret	18	16	17	14	Ret	Ret	Ret	16	17	0

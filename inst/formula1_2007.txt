@@ -1,0 +1,27 @@
+		AUS	MAL	BHR	ESP	MON	CAN	USA	FRA	GBR	EUR	HUN	TUR	ITA	BEL	JPN	CHN	BRA	Points
+ Raikkonen	1	3	3	Ret	8	5	4	1	1	Ret	2	2	3	1	3	1	1	110
+ Hamilton	3	2	2	2	2	1	1	3	3	9	1	5	2	4	1	Ret	7	109
+ Alonso		2	1	5	3	1	7	2	7	2	1	4	3	1	3	Ret	2	3	109
+ Massa		6	5	1	1	3	DSQ	3	2	5	2	13	1	Ret	2	6	3	2	94
+ Heidfeld	4	4	4	Ret	6	2	Ret	5	6	6	3	4	4	5	14	7	6	61
+ Kubica		Ret	18	6	4	5	Ret	0	4	4	7	5	8	5	9	7	Ret	5	39
+ Kovalainen	10	8	9	7	13	4	5	15	7	8	8	6	7	8	2	9	Ret	30
+ Fisichella	5	6	8	9	4	DSQ	9	6	8	10	12	9	12	Ret	5	11	Ret	21
+ Rosberg	7	Ret	10	6	12	10	16	9	12	Ret	7	7	6	6	Ret	16	4	20
+ Coulthard	Ret	Ret	Ret	5	14	Ret	Ret	13	11	5	11	10	Ret	Ret	4	8	9	14
+ Wurz		Ret	9	11	Ret	7	3	10	14	13	4	14	11	13	Ret	Ret	12	0	13
+ Webber		13	10	Ret	Ret	Ret	9	7	12	Ret	3	9	Ret	9	7	Ret	10	Ret	10
+ Trulli		9	7	7	Ret	15	Ret	6	Ret	Ret	13	10	16	11	11	13	13	8	8
+ Vettel		0	0	0	0	0	0	8	0	0	0	16	19	18	Ret	Ret	4	Ret	6
+ Button		15	12	Ret	12	11	Ret	12	8	10	Ret	Ret	13	8	Ret	11	5	Ret	6
+ Schumacher_R	8	15	12	Ret	16	8	Ret	10	Ret	Ret	6	12	15	10	Ret	Ret	11	5
+ Sato		12	13	Ret	8	17	6	Ret	16	14	Ret	15	18	16	15	15	14	12	4
+ Liuzzi		14	17	Ret	Ret	Ret	Ret	17	Ret	16	Ret	Ret	15	17	12	9	6	13	3
+ Sutil		17	Ret	15	13	Ret	Ret	14	17	Ret	Ret	17	21	19	14	8	Ret	Ret	1
+ Barrichello	11	11	13	10	10	12	Ret	11	9	11	18	17	10	13	10	15	Ret	0
+ Speed		Ret	14	Ret	Ret	9	Ret	13	Ret	Ret	Ret	0	0	0	0	0	0	0	0
+ Nakajima	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	10	0
+ Davidson	16	16	16	11	18	11	11	Ret	Ret	12	Ret	14	14	16	Ret	Ret	14	0
+ Yamamoto	0	0	0	0	0	0	0	0	0	0	Ret	20	20	17	12	17	Ret	0
+ Albers		Ret	Ret	14	14	19	Ret	15	Ret	15	0	0	0	0	0	0	0	0	0
+ Winkelhock	0	0	0	0	0	0	0	0	0	Ret	0	0	0	0	0	0	0	0
