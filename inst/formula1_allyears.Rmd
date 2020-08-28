@@ -15,42 +15,44 @@ library("hyper2")
 
 *Takes about 20 minutes to run with no cache*
 
-Here I analyse Formula 1 results 2010-2019 using Plackett-Luce
-likelihoods as implemented in the `hyper2` package.  Files like
-`formula1_2017.txt` are directly copied from Wikipedia (with slight
-whitespace changes).
+Here I analyse Formula 1 results in a range of years using
+Plackett-Luce likelihoods as implemented in the `hyper2` package.
+Files like `formula1_2017.txt` are directly copied from Wikipedia
+(with slight whitespace changes).
+
+```{r}
+years <- 2001:2015
+```
+
 
 
 ```{r,label=f1yearsseparate,cache=TRUE}
 f <- function(M){M[,-ncol(M)]} # removes 'points' column
 o <- function(k){ordertable2supp(f(read.table(k)))}
-F1_2010 <- o("formula1_2010.txt")
-F1_2011 <- o("formula1_2011.txt")
-F1_2012 <- o("formula1_2012.txt")
-F1_2013 <- o("formula1_2013.txt")
-F1_2014 <- o("formula1_2014.txt")
-F1_2015 <- o("formula1_2015.txt")
-F1_2016 <- o("formula1_2016.txt")
-F1_2017 <- o("formula1_2017.txt")
-F1_2018 <- o("formula1_2018.txt")
-F1_2019 <- o("formula1_2019.txt")
+filenamemaker <- function(year){paste("formula1_",year,".txt", sep="")}
+F1_list <- list()
+for(year in years){
+	filename <- filenamemaker(year)
+	jj <- paste("y",year,sep="")
+	F1_list[[jj]] <- o(filename)
+}
 ```
 
 ```{r,label=combineallyears,cache=TRUE}
-F1_list<- list(F1_2010, F1_2011, F1_2012, F1_2013, F1_2014, F1_2015, F1_2016, F1_2017, F1_2018, F1_2019)
-F1_total <- F1_2010 + F1_2011 + F1_2012 + F1_2013 + F1_2014 + F1_2015 + F1_2016 + F1_2017 + F1_2018 + F1_2019
+F1_total <- hyper2()
+for(i in F1_list){F1_total <- F1_total + i}
 ```
 
 ```{r,calculatemaxlikelhood,cache=TRUE}
 m <- maxp(F1_total)
 pie(m)
-dotchart(m,pch=16,main='Formula 1, 2012-9')
+dotchart(m,pch=16,main=paste("Formula 1, years ",min(years)," to ",max(years)))
 ```
 
 ```{r,workwithM}
-M <- matrix(NA,length(pnames(F1_total)),2019-2010+1)
+M <- matrix(NA,nrow=length(pnames(F1_total)),ncol=length(years))
 rownames(M) <- pnames(F1_total)
-colnames(M) <- paste("y",10:19,sep="")
+colnames(M) <- paste("y",years,sep="")
 
 for(i in seq_len(nrow(M))){
     for(j in seq_len(ncol(M))){
@@ -60,7 +62,7 @@ for(i in seq_len(nrow(M))){
 jj <- order(rowSums(M,na.rm=T),decreasing=T)
 M <- M[jj,]
 
-image(x=2010:2019,y=seq_along(pnames(F1_total)),t(M))
+image(x=years,y=seq_along(pnames(F1_total)),t(M))
 ```
 
 
@@ -78,18 +80,12 @@ select <- function(F1tab,minraces=5){
 
 
 ```{r,definefreqrace}
-freqracers <- function(minraces){
-(
-	select(f(read.table("formula1_2010.txt")),minraces) + 
-	select(f(read.table("formula1_2011.txt")),minraces) + 
-	select(f(read.table("formula1_2012.txt")),minraces) + 
-	select(f(read.table("formula1_2013.txt")),minraces) + 
-	select(f(read.table("formula1_2014.txt")),minraces) + 
-	select(f(read.table("formula1_2015.txt")),minraces) + 
-	select(f(read.table("formula1_2016.txt")),minraces) + 
-	select(f(read.table("formula1_2017.txt")),minraces) + 
-	select(f(read.table("formula1_2018.txt")),minraces) 
-	)
+freqracers <- function(minraces){ # minimum number of seasons
+	out <- hyper2()
+	for(year in years){
+		out <- out + select(f(read.table(filenamemaker(year),minraces)))
+	}	
+	return(out)
 }
 
 comp <- function(m,mr){
@@ -192,5 +188,3 @@ m6r <- rev(maxp(F1_top6)) # reverse of MLE with names reversed
 pie(m6)
 comp(m6,m6r)
 ```
-
-
