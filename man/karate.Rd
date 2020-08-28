@@ -35,6 +35,5 @@ competitions with 0-0 results.
 }
 \seealso{\code{\link{zapweak}}}
 \examples{
-data(karate)
-is_ok_hessian(karate)
+summary(karate)
 }

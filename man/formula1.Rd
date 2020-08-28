@@ -57,7 +57,9 @@ systems for the winner, second, third, etc, placing drivers.
   }
 \seealso{\code{\link{ordertable2supp}}}
 \examples{
-data(formula1)  # hyper2 object
-dotchart(maxp(formula1,n=2))  #n=2 specified here for speed
+summary(formula1)
+\dontrun{#Takes too long
+dotchart(maxp(formula1))
+}
 
 }

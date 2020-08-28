@@ -55,10 +55,11 @@ data("oneill")
 maxp(icons)
 discard_flawed(icons,c("OA","WAIS"))
 
+\dontrun{# (takes too long)
 data("skating")
 maxp(skating)[1:4]      # numbers work, keep the first four skaters
 maxp(keep_flawed(skating,pnames(skating)[1:4])) # differs!
-
+}
 
 
 }

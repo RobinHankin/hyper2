@@ -33,8 +33,9 @@ less than \code{minstrength}) using \code{discard_flawed()}.
 \seealso{\code{\link{discard_flawed}},\code{\link{maxp}}}
 \author{Robin K. S. Hankin}
 \examples{
-zapweak(formula1) # seems to work
-
-# data(rowing)
-# zapweak(sculls2016) # removes everyone...
+\dontrun{#Takes too long
+ zapweak(icons)        # removes noone
+ zapweak(sculls2016) # removes everyone...
 }
+}
+

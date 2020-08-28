@@ -35,7 +35,10 @@ players have a ML strength of zero.
 }
 \seealso{\code{\link{ggrl}}}
 \examples{
-data(rowing)
+summary(sculls2016)
+
+\dontrun{#Takes too long
 dotchart(maxp(sculls2016))
+}
 }
 \keyword{datasets}

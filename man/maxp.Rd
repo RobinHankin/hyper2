@@ -88,22 +88,7 @@ equalp(H)
 \seealso{\code{\link{gradient}},\code{\link{fillup}}}
 \examples{
 
-data(chess)
-maxp(chess)
-
-
-data(rowing)
-
-(x1 <- loglik(indep(maxp  (sculls2016)),sculls2016))
-(x2 <- loglik(indep(equalp(sculls2016)),sculls2016))
-
-
-
-## get a p-value for the null of equal player strengths:
-pchisq(2*(x1-x2),df=size(sculls2016)-1,lower.tail=FALSE)
-
-## Note that Wilks's theorem is only asymptotic.
-
+maxp(icons)
 
 W <- hyper2(pnames=letters[1:5])
 W1 <- ggrl(W, 'a', letters[2:3],'d')  # W1 is a suplist object
