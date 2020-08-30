@@ -1,0 +1,24 @@
+		AUS	BRA	SMR	GBR	ESP	EUR	MON	CAN	FRA	AUT	GER	HUN	BEL	ITA	USA	JPN	MAL	Points
+ Schumacher_M	1	1	1	3	5	1	Ret	1	Ret	Ret	Ret	2	2	1	1	1	1	108
+ Hakkinen	Ret	Ret	2	2	1	2	6	4	2	1	2	1	1	2	Ret	2	4	89
+ Coulthard	Ret	DSQ	3	1	2	3	1	7	1	2	3	3	4	Ret	5	3	2	73
+ Barrichello	2	Ret	4	Ret	3	4	2	2	3	3	1	4	Ret	Ret	2	4	3	62
+ Schumacher_R	3	5	Ret	4	4	Ret	Ret	14	5	Ret	7	5	3	3	Ret	Ret	Ret	24
+ Fisichella	5	2	11	7	9	5	3	3	9	Ret	Ret	Ret	Ret	11	Ret	14	9	18
+ Villeneuve	4	Ret	5	16	Ret	Ret	7	15	4	4	8	12	7	Ret	4	6	5	17
+ Button		Ret	6	Ret	5	17	10	Ret	11	8	5	4	9	5	Ret	Ret	5	Ret	12
+ Frentzen	Ret	3	Ret	17	6	Ret	10	Ret	7	Ret	Ret	6	6	Ret	3	Ret	Ret	11
+ Trulli		Ret	4	15	6	12	Ret	Ret	6	6	Ret	9	7	Ret	Ret	Ret	13	12	6
+ Salo		DSQ	DNS	6	8	7	Ret	5	Ret	10	6	5	10	9	7	Ret	10	8	6
+ Verstappen	Ret	7	14	Ret	Ret	Ret	Ret	5	Ret	Ret	Ret	13	15	4	Ret	Ret	10	5
+ Irvine		Ret	Ret	7	13	11	Ret	4	13	13	WD	10	8	10	Ret	7	8	6	4
+ Zonta		6	9	12	Ret	8	Ret	Ret	8	Ret	Ret	Ret	14	12	6	6	9	Ret	3
+ Wurz		7	Ret	9	9	10	12	Ret	9	Ret	10	Ret	11	13	5	10	Ret	7	2
+ Rosa		Ret	8	Ret	Ret	Ret	6	Ret	Ret	Ret	Ret	6	16	16	Ret	Ret	12	Ret	2
+ Herbert	Ret	Ret	10	12	13	11	9	Ret	Ret	7	Ret	Ret	8	Ret	11	7	Ret	0
+ Diniz		Ret	DNS	8	11	Ret	7	Ret	10	11	9	Ret	Ret	11	8	8	11	Ret	0
+ Gene		8	Ret	Ret	14	14	Ret	Ret	16	15	8	Ret	15	14	9	12	Ret	Ret	0
+ Heidfeld	9	Ret	Ret	Ret	16	DSQ	8	Ret	12	Ret	12	Ret	Ret	Ret	9	Ret	Ret	0
+ Mazzacane	Ret	10	13	15	15	8	Ret	12	Ret	12	11	Ret	17	10	Ret	15	13	0
+ Alesi		Ret	Ret	Ret	10	Ret	9	Ret	Ret	14	Ret	Ret	Ret	Ret	12	Ret	Ret	11	0
+ Burti		0	0	0	0	0	0	0	0	0	11	0	0	0	0	0	0	0	0
