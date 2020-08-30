@@ -13,7 +13,7 @@ library("hyper2")
 
 ## Introduction
 
-*Takes about 20 minutes to run with no cache*
+*Takes a couple of hours to run with no cache*
 
 Here I analyse Formula 1 results in a range of years using
 Plackett-Luce likelihoods as implemented in the `hyper2` package.
