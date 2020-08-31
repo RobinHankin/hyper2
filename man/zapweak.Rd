@@ -33,9 +33,9 @@ less than \code{minstrength}) using \code{discard_flawed()}.
 \seealso{\code{\link{discard_flawed}},\code{\link{maxp}}}
 \author{Robin K. S. Hankin}
 \examples{
-\dontrun{#Takes too long
  zapweak(icons)        # removes noone
- zapweak(sculls2016) # removes everyone...
+\donttest{#Takes too long
+ zapweak(sculls2016)   # removes everyone...
 }
 }
 
