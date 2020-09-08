@@ -44,5 +44,3 @@
 ^inst/cook_repeated_cache$
 ^inst/curling_files$
 ^inst/curling_cache$
-^inst/.*\.html$
-^inst/.*\.pdf$
