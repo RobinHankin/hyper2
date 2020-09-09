@@ -7,7 +7,7 @@
  Massa		2	3	7	9	6	4	7	15	11	15	2	4	4	3	8	Ret	3	15	10	144
  Rosberg	5	5	3	3	13	7	5	6	10	3	8	Ret	6	5	5	17	Ret	6	4	142
  Kubica		11	2	4	5	8	3	6	7	5	Ret	7	Ret	3	8	7	Ret	5	9	5	136
- Schumacher	6	10	Ret	10	4	12	4	11	15	9	9	11	7	9	13	6	4	7	Ret	72
+ Schumacher_M	6	10	Ret	10	4	12	4	11	15	9	9	11	7	9	13	6	4	7	Ret	72
  Barrichello	10	8	12	12	9	Ret	14	14	4	5	12	10	Ret	10	6	9	7	14	12	47
  Sutil		12	Ret	5	11	7	8	9	10	6	8	17	Ret	5	16	9	Ret	Ret	12	13	47
  Kobayashi	Ret	Ret	Ret	Ret	12	Ret	10	Ret	7	6	11	9	8	Ret	Ret	7	8	10	14	32
@@ -21,7 +21,7 @@
  Kovalainen	15	13	NC	14	DNS	Ret	Ret	16	Ret	17	Ret	14	16	18	16	12	13	18	17	0
  Trulli		17	DNS	17	Ret	17	15	Ret	Ret	21	16	Ret	15	19	Ret	Ret	13	Ret	19	21	0
  Chandhok	Ret	14	15	17	Ret	14	20	18	18	19	0	0	0	0	0	0	0	0	0	0
- SennaB		Ret	Ret	16	16	Ret	Ret	Ret	Ret	20	0	19	17	Ret	Ret	Ret	15	14	21	19	0
+ Senna_B	Ret	Ret	16	16	Ret	Ret	Ret	Ret	20	0	19	17	Ret	Ret	Ret	15	14	21	19	0
  Grassi		Ret	Ret	14	Ret	19	Ret	19	19	17	Ret	Ret	18	17	20	15	DNS	Ret	NC	18	0
  Glock		Ret	Ret	Ret	DNS	18	Ret	18	Ret	19	18	18	16	18	17	Ret	14	Ret	20	Ret	0
  Yamamoto	0	0	0	0	0	0	0	0	0	20	Ret	19	20	19	0	16	15	0	0	0

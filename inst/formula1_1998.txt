@@ -1,6 +1,6 @@
 		AUS	BRA	ARG	SMR	ESP	MON	CAN	FRA	GBR	AUT	GER	HUN	BEL	ITA	LUX	JPN	Points
  Hakkinen	1	1	2	Ret	1	1	Ret	3	2	1	1	6	Ret	4	1	1	100
- Schumacher	Ret	3	1	2	3	10	1	1	1	3	5	1	Ret	1	2	Ret	86
+ Schumacher_M	Ret	3	1	2	3	10	1	1	1	3	5	1	Ret	1	2	Ret	86
  Coulthard	2	2	6	1	2	Ret	Ret	6	Ret	2	2	2	7	Ret	3	3	56
  Irvine		4	8	3	3	Ret	3	3	2	3	4	8	Ret	Ret	2	4	2	47
  Villeneuve	5	7	Ret	4	6	5	10	4	7	6	3	3	Ret	Ret	8	6	21
