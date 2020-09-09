@@ -1,0 +1,27 @@
+		AUS	BRA	SMR	MON	ESP	CAN	FRA	GBR	AUT	GER	HUN	BEL	ITA	EUR	MAL	JPN	Points
+ Hakkinen	Ret	1	Ret	3	1	1	2	Ret	3	Ret	1	2	Ret	5	3	1	76
+ Irvine		1	5	Ret	2	4	3	6	2	1	1	3	4	6	7	1	3	74
+ Frentzen	2	3	Ret	4	Ret	11	1	4	4	3	4	3	1	Ret	6	4	54
+ Coulthard	Ret	Ret	2	Ret	2	7	Ret	1	2	5	2	1	5	Ret	Ret	Ret	48
+ Schumacher_M	8	2	1	1	3	Ret	5	DNS	0	0	0	0	0	0	2	2	44
+ Schumacher_R	3	4	Ret	Ret	5	4	4	3	Ret	4	9	5	2	4	Ret	5	35
+ Barrichello	5	Ret	3	9	DSQ	Ret	3	8	Ret	Ret	5	10	4	3	5	8	21
+ Herbert	DNS	Ret	10	Ret	Ret	5	Ret	12	14	11	11	Ret	Ret	1	4	7	15
+ Fisichella	4	Ret	5	5	9	2	Ret	7	12	Ret	Ret	11	Ret	Ret	11	14	13
+ Salo		0	0	7	Ret	8	0	0	0	9	2	12	7	3	Ret	0	0	10
+ Trulli		Ret	Ret	Ret	7	6	Ret	7	9	7	Ret	8	12	Ret	2	DNS	Ret	7
+ Hill		Ret	Ret	4	Ret	7	Ret	Ret	5	8	Ret	6	6	10	Ret	Ret	Ret	7
+ Wurz		Ret	7	Ret	6	10	Ret	Ret	10	5	7	7	14	Ret	Ret	8	10	3
+ Diniz		Ret	Ret	Ret	Ret	Ret	6	Ret	6	6	Ret	Ret	Ret	Ret	Ret	Ret	11	3
+ Alesi		Ret	Ret	6	Ret	Ret	Ret	Ret	14	Ret	8	16	9	9	Ret	7	6	2
+ Panis		Ret	6	Ret	Ret	Ret	9	8	13	10	6	10	13	11	9	Ret	Ret	2
+ Gene		Ret	9	9	Ret	Ret	8	Ret	15	11	9	17	16	Ret	6	9	Ret	1
+ Rosa		6	Ret	Ret	Ret	11	Ret	11	Ret	Ret	Ret	15	Ret	Ret	Ret	Ret	13	1
+ Zanardi	Ret	Ret	11	8	Ret	Ret	Ret	11	Ret	Ret	Ret	8	7	Ret	10	Ret	0
+ Takagi		7	8	Ret	Ret	12	Ret	DSQ	16	Ret	Ret	Ret	Ret	Ret	Ret	Ret	Ret	0
+ Villeneuve	Ret	Ret	Ret	Ret	Ret	Ret	Ret	Ret	Ret	Ret	Ret	15	8	10	Ret	9	0
+ Zonta		Ret	DNQ	0	0	0	Ret	9	Ret	15	Ret	13	Ret	Ret	8	Ret	12	0
+ Badoer		Ret	0	8	Ret	Ret	10	10	Ret	13	10	14	Ret	Ret	Ret	Ret	Ret	0
+ Sarrazin	0	Ret	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+ 
+ 

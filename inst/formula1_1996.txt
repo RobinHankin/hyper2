@@ -1,0 +1,25 @@
+		AUS	BRA	ARG	EUR	SMR	MON	ESP	CAN	FRA	GBR	GER	HUN	BEL	ITA	POR	JPN	Points
+ Hill		1	1	1	4	1	Ret	Ret	1	1	Ret	1	2	5	Ret	2	1	97
+ Villeneuve	2	Ret	2	1	11	Ret	3	2	2	1	3	1	2	7	1	Ret	78
+ Schumacher_M	Ret	3	Ret	2	2	Ret	1	Ret	DNS	Ret	4	9	1	1	3	2	59
+ Alesi		Ret	2	3	Ret	6	Ret	2	3	3	Ret	2	3	4	2	4	Ret	47
+ Hakkinen	5	4	Ret	8	8	6	5	5	5	3	Ret	4	3	3	Ret	3	31
+ Berger		4	Ret	Ret	9	3	Ret	Ret	Ret	4	2	13	Ret	6	Ret	6	4	21
+ Coulthard	Ret	Ret	7	3	Ret	2	Ret	4	6	5	5	Ret	Ret	Ret	13	8	18
+ Barrichello	Ret	Ret	4	5	5	Ret	Ret	Ret	9	4	6	6	Ret	5	Ret	9	14
+ Panis		7	6	8	Ret	Ret	1	Ret	Ret	7	Ret	7	5	Ret	Ret	10	7	13
+ Irvine		3	7	5	Ret	4	7	Ret	Ret	Ret	Ret	Ret	Ret	Ret	Ret	5	Ret	11
+ Brundle	Ret	12	Ret	6	Ret	Ret	Ret	6	8	6	10	Ret	Ret	4	9	5	8
+ Frentzen	8	Ret	Ret	Ret	Ret	4	4	Ret	Ret	8	8	Ret	Ret	Ret	7	6	7
+ Salo		6	5	Ret	DSQ	Ret	5	DSQ	Ret	10	7	9	Ret	7	Ret	11	Ret	5
+ Herbert	Ret	Ret	9	7	Ret	3	Ret	7	DSQ	9	Ret	Ret	Ret	9	8	10	4
+ Diniz		10	8	Ret	10	7	Ret	6	Ret	Ret	Ret	Ret	Ret	Ret	6	Ret	Ret	2
+ Verstappen	Ret	Ret	6	Ret	Ret	Ret	Ret	Ret	Ret	10	Ret	Ret	Ret	8	Ret	11	1
+ Katayama	11	9	Ret	DSQ	Ret	Ret	Ret	Ret	Ret	Ret	Ret	7	8	10	12	Ret	0
+ Rosset		9	Ret	Ret	11	Ret	Ret	Ret	Ret	11	Ret	11	8	9	Ret	14	13	0
+ Fisichella	Ret	0	0	13	Ret	Ret	Ret	8	Ret	11	0	0	0	0	0	0	0
+ Lamy		Ret	10	Ret	12	9	Ret	Ret	Ret	12	Ret	12	Ret	10	Ret	16	12	0
+ Badoer		DNQ	11	Ret	DNQ	10	Ret	DNQ	Ret	Ret	DNQ	DNP	0	0	0	0	0	0
+ Lavaggi	0	0	0	0	0	0	0	0	0	0	DNQ	10	DNQ	Ret	15	DNQ	0
+ Montermini	DNQ	Ret	10	DNQ	DNQ	DNS	DNQ	Ret	Ret	DNQ	DNP	0	0	0	0	0	0
+ Marques	0	Ret	Ret	0	0	0	0	0	0	0	0	0	0	0	0	0	0
