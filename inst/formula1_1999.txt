@@ -23,5 +23,3 @@
  Zonta		Ret	DNQ	0	0	0	Ret	9	Ret	15	Ret	13	Ret	Ret	8	Ret	12	0
  Badoer		Ret	0	8	Ret	Ret	10	10	Ret	13	10	14	Ret	Ret	Ret	Ret	Ret	0
  Sarrazin	0	Ret	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
- 
- 
