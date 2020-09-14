@@ -5,6 +5,39 @@ JEBO-D-20-00916
 Referee Report
 
 
+The referee's comments are preceded by a chevron (">") and my response
+is included inline.  I have changed line-breaks in the interests of
+clarity.
+
+Overall Response
+
+I am delighted that this insightful referee "gets"
+the manuscript.  The referee makes a number of observations and
+suggestions, all of which I agree with, and I have made changes to the
+submission in response.  I have tried very hard to preserve the
+brevity and pleasing structure that the referee explicitly notes.  In
+short, the revised manuscript is a stronger and more widely applicable
+document and I commend it to you.
+
+
+Software implementation note
+
+In the interests of full disclosure, I have made a significant change
+to the C++ back end of the hyper2 package:
+
+https://github.com/RobinHankin/hyper2/commit/d9d16c45daa752d4687446d7df9805439f461451#diff-25d902c24283ab8cfbac54dfa101ad31
+
+
+The hyper2 package now uses player names as keys in the STL map class,
+rather than integers.  The change is a conceptual streamlining which
+results in simplified R idiom for a number of cases, but does not
+change the mathematical basis of the software or alter any numerical
+results.
+
+
+Detailed responses
+
+
 > This paper develops extensions to the Bradley-Terry model appropriate
 > to Bernoulli trials so that the model can accommodate the
 > chess-specific needs of draws and the first-mover advantage possessed
