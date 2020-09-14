@@ -53,7 +53,6 @@ inst/jss.*
 *.knit.md
 inst/*.html
 inst/*.pdf
-inst/*.tex
 inst/jsslogo.jpg
 
 src/*.o
