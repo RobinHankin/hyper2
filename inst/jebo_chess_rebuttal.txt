@@ -8,102 +8,100 @@ Referee Report
 This paper develops extensions to the Bradley-Terry model appropriate
 to Bernoulli trials so that the model can accommodate the
 chess-specific needs of draws and the first-mover advantage possessed
-by White. The author takes this extended model to various sets of
+by White.  The author takes this extended model to various sets of
 exclusively game-level outcomes and estimates time-invariant player
 strengths as well as the importance of draws and first-mover
-advantage. After estimating common parameters for draws and
+advantage.  After estimating common parameters for draws and
 first-mover advantage, the author allows for (time-invariant)
-player-specific parameters on these margins. The paper then concludes
+player-specific parameters on these margins.  The paper then concludes
 by considering distinct draw parameters for Soviet and non-Soviet
-players. Using data from the top chess events of 1962 and 1963, the
+players.  Using data from the top chess events of 1962 and 1963, the
 author determines that Soviet players draw more frequently against
 each other than in other game scenarios.
 
 The paper does a nice job of clearly laying out the various reified
 "monsters" that extend the original Bradley-Terry model to accommodate
-chess. This framework is plausible and intuitive. I also appreciated
+chess.  This framework is plausible and intuitive.  I also appreciated
 the paper's brevity in making its point. The allowance for
 playerspecific tendencies to draw or to gain excess-advantage from
-moving first also strikes me as an innovation to the
-literature. Lastly, the paper is well-written and a fun read.
+moving first also strikes me as an innovation to the literature.
+Lastly, the paper is well-written and a fun read.
 
 
 My comments on the rest of the paper are detailed below by decreasing
 importance.
 
 1) The author never properly explores the paper's identification
-strategy. As I read it, the identifying assumption, besides the
+strategy.  As I read it, the identifying assumption, besides the
 functional form assumption, is that player strengths are constant over
 the duration of the considered data. This seems highly plausible
 within a specific event (e.g., the Candidates tournament of 1963, the
 Interzonals of 1962), but much less so with the Anand-Karpov-Kasparov
-example. The author does not specify the timespan over which these 365
-games were played, but I imagine that the timespan must exceed 10
-years. To the extent that all players have matured to full strength
+example.  The author does not specify the timespan over which these
+365 games were played, but I imagine that the timespan must exceed 10
+years.  To the extent that all players have matured to full strength
 and none have yet begun to decline, this assumption would be benign,
 but it should be supported.
 
 Precise estimation will hinge on a large number of games, but this
 will be in tension with the assumption of time-invariant
-player-strengths. The author should explore this tension.
+player-strengths.  The author should explore this tension.
 
 2) The author neglects to motivate the paper beyond its application
 within the chess world.  The tournament literature's applications lie
 primarily, though definitely not exclusively, within compensation and
-labor. How could this extension be used within that context?  Where
+labor.  How could this extension be used within that context?  Where
 might economists see the first-mover advantage in action? Where might
 the extension to allow draws be especially lucrative? Etc.
 
 3) As the author notes, the work of Moul and Nye (2009) is directly on
-point. The author's discussion of this paper, however, is overly
-sparse and at times misleading. Moul and Nye use existing observed
+point.  The author's discussion of this paper, however, is overly
+sparse and at times misleading.  Moul and Nye use existing observed
 player strengths (variations of commonly used scores based on the Elo
-rating system that goes back to 1960). Moul and Nye then use these
+rating system that goes back to 1960).  Moul and Nye then use these
 strengths within an ordered probit to estimate parameters that relate
-back to draw likelihood and White's first-mover advantage. The sharp
+back to draw likelihood and White's first-mover advantage.  The sharp
 difference between that paper and this is then that the author is
 estimating player relative strengths (conditional upon a pool of
 players) while Moul and Nye use "observed" strengths [footnote: Those
 relative strengths are highly predictive, with t-statistics of around
-20]. The latter approach is far less parametrically demanding, but
+20].  The latter approach is far less parametrically demanding, but
 leans much more on the assumption of normally distributed disturbances
-(basically the differing assumption of functional form). The latter
+(basically the differing assumption of functional form).  The latter
 approach also allows individuals' player strength to vary across time
 and is far more flexible to changes in the composition of the pool of
 players.
 
-
 Furthermore, Moul and Nye estimate several versions of their ordered
-probit without data on the number of moves (ply-count). This is
+probit without data on the number of moves (ply-count).  This is
 contrary to the implication of the paper (p. 6, immediately below
 Table 2), which suggests that the ply-count data are essential to that
-paper's findings. All of that paper's core results (significance of
+paper's findings.  All of that paper's core results (significance of
 draws, first-mover advantage, a distinct draw outcome for round-robin
 international tournament games that involve two Soviets) are
-originally derived without ply-count data. The ply-count data are
+originally derived without ply-count data.  The ply-count data are
 incorporated to explore a potential mechanism by which players in a
 draw-cartel might benefit.
 
 4) The paper concludes that the estimates derived from the 1962
 Interzonals and the 1963 Candidates strongly suggest that the "draw
 monster" won games involving two Soviet players more frequently than
-games that involved at least one non-Soviet. This is consistent with a
-Soviet cartel, but it could also be the result of Soviet-specific
-styles of play. Moul and Nye (2009) test the Soviet style-of-play
+games that involved at least one non-Soviet.  This is consistent with
+a Soviet cartel, but it could also be the result of Soviet-specific
+styles of play.  Moul and Nye (2009) test the Soviet style-of-play
 hypothesis by considering international tournaments when the format
-changed from all-play-all to knockout and allSoviet tournaments. Both
-comparisons yield results consistent with a Soviet draw-cartel in
+changed from all-play-all to knockout and all Soviet tournaments.
+Both comparisons yield results consistent with a Soviet draw-cartel in
 international all-play-all tournaments and rejecting the Soviet
 style-of-play hypothesis.  By only considering tournaments that were
 international and all-play-all, the author forgoes this critical
 source of identification.
 
-
 In the cartel example, the author also neglects the advantage that
 presumably accrued to Soviet players when they played non-Soviet
-players in all-play-all international tournaments. This would suggest
+players in all-play-all international tournaments.  This would suggest
 another "monster" to be estimated, one that benefits the Soviet player
-when playing a non-Soviet opponent. Without such an addition, Soviet
+when playing a non-Soviet opponent.  Without such an addition, Soviet
 strengths will be overstated.
 
 
