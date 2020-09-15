@@ -11,10 +11,10 @@ clarity.
 
 Overall Response
 
-I am delighted that this insightful referee "gets"
-the manuscript.  The referee makes a number of observations and
-suggestions, all of which I agree with, and I have made changes to the
-submission in response.  I have tried very hard to preserve the
+I am delighted that this insightful referee "gets" the manuscript.
+The referee makes a number of observations and suggestions, all of
+which I agree with, and I have made changes to the submission in
+response, marked in red.  I have tried very hard to preserve the
 brevity and pleasing structure that the referee explicitly notes.  In
 short, the revised manuscript is a stronger and more widely applicable
 document and I commend it to you.
@@ -75,11 +75,53 @@ Detailed responses
 > years.  To the extent that all players have matured to full strength
 > and none have yet begun to decline, this assumption would be benign,
 > but it should be supported.
+
+
+An excellent observation.  In the chess world the pre-eminent strength
+measure would be the Elo rating in which the winning player takes
+points from the loser based on the pre-match difference in Elo rating.
+Elo exhibits an emergent phenomenon in which sudden changes of ability
+are not reflected instantly but have an exponentially damped response.
+
+My view is that this damping feature is sometimes desirable (old games
+are surely less informative than more recent ones) but uncontrolled in
+the sense that the time-constant is not explicit or controllable, and
+the Elo system uses an arbitrary points system with arbitrary cut-offs
+[as opposed to the objective Bradley-Terry system].
+
 > 
 > Precise estimation will hinge on a large number of games, but this
 > will be in tension with the assumption of time-invariant
 > player-strengths.  The author should explore this tension.
 > 
+
+
+I am in total agreement with this observation.  My thinking on this
+issue has been strongly affected by my recent work applying
+Bradley-Terry to Formula 1 motor racing.  In F1, drivers generally
+start their careers as weak competitors, become stronger with
+experience, and finally become uncompetitive due to age [although
+frankly Lewis Hamilton at 35yo seems to buck this general trend, as
+recent events in Tuscany would indicate].  I would suggest that chess
+players have a similar career arc, although Formula 1 Teams typically
+take a dim view of underperforming drivers---whom they rapidly and
+unceremonially drop.  The career arc for these competitors would have
+a truncated right hand side, unlike chess players who typically
+decline gradually over decades [although I would observe that
+Kasparov's current FIDE rating of 2812 is not that much less than his
+peak of 2851].
+
+Specifically, the dataset in question stretches from 1981 to 2017, a
+very wide range.  Generalized Bradley-Terry, together with reified
+entities, is capable of handling strengths varying over a career: one
+would introduce a "mid-career monster", or perhaps an "experience
+monster".  I would add here that monsters' strength is inherently
+positive, so one could deal with waning strength with age by
+introducing a "youth monster" who helps younger players.  But such
+analysis is, I would suggest, firmly in the category of further work.
+I have added a discussion of this issue to the manuscript.
+
+
 > 2) The author neglects to motivate the paper beyond its application
 > within the chess world.  The tournament literature's applications lie
 > primarily, though definitely not exclusively, within compensation and
