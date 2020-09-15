@@ -89,6 +89,14 @@ the sense that the time-constant is not explicit or controllable, and
 the Elo system uses an arbitrary points system with arbitrary cut-offs
 [as opposed to the objective Bradley-Terry system].
 
+But frankly I don't want to open the can of worms that would be
+comparison between Elo and Bradley-Terry.  I had a protracted argument
+on this issue with a chess enthusiast; let us say the discussion was
+intense and robust.  The problem is that Elo was designed specifically
+to downweight old data and this downweighting is what users of such
+metrics want.  Unfortunately, what my correspondent wanted from BT was
+pretty much Elo: a somewhat circular position.
+
 > 
 > Precise estimation will hinge on a large number of games, but this
 > will be in tension with the assumption of time-invariant
@@ -129,7 +137,9 @@ Further Work.
 > labor.  How could this extension be used within that context?  Where
 > might economists see the first-mover advantage in action? Where might
 > the extension to allow draws be especially lucrative? Etc.
-> 
+>
+
+
 > 3) As the author notes, the work of Moul and Nye (2009) is directly on
 > point.  The author's discussion of this paper, however, is overly
 > sparse and at times misleading.  Moul and Nye use existing observed
