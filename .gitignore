@@ -55,6 +55,17 @@ inst/*.html
 inst/*.pdf
 inst/jsslogo.jpg
 
+
+# temporary files created by latex:
+inst/*.aux
+inst/*.bbl
+inst/*.blg
+inst/*.out
+inst/*.spl
+inst/*.tex~
+
+
+
 src/*.o
 src/*.so
 
