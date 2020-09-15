@@ -14,10 +14,10 @@ Overall Response
 I am delighted that this insightful referee "gets" the manuscript.
 The referee makes a number of observations and suggestions, all of
 which I agree with, and I have made changes to the submission in
-response, marked in red.  I have tried very hard to preserve the
-brevity and pleasing structure that the referee explicitly notes.  In
-short, the revised manuscript is a stronger and more widely applicable
-document and I commend it to you.
+response, colour coded for ease of reference.  I have tried very hard
+to preserve the brevity and pleasing structure that the referee
+explicitly notes.  In short, the revised manuscript is a stronger and
+more widely applicable document and I commend it to you.
 
 
 Software implementation note
@@ -95,7 +95,6 @@ the Elo system uses an arbitrary points system with arbitrary cut-offs
 > player-strengths.  The author should explore this tension.
 > 
 
-
 I am in total agreement with this observation.  My thinking on this
 issue has been strongly affected by my recent work applying
 Bradley-Terry to Formula 1 motor racing.  In F1, drivers generally
@@ -119,7 +118,9 @@ monster".  I would add here that monsters' strength is inherently
 positive, so one could deal with waning strength with age by
 introducing a "youth monster" who helps younger players.  But such
 analysis is, I would suggest, firmly in the category of further work.
-I have added a discussion of this issue to the manuscript.
+I have added a discussion of this issue to the manuscript (RED), in
+two parts: firstly when introducing the dataset, and secondly under
+Further Work.
 
 
 > 2) The author neglects to motivate the paper beyond its application
