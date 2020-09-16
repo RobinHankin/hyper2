@@ -139,6 +139,28 @@ Further Work.
 > the extension to allow draws be especially lucrative? Etc.
 >
 
+(manuscript changes addressing this comment are marked in ORANGE).
+
+The original submission discussed applications to MasterChef
+Australia, consumer behaviour and mating preference, but I was not
+aware of tournament literature as a distinct academic field.  I have
+been studying Lazear and Rosen and pondering how reified monsters
+could help understanding tournaments in a workplace remuneration
+context.  Lazear and Rosen supply a good rationale to consider only
+rank in situations such as Formula 1 motor racing
+
+First-mover advantage is closely related to incumbent advantage,
+something which had not occurred to me until now.  One of the papers
+cited [Hankin 2010] uses a variant of Bradley-Terry to assess
+incumbent advantage in biology (territory defense by lizards) and I
+have added a more explicit pointer to this.
+
+Returning to Lazear and Rosen, schemes that reward rank are common in
+sports (notably Formula 1, discussed above, and sculling, both good
+applications of the Plackett-Luce extension of Bradley-Terry).
+
+Also, I have discussed Formula 1 motor racing above under part 1.
+
 
 > 3) As the author notes, the work of Moul and Nye (2009) is directly on
 > point.  The author's discussion of this paper, however, is overly
