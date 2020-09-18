@@ -94,8 +94,9 @@ comparison between Elo and Bradley-Terry.  I had a protracted argument
 on this issue with a chess enthusiast; let us say the discussion was
 intense and robust.  The problem is that Elo was designed specifically
 to downweight old data and this downweighting is what users of such
-metrics want.  Unfortunately, what my correspondent wanted from BT was
-pretty much Elo: a somewhat circular position.
+metrics want.  Unfortunately, what my correspondent wanted from
+Bradley-Terry strengths was pretty much Elo: a somewhat circular
+position.
 
 > 
 > Precise estimation will hinge on a large number of games, but this
@@ -105,24 +106,24 @@ pretty much Elo: a somewhat circular position.
 
 I am in total agreement with this observation.  My thinking on this
 issue has been strongly affected by my recent work applying
-Bradley-Terry to Formula 1 motor racing.  In F1, drivers generally
-start their careers as weak competitors, become stronger with
-experience, and finally become uncompetitive due to age [although
-frankly Lewis Hamilton at 35yo seems to buck this general trend, as
-recent events in Tuscany would indicate].  I would suggest that chess
-players have a similar career arc, although Formula 1 Teams typically
-take a dim view of underperforming drivers---whom they rapidly and
-unceremonially drop.  The career arc for these competitors would have
-a truncated right hand side, unlike chess players who typically
-decline gradually over decades [although I would observe that
-Kasparov's current FIDE rating of 2812 is not that much less than his
-peak of 2851].
+Bradley-Terry to Formula 1 motor racing [I have a manuscript under
+review at JQAS].  In F1, drivers generally start their careers as weak
+competitors, become stronger with experience, and finally become
+uncompetitive due to age [although frankly Lewis Hamilton at 35yo
+seems to buck this general trend, as recent events in Tuscany would
+indicate].  I would suggest that chess players have a similar career
+arc, although Formula 1 Teams typically take a dim view of
+underperforming drivers---whom they rapidly and unceremonially drop.
+The career arc for these competitors would have a truncated right hand
+side, unlike chess players who typically decline gradually over
+decades [although I would observe that Kasparov's current FIDE rating
+of 2812 is not that much less than his peak of 2851].
 
 Specifically, the dataset in question stretches from 1981 to 2017, a
 very wide range.  Generalized Bradley-Terry, together with reified
 entities, is capable of handling strengths varying over a career: one
 would introduce a "mid-career monster", or perhaps an "experience
-monster".  I would add here that monsters' strength is inherently
+monster".  I would add here that monsters' strengths are inherently
 positive, so one could deal with waning strength with age by
 introducing a "youth monster" who helps younger players.  But such
 analysis is, I would suggest, firmly in the category of further work.
@@ -141,25 +142,30 @@ Further Work.
 
 (manuscript changes addressing this comment are marked in ORANGE).
 
-The original submission discussed applications to MasterChef
+The submission discusses applications to MasterChef
 Australia, consumer behaviour and mating preference, but I was not
 aware of tournament literature as a distinct academic field.  I have
 been studying Lazear and Rosen and pondering how reified monsters
 could help understanding tournaments in a workplace remuneration
 context.  Lazear and Rosen supply a good rationale to consider only
-rank in situations such as Formula 1 motor racing
+rank in situations such as Formula 1 motor racing 
 
 First-mover advantage is closely related to incumbent advantage,
 something which had not occurred to me until now.  One of the papers
 cited [Hankin 2010] uses a variant of Bradley-Terry to assess
 incumbent advantage in biology (territory defense by lizards) and I
-have added a more explicit pointer to this.
+have added a more explicit pointer to this.  One point of contact with
+tournament literature might be incumbent advantage possessed in a
+remuneration tournament by candidates who are working temporarily in
+the capacity being fought over, such as an 'acting CEO' or 'acting
+head of department'.  The appropriate incumbent monster
 
 Returning to Lazear and Rosen, schemes that reward rank are common in
 sports (notably Formula 1, discussed above, and sculling, both good
 applications of the Plackett-Luce extension of Bradley-Terry).
 
-Also, I have discussed Formula 1 motor racing above under part 1.
+Also, I have discussed Formula 1 motor racing above under part 1 of
+the review.
 
 
 > 3) As the author notes, the work of Moul and Nye (2009) is directly on
