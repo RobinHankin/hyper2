@@ -196,7 +196,19 @@ the review.
 > originally derived without ply-count data.  The ply-count data are
 > incorporated to explore a potential mechanism by which players in a
 > draw-cartel might benefit.
-> 
+>
+
+
+This interpretation of Moul and Nye is very close to my own, and
+re-reading my work I realise that the sentence in question was poorly
+phrased and indeed unintentionally misleading.  What I wanted to say
+was that chess draws have been studied by many workers and Moul and
+Nye observe that 
+
+I have rephrased the sentence in question, and added a few more points
+of reference to Mouland Nye, in GREEN.
+
+
 > 4) The paper concludes that the estimates derived from the 1962
 > Interzonals and the 1963 Candidates strongly suggest that the "draw
 > monster" won games involving two Soviet players more frequently than
