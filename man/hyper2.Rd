@@ -47,6 +47,7 @@ These are the basic functions of the hyper2 package.  Function
 \code{hyper()} is the low-level creator function; \code{as.hyper2()} is
 a bit more user-friendly and attempts to coerce its arguments into a
 suitable form; for example, a matrix is interpreted as rows of brackets.
+Length-zero character strings are acceptable.
 
 Function \code{is_valid_hyper2()} tests for valid input, returning a
 Boolean.
