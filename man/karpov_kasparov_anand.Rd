@@ -49,7 +49,7 @@ of game results}
 
   All data drawn from chessgames.com, specifically
 
- \url{http://www.chessgames.com/perl/ezsearch.pl?search=karpov+vs+kasparov}
+ \url{https://www.chessgames.com/perl/ezsearch.pl?search=karpov+vs+kasparov}
 
  Note that the database allows one to sort by white wins or black wins
  (there is a \sQuote{refine search} tab at the bottom).  Some searches

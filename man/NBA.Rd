@@ -27,11 +27,7 @@ Note that the two \dQuote{ghost} players represent the effect of having
 possession.
 }
 \references{
-  \itemize{
-    \item \url{http://www.espn.com/nba/playbyplay?gameId=400954514}
-    \item \url{https://www.nbafullhd.com/24828-2/}
-    \item \url{http://www.NBAbase.com/}
-  }
+  \url{https://www.espn.com/nba/playbyplay?gameId=400954514}
 }
 \examples{
 

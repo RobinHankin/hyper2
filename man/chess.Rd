@@ -33,7 +33,7 @@ Topalov, Anand, Karpov
 }
 \references{
   \itemize{
-    \item \url{http://www.chessbase.com/}
+    \item \url{https://www.chessbase.com/}
   }
 }
 \seealso{\code{\link{karpov_kasparov_anand}}}

@@ -45,7 +45,7 @@ ghost player.
   Robin K. S. Hankin (2010).
   \dQuote{A Generalization of the Dirichlet Distribution},
   \emph{Journal of Statistical Software}, 33(11), 1-18,
-  \url{http://www.jstatsoft.org/v33/i11/}
+  \url{https://www.jstatsoft.org/v33/i11/}
 }
 \examples{
 data(tennis)
