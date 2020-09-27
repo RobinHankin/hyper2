@@ -16,8 +16,9 @@ The referee makes a number of observations and suggestions, all of
 which I agree with, and I have made changes to the submission in
 response, colour coded for ease of reference.  I have tried very hard
 to preserve the brevity and pleasing structure that the referee
-explicitly notes.  In short, the revised manuscript is a stronger and
-more widely applicable document and I commend it to you.
+explicitly notes.  In short, the revised manuscript is a stronger,
+better argued, and more widely applicable document and I commend it to
+you.
 
 
 Software implementation note
@@ -85,9 +86,12 @@ are not reflected instantly but have an exponentially damped response.
 
 My view is that this damping feature is sometimes desirable (old games
 are surely less informative than more recent ones) but uncontrolled in
-the sense that the time-constant is not explicit or controllable, and
-the Elo system uses an arbitrary points system with arbitrary cut-offs
-[as opposed to the objective Bradley-Terry system].
+the sense that the time-constant is not explicit or controllable.
+Also, the Elo system uses an arbitrary points system with arbitrary
+cut-offs [as opposed to the objective Bradley-Terry system] and has
+the undesirable feature that changing the points system or the
+cut-offs will change players' Elo ratings even if their playing
+performance is unchanged.
 
 But frankly I don't want to open the can of worms that would be
 comparison between Elo and Bradley-Terry.  I had a protracted argument
@@ -95,8 +99,8 @@ on this issue with a chess enthusiast; let us say the discussion was
 intense and robust.  The problem is that Elo was designed specifically
 to downweight old data and this downweighting is what users of such
 metrics want.  Unfortunately, what my correspondent wanted from
-Bradley-Terry strengths was pretty much Elo: a somewhat circular
-position.
+Bradley-Terry strengths was pretty much Elo with all its
+arbitrariness: a somewhat circular position.
 
 > 
 > Precise estimation will hinge on a large number of games, but this
@@ -148,7 +152,7 @@ aware of tournament literature as a distinct academic field.  I have
 been studying Lazear and Rosen and pondering how reified monsters
 could help understanding tournaments in a workplace remuneration
 context.  Lazear and Rosen supply a good rationale to consider only
-rank in situations such as Formula 1 motor racing 
+rank in situations such as Formula 1 motor racing.
 
 First-mover advantage is closely related to incumbent advantage,
 something which had not occurred to me until now.  One of the papers
@@ -158,7 +162,8 @@ have added a more explicit pointer to this.  One point of contact with
 tournament literature might be incumbent advantage possessed in a
 remuneration tournament by candidates who are working temporarily in
 the capacity being fought over, such as an 'acting CEO' or 'acting
-head of department'.  The appropriate incumbent monster
+head of department'.  The appropriate incumbent monster would furnish
+a quantification of the incumbent advantage.
 
 Returning to Lazear and Rosen, schemes that reward rank are common in
 sports (notably Formula 1, discussed above, and sculling, both good
@@ -230,3 +235,14 @@ of reference to Mouland Nye, in GREEN.
 > when playing a non-Soviet opponent.  Without such an addition, Soviet
 > strengths will be overstated.
 > 
+
+
+This is an excellent suggestion, one which I feel nicely rounds out
+the analysis.  I have included a "rest monster" whose strength aids
+players following a collusive draw.  Reified Bradley-Terry allows one
+not only to establish the existence of such a rest monster, but also
+to quantify its strength and I have done just this in the revision.
+
+
+
+
