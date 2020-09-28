@@ -123,11 +123,11 @@ for(i in seq_len(nrow(a))){
   white_player_rested <- a[i,5] > a[i,6]
   black_player_rested <- a[i,5] < a[i,6]
 
+
   result <- a[i,3]
   
-
+  if(result == "1-0"){   # white win
     if(white_player_rested){
-      if(result == "1-0"){   # white win
       H[c(white_player,"white","rest"                         )] %<>% inc
       H[c(white_player,"white","rest",black_player,drawmonster)] %<>% dec
     } else if(black_player_rested){
@@ -157,4 +157,5 @@ for(i in seq_len(nrow(a))){
 }
 H
 pie(maxp(H))
+summary(H)
 ```
