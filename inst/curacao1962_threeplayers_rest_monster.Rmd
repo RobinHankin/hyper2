@@ -1,0 +1,160 @@
+---
+title: "curacao_threeplayers_rest_monster"
+author: "Robin Hankin"
+date: "28/09/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This work extends that of `curacao1962_threeplayers.R` by including
+a rest monster.
+
+
+```{r}
+library("hyper2")
+
+a <- read.table("curacao1962_candidates.txt",header=FALSE)
+colnames(a) <- c("W", "B", "result", "round")
+head(a)
+```
+
+specify the players:
+
+```{r}
+  players <- 
+    c("Petrosian", "Keres", "Geller", "Fischer", "Korchnoi",
+      "Benko", "Tal", "Filip")
+  names(players) <-   # accused of collusion or not
+    c("coll", "coll", "coll", "USA", "USSR", "USA", "USSR", "TCH")
+collusive_players <-     c("Petrosian", "Keres", "Geller")
+ ```
+
+```{r}
+d <- as.matrix(cbind(as.character(a$V1),as.character(a$V2)))
+colnames(d) <- c("white","black")
+
+stopifnot(all(c(d) %in% players))
+
+jj <- matrix(0,28,8)
+colnames(jj) <- players
+
+cumulative_matches <- jj
+cumulative_collusive_matches <- jj
+cumulative_noncollusive_matches <- jj
+
+for(i in seq_len(28)){
+  for(j in seq_along(players)){
+    p <- players[j]
+    jj <- subset(a,a$round < i)
+    cm <- 0
+    ncm <- 0
+    for(k in seq_len(nrow(jj))){
+      
+      w <- jj$W[k]
+      b <- jj$B[k]
+
+      this_match <- c(w,b)
+      if((players[j] %in% c(w,b))){
+        if(players[j] %in% collusive_players){  # this player is collusive
+          if((w %in% collusive_players) & (b %in% collusive_players)){  # both players collusive
+            cm <- cm+1
+          } else { # non-collusive match
+            ncm <- ncm+1
+          }
+        } else { # noncollusive player
+          ncm <- ncm+1
+        }
+      } 
+    } # k loop closes
+    cumulative_collusive_matches[i,j] <- cm
+    cumulative_noncollusive_matches[i,j] <- ncm
+    cumulative_matches[i,j] <- cm + ncm
+  } # j loop closes
+} # i loop closes
+cumulative_matches
+cumulative_collusive_matches
+cumulative_noncollusive_matches
+```
+
+In the above three matrices, each row is a round, and the entries show
+the number of matches, collusive matches, and noncollusive matches
+played up to and including that round.
+
+
+```{r}
+a <- cbind(a,cncmp_white=0,cncmp_black=0)
+for(i in seq_len(nrow(a))){
+  r <- a$round[i]
+  jj_w <- which(colnames(cumulative_noncollusive_matches)==a$W[i])
+  jj_b <- which(colnames(cumulative_noncollusive_matches)==a$B[i])
+  ncmp_w <- cumulative_noncollusive_matches[r, jj_w]
+  ncmp_b <- cumulative_noncollusive_matches[r, jj_b]
+  a$cncmp_white[i] <- ncmp_w
+  a$cncmp_black[i] <- ncmp_b
+}
+head(a)
+tail(a)
+```
+
+
+Thus the final match, between Petrosian and Filip was played in round
+28, ended in a draw, and by that time Petrosian had played 18
+noncollusive matches and Filip had played 26.
+
+Now create a hyper2 object with appropriate reified monsters:
+
+
+```{r}
+H <- hyper2(pnames=c(players,"white","draw","cdraw","rest"))
+for(i in seq_len(nrow(a))){
+  white_player <- a[i,1]
+  black_player <- a[i,2]
+
+  collusive <- (white_player %in% collusive_players) & (black_player %in% collusive_players)
+  if(collusive){
+    drawmonster <- "cdraw"
+  } else {
+    drawmonster <- "draw"
+  }
+  
+  white_player_rested <- a[i,5] > a[i,6]
+  black_player_rested <- a[i,5] < a[i,6]
+
+  result <- a[i,3]
+  
+
+    if(white_player_rested){
+      if(result == "1-0"){   # white win
+      H[c(white_player,"white","rest"                         )] %<>% inc
+      H[c(white_player,"white","rest",black_player,drawmonster)] %<>% dec
+    } else if(black_player_rested){
+      H[c(white_player,"white"                                )] %<>% inc
+      H[c(white_player,"white","rest",black_player,drawmonster)] %<>% dec
+    } else { # neither player rested
+      H[c(white_player,"white"                                )] %<>% inc
+      H[c(white_player,"white",       black_player,drawmonster)] %<>% dec
+    }
+  } else if(result == "0-1"){  # black win
+    if(white_player_rested){
+      H[c(                            black_player            )] %<>% inc
+      H[c(white_player,"white","rest",black_player,drawmonster)] %<>% dec
+    } else if(black_player_rested){
+      H[c(                     "rest",black_player            )] %<>% inc
+      H[c(white_player,"white","rest",black_player,drawmonster)] %<>% dec
+    } else { # neither player rested
+      H[c(                            black_player            )] %<>% inc
+      H[c(white_player,"white",       black_player,drawmonster)] %<>% dec
+    }
+  } else if(result == "1/2-1/2"){ # draw
+      H[c(                                         drawmonster)] %<>% inc
+      H[c(white_player,"white","rest",black_player,drawmonster)] %<>% dec
+  } else { # not a white win or a black win or a draw
+    stop("this cannot happen")
+  }
+}
+H
+pie(maxp(H))
+```
