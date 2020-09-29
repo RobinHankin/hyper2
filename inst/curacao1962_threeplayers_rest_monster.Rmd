@@ -179,6 +179,14 @@ mH
 pie(mH)
 ```
 
+ Now a hypothesis test
+
+```{r,label=hyptest,cache=TRUE}
+specificp.gt.test(H,"rest",0)
+```
+
+
+And a more primitive test:
 
 ```{r}
 table(a[,3],a[,5]-a[,6])
