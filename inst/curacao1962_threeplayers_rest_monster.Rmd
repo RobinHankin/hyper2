@@ -90,8 +90,6 @@ the number of matches, collusive matches, and noncollusive matches
 played up to and including that round.
 
 
-
-
 ```{r}
 a <- cbind(a,cncmp_white=0,cncmp_black=0)
 for(i in seq_len(nrow(a))){
@@ -124,62 +122,9 @@ Now create a hyper2 object with appropriate reified monsters:
 
 
 ```{r}
+problem <- function(...){stop("must be a white win or a black win or a draw")}
+
 H <- hyper2(pnames=c(players,"white","draw","rest"))
-prob <- function(...){stop("must be a white win or a black win or a draw")}
-for(i in seq_len(nrow(a))){
-  white_player <- a[i,1]
-  black_player <- a[i,2]
-
-  collusive <- (white_player %in% collusive_players) & (black_player %in% collusive_players)
-  if(collusive){
-    drawmonster <- "draw"
-  } else {
-    drawmonster <- "draw"
-  }
-  
-  white_player_rested <- a[i,5] - a[i,6] > 0
-  black_player_rested <- a[i,6] - a[i,5] > 0
-
-
-  result <- a[i,3]
-  
-  if(result == "1-0"){   # white win
-    if(white_player_rested){
-      H[c(white_player,"white","rest"                         )] %<>% inc
-      H[c(white_player,"white","rest",black_player,drawmonster)] %<>% dec
-    } else if(black_player_rested){
-      H[c(white_player,"white"                                )] %<>% inc
-      H[c(white_player,"white","rest",black_player,drawmonster)] %<>% dec
-    } else { # neither player rested
-      H[c(white_player,"white"                                )] %<>% inc
-      H[c(white_player,"white"       ,black_player,drawmonster)] %<>% dec
-    }
-  } else if(result == "0-1"){  # black win
-    if(white_player_rested){
-      H[c(                            black_player            )] %<>% inc
-      H[c(white_player,"white","rest",black_player,drawmonster)] %<>% dec
-    } else if(black_player_rested){
-      H[c(                     "rest",black_player            )] %<>% inc
-      H[c(white_player,"white","rest",black_player,drawmonster)] %<>% dec
-    } else { # neither player rested
-      H[c(                            black_player            )] %<>% inc
-      H[c(white_player,"white",       black_player,drawmonster)] %<>% dec
-    }
-  } else if(result == "1/2-1/2"){ # draw
-      H[c(                                         drawmonster)] %<>% inc
-      H[c(white_player,"white"       ,black_player,drawmonster)] %<>% dec
-  } else { # not a white win or a black win or a draw
-    prob()
-  }
-}
-H
-(mH <- maxp(H))
-pie(mH)
-summary(H)
-```
-
-```{r,label=verify}
-I <- hyper2(pnames=c(players,"white","draw","rest"))
 for(i in seq_len(nrow(a))){
   white_player <- a[i,1]
   black_player <- a[i,2]
@@ -198,40 +143,39 @@ for(i in seq_len(nrow(a))){
 
   if(white_player_rested){  
     if(       result == "1-0"){ 
-      I[c(white_player,             "white","rest"            )] %<>% inc
+      H[c(white_player,             "white","rest"            )] %<>% inc
     } else if(result == "0-1"){ 
-      I[c(             black_player                           )] %<>% inc
+      H[c(             black_player                           )] %<>% inc
     } else if(result == "1/2-1/2"){                         
-      I[c(                                         drawmonster)] %<>% inc
-    } else { prob() }
-      I[c(white_player,black_player,"white","rest",drawmonster)] %<>% dec
+      H[c(                                         drawmonster)] %<>% inc
+    } else { problem() }
+      H[c(white_player,black_player,"white","rest",drawmonster)] %<>% dec
   } else if(black_player_rested){
     if(       result == "1-0"){ 
-      I[c(white_player,             "white"                   )] %<>% inc
+      H[c(white_player,             "white"                   )] %<>% inc
     } else if(result == "0-1"){ 
-      I[c(             black_player,        "rest"            )] %<>% inc
+      H[c(             black_player,        "rest"            )] %<>% inc
     } else if(result == "1/2-1/2"){                         
-      I[c(                                         drawmonster)] %<>% inc
-    } else { prob() }
-      I[c(white_player,black_player,"white","rest",drawmonster)] %<>% dec
+      H[c(                                         drawmonster)] %<>% inc
+    } else { problem() }
+      H[c(white_player,black_player,"white","rest",drawmonster)] %<>% dec
   } else { # neither player rested, rest monster inactive
     if(       result == "1-0"){ 
-      I[c(white_player,             "white"                   )] %<>% inc
+      H[c(white_player,             "white"                   )] %<>% inc
     } else if(result == "0-1"){ 
-      I[c(             black_player                           )] %<>% inc
+      H[c(             black_player                           )] %<>% inc
     } else if(result == "1/2-1/2"){                         
-      I[c(                                         drawmonster)] %<>% inc
-    } else { prob() }
-      I[c(white_player,black_player,"white",       drawmonster)] %<>% dec
+      H[c(                                         drawmonster)] %<>% inc
+    } else { problem() }
+      H[c(white_player,black_player,"white",       drawmonster)] %<>% dec
   }
 }
 
-I
-
-summary(I)
-maxp(I)
-I==H
-I + (-1)*H
+H
+summary(H)
+mH <- maxp(H)
+mH
+pie(mH)
 ```
 
 
