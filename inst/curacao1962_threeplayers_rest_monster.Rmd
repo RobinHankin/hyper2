@@ -136,8 +136,8 @@ for(i in seq_len(nrow(a))){
     drawmonster <- "draw"
   }
   
-  white_player_rested <- a[i,5] - a[i,6] > 1
-  black_player_rested <- a[i,6] - a[i,5] > 1
+  white_player_rested <- a[i,6] - a[i,5] > 1
+  black_player_rested <- a[i,5] - a[i,6] > 1
 
   result <- a[i,3]
   
