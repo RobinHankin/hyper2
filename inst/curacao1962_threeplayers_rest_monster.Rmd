@@ -214,7 +214,7 @@ for(i in seq_len(nrow(a))){
       I[c(                                         drawmonster)] %<>% inc
     } else { prob() }
       I[c(white_player,black_player,"white","rest",drawmonster)] %<>% dec
-  } else { # neither player rested
+  } else { # neither player rested, rest monster inactive
     if(       result == "1-0"){ 
       I[c(white_player,             "white"                   )] %<>% inc
     } else if(result == "0-1"){ 
