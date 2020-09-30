@@ -99,6 +99,13 @@ Filip at this point.
 
 
 ```{r}
+##  To justify the footnote "No game in the tournament is played
+##  between two players with cumulative game count (collusivitity
+##  ignored), differ by more than one" in jebo_chess_revision2.tex,
+##  replace `cumulative_noncollusive_matches` with
+##  `cumulative_matches` in this chunk.
+##
+
 a <- cbind(a,cncmp_white=0,cncmp_black=0)
 for(i in seq_len(nrow(a))){
   r <- a$round[i]
