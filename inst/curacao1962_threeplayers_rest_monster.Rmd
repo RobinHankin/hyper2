@@ -136,10 +136,13 @@ table(a[,3],a[,5]-a[,6])
 
 Then Fisher test:
 ```{r}
-aa <- subset(a,a[,5] != a[,6])
-aa <- subset(aa,aa[,3] != "1/2-1/2")
+b <- subset(a,a[,5] != a[,6])
+b <- subset(b,abs(b[,5]-b[,6])>1)
+b <- subset(b,b[,3] != "1/2-1/2")
+b <- cbind(b,white_rested = b[,5] < b[,6])
+b
 
-M <- table(aa[,3],white_rested=aa[,5]<aa[,6])
+M <- table(b[,3],white_rested=b[,7])
 M
 fisher.test(M,alternative="greater")
 ```
@@ -209,8 +212,14 @@ pie(mH)
 
  Now a hypothesis test
 
-```{r,label=hyptest,cache=TRUE}
+```{r,label=hyptestrest,cache=TRUE}
 specificp.gt.test(H,"rest",0)
 ```
 
+```{r,label=hyptestdraw,cache=TRUE}
+specificp.gt.test(H,"draw",0)
+```
 
+```{r,label=hyptestwhite,cache=TRUE}
+specificp.gt.test(H,"white",0)
+```
