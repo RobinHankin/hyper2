@@ -87,7 +87,15 @@ cumulative_noncollusive_matches
 
 In the above three matrices, each row is a round, and the entries show
 the number of matches, collusive matches, and noncollusive matches
-played up to and including that round.
+played up to and including that round for each of the 8 players.  Each
+(named) column corresponds to a player.  Looking at the last row of
+`cumulative_noncollusive_matches` we see that in round 28, players
+Petrosian, Keres, and Geller had played a total of 18 noncollusive
+matches while the other players had played considerably more and would
+be expected to be more fatigued at this point in the tournament.  Note
+that Tal retired after round 21 due to illness, which explains why he
+had played fewer noncollusive games than Fischer, Korchnoi, Benko, or
+Filip at this point.
 
 
 ```{r}
@@ -109,7 +117,8 @@ Thus the final match, between Petrosian and Filip was played in round
 28, ended in a draw, and by that time Petrosian had played 18
 noncollusive matches and Filip had played 26.
 
-We can see the difference between the two players:
+We can see the differences between cumulative noncollusive games
+played between Black and White, summed over the whole tournament:
 
 ```{r}
 diff <- a$cncmp_white-a$cncmp_black  # difference in each game
@@ -117,6 +126,25 @@ table(diff)
 table(abs(diff))
 cumsum(table(abs(diff)))
 ```
+
+
+We can assess a null of no effect of fatigue:
+
+```{r}
+table(a[,3],a[,5]-a[,6])
+```
+
+Then Fisher test:
+```{r}
+aa <- subset(a,a[,5] != a[,6])
+aa <- subset(aa,aa[,3] != "1/2-1/2")
+
+M <- table(aa[,3],white_rested=aa[,5]<aa[,6])
+M
+fisher.test(M,alternative="greater")
+```
+
+Highly signficant.
 
 Now create a hyper2 object with appropriate reified monsters:
 
@@ -185,21 +213,4 @@ pie(mH)
 specificp.gt.test(H,"rest",0)
 ```
 
-
-And a more primitive test:
-
-```{r}
-table(a[,3],a[,5]-a[,6])
-```
-
-A bit of tidying:
-
-```{r}
-aa <- subset(a,a[,5] != a[,6])
-aa <- subset(aa,aa[,3] != "1/2-1/2")
-
-M <- table(aa[,3],white_rested=aa[,5]<aa[,6])
-M
-fisher.test(M,alternative="greater")
-```
 
