@@ -211,7 +211,7 @@ was that chess draws have been studied by many workers and Moul and
 Nye observe that 
 
 I have rephrased the sentence in question, and added a few more points
-of reference to Mouland Nye, in GREEN.
+of reference to Mouland Nye, in BLUE.
 
 
 > 4) The paper concludes that the estimates derived from the 1962
@@ -236,7 +236,7 @@ of reference to Mouland Nye, in GREEN.
 > strengths will be overstated.
 > 
 
-
+(comments addressing this comment in DARK GREEN)
 This is an excellent suggestion, one which I feel nicely rounds out
 the analysis.  I have included a "rest monster" whose strength aids
 players following a collusive draw.  Reified Bradley-Terry allows one
