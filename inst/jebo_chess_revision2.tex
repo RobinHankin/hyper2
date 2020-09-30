@@ -716,7 +716,7 @@ $\draw_s/\draw\geqslant e^{1.8}\simeq 6.05$.
   \end{center}
 \end{figure}
 
-\definecolor{DarkGreen}{RGB}{14,99,4}
+\definecolor{DarkGreen}{RGB}{14,159,4}
 
 \textcolor{DarkGreen}{It is reasonable to suppose that collusion of
   the type considered here is ``effective'' in the sense that
@@ -725,17 +725,22 @@ $\draw_s/\draw\geqslant e^{1.8}\simeq 6.05$.
   Petrosian, Keres and Geller had each played a total of 18
   noncollusive matches while Fischer, Benko and Filip had played a
   total of 26 or 27 (Tal, retiring mid tournament due to illness,
-  played only 21).  For each game, we count the noncollusive games
-  played up to that point in the match for White and Black.  If, in
-  that game, the number of noncollusive games differ by more than 1,
-  we posit a ``rest monster'' whose strength helps the player who has
-  played fewer noncollusive games.  Observing that the rest monster is
+  played only 21).  For each game in the tournament, we count the
+  total noncollusive games played up to that point for both the white
+  and black player.  If, in that game, the number of previous
+  noncollusive games for the white and black player differs by more
+  than one, we posit a ``rest
+  monster'' whose strength helps the player who has played fewer
+  noncollusive games.}
+
+\textcolor{DarkGreen}{
+  Observing that the rest monster is
   active in 49 of the 105 games of the tournament, we may consider
   these 49 games and, discarding draws, test whether rested players
   actually win more often than expected; observations are given in
   Table~\ref{restmonsterfisher} .  We reject the null of rested
-  players having the same win probability as their more tired
-  opponents (one-sided Fisher's exact test, $p\simeq 10^{-4}$).}
+  players having the same strength as their more tired opponents
+  (one-sided Fisher's exact test, $p\simeq 10^{-4}$).}
 
 \begin{table}
 \textcolor{DarkGreen}{
@@ -752,11 +757,15 @@ $\draw_s/\draw\geqslant e^{1.8}\simeq 6.05$.
 \end{table}
 
 \textcolor{DarkGreen}{The Bradley-Terry model together with a white
-  player advantage, draw monster, and rest monster, can quantify the
+  player advantage, draw monster, and rest monster, estimates the
   strength of the rest monster at about 26\% (compare the draw monster
-  at 24\%).  The null of the rest monster having zero strength is
-  rejected with a likelihood ratio of about $e^{11.9}$ or a $p$-value
-  of about $10^{-6}$.}
+  at 24\% and the White advantage at about 3\%).  The null of the rest
+  monster having zero strength is rejected with a likelihood ratio of
+  about $e^{11.9}$ or a $p$-value of about $10^{-6}$.  It is an
+  interesting observation that neither Table~\ref{restmonsterfisher},
+  nor reified Bradley-Terry, admit a White advantage (one-sided
+  McNemar test, $p=\frac{1}{8}$, likelihood ratio $1.609$
+  respectively).  }
 
 \section{Conclusions and further work}
 
