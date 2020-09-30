@@ -716,6 +716,48 @@ $\draw_s/\draw\geqslant e^{1.8}\simeq 6.05$.
   \end{center}
 \end{figure}
 
+\definecolor{DarkGreen}{RGB}{14,99,4}
+
+\textcolor{DarkGreen}{It is reasonable to suppose that collusion of
+  the type considered here is ``effective'' in the sense that
+  noncollusive games are detrimental to future play in a way that
+  collusively drawn games are not.  At the end of the tournament,
+  Petrosian, Keres and Geller had each played a total of 18
+  noncollusive matches while Fisher, Benko and Filip had played a
+  total of 26 or 27 (Tal, retiring mid tournament due to illness,
+  played only 21).  For each game, we count the noncollusive games
+  played up to that point in the match for White and Black.  If, in
+  that game, the number of noncollusive games differ by more than 1,
+  we posit a ``rest monster'' whose strength helps the player who has
+  played fewer noncollusive games.  Observing that the rest monster is
+  active in 49 of the 105 games of the tournament, we may consider
+  these 49 games and, discarding draws, test whether rested players
+  actually win more often than expected; observations are given in
+  Table~\ref{restmonsterfisher} .  We reject the null of rested
+  players having the same win probability as their more tired
+  opponents (one-sided Fisher's exact test, $p\simeq 10^{-4}$).}
+
+\begin{table}
+\textcolor{DarkGreen}{
+  \caption{Results for won games in Cura\c{c}ao 1962  between
+      rested and unrested players    \label{restmonsterfisher}}
+  \centering
+  \fbox{%
+    \begin{tabular}{l|cc}\\
+      & White rested & Black rested \\ \hline
+      White wins  & $9$   & $ 3$   \\
+      Black wins  & $0$   & $13$   \\
+  \end{tabular}}
+  }
+\end{table}
+
+\textcolor{DarkGreen}{The Bradley-Terry model together with a white
+  player advantage, draw monster, and rest monster, can quantify the
+  strength of the rest monster at about 26\% (compare the draw monster
+  at 24\%).  The null of the rest monster having zero strength is
+  rejected with a likelihood ratio of about $e^{11.9}$ or a $p$-value
+  of about $10^{-6}$.}
+
 \section{Conclusions and further work}
 
 The present work details an approach to chess analysis based on
@@ -761,7 +803,11 @@ likely impact of a putative Soviet cartel on tournament outcomes.  In
 principle, the present system of likelihood and reified entities would
 admit such simulations and it might be interesting to compare results.
 
+
+
 \subsection*{Supplementary material}
+
+\subsection*{\textcolor{DarkGreen}{The ``rest monster'' is due to a suggestion by an insightful JEBO referee}.}
 
 R code for all statistical analysis given here is available at
 
