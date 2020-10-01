@@ -269,11 +269,13 @@ numerically challenging in the current framework as the unit-sum
 constraint becomes nonlinear, making likelihood maximization
 difficult.
 
-The seminal statistical analysis of 
-\citet{moul2009} consider chess draws and use
-sophisticated regression techniques to analyse games in terms of not
-only the result, but also the ply-count, data not used in the present
-analysis.
+\textcolor{blue}{The seminal work of \citet{moul2009} presents
+  sophisticated regression techniques to analyse draws and first-mover
+  advantage.  They compare all-play-all events with knockout format
+  events to test---and reject---hypotheses of a distinct Soviet
+  style-of-play; the work I present also considers Soviet proclivity
+  to draw, using data from a single event, specifically the Stockholm
+  Interzonal tournament of (1962).}
 
 \subsection{Numerical considerations}
 
@@ -532,15 +534,11 @@ that three of the Soviet players colluded.  The accusation was that
 Keres, Petrosian, and Geller agreed ahead of time to draw when playing
 one another, in order to conserve energy for subsequent matches.
 
-\citet{moul2009} consider this accusation from a statistical
-perspective and present a detailed analysis based on number of moves
-in each game, reasoning that hard-fought games which happened to end
-in a draw are more likely to last longer than collusive or
-pre-arranged draws.  Their analysis incorporated a dataset of 7355
-games played in the period 1940-1978, used to calibrate the ability of
-the players.  In contrast, the analysis presented here uses only game
-outcomes (win-loss-draw) in the competition itself.
-
+\textcolor{blue}{\citet{moul2009} consider this accusation from a
+  statistical perspective.  Their analysis incorporated a dataset of
+  7355 games played in the period 1940-1978, used to calibrate the
+  ability of the players.  In contrast, the analysis presented here
+  uses only game outcomes (win-loss-draw) in the competition itself.}
 
  \begin{table}
  \caption{Cura\c{c}ao 1962 \label{candidates} Candidates, World Chess Championship 1963}
@@ -813,12 +811,29 @@ for a player on a winning streak, and weaker for a losing player.
 likely impact of a putative Soviet cartel on tournament outcomes.  In
 principle, the present system of likelihood and reified entities would
 admit such simulations and it might be interesting to compare results.
+\textcolor{blue}{\cite{moul2009} go on to compare round robin
+  tournaments to knockout format events, searching for evidence of a
+  Soviet draw cartel.  By only considering international tournaments
+  [where Soviets have incentive to play differently against fellow
+    Soviets or Westerners] the analysis presented here does not allow
+  me to do this but the technique could easily be applied to a more
+  informative dataset.}
 
+\textcolor{DarkGreen}{The Bradley-Terry techniques used here furnish
+  evidence that collusive games played during during Cura\c{c}ao 1962
+  were less detrimental to future performance than noncollusive games.
+  However, there was no cognitively realistic model for mental fatigue
+  (for example, downweighting heavy workloads long in the past) and
+  the criterion for restedness itself was quite coarse. not allowing
+  It would be possible in principle to investigate the effect of
+  recovery using similar reified entities.}
 
+\subsection*{\textcolor{DarkGreen}{Acknowledgement}}
 
-\subsection*{Supplementary material}
+\textcolor{DarkGreen}{The ``rest monster'' concept is due to a
+  suggestion by an insightful JEBO referee}
 
-\subsection*{\textcolor{DarkGreen}{The ``rest monster'' is due to a suggestion by an insightful JEBO referee}.}
+\subsection*{Computational resources, supplementary material}
 
 R code for all statistical analysis given here is available at
 

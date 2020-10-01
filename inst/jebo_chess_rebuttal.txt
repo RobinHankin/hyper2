@@ -206,12 +206,9 @@ the review.
 
 This interpretation of Moul and Nye is very close to my own, and
 re-reading my work I realise that the sentence in question was poorly
-phrased and indeed unintentionally misleading.  What I wanted to say
-was that chess draws have been studied by many workers and Moul and
-Nye observe that 
-
-I have rephrased the sentence in question, and added a few more points
-of reference to Mouland Nye, in BLUE.
+phrased and indeed clearly (but unintentionally) misleading.  I have
+rephrased the sentence in question, and added a few more points of
+reference to Moul and Nye, in BLUE.
 
 
 > 4) The paper concludes that the estimates derived from the 1962
