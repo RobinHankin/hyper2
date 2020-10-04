@@ -130,10 +130,11 @@ would introduce a "mid-career monster", or perhaps an "experience
 monster".  I would add here that monsters' strengths are inherently
 positive, so one could deal with waning strength with age by
 introducing a "youth monster" who helps younger players.  But such
-analysis is, I would suggest, firmly in the category of further work.
-I have added a discussion of this issue to the manuscript (RED), in
-two parts: firstly when introducing the dataset, and secondly under
-Further Work.
+analysis is, I would suggest, firmly in the category of further work
+(although the revision does address a time-dependent component in the
+form of a "rest monster").  I have added a discussion of the
+identification issue to the manuscript (RED), in two parts: firstly
+when introducing the dataset, and secondly under Further Work.
 
 
 > 2) The author neglects to motivate the paper beyond its application
@@ -146,13 +147,13 @@ Further Work.
 
 (manuscript changes addressing this comment are marked in ORANGE).
 
-The submission discusses applications to MasterChef
-Australia, consumer behaviour and mating preference, but I was not
-aware of tournament literature as a distinct academic field.  I have
-been studying Lazear and Rosen and pondering how reified monsters
-could help understanding tournaments in a workplace remuneration
-context.  Lazear and Rosen supply a good rationale to consider only
-rank in situations such as Formula 1 motor racing.
+The submission discusses applications to MasterChef Australia,
+consumer behaviour and mating preference, but I was not aware of
+tournament literature as a distinct academic field.  I have been
+studying Lazear and Rosen, and Szymanksi 2003, and pondering how
+reified monsters could help understanding tournaments in a workplace
+remuneration context.  Lazear and Rosen supply a good rationale to
+consider only rank in situations such as Formula 1 motor racing.
 
 First-mover advantage is closely related to incumbent advantage,
 something which had not occurred to me until now.  One of the papers

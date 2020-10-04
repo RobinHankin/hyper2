@@ -73,8 +73,10 @@ Chess Championships, in which Fischer accused three Soviet players of
 collusion.  I conclude, on the basis of a dataset that includes only
 the scorelines at the event itself, that the Candidates Tournament
 (Cura\c{c}ao 1962) exhibits evidence of collusion ($p<10^{-5}$), in
-agreement with previous work that uses additional information such as
-historical results including number of moves.
+agreement with previous work.  \textcolor{blue}{I also present
+  scoreline evidence for the effectiveness of such a drawing cartel:
+  noncollusive games are less detrimental to future play than
+  collusive games ($p<10^{-6}$).}
 \end{abstract}
 
 \begin{keyword}
@@ -114,8 +116,17 @@ winning about 37.5\% of tournament games (black wins 27.6\%); and
 secondly, many chess games, about 39.4\%, are drawn (figures from
 Chessbase).  \textcolor{orange}{First-mover advantage is closely
   related to incumbent advantage, and the techniques presented here
-  have been applied to ecological incumbency~\cite{hankin2010}.}
-
+  have been applied to ecological incumbency~\cite{hankin2010}.  More
+  generally, \cite{szymanski2003} considers sporting contests as
+  examples of competitive situations in which a contribution of some
+  kind [effort, investment, attendance of the elite, etc] is elicited
+  from contestants who may as a result win a prize.
+  \citeauthor{szymanski2003} points out that this paradigm arguably
+  covers executive corporate promotion, interviews for a position in
+  an office, and most sporting tournaments.  As such, the phenomenon
+  of collusion and indeed drawing in pairwise comparison is surely an
+  interesting phenomenon.}
+  
 \subsection{Draws} Chess games may be won by either player, or may be
 drawn; one inference of a draw is that neither player is better than
 the other.  Before 1867, tournament games that were drawn were
@@ -262,7 +273,7 @@ identical, within a threshhold.  Using a logistic expression for the
 difference in players' performance he uses, in current notation,
 $\draw=\nu\sqrt{p_ip_j}$.  However, \citet{joe1990} uses likelihood
 methods to show that this model does not fit data well.  Here we note
-that such a model automatically give stronger players a higher draw
+that such a model automatically gives stronger players a higher draw
 potential, and also note that it is difficult to account for
 first-player advantage in this framework.  Such an approach is
 numerically challenging in the current framework as the unit-sum
@@ -744,10 +755,9 @@ $\draw_s/\draw\geqslant e^{1.8}\simeq 6.05$.
 
 \begin{table}
 \textcolor{DarkGreen}{
-  \caption{Results for won games in Cura\c{c}ao 1962  between
-      rested and unrested players    \label{restmonsterfisher}}
-  \centering
-  \fbox{%
+  \caption{Results for the 25 won games (out of 49 played) in
+    Cura\c{c}ao 1962 between rested and unrested
+    players \label{restmonsterfisher}} \centering \fbox{%
     \begin{tabular}{l|cc}\\
       & White rested & Black rested \\ \hline
       White wins  & $9$   & $ 3$   \\
@@ -813,10 +823,10 @@ principle, the present system of likelihood and reified entities would
 admit such simulations and it might be interesting to compare results.
 \textcolor{blue}{\cite{moul2009} go on to compare round robin
   tournaments to knockout format events, searching for evidence of a
-  Soviet draw cartel.  By only considering international tournaments
-  [where Soviets have incentive to play differently against fellow
-    Soviets or Westerners] the analysis presented here does not allow
-  me to do this but the technique could easily be applied to a more
+  Soviet draw cartel.  The analysis presented here, only considering
+  international tournaments [where Soviets have incentive to play
+    differently against fellow Soviets or Westerners] does not admit
+  this phenomenon, but the technique could easily be applied to a more
   informative dataset.}
 
 \textcolor{DarkGreen}{The Bradley-Terry techniques used here furnish
@@ -840,8 +850,6 @@ admit such simulations and it might be interesting to compare results.
 R code for all statistical analysis given here is available at
 
 {\tt https://github.com/RobinHankin/hyper2}.
-
-\section*{References}
 
 \bibliography{jebo_chess.bib}
 
