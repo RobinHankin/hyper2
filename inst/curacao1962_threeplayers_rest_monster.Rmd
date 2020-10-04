@@ -41,57 +41,56 @@ stopifnot(all(c(d) %in% players))
 jj <- matrix(0,28,8)
 colnames(jj) <- players
 
-cumulative_matches <- jj
-cumulative_collusive_matches <- jj
-cumulative_noncollusive_matches <- jj
+cumulative_games <- jj
+cumulative_collusive_games <- jj
+cumulative_noncollusive_games <- jj
 
-for(i in seq_len(28)){
+for(i in seq_len(28)){  # 'i' loops through rounds 
   for(j in seq_along(players)){
-    p <- players[j]
-    jj <- subset(a,a$round < i)
-    cm <- 0
-    ncm <- 0
-    for(k in seq_len(nrow(jj))){
+    previous_games <- subset(a,a$round < i)
+    cg   <- 0   # cumulative games
+    cncg <- 0   # cumulative noncollusive games
+    for(k in seq_len(nrow(previous_games))){
       
-      w <- jj$W[k]
-      b <- jj$B[k]
+      w <- previous_games$W[k]  # white player
+      b <- previous_games$B[k]  # black player
 
-      this_match <- c(w,b)
-      if((players[j] %in% c(w,b))){
+      this_game <- c(w,b)
+      if((players[j] %in% this_game)){
         if(players[j] %in% collusive_players){  # this player is collusive
           if((w %in% collusive_players) & (b %in% collusive_players)){  # both players collusive
-            cm <- cm+1
-          } else { # non-collusive match
-            ncm <- ncm+1
+            cg <- cg+1   # increment cm  == cumulative games
+          } else { # non-collusive game
+            cncg <- cncg+1 # increment ncm == cumulative noncollusive games
           }
         } else { # noncollusive player
-          ncm <- ncm+1
+          cncg <- cncg+1   # increment ncm == cumulative noncollusive games
         }
       } 
     } # k loop closes
-    cumulative_collusive_matches[i,j] <- cm
-    cumulative_noncollusive_matches[i,j] <- ncm
-    cumulative_matches[i,j] <- cm + ncm
+    cumulative_collusive_games[i,j] <- cg
+    cumulative_noncollusive_games[i,j] <- cncg
+    cumulative_games[i,j] <- cg + cncg
   } # j loop closes
 } # i loop closes
 ```
 
-So we have three matrices `cumulative_matches`,
-`cumulative_collusive_matches` and `cumulative_noncollusive_matches`:
+So we have three matrices `cumulative_games`,
+`cumulative_collusive_games` and `cumulative_noncollusive_games`:
 
 ```{r}
-cumulative_matches
-cumulative_collusive_matches
-cumulative_noncollusive_matches
+cumulative_games
+cumulative_collusive_games
+cumulative_noncollusive_games
 ```
 
 In the above three matrices, each row is a round, and the entries show
-the number of matches, collusive matches, and noncollusive matches
-played up to and including that round for each of the 8 players.  Each
-(named) column corresponds to a player.  Looking at the last row of
-`cumulative_noncollusive_matches` we see that in round 28, players
+the number of games, collusive games, and noncollusive games played up
+to and including that round for each of the 8 players.  Each (named)
+column corresponds to a player.  Looking at the last row of
+`cumulative_noncollusive_games` we see that in round 28, players
 Petrosian, Keres, and Geller had played a total of 18 noncollusive
-matches while the other players had played considerably more and would
+games while the other players had played considerably more and would
 be expected to be more fatigued at this point in the tournament.  Note
 that Tal retired after round 21 due to illness, which explains why he
 had played fewer noncollusive games than Fischer, Korchnoi, Benko, or
@@ -102,17 +101,17 @@ Filip at this point.
 ##  To justify the footnote "No game in the tournament is played
 ##  between two players with cumulative game count (collusivitity
 ##  ignored), differ by more than one" in jebo_chess_revision2.tex,
-##  replace `cumulative_noncollusive_matches` with
-##  `cumulative_matches` in this chunk.
+##  replace `cumulative_noncollusive_games` with
+##  `cumulative_games` in this chunk.
 ##
 
 a <- cbind(a,cncmp_white=0,cncmp_black=0)
 for(i in seq_len(nrow(a))){
   r <- a$round[i]
-  jj_w <- which(colnames(cumulative_noncollusive_matches)==a$W[i])
-  jj_b <- which(colnames(cumulative_noncollusive_matches)==a$B[i])
-  ncmp_w <- cumulative_noncollusive_matches[r, jj_w]
-  ncmp_b <- cumulative_noncollusive_matches[r, jj_b]
+  jj_w <- which(colnames(cumulative_noncollusive_games)==a$W[i])
+  jj_b <- which(colnames(cumulative_noncollusive_games)==a$B[i])
+  ncmp_w <- cumulative_noncollusive_games[r, jj_w]
+  ncmp_b <- cumulative_noncollusive_games[r, jj_b]
   a$cncmp_white[i] <- ncmp_w
   a$cncmp_black[i] <- ncmp_b
 }
@@ -122,7 +121,7 @@ tail(a)
 
 Thus the final match, between Petrosian and Filip was played in round
 28, ended in a draw, and by that time Petrosian had played 18
-noncollusive matches and Filip had played 26.
+noncollusive games and Filip had played 26.
 
 We can see the differences between cumulative noncollusive games
 played between Black and White, summed over the whole tournament:
