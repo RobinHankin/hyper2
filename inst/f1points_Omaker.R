@@ -1,3 +1,6 @@
+## Files like "f2012.R" are generated from file f1points_Omaker.R
+## using sed as discussed below.
+
 ## This file creates 1000 (variable "howmany") simulated Formula 1
 ## results and compares the simulated ranks with the actual
 ## points-based ranks according to different points systems such as
