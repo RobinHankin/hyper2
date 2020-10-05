@@ -80,7 +80,7 @@ Detailed responses
 
 An excellent observation.  In the chess world the pre-eminent strength
 measure would be the Elo rating in which the winning player takes
-points from the loser based on the pre-match difference in Elo rating.
+points from the loser based on the pre-match Elo rating difference.
 Elo exhibits an emergent phenomenon in which sudden changes of ability
 are not reflected instantly but have an exponentially damped response.
 
@@ -234,12 +234,13 @@ reference to Moul and Nye, in BLUE.
 > strengths will be overstated.
 > 
 
-(comments addressing this comment in DARK GREEN)
-This is an excellent suggestion, one which I feel nicely rounds out
-the analysis.  I have included a "rest monster" whose strength aids
-players following a collusive draw.  Reified Bradley-Terry allows one
-not only to establish the existence of such a rest monster, but also
-to quantify its strength and I have done just this in the revision.
+(comments addressing this comment in DARK GREEN) This is an excellent
+suggestion, one which I feel nicely rounds out the analysis.  I have
+included a "rest monster" whose strength aids players following a
+collusive draw.  Reified Bradley-Terry allows one not only to
+establish the existence of such a rest monster, but also to quantify
+its strength and I have done just this in the revision, and compared
+the findings with a classical McNemar's test.
 
 
 
