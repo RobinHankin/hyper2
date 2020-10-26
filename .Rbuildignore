@@ -44,3 +44,5 @@
 ^inst/cook_repeated_cache$
 ^inst/curling_files$
 ^inst/curling_cache$
+^inst/curacao1962_threeplayers_rest_monster_files$
+^inst/curacao1962_threeplayers_rest_monster_cache$
