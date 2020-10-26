@@ -24,21 +24,32 @@ colnames(OT) <- c("J1","J2")
 OT
 ```
 
-Object `a` is a straightforward order table, just like
-`skating_table`; we see, for example, that both judges put competitor
-`a` first, but put `b` second and fifth respectively.  The judges
-second choice was `b` and `c` respectively.  We can coerce order table
-`OT` to a rank table `RT`:
+Object `OT` is a straightforward order table, just like
+`skating_table` but smaller and simpler.  We have two columns, one for
+each judge (named `J1` and`J2`), and five competitors, `a` through
+`e`.  The first row refers to competitor `a`; both judges put
+competitor `a` first.  The second row shows that `J1` put `b` second
+and `J2` put competitor `b` fifth.  If instead we ask who was placed
+third by each judge, this is not directly given; but by looking for
+`3` in the table we see that `J1` put `c` third and `J2` put `d`
+third.  To answer this and similar questions directly, we can coerce
+order table `OT` to a rank table `RT`:
 
 ```{r}
 RT <- ordertable_to_ranktable(OT)
 RT
 ```
 
-Object `RT` gives the same information but in a different form.  Note
-that above we see the print method in action, which uses
-`ranktable_to_printable_object()`.  However, it is possible to view
-`RT` directly by removing class `ranktable`:
+Object `RT` gives the same information as `OT` but in a different
+form.  Note that above we see the print method in action, which uses
+`ranktable_to_printable_object()`.  Here the _rows_ correspond to the
+two judges.  Each row is a rank vector.  Column headings refer to
+placings (`c1` is supposed to be read "came first", `c2` "came second"
+etc).  Looking at the fifth column (`c5`) we see that `J1` and `J2`
+placed `e` and `b` fifth respectively.
+
+Note that it is possible to view object `RT` directly by removing
+class `ranktable`:
 
 ```{r}
 class(RT)
@@ -49,13 +60,13 @@ RT
 Note carefully that the second row of `RT` (which corresponds to the
 second judge) does *not* match the second column of `OT`.  The way to
 read the second row of `RT` is as follows.  We see the entries `1 3 4
-5 2` indicating that the first choice was competitor 1 [viz `a`, the
-second choice competitor 3 [viz `c`], the third choice competitor 4
-[viz `d`], fourth choice competitor 5 [`e`] and fifth choice
-competitor 2 [`b`].  So the rows are *ranks* (see the discussion in
-`rrank.Rd`).  But it is very tempting to read the second row of `RT`
-as "judge 2 placed competitor `b` in third place", which is wrong
-because this is interpreting the row as an *order*.  This is why the
-print method is there.
+5 2` indicating that the first choice was competitor 1 [viz `a`], the
+second choice was competitor 3 [viz `c`], the third choice was
+competitor 4 [viz `d`], fourth choice was competitor 5 [`e`] and fifth
+choice was competitor 2 [`b`].  So the rows are *ranks* (see the
+discussion in `rrank.Rd`).  But it is very tempting to read the second
+row of `RT` as "judge 2 placed competitor `b` in third place", which
+is wrong because this is interpreting the row as an *order*.  This is
+why the print method is there.
 
 
