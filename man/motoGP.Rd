@@ -12,17 +12,19 @@
   Object \code{motoGP_2019_table} is a dataframe of results showing
   ranks of 28 drivers (riders?) in the 2019 FIM MotoGP World
   Championship.  The format is standard, that is, can be interpreted by
-  function \code{ordertable2supp()} and indeed
-  \code{ordertable2supp(motoGP_2019_table)} gives the corresponding
-  support function, \code{motoGP_2019}.
+  function \code{ordertable2supp()} if the final points column is
+  removed.  The corresponding support function is \code{motoGP_2019}.
 
-  File \code{inst/moto2019.txt} is the source text file; to create
-  \code{motoGP_2019_table} use
+  File \code{inst/moto2019.txt} is the source text file; to create the R
+  objects documented here use something like
 
-  \code{a <- read.table(system.file("motoGP_2019.txt",package="hyper2"))}
-
-  and then \code{ordertable2supp(a)} gives \code{motGP_2019}.
+\preformatted{
+motoGP_2019_table <- read.table("motoGP_2019.txt",header=TRUE)
+motoGP_2019 <- ordertable2supp(motoGP_2019_table[,1:19])
+save(motoGP_2019_table,motoGP_2019,file="motoGP.rda")
+}
   
+
 }
 \references{
 

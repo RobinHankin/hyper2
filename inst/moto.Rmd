@@ -29,19 +29,26 @@ first in Argentina, retired in Austin, and so on.  In the first
 column, we see the result from Qatar (QAT) in which Marquez came
 second, Dovizioso first, Vinales third, and so on.  Notation used also
 includes six different classes of no-score such as "Ret" for retired,
-"WD" for withdrawn, and so on.  I now use bespoke R function
+"WD" for withdrawn, and so on.  I now use package function
 \code{ordertable2supp()}, that translates data of this type into a
 log-likelihood.  The function is similar to, but slightly different
 from, the analysis in `eurovision.R`.
 
 ```{r,applydata}
+head(motoGP_2019_table)
+```
+
+In the package, object `motoGP_2019` is the corresponding
+Plackett-Luce likelihood function; it is equivalent to
+`ordertable2supp(motoGP_2019_table[,1:19])`:
+
+```{r,showmotolikelihoodhead}
 head(motoGP_2019)
 ```
 
-(object `motoGP_2019` is equivalent to
-`ordertable2supp(motoGP_2019_table)`.  Above, we see a small part of
-the Placket-Luce likelihood function for the 2019 results.  We can
-find the maximum likelihood estimator by using the `maxp()` function:
+Above, we see a small part of the Placket-Luce likelihood function for
+the 2019 results.  We can find the maximum likelihood estimator by
+using the `maxp()` function:
 
 ```{r,maxp2017,cache=TRUE}
 options(width = 100)
@@ -51,15 +58,16 @@ dotchart(m,pch=16)
 pie(m)
 ```
 
-In the above, note the dominance of Marquez.  It is sometimes
-preferable to plot the estimated strengths on a log scale:
+In the two figures above, note the dominance of Marquez.  It is
+sometimes preferable to plot the estimated strengths on a log scale:
 
 ```{r,maxp2017log}
 dotchart(log(m[1:27]),pch=16)
 ```
 
-(in the diagram above, we remove the bottom-ranked player, Lecuona,
-whose estimated strength is zero).
+(in the diagram above, observe thatthe bottom-ranked player, Lecuona,
+has a ML strength of zero but the estimate is slightly positive for
+numerical reasons).
 
 # Likelihood scoring vs points scoring
 
