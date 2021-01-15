@@ -15,8 +15,6 @@ from the 2018 World Karate Championships, men's 67kg.  The format can be
 interpreted by the idiom in \code{inst/karate_analysis.R}, which creates
 \code{hyper2} object \code{karate}.
 
-\code{read.table(system.file("karate2018.txt",package="hyper2"))}
-
 }
 \references{
 
