@@ -1,15 +1,19 @@
 \name{ordertrans}
 \alias{ordertrans}
+\alias{ordertransplot}
 \title{Order transformation}
 \description{
 Given an order vector, shuffle so that the players appear in a specified
 order. 
 }
-\usage{ordertrans(x,players)}
+\usage{
+ordertrans(x,players)
+ordertransplot(ox,oy,...)
 \arguments{
   \item{x}{A (generalized) order vector}
   \item{players}{A character vector specifying the order in which the
     players will be listed; if a named vector, use the names}
+  \item{ox,oy}{Rank vectors
 }
 
 \details{
@@ -35,6 +39,11 @@ came second, \code{a} came third, \code{b} came first, and \code{c} came
 fourth.  Object \code{o} contains the same information but presented
 differently.  This says that \code{a} came third, \code{b} came first,
 \code{c} came fourth, and \code{d} came second.
+
+There is a nice example of \code{ordertrans()} in
+\code{inst/eurovision.Rmd}, and file \code{inst/ordertrans.Rmd} provides
+further discussion and examples.
+
 }
 \value{Returns a named vector}
 \author{Robin K. S. Hankin}
@@ -47,6 +56,9 @@ differently.  This says that \code{a} came third, \code{b} came first,
   the names---which can appear in any order---for the competitor you are
   interested in.  I guess \dQuote{generalised order vector} might be a
   better description of the argument.
+
+
+  
 }
 \seealso{\code{\link{rrank}}}
 \examples{
@@ -60,5 +72,17 @@ names(o)  <- n
 
 ordertrans(o, sort(n))
 
+
+
+
+
+rL <- maxp(volvo2014)   # ranks Likelihood
+rL[] <- rank(-maxp(volvo2014))
+
+r1 <- volvo_table_2014[,1]  # ranks race 1
+names(r1) <- rownames(volvo_table_2014)
+ordertransplot(rL,r1)
+
 }
+
 

@@ -1,0 +1,177 @@
+---
+title: "The ordertrans() function"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+```
+
+# Introduction
+
+The `ordertrans()` function can be difficult to understand and this
+short document provides some sensible use-cases.
+
+
+
+## Hello world
+
+The manpage provides a very simple example:
+
+
+```{r,label=simpexample}
+x <- c(d=2,a=3,b=1,c=4)
+x
+```
+
+In the above, object `x` is a named vector with elements
+\code{seq_along(x)} in some order.  Technically `x` is an order vector
+because it answers the question "where did the first-named competitor
+come?"  (see also the discussion at `rrank.Rd`).  However, it might
+equally be a rank vector because it answers the question "who came
+first? who came second?".
+
+But note that `x` is not helpfully structured to answer either of
+these questions: you have to go searching through the names or the
+ranks respectively---both of which may appear in any order---to find
+the competitor or rank you are interested in.  What we want is to
+rearrange the elements of `x` so that the names are in alphabetical
+order.  That way we can see straighaway where competitor `a` placed
+(in this case, third).  This nontrivial task is accomplished by
+function `ordertrans()`:
+
+
+```{r,label=useordertrans}
+o <- ordertrans(x,letters[1:4])
+o
+```
+
+Observe that objects `x` and `o` are equal in the sense that they are
+a rearrangement of one another:
+
+```{r,label=equalrearrangement}
+identical(x, o[c(4,1,2,3)])
+identical(o, x[c(2,3,4,1)])
+```
+
+One consequence of this is that the resulting Plackett-Luce support
+functions will be the same:
+
+```{r,showordervec}
+ordervec2supp(x)
+ordervec2supp(o)
+```
+
+Note carefully that the two support functions above can be
+mathematically identical but not formally `identical()` because
+neither the order of the brackets, nor the order of terms within a
+bracket, is defined.  They look the same on my system but YMMV.  It is
+possible that the two support functions might appear to be different
+even though they are mathematically the same. We can verify that the
+two are mathematically identical using package idiom `==`:
+
+```{r}
+ordervec2supp(x) == ordervec2supp(o)
+```
+
+## Skating
+
+Let us consider the skating dataset and use `ordertrans()` to study
+it.
+
+```{r,label=lookatskating}
+skating_table
+```
+
+We might ask how judges 1 and 2 compare to one another?  We need to
+create vectors like `x` and `y` above:
+
+```{r,makej1j2}
+j1 <- skating_table[,1]  # column 1 is judge number 1
+names(j1) <- rownames(skating_table)
+j2 <- skating_table[,2]  # column 2 is judge number 2
+names(j2) <- rownames(skating_table)
+j1
+j2
+cbind(j1,j2)
+```
+
+In the above, see how objects `j1` and `j2` have identical names, in
+the same order.  Observe that `hughes` is ranked 1 by judge 1, and 4
+by judge 2.  This makes it sensible to plot `j1` against `j2`:
+
+```{r}
+par(pty='s')  # forces plot to be square
+plot(j1,j2,asp=1,pty='s',xlim=c(0,25),ylim=c(0,25),pch=16,xlab='judge 1',ylab='judge 2')
+abline(0,1)  # diagonal line
+for(i in seq_along(j1)){text(j1[i],j2[i],names(j1)[i],pos=4,col='gray',cex=0.7)}
+```
+
+In the above plot we see general agreement but differences in detail.
+For example, `hughes` is ranked first by judge 1 and fourth by judge
+2.  However, other problems are not so easy.  Suppose we wish to
+compare the ranks according to likelihood with the ranks according to
+some points system.
+
+```{r,label=maxlikeskating,cache=TRUE}
+mL <- maxp(skating)  # 'L' for Likelihood
+mL
+```
+
+Note that in the above, the competitors' names are in alphabetical
+order.  We first need to convert strengths to ranks:
+
+```{r,label=strengthstoranks}
+mL[] <- rank(-mL)  # minus because ranks orders from weak to strong
+mL
+```
+
+(note that the names are in the same order as before, alphabetical).
+In the above we see that `slutskya` ranks first, `hughes` second, and
+so on.  Another way of ranking the skaters is to use a Borda-type
+system: essentially the rowsums of the table (and, of course, the
+_lowest_ score wins):
+
+
+```{r,label=pointsskating,cache=TRUE}
+mP <- rowSums(skating_table)  # 'P' for Points
+mP[] <- rank(mP,ties='first') # positive sign here
+mP
+```
+
+It is not at all obvious how to compare `mP` and `mL`.  For example,
+we might be interested in `hegel`.  It takes some effort to find that
+her likelihood rank is 20 and her Borda rank is 19.  Function
+`ordertrans()` facilitates this:
+
+
+```{r,label=ordertransexample}
+ordertrans(mP,names(mL))  
+```
+
+See above how `ordertrans()` shows the points-based ranks but in
+alphabetical order, to facilitate comparison with `mL`.  We can now
+plot these against one another:
+
+```{r,label=crapplot}
+plot(mL,ordertrans(mP,mL))
+```
+
+However, the plot above is a bit crude.  Function `ordertransplot()`
+gives a more visually pleasing output:
+
+```{r,label=showoffordertransplot}
+ordertransplot(mL,mP,xlab="likelihood rank",ylab="Borda rank")
+```
+
+So now we may compare judge 1 against likelihood:
+```{r,transplotjudge1}
+ordertransplot(mL,j1,xlab="likelihood rank",ylab="Judge 1 rank")
+```
+
+In the above, looking at the lower-left corner, we see (reading
+horizontally) that the likelihood method placed Slutskya first, then
+Hughes second, then Kwan third; while (reading vertically) judge 1
+placed Hughes first, then Kwan, then Slutskya.

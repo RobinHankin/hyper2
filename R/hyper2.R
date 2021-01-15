@@ -939,3 +939,12 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     x[apply(outer(players,names(x),`==`),1,which)]
 }
 
+`ordertransplot` <- function(ox,oy,...){
+  oyp <- ordertrans(oy,names(ox))
+  par(pty='s') # square plot
+  jj <- c(0,max(c(ox,oy)))
+  plot(ox,oyp,asp=1,pty='s',xlim=jj,ylim=jj,pch=16,...)
+  abline(0,1)
+  for(i in seq_along(ox)){text(ox[i],oyp[i],names(ox)[i],pos=4,col='gray',cex=0.7)}
+}
+
