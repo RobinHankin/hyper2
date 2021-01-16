@@ -27,7 +27,7 @@ x
 ```
 
 In the above, object `x` is a named vector with elements
-\code{seq_along(x)} in some order.  Technically `x` is an order vector
+`seq_along(x)` in some order.  Technically `x` is an order vector
 because it answers the question "where did the first-named competitor
 come?"  (see also the discussion at `rrank.Rd`).  However, it might
 equally be a rank vector because it answers the question "who came
@@ -155,6 +155,7 @@ See above how `ordertrans()` shows the points-based ranks but in
 alphabetical order, to facilitate comparison with `mL`.  We can now
 plot these against one another:
 
+
 ```{r,label=crapplot}
 plot(mL,ordertrans(mP,mL))
 ```
@@ -162,14 +163,18 @@ plot(mL,ordertrans(mP,mL))
 However, the plot above is a bit crude.  Function `ordertransplot()`
 gives a more visually pleasing output:
 
+
 ```{r,label=showoffordertransplot}
 ordertransplot(mL,mP,xlab="likelihood rank",ylab="Borda rank")
 ```
 
 So now we may compare judge 1 against likelihood:
+
+
 ```{r,transplotjudge1}
 ordertransplot(mL,j1,xlab="likelihood rank",ylab="Judge 1 rank")
 ```
+
 
 In the above, looking at the lower-left corner, we see (reading
 horizontally) that the likelihood method placed Slutskya first, then
