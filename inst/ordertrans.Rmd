@@ -45,7 +45,7 @@ function `ordertrans()`:
 
 
 ```{r,label=useordertrans}
-o <- ordertrans(x,letters[1:4])
+o <- ordertrans(x) # by default, sorts names() into alphabetical order
 o
 ```
 
