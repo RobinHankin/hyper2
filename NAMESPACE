@@ -15,6 +15,7 @@ importFrom("partitions","perms")
 importFrom("magrittr", "%>%", "%<>%")
 importFrom("cubature", "adaptIntegrate")
 
+importFrom("graphics", "abline", "par", "text")
 
 import(methods)
 
