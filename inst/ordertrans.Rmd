@@ -27,11 +27,12 @@ x
 ```
 
 In the above, object `x` is a named vector with elements
-`seq_along(x)` in some order.  Technically `x` is an order vector
-because it answers the question "where did the first-named competitor
-come?"  (see also the discussion at `rrank.Rd`).  However, it might
-equally be a rank vector because it answers the question "who came
-first? who came second?".
+`seq_along(x)` in some order.  It means that competitor `d` came
+second, competitor `a` came third, `b` came first and `c` came fourth.
+Technically `x` is an order vector because it answers the question
+"where did a particular competitor come?"  However, it might equally
+be a rank vector because it answers the question "who came first? who
+came second?"  (see also the discussion at `rrank.Rd`).
 
 But note that `x` is not helpfully structured to answer either of
 these questions: you have to go searching through the names or the
@@ -60,8 +61,8 @@ One consequence of this is that the resulting Plackett-Luce support
 functions will be the same:
 
 ```{r,showordervec}
-ordervec2supp(x)
-ordervec2supp(o)
+(Sx <- ordervec2supp(x))
+(So <- ordervec2supp(o))
 ```
 
 Note carefully that the two support functions above can be
@@ -73,7 +74,7 @@ even though they are mathematically the same. We can verify that the
 two are mathematically identical using package idiom `==`:
 
 ```{r}
-ordervec2supp(x) == ordervec2supp(o)
+Sx==So
 ```
 
 ## Skating
