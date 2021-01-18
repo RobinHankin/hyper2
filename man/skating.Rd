@@ -48,11 +48,14 @@ dotchart(skating_maxp)
 
 ordertable_to_ranktable(skating_table)
 
-par(pty='s')
-lik <- order(skating_maxp,decreasing=TRUE)
-plot(1:23,lik,asp=1,pch=16,xlab='official order',ylab='likelihood order')
-text(1:23,lik,pos=c(rep(4,19),rep(2,4)),pnames(skating))
-abline(0,1)
+rL <- sort(skating_maxp,decreasing=TRUE)
+rL[] <- seq_along(rL)
+rO <- seq_len(nrow(skating_table))
+names(rO) <- rownames(skating_table)
+ordertransplot(rO,rL,
+   xlab="offical rank",ylab="likelihood rank",
+   main="Ladies free skating, 2002 Winter Olympics")
+
 }
 \keyword{datasets}
 

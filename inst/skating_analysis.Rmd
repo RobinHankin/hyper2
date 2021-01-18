@@ -184,15 +184,16 @@ letters.  Thus the first three points are maximum likelihoods for
 
 ## Ranking methodologies.
 
- maximum likelihood estimated strengths furnish an ordering for the competitors.
-We can compare ranking by strengths with the official point-tallying method:
+maximum likelihood estimated strengths furnish an ordering for the
+competitors.  We can compare ranking by strengths with the official
+point-tallying method:
 
 ```{r,dpi=72}
-par(pty='s')
-lik <- rank(-m)
-plot(1:23,lik,asp=1,pch=16,xlab='official order',ylab='likelihood order')
-text(1:23,lik,asp=1,pch=16,pos=c(rep(4,19),rep(2,4)),rownames(skating_table))
-abline(0,1)
+ rL <- sort(skating_maxp,decreasing=TRUE)
+ rL[] <- seq_along(rL)
+ rO <- seq_len(nrow(skating_table))
+ names(rO) <- rownames(skating_table)
+ ordertransplot(rO,rL,xlab="offical rank",ylab="likelihood rank",main="Ladies free skating, 2002 Winter Olympics")
 ```
 
 In the above diagram, there is close agreement between the two methods
