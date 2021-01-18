@@ -20,7 +20,7 @@ ordertransplot(ox,oy,...)
 }
 
 \details{
-
+  
   The best way to describe this function is with an example:
 
   \preformatted{
@@ -29,23 +29,42 @@ ordertransplot(ox,oy,...)
 > x
 d a b c 
 2 3 1 4 
-> o <- ordertrans(x,letters[1:4])
-> o
-a b c d 
-3 1 4 2 
-> ordervec2supp(x) == ordervec2supp(o)
-> [1] TRUE
 }
 
 In the above, we see \code{x} is an order vector showing that \code{d}
 came second, \code{a} came third, \code{b} came first, and \code{c} came
-fourth.  Object \code{o} contains the same information but presented
-differently.  This says that \code{a} came third, \code{b} came first,
-\code{c} came fourth, and \code{d} came second.
+fourth.  This is difficult to deal with because one has to search
+through the vector to find a particular competitor, or a particular
+rank.  This would be harder if the vector was longer.
+If we wish to answer the question \dQuote{where did competitor \code{a}
+  come?  where did \code{b} come?} we would want an \emph{order} vector
+in which the competitors are in alphabetical order.  This is
+accomplished by \code{ordertrans()}:
+
+\preformatted{
+> o <- ordertrans(x)
+> o
+a b c d 
+3 1 4 2 
+}
+
+(this is equivalent to \code{o <- x[order(names(x))]}).  Object \code{o}
+contains the same information as \code{x}, but presented differently.
+This says that \code{a} came third, \code{b} came first, \code{c} came
+fourth, and \code{d} came second.  In particular, the Plackett-Luce
+order statistic is identical:
+
+\preformatted{
+> ordervec2supp(x) == ordervec2supp(o)
+> [1] TRUE
+}
 
 There is a nice example of \code{ordertrans()} in
 \code{inst/eurovision.Rmd}, and file \code{inst/ordertrans.Rmd} provides
 further discussion and examples.
+
+Function \code{ordertrans()} takes a second argument which allows the
+user to arrange an order vector into the order specified.
 
 }
 \value{Returns a named vector}
@@ -74,12 +93,12 @@ names(o) <- rownames(skating_table)
 
 ordertrans(o)
 
-rL <- maxp(volvo2014)   # ranks Likelihood
-rL[] <- rank(-maxp(volvo2014))
+#rL <- maxp(volvo2014)   # ranks Likelihood
+#rL[] <- rank(-maxp(volvo2014))
 
-r1 <- volvo_table_2014[,1]  # ranks race 1
-names(r1) <- rownames(volvo_table_2014)
-ordertransplot(rL,r1)
+#r1 <- volvo_table_2014[,1]  # ranks race 1
+#names(r1) <- rownames(volvo_table_2014)
+#ordertransplot(rL,r1)
 
 }
 

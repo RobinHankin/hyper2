@@ -931,20 +931,23 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
 }
 
-`ordertrans` <- function(x,players=sort(names(x))){
-    if(is.numeric(players)){players <- names(players)}
+`ordertrans` <- function(x,players){
+    if(missing(players)){return(x[order(names(x))])}
+  
     stopifnot(length(x) == length(players))
     stopifnot(all(sort(names(x)) == sort(players)))
     stopifnot(all(table(names(x))==1))
     x[apply(outer(players,names(x),`==`),1,which)]
 }
 
-`ordertransplot` <- function(ox,oy,...){
-  oyp <- ordertrans(oy,names(ox))
+`ordertransplot` <- function(ox,oy, ...){
+  stopifnot(all(sort(names(ox))==sort(names(oy))))
+  ox <- ordertrans(ox)
+  oy <- ordertrans(oy)
   par(pty='s') # square plot
   jj <- c(0,max(c(ox,oy)))
-  plot(ox,oyp,asp=1,pty='s',xlim=jj,ylim=jj,pch=16,...)
+  plot(ox,oy,asp=1,pty='s',xlim=jj,ylim=jj,pch=16,...)
   abline(0,1)
-  for(i in seq_along(ox)){text(ox[i],oyp[i],names(ox)[i],pos=4,col='gray',cex=0.7)}
+  for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray',cex=0.7)}
 }
 
