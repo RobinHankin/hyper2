@@ -16,12 +16,11 @@ library("hyper2",quietly=TRUE)
 This document analyses strengths of the competitors in the Ladies'
 Figure Skating at the 2002 Winter Olympics.  In the package, dataframe
 `skating_table` is copied from Lock and Lock (see skating.Rd for more
-details).
+details).  It also creates file `data/skating.rda` which contains R objects `skating_table`, 
 
 ```{r,showskating}
 set.seed(0)
-data("skating")
-skating_table
+skating_table <- read.table("skating.txt",header=TRUE)
 ```
 
 Object `skating_table` is an **order table**.  It is structured so
@@ -94,7 +93,9 @@ the order given by this system.
 Now some data visualization.  First the MLE for the strengths:
 
 ```{r,maxshow, cache = TRUE}
-(m <- maxp(skating))
+skating <- ordertable2supp(skating_table)
+skating_maxp <- maxp(skating)
+m <- skating_maxp # for ease of  typing
 ```
 
 ```{r,dpi=72}
@@ -281,4 +282,12 @@ and have some fun with it:
 ```{r}
 o <- maxp(o)
 pie(o)
+```
+
+### Package dataset
+
+Following lines create `skating.rda`, residing in the `data/` directory of the package.
+
+```{r,label=saveskatingdataset}
+save(skating_table,skating,skating_maxp,file="skating.rda")
 ```
