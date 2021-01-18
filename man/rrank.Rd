@@ -97,7 +97,7 @@ Note that function \code{rrank()} returns an object of class
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ggrl}},\code{\link{rank_likelihood}},\code{\link{skating}}}
+\seealso{\code{\link{ordertrans}},\code{\link{rank_likelihood}},\code{\link{skating}}}
 \examples{
 ptrue <- (4:1)/10
 names(ptrue) <- letters[1:4]
@@ -111,7 +111,5 @@ maxp(H)   # should be close to ptrue
 
 H <- H + rank_likelihood(rrank(100,maxp(H)))
 maxp(H)
-
-
 
 }
