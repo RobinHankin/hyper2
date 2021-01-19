@@ -1,0 +1,171 @@
+---
+title: "Quantifying the rock-paper-scissors effect"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+abbreviated <- TRUE  # change to FALSE for full names
+```
+
+## Abstract
+
+Here I quantify the strength of a circular rock-paper-scissors effect
+using the `hyper2` package, improving on previous results which merely
+established its existence.
+
+## Rock Paper Scissors
+
+Consider the following dataset:
+
+```{r,chesstable}
+o <- matrix(c(22,NA,8,13,23,NA,NA,12,10),3,3)
+dimnames(o) <- list(
+    match=c("T_vs_A","A_vs_K","T_vs_K"),
+    player=c("Topalov","Anand","Karpov"))
+o
+```
+
+This is documented in `chess.Rd` and shows that Topalov played Anand
+$22+13=35$ times, winning 22 and losing 13 matches.  The corresponding
+likelihood function is `chess`:
+
+```{r,showchess}
+chess
+maxp(chess)
+```
+
+(we refer to this as the "TAK" model).  We might ask whether there is
+evidence for the players having differing strengths:
+
+```{r}
+equalp.test(chess)
+```
+
+Thus we fail to reject $H_0\colon p_T=p_A=p_K$ under T-A-K as the
+p-value is about 0.39.
+
+## RPS in chess
+
+The existence of a rock-paper-scissors relationship between the
+players was discussed in Hankin (2010) and the null of no RPS
+phenomena could be rejected using the Alymer test.  
+
+Here we improve on that work by introducing a monster, `M`, that
+accounts for the rock-paper-scissors nature of the players.  The RPS
+monster helps players that benefit from the RPS nature of the result.
+The simplest nontrivial probability model is that all three real
+players have the same strength: $p_T=p_A=p_K$, which we write $T=A=K$.
+Under $T=A=K$, writing $p_T=p_A=p_K=\alpha$ we can use a binomial test
+to calculate the p-value for the hypothesis that $p_M=0$:
+
+```{r,binomtest}
+binom.test(sum(diag(o)),sum(o,na.rm=TRUE),alternative="greater")
+```
+
+Estimating $p_M$ is also straightforward:
+
+$$
+Prob(\mathrm{procyclic}\ \mathrm{win})=\frac{\alpha+M}{2\alpha+M}
+$$
+
+
+(a "procyclic win" is a win that would be expected under a strong
+monster).  Here we also have $3\alpha+M=0$, so to estimate the
+strength of the monster we would solve
+
+$$
+\frac{\alpha+M}{2\alpha+M}=p,\qquad{3\alpha + M}=1
+$$
+
+for $\alpha$ and $M$, where $p$ is the probability of a procyclic win.
+This gives us
+
+$$
+\alpha=\frac{1-p}{2-p},\qquad M=\frac{2p-1}{2-p}.
+$$
+
+If we use the maximum likelihood estimate value for a procyclic win of
+$\frac{55}{88}=0.625$ we find that $\hat{M}=0.18$ approximately.
+Further, we may express $p$, the probability of a pro-cyclic win, as
+$p=\frac{1+2M}{2+M}$.  If we observe $a$ procyclic wins and $b$
+countercyclic wins a likelihood function for $M$ would then be
+
+$$
+\mathcal{L}(M)= p^a(1-p)^b=\left(\frac{1+2M}{2+M}\right)^a\cdot
+\left(\frac{1-M}{2+M}\right)^b
+$$
+
+(a graph is given below).  We may relax the assumption of equal
+strength of the real players by using a more sophisticated hyper2
+construction:
+
+```{r,setupH}
+H <- hyper2()
+H[c("Topalov",                 "M")] %<>% inc(22   )
+H[c(          "Anand"             )] %<>% inc(   13)
+H[c("Topalov","Anand",         "M")] %<>% dec(22+13)
+
+H[c(          "Anand",         "M")] %<>% inc(   23)
+H[c(                  "Karpov"    )] %<>% inc(   12)
+H[c(          "Anand","Karpov","M")] %<>% dec(23+12)
+
+H[c("Topalov"                     )] %<>% inc( 8   )
+H[c(                  "Karpov","M")] %<>% inc(   10)
+H[c("Topalov",        "Karpov","M")] %<>% dec( 8+10)
+H
+```
+
+We can call this the TAKM model, and find the evaluate:
+
+```{r}
+maxp(H)
+```
+
+We see that, under TAKM, the monster has strength of about 0.16,
+slightly less than the 0.18 obtained for $M$ under the equality
+assumption $p_T=p_A=p_K$.  Further, under TAKM, the three "real"
+players are again all of approximately equal strength, and we may test
+this:
+
+```{r,testequalTAKM}
+samep.test(H,c("Topalov","Anand","Karpov"))
+```
+
+(note the estimated monster strengths of 0.16 and 0.18 agree with the
+previous estimate).  Thus the p-value of about 0.77 indicates failure
+to reject the null (compare 0.39 under TAK).  Now we can test
+$H_0\colon p_M=0$ under TAKM:
+
+```{r}
+specificp.gt.test(H,"M",0)
+```
+
+(in the test above, note that the players may appear in a different
+order from previously).  The test shows that we may reject the
+hypothesis that $p_M=0$ under TAKM with a p-value of $0.04$ (compare
+0.012 from the binomial test).
+
+
+### Profile likelihood
+
+We may plot a profile likelihood curve for $M$:
+
+```{r}
+M <- seq(from=0.001,to=0.4,len=40)
+L1 <- profsupp(H,"M",M)
+L1 <- L1-max(L1)
+
+L2 <- 55*log(1+2*M)+33*log(1-M)-88*log(2+M)
+L2 <- L2-max(L2)
+
+plot(M,L1,type="l",col="black",ylab="log likelihood",xlab="Monster strength")
+points(M,L2,type="l",col="red")
+abline(h=c(0,-2),lty=2)
+legend("topright",col=c("black","red"),lty=1,legend=c("TAKM","T=A=K"))
+```
+
+Above we see support curves for RPS monster strength using TAKM and
+$T=A=K$, showing very similar results.
