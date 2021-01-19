@@ -394,7 +394,6 @@
 
     cat("degrees of freedom: ", x$df, "\n", sep = "")
     cat("support difference = ", x$statistic, "\n",sep="")
-    cat("(criterion is 2 two units of support per degree of freedom)\n")
     cat("p-value: ", x$p.value, " ",x$sidedness, "\n", sep = "")
     cat("\n")
     return(invisible(x))
