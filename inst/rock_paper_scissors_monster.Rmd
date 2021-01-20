@@ -12,9 +12,12 @@ abbreviated <- TRUE  # change to FALSE for full names
 
 ## Abstract
 
-Here I quantify the strength of a circular rock-paper-scissors effect
-using the `hyper2` package, improving on previous results which merely
-established its existence.
+Here I use the `hyper2` package (Hankin 2017) to quantify the strength
+of a circular rock-paper-scissors effect using the `hyper2` package,
+improving on previous results (West and Hankin 2008) which merely
+established its existence.  I use two datasets, a three-player
+scoreline and a synthetic dataset referring to wear on a seven-tooth
+gear wheel.
 
 ## Rock Paper Scissors
 
@@ -118,7 +121,9 @@ H[c("Topalov",        "Karpov","M")] %<>% dec( 8+10)
 H
 ```
 
-We can call this the TAKM model, and find the evaluate:
+(in the above, a win by a player helped by the RPS effect has `M`
+added to his strength).  We can call this the TAKM model, and find the
+evaluate:
 
 ```{r}
 maxp(H)
@@ -169,3 +174,118 @@ legend("topright",col=c("black","red"),lty=1,legend=c("TAKM","T=A=K"))
 
 Above we see support curves for RPS monster strength using TAKM and
 $T=A=K$, showing very similar results.
+
+# Generalized RPS
+
+West and Hankin (2008) consider a synthetic dataset referring to seven
+teeth of a gear wheel.  Consecutive pairs are repeatedly compared and
+the most worn tooth is nominated by independent judges.  Here a
+dataset of the same form will be used, but the entries have been
+changed for pedagogical reasons:
+
+```{r,echo=FALSE}
+t1 <- "t1"
+t2 <- "t2"
+t3 <- "t3"
+t4 <- "t4"
+t5 <- "t5"
+t6 <- "t6"
+t7 <- "t7"
+M <- "M"
+```
+
+```{r,label=setuphw}
+hw <- matrix(c(
+    16,05,NA,NA,NA,NA,NA,
+    NA,06,09,NA,NA,NA,NA,
+    NA,NA,05,11,NA,NA,NA,
+    NA,NA,NA,06,12,NA,NA,
+    NA,NA,NA,NA,05,09,NA,
+    NA,NA,NA,NA,NA,04,07,
+    13,NA,NA,NA,NA,NA,05),
+    7,7,byrow=TRUE)
+colnames(hw) <- paste("t",1:7,sep="")
+hw
+```
+
+Thus, considering the top row, we see that in a total of $16+5=21$
+independent comparisons between `t1` and `t2`, tooth `t1` was judged
+to be the more worn one 16 times, and `t2` was judged to be the more
+worn one $5$ times (NB: in the above, I have changed the dataset in
+order to make `t1` stronger than the other players while maintaining
+the RPS phenomenon).  We may convert this dataset to a generalized
+`hyper2` object.  First a standard Bradley-Terry:
+
+```{r,label=HWnomonster}
+HW <- hyper2()
+rs <- -rowSums(hw,na.rm=TRUE)
+cs <- colSums(hw,na.rm=TRUE)
+HW[t1] <- cs[1]
+HW[t2] <- cs[2]
+HW[t3] <- cs[3]
+HW[t4] <- cs[4]
+HW[t5] <- cs[5]
+HW[t6] <- cs[6]
+HW[t7] <- cs[7]
+HW[c(t1,t2)] <- rs[1]
+HW[c(t2,t3)] <- rs[2]
+HW[c(t3,t4)] <- rs[3]
+HW[c(t4,t5)] <- rs[4]
+HW[c(t5,t6)] <- rs[5]
+HW[c(t6,t7)] <- rs[6]
+HW[c(t7,t1)] <- rs[7]
+HW
+```
+
+(likelihood function `HW` has no monster).  We can then analyse this:
+
+```{r,label=testHW}
+maxp(HW)
+equalp.test(HW)
+```
+
+Thus according to this model we may reject the hypothesis of equal
+strength.  We now incorporate the monster:
+
+```{r,label=NWwithmonster}
+HWM <- hyper2()
+tt <- c("t1","t2","t3","t4","t5","t6","t7")
+for(i in 1:6){
+  HWM[c(tt[i]          )] <-  hw[i,i  ]
+  HWM[c(      tt[i+1],M)] <-  hw[i,i+1]
+  HWM[c(tt[i],tt[i+1],M)] <- rs[i]
+}
+HWM[c(tt[7]        )] <-  hw[7,7]
+HWM[c(      tt[1],M)] <-  hw[7,1]
+HWM[c(tt[7],tt[1],M)] <- rs[7]
+HWM
+```
+
+Then the same analysis applies:
+
+```{r,label=maxpHWM}
+maxp(HWM)
+```
+
+and we can test the hypothesis that $p_M=0$:
+
+```{r}
+specificp.gt.test(HWM,"M",0)
+```
+
+suggesting that we may reject the hypothesis of zero monster strength
+with a p-value of about 4.7\%, even after accounting for the different
+strengths of the teeth.
+
+
+## References
+
+* L. J. West and R. K. S. Hankin 2008.  "Exact tests for two-way
+  contingency tables with structural zeros".  _Journal of Statistical
+  Software_ 2008, volume 28 issue 11.
+* R. K. S. Hankin 2010.  "A generalization of the Dirichlet
+  distribution".  _Journal of Statistical Software_ 2010, volume 33
+  issue 11.
+* R. K. S. Hankin 2017.  "Partial rank data with the `hyper2` package:
+  likelihood functions for generalized Bradley-Terry models".  _The R
+  Journal_, volume 9, number 2.
