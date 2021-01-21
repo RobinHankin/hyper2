@@ -1,19 +1,23 @@
 \name{icons}
 \alias{icons}
 \alias{icons_matrix}
+\alias{icons_maxp}
 \alias{oneill}
 \docType{data}
 \title{Dataset on climate change due to O'Neill}
 \description{
-  Object \code{icons_matrix} is 
-  a matrix of nine rows and six columns, one column for each of six
-  icons relevant to climate change.  The matrix entries show the number
-  of respondents who indicated which icon they found most concerning.
-  The nine rows show different classes of respondents who were exposed
-  to different subsets (of size four) of the six icons.
+
+  Object \code{icons_matrix} is a matrix of nine rows and six columns,
+  one column for each of six icons relevant to climate change.  The
+  matrix entries show the number of respondents who indicated which icon
+  they found most concerning.  The nine rows show different classes of
+  respondents who were exposed to different subsets (of size four) of
+  the six icons.
 
   The columns correspond to the different stimulus icons used, detailed
-  below.
+  below.  An extensive discussion is given in West and Hankin 2008, and
+  Hankin 2010; an updated analysis is given in the \code{icons}
+  vignette.
 
   Object \code{icons} is the corresponding likelihood function, which
   can be created with \code{saffy(icons_matrix)}.
@@ -53,9 +57,9 @@
   }
 }
 \examples{
-data(oneill)
-maxp(icons)
+data(icons)
+pie(icons_maxp)
+equalp.test(icons)
 
-icons == saffy(icons_matrix)   # should be TRUE
 }
 \keyword{datasets}

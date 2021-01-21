@@ -1,0 +1,48 @@
+---
+title: "icons"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+This minimal document reads file `icons.txt` and creates R objects
+`icons`, `icons_matrix`, and `icons_maxp`.  The dataset is discussed
+extensively in West and Hankin 2008, and Hankin 2010.
+
+
+```{r readiconstable}
+icons_table  <- as.matrix(read.table("icons.txt",header=TRUE))
+icons_table
+```
+
+Thus the first row shows that a total of $5+3+4+3=15$ respondents were
+shown icons `NB`, `L`, `THC`, and `WAIS`; 5 of them chose `NB` as
+"most concerning", 3 chose `L`, 4 chose `THC` and 3 chose `WAIS`.
+
+We can use function `saffy()` to convert the table into a `hyper2`
+object:
+
+```{r createhyper2}
+icons <- saffy(icons_table)
+icons
+icons_maxp <- maxp(icons)
+icons_maxp
+```
+
+This file exists for consistency; an extended discussion (and
+statistical tests) are presented in the vignette `icons`.
+
+
+### Package dataset
+
+Following lines create `icons.rda`, residing in the `data/` directory of the package.
+
+```{r,label=saveiconsdataset}
+save(icons_table,icons,icons_maxp,file="icons.rda")
+```

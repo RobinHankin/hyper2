@@ -21,7 +21,6 @@ likelihood function for the dataset.
 \seealso{\code{\link{icons}}}
 \examples{
 
-data("oneill")
-icons == saffy(icons_matrix)  # should be TRUE
+icons == saffy(icons_table)  # should be TRUE
 
 }
