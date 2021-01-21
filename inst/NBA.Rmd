@@ -1,0 +1,120 @@
+---
+title: "Basketball: an analysis of a single game"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+File `NBA.txt` contains a point-by-point analysis of a basketball
+match between the Cleveland Cavaliers and the Golden State Warriors on
+13 June 2017, data taken from
+[here](https://www.espn.com/nba/playbyplay?gameId=400954514).
+
+```{r readNBAtable}
+NBA_table  <- read.csv("NBA.txt",header=TRUE)
+head(NBA_table)
+```
+
+Each row corresponds to a point scored.  The first column is the time
+of the score, the second is the number of points scored, the third
+shows which team had possession at the start of play, and the fourth
+shows which team scored.  The other columns show the players.  Table
+entries show whether or not that particular player was on the pitch
+when the point was scored.  Note that the two "ghost" players
+represent the effect of having possession.
+
+First some basics:
+
+```{r,fisherbasic}
+(TT <- table(NBA_table[,3:4]))
+fisher.test(TT,alternative="greater")
+```
+
+Thus the identity of the scoring team is not independent of the
+identity of the possessing team (as one might expect).  
+We can convert `NBA_table` to a likelihood function:
+
+```{r,definsupportb,cache=TRUE}
+allplayers <- as.matrix(NBA_table[,5:23])
+NBA <- hyper2()
+
+## players 1-9 Cleveland
+## players 10-19 (sic) Warriors:
+C_onpitch <- allplayers[,1:9]
+W_onpitch <- allplayers[,10:19]
+
+possession <- NBA_table[,3]
+scored <-    NBA_table[,4]
+
+
+for(i in seq_len(nrow(NBA_table))){
+  if(scored[i] == 'W'){  # Warriors score a point
+    onpitch_scored  <- names(which(W_onpitch[i,]))
+    onpitch_noscore <- names(which(C_onpitch[i,]))
+  } else if(scored[i] == "C"){ # Cleveland score a point
+    onpitch_scored  <- names(which(C_onpitch[i,]))
+    onpitch_noscore <- names(which(W_onpitch[i,]))
+  } else {
+    stop("scorint team must be either W or C")
+  }
+  if(possession[i] == 'W'){
+    onpitch_scored <- c(onpitch_scored,"W_possession")
+  } else if (possession[i] == 'C'){
+    onpitch_scored <- c(onpitch_scored,"C_possession")
+  } else {
+    stop("possession must be either W or C")
+  }
+  NBA[onpitch_scored] %<>% inc()
+  NBA[c(onpitch_scored,onpitch_noscore)] %<>% dec()
+}
+
+NBA_maxp <- maxp(NBA)
+NBA_maxp %<>% ordertrans(c(colnames(NBA_table)[-(1:4)],"C_possession","W_possession"))
+dotchart(NBA_maxp,col=c(rep("black",9),rep("red",10),rep("blue",2)),pch=16)
+```
+
+# Statistical analysis
+
+```{r,statsanal,cache=TRUE}
+samep.test(NBA,c("C_possession","W_possession"))
+```
+
+We may thus assume that Cleveland having possession is the same
+strength as the Warriors having possession.
+
+Now, what is the probability of C scoring both with and without
+possession?  We may condition on the estimated player and possession
+strengths, and assume that only the 5 strongest players on each team
+play.
+
+```{r}
+C_allstrengths <- sort(NBA_maxp[01:9],decreasing=TRUE)
+W_allstrengths <- sort(NBA_maxp[10:19],decreasing=TRUE)
+C_strongestteam <- sum(C_allstrengths[1:5])
+W_strongestteam <- sum(W_allstrengths[1:5])
+possession <- 0.2155786 # taken from samep.test() above
+
+# probability of C scoring without possession:
+(C_strongestteam           )/(C_strongestteam + W_strongestteam + possession)
+
+
+# probability of C scoring with possession:
+(C_strongestteam+possession)/(C_strongestteam + W_strongestteam + possession)
+```
+
+
+
+
+### Package dataset
+
+Following lines create `NBA.rda`, residing in the `data/` directory of the package.
+
+```{r,label=saveNBAdataset}
+save(NBA_table,NBA,NBA_maxp,file="NBA.rda")
+```

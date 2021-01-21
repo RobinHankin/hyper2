@@ -21,10 +21,12 @@ that particular player was on the pitch when the point was scored.
 
 Likelihood function \code{NBA_likelihood} is a \code{hyper2} object that
 gives the log-likelihood function for this dataset.  It may be created
-by executing \code{basketball.R}, in the \code{inst/} directory.
+by executing \code{NBA.Rmd}, in the \code{inst/} directory; this file
+also presents some more detailed analysis.
 
 Note that the two \dQuote{ghost} players represent the effect of having
 possession.
+
 }
 \references{
   \url{https://www.espn.com/nba/playbyplay?gameId=400954514}
@@ -32,7 +34,7 @@ possession.
 \examples{
 
 data(NBA)
-dotchart(maxp(NBA_likelihood))
+dotchart(NBA_maxp)
 
 }
 \keyword{datasets}
