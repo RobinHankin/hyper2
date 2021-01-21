@@ -17,6 +17,7 @@ Premier League.
 
 ```{r}
 library("hyper2",quietly=TRUE)
+T20_table <- read.table("T20.txt",header=TRUE)
 head(T20_table)
 nrow(T20_table)
 ```		
@@ -89,8 +90,10 @@ won_match =c(FALSE,TRUE))
 M
 ```
 
-We may reject homogoneity of proportion (Fisher's exact test, $p= `r round(fisher.test(M)$p.value,3)`$).  Recalling that a slight majority
-of toss winners elect to field first (361 out of 633), we see that this is a consistent result.
+We may reject homogoneity of proportion (Fisher's exact test, $p= `r
+round(fisher.test(M)$p.value,3)`$).  Recalling that a slight majority
+of toss winners elect to field first (361 out of 633), we see that
+this is a consistent result.
 
 
 
@@ -104,7 +107,7 @@ function for the strengths:
 
 ```{r}
 attach(lapply(T20_table[, ], as.vector))  # vector access to team1, etc
-T20 <- hyper2(pnames=c(levels(T20_table$team1)))
+T20 <- hyper2()
 for(i in seq_along(team1)){
    T20[match_winner[i]] %<>% inc
    T20[c(team1[i],team2[i])] %<>% dec
@@ -116,7 +119,8 @@ T20
 and maximization is straightforward:
 
 ```{r}
-dotchart(maxp(T20))
+T20_maxp <- maxp(T20)
+dotchart(T20_maxp)
 ```
 
 So we can test the null that all the teams have the same strength:
@@ -168,7 +172,18 @@ for(i in seq_along(team1)){
 and again we can maximize the likelihood:
 
 ```{r}
-dotchart(maxp(T20_toss))
+T20_maxp_toss <- maxp(T20_toss)
+dotchart(T20_maxp_toss)
 ```
 
 Above, note the small estimated strength of the toss.
+
+
+### Package dataset
+
+The following lines create `T20.rda`, residing in the `data/`
+directory of the package.
+
+```{r,label=saveT20dataset}
+save(T20_table,T20,T20_maxp,T20_toss,file="T20.rda")
+```
