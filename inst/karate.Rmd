@@ -1,0 +1,55 @@
+---
+title: "karate"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+
+
+
+Here I analyse a [karate](https://en.wikipedia.org/wiki/Karate)
+dataset taken from
+[https://en.wikipedia.org/wiki/2018_World_Karate_Championships].
+
+
+```{r readkaratetable}
+karate_table  <- read.table("karate.txt",header=TRUE)
+head(karate_table)
+```
+
+Converting it to a likelihood function is straightforward:
+
+```{r converttolikelihood}
+karate <- hyper2()
+for(i in seq_len(nrow(karate_table))){
+
+  p1 <- karate_table$karateka1[i]
+  p2 <- karate_table$karateka2[i]
+
+  w1 <- karate_table$wins1[i]
+  w2 <- karate_table$wins2[i]
+  
+  karate[p1] %<>% inc(w1)
+  karate[p2] %<>% inc(w2)
+  karate[c(p1,p2)] %<>% dec(w1+w2)
+}
+karate
+karate_maxp <- maxp(karate)
+karate_maxp
+```
+
+### Package dataset
+
+Following lines create `karate.rda`, residing in the `data/` directory
+of the package.
+
+```{r,label=savekaratedataset}
+save(karate_table,karate,karate_maxp,file="karate.rda")
+```
