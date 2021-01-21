@@ -26,10 +26,9 @@ curling_table
 Thus the first row shows that Canada came first in 1998, third in
 2002, and so on; the first column shows that in 1998, Canada came
 first, China did not compete [`NA` meaning did not compete], Denmark
-came second, and so on.
-
-First we will interpret `NA` in the same way as `DNS` in the context
-of formula 1 motor racing.  We need to define a new data frame, `b`:
+came second, and so on.  First we will interpret `NA` in the same way
+as `DNS` in the context of formula 1 motor racing.  We need to define
+a new data frame, `b`:
 
 ```{r,defineb}
 ct <- curling_table
@@ -40,10 +39,10 @@ ct
 In this form we can easily convert to a support function:
 
 ```{r,definsupportb,cache=TRUE}
-H1 <- ordertable2supp(ct)
-H1
-mH1 <- maxp(H1)
-pie(mH1)
+curling1 <- ordertable2supp(ct)
+head(curling1)
+curling1_maxp <- maxp(curling1)
+pie(curling1_maxp)
 ```
 
 ## Interpretation of `NA`
@@ -55,16 +54,16 @@ because that that team did not compete.  This means that function
 method:
 
 ```{r,makehyper2curling}
-H2 <- hyper2(pnames=rownames(curling_table))
+curling2 <- hyper2()
 
 for(i in seq_len(ncol(curling_table))){
     x <- curling_table[,i]
     names(x) <- rownames(curling_table)
-    H2 %<>% order_obs(x[!is.na(x)])
+    curling2 <- curling2 + ordervec2supp(x[!is.na(x)])
 }
-head(H2)
-(mH2 <- maxp(H2))
-pie(mH2)
+head(curling2)
+(curling2_maxp <- maxp(curling2))
+pie(curling2_maxp)
 ```
 
 
@@ -72,14 +71,23 @@ pie(mH2)
 
 ```{r,plotcomplog}
 par(pty="s")
-plot(log10(mH1),log10(mH2),asp=1,pch=16,xlim=c(-2.6,0),ylim=c(-2.6,0))
+plot(log10(curling1_maxp),log10(curling2_maxp),asp=1,pch=16,xlim=c(-2.6,0),ylim=c(-2.6,0))
 posn <- c(Canada=2, China=4, Denmark=4, Germany=4, GB=4, Italy=1, Japan=2, Norway=2,
           Russia=4, South_Korea=4, Sweden=4, Switzerland=2, US=4)
 for(i in seq_len(nrow(curling_table))){
-	text(log10(mH1)[i],log10(mH2)[i],rownames(curling_table)[i],col="gray",pos=posn[i])
+	text(log10(curling1_maxp)[i],log10(curling2_maxp)[i],rownames(curling_table)[i],col="gray",pos=posn[i])
 }
 abline(0,1)
 grid()
 ```
 
 The two likelihood systems have very different evaluates.
+
+
+### Package dataset
+
+Following lines create `curling.rda`, residing in the `data/` directory of the package.
+
+```{r,label=savecurlingdataset}
+save(curling_table,curling1,curling2,curling1_maxp,curling2_maxp,file="curling.rda")
+```
