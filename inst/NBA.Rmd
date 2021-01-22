@@ -43,6 +43,7 @@ We can convert `NBA_table` to a likelihood function:
 ```{r,definsupportb,cache=TRUE}
 allplayers <- as.matrix(NBA_table[,5:23])
 NBA <- hyper2()
+NBA2 <- hyper2()
 
 ## players 1-9 Cleveland
 ## players 10-19 (sic) Warriors:
@@ -50,8 +51,7 @@ C_onpitch <- allplayers[,1:9]
 W_onpitch <- allplayers[,10:19]
 
 possession <- NBA_table[,3]
-scored <-    NBA_table[,4]
-
+scored     <- NBA_table[,4]
 
 for(i in seq_len(nrow(NBA_table))){
   if(scored[i] == 'W'){  # Warriors score a point
@@ -63,30 +63,51 @@ for(i in seq_len(nrow(NBA_table))){
   } else {
     stop("scorint team must be either W or C")
   }
+  print(onpitch_scored)
+  print(onpitch_noscore)
   if(possession[i] == 'W'){
-    onpitch_scored <- c(onpitch_scored,"W_possession")
+    onpitch_scored1 <- c(onpitch_scored,"possession")
+    onpitch_scored2 <- c(onpitch_scored,"W_possession")
   } else if (possession[i] == 'C'){
-    onpitch_scored <- c(onpitch_scored,"C_possession")
+    onpitch_scored1 <- c(onpitch_scored,"possession")
+    onpitch_scored2 <- c(onpitch_scored,"C_possession")
   } else {
     stop("possession must be either W or C")
   }
-  NBA[onpitch_scored] %<>% inc()
-  NBA[c(onpitch_scored,onpitch_noscore)] %<>% dec()
+
+  NBA[onpitch_scored1] %<>% inc()
+  NBA[c(onpitch_scored1,onpitch_noscore)] %<>% dec()
+
+  NBA2[onpitch_scored2] %<>% inc()
+  NBA2[c(onpitch_scored,onpitch_noscore)] %<>% dec()
 }
 
+NBA2_maxp <- maxp(NBA2)
+NBA2_maxp %<>% ordertrans(c(colnames(NBA_table)[-(1:4)],"C_possession","W_possession"))
+dotchart(NBA2_maxp,col=c(rep("black",9),rep("red",10),rep("blue",2)),pch=16)
+
 NBA_maxp <- maxp(NBA)
-NBA_maxp %<>% ordertrans(c(colnames(NBA_table)[-(1:4)],"C_possession","W_possession"))
-dotchart(NBA_maxp,col=c(rep("black",9),rep("red",10),rep("blue",2)),pch=16)
+NBA_maxp %<>% ordertrans(c(colnames(NBA_table)[-(1:4)],"possession"))
+dotchart(NBA_maxp,col=c(rep("black",9),rep("red",10),rep("blue",1)),pch=16)
 ```
 
 # Statistical analysis
 
 ```{r,statsanal,cache=TRUE}
-samep.test(NBA,c("C_possession","W_possession"))
+samep.test(NBA2,c("C_possession","W_possession"))
 ```
 
 We may thus assume that Cleveland having possession is the same
-strength as the Warriors having possession.
+strength as the Warriors having possession, and from now on we work
+with `NBA` rather than `NBA2`.
+
+
+```{r,cache=TRUE}
+(C_allstrengths <- sort(NBA_maxp[01:9],decreasing=TRUE))
+(W_allstrengths <- sort(NBA_maxp[10:19],decreasing=TRUE))
+samep.test(NBA, names(C_allstrengths))
+samep.test(NBA, names(W_allstrengths))
+```
 
 Now, what is the probability of C scoring both with and without
 possession?  We may condition on the estimated player and possession
@@ -94,8 +115,6 @@ strengths, and assume that only the 5 strongest players on each team
 play.
 
 ```{r}
-C_allstrengths <- sort(NBA_maxp[01:9],decreasing=TRUE)
-W_allstrengths <- sort(NBA_maxp[10:19],decreasing=TRUE)
 C_strongestteam <- sum(C_allstrengths[1:5])
 W_strongestteam <- sum(W_allstrengths[1:5])
 possession <- 0.2155786 # taken from samep.test() above
@@ -107,8 +126,6 @@ possession <- 0.2155786 # taken from samep.test() above
 # probability of C scoring with possession:
 (C_strongestteam+possession)/(C_strongestteam + W_strongestteam + possession)
 ```
-
-
 
 
 ### Package dataset
