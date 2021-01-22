@@ -25,7 +25,8 @@ rp(n, H, startp = NULL, fcm = NULL, fcv = NULL, SMALL = 1e-06, l=loglik,...)
 
   If the distribution is Dirichlet, use \code{rdirichlet()} to generate
   random observations: it is much faster, and produces serially
-  independent samples.
+  independent samples.  To return \emph{uniform} samples, use
+  \code{rp_unif()} (documented at \code{dirichlet.Rd}).
   
 }
 \value{

@@ -891,6 +891,13 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
+`rp_unif` <-function(n,H){
+    stopifnot(is.hyper2(H))
+    alpha <- rep(1,size(H)) # '1' because rdirichlet() takes alpha, not powers
+    names(alpha) <- pnames(H)
+    return(rdirichlet(n=n,H=alpha))
+}
+    
 `discard_flawed2` <- function(x, unwanted,...){
     if(is.character(unwanted)){
         wanted <- !which(rownames(x)==unwanted)

@@ -2,6 +2,7 @@
 \alias{dirichlet}
 \alias{rdirichlet}
 \alias{is.dirichlet}
+\alias{rp_unif}
 \alias{gd}
 \alias{Dirichlet}
 \alias{gd}
@@ -22,6 +23,7 @@ GD(alpha, beta, beta0=0)
 GD_wong(alpha, beta)
 rdirichlet(n,H)
 is.dirichlet(H)
+rp_unif(n,H)
 }
 \arguments{
   \item{powers}{In function \code{dirichlet()} a (named) vector of powers}
@@ -38,12 +40,15 @@ is.dirichlet(H)
   Dirichlet distribution.  If second argument \code{H} is a
   \code{hyper2} object, it is tested [with \code{is.dirichlet()}] for
   being a Dirichlet distribution.  If so, samples from it are returned.
-  If not, (e.g. \code{icons}), an error is given.
+  If not, (e.g. \code{icons}), an error is given.  If \code{H} is not a
+  \code{hyper2} object, it is interpreted as a vector of parameters
+  \eqn{\alpha}{alpha} [\strong{not} a vector of powers].
 
-  If \code{H} is not a \code{hyper2} object, it is interpreted as a
-  vector of parameters \eqn{\alpha}{alpha} [\strong{not} a vector of
-  powers].
-
+  Function \code{rp_unif()} returns uniformly distributed vectors,
+  effectively using \code{H*0}; but note that this uses Dirichlet
+  sampling which is much faster and better than the Metropolis-Hastings
+  functionality documented at \code{rp.Rd}.
+  
 }
 \author{Robin K. S. Hankin}
 \note{
@@ -51,7 +56,7 @@ is.dirichlet(H)
   poses problems for \code{hyper2} objects as zero power brackets are
   dropped.
 }
-\seealso{\code{\link{hyper2}}}
+\seealso{\code{\link{hyper2}},\code{\link{rp}}}
 \examples{
 
 x1 <- dirichlet(c(a=1,b=2,c=3))
