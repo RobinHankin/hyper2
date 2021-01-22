@@ -38,13 +38,19 @@ is.dirichlet(H)
   Dirichlet distribution.  If second argument \code{H} is a
   \code{hyper2} object, it is tested [with \code{is.dirichlet()}] for
   being a Dirichlet distribution.  If so, samples from it are returned.
-  If not, (e.g. \code{icons}), then it is coerced to a \strong{uniform}
-  distribution and samples from that returned, with a warning.  If
-  \code{H} is not a \code{hyper2} object, it is interpreted as a vector
-  of parameters \eqn{\alpha}{alpha} [\strong{not} a vector of powers].
-  
+  If not, (e.g. \code{icons}), an error is given.
+
+  If \code{H} is not a \code{hyper2} object, it is interpreted as a
+  vector of parameters \eqn{\alpha}{alpha} [\strong{not} a vector of
+  powers].
+
 }
 \author{Robin K. S. Hankin}
+\note{
+  A dirichlet distribution can have a term with zero power.  But this
+  poses problems for \code{hyper2} objects as zero power brackets are
+  dropped.
+}
 \seealso{\code{\link{hyper2}}}
 \examples{
 

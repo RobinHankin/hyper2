@@ -879,7 +879,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
             pn <- pnames(H)
             s <- size(H)
         } else { # hyper2, but not dirichlet
-            stop("hyper2 object supplied but is not a Dirichlet distribution: sample from uniform distribution returned")
+            stop("hyper2 object supplied but is not a Dirichlet distribution")
         }
     } else {   # H is vector of alpha
         pn <- names(H)
