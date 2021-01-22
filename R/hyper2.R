@@ -656,8 +656,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     if(!xor(missing(powers),missing(alpha))){
         stop("supply exactly one of powers, alpha")
     }
-
-    
+  
     if(missing(powers)){
         powers <- alpha-1
     }
@@ -876,7 +875,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `rdirichlet` <- function(n, H){
     if(is.hyper2(H)){
         if(is.dirichlet(H)){
-            alpha <- powers(H)
+            alpha <- powers(H)+1
             pn <- pnames(H)
             s <- size(H)
         } else { # hyper2, but not dirichlet
