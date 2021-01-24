@@ -7,14 +7,13 @@ Given an order vector, shuffle so that the players appear in a specified
 order. 
 }
 \usage{
-ordertrans(x,players=sort(names(x)))
+ordertrans(x,players)
 ordertransplot(ox,oy,...)
 }
 \arguments{
   \item{x}{A (generalized) order vector}
   \item{players}{A character vector specifying the order in which the
-    players will be listed; if a named vector, use its \code{names()}.
-    The default corresponds to sorting in to alphabetical order}
+    players will be listed; if missing, use \code{sort(names(x))}}
   \item{ox,oy}{Rank vectors}
   \item{...}{Further arguments, passed to \code{plot()}}
 }
