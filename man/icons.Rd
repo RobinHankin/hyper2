@@ -1,6 +1,7 @@
 \name{icons}
 \alias{icons}
 \alias{icons_matrix}
+\alias{icons_table}
 \alias{icons_maxp}
 \alias{oneill}
 \docType{data}
@@ -22,7 +23,7 @@
   Object \code{icons} is the corresponding likelihood function, which
   can be created with \code{saffy(icons_matrix)}.
 }
-\usage{data(oneill)}
+\usage{data(icons)}
 \details{
   The six icons were used in this study were:
   \describe{
