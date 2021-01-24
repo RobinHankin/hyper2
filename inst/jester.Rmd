@@ -75,18 +75,18 @@ system.time(for(i in seq_len(nrow(a))){jester <- jester + rank_likelihood(f(a[i,
 now
 
 ```{r,label=findmaxp,cache=TRUE}
-system.time(mjest <- maxp(jester,n=1))
+system.time(jester_maxp <- maxp(jester,n=1))
 ```
 
 and 
 
-```{r,showmjest}
-mjest
-plot(mjest)
+```{r,showjester_maxp}
+jester_maxp
+plot(jester_maxp)
 ```
 
 ```{r,label=equalptestdoer,cache=TRUE}
-equalp.test(jester,startp=indep(mjest))
+equalp.test(jester,startp=indep(jester_maxp))
 ```
 
 ## Reference
@@ -94,3 +94,17 @@ equalp.test(jester,startp=indep(mjest))
 Eigentaste: A Constant Time Collaborative Filtering Algorithm. Ken
 Goldberg, Theresa Roeder, Dhruv Gupta, and Chris Perkins. _Information
 Retrieval_, 4(2), 133-151. July 2001.
+
+
+### Package dataset
+
+Following lines create `jester.rda`, residing in the `data/` directory of the package.
+
+```{r,label=savejesterdataset}
+save(jester,jester_maxp,file="jester.rda")
+```
+
+
+
+
+
