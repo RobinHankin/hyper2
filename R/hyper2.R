@@ -427,6 +427,27 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
 }
 
+`maxp_simplex` <- function(H, n=100, show=FALSE, give=FALSE, ...){
+    best_so_far <- -Inf # best (i.e. highest) likelihood found to date
+    likes <- rep(NA,n)
+    for(i in seq_len(n)){
+        jj <- maxp_single(H, startp=indep(rp_unif(1,H)), give=TRUE, ...)
+        likes[i] <- jj$value
+        if(show){cat(paste(i,"; ", best_so_far, "  " , jj$value,"\n", sep=""))}
+        if(jj$value > best_so_far){ # that is, if we have found something better
+            out <- jj
+            best_so_far <- jj$value
+        }
+    }  # i loop closes, stop searching
+    if(give){
+        return(c(out,likes=list(likes)))
+    } else {
+        out <- fillup(out$par)
+        if(!identical(pnames(H),NA)){names(out) <- pnames(H)}
+        return(out)
+    }
+}
+
 `maxplist` <- function (Hlist, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, SMALL=1e-6, ...){
     n <- size(Hlist[[1]])
     if (is.null(startp)) {

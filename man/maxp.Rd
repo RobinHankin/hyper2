@@ -2,6 +2,7 @@
 \alias{maxp}
 \alias{maxplist}
 \alias{maxp_single}
+\alias{maxp_simplex}
 \alias{equalp}
 \alias{allequal}
 \alias{equalprobs}
@@ -13,6 +14,7 @@ maxp(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, n=10,
 maxplist(Hlist, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, ...)
 maxp_single(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6,
    maxtry=100, ...)
+maxp_simplex(H, n=100, show=FALSE, give=FALSE, ...)
 equalp(H)
 }
 \arguments{
@@ -47,6 +49,14 @@ equalp(H)
   If function \code{maxp()} is given a \code{suplist} object it
   dispatches to \code{maxplist()}.
 
+  Function \code{maxp_simplex()} is intended for complicated or flat
+  likelihood functions where finding local maxima might be a problem.
+  It repeatedly calls \code{maxp_single()}, starting from a different
+  randomly chosen point in the simplex each time.  This function does
+  not take \code{fcm} or \code{fcv} arguments, it operates over the
+  whole simplex (hence the name).  Further arguments, \code{...}, are
+  passed to \code{maxp_single()}.
+  
   The functions do not work for the \code{masterchef_series6} likelihood
   function.  These require a bespoke optimization as shown in the
   vignette.
