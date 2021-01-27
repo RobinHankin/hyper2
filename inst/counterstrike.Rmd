@@ -54,8 +54,8 @@ The dataset used here is a list whose six elements correspond to six
 rounds of play, which are assumed to be statistically independent.
 The R idiom is:
 
-```{r, zachslist}
-zachslist <- list(
+```{r, zacslist}
+zacslist <- list(
     round1 = c("Skadoodle","olofmeister","tarik","GuardiaN","RUSH",
          "rain", "Stewie2k","karrigan","autimatic","NiKo"),
     round2 = c("karrigan", "NiKo", "Stewie2K", "RUSH", "rain", "GuardiaN",
@@ -146,7 +146,7 @@ We can use it:
 
 ```{r, useit}
 H <- hyper2(pnames=c(team1,team2))
-for(i in zachslist){
+for(i in zacslist){
   H <- H + counterstrike_maker(team1,team2, deathorder=i)
 }
 ```
