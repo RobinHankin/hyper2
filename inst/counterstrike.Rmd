@@ -90,7 +90,6 @@ where the four terms correspond to the deaths of `a,b,y,c`
 respectively.  See how the denominator gets shorter as the teams die
 one by one.
 
-
 # Likelihood function for the observed dataset
 
 
@@ -145,16 +144,17 @@ We can use it:
 
 
 ```{r, useit}
-H <- hyper2(pnames=c(team1,team2))
+counterstrike <- hyper2(pnames=c(team1,team2))
 for(i in zacslist){
-  H <- H + counterstrike_maker(team1,team2, deathorder=i)
+  counterstrike <- counterstrike + (counterstrike_maker(team1,team2, deathorder=i))
 }
 ```
 
 then plot it:
 
 ```{r, plotit}
-dotchart(maxp(H),pch=16,main='observed data')
+counterstrike_maxp <- maxp(counterstrike)
+dotchart(counterstrike_maxp,pch=16,main='observed data')
 ```
 
 showing that Skadoodle has the highest estimated strength.
@@ -199,7 +199,7 @@ observed loglikelihood ratio.
 
 ```{r, random2,cache=TRUE}
 
-datapoint <- loglik(indep(maxp(H)),H) - loglik(indep(equalp(H)),H)
+datapoint <- loglik(indep(maxp(counterstrike)),counterstrike) - loglik(indep(equalp(counterstrike)),counterstrike)
 	
 n <- 100  # takes about 5 minutes for n=1000 trials
 distrib <- rep(0,n)
@@ -209,7 +209,7 @@ for(i in seq_len(n)){
     pp <- rdeath(team1,team2)
     Hrand <- Hrand + counterstrike_maker(team1,team2, pp)
 	}
-  distrib[i] <- loglik(indep(maxp(Hrand)),Hrand) - loglik(indep(equalp(H)),Hrand)
+  distrib[i] <- loglik(indep(maxp(Hrand)),Hrand) - loglik(indep(equalp(counterstrike)),Hrand)
 }
 
 hist(distrib)
@@ -218,3 +218,15 @@ abline(v=datapoint,lwd=6)
 
 Thus we can see that the observation is not significant: from this
 perspective, the deathorder may as well be totally random.
+
+
+
+### Package dataset
+
+Following lines create `counterstrike.rda`, residing in the `data/` directory of the package.
+
+```{r,label=savecounterstrikedataset}
+save(counterstrike,counterstrike_maxp,zacslist,file="counterstrike.rda")
+```
+
+
