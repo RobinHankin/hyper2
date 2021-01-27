@@ -11,7 +11,7 @@
 \alias{mean_hyper2}
 \title{Normalizing constant for the hyperdirichlet distribution}
 \description{
-Uses numerical techniques for calculating the normalizing constant for the hyperdirichlet distribution
+Numerical techniques for calculating the normalizing constant for the hyperdirichlet distribution
 }
 \usage{
 B(H, disallowed=NULL, give=FALSE, ...)
@@ -35,8 +35,10 @@ p_to_e(p)
   \item{e,p}{A vector; see details}
   \item{ip}{A vector of probabilities corresponding to \code{indep(p)}
     where \code{p} is vector with unit sum}
-  \item{include.Jacobian}{Boolean, indicated whether or not to include
-    the Jacobian transformation in the evaluation}
+  \item{include.Jacobian}{Boolean, with default \code{TRUE} meaning to
+    include the Jacobian transformation in the evaluation, and
+    \code{FALSE} meaning to ignore it; use \code{FALSE} for likelihood
+    work and \code{TRUE} for probability densities}
   \item{give}{Boolean, with default \code{FALSE} meaning to return the
     value of the integral and \code{TRUE} meaning to return the full
     output of \code{adaptIntegrate()}}
