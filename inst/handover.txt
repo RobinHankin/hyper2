@@ -1,0 +1,5 @@
+	Yes    No Missing 
+Yes      26  	1       2 
+No        5    18       9
+Missing   4     4       0 
+   

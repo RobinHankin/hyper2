@@ -1,0 +1,118 @@
+---
+title: "handover"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("aylmer")
+library("magrittr")
+options("digits" = 5)
+```
+
+This short document is based on Altham and Hankin 2010, which
+discussed an interesting dataset originally presented by Lin
+et. al. (2009).  It uses more sophisticated idiom furnished by the
+`hyper2` package, which is an improved and efficient upgrade of the
+primitive `hyperdirichlet` package.  The dataset arose from 69 medical
+malpractice claims and refers to the two surgeon–reviewers' answers to
+the question "was there a communication breakdown in the hand-off
+between physicians caring for the patient?".  The rows of Table 1
+correspond to the answers that were given by reviewer 1, and the
+columns to the answers given by reviewer 2.
+
+```{r readcurlingtable}
+handover_table <- as.matrix(read.table("handover.txt"))
+names(dimnames(handover_table)) <- c("reviewer1","reviewer2")
+handover_table[3,3] <- NA # structural zero
+handover_table
+```
+
+Thus we see that in 26 cases, both reviewers answered "yes", in 18
+both said "no".  The table also records partial responses that include
+observations missed by one or both reviewers.  Responses missed by
+both reviewers are uninformative and automatically rejected:
+structural zeros, in `aylmer` terminology.  We first apply the Aylmer
+test to assess whether the two reviewers give the same proportion of
+"yes" responses:
+
+```
+> aylmer.test(a,alternative=function(a){a[1,2]-a[2,1]})
+
+	Aylmer functional test for count data
+
+data:  a
+p-value = 0.169
+alternative hypothesis: test function exceeds observed
+
+> 
+```
+
+
+(Compare the McNemar test which gives an exact $p$-value of
+$7/64\simeq 0.1094$).  We follow the previous workers and assume that
+cases are missing at random and seek a likelihood function on
+$\theta_{11},\theta_{10},\theta_{01},\theta_{00} subjet to
+$\theta_{ij}\geq 0,\sum_{i,j \in\left\lbrace
+0,1\right\rbrace}\theta_{ij}=1$.  Here "1" means "yes" and "0" means
+"no", so $\theta_{01}$ is the probability of reviewer 1 responding
+"no" and reviewer 2 responding "yes".
+
+```{r}
+handover <- hyper2()
+handover["t11"] %<>% inc(handover_table[1,1])
+handover["t10"] %<>% inc(handover_table[1,2])
+handover["t01"] %<>% inc(handover_table[2,1])
+handover["t00"] %<>% inc(handover_table[2,2])
+
+handover[c("t11","t10")] %<>% inc(handover_table[1,3])  # yes-yes plus yes-no  = 2 
+handover[c("t01","t00")] %<>% inc(handover_table[2,3])  #  no-yes plus  no-no  = 9 
+handover[c("t11","t01")] %<>% inc(handover_table[3,1])  # yes-yes plus  no-yes = 4 
+handover[c("t10","t00")] %<>% inc(handover_table[3,2])  # yes-no  plus  no-no  = 4 
+handover
+handover_maxp <- maxp(handover)
+handover_maxp
+```
+
+
+We may simply test the hypothesis that $\theta_{01} = \theta_{10}$:
+
+```{r}
+samep.test(handover,c("t01","t10"))
+```
+
+Alternatively we might use the Bayesian paradigm and calculate the
+probability of $\theta_{01} > \theta_{10}$:
+
+```{r}
+probability(handover,disallowed=function(p){p[2]<p[3]},tol=0.05)
+```
+
+the result differing slightly from the previous value, probably due to
+numerical issues.
+
+
+### References
+
+* PME Altham and RKS Hankin 2010.  "Using recently developed software on
+a 2x2 table of matched pairs with incompletely classified data".
+_Journal of the Royal Statistical Society_, 59:2):377-379
+* L West and RKS Hankin 2008. "Exact tests for two-way contingency
+tables with structural zeros".  _Journal of Statistical Software_
+28(11)
+* RKS Hankin 2010. "A generalization of the Dirichlet distribution". 
+ _Journal of Statistical Software_ 33(11)
+* RKS Hankin 2017. "Partial rank data with the hyper2 package:
+  likelihood functions for generalized Bradley-Terry models".  _The R
+  Journal_ 9(2)
+
+
+### Package dataset
+
+Following lines create `handover.rda`, residing in the `data/` directory of the package.
+
+```{r,label=savecurlingdataset}
+save(handover_table,handover_maxp,handover,file="handover.rda")
+```
