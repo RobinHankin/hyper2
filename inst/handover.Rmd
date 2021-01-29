@@ -99,7 +99,7 @@ $\psi=\theta_{10}/(\theta_{10}+\theta_{01})$ under the posterior
 distribution induced by the complete cases:
 
 ```{r,samplepsi,message=FALSE,cache=TRUE}
-jj <- rp(300000,H=handover)
+jj <- rp(3000,H=handover)
 head(jj)
 psifun <- function(x){x[3]/(x[2]+x[3])}
 logoddsfun <- function(x){log(x[2]/x[3])}
