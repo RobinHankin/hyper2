@@ -1,6 +1,6 @@
 ---
 title: "handover"
-output: html_document
+output: bookdown::html_document2
 ---
 
 ```{r setup, include=FALSE}
@@ -31,7 +31,7 @@ handover_table
 ```
 
 Thus we see that in 26 cases, both reviewers answered "yes", in 18
-both said "no".  The table also records partial responses that include
+<both said "no".  The table also records partial responses that include
 observations missed by one or both reviewers.  Responses missed by
 both reviewers are uninformative and automatically rejected:
 structural zeros, in `aylmer` terminology.  We first apply the Aylmer
@@ -54,11 +54,11 @@ alternative hypothesis: test function exceeds observed
 (Compare the McNemar test which gives an exact $p$-value of
 $7/64\simeq 0.1094$).  We follow the previous workers and assume that
 cases are missing at random and seek a likelihood function on
-$\theta_{11},\theta_{10},\theta_{01},\theta_{00} subjet to
+$\theta_{11},\theta_{10},\theta_{01},\theta_{00}$ subject to
 $\theta_{ij}\geq 0,\sum_{i,j \in\left\lbrace
-0,1\right\rbrace}\theta_{ij}=1$.  Here "1" means "yes" and "0" means
-"no", so $\theta_{01}$ is the probability of reviewer 1 responding
-"no" and reviewer 2 responding "yes".
+0,1\right\rbrace}\theta_{ij}=1$.  Here "1" means "yes" and "0"
+means "no", so $\theta_{01}$ is the probability of reviewer 1
+responding "no" and reviewer 2 responding "yes".
 
 ```{r}
 handover <- hyper2()
@@ -94,7 +94,61 @@ the result differing slightly from the previous value, probably due to
 numerical issues.
 
 
-### References
+We can now consider the distribution of
+$\psi=\theta_{10}/(\theta_{10}+\theta_{01})$ under the posterior
+distribution induced by the complete cases:
+
+```{r,samplepsi,message=FALSE,cache=TRUE}
+jj <- rp(300000,H=handover)
+head(jj)
+psifun <- function(x){x[3]/(x[2]+x[3])}
+logoddsfun <- function(x){log(x[2]/x[3])}
+psi <- apply(jj,1,psifun)
+log_odds <- apply(jj,1,logoddsfun)
+psi_complete <- rbeta(length(psi),2,6)
+```
+
+We can now reproduce the four graphics given by Altham and Hankin:
+
+Sample of $\psi=\theta_{10}/(\theta_{10}+\theta_{01})$ under the
+posterior induced by the whole dataset (histogram), together with the
+posterior distribution of $\psi$ induced by the complete cases only
+(a beta distribution with parameters 2 and 6).
+
+```{r histpsi,echo=FALSE,fig.cap="Sample of $\\psi=\\theta_{10}/(\\theta_{10}+\\theta_{01})$ under the posterior induced  by the whole dataset (histogram), together with the posterior distribution of $\\psi$ induced by the complete cases only (a beta distribution with parameters 2 and 6)"}
+hist(psi,nclass=70,probability=TRUE,main=expression(paste("PDF of ",psi)))
+p <- seq(from=0,to=1,len=100)
+points(p,dbeta(p,2,6),type="l")
+abline(v=psifun(handover_maxp),col="red",lwd=5)
+segments(x0=0.5,y0=0,y1=1.5,col="blue",lwd=5)
+legend("topright",lty=1,lwd=c(1,5,5),col=c("black","red","blue"),
+       legend=c(
+           "complete cases",
+           expression(hat(psi) * " (complete cases)"),
+           expression(psi * " = 0.5")
+           ))
+```
+
+```{r qqplotpsi,echo=FALSE,fig.cap="Quantile-quantile plot of $\\psi=\\theta_{10}/(\\theta_{10}+\\theta_{01})$ under the posterior induced  by the whole dataset against the posterior distribution of $\\psi$ induced by the complete cases only (a beta distribution with parameters 2 and 6)",cache=TRUE}
+par(pty='s')
+qqplot(psi,psi_complete,asp=1,xlim=0:1,ylim=0:1)
+abline(0,1)
+```
+
+```{r ecdfpsi,echo=FALSE,fig.cap="Empirical cumulative distribution function of $\\psi=\\theta_{10}/(\\theta_{10}+\\theta_{01})$ under the posterior induced  by the whole dataset, and that of $\\psi$ induced by the complete cases only (a beta distribution with parameters 2 and 6)",cache=TRUE}
+plot(psi,seq_along(psi)/length(psi),type="l",col="black",xlab=expression(psi),ylab="quantile")
+points(psi_complete,seq_along(psi_complete)/length(psi_complete),type="l",col="red")
+legend("topleft",lty=1,col=c("black","red"),legend=c("whole dataset","complete cases"))
+```
+
+```{r logoddsqqplot,echo=FALSE,fig.cap="QQ plot of $\\phi=\\log(\\theta_{01}/\\theta_{10})$",cache=TRUE}
+qqnorm(log_odds,main="QQ plot of log-odds")
+abline(mean(log_odds),sd(log_odds))
+```
+
+Figures \@ref(fig:histpsi) to  \@ref(fig:logoddsqqplot) show different aspects of the dataset.
+
+### References {-}
 
 * PME Altham and RKS Hankin 2010.  "Using recently developed software on
 a 2x2 table of matched pairs with incompletely classified data".
@@ -109,7 +163,7 @@ tables with structural zeros".  _Journal of Statistical Software_
   Journal_ 9(2)
 
 
-### Package dataset
+### Package dataset {-}
 
 Following lines create `handover.rda`, residing in the `data/` directory of the package.
 
