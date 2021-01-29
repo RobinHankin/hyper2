@@ -17,6 +17,12 @@ rhyper2(n = 8, s = 5, pairs = TRUE, teams = TRUE, race = TRUE, pnames)
     \code{letters}; set to \code{NA} meaning no names}
 }
 \author{Robin K. S. Hankin}
+\note{
+  Function \code{rhyper2()} returns a likelihood function based on
+  random observations.  To return a random probability vector drawn from
+  a from a given (normalized) likelihood function, use \code{rp()}.
+}
+\seealso{\code{\link{rp}}}
 \examples{
 
 dotchart(maxp(rhyper2(n=8,s=10)))
