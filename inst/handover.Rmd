@@ -30,8 +30,8 @@ handover_table[3,3] <- NA # structural zero
 handover_table
 ```
 
-Thus we see that in 26 cases, both reviewers answered "yes", in 18
-<both said "no".  The table also records partial responses that include
+Thus we see that in 26 cases, both reviewers answered "yes", and in 18
+both said "no".  The table also records partial responses that include
 observations missed by one or both reviewers.  Responses missed by
 both reviewers are uninformative and automatically rejected:
 structural zeros, in `aylmer` terminology.  We first apply the Aylmer
