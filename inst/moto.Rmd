@@ -1,6 +1,6 @@
 ---
 title: "Grand Prix motorcycle racing"
-output: html_document
+output: bookdown::html_document2
 ---
 
 ```{r setup, include=FALSE}
@@ -13,93 +13,67 @@ library("magrittr")
 
 ## The 2019 FIM motoGP world championship
 
-
 Here I analyse a series of Grand Prix motorcycling race results using
-the `hyper` package which implements the Plackett-Luce likelihood
+the `hyper2` package which implements the Plackett-Luce likelihood
 function.  Consider the following dataset, taken from Wikipedia:
 
 ```{r cars}
-data(motoGP)
-motoGP_2019_table
+moto_table <- read.table("motoGP_2019.txt")
+head(moto_table)
 ```
 
 Each row is a driver (rider?) and each column (after the first) a
-venue.  Taking the first row we see that Marquez came second in Qatar,
-first in Argentina, retired in Austin, and so on.  In the first
+venue.  Taking the first row we see that Marquez came second in Qatar
+(QAT), first in Argentina, retired in Austin, and so on.  In the first
 column, we see the result from Qatar (QAT) in which Marquez came
 second, Dovizioso first, Vinales third, and so on.  Notation used also
 includes six different classes of no-score such as "Ret" for retired,
 "WD" for withdrawn, and so on.  I now use package function
-\code{ordertable2supp()}, that translates data of this type into a
-log-likelihood.  The function is similar to, but slightly different
-from, the analysis in `eurovision.R`.
-
-```{r,applydata}
-head(motoGP_2019_table)
-```
-
-In the package, object `motoGP_2019` is the corresponding
-Plackett-Luce likelihood function; it is equivalent to
-`ordertable2supp(motoGP_2019_table[,1:19])`:
+`ordertable2supp()`, that translates data of this type into a
+log-likelihood.  In the package, object `moto` is the corresponding
+Plackett-Luce likelihood function; we drop the final column which is
+the points scored by each rider.
 
 ```{r,showmotolikelihoodhead}
-head(motoGP_2019)
+moto <- ordertable2supp(moto_table[,-ncol(moto_table)])
+head(moto)
 ```
 
 Above, we see a small part of the Placket-Luce likelihood function for
 the 2019 results.  We can find the maximum likelihood estimator by
 using the `maxp()` function:
 
-```{r,maxp2017,cache=TRUE}
-options(width = 100)
-m <- maxp(motoGP_2019)
-m
-dotchart(m,pch=16)
-pie(m)
+```{r,maxpcalculator,cache=TRUE}
+moto_maxp <- maxp(moto)
+moto_maxp
 ```
 
-In the two figures above, note the dominance of Marquez.  It is
-sometimes preferable to plot the estimated strengths on a log scale:
-
-```{r,maxp2017log}
-dotchart(log(m[1:27]),pch=16)
+```{r dotchartmoto, echo=TRUE,fig.cap="Dot chart of riders' strengths"}
+dotchart(moto_maxp,pch=16)
 ```
 
-(in the diagram above, observe thatthe bottom-ranked player, Lecuona,
-has a ML strength of zero but the estimate is slightly positive for
-numerical reasons).
-
-# Likelihood scoring vs points scoring
-
-The championship winning order is determined by a points system: the
-winner is awarded 25 points, second place 18 points, and so on.  We
-can now check to see how the points total matches up with the
-likelihood estimation.
-
-```{r,pointsforwinning}
-(points_awarded <- c(`1st`=25, `2nd`=20, `3rd`=16, `4th`=13, `5th`= 11,
-`6th`=10, `7th`= 9, `8th`=8,`9th`=7, `10th`=6, `11th`=5, `12th`=4,
-`13th`=3, `14th`=2, `15th`=1))
+```{r piechartmoto,echo=TRUE,fig.cap="Pie chart of riders' strengths"}
+pie(moto_maxp)
 ```
 
-```{r,likelihoodandscore}
-points <- motoGP_2019_table$points
-names(points) <- motoGP_2019_table$driver
+In figures \@ref(fig:dotchartmoto) and \@ref(fig:piechartmoto), note
+the dominance of Marquez.  It is sometimes preferable to plot the
+estimated strengths on a log scale:
 
-ox <- rank(-points) # negative because number 1 = largest number of points
-oy <- rank(-m)      # negative because number 1 = largest strength
-par(pty='s')        # square plot
-plot(ox,oy,asp=1,pty='s',xlim=c(0,28),ylim=c(0,28),pch=16,
-xlab="official order",ylab="my order",main='motoGP, 2019 season')
-par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
-for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray') }
-par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
-abline(0,1)
+```{r dotchartlogmoto, echo=TRUE,fig.cap="Dot chart of riders' strengths, log scale"}
+dotchart(log10(moto_maxp),pch=16)
 ```
 
-In the graph above, we see a certain amount of disagreement.  Only the
-top two riders, Marquez and Dovizioso, have rankings common to
-likelihood system and points system.  Considering the next four
-players (Vinales, Rins, Quartaro, Petrucci) we see that the
-points-based order is Vinales, Rins, Petrucci, but the likelihood
-order is Petrucci, Vinales, Rins (Rossi), Quartararo.
+
+(in figure \@ref(fig:dotchartlogmot) observe that the bottom-ranked
+player, Lecuona, has a ML strength of zero but the estimate is
+slightly positive for numerical reasons).
+
+### Package dataset {-}
+
+Following lines create `moto.rda`, residing in the `data/` directory
+of the package.
+
+```{r,label=savemotodataset}
+save(moto,moto_table,moto_maxp,file="moto.rda")
+```
