@@ -29,11 +29,14 @@ rp(n, H, startp = NULL, fcm = NULL, fcv = NULL, SMALL = 1e-06, l=loglik,...)
   \code{rp_unif()} (documented at \code{dirichlet.Rd}).
   
 }
-\value{
-Returns a matrix, each row being a unit-sum observation.
-}
+\value{Returns a matrix, each row being a unit-sum observation.}
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{maxp}},\code{\link{loglik}},\code{\link{dirichlet}}}
+\note{
+  Function \code{rp()} a random sample from a given normalized
+  likelihood function.  To return a likelihood function based on random
+  observations, use \code{rhyper2()}.
+}
+\seealso{\code{\link{maxp}},\code{\link{loglik}},\code{\link{dirichlet}},\code{\link{rhyper2}}}
 \examples{
 rp(10,icons)
 
