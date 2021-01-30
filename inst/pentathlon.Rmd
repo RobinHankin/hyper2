@@ -1,0 +1,73 @@
+---
+title: "Pentathlon"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+
+The [modern
+pentathlon](https://en.wikipedia.org/wiki/Modern_pentathlon) is an
+Olympic sport that comprises five different events: fencing, swimming,
+horse riding, and running.  This short document discusses a dataset
+taken from the [2004 Summer
+Olympics](https://en.wikipedia.org/wiki/Modern_pentathlon_at_the_2004_Summer_Olympics),
+analysing the order statistic for the top seven competitors:
+
+		
+* Moiseev		
+* Zadneprovskis	
+* Capalini	
+* Cerkovskis	
+* Meliakh		
+* Michalik	
+* Walther		
+
+(I have removed diacritics from some of the names).
+
+
+```{r readpentathlontable}
+pentathlon_table <- as.matrix(read.table("pentathlon.txt"))
+pentathlon_table
+```
+
+Thus the top line shows that Moiseev came fifth in shooting, first in
+fencing and swimming, sixth in riding, and fifth in running.  The
+first column shows that the shooting was won by Meliakh (who came
+first), runner up was Machalik, and so on.
+
+We can present the same information in another way:
+
+```{r showranktable}
+ordertable_to_ranktable(pentathlon_table)
+```
+
+
+```{r}
+pentathlon <- ordertable2supp(pentathlon_table)
+pentathlon_maxp <- maxp(pentathlon)
+pentathlon_maxp
+pie(pentathlon_maxp)
+```
+
+And we can test the null that the competitors all have the same
+Plackett-Luce strengths:
+
+```{r}
+equalp.test(pentathlon)
+```
+
+
+### Package dataset {-}
+
+Following lines create `pentathlon.rda`, residing in the `data/` directory of the package.
+
+```{r,label=savecurlingdataset}
+save(pentathlon_table,pentathlon,pentathlon_maxp,file="pentathlon.rda")
+```
