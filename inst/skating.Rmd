@@ -1,52 +1,55 @@
-title: "Ladies' figure skating"
-author: "Robin K. S. Hankin"
-date: "`r Sys.Date()`"
-vignette: >
-  %\VignetteIndexEntry{figure_skating}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+---
+title: "skating"
+output: bookdown::html_document2
 ---
 
-# Ladies' figure skating in the 2002 Winter Olympics
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
 
-```{r, echo=T, results = 'hide', message= FALSE}
-library("hyper2",quietly=TRUE)
-```		
+# Ladies' figure skating in the 2002 Winter Olympics
 
 This document analyses strengths of the competitors in the Ladies'
 Figure Skating at the 2002 Winter Olympics.  In the package, dataframe
 `skating_table` is copied from Lock and Lock (see skating.Rd for more
-details).  It also creates file `data/skating.rda` which contains R objects `skating_table`, 
+details).  It also creates file `data/skating.rda` which contains R
+objects `skating`, `skating_table`, and `skating_maxp`.
 
 ```{r,showskating}
 set.seed(0)
 skating_table <- read.table("skating.txt",header=TRUE)
+skating_table
 ```
 
-Object `skating_table` is an **order table**.  It is structured so
-that each competitor is a row, and each judge is a column.  Function
+Object `skating_table` is an order table.  It is structured so that
+each competitor is a row, and each judge is a column.  Function
 `rank_likelihood()` considers each row to be a race [or a judge], so
 we need to take a transpose.  The following R idiom is plausible but
-incorrect:
+**incorrect**:
 
 ```{r,skatingwrong}
-skating_incorrect <- rank_likelihood(t(skating_table))
+skating_incorrect <- rank_likelihood(t(skating_table)) # incorrect
 ```
 
 The above is incorrect because we are applying a rank technique to an
-order table.  Correct analysis follows; firstly we coerce to a
-**rank** table:
+order table.  Correct analysis follows.  One good thing to do is to
+present the dataset as an order table;
 
 ```{r,coercetoranktable}
-(skating_order <- ordertable_to_ranktable(skating_table))
+ordertable_to_ranktable(skating_table)
 ```
 
 In the above, the column names should be read "came first" (`c1`),
 "came second" (`c2`) and so on to "came 23rd" (`c23`).  From the first
-column, we see that Hughes came first 5 times and Slutskya came first
-four times, and from the last column we see that all judges except
-`J3` awarded Luca last place.  File `man/rrank.Rd` has a detailed
-discussion of the differences between rank and order.
+column, we see that Hughes came first 5 times [according to judges
+1,5,7,8,9] and Slutskya came first four times [judges 2,3,4,6].  From
+the last column we see that all judges except `J3` awarded Luca last
+place.  File `man/rrank.Rd` has a detailed discussion of the
+differences between rank and order.
 
 We can convert an order table to a support function:
 
@@ -69,6 +72,9 @@ shows that five judges ranked Hughes first and four judges ranked
 Slutskaya first.  The second column corresponds to "second place" and
 shows that one judge gave Hughes second place, two judges placed
 Slutskaya second, five gave Kawn second, and one gave Cohen second.
+The first row corresponds to Hughes and we see that, of $5+1+1+2=9$
+judges, 5 placed Hughes first, one placed her second, one placed her
+third, and two placed her fourth.
 
 The formal ordering used in competition is, according to Lock and
 Lock, given by the median ordinal:
@@ -188,7 +194,7 @@ maximum likelihood estimated strengths furnish an ordering for the
 competitors.  We can compare ranking by strengths with the official
 point-tallying method:
 
-```{r,dpi=72}
+```{r rLrO,fig.cap="Official ranks vs likelihood rank, Ladies free skating, 2002 Winter Olympics"}
  rL <- sort(skating_maxp,decreasing=TRUE)
  rL[] <- seq_along(rL)
  rO <- seq_len(nrow(skating_table))
@@ -196,13 +202,12 @@ point-tallying method:
  ordertransplot(rO,rL,xlab="offical rank",ylab="likelihood rank",main="Ladies free skating, 2002 Winter Olympics")
 ```
 
-In the above diagram, there is close agreement between the two methods
-in the large, but differences in detail.  For example, the official
-ordering is hughes first, then slutskaya second, then kwan third;
-likelihood winner is slutskya, followed by hughes and then kwan.
-
-We can gain some understanding of this result by looking at the raw
-judging results for the three medallists:
+In figure \@ref(fig:rLrO), there is close agreement between the two
+methods in the large, but differences in detail.  For example, the
+official ordering is hughes first, then slutskaya second, then kwan
+third; likelihood winner is slutskya, followed by hughes and then
+kwan.  We can gain some understanding of this result by looking at the
+raw judging results for the three medallists:
 
 ```{r,threemedallists}
 head(skating_table,2)
@@ -281,13 +286,14 @@ o
 and have some fun with it:
 
 ```{r}
-o <- maxp(o)
+(o <- maxp(o))
 pie(o)
 ```
 
-### Package dataset
+### Package dataset {-}
 
-Following lines create `skating.rda`, residing in the `data/` directory of the package.
+Following lines create `skating.rda`, residing in the `data/`
+directory of the package.
 
 ```{r,label=saveskatingdataset}
 save(skating_table,skating,skating_maxp,file="skating.rda")
