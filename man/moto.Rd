@@ -1,5 +1,5 @@
 \name{moto}
-alias{moto}
+\alias{moto}
 \alias{motoGP}
 \alias{motoGP_2019}
 \alias{moto_table}
