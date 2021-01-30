@@ -1,6 +1,6 @@
 ---
-title: "The ordertrans() function"
-output: html_document
+title: "The `ordertrans()` function"
+output: bookdown::html_document2
 ---
 
 ```{r setup, include=FALSE}
@@ -12,13 +12,9 @@ library("magrittr")
 # Introduction
 
 The `ordertrans()` function can be difficult to understand and this
-short document provides some sensible use-cases.
-
-
-
-## Hello world
-
-The manpage provides a very simple example:
+short document provides some sensible use-cases.  The manpage provides
+a very simple example, but here we are going to use an even simpler
+example:
 
 
 ```{r,label=simpexample}
@@ -79,14 +75,15 @@ Sx==So
 
 ## Skating
 
-Let us consider the skating dataset and use `ordertrans()` to study
-it.
+Let us consider the skating dataset and use `ordertrans()` to study it
+(note that the skating dataset is analysed in more depth in
+`skating.Rmd`).
 
 ```{r,label=lookatskating}
 skating_table
 ```
 
-We might ask how judges 1 and 2 compare to one another?  We need to
+We might ask how judges `J1` and `J2` compare to one another?  We need to
 create vectors like `x` and `y` above:
 
 ```{r,makej1j2}
@@ -100,21 +97,22 @@ cbind(j1,j2)
 ```
 
 In the above, see how objects `j1` and `j2` have identical names, in
-the same order.  Observe that `hughes` is ranked 1 by judge 1, and 4
-by judge 2.  This makes it sensible to plot `j1` against `j2`:
+the same order.  Observe that `hughes` is ranked 1 (that is, first) by
+`J1`, and 4 (that is, 4th) by `J2`.  This makes it sensible to plot
+`j1` against `j2`:
 
-```{r}
+```{r j1vsj2,fig.cap="Judge 1 vs judge 2"}
 par(pty='s')  # forces plot to be square
 plot(j1,j2,asp=1,pty='s',xlim=c(0,25),ylim=c(0,25),pch=16,xlab='judge 1',ylab='judge 2')
 abline(0,1)  # diagonal line
 for(i in seq_along(j1)){text(j1[i],j2[i],names(j1)[i],pos=4,col='gray',cex=0.7)}
 ```
 
-In the above plot we see general agreement but differences in detail.
-For example, `hughes` is ranked first by judge 1 and fourth by judge
-2.  However, other problems are not so easy.  Suppose we wish to
-compare the ranks according to likelihood with the ranks according to
-some points system.
+In figure \@ref(fig:j1vsj2), we see general agreement but differences
+in detail.  For example, `hughes` is ranked first by judge 1 and
+fourth by judge 2.  However, other problems are not so easy.  Suppose
+we wish to compare the ranks according to likelihood with the ranks
+according to some points system.
 
 ```{r,label=maxlikeskating,cache=TRUE}
 mL <- maxp(skating)  # 'L' for Likelihood
@@ -156,28 +154,28 @@ See above how `ordertrans()` shows the points-based ranks but in
 alphabetical order, to facilitate comparison with `mL`.  We can now
 plot these against one another:
 
-
-```{r,label=crapplot}
-plot(mL,ordertrans(mP,mL))
+```{r,label=crapplot,fig.cap="points-based ranks vs likelihood ranks"}
+plot(mL,ordertrans(mP,names(mL)))
 ```
 
-However, the plot above is a bit crude.  Function `ordertransplot()`
-gives a more visually pleasing output:
+However, figure \@ref(fig:crapplot) is a bit crude.  Function
+`ordertransplot()` gives a more visually pleasing output, see figure
+\@ref(fig:showoffordertransplot).
 
 
-```{r,label=showoffordertransplot}
+```{r,label=showoffordertransplot,fig.cap="points=based rank vs likelihood rank using `ordertransplot()`"}
 ordertransplot(mL,mP,xlab="likelihood rank",ylab="Borda rank")
 ```
 
 So now we may compare judge 1 against likelihood:
 
 
-```{r,transplotjudge1}
+```{r transplotjudge1,fig.cap="Likelihood rank vs rank according to Judge 1"}
 ordertransplot(mL,j1,xlab="likelihood rank",ylab="Judge 1 rank")
 ```
 
-
-In the above, looking at the lower-left corner, we see (reading
-horizontally) that the likelihood method placed Slutskya first, then
-Hughes second, then Kwan third; while (reading vertically) judge 1
-placed Hughes first, then Kwan, then Slutskya.
+In figure \@ref(fig:transplotjudge1), looking at the lower-left
+corner, we see (reading horizontally) that the likelihood method
+placed Slutskya first, then Hughes second, then Kwan third; while
+(reading vertically) judge 1 placed Hughes first, then Kwan, then
+Slutskya.
