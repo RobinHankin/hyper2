@@ -1,0 +1,7 @@
+           denmark germany netherlands norway    nz   USA
+denmark          NA   FALSE        TRUE   TRUE  TRUE  TRUE
+germany        TRUE      NA        TRUE   TRUE  TRUE FALSE
+netherlands   FALSE   FALSE          NA  FALSE  TRUE  TRUE
+norway        FALSE   FALSE        TRUE     NA FALSE  TRUE
+nz            FALSE   FALSE       FALSE   TRUE    NA  TRUE
+USA           FALSE    TRUE       FALSE  FALSE FALSE    NA

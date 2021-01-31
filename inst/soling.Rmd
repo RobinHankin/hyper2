@@ -1,37 +1,52 @@
 ---
-title: "Soling at the 2000 Summer Olympics"
-output: html_document
+title: "soling"
+output: bookdown::html_document2
 ---
 
 ```{r setup, include=FALSE}
+set.seed(0)
 knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
 ```
 
-The Soling is a type of boat raced in the 2000 Summer Olympics.  Here I analyse race data taken from
-
-[https://en.wikipedia.org/w/index.php?title=Sailing_at_the_2000_Summer_Olympics_\%E2\%80\%93_Soling&oldid=945362535]
-
+The Soling is a type of boat raced in the 2000 Summer Olympics.  Here
+I analyse race data taken from
+[wikipedia](https://en.wikipedia.org/w/index.php?title=Sailing_at_the_2000_Summer_Olympics_\%E2\%80\%93_Soling&oldid=945362535)
 using a Plackett-Luce extension of the Bradley-Terry model.
 
 
-
 ```{r loadlib}
-library("hyper2")
-data(soling)
-H <- soling_table_2000
-ordertable_to_ranktable(soling_table_2000)
-head(soling2000)
+soling_table <- read.table("soling.txt")
+soling_table
+```
+
+Thus we see, reading column 1, that in race 1, `norway` came fifth,
+`nz` third, `netherlands` first, and so on.  We can present this
+information in a rank table format:
+
+```{r interpretsoling}
+ordertable_to_ranktable(soling_table)
+```
+
+and also convert it to a likelihood function:
+
+```{r solingtolikelihood}
+soling <- ordertable2supp(soling_table)
+head(soling)
 ```
 
 We can also consider observations from the round robins and quarter finals:
 
 ```{r,rrqf}
-soling2000_rr1
-soling2000_rr2
-soling2000_qf
+soling_rr1 <- read.table("soling_rr1.txt")
+soling_rr2 <- read.table("soling_rr2.txt")
+soling_qf  <- read.table("soling_qf.txt" )
+soling_rr1
 ```
 
-Thus, for example, taking `soling2000_rr1[1,2] == TRUE` we see that
+Thus, for example, taking `soling_rr1[1,2] == TRUE` we see that
 Germany beat Sweden in round robin 1.  To incorporate this information
 we need a little bespoke function:
 
@@ -57,32 +72,45 @@ rr <- function(H,M){
 We can see the effect on the evaluate of incorporating the additional
 observations into the Plackett-Luce likelihoods:
 
-```{r}
-H <- soling2000
-before <- maxp(H)
-H %<>% rr(soling2000_rr1)
-H %<>% rr(soling2000_rr2)
-H %<>% rr(soling2000_qf)
-after <- maxp(H)
+```{r showdiff,fig.cap="Evaluate before and after incorporation round robin and quarter final information"}
+H <- soling  # before new information
+soling_maxp <- maxp(H) 
+H %<>% rr(soling_rr1)
+H %<>% rr(soling_rr2)
+H %<>% rr(soling_qf)
+soling_after <- H # after new information
+soling_after_maxp <- maxp(soling_after)
 par(pty="s")
-plot(before,after,asp=1,pch=16,xlim=c(0,0.3),ylim=c(0,0.3))
+plot(soling_maxp,soling_after_maxp,,asp=1,pch=16,xlim=c(0,0.3),ylim=c(0,0.3))
 abline(0,1)
 ```
 
-The diagram above shows a modest change.  We might ask whether the
-additional observations are consistent with the original Placket-Luce
-likelihood:
+Figure \@ref(fig:showdiff) shows a modest change.  We might ask
+whether the additional observations are consistent with the original
+Placket-Luce likelihood:
 
 ```{r}
-(H2 <- H + (-1)*soling2000)
+(soling_diff <- soling_after + (-1)*soling)
 ```
 
-So `H2` is the _difference_ between `H`--- which is `soling2000` plus
-the observations from the roundrobins and quarter finals---and
-`soling2000`.  In other words, `H2` is the simply the information in
-the roundrobins and quarter finals. 
+So `H2` is the _difference_ between `H`--- which is `soling` plus the
+observations from the roundrobins and quarter finals---and `soling`
+withouth the extra information.  In other words, `H2` is the simply
+the information in the roundrobins and quarter finals.
 
 ```{r,testH2equalp}
-equalp.test(H2)
+equalp.test(soling_diff)
+```
+
+
+### Package dataset {-}
+
+Following lines create `soling.rda`, residing in the `data/`
+directory of the package.
+
+```{r,label=savesolingdataset}
+save(soling,soling_after, soling_maxp,soling_after_maxp,soling_table,
+     soling_rr1, soling_rr2, soling_qf,
+  file="soling.rda")
 ```
 

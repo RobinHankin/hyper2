@@ -1,0 +1,7 @@
+          denmark germany russia sweden australia   USA
+denmark        NA    TRUE   TRUE  FALSE      TRUE  TRUE
+germany     FALSE      NA   TRUE   TRUE      TRUE FALSE
+russia      FALSE   FALSE     NA   TRUE      TRUE  TRUE
+sweden       TRUE   FALSE  FALSE     NA      TRUE  TRUE
+australia   FALSE   FALSE  FALSE  FALSE        NA  TRUE
+USA         FALSE    TRUE   TRUE  FALSE     FALSE    NA

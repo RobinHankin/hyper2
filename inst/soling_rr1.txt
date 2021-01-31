@@ -1,0 +1,7 @@
+        germany sweden denmark france ukraine    UK
+germany      NA   TRUE   FALSE   TRUE    TRUE  TRUE
+sweden    FALSE     NA    TRUE   TRUE    TRUE  TRUE
+denmark    TRUE  FALSE      NA   TRUE    TRUE FALSE
+france    FALSE  FALSE   FALSE     NA    TRUE  TRUE
+ukraine   FALSE  FALSE   FALSE  FALSE      NA  TRUE
+UK        FALSE  FALSE    TRUE  FALSE   FALSE    NA
