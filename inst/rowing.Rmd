@@ -1,0 +1,134 @@
+---
+title: "rowing: analysis of sculls in the 2016 Olympics"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+This short document analyses the `rowing` dataset: sculls in the 2016
+olympics.  It is not really standalone and is here as part of a
+consistent dataset generation mechanism used in the `hyper2` package.
+See the `hyper2` vignette for a more formal discussion.  In Olympic
+sculling, up to six individual competitors race a small boat called a
+scull over a course of length 2\,km; the object is to cross the
+finishing line first.  Note that actual timings are irrelevant, given
+the model, as the sufficient statistic is the order in which
+competitors cross the finishing line.  The 2016 Summer Olympics is a
+case in point: the gold and silver medallists finished less than~5
+milliseconds apart, corresponding to a lead of~$\sim
+2.5\,\mathrm{cm}$.  The dataset is as follows;
+
+```{r}
+show <- function(filename){
+  unlist(lapply(strsplit(readLines(filename)," "),paste,collapse=" "))
+}					       
+show("rowing.txt")
+```				 
+
+The first line shows that `fournier` came first, `cabrera` second, and
+so on.  We can convert this dataset into a Plackett-Luce likelihood
+function as follows:
+
+```{r definerowing, cache=TRUE}
+
+f <- function(filename){
+  o <- strsplit(readLines(filename)," ")
+
+  rowers <- sort(unique(unlist(o)))
+  H <- hyper2(list(),0,pnames=rowers)
+
+  for(v in o){
+      v <- rev(v)
+      for(i in seq_along(v)){
+          H[v[i]] %<>% inc           # H[v[i]] %<>% `+`(1)
+          H[v[seq_len(i)]] %<>% dec  # H[v[seq_len(i)]] %<>% `-`(1)
+      }
+  }
+  return(H)
+}	
+
+rowing <- f("rowing.txt")
+pnames(rowing)
+head(rowing)
+```
+
+Object `rowing` is a loglikelihood function on the strengths of the 32
+competitors.  Our first step is to find the evaluate:
+
+```{r maxpcalc,cache=TRUE}
+rowing_maxp <- maxp(rowing)
+rowing_maxp
+```
+
+
+and we may display it using a dot chart:
+
+```{r showrowingmaxppie, echo=FALSE, fig.cap="dot chart of results in the 2016 Olympic Sculls"}
+dotchart(rowing_maxp)
+```
+
+```{r showrowingmaxppielog, echo=FALSE, fig.cap="dot chart of results in the 2016 Olympic Sculls (log scale)"}
+dotchart(log10(rowing_maxp))
+```
+
+
+Figure \@ref(fig:showrowingmaxppie) shows that many competitors have
+very small strength and figure \@ref(fig:showrowingmaxppielog) shows
+that many competitors have zero strength to numerical precision.
+Looking at the original dataset we can see why: observe that `gambour`
+came last in every race except for race number 7 (won by `boudina`).
+In race 7, he beat only `yaklovlev`.  But we see that `yaklovlev` came
+last in every race except race 20, where he beat only `gambour`.  Thus
+the maximum likelihood estimate for `gambour + yaklovlev` would be
+zero, because these two competitors always lose to everyone else.  It
+is thus reasonable to eliminate `gambour` and `yaklovlev` from the
+dataset. We may apply this reasoning recursively and end up with the
+following dataset:
+
+```{r}
+show("rowing_minimal.txt")
+```
+
+We may then analyse this:
+
+```{r rowingminimaldef}
+rowing_minimal <- f("rowing_minimal.txt")
+head(rowing_minimal)
+pnames(rowing_minimal)
+```
+
+This is a much more manageable dataset, much easier to study and less
+cluttered, as competitors with zero estimated strength are not
+present. *However, it is incorrect as `drysdale` does not appear.
+Something is wrong.*
+
+
+```{r minimalmaxp,cache=TRUE}
+(rowing_minimal_maxp <- maxp(rowing_minimal))
+```
+
+
+```{r maxpcalcminimal,fig.cap="Minimal dataset, maximum likelihood estimate of strength"}
+dotchart(rowing_minimal_maxp)
+```
+
+
+
+
+
+
+
+### Package dataset {-}
+
+Following lines create `rowing.rda`, residing in the `data/` directory
+of the package.
+
+```{r,label=saverowingingdataset}
+save(rowing,rowing_minimal,rowing_maxp,rowing_minimal_maxp,file="rowing.rda")
+```

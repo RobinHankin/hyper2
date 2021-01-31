@@ -4,19 +4,24 @@
 \alias{sculling}
 \alias{sculls2016}
 \alias{allrowers}
+\alias{rowing_minimal}
+\alias{rowing_maxp}
+\alias{rowing_minimal_maxp}
 \docType{data}
 \title{Rowing dataset, sculling}
 \description{Data from Men's single sculls, 2016 Summer Olympics}
 \usage{data(rowing)}
 \format{
-\code{sculls2016} is a  \code{hyper2} object that gives a likelihood
+
+Object \code{rowing} is a  \code{hyper2} object that gives a likelihood
 function for the 2016 men's sculls.
+
 }
 \details{
-Object \code{sculls2016} is created by the code in
-\code{inst/rowing_analysis.R}.  This reads file \code{inst/rowing.txt},
-each line of which is a heat showing the finishing order.  Character vector
-\code{allrowers} holds the names of all the rowers.
+
+Object \code{rowing} is created by the code in \code{inst/rowing.Rmd}.
+This reads file \code{inst/rowing.txt}, each line of which is a heat
+showing the finishing order.
 
 File \code{inst/rowing_minimal.txt} has the same data but with dominated
 players (that is, any group of players none of whom have beaten any
@@ -35,10 +40,6 @@ players have a ML strength of zero.
 }
 \seealso{\code{\link{ggrl}}}
 \examples{
-summary(sculls2016)
-
-\dontrun{#Takes too long
-dotchart(maxp(sculls2016))
-}
+dotchart(rowing_maxp)
 }
 \keyword{datasets}

@@ -380,7 +380,7 @@ subsequent heats in a similar manner, the package includes a
 ready-made dataset, \code{sculls2016}:
 
 <<rowers>>=
-head(sculls2016)   # see rowing.Rd
+head(rowing)   # see rowing.Rd
 @ 
  
 Finding the maximum likelihood estimate for the
@@ -394,7 +394,7 @@ quickly.
 \begin{figure}[htbp]
 \begin{center}
 <<rowing_maxp,echo=TRUE,fig=TRUE>>=
-dotchart(maxp(sculls2016))
+dotchart(rowing_maxp)
 @
 \caption{Maximum likelihood estimate for the strengths of the~32
   competitors\label{maxp_sculls2016} in the Men's singles sculls in
