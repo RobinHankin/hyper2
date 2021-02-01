@@ -179,7 +179,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     stop("Unary operator '", .Generic, "' is not implemented for hyper2 objects")
     }
 
-  if (!is.element(.Generic, c("+", "==", "!=", "*", "^" ))){
+  if (!is.element(.Generic, c("+", "-", "==", "!=", "*", "^" ))){
     stop("Binary operator '", .Generic, "' is not implemented for hyper2 objects")
   }
   
