@@ -74,6 +74,7 @@ H3 <- ordervec2supp(c(a = 4, b = 3, c = 0, d = 1, e = 2))
 
 ## Now it is revealed that a,b,c had some advantage in races 1,2,3 respectively:
 Ht <- pwa(H1,'a') + pwa(H2,'b') + pwa(H2,'c')
-pie(maxp(Ht))
+
+specificp.test(Ht,"S")
 
 }
