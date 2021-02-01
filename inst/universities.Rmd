@@ -1,12 +1,15 @@
 ---
 title: "universities"
-output: html_document
+output: bookdown::html_document2
 ---
 
+
 ```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 library("magrittr")
-knitr::opts_chunk$set(echo = TRUE)
+options("digits" = 5)
 ```
 
 ## University ranking data
@@ -14,8 +17,8 @@ knitr::opts_chunk$set(echo = TRUE)
 First load the data:
 
 ```{r cars}
-a <- read.table("universities.txt",header=TRUE)
-head(a,12)
+universities_table <- read.table("universities.txt",header=TRUE)
+head(universities_table,12)
 ```
 
 Each row corresponds to a ranking in the THE ranking system.  Thus the
@@ -41,24 +44,24 @@ f <- function(a,y){
   rownames(out) <- a[,1]
   return(out)
 }
-f(a,2012)
+f(universities_table,2012)
 ```
 
 Now:
 ```{r,playerwithadvantage}
-H <- hyper2(pnames=a[1:8,1])
-for(i in 2013:2020){ H %<>% `+`(ordertable2supp(f(a,i)))}
-H
+universities <- hyper2(pnames=universities_table[1:8,1])
+for(i in 2013:2020){universities %<>% `+`(ordertable2supp(f(universities_table,i)))}
+universities
 ```
 
-Object `H` is simply the support function for the universities'
-strengths for all years' observations (assumed to be independent)
-2013-2020:
+Object `universities` is simply the support function for the
+universities' strengths for all years' observations (assumed to be
+independent) 2013-2020:
 
 ```{r,label=maxpcalc,cache=TRUE}
-m <- maxp(H)
-m
-pie(m)
+universities_maxp <- maxp(universities)
+universities_maxp
+pie(universities_maxp)
 ```
 
 Note the dominance of Auckland (UoA).  We observe that AUT has
@@ -68,17 +71,17 @@ increase is significant:
 
 ```{r,label=preandpost}
 
-H1 <- hyper2(pnames=c("AUT_pre",a[c(1:2,4:8),1]))
+H1 <- hyper2(pnames=c("AUT_pre",universities_table[c(1:2,4:8),1]))
 for(i in 2012:2016){
-  b <- f(a,i)
+  b <- f(universities_table,i)
   rownames(b)[3] <- "AUT_pre"
   H1 <- H1 + ordertable2supp(b)
 } # column loop closes
 
 
-H2 <- hyper2(pnames=c("AUT_post",a[c(1:2,4:8),1]))
+H2 <- hyper2(pnames=c("AUT_post",universities_table[c(1:2,4:8),1]))
 for(i in 2017:2020){
-  jj <- f(a,i)
+  jj <- f(universities_table,i)
   rownames(jj)[3] <- "AUT_post"
   H2 <- H2 + ordertable2supp(jj)
 }
@@ -86,11 +89,24 @@ maxp(H2)
 ```
 
 
-See how we reject $H_0\colon S=0$ with a p-value of about 0.00676,
-significant at 1\%.
-
 ```{r}
 H <- H1 + H2
 maxp(H)
-samep.test(H,c(1,9))
 ```
+
+So from the above we see that the estimated post-2016 strength of AUT
+is larger than the pre-2016 strength.  Is this change significant?
+
+```{r}
+samep.test(H,c("AUT_pre","AUT_post"))
+```
+
+### Package dataset {-}
+
+Following lines create `universities.rda`, residing in the `data/`
+directory of the package.
+
+```{r,label=savecurlingdataset}
+save(universities_table,universities_maxp,universities,file="universities.rda")
+```
+
