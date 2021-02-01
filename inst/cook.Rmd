@@ -16,19 +16,19 @@ package.
 
 ```{r loadlib}
 library(hyper2)
-H <- hyper2(pnames=paste("p",1:5,sep=""))
-H
+
 ```
 
 Now add some data:
 
 ```{r data}
-H <- H +
-    rank_likelihood(c(5,2,3,4)) + # person 1 says 5 is the best, 4 the worst.
-    rank_likelihood(c(1,5,3,4)) + # person 2 says 1 is the best, 4 the worst.
-    rank_likelihood(c(1,4,2,5)) + # person 3 says 1 is the best, 5 the worst.
-    rank_likelihood(c(1,2,3,5)) + # person 4 says 1 is the best, 5 the worst.
-    rank_likelihood(c(2,1,3,4))   # person 5 says 2 is the best, 4 the worst.
+
+H <- hyper2() + 
+  race(c("p5","p2","p3","p4")) + # person 1 says p5 is the best, p4 the worst.
+  race(c("p1","p5","p3","p4")) + # person 2 says p1 is the best, p4 the worst.
+  race(c("p1","p4","p2","p5")) + # person 3 says p1 is the best, p5 the worst.
+  race(c("p1","p2","p3","p5")) + # person 4 says p1 is the best, p5 the worst.
+  race(c("p2","p1","p3","p4"))   # person 5 says p2 is the best, p4 the worst.
 H
 ```
 
@@ -50,67 +50,27 @@ dotchart(log(maxp(H)),pch=16,main="log probabilities")
 We can assess the hypothesis that all players have the same strength:
 
 ```{r}
-L1 <- loglik(indep(equalp(H)),H)  # support at equal strengths
-L2 <- loglik(indep(maxp(H)),H)    # maximum support
-L2-L1
-pchisq(2*(L2-L1),df=1,lower.tail=FALSE) # p-value of asymptotic distribution
+equalp.test(H)
 ```
 
 Thus we reject the hypothesis of equal strength.  Now we can assess
 the hypothesis that person `a` does in fact have the highest strength
 of the five.  We can follow the reasoning in the _icons_
-demonstration:
+demonstration and test $H_0\colon p_1=p_2$:
 
 ```{r}
-o <- function(Ul,Cl,startp,give=FALSE){
-    small <- 1e-4  #  ensure start at an interior point
-    if(missing(startp)){startp <- small*(1:4)+rep(0.1,4)}
-    out <- maxp(H, startp=small*(1:4)+rep(0.1,4), give=TRUE, fcm=Ul,fcv=Cl)
-		if(give){
-			return(out)
-		} else {
-			return(out$value)
-		}
-}
-
-p2max <- o(c(-1, 1, 0, 0), 0)
-p3max <- o(c(-1, 0, 1, 0), 0)
-p4max <- o(c(-1, 0, 0, 1), 0)
-p5max <- o(c(-2,-1,-1,-1),-1)
+samep.test(H,c("p1","p2"))
 ```
 
-(the final line is different because `p5` is the fillup value).
-
-```{r}
-(likes <- c(p2max,p3max,p4max,p5max))
-max(likes)
-```
-
-Observe that the hypothesis with the maximum likelihood is
-$p_2\geqslant p_1$, as might be expected on the grounds that in the
-unconstrained case we have
-$\hat{p_2}>\max\left(\hat{p_3},\hat{p_4},\hat{p_5}\right)$.  Now
-compare the constrained maximum with the unconstrained maximum:
-
-```{r}
-maxp(H,give=TRUE)$value
-```
-
-So the support loss by the constraint is
-
-```{r}
-(L <- maxp(H,give=TRUE)$value - max(likes))
-```
-
-short of Edwards's two-units-of-support criterion.  There is no strong
-evidence to support the assertion that person 1 is actually stronger
-than person 2 in the sense that $p_1>p_2$.
+There is no strong evidence to support the assertion that person 1 is
+actually stronger than person 2 in the sense that $p_1>p_2$.
 
 ## Suspect observation
 
-Suppose that we subsequently observe order statistic `5,4,3,2,1`, that
-is, person 5 is the best, 4 is the second best, and so on to 1 being
-the worst.  Is this observation consistent with the previous dataset?
+Suppose that we subsequently observe order statistic `p5,p4,p3,p2,p1`,
+that is, person 5 is the best, 4 is the second best, and so on to 1
+being the worst.  Is this observation consistent with the previous
+dataset?
 
 It is possible to perform a permutation test on this as follows.
 First, calculate the probability of each of the $5!=120$ possible
@@ -118,8 +78,10 @@ observations (up to a constant):
 
 ```{r}
 library(partitions)
+M <- perms(5)
+M[] <- paste("p",M,sep="")
 imH <- indep(maxp(H))
-f <- function(o){loglik(imH,rank_likelihood(o),log=FALSE)}
+f <- function(o){loglik(imH,race(o),log=FALSE)}
 LL <- apply(perms(5),2,f)
 length(LL)
 sum(LL)
@@ -157,18 +119,19 @@ professional chef puts the dishes in order).  First, before:
 H <- hyper2(pnames=c(paste("p",1:5,sep="")))  # 'S' the strength of training
 # observations before training:
 Hbefore <- H +
-    rank_likelihood(c(5,2,3,4,1)) + #  5 is the best, 4 the worst.
-    rank_likelihood(c(5,3,2,4,1)) + #  5 is the best, 1 the worst.
-    rank_likelihood(c(4,5,3,2,1)) + #  4 is the best, 1 the worst.
-    rank_likelihood(c(5,3,4,1,2)) + #  5 is the best, 2 the worst.
-    rank_likelihood(c(2,5,3,1,4))   #  2 is the best, 4 the worst.
+  race(c("p5","p2","p3","p4","p1")) + #  5 is the best, 4 the worst.
+  race(c("p5","p3","p2","p4","p1")) + #  5 is the best, 1 the worst.
+  race(c("p4","p5","p3","p2","p1")) + #  4 is the best, 1 the worst.
+  race(c("p5","p3","p4","p1","p2")) + #  5 is the best, 2 the worst.
+  race(c("p2","p5","p3","p1","p4"))   #  2 is the best, 4 the worst.
 Hbefore
 ```
 
-Now, after the training we have two order observations: `1,2,3,4,5`
-and `3,1,5,2,4`.  Thus in the first observation, player 1 comes first
-and in the second observation, player 1 comes second second (after
-player 3).  The likelihood for the first observation would be
+Now, after the training we have two finishing order observations:
+`p1,p2,p3,p4,p5` and `p3,p1,p5,p2,p4`.  Thus in the first observation,
+`p1` comes first and in the second observation, `p1` comes second
+second (after `p3`).  The likelihood for the first observation would
+be
 
 \[
 \frac{p_1+S}{p_1+S+p_2+p_3+p_4+p_5}\cdot
@@ -192,8 +155,7 @@ We can translate these into package idiom with function `pwa()`
 ("person with advantage"):
 
 ```{r,usepwafortraining}
-Hafter <- rank_likelihood(1:5)+rank_likelihood(c(3,1,5,2,4))
-pnames(Hafter) <- pnames(Hbefore)
+Hafter <- race(c("p1","p2","p3","p4","p5")) + race(c("p3","p1","p5","p2","p4"))
 Hafter %<>%  pwa("p1")
 Hafter
 ```
