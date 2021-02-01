@@ -1,18 +1,17 @@
 ---
 title: "Eurovision Song Contest: semifinal 1, 2009"
-output: html_document
+output: bookdown::html_document2
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 library("magrittr")
+options("digits" = 5)
 abbreviated <- TRUE  # change to FALSE for full names
 ```
 
-## The Eurovision Song contest
-
-The dataset `wiki_matrix`, defined below, is copied from "Eurovision
+The file `eurovision.txt`, defined below, is copied from "Eurovision
 Song Contest 2009," Wikipedia, accessed May 13, 2018.  It refers to
 semi-final 1.  More documentation is given in `eurovision.Rd` [type
 `help(euro2009)` at the `R` prompt].
@@ -20,8 +19,8 @@ semi-final 1.  More documentation is given in `eurovision.Rd` [type
 First we specify the matrix as appearing in the Wikipedia page:
 
 ```{r, specifymatrix}
-data(eurovision)
-(wiki_matrix <- as.matrix(eurovision2009_votingtable))
+eurovision_table <- as.matrix(read.table("eurovision.txt"))
+eurovision_table
 ```
 
 Each row corresponds to a contestant and each column to a judge.  Note
@@ -50,8 +49,8 @@ the voters' preferences matters.  The following R idiom translates
 `wiki_matrix` into a form suitable for analysis with `hyper2`:
 
 ```{r,prefsetter}
-preference <- wiki_matrix*0  
-for(i in seq_along(points)){ preference[wiki_matrix == points[i]] <- i }
+preference <- eurovision_table*0  
+for(i in seq_along(points)){ preference[eurovision_table == points[i]] <- i }
 
 countries <- data.frame(
     fullname =
@@ -74,8 +73,8 @@ competitors <- as.character(jj[1:18])
 colnames(preference) <- jj      # voters; 20 countries (18 + DE + UK)
 rownames(preference) <- competitors  
 
-rownames(wiki_matrix) <- jj[1:18]
-colnames(wiki_matrix) <- jj
+rownames(eurovision_table) <- jj[1:18]
+colnames(eurovision_table) <- jj
 ```
 
 In the above, matrix `preference` records voters' first, second,
@@ -102,32 +101,41 @@ two rows corresponding to votes cast by Germany and the UK, who did
 not compete and therefore cast votes for all competitors.
 
 We need to convert matrix `preference` into a likelihood function,
-here `eurovision2009`:
+here `eurovision`:
  
 ```{r,morestuff}
-eurovision2009 <- hyper2()
+eurovision <- hyper2()
 
 for(i in seq_len(ncol(preference))){   # cycle through the rows; each row is a voter
     d <- preference[,i,drop=TRUE]
-	eurovision2009 <- 	eurovision2009  + ordervec2supp(d[!is.na(d)])
+	eurovision <- eurovision + ordervec2supp(d[!is.na(d)])
 } # i loop closes
+```
+
+
+```{r,checknull,cache=TRUE}
+eurovision_maxp <- maxp(eurovision)
+eurovision_maxp
+```
+
+```{r,plotpieeurovision,fig.cap="Maximum likelihood strengths of competitors in the 2009 Eurovision song contest, semifinal 1"} 
+pie(eurovision_maxp)
 ```
 
 Now we can check null of equal strengths:
 
-```{r,checknull,cache=TRUE}
-m <- maxp(eurovision2009)
-m
-equalp.test(eurovision2009)
+
+'''{r,label=equalptesteurovision,cache=TRUE}
+equalp.test(eurovision)
 ```
 
 Thus the difference is about 122 units of support, surely significant.
 
 
 ```{r,orderplot}
-points_scored <- rowSums(wiki_matrix,na.rm=TRUE)  # points
+points_scored <- rowSums(eurovision_table,na.rm=TRUE)  # points
 ox <- rank(-points_scored)
-oy <- rank(-m)   # m = MLE
+oy <- rank(-eurovision_maxp)   # m = MLE
 oyp <- ordertrans(oy,names(ox))
 
 par(pty='s') # square plot
@@ -140,3 +148,10 @@ par(xpd=FALSE) # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
 
+### Package dataset {-}
+
+Following lines create `eurovision.rda`, residing in the `data/` directory of the package.
+
+```{r,label=saveeurovisiondataset}
+save(eurovision_table,eurovision_maxp,eurovision,file="eurovision.rda")
+```
