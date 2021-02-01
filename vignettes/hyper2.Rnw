@@ -377,7 +377,7 @@ head(H)
 Again observe that object \code{H} includes its terms in no apparent
 order.  Although it would be possible to incorporate information from
 subsequent heats in a similar manner, the package includes a
-ready-made dataset, \code{sculls2016}:
+ready-made dataset, \code{rowing}:
 
 <<rowers>>=
 head(rowing)   # see rowing.Rd

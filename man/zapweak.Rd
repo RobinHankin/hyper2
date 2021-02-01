@@ -35,7 +35,7 @@ less than \code{minstrength}) using \code{discard_flawed()}.
 \examples{
  zapweak(icons)        # removes noone
 \donttest{#Takes too long
- zapweak(sculls2016)   # removes everyone...
+ zapweak(rowing)   # removes everyone...
 }
 }
 
