@@ -44,6 +44,11 @@ hyper2_sum_numeric(H,r)
   objects are better thought of as support functions than likelihood
   functions; this is reflected in the print method which explicitly
   wraps the likelihood function in a \dQuote{\code{log()}}.
+
+  Idiom \code{H1-H1} returns {H1 + (-1)*H2}, useful for investigating
+  the difference between likelihood functions arising from two different
+  observations, or different probability models.  An example is given in
+  \code{inst/soling.Rmd}.
     
   Testing for equality is not straightforward for two implementation
   reasons.  Firstly, the object itself is stored internally as a

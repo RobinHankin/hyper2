@@ -81,7 +81,7 @@ H %<>% rr(soling_qf)
 soling_after <- H # after new information
 soling_after_maxp <- maxp(soling_after)
 par(pty="s")
-plot(soling_maxp,soling_after_maxp,,asp=1,pch=16,xlim=c(0,0.3),ylim=c(0,0.3))
+plot(soling_maxp,soling_after_maxp,asp=1,pch=16,xlim=c(0,0.3),ylim=c(0,0.3))
 abline(0,1)
 ```
 
@@ -90,13 +90,13 @@ whether the additional observations are consistent with the original
 Placket-Luce likelihood:
 
 ```{r}
-(soling_diff <- soling_after + (-1)*soling)
+(soling_diff <- soling_after - soling)
 ```
 
-So `H2` is the _difference_ between `H`--- which is `soling` plus the
-observations from the roundrobins and quarter finals---and `soling`
-withouth the extra information.  In other words, `H2` is the simply
-the information in the roundrobins and quarter finals.
+So `soling_diff` is the _difference_ between `H`--- which is `soling`
+plus the observations from the roundrobins and quarter finals---and
+`soling` without the extra information.  In other words, the
+information in the roundrobins and quarter finals.
 
 ```{r,testH2equalp}
 equalp.test(soling_diff)
