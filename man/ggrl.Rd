@@ -8,6 +8,7 @@
 \alias{rank_likelihood}
 \alias{rankvec_likelihood}
 \alias{elimination}
+\alias{race}
 \title{Order statistics}
 \description{
   Various functions for calculating the likelihood function for order
@@ -20,7 +21,8 @@ choose_losers(H, all_players, losers)
 choose_winners(H, all_players, winners)
 elimination(all_players)
 rank_likelihood(M,times=1)
-rankvec_likelihood(x)
+rankvec_likelihood(v)
+race(v)
 }
 
 \arguments{
@@ -36,7 +38,7 @@ rankvec_likelihood(x)
     competitor \code{a} finished in place \code{j} in race \code{i}}
   \item{times}{Vector specifiying the number of times each row is
     observed}
-  \item{x}{A character vector specifying ranks.  Thus
+  \item{v}{A character vector specifying ranks.  Thus
   \code{c("b","c","a")} means that \code{b} came first, \code{c} second,
   and \code{a} third} 
 }
@@ -70,14 +72,20 @@ rankvec_likelihood(x)
   eliminated).
 
   Function \code{rank_likelihood()} takes a matrix \code{M} with rows
-  corresponding to a judges (or race); a vector is coerced to a one-row
-  matrix.  Each row of \code{M} is an order statistic: thus
-  \code{c(3,4,2,1)} means that person 3 came first, person 4 came
-  second, person 2 came third and person 1 came last.  Note that in data
-  frames like \code{motoGP2019_table}, each \emph{column} is a race.
+  corresponding to a judges (or race); column names are interpreted as
+  competitor names.  qA named vector is coerced to a one-row matrix.
+  Each row of \code{M} is an order statistic: thus \code{c(3,4,2,1)}
+  means that person 3 came first, person 4 came second, person 2 came
+  third and person 1 came last.  Note that in data frames like
+  \code{F1_table_2017}, each \emph{column} is a race.
 
-  Function \code{addrank()} is now defunct.
-  
+  Function \code{rankvec_likelihood()} takes a character vector of
+  competitors with the order of elements corresponding to the finishing
+  order; a Plackett-Luce likelihood function is returned.  Thus
+  \code{v=c("d","b","c","a")} corresponds to \code{d} coming first,
+  \code{b} second, \code{c} third, and \code{a} fourth.  Function
+  \code{race()} is an arguably more memorable synonym.  An example is
+  given in \code{inst/rowing.Rmd}.
 }
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{rrank}},\code{\link{ordertable2supp}}}
@@ -97,6 +105,9 @@ colnames(r1) <- letters[1:7]
 # Likelihood function for r1:
 W <- rank_likelihood(r1)
 
+H <- hyper2()
+for(i in 1:10){H <- H+race(sample(letters[1:9],sample(6,1),replace=FALSE))}
+equalp.test(H)$p.value  # should not be significant (null is true)
 
 
 H <- hyper2(pnames=letters[1:5])

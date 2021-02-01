@@ -498,11 +498,18 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(out)
 }
 
-`rankvec_likelihood` <- function(x){
-    jj <- seq_along(x)
-    names(jj)  <- x
-    return(rank_likelihood(jj))
+`rankvec_likelihood` <- function(v){
+  stopifnot(all(table(v)==1))
+  out <- hyper2()
+  v <- rev(v)   # first-placed competitor is the first element of v
+  for(i in seq_along(v)){
+    out[v[i]] <- out[v[i]] + 1  #  out[v[i]] %<>% inc
+    out[v[seq_len(i)]] <- out[v[seq_len(i)]] - 1
+  }
+  return(out)
 }
+
+`race` <- rankvec_likelihood
 
 #`addrank` <- function(H,ranks){
 #     .Defunct(new = 'rank_likelihood',msg='use H <- H+rank_likelihood(...)')
@@ -977,4 +984,3 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   abline(0,1)
   for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray',cex=0.7)}
 }
-
