@@ -57,6 +57,8 @@
       distribution}.   \emph{Journal of Statistical software}, 33:11
   }
 }
+\author{Robin K. S. Hankin}
+\seealso{\code{\link{matrix2supp}}}
 \examples{
 data(icons)
 pie(icons_maxp)
