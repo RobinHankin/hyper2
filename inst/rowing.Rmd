@@ -95,7 +95,8 @@ following dataset:
 show("rowing_minimal.txt")
 ```
 
-We may then analyse this:
+(also, we have removed `drysdale`, as he won everything and his ML
+strength would be 1).  We may then analyse this:
 
 ```{r rowingminimaldef}
 rowing_minimal <- f("rowing_minimal.txt")
@@ -105,17 +106,17 @@ pnames(rowing_minimal)
 
 This is a much more manageable dataset, much easier to study and less
 cluttered, as competitors with zero estimated strength are not
-present. *However, it is incorrect as `drysdale` does not appear.
-Something is wrong.*
-
+present. 
 
 ```{r minimalmaxp,cache=TRUE}
-(rowing_minimal_maxp <- maxp(rowing_minimal))
+rowing_minimal_maxp <- maxp(rowing_minimal)
+rowing_minimal_maxp
 ```
 
 
 ```{r maxpcalcminimal,fig.cap="Minimal dataset, maximum likelihood estimate of strength"}
 dotchart(rowing_minimal_maxp)
+dotchart(log10(rowing_minimal_maxp))
 ```
 
 
