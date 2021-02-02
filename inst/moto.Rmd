@@ -65,7 +65,7 @@ dotchart(log10(moto_maxp),pch=16)
 ```
 
 
-(in figure \@ref(fig:dotchartlogmot) observe that the bottom-ranked
+(in figure \@ref(fig:dotchartlogmoto) observe that the bottom-ranked
 player, Lecuona, has a ML strength of zero but the estimate is
 slightly positive for numerical reasons).
 
