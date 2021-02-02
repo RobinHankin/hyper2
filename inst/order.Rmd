@@ -66,7 +66,7 @@ The `hyper2` idiom for creating a likelihood function is as follows:
 
 ```{r defineH}
 library("hyper2")
-H <- rank_likelihood(rbind(1:10))
+H <- race(letters[1:10])
 H
 ```
 And then maximizing it is carried out using the `maxp()` function:
@@ -83,7 +83,7 @@ the exact MLE of $(1,0,\ldots,0)$ shows that the numerics have not
 done a particularly good job in identifying the evaluate, presumably
 as a result of the difficulty of honouring the constraints.  However,
 if we give the system a hand by starting at a point closer to the
-evaluate we can do much better:
+evaluate we can do slightly better:
 
 ```{r}
 f <- function(p,n){c(p,rep((1-p)/n,n-1))}

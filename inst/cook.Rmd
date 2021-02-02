@@ -116,9 +116,8 @@ the complication of not being allowed to vote for oneself (perhaps a
 professional chef puts the dishes in order).  First, before:
 
 ```{r,beforetraining}
-H <- hyper2(pnames=c(paste("p",1:5,sep="")))  # 'S' the strength of training
 # observations before training:
-Hbefore <- H +
+Hbefore <- 
   race(c("p5","p2","p3","p4","p1")) + #  5 is the best, 4 the worst.
   race(c("p5","p3","p2","p4","p1")) + #  5 is the best, 1 the worst.
   race(c("p4","p5","p3","p2","p1")) + #  4 is the best, 1 the worst.
@@ -164,7 +163,6 @@ In the above, the additional strength conferred by the training is
 represented by `S`.  We can estimate the effect of training:
 
 ```{r,addbeforeandafter}
-pnames(Hbefore) <- c(pnames(Hbefore),"S")
 maxp(Hbefore+Hafter)
 ```
 
