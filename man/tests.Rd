@@ -106,12 +106,9 @@ idiom is involved.
 
 \examples{
 
-data(volvo)
-equalp.test(volvo2014)
+equalp.test(volvo)
 
-specificp.test(volvo2014,1,0.1)
-
-samep.test(icons,1:2) # P_NB == p_L
+samep.test(icons,c("NB","L"))
 
 
 }
