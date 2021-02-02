@@ -52,20 +52,20 @@ we are interested only in the first two competitors, `a` and `b`,
 which are competitors 1 and 2.
 
 ```{r}
-keep_flawed(OT,1:2)
+keep_flawed(OT, c("a","b"))
 ```
 
 Above, function `keep_flawed()` has effectively taken `OT`, set `c=0`,
-and then discarded the `c^5` term.  This process, while natural, has
-the effect of replacing `(a+c)^-4` with `a^-4`, which has no natural
-probabilistic interpretation: we are ignoring `c`'s victories but
-nevertheless interpreting joint strength term on the denominator [viz
-`a+c`] as a *loss* for `a`.
+and then discarded the `c^5` term.  This process, while natural from a
+computing perspective, has the effect of replacing `(a+c)^-4` with
+`a^-4`, which has no natural probabilistic interpretation: we are
+ignoring `c`'s victories but nevertheless interpreting the joint
+strength term on the denominator [viz `a+c`] as a *loss* for `a`.
 
 What happens if we keep only `a`?
 
 ```{r}
-keep_flawed(OT,1)
+keep_flawed(OT,"a")
 ```
 
 the above support function is meaningless (?) as, having set `b=0` we
