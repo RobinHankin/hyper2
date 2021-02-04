@@ -87,11 +87,13 @@ value \eqn{p_n} is calculated as
 \eqn{1-\left(p_1,\ldots,p_{n-1}\right)}{1-(p_1,...,p_n-1)}.
 
 If argument \code{border} is \code{TRUE}, function \code{hessian()}
-returns an \eqn{n+1}-by-\eqn{n+1} matrix of second derivatives; the
-borders are as returned by \code{gradient()}.  If \code{border} is
-\code{FALSE}, ignore the fillup value and return an \eqn{n}-by\eqn{n}
-matrix.
+returns an \eqn{n}-by-\eqn{n} matrix of second derivatives; the borders
+are as returned by \code{gradient()}.  If \code{border} is \code{FALSE},
+ignore the fillup value and return an \eqn{n-1}-by\eqn{n-1} matrix.
 
+Calling \code{hessian()} at the evaluate will not return exact zeros for
+the constraint on the fillup value; \code{gradient()} is used and this
+does not return exactly zeros at the evaluate.
 }
 
 \author{Robin K. S. Hankin}

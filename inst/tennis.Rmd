@@ -134,13 +134,26 @@ specificp.test(tennis_ghost,"G",0.0001)  # nonzero value needed to avoid trigger
 so we can infer that the ghost is indeed real as we reject $H_0\colon
 p_G=0$.
 
+We can use the Hessian matrix:
+
+```{r}
+(M <- hessian(tennis,indep(tennis_maxp),border=TRUE))
+```
+
+See how the fillup value `p4` takes up the unit sum constraint [it is
+defined as $p_4=1-p_1-p_2-p_3$].  Matrix `M` should be
+negative-semidefinite:
 
 
 ```{r}
-(hess1 <- hessian(tennis,indep(tennis_maxp),border=TRUE))
-(hess2 <- hessian(tennis,indep(tennis_maxp),border=FALSE))
-eigen(hess2,TRUE,TRUE)
+eigen(M,TRUE,TRUE)$values # one value is zero to numerical precision; the rest should be <0
 ```
+
+See how one eigenvalue is zero (to numerical precision) and the rest
+are strictly negative, corresponding to the support function having a
+well-defined maximum.
+
+
 
 ### References {-}
 
@@ -158,6 +171,3 @@ Following lines create `tennis.rda`, residing in the `data/` directory of the pa
 ```{r,label=savecurlingdataset}
 save(tennis,tennis_maxp,tennis_ghost, tennis_ghost_maxp,file="tennis.rda")
 ```
-
-
-
