@@ -18,9 +18,9 @@ for \eqn{p}, as given by \code{maxp()}.
 }
 \usage{
 gradient(H, probs=indep(maxp(H)))
-hessian(H,probs=indep(maxp(H)),border=TRUE,tidy=TRUE)
+hessian(H,probs=indep(maxp(H)),border=TRUE)
 hessian_lowlevel(L, powers, probs, pnames,n) 
-is_ok_hessian(H)
+is_ok_hessian(M)
 }
 \arguments{
   \item{H}{A \code{hyper2} object}
@@ -30,6 +30,9 @@ is_ok_hessian(H)
   \item{border}{Boolean, with default \code{TRUE} meaning to return the
     bordered Hessian and \code{FALSE} meaning to return the Hessian
     (warning: this option does not respect the unit sum constraint)}
+  \item{M}{A bordered Hessian matrix, understood to have a single
+    constraint (the unit sum) at the last row and column; the output of
+    \code{hessian(border=TRUE)}}
 }
 
 \details{
@@ -74,6 +77,9 @@ negative-definite.
 Function \code{hessian_lowlevel()} is a low-level helper function that
 calls the \code{C++} routine.
 
+Further examples and discussion is given in file
+\code{inst/gradient.Rmd}.
+
 }
 
 \value{
@@ -89,7 +95,7 @@ value \eqn{p_n} is calculated as
 If argument \code{border} is \code{TRUE}, function \code{hessian()}
 returns an \eqn{n}-by-\eqn{n} matrix of second derivatives; the borders
 are as returned by \code{gradient()}.  If \code{border} is \code{FALSE},
-ignore the fillup value and return an \eqn{n-1}-by\eqn{n-1} matrix.
+ignore the fillup value and return an \eqn{n-1}-by-\eqn{n-1} matrix.
 
 Calling \code{hessian()} at the evaluate will not return exact zeros for
 the constraint on the fillup value; \code{gradient()} is used and this
@@ -110,20 +116,5 @@ deltaL - deltaLn  # should be small [zero to first order]
 
 hessian(icons)
 is_ok_hessian(icons)
-
-## Demostrate Hessian matrix of second derivatives:
-## First, exact calculations:
-p <- indep(equalp(icons))
-dp <- rnorm(5)*1e-2
-dpc <- fillup(dp,0)   # constrained dp
-dL <- loglik(p+dp,icons) - loglik(p,icons)
-hess <- hessian(icons,p,border=FALSE)
-
-dL1 <- sum(gradient(icons,p)*dp)              # first order
-dL2 <- dL1 + t(dpc) \%*\% hess \%*\% dpc/2    # second order
-## above should be emulator::quad.form(dpc,hess)
-
-print(c(exact_delta=dL,delta_1st_order=dL1,delta_2nd_order=dL2))
-print(dL-c(first_order_error=dL1,second_order_error= dL2))
 
 }

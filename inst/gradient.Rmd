@@ -6,6 +6,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library("hyper2",quietly=TRUE)
+set.seed(0)
 ```
 
 We will numerically verify the `gradientn()` function for two `hyper2`
@@ -183,4 +184,74 @@ sum(powers(icons))
 sum(p_icons*gradientn(icons,p_icons))
 ```
 
+
+## Case study: icons
+
+Consider the `icons` likelihood function; we wonder whether the
+loglikelihood function has a well-defined maximum.
+
+```{r}
+(M <- hessian(icons))
+is_ok_hessian(M)
+```
+
+This would suggest that the maximum is defined; we may ask how sharp
+it is:
+
+```{r}
+is_ok_hessian(M,give=TRUE)
+```
+
+suggesting a reasonably sharp constrained maximum point.  We now
+demostrate that the Hessian matrix of second derivatives is
+numerically correct.  First the unconstrained problem, working with
+the first five elements.  The first step is to look at the likelihood,
+the gradient, and the Hessian, all evaluated at a certain point:
+
+```{r}
+(p <- indep(equalp(icons))) # NB not the evaluate
+(G <- gradient(icons,p))
+(M <- hessian(icons,p,border=FALSE))
+eigen(M,TRUE,TRUE)$values
+```
+
+```{r}
+dp <- rnorm(5)*1e-4        # small perturbation
+dL <- loglik(p+dp,icons) - loglik(p,icons)  # delta loglikelihood (exact)
+
+dL1 <- sum(gradient(icons,p)*dp)    # first order approximation
+dL2 <- dL1 + t(dp) %*% M %*% dp/2   # second order; should be quad.form(dp,M)
+
+c(dL,dL1,dL2)
+
+c(first_order_error=dL-dL1,second_order_error=dL-dL2)
+
+```
+
+In the above, see how the first order approximation is pretty good: it
+is of ${\mathcal O}(f''(x)\delta x^2)$ which here would be about
+$1000\times 10^{-8}=10^{-5}$ which is pretty much what we observe [the
+1000 is the typical size of the elements of the Hessian].  The
+second-order approximation is better, having a smaller error ... but
+not that much better.  I would expect the error to be ${\mathcal
+O}(f'''(x)\delta x^3)$ but maybe the third order derivatives are
+larger than one might expect.  We can perform a similar analysis but
+using bordered Hessians:
+
+```{r}
+
+dpc <- fillup(dp,0)   # constrained delta p
+
+MC <- hessian(icons,p,border=TRUE)
+dLC1 <- sum(gradientn(icons,fillup(p))*dpc)    # first order approximation
+dLC2 <- dLC1 + t(dpc) %*% MC %*% dpc/2     # second order
+
+c(dL,dLC1,dLC2)
+
+c(first_order_error=dL-dLC1,second_order_error=dL-dLC2)
+
+```
+
+
+showing similar results.
 

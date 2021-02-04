@@ -322,12 +322,15 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
-`is_ok_hessian` <- function(H){
-    hess <- hessian(H)
-    s <- seq(from=3,to=nrow(hess))
+`is_ok_hessian` <- function(M,give=TRUE){
+    stopifnot(is.matrix(M))
+    stopifnot(nrow(M) == ncol(M))
+    n <- nrow(M)
+    M <- M[n:1,n:1]
+    s <- seq(from=3,to=n)
     alt <- (s%%2) == 1  # T,F,T,F,T...
-    jj <- sapply(s,function(n){det(hess[seq_len(n),seq_len(n)])})
-    all((jj>0) == alt)
+    jj <- sapply(s,function(n){det(M[seq_len(n),seq_len(n)])})
+    if(give){return(jj)} else {return(all((jj>0) == alt))}
 }
 
 `fillup` <- function(x,total=1){
