@@ -1,5 +1,7 @@
 \name{tennis}
 \alias{tennis}
+\alias{tennis_maxp}
+\alias{tennis_ghost_maxp}
 \alias{doubles}
 \alias{doubles_noghost}
 \alias{tennis_noghost}
