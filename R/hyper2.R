@@ -313,14 +313,12 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     n <- size(H)
     stopifnot(length(probs) == n-1)
     out <- hessian_lowlevel(brackets(H),powers(H),fillup(probs),pnames(H),n)$block_hessian_components
-    out <- matrix(out,n,n)
+    out <- matrix(out[seq_len((n-1)^2)],n-1,n-1)
     if(isFALSE(border)){return(out)}
-    out <- rbind(c(0,rep(1,n)),cbind(1,out))
-    if(!identical(pnames(H),NA)){
-        jj <- c("usc",as.character(pnames(H))) # "usc" = unit sum constraint
-        rownames(out) <- jj
-        colnames(out) <- jj
-    }
+    jj <- gradient(H,probs=probs)
+    out <- cbind(rbind(out,jj),c(jj,0))
+    rownames(out) <- pnames(H)
+    colnames(out) <- pnames(H)
     return(out)
 }
 

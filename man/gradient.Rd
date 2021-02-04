@@ -18,7 +18,7 @@ for \eqn{p}, as given by \code{maxp()}.
 }
 \usage{
 gradient(H, probs=indep(maxp(H)))
-hessian(H,probs=indep(maxp(H)),border=TRUE)
+hessian(H,probs=indep(maxp(H)),border=TRUE,tidy=TRUE)
 hessian_lowlevel(L, powers, probs, pnames,n) 
 is_ok_hessian(H)
 }
@@ -86,12 +86,11 @@ entries being the gradient of the log-likelihood with respect to the
 value \eqn{p_n} is calculated as
 \eqn{1-\left(p_1,\ldots,p_{n-1}\right)}{1-(p_1,...,p_n-1)}.
 
-
-
-Function \code{hessian()} returns an \eqn{n+1}-by-\eqn{n+1} matrix of
-second derivatives, bordered with constants corresponding to the unit
-sum constraint.  
-
+If argument \code{border} is \code{TRUE}, function \code{hessian()}
+returns an \eqn{n+1}-by-\eqn{n+1} matrix of second derivatives; the
+borders are as returned by \code{gradient()}.  If \code{border} is
+\code{FALSE}, ignore the fillup value and return an \eqn{n}-by\eqn{n}
+matrix.
 
 }
 
