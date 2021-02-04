@@ -12,8 +12,11 @@ options("digits" = 5)
 ```
 
 This short document discusses a dataset first presented by Hankin
-(2010), although here only the first 52 (out of 4000) observations are
-used.
+(2010), although here only the first 52 observations are used.  A
+volleyball \dfn{set} is a Bernoulli trial between two disjoint subsets
+of the players.  The two subsets are denoted (after the game) as the
+_winners_ and the _losers_: these are denoted by `1` and `0`
+respectively.
 
 ```{r readcurlingtable}
 volleyball_table <- as.matrix(read.table("volleyball.txt",header=TRUE))
@@ -21,8 +24,11 @@ nrow(volleyball_table)
 head(volleyball_table)
 ```
 
-The first row shows a game between a team comprising `p1`, `p4`, and
-`p8` against a team comprising `p5` and `p6`.  Team `p1 p4 p8` won.
+Each row of `volleyball_table` is a set.  Thus the first line shows a
+game between a team comprising `p1`, `p4`, and `p8` against a team
+comprising `p5` and `p6`.  Player `p9` did not play; team `p1 p4 p8`
+won.  
+
 We may use function `volley()` to convert this to a likelihood
 function:
 
@@ -30,7 +36,6 @@ function:
 volleyball <- volley(volleyball_table)
 (volleyball_maxp <- maxp(volleyball))
 ```
-
 
 The original synthetic dataset was prepared using Zipf's law for the
 players' strengths, so we may test the hypothesis that this is the
