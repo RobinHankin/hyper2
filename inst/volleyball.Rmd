@@ -1,0 +1,62 @@
+---
+title: "volleyball dataset"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+This short document discusses a dataset first presented by Hankin
+(2010), although here only the first 52 (out of 4000) observations are
+used.
+
+```{r readcurlingtable}
+volleyball_table <- as.matrix(read.table("volleyball.txt",header=TRUE))
+nrow(volleyball_table)
+head(volleyball_table)
+```
+
+The first row shows a game between a team comprising `p1`, `p4`, and
+`p8` against a team comprising `p5` and `p6`.  Team `p1 p4 p8` won.
+We may use function `volley()` to convert this to a likelihood
+function:
+
+```{r}
+volleyball <- volley(volleyball_table)
+(volleyball_maxp <- maxp(volleyball))
+```
+
+
+The original synthetic dataset was prepared using Zipf's law for the
+players' strengths, so we may test the hypothesis that this is the
+case; $H_0\colon p_i\propto i^{-1}$:
+
+```{r}
+zipf <- function(n){jj <- 1/(1:n); jj/sum(jj)}
+zipf(9)
+(null_support <- loglik(indep(zipf(9)),volleyball))
+(alternative_support <- loglik(indep(volleyball_maxp),volleyball))
+(Lambda <- 2*(alternative_support-null_support))
+pchisq(Lambda,df=8,lower.tail=FALSE)
+```
+
+somewhat disappointingly rejecting the null with a $p$-value of about
+4\% (and indeed--just---with a two units of support per degree of
+freedom criterion).  However, it is not clear to me the extent to
+which Wilks's theorem is applicable here [Wilks is an asymptotic
+result; recall that we have only 52 observations here], nor whether
+the support criterion is appropriate with 8 degrees of freedom.
+
+
+### Package dataset {-}
+
+Following lines create `volleyball.rda`, residing in the `data/` directory of the package.
+
+```{r,label=savecurlingdataset}
+save(volleyball_table,volleyball_maxp,volleyball,file="volleyball.rda")
+```
