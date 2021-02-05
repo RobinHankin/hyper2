@@ -63,11 +63,11 @@ loglik(c(1/3,1/3),chess)
 
 data(masterchef)
 
-a1 <- rep(1/13,12)                          # equal strengths
-a2 <- indep(pmax_masterchef6)               # MLE
+a1 <- rep(1/13,12)                  # equal strengths
+a2 <- indep(masterchef_maxp)        # MLE
 
-like_series(a1,masterchef_series6)
-like_series(a2,masterchef_series6)
+like_series(a1,masterchef)
+like_series(a2,masterchef)
 
 
 W <- hyper2(pnames=letters[1:6])

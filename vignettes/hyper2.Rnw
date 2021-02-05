@@ -678,7 +678,7 @@ players are of equal strength:
 data("masterchef")
 n <- 13   # 13 players
 equal_strengths <- rep(1/n,n-1)
-like_series(equal_strengths, masterchef_series6)  # see masterchef.Rd
+like_series(equal_strengths, masterchef)  # see masterchef.Rd
 @ 
 
 The strengths of the 13 players may be estimated using standard
@@ -692,29 +692,29 @@ CI <- c(rep(0,n-1),-1)     # p_1+...+p_{n-1} <= 1
 
 constrOptim(  # maxp() does not work for masterchef_series6
     theta = equal_strengths,  # starting point for optimization
-    f = function(p){-like_series(p,masterchef_series6)}, # see masterchef.Rd
+    f = function(p){-like_series(p,masterchef)}, # see masterchef.Rd
     ui=UI, ci=CI,
     grad=NULL)
 @ 
 
 \begin{figure}[htbp]
 \begin{center}
-<<maxp_masterchef,echo=TRUE,fig=TRUE>>=
-pmax_masterchef6
-dotchart(pmax_masterchef6)
+<<masterchef_maxp,echo=TRUE,fig=TRUE>>=
+masterchef_maxp
+dotchart(masterchef_maxp)
 @
 \caption{Maximum likelihood estimate for the strengths of the top~13
-  competitors\label{masterchef6} in Series~6 of \emph{MasterChef Australia}
+  competitors\label{masterchef} in Series~6 of \emph{MasterChef Australia}
 }
 \end{center}
 \end{figure}
 
-The resulting maximum likelihood estimate, \code{pmax_masterchef6} in
-the package, is shown pictorially in Figure~\ref{masterchef6}.  The
+The resulting maximum likelihood estimate, \code{masterchef_maxp} in
+the package, is shown pictorially in Figure~\ref{masterchef}.  The
 support at the precalculated evaluate is
 
 <<like_series2>>=
-like_series(indep(pmax_masterchef6), masterchef_series6)
+like_series(indep(masterchef_maxp), masterchef)
 @ 
 
 and this allows us to test the hypothesis of equal player strengths:
@@ -743,11 +743,11 @@ constrOptim(  # maxp() does not work for masterchef_series6
     ui = UI, ci=CI)
 @ 
 
-Object \code{pmax_masterchef6_constrained} in the package is the
+Object \code{maxp_masterchef6_constrained} in the package is the
 result of the above optimization, at which point the likelihood is
 
 <<>>=
-like_series(indep(pmax_masterchef6_constrained), masterchef_series6)
+like_series(indep(masterchef_constrained_maxp), masterchef)
 @ 
 
 The two estimates differ by about~$1.18$, less than the
