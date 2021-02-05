@@ -20,7 +20,7 @@ for \eqn{p}, as given by \code{maxp()}.
 gradient(H, probs=indep(maxp(H)))
 hessian(H,probs=indep(maxp(H)),border=TRUE)
 hessian_lowlevel(L, powers, probs, pnames,n) 
-is_ok_hessian(M)
+is_ok_hessian(M, give=TRUE)
 }
 \arguments{
   \item{H}{A \code{hyper2} object}
@@ -33,6 +33,10 @@ is_ok_hessian(M)
   \item{M}{A bordered Hessian matrix, understood to have a single
     constraint (the unit sum) at the last row and column; the output of
     \code{hessian(border=TRUE)}}
+  \item{give}{Boolean with default \code{FALSE} meaning for function
+    \code{is_ok_hessian()} to return whether or not \code{M}
+    corresponds to a negative-definite  matrix, and \code{TRUE} meaning
+    to return more details}
 }
 
 \details{
@@ -114,7 +118,7 @@ deltaLn <- sum(delta*gradient(chess,p + delta/2))   # numeric
 
 deltaL - deltaLn  # should be small [zero to first order]
 
-hessian(icons)
-is_ok_hessian(icons)
+H <- hessian(icons)
+is_ok_hessian(H)
 
 }

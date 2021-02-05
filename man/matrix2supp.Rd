@@ -2,8 +2,6 @@
 \alias{matrix2supp}
 \alias{saffy}
 \alias{volley}
-\alias{volleyball}
-\alias{volleyball_matrix}
 \title{Convert a matrix to a likelihood function}
 \description{
 
@@ -44,11 +42,11 @@ Two functions are documented here:
 }
 
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{icons}}}
+\seealso{\code{\link{icons}},\code{\link{volleyball}}}
 \examples{
 
 icons == saffy(icons_table)  # should be TRUE
 
-volley(volleyball_matrix) == volleyball # also should be TRUE
+volley(volleyball_table) == volleyball # also should be TRUE
 
 }
