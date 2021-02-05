@@ -306,6 +306,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `gradientn` <- function(H,probs=maxp(H)){
   stopifnot(length(probs) == size(H)) # not necessarily summing to 1!
   out <- differentiate_n(brackets(H), powers(H), probs, pnames(H),size(H))$grad_comp
+  names(out) <- pnames(H)
   return(out)
 }
 
