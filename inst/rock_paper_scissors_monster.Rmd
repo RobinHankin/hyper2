@@ -24,11 +24,11 @@ gear wheel.
 Consider the following dataset:
 
 ```{r,chesstable}
-o <- matrix(c(22,NA,8,13,23,NA,NA,12,10),3,3)
-dimnames(o) <- list(
+chess_table <- as.matrix(read.table("chess.txt"))
+dimnames(chess_table) <- list(
     match=c("T_vs_A","A_vs_K","T_vs_K"),
     player=c("Topalov","Anand","Karpov"))
-o
+chess_table
 ```
 
 This is documented in `chess.Rd` and shows that Topalov played Anand
@@ -36,8 +36,10 @@ $22+13=35$ times, winning 22 and losing 13 matches.  The corresponding
 likelihood function is `chess`:
 
 ```{r,showchess}
+chess <- saffy(chess_table)
 chess
-maxp(chess)
+chess_maxp <- maxp(chess)
+chess_maxp
 ```
 
 (we refer to this as the "TAK" model).  We might ask whether there is
@@ -65,7 +67,7 @@ Under $T=A=K$, writing $p_T=p_A=p_K=\alpha$ we can use a binomial test
 to calculate the p-value for the hypothesis that $p_M=0$:
 
 ```{r,binomtest}
-binom.test(sum(diag(o)),sum(o,na.rm=TRUE),alternative="greater")
+binom.test(sum(diag(chess_table)),sum(chess_table,na.rm=TRUE),alternative="greater")
 ```
 
 Estimating $p_M$ is also straightforward:
@@ -289,3 +291,13 @@ strengths of the teeth.
 * R. K. S. Hankin 2017.  "Partial rank data with the `hyper2` package:
   likelihood functions for generalized Bradley-Terry models".  _The R
   Journal_, volume 9, number 2.
+
+### Package dataset
+
+Following lines create `chess.rda`, residing in the `data/` directory of the package.
+
+```{r,label=savechessdataset}
+save(chess_table,chess,chess_maxp,file="chess.rda")
+```
+
+

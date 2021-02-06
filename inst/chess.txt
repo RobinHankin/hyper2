@@ -1,0 +1,4 @@
+       Topalov Anand Karpov
+T_vs_A      22    13     NA
+A_vs_K      NA    23     12
+bT_vs_K       8    NA     10
