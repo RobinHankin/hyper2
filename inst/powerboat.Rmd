@@ -1,0 +1,61 @@
+---
+title: "powerboat"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+[powerboat](https://en.wikipedia.org/w/index.php?title=2018_F1_Powerboat_World_Championship&oldid=920386507)
+racing is an important and prestigious sport.  Here I analyse a
+dataset taken from the 2018 F1 Powerboat world championships.
+
+
+```{r readpowerboattable}
+powerboat_table <- read.table("powerboat.txt",header=TRUE)
+```
+
+We need some data cleaning first; specifically a zero entry is treated
+as "did not start":
+
+```{r}
+powerboat_table[powerboat_table==0] <- "DNS"
+powerboat_table[20:21,8] <- 0  # above does not apply to points
+powerboat_table
+```
+
+Each row is a driver and each column a venue (apart from the final
+column, which is points scored).  Thus we see from the first column
+that, in Portugal, Torrente came first, Stark second, T. AlQamzi
+second, and so on.
+
+In this form we can easily convert to a support function:
+
+```{r,definsupportb,cache=TRUE}
+powerboat <- ordertable2supp(powerboat_table[,1:7])
+head(powerboat)
+(powerboat_maxp <- maxp(powerboat))
+pie(powerboat_maxp)
+par(pty="s")
+points <- as.numeric(powerboat_table[,8])
+names(points) <- rownames(powerboat_table)
+points
+points <- points[order(names(points))]
+points
+plot(powerboat_maxp,points*max(powerboat_maxp)/max(points),xlab="likelihood",ylab="points",pch=16)
+abline(0,1)
+```
+
+### Package dataset
+
+Following lines create `powerboat.rda`, residing in the `data/`
+directory of the package.
+
+```{r,label=savepowerboatdataset}
+save(powerboat_table,powerboat,powerboat_maxp,file="powerboat.rda")
+```
