@@ -1,0 +1,315 @@
+---
+title: "Karpov, Kasprov, Anand"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+This file defines dataset `kka` which is the observed scorelines
+between the three players.  It is used to calculate likelihood
+functions: `karpov_kasparov_anand`, `kka_3whites` and `kka_3draws`
+This Rmd file supercedes files `inst/karpov_kasparov_anand.R` and
+`inst/kka_3draws.R` and `inst/kka_array.R`.  Some more detail is given
+in `man/karpov_kasparov_anand.Rd`.
+
+
+```{r setupkka}
+kka <- c(
+## Kasparov vs Karpov
+karpov_plays_white_beats_kasparov = 18,  # 12 on p1, 6 on p2
+kasparov_plays_white_beats_karpov = 30, # 13 on p1, 17 on p2
+kasparov_plays_white_losesto_karpov = 07,
+karpov_plays_white_losesto_kasparov = 09,
+karpov_plays_white_draws_kasparov = 11+13+14+17+14+03,
+kasparov_plays_white_draws_karpov = 14+12+11+08+11+01,
+
+## Kasparov vs Anand
+kasparov_plays_white_beats_anand = 15,
+anand_plays_white_beats_kasparov = 06,
+anand_plays_white_losesto_kasparov = 11,
+kasparov_plays_white_losesto_anand = 02,
+kasparov_plays_white_draws_anand = 26,
+anand_plays_white_draws_kasparov = 20,
+
+## Karpov vs Anand
+karpov_plays_white_beats_anand = 07,
+anand_plays_white_beats_karpov = 18,
+anand_plays_white_losesto_karpov = 05,
+karpov_plays_white_losesto_anand = 13,
+karpov_plays_white_draws_anand = 29,
+anand_plays_white_draws_karpov = 20
+)
+kka
+```
+
+Quite a lot of information here, but for example we might ask what the
+scoreline is for Karpov playing white against Kasparov:
+
+```{r kkaexample}
+(a1 <- c(
+kka["karpov_plays_white_beats_kasparov"],
+kka["karpov_plays_white_draws_kasparov"],
+kka["karpov_plays_white_losesto_kasparov"]
+))
+```
+
+If we were to ask instead what happens if Karpov plays black against
+Kasparov this would be:
+
+```{r kkaexample2}
+(a2 <- c(
+kka["kasparov_plays_white_beats_karpov"],
+kka["kasparov_plays_white_draws_karpov"],
+kka["kasparov_plays_white_losesto_karpov"]
+))
+```
+
+To investigate the effect of playing white we might do this:
+
+```{r anamwa}
+M <- rbind(a1,rev(a2))
+dimnames(M) <- list(karpov_plays=c("White","Black"),result=c("karpov wins","karpov draws","kaprov loses"))
+M
+fisher.test(M)
+```
+
+but we need a likelihood function.  Here I define likelihood function
+`karpov_kasparov_anand` but to save typing we work with temporary
+object `H` and rename it at the end:
+
+```{r defineH}
+
+results <- as.list(kka)
+attach(results)
+H <- hyper2()
+
+
+## Kasparov vs Karpov
+karpov_vs_kasparov <- c("Karpov","Kasparov","white","draw")  # all "players", real and imaginary
+
+H <- H + trial(c("Karpov"  ,"white"), karpov_vs_kasparov, karpov_plays_white_beats_kasparov)
+H <- H + trial(c("Kasparov","white"), karpov_vs_kasparov, kasparov_plays_white_beats_karpov)
+H <- H + trial(  "Karpov"           , karpov_vs_kasparov, kasparov_plays_white_losesto_karpov)
+H <- H + trial(  "Kasparov"         , karpov_vs_kasparov, karpov_plays_white_losesto_kasparov)
+H <- H + trial(  "draw"             , karpov_vs_kasparov, karpov_plays_white_draws_kasparov)
+H <- H + trial(  "draw"             , karpov_vs_kasparov, kasparov_plays_white_draws_karpov)
+
+## Kasparov vs Anand
+kasparov_vs_anand <- c("Kasparov","Anand","white","draw")
+H <- H + trial(c("Kasparov","white"), kasparov_vs_anand, kasparov_plays_white_beats_anand)
+H <- H + trial(c("Anand"   ,"white"), kasparov_vs_anand, anand_plays_white_beats_kasparov)
+H <- H + trial(c("Kasparov"        ), kasparov_vs_anand, anand_plays_white_losesto_kasparov)
+H <- H + trial(c("Anand"           ), kasparov_vs_anand, kasparov_plays_white_losesto_anand)
+H <- H + trial(  "draw"             , kasparov_vs_anand, kasparov_plays_white_draws_anand)
+H <- H + trial(  "draw"             , kasparov_vs_anand, anand_plays_white_draws_kasparov)
+
+## Karpov vs Anand
+karpov_vs_anand <- c("Karpov","Anand","white","draw")
+H <- H + trial(c("Karpov","white"), karpov_vs_anand, karpov_plays_white_beats_anand)
+H <- H + trial(c("Anand" ,"white"), karpov_vs_anand, anand_plays_white_beats_karpov)
+H <- H + trial(  "Karpov"         , karpov_vs_anand, anand_plays_white_losesto_karpov)
+H <- H + trial(  "Anand"          , karpov_vs_anand, karpov_plays_white_losesto_anand)
+H <- H + trial(  "draw"           , karpov_vs_anand, karpov_plays_white_draws_anand)
+H <- H + trial(  "draw"           , karpov_vs_anand, anand_plays_white_draws_karpov)
+
+detach(results)
+
+karpov_kasparov_anand <- H
+karpov_kasparov_anand
+(karpov_kasparov_anand_maxp <- maxp(karpov_kasparov_anand))
+```
+
+
+Test the hypothesis that all three players have the same strength; first do the free optimization:
+
+```{r testall3}
+samep.test(karpov_kasparov_anand,c("Karpov","Kasparov","Anand"))
+```
+
+and we reject that null.  Now test the hypothesis that playing white confers no advantage:
+
+```{r whitenoadvantage,cache=TRUE}
+specificp.test(karpov_kasparov_anand,"white",0)
+```
+
+We now allow each player to have a personalised draw monster.  The
+resulting likelihood function is called `kka_3draws` but the idiom
+below uses `H` to save typing.
+
+```{r kka3draws}
+library("hyper2")
+H <- hyper2()
+
+results <- as.list(kka)
+attach(results)
+
+karpov_vs_kasparov <- c("Karpov","Kasparov","Karpov_draw","Kasparov_draw","white")
+draw1 <- c("Karpov_draw","Kasparov_draw")
+
+H <- H + trial(c("Karpov"  ,"white"), karpov_vs_kasparov, karpov_plays_white_beats_kasparov)
+H <- H + trial(c("Kasparov","white"), karpov_vs_kasparov, kasparov_plays_white_beats_karpov)
+H <- H + trial(c("Karpov"  )        , karpov_vs_kasparov, kasparov_plays_white_losesto_karpov)
+H <- H + trial(c("Kasparov")        , karpov_vs_kasparov, karpov_plays_white_losesto_kasparov)
+H <- H + trial(draw1                , karpov_vs_kasparov, karpov_plays_white_draws_kasparov)
+H <- H + trial(draw1                , karpov_vs_kasparov, kasparov_plays_white_draws_karpov)
+
+## Kasparov vs Anand
+kasparov_vs_anand <- c("Kasparov","Anand","Kasparov_draw","Anand_draw","white")
+draw2 <- c("Kasparov_draw","Anand_draw")
+H <- H + trial(c("Kasparov","white"), kasparov_vs_anand, kasparov_plays_white_beats_anand)
+H <- H + trial(c("Anand"   ,"white"), kasparov_vs_anand, anand_plays_white_beats_kasparov)
+H <- H + trial(c("Kasparov"  )      , kasparov_vs_anand, anand_plays_white_losesto_kasparov)
+H <- H + trial(c("Anand")           , kasparov_vs_anand, kasparov_plays_white_losesto_anand)
+H <- H + trial(draw2                , kasparov_vs_anand, kasparov_plays_white_draws_anand)
+H <- H + trial(draw2                , kasparov_vs_anand, anand_plays_white_draws_kasparov)
+
+
+## Karpov vs Anand
+karpov_vs_anand <- c("Karpov","Anand","Karpov_draw","Anand_draw","white")
+draw3 <- c("Karpov_draw","Anand_draw")
+
+H <- H + trial(c("Karpov","white"), karpov_vs_anand, karpov_plays_white_beats_anand)
+H <- H + trial(c("Anand" ,"white"), karpov_vs_anand, anand_plays_white_beats_karpov)
+H <- H + trial(c("Karpov"        ), karpov_vs_anand, anand_plays_white_losesto_karpov)
+H <- H + trial(c("Anand"         ), karpov_vs_anand, karpov_plays_white_losesto_anand)
+H <- H + trial(draw3              , karpov_vs_anand, karpov_plays_white_draws_anand) 
+H <- H + trial(draw3              , karpov_vs_anand, anand_plays_white_draws_karpov) 
+
+detach(results)
+
+kka_3draws <- H
+kka_3draws 
+```
+
+and one natural test is that the three draw monsters are of equal strength:
+
+```{r threedrawsequal,cache=TRUE}
+(kka_3draws_maxp <- maxp(kka_3draws))
+pie(kka_3draws_maxp)
+samep.test(kka_3draws,c("Karpov_draw","Kasparov_draw","Anand_draw"))
+```
+
+Now allow each player to have distinct white strength.  We create
+`kka_3whites`, again using temporary variable `H` to save typing:
+
+
+```{r kka3whitedef}
+H <- hyper2()
+
+results <- as.list(kka)
+attach(results)
+
+D <- "draw"
+
+## First: Karpov vs Kasparov
+karpov_plays_white_vs_kasparov <- c("Karpov","Kasparov","Karpov_white","draw"  )  # "players" 
+kasparov_plays_white_vs_karpov <- c("Karpov","Kasparov","Kasparov_white","draw")
+H <- H + trial(c("Karpov"  ,"Karpov_white"  ), karpov_plays_white_vs_kasparov, karpov_plays_white_beats_kasparov  ) # Karpov wins playing white
+H <- H + trial(c("Kasparov","Kasparov_white"), kasparov_plays_white_vs_karpov, kasparov_plays_white_beats_karpov  ) # Kasparov wins playing white
+H <- H + trial(c("Kasparov")                 , karpov_plays_white_vs_kasparov, karpov_plays_white_losesto_kasparov) # Kasparov wins playing black
+H <- H + trial(c("Karpov"  )                 , kasparov_plays_white_vs_karpov, kasparov_plays_white_losesto_karpov) # Karpov wins playing black
+H <- H + trial(D                             , karpov_plays_white_vs_kasparov, karpov_plays_white_draws_kasparov  ) # Karpov white, draws
+H <- H + trial(D                             , kasparov_plays_white_vs_karpov, kasparov_plays_white_draws_karpov  ) # Kasparov white, draws
+
+## Second: Karpov vs Anand
+karpov_plays_white_vs_anand <- c("Karpov","Anand","Karpov_white","draw"  )
+anand_plays_white_vs_karpov <- c("Karpov","Anand","Anand_white","draw")
+H <- H + trial(c("Karpov","Karpov_white"), karpov_plays_white_vs_anand, karpov_plays_white_beats_anand  ) # Karpov wins playing white
+H <- H + trial(c("Anand" ,"Anand_white" ), anand_plays_white_vs_karpov, anand_plays_white_beats_karpov  ) # Anand wins playing white
+H <- H + trial(c("Anand"                ), karpov_plays_white_vs_anand, karpov_plays_white_losesto_anand) # Anand wins playing black
+H <- H + trial(c("Karpov"               ), anand_plays_white_vs_karpov, anand_plays_white_losesto_karpov) # Karpov wins playing black
+H <- H + trial(D                         , karpov_plays_white_vs_anand, karpov_plays_white_draws_anand  ) # Karpov white, draws
+H <- H + trial(D                         , anand_plays_white_vs_karpov, anand_plays_white_draws_karpov  ) # Anand white, draws
+
+## Third: Kasparov vs Anand
+anand_plays_white_vs_kasparov <- c("Anand","Kasparov","Anand_white","draw"   )
+kasparov_plays_white_vs_anand <- c("Anand","Kasparov","Kasparov_white","draw")
+H <- H + trial(c("Kasparov","Kasparov_white"), kasparov_plays_white_vs_anand, kasparov_plays_white_beats_anand  ) # Kasparov wins playing white
+H <- H + trial(c("Anand"   ,"Anand_white"   ), anand_plays_white_vs_kasparov, anand_plays_white_beats_kasparov  ) # Anand wins playing white
+H <- H + trial(c("Anand"                    ), kasparov_plays_white_vs_anand, kasparov_plays_white_losesto_anand) # Anand wins playing black
+H <- H + trial(c("Kasparov"                 ), anand_plays_white_vs_kasparov, anand_plays_white_losesto_kasparov) # Kasparov wins playing black
+H <- H + trial(D                             , kasparov_plays_white_vs_anand, kasparov_plays_white_draws_anand  ) # Kasparov white, draws
+H <- H + trial(D                             , anand_plays_white_vs_kasparov, anand_plays_white_draws_kasparov  ) # Anand white, draws
+
+detach(results)
+
+kka_3whites <- H
+kka_3whites
+```
+
+Natural test for equality of the three white monsters's strengths:
+
+```{r threewhitesequal,cache=TRUE}
+(kka_3whites_maxp <- maxp(kka_3whites))
+pie(kka_3whites_maxp)
+samep.test(kka_3whites,c("Karpov_white","Kasparov_white","Anand_white"))
+```
+(fail to reject the null).
+
+
+We now create a 3x3x3 array of results for the dataset.
+
+```{r kkaarray}
+
+library("hyper2")
+library("abind")
+attach(as.list(kka))
+        
+players <- c("Anand","Karpov","Kasparov")
+
+plays_white_wins <- matrix(NA,3,3)
+dimnames(plays_white_wins) <- list(plays_white_wins=players,plays_black_loses=players)
+plays_white_wins["Anand"   ,"Karpov"  ] <- anand_plays_white_beats_karpov
+plays_white_wins["Anand"   ,"Kasparov"] <- anand_plays_white_beats_kasparov
+plays_white_wins["Karpov"  ,"Anand"   ] <- karpov_plays_white_beats_anand
+plays_white_wins["Karpov"  ,"Kasparov"] <- karpov_plays_white_beats_kasparov
+plays_white_wins["Kasparov","Anand"   ] <- kasparov_plays_white_beats_anand
+plays_white_wins["Kasparov","Karpov"  ] <- kasparov_plays_white_beats_karpov
+
+plays_white_draws  <- matrix(NA,3,3)
+dimnames(plays_white_draws) <- list(plays_white_draws=players,plays_black_draws=players)
+plays_white_draws["Anand"   ,"Karpov"  ] <- anand_plays_white_draws_karpov
+plays_white_draws["Anand"   ,"Kasparov"] <- anand_plays_white_draws_kasparov
+plays_white_draws["Karpov"  ,"Anand"   ] <- karpov_plays_white_draws_anand
+plays_white_draws["Karpov"  ,"Kasparov"] <- karpov_plays_white_draws_kasparov
+plays_white_draws["Kasparov","Anand"   ] <- kasparov_plays_white_draws_anand
+plays_white_draws["Kasparov","Karpov"  ] <- kasparov_plays_white_draws_karpov
+
+
+plays_white_loses <- matrix(NA,3,3)
+dimnames(plays_white_loses) <- list(plays_white_loses=players,plays_black_wins=players)
+plays_white_loses["Karpov"   ,"Anand"   ] <- karpov_plays_white_losesto_anand
+plays_white_loses["Kasparov" ,"Anand"   ] <- kasparov_plays_white_losesto_anand
+plays_white_loses["Anand"    ,"Karpov"  ] <- anand_plays_white_losesto_karpov
+plays_white_loses["Kasparov" ,"Karpov"  ] <- kasparov_plays_white_losesto_karpov
+plays_white_loses["Anand"    ,"Kasparov"] <- anand_plays_white_losesto_kasparov
+plays_white_loses["Karpov"   ,"Kasparov"] <- karpov_plays_white_losesto_kasparov
+detach(as.list(kka))
+
+    plays_white_wins
+    plays_white_draws
+    plays_white_loses
+
+kka_array <- abind(
+    plays_white_wins,
+    plays_white_draws,
+    plays_white_loses,
+    along=3)
+dimnames(kka_array)[[3]] <- c("plays_white_wins", "plays_white_draws", "plays_white_loses")
+kka_array
+```
+
+### Package dataset
+
+Following lines create `kka.rda`, residing in the `data/` directory of
+the package.
+
+```{r,label=savecurlingdataset,cache=TRUE}
+save(kka,karpov_kasparov_anand,kka_3draws,kka_3whites,kka_array,file="kka.rda")
+```
