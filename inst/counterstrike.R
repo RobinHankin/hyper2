@@ -1,4 +1,9 @@
+## This file runs a randomised version of Boston 2018:
+
 ## https://www.youtube.com/watch?v=XKWzlG4jDnI
+
+## It then creates, and maximizes the likelihood function for the
+## strength of the players.
 
 library(hyper2)
 library(partitions) ## needed for perms()
@@ -6,12 +11,6 @@ library(magrittr)
 
 team1  <- c("autimatic","tarik", "Skadoodle","Stewie2k","RUSH")   #Cloud9
 team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")  # FaZe Clan
-
-## This script creates a hyper2 object H which is a likelihood function
-## for the strengths of the players in team1 and team2 above.  It defines
-## a function counterstrike_maker() which is called in a loop at the bottom
-## of the script.   The dataset is a list called zachslist, defined in
-## this file below. 
 
 ## Function counterstrike_maker() needs the identities of all players
 ## on each team.  It assumes that players are always killed by the
@@ -49,19 +48,11 @@ team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")  # FaZe Clan
 
 ## The function does not have strong error-checking functionality.
 
-## The dataset [here, `zachslist`] is a list whose six elements
-## correspond to six rounds of play, which are assumed to be
-## statistically independent.  Object H corresponds to an overall
-## likelihood function for all the rounds combined: it is created by
-## iterating through zachslist and incrementing the likelihood
-## function for each round.
-
 ## File man/counterstrike.Rd has more details on the data's origin.
 
-
-## Object Hrand is a randomly generated version of H, created by
-## running an in-silico deathmatch on the assumption of equal player
-## strengths.
+## Object Hrand is a randomly generated version of
+## hyper2::counterstrike, created by running an in-silico deathmatch
+## on the assumption of equal player strengths.
 
 `counterstrike_maker` <- function(team1,team2,deathorder){
 
@@ -99,42 +90,6 @@ team2 <- c("NiKo","olofmeister","karrigan","GuardiaN","rain")  # FaZe Clan
   }
   return(out)
 }
-
-## all rounds from the match, data kindly supplied by Zachary Hankin:
-zachslist <- list(
-    round1 =
-      c("Skadoodle","olofmeister","tarik",
-        "GuardiaN", "RUSH", "rain","Stewie2k",
-        "karrigan","autimatic","NiKo"
-        ),
-    round2 =
-      c("karrigan", "NiKo", "Stewie2K",
-        "RUSH", "rain", "GuardiaN",
-        "autimatic", "olofmeister"
-        ),
-    round3 =
-      c("rain","tarik","autimatic",
-        "karrigan","RUSH","GuardiaN",
-        "Stewie2K","NiKo","olofmeister"
-        ),
-    round4 =
-      c("rain","GuardiaN","karrigan",
-        "NiKo","olofmeister"
-        ),
-    round5 =
-      c("olofmeister","rain","karrigan",
-        "tarik","Stewie2K","autimatic"
-        ),
-    round6 =
-      c("GuardiaN","karrigan")
-)
-
-H <- hyper2(pnames=c(team1,team2))
-for(i in zachslist){
-  H <- H + counterstrike_maker(team1,team2, deathorder=i)
-}
-
-dotchart(maxp(H),pch=16,main='observed data')
 
 Hrand <- hyper2(pnames=c(team1,team2))
 for(i in 1:6){
