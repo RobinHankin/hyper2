@@ -1,5 +1,9 @@
 \name{interzonal}
 \alias{interzonal}
+\alias{interzonal_maxp}
+\alias{interzonal_table}
+\alias{interzonal_collusion}
+\alias{interzonal_collusion_maxp}
 \alias{curacao}
 \alias{curacao3}
 \alias{stockholm1962}
@@ -41,6 +45,5 @@ dotchart(maxp(interzonal,n=2)) # n=2 for speed
 
 maxp(interzonal_collusion,n=2)
 
-curacao
 }
 \keyword{datasets}
