@@ -45,10 +45,10 @@ equalp.test(volvo)
 
 ## References {-}
 
-Wikipedia contributors, 2019.  \dQuote{2014-2015 Volvo Ocean Race}.
-In \emph{Wikipedia, the free encyclopedia}.  Retrieved 22:21, February
+Wikipedia contributors, 2019.  "2014-2015 Volvo Ocean Race".
+In _Wikipedia, the free encyclopedia_.  Retrieved 22:21, February
 28, 2020.
-\url{https://en.wikipedia.org/w/index.php?title=2014\%E2\%80\%932015_Volvo_Ocean_Race&oldid=914916131},
+(https://en.wikipedia.org/w/index.php?title=2014\%E2\%80\%932015_Volvo_Ocean_Race&oldid=914916131)
 
 
 ### Package dataset {-}
