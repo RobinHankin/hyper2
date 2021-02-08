@@ -376,22 +376,40 @@ CI <- c(rep(0,3),-1)              # p_i >= 0 and sum p_i <= 1
                       
 We will test $H_A\colon p_2<p_3$ using the method of support.
 
+\begin{Sinput}
+> constrained <- maxp(H,give=TRUE,fcm = rbind(c(0,-1,1)), fcv=0,maxtry=1e5)
+> constrained 
+\end{Sinput}
+\begin{Soutput}
+$par
+[1] 0.42735779 0.06018069 0.06018069
 
-<<>>=
-ml_HA <- constrOptim(theta=c(0.1,0.2,0.1), f = obj,grad=gr,
-ui = rbind(UI,c(0,1,-1)),   # p2 > p3
-ci = c(CI,0))
-ml_HA$value
-@ 
+$value
+[1] -66.14478
+
+$counts
+function gradient 
+     318       43 
+
+$convergence
+[1] 0
+
+$message
+NULL
+
+$outer.iterations
+[1] 2
+
+$barrier.value
+[1] 0.0001060435
+
+$likes
+ [1] -82.48451 -66.73119 -82.48454 -66.14478 -67.33553 -67.11853 -66.14607
+ [8] -66.16411 -66.27162 -66.67668
+\end{Soutput}
 
 
-Thus  the support for $H_A$ is
-
-<<>>=
-ml_HA$value - free$value
-@ 
-
-thus agreeing almost exactly with~\citet{altham2010}.
-
+Thus the support for $H_A$ is about $66.14478-64.14538=1.9999$, or
+almost exactly 2 units of support.
 \bibliography{hyper2}
 \end{document}
