@@ -12,7 +12,7 @@ Suggests: knitr, rmarkdown, testthat, mathjaxr
 VignetteBuilder: knitr
 Imports: Rcpp (>= 0.12.5), partitions, EMC
 LinkingTo: Rcpp
-URL: https://github.com/RobinHankin/hyper2.git
+URL: https://github.com/RobinHankin/hyper2
 BugReports: https://github.com/RobinHankin/hyper2/issues
 RoxygenNote: 6.1.1
 RdMacros: mathjaxr
