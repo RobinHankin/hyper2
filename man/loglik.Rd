@@ -53,6 +53,9 @@ intended for use with \code{ggrl()}.
   Log-likelihood (also known as \emph{support}) is defined up to an
   arbitrary additive constant.
 
+  Empty brackets are interpreted consistently: that is, zero whatever
+  the probability vector (although the print method is not perfect).
+
   
   }
 \author{Robin K. S. Hankin}
