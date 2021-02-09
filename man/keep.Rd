@@ -1,8 +1,12 @@
 \name{keep}
 \alias{keep}
+\alias{retain}
 \alias{discard}
+\alias{drop}
 \alias{keep_flawed}
+\alias{retain_flawed}
 \alias{discard_flawed}
+\alias{drop_flawed}
 \alias{keep_flawed2}
 \alias{discard_flawed2}
 \title{Keep or discard players}
