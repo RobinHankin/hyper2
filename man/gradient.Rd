@@ -7,7 +7,7 @@
 \alias{bordered_hessian}
 \alias{hessian_bordered}
 \title{Differential calculus}
-\description{
+\description{\loadmathjax
 
 Given a \code{hyper2} object and a point in probability space,
 function \code{gradient()} returns the gradient of the log-likelihood;
@@ -48,10 +48,10 @@ function.  If the \code{hyper2} object is of size \eqn{n}, then argument
 \eqn{n-1}.  The hard part of this is accounting for the fillup value.
 The function returns the derivative of the loglikelihood with respect to
 the\eqn{n-1} independent components of
-\eqn{\left(p_1,\ldots,p_n\right)}{(p_1,...,p_n)}, namely
-\eqn{\left(p_1,\ldots,p_{n-1}\right)}{(p_1,...,p_n-1)}.  The fillup
-value \eqn{p_n} is calculated as
-\eqn{1-\left(p_1+\cdots + p_{n-1}\right)}{1-(p_1+...+p_n-1)}.
+\mjeqn{\left(p_1,\ldots,p_n\right)}{(p_1,...,p_n)}, namely
+\mjeqn{\left(p_1,\ldots,p_{n-1}\right)}{(p_1,...,p_n-1)}.  The fillup
+value \mjseqn{p_n} is calculated as
+\mjeqn{1-\left(p_1+\cdots + p_{n-1}\right)}{1-(p_1+...+p_n-1)}.
 
 Function \code{gradientn()} returns the gradient of the loglikelihood
 function but ignores the unit sum constraint.
@@ -62,9 +62,9 @@ vector is not treated differently from the others; all \eqn{n} elements
 are treated as independent.  The sum need not equal one.
 
 Function \code{hessian()} returns the \dfn{bordered Hessian}, a matrix
-of size \eqn{n+1\times n+1}{(n+1)*(n+1)}, which is useful when using
+of size \mjeqn{n+1\times n+1}{(n+1)*(n+1)}, which is useful when using
 Lagrange's method of undetermined multipliers.  The first row and column
-correspond to the unit sum constraint, \eqn{\sum p_1=1}{p_1+...+p_n=1}.
+correspond to the unit sum constraint, \mjeqn{\sum p_1=1}{p_1+...+p_n=1}.
 Row and column names of the matrix are the \code{pnames()} of the
 \code{hyper2} object, plus \dQuote{\code{usc}} for \dQuote{Unit Sum
 Constraint}.
@@ -91,10 +91,10 @@ Further examples and discussion is given in file
 Function \code{gradient()} returns a vector of length \eqn{n-1} with
 entries being the gradient of the log-likelihood with respect to the
 \eqn{n-1} independent components of
-\eqn{\left(p_1,\ldots,p_n\right)}{(p_1,...,p_n)}, namely
-\eqn{\left(p_1,\ldots,p_{n-1}\right)}{(p_1,...,p_n-1)}.  The fillup
-value \eqn{p_n} is calculated as
-\eqn{1-\left(p_1,\ldots,p_{n-1}\right)}{1-(p_1,...,p_n-1)}.
+\mjeqn{\left(p_1,\ldots,p_n\right)}{(p_1,...,p_n)}, namely
+\mjeqn{\left(p_1,\ldots,p_{n-1}\right)}{(p_1,...,p_n-1)}.  The fillup
+value \mjseqn{p_n} is calculated as
+\mjeqn{1-\left(p_1,\ldots,p_{n-1}\right)}{1-(p_1,...,p_n-1)}.
 
 If argument \code{border} is \code{TRUE}, function \code{hessian()}
 returns an \eqn{n}-by-\eqn{n} matrix of second derivatives; the borders
