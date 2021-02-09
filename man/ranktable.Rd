@@ -35,15 +35,11 @@ Function \code{ranktable_to_ordertable()} is trivial;
 tables would be \code{skating_table}. 
 
 Function \code{ordertable_to_ranktable(x)} checks for each column being
-a permutation of \code{seq_len(nrow(x))} and, if not, stops.
-
-Note that DNF entries are out of scope for
-\code{ordertable_to_ranktable()}.  To convert order tables such as
-\code{F1_table_2017}, which include DNF entries, use
-\code{wikitable_to_ranktable()} or \code{ordertable2supp()} to produce a
-likelihood function.  Note that
-\code{ordertable_to_ranktable(F1_table_2017)} silently produces
-incorrect output.
+a permutation of \code{seq_len(nrow(x))} and, if not, it stops.  In
+particular, \acronym{DNF} entries are out of scope.  To convert order
+tables such as \code{F1_table_2017}, which include \acronym{DNF}
+entries, use \code{wikitable_to_ranktable()} or \code{ordertable2supp()}
+to produce a likelihood function.
 
 The print method is discussed in vignette
 \code{inst/ordertable_to_ranktable.Rmd}.
