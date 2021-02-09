@@ -34,7 +34,7 @@ profile_support_single(H, i, p, evaluate=FALSE, ...)
 \seealso{\code{\link{loglik}}}
 \examples{
 
-p <- seq(from=0.1,to=0.4,len=20)
+p <- seq(from=0.5,to=0.4,len=10)
 u <- profsupp(icons,"NB",p)
 plot(p,u-max(u))
 abline(h=c(0,-2))
