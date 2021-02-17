@@ -40,10 +40,8 @@ Some other analysis is given in files
 }
 \seealso{\code{\link{chess}},\code{\link{karpov_kasparov_anand}}}
 \examples{
-data(interzonal)
-dotchart(maxp(interzonal,n=2)) # n=2 for speed
+pie(interzonal_maxp)
 
-maxp(interzonal_collusion,n=2)
-
+# samep.test(interzonal,c("Fischer","Geller")) # takes too long
 }
 \keyword{datasets}
