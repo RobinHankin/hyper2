@@ -42,7 +42,7 @@ which resides in the \code{data/} directory.
 }
 \references{
   \itemize{
-    \item \url{https://www.chessbase.com/}
+    \item \url{https://en.chessbase.com/}
   }
 }
 \seealso{\code{\link{karpov_kasparov_anand}}}
