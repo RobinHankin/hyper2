@@ -32,6 +32,12 @@ extern SEXP _hyper2_hessian_lowlevel(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _hyper2_identityL(SEXP, SEXP);
 extern SEXP _hyper2_overwrite(SEXP, SEXP, SEXP, SEXP);
 
+/*
+
+Following lines commented out because they are duplicated in
+RcppExports.cpp (which is created by compileAttributes())
+
+
 static const R_CallMethodDef CallEntries[] = {
     {"_hyper2_accessor",         (DL_FUNC) &_hyper2_accessor,         3},
     {"_hyper2_addL",             (DL_FUNC) &_hyper2_addL,             4},
@@ -45,11 +51,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_hyper2_overwrite",        (DL_FUNC) &_hyper2_overwrite,        4},
     {NULL, NULL, 0}
 };
-
-
-/*
-Following lines commented out because they are duplicated in
-RcppExports.cpp (which is created by compileAttributes())
 
 void R_init_hyper2(DllInfo *dll)
 {
