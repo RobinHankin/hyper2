@@ -359,7 +359,7 @@ List hessian_lowlevel(
              const NumericVector &n
                ){
 
-    const unsigned int nn=n[0];
+    const int nn=n[0];
     NumericVector out(nn*nn);
     const hyper2 h=prepareL(L,powers);
     int r=0;
