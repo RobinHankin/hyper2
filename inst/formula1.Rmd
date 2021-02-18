@@ -46,7 +46,7 @@ came first at each venue: Vettel in Australia (AUS), Hamilton in China
 (CHN), Vettel in Bahrain (BHR), and so on.  I now use bespoke R
 function \code{ordertable2supp()}, that translates data of this type
 into a log-likelihood.  The function is similar to, but slightly
-different from, the analysis in `eurovision.R`.
+different from, the analysis in `eurovision.Rmd`.
 
 ```{r,applydata}
 L2017 <- ordertable2supp(f2017)
