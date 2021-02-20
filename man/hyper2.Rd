@@ -60,9 +60,13 @@ where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.  Note that function
 }
 \note{The empty string is a perfectly valid name}
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{Ops.hyper2}},\code{\link{Extract.hyper2}},\code{\link{loglik}}}
+\seealso{
+  \code{\link{Ops.hyper2}},
+  \code{\link{Extract.hyper2}},
+  \code{\link{loglik}},
+  \code{\link{hyper2-package}}
+}
 \examples{
 o <- hyper2(list("a","b","c",c("a","b"),letters[1:3]),1:5) 
-
 
 }
