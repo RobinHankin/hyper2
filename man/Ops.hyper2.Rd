@@ -58,11 +58,10 @@ hyper2_sum_numeric(H,r)
   elements; neither does it admit repeated elements.  See examples.
 
   Function \code{hyper2_sum_numeric()} is defined so that idiom like
-
-  \code{H[p] <- H[p] + 3}
-
-  works (without this, one has to type \code{H[p] <- powers(H[p]) + 3},
-  which sucks).
+  \code{icons["L"] + 5} works as expected.  This means that
+  \code{icons["L"] <- icons["L"] + 3} and \code{icons["L"] \%<>\%inc(3)}
+  work (without this, one has to type \code{icons["L"] <-
+  powers(icons["L"]) + 3}, which sucks).
   
 }
 \value{

@@ -47,10 +47,15 @@ These are the basic functions of the hyper2 package.  Function
 \code{hyper()} is the low-level creator function; \code{as.hyper2()} is
 a bit more user-friendly and attempts to coerce its arguments into a
 suitable form; for example, a matrix is interpreted as rows of brackets.
-Length-zero character strings are acceptable.
+
+Functions \code{pnames()} and \code{pnames<-()} are the accessor and
+setter methods for the player names.  Length-zero character strings are
+acceptable.
 
 Function \code{is_valid_hyper2()} tests for valid input, returning a
-Boolean.
+Boolean.  Note that it is perfectly acceptable to have an element of
+\code{pnames} that is not present in the likelihood function (this would
+correspond to having no information about that particular player).
 
 Function \code{size()} returns the (nominal) length \eqn{n} of
 nonnegative vector \eqn{p=\left(p_1,\ldots,p_n\right)}{p=(p_1,...,p_n)}
@@ -68,5 +73,9 @@ where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.  Note that function
 }
 \examples{
 o <- hyper2(list("a","b","c",c("a","b"),letters[1:3]),1:5) 
+
+# Verify that the MLE is invariant under reordering
+pnames(icons) <- rev(pnames(icons))
+maxp(icons) - icons_maxp # should be small
 
 }

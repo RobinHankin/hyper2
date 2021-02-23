@@ -51,8 +51,7 @@ discard_flawed(H, unwanted)
   
 }
 \author{Robin K. S. Hankin}
-\note{Function \code{tidy()} is very, very, inelegant}
-\seealso{\code{\link{ordertable2supp}}}
+\seealso{\code{\link{ordertable2supp}},\code{\link{tidy}}}
 \examples{
 
 data("oneill")

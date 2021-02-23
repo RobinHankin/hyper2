@@ -38,7 +38,10 @@ function is here because it is used in \code{ggrl()}.
  x <- sample(9)
  names(x) <- sample(letters[1:9])
  H <- rank_likelihood(x)
+ character_to_number(letters[1:3],pnames(H))
 
-character_to_number(letters[1:3],pnames(H))
+ char2num(c("PB","L"),pnames(icons))
+
+
 
 }

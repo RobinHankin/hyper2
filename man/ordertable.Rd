@@ -2,15 +2,17 @@
 \alias{ordertable}
 \alias{order_table}
 \title{Order tables}
-\description{Order tables}
+n\description{Order tables}
 \details{
 
 The package makes extensive use of order tables and these are discussed
 here together with a list of order tables available in the package as
-data.  Consider \code{pentathlon_ordertable}:
+data.  See also \code{ranktable.Rd}.
+
+Consider \code{pentathlon_ordertable}:
 
 \preformatted{
- > pentathlon_ordertable
+ > pentathlon_table
               shooting fencing swimming riding running
 Moiseev              5       1        1      6       5
 Zadneprovskis        6       2        5      5       1
@@ -21,26 +23,27 @@ Michalik             2       4        6      2       7
 Walther              7       5        3      4       3
 }
 
-Although \code{pentathlon_ordertable} is a dataset in the package, the
-source dataset is also included in the \code{inst/} directory as file
+Although \code{pentathlon_table} is a dataset in the package, the source
+dataset is also included in the \code{inst/} directory as file
 \code{pentathlon.txt}; use idiom like
 \code{read.table("inst/pentathlon.txt")} to load the order table.
 
-Object \code{pentathlon_ordertable} is a representative example.  Each
-row is a competitor, each column an event (venue, judge, \ldots).  The
-first row shows Moiseev's ranking in shooting (5th), fencing (1st), and
-so on.  The first column shows the ranks of the competitors in shooting.
-Thus Moiseev came fifth, Zadneprovskis came 6th, and so on.
+Object \code{pentathlon_table} is a representative example of
+ordertabless.  Each row is a competitor, each column an event (venue,
+judge, \ldots).  The first row shows Moiseev's ranking in shooting
+(5th), fencing (1st), and so on.  The first column shows the ranks of
+the competitors in shooting.  Thus Moiseev came fifth, Zadneprovskis
+came 6th, and so on.
 
 However, to create a likelihood function we need ranks, not orders.  We
 need to know, for a given event, who came first, who came second, and so
 on (an extended discussion on the difference between rank and order is
 given at \code{rrank.Rd}).  We can convert from an order table to a rank
 table using \code{ordertable_to_ranktable()} (see also
-\code{ranktable.Rd}:
+\code{ranktable.Rd}):
 
 \preformatted{
-> ordertable_to_ranktable(pentathlon_ordertable)
+> ordertable_to_ranktable(pentathlon_table)
          c1            c2            c3         c4       c5           
 shooting Meliakh       Michalik      Cerkovskis Capalini Moiseev      
 fencing  Moiseev       Zadneprovskis Cerkovskis Michalik Walther      
@@ -96,5 +99,9 @@ to be contiguous], use \code{as.ordertable()}.
   \code{\link{ranktable}},\code{\link{as.ordertable}}
 }
 \examples{
-2+2
+
+ordertable_to_ranktable(soling_table)
+ordertable2supp(soling_table) == soling  # should be TRUE
+
+
 }

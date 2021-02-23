@@ -72,7 +72,7 @@ race(v)
   eliminated).
 
   Function \code{rank_likelihood()} takes a matrix \code{M} with rows
-  corresponding to a judges (or race); column names are interpreted as
+  corresponding to a judge (or race); column names are interpreted as
   competitor names.  qA named vector is coerced to a one-row matrix.
   Each row of \code{M} is an order statistic: thus \code{c(3,4,2,1)}
   means that person 3 came first, person 4 came second, person 2 came
@@ -84,8 +84,12 @@ race(v)
   order; a Plackett-Luce likelihood function is returned.  Thus
   \code{v=c("d","b","c","a")} corresponds to \code{d} coming first,
   \code{b} second, \code{c} third, and \code{a} fourth.  Function
-  \code{race()} is an arguably more memorable synonym.  An example is
-  given in \code{inst/rowing.Rmd}.
+  \code{race()} is an arguably more memorable synonym.
+
+  An example of \code{race()} is given in \code{inst/rowing.Rmd}, and
+  examples of \code{ggrl()} are given in \code{inst/loser.Rmd} and
+  \code{inst/masterchef.Rmd}.
+
 }
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{rrank}},\code{\link{ordertable2supp}}}
