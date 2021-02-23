@@ -11,8 +11,8 @@ options("digits" = 5)
 abbreviated <- TRUE  # change to FALSE for full names
 ```
 
-The file `eurovision.txt`, defined below, is copied from "Eurovision
-Song Contest 2009," Wikipedia, accessed May 13, 2018.  It refers to
+The file `eurovision.txt`, used below, is copied from "Eurovision Song
+Contest 2009," Wikipedia, accessed May 13, 2018.  It refers to
 semi-final 1.  More documentation is given in `eurovision.Rd` [type
 `help(euro2009)` at the `R` prompt].
 
@@ -124,8 +124,7 @@ pie(eurovision_maxp)
 
 Now we can check null of equal strengths:
 
-
-'''{r,label=equalptesteurovision,cache=TRUE}
+```{r,label=equalptesteurovision,cache=TRUE}
 equalp.test(eurovision)
 ```
 
