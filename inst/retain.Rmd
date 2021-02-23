@@ -28,7 +28,8 @@ jj
 
 Above, rows of object `jj` correspond to competitors and columns to
 judges.  Object `jj` does not function as a rank table because the
-entries are not sequential. 
+entries are not sequential (judge `J2`, for example, has no
+second-ranked competitor).
 
 We could convert explicitly:
 
@@ -74,3 +75,13 @@ realise that `(a+b)^-6` reduces to `a^-6`.  It is as though `a` has
 wins only 3 trials out of 8, against a competitor of known zero
 strength whose (impossible) wins we ignore.  Perhaps this has a
 natural interpretation in probability, but if so I don't see it.
+
+###  Conclusions{-}
+
+It does not seem possible to take a `hyper2` object and discard
+certain players.  It seems that the only way to discard players is to
+work with the original observation, discard players in the dataset
+according to some criterion, and coerce to a likelihood function.
+
+
+
