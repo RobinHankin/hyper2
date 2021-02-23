@@ -47,7 +47,7 @@ function.  If the \code{hyper2} object is of size \eqn{n}, then argument
 \code{indep(p)}; and the returned gradient is also a vector of length
 \eqn{n-1}.  The hard part of this is accounting for the fillup value.
 The function returns the derivative of the loglikelihood with respect to
-the\eqn{n-1} independent components of
+the \eqn{n-1} independent components of
 \mjeqn{\left(p_1,\ldots,p_n\right)}{(p_1,...,p_n)}, namely
 \mjeqn{\left(p_1,\ldots,p_{n-1}\right)}{(p_1,...,p_n-1)}.  The fillup
 value \mjseqn{p_n} is calculated as
@@ -75,7 +75,7 @@ The unit sum constraint borders could have been added with idiom
 Function \code{is_ok_hessian()} returns the result of the second
 derivative test for the maximum likelihood estimate being a local
 maximum on the constraint hypersurface.  This is a generalization of the
-usual unconstrained problem, for which the test is Hessian's being
+usual unconstrained problem, for which the test is the Hessian's being
 negative-definite.
 
 Function \code{hessian_lowlevel()} is a low-level helper function that
