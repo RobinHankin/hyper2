@@ -2,7 +2,7 @@
 \alias{ordertable}
 \alias{order_table}
 \title{Order tables}
-n\description{Order tables}
+\description{Order tables}
 \details{
 
 The package makes extensive use of order tables and these are discussed
