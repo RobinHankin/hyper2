@@ -16,7 +16,7 @@ options("digits" = 5)
 
 Here I analyse a [karate](https://en.wikipedia.org/wiki/Karate)
 dataset taken from
-[https://en.wikipedia.org/wiki/2018_World_Karate_Championships].
+[wikipedia](https://en.wikipedia.org/wiki/2018_World_Karate_Championships).
 
 
 ```{r readkaratetable}
