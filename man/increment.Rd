@@ -35,12 +35,12 @@ Suppose we wish to increment the power of \code{a+b}.  We could do:
 H[c("a","b")] <- H[c("a","b")] + 1
 }
 
-Or use \code{magrittr} pipes:
+(see the discussion of \code{hyper2_sum_numeric} at
+\code{Ops.hyper2.Rd}).  Alternatively we could use \code{magrittr} pipes:
 
 \preformatted{
 H[c("a","b")] \%<>\% `+`(1)
 }
-
 
 But \code{inc} and \code{dec} furnish convenient idiom to accomplish the
 same thing:
@@ -66,9 +66,7 @@ H[c("a","b")] \%<>\% inc(H["a"])
 
 The convenience function \code{trial()} takes this one step further and
 increments the \sQuote{winning team} and decrements the bracket
-containing all players.  This function is intended to be used with
-magrittr pipes:
-
+containing all players.  The winners are expected to be players.
 
 \preformatted{
 > trial(c("a","b"),c("a","b","c"))
@@ -89,7 +87,9 @@ data(chess)
 ## Now suppose we observe an additional match, in which Topalov beats
 ## Anand.  To incorporate this observation into the LF:
 
-chess["Topalov"] \%<>\% inc
-chess[c("Topalov","Anand")] \%<>\% dec
-chess
+
+
+trial("a",c("a","b"))
+
+chess <- chess + trial("Topalov",c("Topalov","Anand"))
 }

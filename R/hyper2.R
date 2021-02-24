@@ -765,6 +765,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `dec` <- function(H,val=1){ H %<>% `-`(val)}   # decrement
 
 `trial` <- function(winners,players,val=1){
+    stopifnot(all(winners %in% players))
     H <- hyper2()
     H[winners] %<>% `+`(val)
     H[players] %<>% `-`(val)
