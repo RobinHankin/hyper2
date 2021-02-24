@@ -20,7 +20,7 @@
 \alias{hyper2_overwrite}
 \title{Wrappers to c calls}
 \description{
-Various low-level wrappers to c calls, courtesy of Rcpp
+Various low-level wrappers to \proglang{C} functions, courtesy of Rcpp
 }
 \usage{
 overwrite(L1, powers1, L2, powers2)
