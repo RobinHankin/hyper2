@@ -8,9 +8,9 @@ Description: A suite of routines for the hyperdirichlet distribution; supersedes
 License: GPL (>= 2)
 LazyData: yes
 Depends: methods, magrittr, cubature, R (>= 3.5.0)
-Suggests: knitr, rmarkdown, testthat, mathjaxr
+Suggests: knitr, rmarkdown, testthat
 VignetteBuilder: knitr
-Imports: Rcpp (>= 0.12.5), partitions, EMC
+Imports: Rcpp (>= 0.12.5), partitions, EMC, mathjaxr
 LinkingTo: Rcpp
 URL: https://github.com/RobinHankin/hyper2
 BugReports: https://github.com/RobinHankin/hyper2/issues
