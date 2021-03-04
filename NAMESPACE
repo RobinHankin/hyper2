@@ -11,6 +11,7 @@ importFrom("cubature", "adaptIntegrate")
 importFrom("graphics", "abline", "par", "text")
 
 import(methods)
+import(mathjaxr)
 
 export(hyper2_add)
 export(size)
