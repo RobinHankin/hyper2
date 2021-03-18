@@ -1,0 +1,258 @@
+---
+title: "fatigue"
+author: "Robin Hankin"
+date: "16/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+```
+
+## R Markdown
+
+Analysis of  the 1973 interzonal competition
+
+
+```{r cars}
+jj <- read.table("interzonal1973_petropolis.txt",header=TRUE,skip=2)
+a <- data.frame(day=jj$day + 31*(jj$month=="August"),white=jj$white,black=jj$black,result=jj$result,round=jj$round,moves=jj$moves)
+
+plot(sort(unique(a$day)),type='b',pch=c(1,1,16))
+tail(a)
+```
+
+```{r,label=define_H,cache=TRUE}
+players <-  unique(sort(c(a$white,a$black)))
+
+wm <- "wm" 
+dm <- "dm"
+rm <- "rm"
+
+tab <- matrix(0,length(players),3)
+colnames(tab) <- c("won","lost","drawn")
+rownames(tab) <- players
+
+H <- hyper2()
+for(i in seq_len(nrow(a))){
+  white_player <- a$white[i]
+  black_player <- a$black[i]
+  result <- a$result[i]
+  H[c(white_player,wm,black_player,dm)] %<>% dec()
+  if(result == "1-0"){ # white win, black loss
+    H[c(white_player,wm)] %<>% inc()
+    tab[white_player,] <- tab[white_player,] + c(1,0,0)
+    tab[black_player,] <- tab[black_player,] + c(0,1,0)
+  } else if(result == "0-1"){ # white loss, black win
+    H[black_player] %<>% inc()
+    tab[white_player,] <- tab[white_player,] + c(0,1,0)
+    tab[black_player,] <- tab[black_player,] + c(1,0,0)
+  } else if(result == "1/2-1/2"){  # draw
+    H[dm] %<>% inc()
+    tab[white_player,] <- tab[white_player,] + c(0,0,1)
+    tab[black_player,] <- tab[black_player,] + c(0,0,1)
+    
+  } else {
+    stop("this cannot happen")
+  }
+}
+```
+
+
+```{r,label=calculatemaxp,cache=TRUE}
+mH <- maxp(H,n=100)
+```
+
+```{r,testwhitezero,cache=TRUE}
+specificp.gt.test(H,"wm",0)
+```
+
+
+```{r,summaryofH}
+head(H)
+pnames(H)
+
+pie(mH)
+dotchart(mH)
+mH
+summary(H)
+```
+
+
+```{r}
+tab <- cbind(tab,played=rowSums(tab))
+tab
+```
+
+
+```{r}
+table(a$result)
+hist(a$moves)
+plot(moves~as.factor(result),data=a)
+result
+moves_drawn_games <- a$moves[a$result == "1/2-1/2"]
+moves_won_games   <- a$moves[a$result != "1/2-1/2"]
+t.test(moves_drawn_games,moves_won_games)
+```
+
+```{r}
+head(a,10)
+o <- matrix(0,max(a[,5]),length(players))
+dimnames(o) <- list(round=paste("r",seq_len(nrow(o)),sep=""),player=players)
+
+for(i in seq_len(nrow(a))){
+	o[a[i,5],which(players==a[i,2])] %<>% `+`(1)
+	o[a[i,5],which(players==a[i,3])] %<>% `+`(1)
+}
+o
+```
+
+
+Now focus on pairs of successive rounds: 1,2; 4,5; 7,8; 10,11; 13,14; 16,17
+
+
+```{r}
+unlist(a[2,])
+`fatigued` <- function(i){
+  x <- unlist(a[i,])
+  day <- as.numeric(a[i,1])
+  white_player <- a[i,2]
+  black_player <- a[i,3]
+  result <- a[i,4]
+  round <- as.numeric(a[i,5])
+  out <- c(white_player_fatigued=FALSE,black_player_fatigued=FALSE)
+  
+  if(round%%3 == 1){return(out)}  # yesterday was a break day
+  out <- c(white_player_fatigued=FALSE,black_player_fatigued=FALSE)
+  b <- a[a$round==round-1,]  # b = yesterday's schedule
+  yesterdays_white_players <- unique(sort(c(b[,2])))
+  yesterdays_black_players <- unique(sort(c(b[,3])))
+
+
+  if(white_player %in% yesterdays_white_players){  # he played white yesterday...
+    if(b[which(white_player==b[,2]),4] !="1/2-1/2"){  # ...and didn't draw...
+      out["white_player_fatigued"] <- TRUE # ... the white player is fatigued
+    }
+  } 
+    
+  if(white_player %in% yesterdays_black_players){  # he played black yesterday...
+    if(b[which(white_player==b[,3]),4] !="1/2-1/2"){  # ...and didn't draw...
+      out["white_player_fatigued"] <- TRUE # ... the white player is fatigued
+    }
+  }
+
+  if(black_player %in% yesterdays_white_players){  # he played white yesterday...
+    if(b[which(black_player==b[,2]),4] !="1/2-1/2"){  # ...and didn't draw...
+      out["black_player_fatigued"] <- TRUE # ... the black player is fatigued
+    }
+  } 
+    
+  if(black_player %in% yesterdays_black_players){  # he played black yesterday...
+    if(b[which(white_player==b[,3]),4] !="1/2-1/2"){  # ... and didn't draw...
+      out["black_player_fatigued"] <- TRUE # ... the white player is fatigued
+    }
+  }
+
+  return(out)
+}
+
+rm(H)
+Hf <- hyper2() # H fatigue
+for(i in seq_len(nrow(a))){
+  white_player <- a[i,2]
+  black_player <- a[i,3]
+  result <- a[i,4]
+
+  jj <- fatigued(i)
+  white_player_fatigued <- jj[1]
+  black_player_fatigued <- jj[2]
+  
+  if(white_player_fatigued & black_player_fatigued){  # both fatigued: no fatigue monster
+    Hf[c(white_player,wm,black_player,dm)] %<>% dec()
+    if(result == "1-0"){ # white win, black loss
+      Hf[c(white_player,wm)] %<>% inc()
+    } else if(result == "0-1"){ # white loss, black win
+      Hf[c(black_player)] %<>% inc()
+    } else if(result == "1/2-1/2"){ # draw
+      Hf[dm] %<>% inc()
+    } else {
+      stop("result must be 0-1, 1-0, or 1/2-1/2")
+    }
+  } else if (white_player_fatigued & !black_player_fatigued){
+    Hf[c(white_player,wm,black_player,dm,rm)] %<>% dec()
+    if(result == "1-0"){ # white win, black loss
+      Hf[c(white_player,wm)] %<>% inc()
+    } else if(result == "0-1"){ # white loss, black win
+      Hf[c(black_player,rm)] %<>% inc()
+    } else if(result == "1/2-1/2"){ # draw
+      Hf[dm] %<>% inc()
+    } else {
+      stop("result must be 0-1, 1-0, or 1/2-1/2")
+    }
+  } else if (!white_player_fatigued & black_player_fatigued){
+    Hf[c(white_player,wm,black_player,dm,rm)] %<>% dec()
+    if(result == "1-0"){ # white win, black loss
+      Hf[c(white_player,wm,rm)] %<>% inc()
+    } else if(result == "0-1"){ # white loss, black win
+      Hf[c(black_player)] %<>% inc()
+    } else if(result == "1/2-1/2"){ # draw
+      Hf[dm] %<>% inc()
+    } else {
+      stop("result must be 0-1, 1-0, or 1/2-1/2")
+    }
+  } else if (!white_player_fatigued & !black_player_fatigued){ # neither fatigued
+    Hf[c(white_player,wm,black_player,dm)] %<>% dec()
+    if(result == "1-0"){ # white win, black loss
+      Hf[c(white_player,wm)] %<>% inc()
+    } else if(result == "0-1"){ # white loss, black win
+      Hf[c(black_player)] %<>% inc()
+    } else if(result == "1/2-1/2"){ # draw
+      Hf[dm] %<>% inc()
+    } else {
+      stop("result must be 0-1, 1-0, or 1/2-1/2")
+    }
+  } else {
+    stop("This is a logical impossibility")
+  }
+}
+```
+
+
+
+now play with it:
+
+```{r,calchfmax,cache=TRUE}
+Hf_maxp <- maxp(Hf)
+````
+
+```{r}
+summary(Hf)
+pnames(Hf)
+Hf_maxp
+pie(Hf_maxp)
+```
+
+
+```{r}
+jj <- rep(0,nrow(a))
+M <- data.frame(
+white_player=rep(NA,nrow(a)),
+black_player=rep(NA,nrow(a)),
+white_player_fatigued=FALSE,
+black_player_fatigued=FALSE
+)
+for(i in seq_len(nrow(a))){
+	M[i,1] <- a[i,2]	
+	M[i,2] <- a[i,3]	
+	jj <- fatigued(i)
+	M[i,3] <- jj[1]
+	M[i,4] <- jj[2]
+}
+colnames(M) <- c("white","black","white_fatigued","black_fatigued")
+tail(M)
+table(M[,3])
+table(M[,4])
+```
+
+
