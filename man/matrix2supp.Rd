@@ -1,5 +1,6 @@
 \name{matrix2supp}
 \alias{matrix2supp}
+\alias{matrix_to_HD}
 \alias{saffy}
 \alias{volley}
 \title{Convert a matrix to a likelihood function}
