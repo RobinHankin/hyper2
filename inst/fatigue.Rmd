@@ -82,6 +82,7 @@ summary(H)
 
 ```{r}
 tab <- cbind(tab,played=rowSums(tab))
+tab <- cbind(tab,points=tab[,1] + tab[,3]/2)
 tab
 ```
 
