@@ -110,44 +110,6 @@ pchisq(2*(l0-l1),df=size(formula1)-1,lower.tail=FALSE)
 
 which is even worse.
 
-# Likelihood scoring vs points scoring
-
-The championship winning order is determined by a points system: the
-winner is awarded 25 points, second place 18 points, and so on.  We
-can now check to see how the points total matches up with the
-likelihood estimation.
-
-```{r,likelihoodandscore}
-jj <- read.table("formula1_2017.txt",header=TRUE)
-points <- jj[,21]
-names(points) <- rownames(jj)
-
-m <- mL2017   # maxp(formula1)
-ox <- rank(-points) # negative because number 1 = largest number of points
-oy <- rank(-m)      # negative because number 1 = largest strength
-par(pty='s')        # square plot
-plot(ox,oy,asp=1,pty='s',xlim=c(0,25),ylim=c(0,25),pch=16,
-xlab="official order",ylab="my order",main='Formula 1, 2017 season')
-par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
-for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray') }
-par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
-abline(0,1)
-```
-
-In the graph above, we see a certain amount of disagreement.  For
-example, using F1 points scored places Hamilton first (363), Vettel
-second (317), and Bottas third (305); while `hyper2` places Hamilton
-first (0.29), Bottas second (0.17), and Vettel third (0.14).  Note
-also the large number of players with zero points (who rank equal 23rd
-by the F1 points system) but are nevertheless separated by
-Bradley-Terry.  These players appear as a line of points at $x=23$:
-Resta to Ericcson.  Note also Palmer and Alonso who managed to score a
-F1 point but rank below Ericcson according to Bradley-Terry.
-
-But overall there
-seems to be some degree of correlation between the two, and
-differences in detail.
-
 # Analysis of nulls:
 
 ## Hypothesis: all players have equal strengths
@@ -218,14 +180,11 @@ F1_2017 <- ordertable2supp(jj[,seq_len(ncol(jj)-1)], incomplete = TRUE)
 
 
 a <- list(F1_2014, F1_2015, F1_2016, F1_2017)
-alldrivers <- all_pnames(a)
+alldrivers <- unique(sort(unlist(lapply(a,pnames))))
 
-F1_total <- hyper2(pnames=alldrivers)
 
-F1_total %<>% add(change_pnames(F1_2014,alldrivers)) 
-F1_total %<>% add(change_pnames(F1_2015,alldrivers)) 
-F1_total %<>% add(change_pnames(F1_2016,alldrivers)) 
-F1_total %<>% add(change_pnames(F1_2017,alldrivers)) 
+
+F1_total <- F1_2014 + F1_2015 + F1_2016 + F1_2017
 
 head(F1_total)
 ```
@@ -289,7 +248,7 @@ for(i in seq_len(ncol(f2017))){
 	} else {
 	   stop("neither wet nor dry?")
 	}
-	L2017 %<>% order_obs(o)
+	L2017 <- L2017 + ordervec2supp(o)
 }  # for(i) loop closes
 head(L2017)
 ```
