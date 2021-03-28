@@ -11,11 +11,16 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-## Rank tables
+# Introduction
 
 
-Rank tables can be confusing, here is a tiny example that should
-clarify things.
+Rank tables can be confusing.  The package includes a range of
+functionality for dealing with them, including a bespoke print method.
+Here, I discuss two cases: firstly, a tiny toy example, and secondly
+the volvo ocean racing dataset.
+
+
+# Toy dataset
 
 ```{r}
 OT <- cbind(1:5,c(1,5,2:4))
@@ -70,3 +75,54 @@ is wrong because this is interpreting the row as an *order*.  This is
 why the print method is there.
 
 
+# Volvo ocean racing dataset
+
+(See `volvo.Rd` for more details).
+
+```{r}
+volvo_table
+```
+
+Thus we see from the first column that in leg 1, AbuDabhi came first,
+Brunel third, and so on.  From the first row we see that AbuDhabi came
+first in leg 1, third in leg 2, second in leg 3, and so on.  Suppose
+we wish to know who came first in each leg:
+
+```{r}
+x <- wikitable_to_ranktable(volvo_table)
+x
+```
+
+And we see from the first column that AbuDhabi came first in leg 1,
+Brunel came first in leg 2, Dongfeng came first in leg 3, and so on.
+The second column shows who came second in each leg.  Now suppose we
+are interested in only the first, second and third-placed teams:
+
+
+```{r}
+x[,1:3]
+```
+
+The above shows that the extraction method for `ranktable` objects is
+not yet written; maybe one day I will get round to implementing
+`[.ranktable()` (right now I am not 100% sure that this is a good
+idea).  Note that simply restoring the `ranktable` class can be
+misleading:
+
+```{r}
+xx <- x[,1:3]
+xx
+class(xx) <- "ranktable"
+xx
+```
+
+In the above, `NA`s are introduced because a `ranktable` object uses
+the column names to store names of the competitors, and of course
+extracting the first three columns means keeping only the first three
+column names.  Observe that extraction after passing to
+`ranktable_to_printable_object()` works nicely:
+
+
+```{r}
+ranktable_to_printable_object(x)[,1:3]
+```
