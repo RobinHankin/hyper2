@@ -42,6 +42,9 @@ tables such as \code{F1_table_2017}, which include \acronym{DNF}
 entries, use \code{wikitable_to_ranktable()} or \code{ordertable2supp()}
 to produce a likelihood function.
 
+Function \code{ranktable_to_printable_object()} is a helper function
+that coerces a \code{ranktable} object to a matrix that prints nicely.
+
 The print method is discussed in vignette
 \code{inst/ordertable_to_ranktable.Rmd}.
 
