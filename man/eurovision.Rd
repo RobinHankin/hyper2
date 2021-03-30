@@ -47,6 +47,7 @@ resides in the \code{data/} directory.
     \item P. M. E. Altham, personal communication
   }
 }
+\seealso{\code{\link{eurodance}}}
 \examples{
 data(eurovision)
 dotchart(eurovision_maxp)

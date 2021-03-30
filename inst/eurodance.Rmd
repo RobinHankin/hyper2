@@ -1,0 +1,102 @@
+---
+title: "Eurovision **Dance** Contest 2008"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+abbreviated <- TRUE  # change to FALSE for full names
+```
+
+The file `eurodance_2008.txt`, used below, is copied from
+"Eurovision Dance Contest 2008," Wikipedia, accessed March 31, 2021.
+First we specify the matrix as appearing in the Wikipedia page:
+
+```{r, specifymatrix}
+eurodance_table <- as.matrix(read.table("eurovision_dance_2008.txt"))
+eurodance_table
+o <- eurodance_table # saves typing
+```
+
+Each row corresponds to a contestant and each column to a judge.  The
+points system used was:
+
+```{r,pointsforplaces}
+points_voters <- c(12,10,8,7,6,5,4,3,2,1)
+points_jury   <- 4*points_voters
+ov <- o[,-(1:2)] # ='o' but just the voters: exclude total and jury
+pref <- ov*0  # retains NA
+for(i in seq_along(points_voters)){pref[ov == points_voters[i]] <- i}
+pref
+```
+
+Now we treat each column as an order statistic:
+
+```{r,cache=TRUE}
+eurodance <- hyper2()
+for(i in seq_len(ncol(pref))){
+	x <- pref[,i]
+	eurodance %<>% `+`(ordervec2supp(x[!is.na(x)]))
+}  # i loop closes
+eurodance_maxp <- maxp(eurodance)
+eurodance_maxp
+pie(eurodance_maxp)
+```
+
+Note the dominance of Poland.  Now we consider the jury's vote:
+
+```{r}
+(jj <- o[,2])
+jj <- sort(jj,decreasing=TRUE)
+jj[jj>0] <- seq_len(sum(jj>0))
+jury <- jj
+jury
+```
+
+Now the question is whether the partial rank conferred by the jury is
+consistent with that of the voters.  The permutation test technique
+used in `cook.Rmd` is not appropriate here as there are $14!/4!\simeq
+3.6\times 10^9$ permutations to consider; we will use a randomised
+sampling method.  Below, we use a resampling technique: 4000
+randomised jury observation are created, and the likelihood [under the
+Plackett-Luce likelihood function for the order statistics of the
+nationals' voters] is calculated.  The $p$-value is then the
+probability of observing the actual observation or an observation more
+unlikely under this likelihood function; it is operationally identical
+to a simulated Fisher's exact test.
+
+```{r,cache=TRUE}
+n <- 4000
+LL <- rep(0,n)
+for(i in seq_len(n)){
+	jjstar <- sample(jury)
+	names(jjstar) <- names(jury)
+	LL[i] <- loglik(indep(eurodance_maxp),ordervec2supp(jjstar),log=FALSE)
+}
+```
+
+```{r}
+plot(sort(LL),log="y")
+p <- loglik(indep(eurodance_maxp),ordervec2supp(jury),log=FALSE)
+abline(h=p)
+```
+
+```{r}
+sum(LL[LL<p])/sum(LL)
+```
+
+
+The $p$-value of about 2.4\% shows that there is strong evidence to
+suggest that the expert jury's ordering differs from that of the
+national popular vote.
+
+### Package dataset {-}
+
+Following lines create `eurodance.rda`, residing in the `data/` directory of the package.
+
+```{r,label=saveeurodancedataset}
+save(eurodance_table,eurodance_maxp,eurodance,file="eurodance.rda")
+```
