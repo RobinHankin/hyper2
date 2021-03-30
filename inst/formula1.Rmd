@@ -13,6 +13,8 @@ options("digits" = 5)
 
 ## Formula 1
 
+**This Rmd file takes about two hours to run without cache.**
+
 Formula 1 racing is an important and prestigious motor sport.  Here I
 analyse a series of racing results using the `hyper2` package which
 implements the Plackett-Luce likelihood function.
@@ -64,6 +66,7 @@ the `maxp()` function:
 rm(L2017)
 mL2017 <- maxp(formula1)
 mL2017
+mL2017 <- mL2017[-which(names(mL2017) %in% c("Resta","Button"))]
 dotchart(mL2017,pch=16,main='2017 Formula 1')
 dotchart(log(mL2017)[1:23],pch=16,main='2017 Formula 1, log scale')
 ```
