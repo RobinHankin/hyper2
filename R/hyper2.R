@@ -716,11 +716,14 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   k <- length(alpha)
   stopifnot(length(beta) == k)
 
-  gamma <- beta[-k]-(alpha[-1]+beta[-1])
+  gamma <- beta[-k]-alpha[-1]-beta[-1]
   gamma <- c(gamma, beta[k]-1)
+  
   H <- dirichlet(powers=alpha-1)
-  for(i in 1:k){
-    H[names(alpha)[(i+1):(k+1)]] <- gamma[i]
+  jj <- gamma[length(gamma)]
+  H[names(jj)] <- jj
+  for(i in seq_len(k-1)){
+    H[names(alpha)[(i+1):(k)]] <- gamma[i]
   }
   return(H)   
 }
