@@ -733,6 +733,17 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     rep(1/n,n)
 }
 
+`zipf` <- function(n){
+  nn <- NULL
+  if(is.hyper2(n)){
+    nn <- pnames(n)
+    n <- size(n)
+  }
+  jj <- 1/seq_len(n)
+  names(jj) <- nn
+  jj/sum(jj)
+}
+
 `saffy` <- function(M){
     out <- hyper2(pnames=colnames(M))
     for(i in seq_len(nrow(M))){
