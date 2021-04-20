@@ -14,7 +14,7 @@ distribution, formally
     interpreted as \code{size(n)}}}
 \value{Returns a numeric vector summing to one}
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{knownp.test()}}}
+\seealso{\code{\link{knownp.test}}}
 \examples{
 
 zipf(icons)
