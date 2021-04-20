@@ -1,4 +1,4 @@
-`equalp.test` <- function(H,...){
+`equalp.test` <- function(H,p,...){
     n <- size(H)
     m_alternative <- maxp(H,give=TRUE,...)
     alternative_support <- m_alternative$value
@@ -9,7 +9,11 @@
     df <- size(H)-1
 
     null_support <- loglik(indep(equalp(H)),H)
-    jj <- equalp(H)
+    if(missing(p)){
+      jj <- equalp(H)
+    } else {
+      jj <- p
+    }
     names(jj) <- pnames(H)
     null_estimate <- jj
 
@@ -38,6 +42,11 @@
         )
     class(rval) <- "hyper2test"
     return(rval)
+}
+
+`knownp.test` <- function(H,p,...){
+  if(missing(p)){stop("p must be supplied")}
+  equalp.test(H,p,...)
 }
 
 `specificp.test` <- function(H, i, specificp=1/size(H), alternative = c("two.sided","less","greater"), ...){
