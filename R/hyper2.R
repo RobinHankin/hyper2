@@ -730,7 +730,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 `equalp` <- function(H){
     n <- size(H)
-    rep(1/n,n)
+    out <- rep(1/n,n)
+    names(out) <- pnames(H)
+    return(out)
 }
 
 `zipf` <- function(n){
