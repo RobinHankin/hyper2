@@ -8,7 +8,7 @@ importFrom("utils", "head")
 importFrom("partitions","perms")
 importFrom("magrittr", "%>%", "%<>%")
 importFrom("cubature", "adaptIntegrate")
-importFrom("graphics", "abline", "par", "text")
+importFrom("graphics", "abline", "par", "text","points")
 
 import(methods)
 import(mathjaxr)

@@ -1005,3 +1005,23 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   abline(0,1)
   for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray',cex=0.7)}
 }
+
+`consistency` <- function(H,plot=TRUE,...){
+  m1 <- maxp(H)
+  pnames(H) <- rev(pnames(H))
+  m2 <- rev(maxp(H))
+  out <- rbind(orig=m1,rev=m2,diff=m1-m2)
+  if(plot){
+    par(pty="s")
+    plot(m1,m2,xlab='',ylab='',log="xy",type="n")
+    abline(0,1,col='gray')
+    points(m1,m2,pch=16, ...)
+    for (i in seq_along(m1)) {
+      text(m1[i], m2[i], names(m1)[i], pos = 4, col = "gray", cex = 0.7)
+    }
+    return(invisible(out))
+  } else {
+    return(out)
+  }
+}
+
