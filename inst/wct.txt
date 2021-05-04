@@ -1,0 +1,470 @@
+wct01 Colapinto Bailey Wright
+wct01 Freestone Lau Smith
+wct01 Dora Ferreira Slater
+wct01 Duru Toledo Ibelli
+wct01 Moniz Heazlewood Wilson
+wct01 Medina Callinan Herdy
+wct01 Buchan Coffin Andre
+wct01 Bourez Flores Fioravanti
+wct01 Rodrigues Carmichael Christie
+wct01 Igarashi Silva Zietz
+wct01 Andino Mendes Cardoso
+wct01 Wright Florence Crisanto
+wct01 Herdy Wilson Fioravanti
+wct01 Smith Christie Ibelli
+wct01 Wright Crisanto Slater
+wct01 Cardoso Zietz Andre
+wct01 Toledo Bailey
+wct01 Florence Buchan
+wct01 Igarashi Mendes
+wct01 Coffin Flores
+wct01 Heazlewood Wilson
+wct01 Moniz Colapinto
+wct01 Andino Crisanto
+wct01 Wright Lau
+wct01 Medina Herdy
+wct01 Dora Duru
+wct01 Smith Callinan
+wct01 Wright Freestone
+wct01 Ferreira Christie
+wct01 Cardoso Rodrigues
+wct01 Carmichael Zietz
+wct01 Bourez Silva
+wct01 Florence Toledo
+wct01 Coffin Igarashi
+wct01 Moniz Heazlewood
+wct01 Andino Wright
+wct01 Medina Dora
+wct01 Smith Wright
+wct01 Ferreira Cardoso
+wct01 Carmichael Bourez
+wct01 Florence Coffin
+wct01 Andino Moniz
+wct01 Smith Medina
+wct01 Ferreira Carmichael
+wct01 Andino Florence
+wct01 Ferreira Smith
+wct01 Ferreira Andino
+wct02 Andre Flores Wright
+wct02 Smith Buchan Freestone
+wct02 Toledo Slater Huxtable
+wct02 Lau Ferreira Ibelli
+wct02 Willcox Wilson Duru
+wct02 Medina Callinan Mann
+wct02 Coffin Fioravanti Rodrigues
+wct02 Andino Moniz Bailey
+wct02 Christie Dora Carmichael
+wct02 Silva Bourez Heazlewood
+wct02 Florence Cardoso Mendes
+wct02 Crisanto Igarashi Wright
+wct02 Wright Freestone Mann
+wct02 Bailey Carmichael Huxtable
+wct02 Heazlewood Wright Mendes
+wct02 Rodrigues Ibelli Duru
+wct02 Slater Wilson
+wct02 Crisanto Rodrigues
+wct02 Coffin Bailey
+wct02 Callinan Bourez
+wct02 Toledo Ibelli
+wct02 Moniz Wright
+wct02 Willcox Andino
+wct02 Silva Carmichael
+wct02 Medina Heazlewood
+wct02 Cardoso Dora
+wct02 Wright Christie
+wct02 Florence Andre
+wct02 Ferreira Freestone
+wct02 Flores Lau
+wct02 Igarashi Buchan
+wct02 Smith Fioravanti
+wct02 Slater Crisanto
+wct02 Callinan Coffin
+wct02 Toledo Moniz
+wct02 Willcox Silva
+wct02 Medina Cardoso
+wct02 Florence Wright
+wct02 Ferreira Flores
+wct02 Smith Igarashi
+wct02 Callinan Slater
+wct02 Toledo Willcox
+wct02 Florence Medina
+wct02 Smith Ferreira
+wct02 Toledo Callinan
+wct02 Florence Smith
+wct02 Florence Toledo
+wct03 Florence Rodrigues Fioravanti
+wct03 Smith Andre Zietz
+wct03 Wilson Freestone Buchan
+wct03 Ferreira Ibelli Lau
+wct03 Toledo Crisanto Willcox
+wct03 Waida Medina Silva
+wct03 Dora Wright Bailey
+wct03 Coffin Flores Mendes
+wct03 Slater Andino Callinan
+wct03 Christie Carmichael Moniz
+wct03 Wright Duru Igarashi
+wct03 Bourez Colapinto Cardoso
+wct03 Igarashi Silva Willcox
+wct03 Fioravanti Cardoso Lau
+wct03 Buchan Moniz Bailey
+wct03 Callinan Mendes Zietz
+wct03 Wilson Andre
+wct03 Rodrigues Dora
+wct03 Duru Florence
+wct03 Carmichael Silva
+wct03 Freestone Ferreira
+wct03 Flores Cardoso
+wct03 Coffin Colapinto
+wct03 Andino Christie
+wct03 Toledo Ibelli
+wct03 Callinan Moniz
+wct03 Slater Wright
+wct03 Bourez Waida
+wct03 Fioravanti Medina
+wct03 Buchan Wright
+wct03 Igarashi Crisanto
+wct03 Mendes Smith
+wct03 Rodrigues Wilson
+wct03 Carmichael Duru
+wct03 Flores Freestone
+wct03 Andino Coffin
+wct03 Toledo Callinan
+wct03 Slater Bourez
+wct03 Buchan Fioravanti
+wct03 Igarashi Mendes
+wct03 Rodrigues Carmichael
+wct03 Flores Andino
+wct03 Slater Toledo
+wct03 Igarashi Buchan
+wct03 Flores Rodrigues
+wct03 Igarashi Slater
+wct03 Igarashi Flores
+wct04 Florence Andre Slater
+wct04 Igarashi Bailey Dora
+wct04 Crisanto Wilson Ibelli
+wct04 Ferreira Duru Morais
+wct04 Medina Silva Willcox
+wct04 Toledo Zietz Robinson
+wct04 Smith Christie Buchan
+wct04 Andino Moniz Freestone
+wct04 Callinan Coffin Fioravanti
+wct04 Lau Rodrigues Carmichael
+wct04 Mendes Flores Cardoso
+wct04 Wright Colapinto Bourez
+wct04 Robinson Freestone Carmichael
+wct04 Fioravanti Bourez Willcox
+wct04 Dora Cardoso Morais
+wct04 Slater Ibelli Buchan
+wct04 Ferreira Bailey
+wct04 Bourez Dora
+wct04 Florence Freestone
+wct04 Zietz Flores
+wct04 Ibelli Medina
+wct04 Slater Cardoso
+wct04 Smith Fioravanti
+wct04 Coffin Mendes
+wct04 Robinson Toledo
+wct04 Moniz Rodrigues
+wct04 Wright Lau
+wct04 Andino Colapinto
+wct04 Wilson Andre
+wct04 Crisanto Duru
+wct04 Callinan Silva
+wct04 Igarashi Christie
+wct04 Ferreira Bourez
+wct04 Florence Zietz
+wct04 Ibelli Slater
+wct04 Smith Coffin
+wct04 Moniz Robinson
+wct04 Andino Wright
+wct04 Wilson Crisanto
+wct04 Callinan Igarashi
+wct04 Florence Ferreira
+wct04 Ibelli Smith
+wct04 Andino Moniz
+wct04 Wilson Callinan
+wct04 Florence Ibelli
+wct04 Andino Wilson
+wct04 Florence Andino
+wct05 Igarashi Andre Crisanto
+wct05 Medina Bailey Buchan
+wct05 Dora Souza Andino
+wct05 Toledo Morais Zietz
+wct05 Ferreira Silva Herdy
+wct05 Florence Ibelli Ribeiro
+wct05 Cardoso Christie Smith
+wct05 Wilson Rodrigues Lau
+wct05 Slater Colapinto Coffin
+wct05 Moniz Wright Freestone
+wct05 Callinan Mendes Carmichael
+wct05 Bourez Duru Flores
+wct05 Zietz Andino Ribeiro
+wct05 Kymerson Smith Buchan
+wct05 Coffin Lau Crisanto
+wct05 Carmichael Freestone Flores
+wct05 Toledo Souza
+wct05 Slater Zietz
+wct05 Igarashi Christie
+wct05 Duru Wright
+wct05 Morais Ferreira
+wct05 Rodrigues Cardoso
+wct05 Wilson Lau
+wct05 Mendes Coffin
+wct05 Florence Kymerson
+wct05 Carmichael Dora
+wct05 Smith Freestone
+wct05 Colapinto Callinan
+wct05 Andino Bailey
+wct05 Silva Moniz
+wct05 Bourez Ibelli
+wct05 Medina Andre
+wct05 Toledo Slater
+wct05 Igarashi Duru
+wct05 Morais Rodrigues
+wct05 Wilson Mendes
+wct05 Florence Carmichael
+wct05 Smith Colapinto
+wct05 Andino Silva
+wct05 Medina Bourez
+wct05 Toledo Igarashi
+wct05 Morais Wilson
+wct05 Smith Florence
+wct05 Andino Medina
+wct05 Toledo Morais
+wct05 Smith Andino
+wct05 Toledo Smith
+wct06 Medina Duru Morais
+wct06 Ferreira Bailey Crisanto
+wct06 Igarashi Souza Mendes
+wct06 Smith Ibelli Couzinet
+wct06 Andino Dora Vries
+wct06 Toledo February Buchan
+wct06 Wilson Silva Andre
+wct06 Lau Coffin Cardoso
+wct06 Christie Rodrigues Callinan
+wct06 Zietz Slater Flores
+wct06 Bourez Wright Freestone
+wct06 Carmichael Colapinto Moniz
+wct06 Freestone Callinan Vries
+wct06 Moniz Buchan Couzinet
+wct06 Flores Morais Mendes
+wct06 Crisanto Cardoso Andre
+wct06 Smith Bailey
+wct06 Wright Duru
+wct06 Medina Colapinto
+wct06 Callinan Dora
+wct06 Andino Souza
+wct06 Silva Flores
+wct06 Lau Wilson
+wct06 Buchan Coffin
+wct06 Toledo February
+wct06 Cardoso Rodrigues
+wct06 Zietz Carmichael
+wct06 Bourez Christie
+wct06 Igarashi Morais
+wct06 Crisanto Moniz
+wct06 Slater Ibelli
+wct06 Ferreira Freestone
+wct06 Wright Smith
+wct06 Medina Callinan
+wct06 Andino Silva
+wct06 Buchan Lau
+wct06 Toledo Cardoso
+wct06 Zietz Bourez
+wct06 Igarashi Crisanto
+wct06 Ferreira Slater
+wct06 Medina Wright
+wct06 Andino Buchan
+wct06 Toledo Zietz
+wct06 Ferreira Igarashi
+wct06 Medina Andino
+wct06 Ferreira Toledo
+wct06 Medina Ferreira
+wct07 Bailey Medina Crisanto
+wct07 Buchan Andre Smith
+wct07 Igarashi Souza Ibelli
+wct07 Ferreira Vaast Zietz
+wct07 Duru Toledo Newton
+wct07 Andino Dora Drollet
+wct07 Slater Silva Morais
+wct07 Christie Cardoso Callinan
+wct07 Lau Wilson Rodrigues
+wct07 Colapinto Flores Bourez
+wct07 Wright Carmichael Mendes
+wct07 Moniz Freestone Coffin
+wct07 Zietz Smith Drollet
+wct07 Callinan Ibelli Newton
+wct07 Crisanto Bourez Morais
+wct07 Coffin Mendes Rodrigues
+wct07 Andre Igarashi
+wct07 Silva Buchan
+wct07 Wright Bailey
+wct07 Bourez Zietz
+wct07 Souza Ferreira
+wct07 Duru Cardoso
+wct07 Smith Christie
+wct07 Wilson Dora
+wct07 Vaast Andino
+wct07 Flores Carmichael
+wct07 Colapinto Callinan
+wct07 Medina Lau
+wct07 Toledo Mendes
+wct07 Moniz Crisanto
+wct07 Ibelli Coffin
+wct07 Freestone Slater
+wct07 Andre Silva
+wct07 Wright Bourez
+wct07 Souza Duru
+wct07 Smith Wilson
+wct07 Flores Vaast
+wct07 Medina Colapinto
+wct07 Moniz Toledo
+wct07 Ibelli Freestone
+wct07 Wright Andre
+wct07 Smith Souza
+wct07 Medina Flores
+wct07 Moniz Ibelli
+wct07 Wright Smith
+wct07 Medina Moniz
+wct07 Wright Medina
+wct09 Colapinto Igarashi Bailey
+wct09 Ferreira Morais Ibelli
+wct09 Fioravanti Dora Andino
+wct09 Couzinet Smith Zietz
+wct09 Toledo Duru Lacomare
+wct09 Medina Rodrigues Mignot
+wct09 Wright Cardoso Christie
+wct09 Wilson Buchan Andre
+wct09 Slater Mendes Coffin
+wct09 Moniz Lau Carmichael
+wct09 Crisanto Callinan Silva
+wct09 Freestone Flores Bourez
+wct09 Andino Mignot Andre
+wct09 Lacomare Bourez Zietz
+wct09 Bailey Ibelli Silva
+wct09 Coffin Carmichael Christie
+wct09 Smith Morais
+wct09 Flores Ibelli
+wct09 Lau Wright
+wct09 Callinan Rodrigues
+wct09 Lacomare Toledo
+wct09 Carmichael Cardoso
+wct09 Wilson Couzinet
+wct09 Freestone Igarashi
+wct09 Medina Mignot
+wct09 Buchan Coffin
+wct09 Moniz Crisanto
+wct09 Fioravanti Slater
+wct09 Andino Bailey
+wct09 Dora Colapinto
+wct09 Bourez Duru
+wct09 Ferreira Mendes
+wct09 Flores Smith
+wct09 Callinan Lau
+wct09 Lacomare Carmichael
+wct09 Freestone Wilson
+wct09 Buchan Medina
+wct09 Fioravanti Moniz
+wct09 Andino Dora
+wct09 Ferreira Bourez
+wct09 Flores Callinan
+wct09 Freestone Lacomare
+wct09 Fioravanti Buchan
+wct09 Ferreira Andino
+wct09 Flores Freestone
+wct09 Ferreira Fioravanti
+wct09 Flores Ferreira
+wct10 Cardoso Igarashi Christie
+wct10 Colapinto Andino Bailey
+wct10 Dora Ferreira Morais
+wct10 Ibelli Smith Colapinto
+wct10 Toledo Ribeiro Lau
+wct10 Medina Duru Blanco
+wct10 Freestone Andre Wright
+wct10 Silva Flores Fioravanti
+wct10 Wilson Coffin Mendes
+wct10 Crisanto Buchan Moniz
+wct10 Zietz Carmichael Callinan
+wct10 Rodrigues Slater Bourez
+wct10 Wright Blanco Christie
+wct10 Colapinto Fioravanti Moniz
+wct10 Mendes Morais Callinan
+wct10 Bailey Bourez Lau
+wct10 Smith Colapinto
+wct10 Colapinto Buchan
+wct10 Andino Andre
+wct10 Rodrigues Silva
+wct10 Toledo Ribeiro
+wct10 Carmichael Dora
+wct10 Igarashi Fioravanti
+wct10 Slater Zietz
+wct10 Medina Blanco
+wct10 Ibelli Bourez
+wct10 Crisanto Flores
+wct10 Mendes Wright
+wct10 Ferreira Morais
+wct10 Coffin Cardoso
+wct10 Freestone Duru
+wct10 Bailey Wilson
+wct10 Smith Colapinto
+wct10 Andino Rodrigues
+wct10 Toledo Carmichael
+wct10 Igarashi Slater
+wct10 Ibelli Medina
+wct10 Crisanto Mendes
+wct10 Ferreira Coffin
+wct10 Freestone Bailey
+wct10 Smith Andino
+wct10 Igarashi Toledo
+wct10 Ibelli Crisanto
+wct10 Ferreira Freestone
+wct10 Smith Igarashi
+wct10 Ferreira Ibelli
+wct10 Ferreira Smith
+wct11 Bailey Coffin Igarashi
+wct11 Andino Colapinto Andre
+wct11 Toledo Silva Christie
+wct11 Crisanto Smith Morais
+wct11 Medina Cardoso deVault
+wct11 Kemper Ferreira Rodrigues
+wct11 Wright Freestone Fioravanti
+wct11 Buchan Mendes Florence
+wct11 Lau Ibelli Flores
+wct11 Bourez Slater Zietz
+wct11 Duru Wilson Carmichael
+wct11 Moniz Callinan Dora
+wct11 Igarashi deVault Fioravanti
+wct11 Florence Zietz Morais
+wct11 Dora Christie Flores
+wct11 Andre Carmichael Rodrigues
+wct11 Ferreira Andre
+wct11 Crisanto Coffin
+wct11 Dora Wright
+wct11 Wilson Cardoso
+wct11 Christie Toledo
+wct11 Freestone Callinan
+wct11 Moniz Kemper
+wct11 Slater Duru
+wct11 Medina deVault
+wct11 Ibelli Carmichael
+wct11 Florence Lau
+wct11 Bailey Igarashi
+wct11 Mendes Smith
+wct11 Colapinto Buchan
+wct11 Bourez Silva
+wct11 Andino Zietz
+wct11 Ferreira Crisanto
+wct11 Dora Wilson
+wct11 Freestone Christie
+wct11 Slater Moniz
+wct11 Medina Ibelli
+wct11 Florence Bailey
+wct11 Colapinto Mendes
+wct11 Bourez Andino
+wct11 Ferreira Dora
+wct11 Slater Freestone
+wct11 Medina Florence
+wct11 Colapinto Bourez
+wct11 Ferreira Slater
+wct11 Medina Colapinto
+wct11 Ferreira Medina
