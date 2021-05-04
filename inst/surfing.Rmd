@@ -312,7 +312,12 @@ a high number of manoeuvres at their disposal and others are more
 suited to surfers who regularly surf bigger waves. 
 
 ```{r}
-head(read.table("players.txt",header=TRUE))
+players <- read.table("players.txt",header=TRUE)
+head(players)
+table(players$nation)
+players$name
+wildcards <- players$name[-(1:36)]
+wildcards
 ```
 
 
@@ -327,13 +332,20 @@ The first line shows that, at one of the heats in `wct01`, `Colapinto`
 came first, `Bailey` second, and `Wright` came third.  The last line
 shows that, at `wct11`, `Ferreira` came first and `Medina` came
 second.  We can convert this dataset into a Plackett-Luce likelihood
-function as follows:
+function but first have to remove the wildcards and also player Vries
+whose maximum likelihood strength is zero.
 
-```{r definerowing, cache=TRUE}
-
-
+```{r definesurfing, cache=TRUE}
+remove <- c(wildcards, "Vries")
 surfing <- hyper2()
-for(v in o){surfing <- surfing + race(v[-1])} # first entry is venue
+for(v in o){
+   r <- v[-1]  # first entry is venue
+   numberretained <- sum(!(r %in% remove))
+   if(numberretained > 1){
+     r <- r[!(r %in% remove)]
+     surfing <- surfing + race(r)
+    }
+}	
 summary(surfing)
 ```
 
