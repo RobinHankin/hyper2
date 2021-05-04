@@ -92,12 +92,12 @@ names(o) <- rownames(skating_table)
 
 ordertrans(o)
 
-#rL <- maxp(volvo2014)   # ranks Likelihood
-#rL[] <- rank(-maxp(volvo2014))
+rL <- maxp(volvo)   # ranks Likelihood
+rL[] <- rank(-maxp(volvo))
 
-#r1 <- volvo_table_2014[,1]  # ranks race 1
-#names(r1) <- rownames(volvo_table_2014)
-#ordertransplot(rL,r1)
+r1 <- volvo_table[,1]  # ranks race 1
+names(r1) <- rownames(volvo_table)
+ordertransplot(rL,r1,xlab="likelihood rank, all races",ylab="rank, race 1")
 
 }
 
