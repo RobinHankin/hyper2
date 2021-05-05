@@ -68,6 +68,9 @@ dotchart(rowing_maxp)
 dotchart(log10(rowing_maxp))
 ```
 
+```{r conscheck, cache=TRUE,fig.cap="consistency check for rowing function"}
+consistency(rowing)
+```
 
 Figure \@ref(fig:showrowingmaxppie) shows that many competitors have
 very small strength and figure \@ref(fig:showrowingmaxppielog) shows
