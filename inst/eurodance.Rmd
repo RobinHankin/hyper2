@@ -11,12 +11,12 @@ options("digits" = 5)
 abbreviated <- TRUE  # change to FALSE for full names
 ```
 
-The file `eurodance_2008.txt`, used below, is copied from
-"Eurovision Dance Contest 2008," Wikipedia, accessed March 31, 2021.
+The file `eurodance2008.txt`, used below, is copied from
+"Eurovision Dance Contest 2008", Wikipedia, accessed March 31, 2021.
 First we specify the matrix as appearing in the Wikipedia page:
 
 ```{r, specifymatrix}
-eurodance_table <- as.matrix(read.table("eurovision_dance_2008.txt"))
+eurodance_table <- as.matrix(read.table("eurodance2008.txt"))
 eurodance_table
 o <- eurodance_table # saves typing
 ```
@@ -46,7 +46,15 @@ eurodance_maxp
 pie(eurodance_maxp)
 ```
 
-Note the dominance of Poland.  Now we consider the jury's vote:
+Note the dominance of Poland.  We verify consistency:
+
+```{r,cache=TRUE}
+consistency(eurodance)
+```
+
+
+
+Now we consider the jury's vote:
 
 ```{r}
 (jj <- o[,2])
