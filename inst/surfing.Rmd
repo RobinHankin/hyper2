@@ -332,8 +332,8 @@ The first line shows that, at one of the heats in `wct01`, `Colapinto`
 came first, `Bailey` second, and `Wright` came third.  The last line
 shows that, at `wct11`, `Ferreira` came first and `Medina` came
 second.  We can convert this dataset into a Plackett-Luce likelihood
-function but first have to remove the wildcards and also player Vries
-whose maximum likelihood strength is zero.
+function but first have to remove the wildcards and also player
+`Vries` whose maximum likelihood strength is zero.
 
 ```{r definesurfing, cache=TRUE}
 remove <- c(wildcards, "Vries")
@@ -356,6 +356,12 @@ competitors.  Our first step is to find the evaluate:
 surfing_maxp <- maxp(surfing)
 surfing_maxp
 sort(surfing_maxp)
+```
+
+and the second step is to establish its consistency:
+
+```{r consistencycheck,cache=TRUE}
+consistency(surfing)
 ```
 
 and we may display it using a dot chart:
