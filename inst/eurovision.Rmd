@@ -122,6 +122,14 @@ eurovision_maxp
 pie(eurovision_maxp)
 ```
 
+Observe the small estimated strength for Czechoslovakia (`CZ`) at
+about `1e-06`.  This is consistent with the second row of `preference`
+which shows that noone gave them any points.
+
+```{r,consistencycheck,cache=TRUE,fig.cap="consistency check: maximum likelihood obtained two different ways.  Exact agreement corresponds to points lying on the diagonal line.  Note the small estimated strength of Czechoslovakia"}
+consistency(eurovision)
+```
+
 Now we can check null of equal strengths:
 
 ```{r,label=equalptesteurovision,cache=TRUE}
