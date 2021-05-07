@@ -282,34 +282,45 @@ https://www.worldsurfleague.com/athletes/tour/mct?year=2019.
 
 # Introduction
 
-Competitive surfing involves surfers competing against one or two
-other surfers in heats lasting 30-50 minutes.  Points are awarded on a
-10-point scale: each of five judges awards points to a surfer riding a
-particular wave.
+Surfing is a popular and growing activity in terms of both
+participation and viewing.  Competitive surfing involves surfers
+competing against one or two other surfers in heats lasting 30-50
+minutes.  Points are awarded on a 10-point scale: each of five judges
+awards points to a surfer riding a particular wave.
 
-The five judges rate each of the waves ridden by a surfer and award
-points based on a range of subjective criteria including commitment
+The typical format is as follows.  Up to four surfers---the
+competitors---are in the water simultaneously, watched by up to five
+judges.  Subject to surfing etiquette, competitors are free to catch a
+wave at their discresion within the heat's time window, typically
+20-30 minutes.  The judges rate each wave ride and award points to the
+surfer based on a range of subjective criteria including commitment
 and degree of difficulty, innovation and progress of manoeuvres,
-combination of major manoeuvre, variety of manoeuvres and speed, power
-and flow.  The top score and bottom score among the five judges are
-removed and the remaining three judges' scores are averaged to give
-the final score for the surfer for that wave.
+variety of manoeuvres and speed, power and flow.  The top score and
+bottom score among the five judges are removed and the remaining three
+judges' scores are averaged to give the final score for the surfer for
+that wave.  Each surfer's aggregate score is given by the average of
+the two highest-scoring waves.  The winner of the tournament is the
+surfer with the highest aggregate score.
 
-Each surfer's aggregate score is given by the average of the two
-highest-scoring waves.  The winner of the tournament is the surfer
-with the highest aggregate score.
+Such scoring systems are designed to account for the random nature of
+wave quality while reflecting competitors' abilities fairly.
+Differences in wave quality between successive days mean that direct
+comparison of scores between one day and another are not informative
+about competitors' abilities as they are strongly dependent on details
+of wave quality at the time of the competition.  However, for a
+particular heat, the order statistic---that is, which competitor
+scored most highly, second highest, and third---is informative about
+competitors' abilities: the wave environment is common to each surfer.
 
 The World Surf League (WSL) is the main governing body of surfing
 competitions.  The WSL conducts a world tour in which the best ranked
 34 surfers compete; in addition, at each tour venue, two "wildcard"
-surfers also enter the competition.
-
-
-The 2019 WSL tour saw competitive events held at eleven different surf
-locations.  In each of these locations the wave type of wave
-differs.  Some events are known to be more favourable to those who have
-a high number of manoeuvres at their disposal and others are more
-suited to surfers who regularly surf bigger waves. 
+surfers also enter the competition.  The 2019 WSL tour saw competitive
+events held at eleven different surf locations.  In each of these
+locations the wave type of wave differs.  Some events are known to be
+more favourable to those who have a high number of manoeuvres at their
+disposal and others are more suited to surfers who regularly surf
+bigger waves.
 
 ```{r}
 players <- read.table("players.txt",header=TRUE)
@@ -366,7 +377,7 @@ consistency(surfing)
 
 and we may display it using a dot chart:
 
-```{r showsurfingmaxppie, echo=FALSE, fig.cap="dot chart of result"}
+```{r showsurfingmaxppie, echo=FALSE, fig.height=8,fig.cap="dot chart of result"}
 dotchart(surfing_maxp)
 dotchart(log10(surfing_maxp))
 pie(surfing_maxp)
