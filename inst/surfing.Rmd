@@ -1,6 +1,7 @@
 ---
 title: "surfing"
 output: bookdown::html_document2
+bibliography: chess.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -10,6 +11,13 @@ library("hyper2")
 library("magrittr")
 options("digits" = 5)
 ```
+
+@fischer1969
+
+[@fischer1969]
+
+[-@fischer1969]
+
 
 
 (This document is in two parts.  The first is a slightly edited
@@ -286,21 +294,26 @@ Surfing is a popular and growing activity in terms of both
 participation and viewing.  Competitive surfing involves surfers
 competing against one or two other surfers in heats lasting 30-50
 minutes.  Points are awarded on a 10-point scale: each of five judges
-awards points to a surfer riding a particular wave.
+awards points to a surfer riding a particular wave.  The World Surf
+League (WSL) is the main governing body of surfing competitions.  The
+WSL conducts a world tour in which the best ranked 34 surfers compete;
+in addition, at each tour venue, two "wildcard" surfers also enter the
+competition, who are ignored here.  The 2019 WSL tour saw competitive
+events held at eleven different surf locations.
 
 The typical format is as follows.  Up to four surfers---the
 competitors---are in the water simultaneously, watched by up to five
 judges.  Subject to surfing etiquette, competitors are free to catch a
-wave at their discresion within the heat's time window, typically
+wave at their discretion within the heat's time window, typically
 20-30 minutes.  The judges rate each wave ride and award points to the
 surfer based on a range of subjective criteria including commitment
-and degree of difficulty, innovation and progress of manoeuvres,
-variety of manoeuvres and speed, power and flow.  The top score and
-bottom score among the five judges are removed and the remaining three
-judges' scores are averaged to give the final score for the surfer for
-that wave.  Each surfer's aggregate score is given by the average of
-the two highest-scoring waves.  The winner of the tournament is the
-surfer with the highest aggregate score.
+and degree of difficulty, innovation and variety of manoeuvres, and
+transition between manoeuvres.  The top score and bottom score among
+the five judges are removed and the remaining three judges' scores are
+averaged to give the final score for the surfer for that wave.  Each
+surfer's aggregate score is given by the average of the two
+highest-scoring waves.  The winner of the tournament is the surfer
+with the highest aggregate score.
 
 Such scoring systems are designed to account for the random nature of
 wave quality while reflecting competitors' abilities fairly.
@@ -312,15 +325,80 @@ particular heat, the order statistic---that is, which competitor
 scored most highly, second highest, and third---is informative about
 competitors' abilities: the wave environment is common to each surfer.
 
-The World Surf League (WSL) is the main governing body of surfing
-competitions.  The WSL conducts a world tour in which the best ranked
-34 surfers compete; in addition, at each tour venue, two "wildcard"
-surfers also enter the competition.  The 2019 WSL tour saw competitive
-events held at eleven different surf locations.  In each of these
-locations the wave type of wave differs.  Some events are known to be
-more favourable to those who have a high number of manoeuvres at their
-disposal and others are more suited to surfers who regularly surf
-bigger waves.
+
+# Bradley-Terry
+
+\subsection{Bradley-Terry and generalizations for rank
+statistics}\label{bradley-terry-and-generalizations-for-rank-statistics}
+
+The Bradley-Terry model [@bradley1954] assigns non-negative strengths
+$p_1,\ldots, p_n$ to each of $n$ competitors in such a way that the
+probability of $i$ beating $j\neq i$ in pairwise competition is
+$\frac{p_i}{p_i+p_j}$; it is conventional to normalize so that $\sum
+p_i=1$.  Further, we use a generalization due to [@luce1959], in which
+the probability of competitor~$i$ winning in a field of $\left\lbrace
+1,\ldots, n\right\rbrace$ is $\frac{p_i}{p_1+\cdots +p_n}$.  Noting
+that there is information in the whole of the finishing order, and not
+just the first across the line, we can follow [@plackett1975] and
+consider the runner-up to be the winner among the remaining
+competitors, and so on down the finishing order. Without loss of
+generality, if the order of finishing were $1,2,3,4,5$, then a
+suitable Plackett-Luce likelihood function would be
+
+\begin{equation}\label{competitors_1_to_5_likelihood}
+\frac{p_1}{p_1+p_2+p_3+p_4+p_5}\cdot
+\frac{p_2}{p_2+p_3+p_4+p_5}\cdot
+\frac{p_3}{p_3+p_4+p_5}\cdot
+\frac{p_4}{p_4+p_5}\cdot
+\frac{p_5}{p_5}
+\end{equation}
+
+and this would be a forward ranking Plackett-Luce model in the
+terminology of [@johnson2020].  A slight generalization allows the
+incorporation of non-finishers (DNF etc). If, say, competitors 4 and 5
+did not finish, we would have
+
+\begin{equation}\label{competitors_1_to_3_only_finished}
+\frac{p_1}{p_1+p_2+p_3+p_4+p_5}\cdot
+\frac{p_2}{p_2+p_3+p_4+p_5}\cdot
+\frac{p_3}{p_3+p_4+p_5}
+\end{equation}
+
+(observe how this likelihood function, while informative about
+$p_4+p_5$, is uninformative about $p_4\left|p_4+p_5\right.$).  We now
+use a technique due to Hankin (2010, 2017) and introduce
+fictional (reified) entities whose nonzero Bradley-Terry strength
+helps certain competitors or sets of competitors under certain
+conditions. The canonical example would be the home-ground advantage
+in association football.  If players (teams) $1,2$ with strengths
+$p_1,p_2$ compete, and if our observation were $a$ home wins and $b$
+away wins for team $1$, and $c$ home wins and $d$ away wins for
+team~$2$, then a suitable likelihood function would be
+
+\[
+\left(\frac{p_1+p_H}{p_1+p_2+p_H}\right)^a
+\left(\frac{p_1}{p_1+p_2+p_H}\right)^b
+\left(\frac{p_2+p_H}{p_1+p_2+p_H}\right)^c
+\left(\frac{p_2+p_H}{p_1+p_2+p_H}\right)^d,
+\]
+
+\noindent where $p_H$ is a quantification of the beneficial home
+ground effect.  Similar techniques have been used to account for the
+first-move advantage in chess, and effective coordination between
+members of doubles tennis teams; we may use a similar device to
+account for (e.g.) wet conditions in Formula 1.  
+
+
+# Literature Review and previous work
+
+Most previous research into competitive surfing is limited to the
+scoring of ariel manoeuvres compared with other manoeuvres in events
+[10] and analysis in the difference in average wave scores for the top
+10 and bottom 10 surfers using a One-way ANOVA method [11].
+
+
+
+
 
 ```{r}
 players <- read.table("players.txt",header=TRUE)
