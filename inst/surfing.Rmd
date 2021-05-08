@@ -12,14 +12,6 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-@fischer1969
-
-[@fischer1969]
-
-[-@fischer1969]
-
-
-
 (This document is in two parts.  The first is a slightly edited
 version of Tim Driver's dissertation on surfing statistics, the second
 a short analysis---using new software not available to Tim---of a
@@ -291,29 +283,30 @@ https://www.worldsurfleague.com/athletes/tour/mct?year=2019.
 # Introduction
 
 Surfing is a popular and growing activity in terms of both
-participation and viewing.  Competitive surfing involves surfers
-competing against one or two other surfers in heats lasting 30-50
-minutes.  Points are awarded on a 10-point scale: each of five judges
-awards points to a surfer riding a particular wave.  The World Surf
-League (WSL) is the main governing body of surfing competitions.  The
-WSL conducts a world tour in which the best ranked 34 surfers compete;
-in addition, at each tour venue, two "wildcard" surfers also enter the
-competition, who are ignored here.  The 2019 WSL tour saw competitive
-events held at eleven different surf locations.
+participation and viewing [@warshaw2010].  Competitive surfing
+involves surfers competing against one or two other surfers in heats
+lasting 30-50 minutes [@booth1995].  Points are awarded on a 10-point
+scale: each of five judges awards points to a surfer riding a
+particular wave.  The World Surf League (WSL) is the main governing
+body of surfing competitions [@wsl].  The WSL conducts a world tour in
+which the best ranked 34 surfers compete; in addition, at each tour
+venue, two "wildcard" surfers also enter the competition, who are
+ignored here.  The 2019 WSL tour saw competitive events held at eleven
+different surf locations.
 
 The typical format is as follows.  Up to four surfers---the
 competitors---are in the water simultaneously, watched by up to five
 judges.  Subject to surfing etiquette, competitors are free to catch a
 wave at their discretion within the heat's time window, typically
 20-30 minutes.  The judges rate each wave ride and award points to the
-surfer based on a range of subjective criteria including commitment
-and degree of difficulty, innovation and variety of manoeuvres, and
-transition between manoeuvres.  The top score and bottom score among
-the five judges are removed and the remaining three judges' scores are
-averaged to give the final score for the surfer for that wave.  Each
-surfer's aggregate score is given by the average of the two
-highest-scoring waves.  The winner of the tournament is the surfer
-with the highest aggregate score.
+surfer based on a range of subjective criteria such as stylish
+execution and transition of manoeuvres, but also credit elements such
+as the difficulty and novelty of the performance.  The top score and
+bottom score among the five judges are removed and the remaining three
+judges' scores are averaged to give the final score for the surfer for
+that wave.  Each surfer's aggregate score is given by the average of
+the two highest-scoring waves.  The winner is the surfer with the
+highest aggregate score.
 
 Such scoring systems are designed to account for the random nature of
 wave quality while reflecting competitors' abilities fairly.
@@ -398,8 +391,6 @@ scoring of ariel manoeuvres compared with other manoeuvres in events
 
 
 
-
-
 ```{r}
 players <- read.table("players.txt",header=TRUE)
 head(players)
@@ -473,3 +464,6 @@ of the package.
 ```{r,label=savesurfiningingdataset}
 save(surfing,surfing_maxp,file="surfing.rda")
 ```
+
+
+# references
