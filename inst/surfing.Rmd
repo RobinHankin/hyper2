@@ -12,272 +12,8 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-(This document is in two parts.  The first is a slightly edited
-version of Tim Driver's dissertation on surfing statistics, the second
-a short analysis---using new software not available to Tim---of a
-dataset he provided).
-
-Abstract: As surfing continuous to grow as a professional sport, there
-is a lack of analysis on competition results. This report applies
-generalized Bradley-Terry models to get the maximum likelihood of
-surfer’s strengths in competitions with powerful waves. By gathering
-competition data, analysis can be conducted in R using the `hyper2`
-package, resulting in the surfer’s strengths. Using this methodology,
-weaker surfers were able to be identified when considering all
-powerful wave locations, however, there was not enough data to get a
-significant result for single events. Furthermore, it is hoped that a
-result forecasting model can be produced using similar techniques.
-
-Competitive surfing involves surfers competing against one or two
-other surfers in heats lasting 30-50 minutes. Points are awarded on a
-10-point scale, with [0.0- 1.9] a poor score, [2.0-3.9] a fair score,
-[4.0 - 5.9] an average score, [6.0 – 7.9] a good score and finally
-[8.0 – 10.0] an Excellent score. The highest two waves ridden by an
-individual are then combined to produce an individual heat total, the
-highest of which then wins the heat [1].
-
-Five judges rate each of the waves ridden by a surfer and award points
-based off of a range of criteria including commitment and degree of
-difficulty, innovation and progress of manoeuvres, combination of
-major manoeuvre, variety of manoeuvres and speed, power and flow
-[1]. The top score and bottom score of the judges are removed and the
-remaining three judges scores are averaged to give the final score for
-the surfer.
-
-Structure of the event is as follows, initially there is a seeding
-round consisting of 12 heats with three surfers competing in each
-heat. The top two surfers of each heat advance to the round of 32
-while the 12 surfers who failed to finish first or second are placed
-in an elimination round. The elimination round is again four,
-three-man heats with last placed in each heat being eliminated from
-the competition. Surfers are then in man on man heats, with the loser
-of each heat eliminated from the competition. This format then repeats
-with a round of 16, quarter finals, semi-finals and finally the
-finals.
-
-The World Surf League (WSL) is the main governing body of surfing
-competitions. The WSL conducts a world tour that the best ranked 34
-surfers compete in. At each tour venue, two wild cards also enter the
-competition. The wildcard surfers are chosen from the main sponsors of
-the event and the winner of a local competition that is held before
-the main event starts. On occasion, if or more of the 34 surfers are
-injured, an injury replacement surfer will be selected by the WSL to
-be added to the competition to keep the heat format the same.
-
-The 2019 tour saw competitive events held at eleven different surf
-locations. In each of these locations the wave type of wave
-differs. Some events are known to be more favourable to those who have
-a high number of manoeuvres at their disposal and others are more
-suited to surfers who regularly surf bigger waves. Of the 11 locations
-in 2019, three competitions stand out as the waves at locations are
-known for the size and power. At these locations, judges score riding
-inside the wave ("tubed") higher than other turn or air style
-manoeuvres. The locations are Pipeline in Hawaii, Teahupo’o in Tahiti
-and Margaret River in Western Australia.
-
-At these locations, ocean swell comes from deep water and hits shallow
-reefs. The lower part of the wave slows down due to the interference
-with the ocean floor while the top part keeps a similar velocity and
-eventually the wave breaks. As the top part of the wave is moving
-forward at a larger velocity, it breaks closer to the reef, causing
-there to be a gap between the top part and the bottom close to the
-surface of the water [2].  Surfing in this critical zone is when you
-are getting tubed and subsequently scored highly, due to the
-commitment and degree of difficulty involved.
-
-Analysis on competitive surfing has not attracted much attention since
-surfing became a professional sport 1960s [3]. With the recent
-inclusion in the Olympic games, surfing continues to grow in
-professionalism. High-level analysis of surfing needs to develop to
-allow new insights to be discovered about surfers performance in
-competitions to continue this trend of professionalism in the sport.
 
 
-[discussion of Bradley-Terry elided]
-
-# Literature Review
-
-Currently relevant research into competitive surfing has been limited
-to the scoring of ariel manoeuvres compared with other manoeuvres in
-events [10] and analysis in the difference in average wave scores for
-the top 10 and bottom 10 surfers using a One-way ANOVA method [11].
-
-In the work discussed in the paper "Analysis of Manoeuvres and Scoring
-in Competitive Surfing" [10], analysis was done on the waves ridden in
-the quarter finals, semi-finals and final heats of the 2012 World
-Championship Tour at all locations. On this year of the Tour, Western
-Australia was not included and so Margaret River was not surfed. Waves
-which involved a tube or arial manoeuvre were shown to score higher
-than doing other turn style on the wave across all locations and have
-a much lower completion rate than other manoeuvres. This shows the
-importance for getting tubed at elite surfing levels to win heats and
-thus win competitions. As this research piece is focusing on the Tour
-locations that have waves with higher opportunities to get tubed, poor
-results here are indicative of poor ability to get tubed.
-
-In the research done in the paper "Scoring Analysis of the Men's 2013
-World Championship Tour of Surfing" [11], scores from the top 10
-surfers and bottom 10 surfers 2013 World Championship Tour are
-analysed to determine if there is any difference in the average wave
-score and average total heat score. A one-way ANOVA was performed on
-the two groups to determine if there was any major discrepancies. It
-was found that the top 10 surfers had a score of 14.7% higher than the
-bottom 10 surfers and the standard deviation of the top surfers score
-was 9.39% less than that of the bottom 10 surfers. The authors then
-took this work to surf coaches to highlight the importance of
-performing better as an increase in the average wave score by 10% for
-a bottom ranked surfer would greatly improve their overall ranking on
-the Tour.
-
-The method of approach in this research report is to use Bradley-Terry
-models [4] for paired comparisons to analyse the results of
-heats.  Bradley-Terry models are popular for paired comparisons between
-competitors.  As earlier heats in the competition have three man heats
-a general Bradley Terry model will be used to look at this comparison.
-
-Existing research has been conducted on other sports using
-Bradley-Terry models, including tennis [12], baseball [13] and
-American football [14].
-
-The existing research conducted by McHale and Morton [12] titled "A
-Bradley-Terry type model for forecasting tennis match results" looked
-at the top tier results from the Association of Tennis Professionals
-(ATP) for 9 seasons between 2000-2008. The data used was the amount of
-games in sets won by competitors when playing against other
-competitors. Information about the surface that the court was played
-on, be it clay, grass or a hardcourt was also included and a form
-decaying factor based of previous results. Once
-
-the modified Bradley-Terry models were applied to the data, the model
-produced an alternative ranking system. Five of the top 15 official
-ATP ranking were not included in the top 15 players returned by the
-model. They then go on to use this new ranking to forecast the results
-of upcoming tennis matches.
-
-The existing research by Butler and Whelan [14] describes modification
-to the original Bradley-Terry model and applies the model to American
-Football results in the round robin stages of the 1998 Western
-Athletic conference. In the round robin stage, teams compete against
-all the teams in their division, along with one team in the other
-division. The divisions are separated geographically, and each
-contained 8 teams. The model initially identified if any pairs of
-teams i and j were strictly better than the other through analysing
-previous matchups. If results existed that did not display
-transitivity relationship, then Bradley-Terry models were applied to
-these subsets in order to determine a superior team.
-
-The original Bradley-Terry model developed only considered paired data
-and did not describe a case with more than two competitors. This is
-appropriate for the later heats but fails in the earlier three-man
-heat competitions. A general model needs to be applied as described by
-Luce [7], to consider the case for three or more.
-
-The generalized Bradley-Terry model has been put into R under the
-Hyper2 package by Robin K. S. Hankin [15] and has since been used for
-a number of projects including analysis of competitive cooking and
-rowing [9]. The research done on the rowing piece analysed the men’s
-single scull in the 2016 Olympic games. 25 races were run at this
-competition with 31 rowers entering, each with a maximum of six rowers
-competing per. If a rower won the race, be it a millisecond or a
-minute, they were still recorded the same as the only concern of the
-model is the placing in whish the rowers finished. The maximum
-likelihood estimate for each rower winning the event was produced,
-showing an alternative ranking system to the knock out format at the
-Olympics. The models ranking had Drysdale first, Synek second and
-Martin third. The actual results in the final were Drysdale first,
-Martin second and Synek Third.
-
-
-# Research Question:
-
-The purpose of this research report is to do analysis using
-generalized Bradley-Terry models on the 2019 WSL Tour at competition
-locations known to have powerful surf. These locations are Margaret
-River, Teahupo'o and Pipeline. Generalized Bradley-Terry models will
-be used on the surfer's heat results.
-
-Analysis will be done on each competition individually, a combination
-of Margaret River and Teahupo'o as well as a combination of all three
-locations. Each individual location will be analysed to create an
-alternative ranking system to the competition knockout format. All
-three locations will be analysed together to determine a ranking
-system for the best surfer in powerful waves, based off these
-locations having waves of consequence. Margaret River and Teahupo’o
-will be analysed together to investigate an early model used for
-forecasting results at these locations, specifically can the results
-from these two locations be used to forecast the pipeline competition
-results.
-
-[1] "Rules and Regulations" [Online]. Available:
-https://www.worldsurfleague.com/pages/rules- and-regulations.
-
-[2] M. Longuet-Higgins, "Progress Toward Understanding How Waves
-Break," in Twenty-First Symposium on Naval Hydrodynamics, National
-Research Council, Naval Studies Board, Division on Engineering and
-Physical Sciences, Commission on Physical Sciences, Mathematics, and
-Applications, 1997, pp. 7-29.
-
-[3] D. Booth, "Ambiguities in Pleasure and Discipline: The Development
-of Competitive Surfing," Journal of Sport HIstory, 1995.
-
-[4] E. M. Terry and A. R. Bradley, "Rank Analysis of Incomplete
-Block Designs: I. The Method of Paired Comparisons," Biometrika,
-pp. 324-345, 1952.
-
-[5] D. R. Hunter, "MM algorithms for generalized Bradley-Terry
-models," The annals of Statistics, pp. 384-406, 2004.
-
-[6] H. Turner and D. Firth, "Bradley-Terry Models in R: The
-BradleyTerry2," Journal of Statistical Software, 2012.
-
-[7] R. D. Luce, Individual choice behaviour: A theoretical analysis,
-New York: Wiley, 1959.
-
-[8] R. Plackett, "The Analysis of Permutations," Journal of the Royal
-Statistical Society, pp. 193-202, 1975.
-
-[9] R. K. S. Hankin, "Partial rank data with the hyper2 package:
-likelihood functions for generalized Bradley-Terry," R Journal, 2017.
-
-[10] L. Lundgren, R. Newton, T. Tran, M. Dunn, S. Nimphius and
-J. Sheppard, "Analysis of Manoeuvres and Scoring in Competitive
-Surfing," International Journal of Sports Science & Coachin, 2014.
-
-[11] O. Farley, E. Raymond, J. Secomb, B. Ferrier and L. Lundgren,
-"Scoring Analysis of the Men’s 2013 World Championship Tour of
-Surfing," The International Journal of Aquatic Research and Education,
-2015.
-
-[12] I. McHale and A. Morton, "A Bradley-Terry type model for
-forecasting tennis match results," International Journal of
-Forecasting, pp. 619-630, 2011.
-
-[13] H. Turner and D. Firth, "Bradley-Terry Models in R: The
-BradleyTerry2 Package," Journal of Statistical Software, 2011.
-
-[14] K. Butler and W. T. John , "The existence of maximum likelihood
-estimates in the Bradley-Terry model and its extensions," 2004.
-
-[15] R. K. S. Hankin, "A Generalization of the Dirichlet
-Distribution," Journal of Statistical Software - Vol 33 - Issue 11,
-2010.
-
-[16] "Margaret River," World Surf League, 2019. [Online]. Available:
-https://www.worldsurfleague.com/events/2019/mct/2913/margaret-river-pro.
-
-[17] World Surf League, "Teahupo'o,"
-August-September 2019. [Online]. Available:
-https://www.worldsurfleague.com/events/2019/mct/2919/tahiti-pro-teahupoo.
-
-[18] World Surf League, "Pipeline,"
-December 2019. [Online]. Available:
-https://www.worldsurfleague.com/events/2019/mct/2927/billabong-pipe-masters.
-
-[19] "2019 Surfers," World Surf League, 2019. [Online]. Available:
-https://www.worldsurfleague.com/athletes/tour/mct?year=2019.
-
-
-[Tim's work ends, my work starts]
 
 
 # Introduction
@@ -318,11 +54,23 @@ particular heat, the order statistic---that is, which competitor
 scored most highly, second highest, and third---is informative about
 competitors' abilities: the wave environment is common to each surfer.
 
+# Previous related work
+
+@farley2013 analyse surfing results using one-way ANOVA techniques and
+report comparisons between the top 10 and bottom 10 surfers in the
+2013 World Championship Tour and conclude that the top-ranked athletes
+are more consistent than the lower-ranked group. They report that "To
+date, only a limited number of research studies have reported on the
+results of competitive surfing" [p44], and the analysis presented here
+is hoped to change that.
+
+Other statistical research into competitive surfing appears to focus
+on the scoring of aerial manoeuvres compared with other manoeuvres in
+events.  @lundgren2014, for example, report that aerial manoeuvres
+scored higher than other stunts but had a lower completion rate, a
+theme we return to below.
 
 # Bradley-Terry
-
-\subsection{Bradley-Terry and generalizations for rank
-statistics}\label{bradley-terry-and-generalizations-for-rank-statistics}
 
 The Bradley-Terry model [@bradley1954] assigns non-negative strengths
 $p_1,\ldots, p_n$ to each of $n$ competitors in such a way that the
@@ -347,26 +95,14 @@ suitable Plackett-Luce likelihood function would be
 \end{equation}
 
 and this would be a forward ranking Plackett-Luce model in the
-terminology of [@johnson2020].  A slight generalization allows the
-incorporation of non-finishers (DNF etc). If, say, competitors 4 and 5
-did not finish, we would have
-
-\begin{equation}\label{competitors_1_to_3_only_finished}
-\frac{p_1}{p_1+p_2+p_3+p_4+p_5}\cdot
-\frac{p_2}{p_2+p_3+p_4+p_5}\cdot
-\frac{p_3}{p_3+p_4+p_5}
-\end{equation}
-
-(observe how this likelihood function, while informative about
-$p_4+p_5$, is uninformative about $p_4\left|p_4+p_5\right.$).  We now
-use a technique due to Hankin (2010, 2017) and introduce
-fictional (reified) entities whose nonzero Bradley-Terry strength
-helps certain competitors or sets of competitors under certain
-conditions. The canonical example would be the home-ground advantage
-in association football.  If players (teams) $1,2$ with strengths
-$p_1,p_2$ compete, and if our observation were $a$ home wins and $b$
-away wins for team $1$, and $c$ home wins and $d$ away wins for
-team~$2$, then a suitable likelihood function would be
+terminology of [@johnson2020].  We now use a technique due to Hankin
+(2010, 2017) and introduce fictional (reified) entities whose nonzero
+Bradley-Terry strength helps certain competitors or sets of
+competitors under certain conditions.  The original example was the
+home-ground advantage in football.  If players (teams) $1,2$ with
+strengths $p_1,p_2$ compete, and if our observation were $a$ home wins
+and $b$ away wins for team $1$, and $c$ home wins and $d$ away wins
+for team~$2$, then a suitable likelihood function would be
 
 \[
 \left(\frac{p_1+p_H}{p_1+p_2+p_H}\right)^a
@@ -378,18 +114,7 @@ team~$2$, then a suitable likelihood function would be
 \noindent where $p_H$ is a quantification of the beneficial home
 ground effect.  Similar techniques have been used to account for the
 first-move advantage in chess, and effective coordination between
-members of doubles tennis teams; we may use a similar device to
-account for (e.g.) wet conditions in Formula 1.  
-
-
-# Literature Review and previous work
-
-Most previous research into competitive surfing is limited to the
-scoring of ariel manoeuvres compared with other manoeuvres in events
-[10] and analysis in the difference in average wave scores for the top
-10 and bottom 10 surfers using a One-way ANOVA method [11].
-
-
+members of doubles tennis teams.
 
 ```{r}
 players <- read.table("players.txt",header=TRUE)
