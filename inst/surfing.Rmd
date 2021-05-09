@@ -117,7 +117,7 @@ first-move advantage in chess, and effective coordination between
 members of doubles tennis teams.
 
 ```{r}
-players <- read.table("players.txt",header=TRUE)
+players <- read.table("wct_surfers_table.txt",header=TRUE)
 head(players)
 table(players$nation)
 players$name
@@ -187,7 +187,8 @@ Following lines create `surfing.rda`, residing in the `data/` directory
 of the package.
 
 ```{r,label=savesurfiningingdataset}
-save(surfing,surfing_maxp,file="surfing.rda")
+surfing_table <- players
+save(surfing,surfing_maxp,surfing_table,file="surfing.rda")
 ```
 
 
