@@ -188,7 +188,7 @@ wct04 Andino Wilson
 wct04 Florence Andino
 wct05 Igarashi Andre Crisanto
 wct05 Medina Bailey Buchan
-wct05 Dora Souza Andino
+wct05 Dora deSouza Andino
 wct05 Toledo Morais Zietz
 wct05 Ferreira Silva Herdy
 wct05 Florence Ibelli Ribeiro_A
@@ -202,7 +202,7 @@ wct05 Zietz Andino Ribeiro_A
 wct05 Kymerson Smith Buchan
 wct05 Coffin Lau Crisanto
 wct05 Carmichael Freestone Flores
-wct05 Toledo Souza
+wct05 Toledo deSouza
 wct05 Slater Zietz
 wct05 Igarashi Christie
 wct05 Duru Wright
@@ -235,7 +235,7 @@ wct05 Smith Andino
 wct05 Toledo Smith
 wct06 Medina Duru Morais
 wct06 Ferreira Bailey Crisanto
-wct06 Igarashi Souza Mendes
+wct06 Igarashi deSouza Mendes
 wct06 Smith Ibelli Couzinet
 wct06 Andino Dora Vries
 wct06 Toledo February Buchan
@@ -253,7 +253,7 @@ wct06 Smith Bailey
 wct06 Wright Duru
 wct06 Medina Colapinto
 wct06 Callinan Dora
-wct06 Andino Souza
+wct06 Andino deSouza
 wct06 Silva Flores
 wct06 Lau Wilson
 wct06 Buchan Coffin
@@ -282,7 +282,7 @@ wct06 Ferreira Toledo
 wct06 Medina Ferreira
 wct07 Bailey Medina Crisanto
 wct07 Buchan Andre Smith
-wct07 Igarashi Souza Ibelli
+wct07 Igarashi deSouza Ibelli
 wct07 Ferreira Vaast Zietz
 wct07 Duru Toledo Newton
 wct07 Andino Dora Drollet
@@ -300,7 +300,7 @@ wct07 Andre Igarashi
 wct07 Silva Buchan
 wct07 Wright Bailey
 wct07 Bourez Zietz
-wct07 Souza Ferreira
+wct07 deSouza Ferreira
 wct07 Duru Cardoso
 wct07 Smith Christie
 wct07 Wilson Dora
@@ -314,14 +314,14 @@ wct07 Ibelli Coffin
 wct07 Freestone Slater
 wct07 Andre Silva
 wct07 Wright Bourez
-wct07 Souza Duru
+wct07 deSouza Duru
 wct07 Smith Wilson
 wct07 Flores Vaast
 wct07 Medina Colapinto
 wct07 Moniz Toledo
 wct07 Ibelli Freestone
 wct07 Wright Andre
-wct07 Smith Souza
+wct07 Smith deSouza
 wct07 Medina Flores
 wct07 Moniz Ibelli
 wct07 Wright Smith
