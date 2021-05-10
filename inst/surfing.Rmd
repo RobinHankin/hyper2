@@ -118,7 +118,7 @@ members of doubles tennis teams.
 
 ```{r}
 surfing_table <- read.table("wct_surfers_table.txt",header=TRUE)
-head(surfing_table)
+surfing_table
 table(surfing_table$nation)
 surfing_table$name
 wildcards <- rownames(surfing_table)[-(1:36)]
@@ -177,6 +177,8 @@ dotchart(log10(surfing_maxp))
 pie(surfing_maxp)
 ```
 
+Test the null of equal strengths:
+
 ```{r pval,cache=TRUE}
 equalp.test(surfing)
 ```
@@ -186,14 +188,16 @@ on likelhood:
 
 
 ```{r ordertransplotplot,fig.cap="Official ranks vs likelihood rank, WCT"}
- rL <- sort(surfing_maxp,decreasing=TRUE)
- rL[] <- seq_along(rL)
- rO <- seq_len(nrow(surfing_table))
- names(rO) <- rownames(surfing_table)
- rO
- rL
-
-# ordertransplot(rO,rL,xlab="offical rank",ylab="likelihood rank",main="WCT 2019")
+rL <- sort(surfing_maxp,decreasing=TRUE)
+rL[] <- seq_along(rL)    # likelihood-based rank
+rO <- seq_len(nrow(surfing_table))[1:36]
+names(rO) <- rownames(surfing_table)[1:36]
+rO
+rL
+sort(names(rO))
+sort(names(rO))
+sort(names(rO))==sort(names(rO))
+ordertransplot(rO,rL,xlab="offical rank",ylab="likelihood rank",main="WCT 2019")
 ```
 
 
