@@ -9,7 +9,7 @@ wct01 Bourez Flores Fioravanti
 wct01 Rodrigues Carmichael Christie
 wct01 Igarashi Silva Zietz
 wct01 Andino Mendes Cardoso
-wct01 Wright Florence Crisanto
+wct01 Wright_M Florence Crisanto
 wct01 Herdy Wilson Fioravanti
 wct01 Smith Christie Ibelli
 wct01 Wright Crisanto Slater
@@ -25,7 +25,7 @@ wct01 Wright Lau
 wct01 Medina Herdy
 wct01 Dora Duru
 wct01 Smith Callinan
-wct01 Wright Freestone
+wct01 Wright_M Freestone
 wct01 Ferreira Christie
 wct01 Cardoso Rodrigues
 wct01 Carmichael Zietz
@@ -35,7 +35,7 @@ wct01 Coffin Igarashi
 wct01 Moniz Heazlewood
 wct01 Andino Wright
 wct01 Medina Dora
-wct01 Smith Wright
+wct01 Smith Wright_M
 wct01 Ferreira Cardoso
 wct01 Carmichael Bourez
 wct01 Florence Coffin
@@ -56,17 +56,17 @@ wct02 Andino Moniz Bailey
 wct02 Christie Dora Carmichael
 wct02 Silva Bourez Heazlewood
 wct02 Florence Cardoso Mendes
-wct02 Crisanto Igarashi Wright
+wct02 Crisanto Igarashi Wright_M
 wct02 Wright Freestone Mann
 wct02 Bailey Carmichael Huxtable
-wct02 Heazlewood Wright Mendes
+wct02 Heazlewood Wright_M Mendes
 wct02 Rodrigues Ibelli Duru
 wct02 Slater Wilson
 wct02 Crisanto Rodrigues
 wct02 Coffin Bailey
 wct02 Callinan Bourez
 wct02 Toledo Ibelli
-wct02 Moniz Wright
+wct02 Moniz Wright_M
 wct02 Willcox Andino
 wct02 Silva Carmichael
 wct02 Medina Heazlewood
@@ -102,7 +102,7 @@ wct03 Dora Wright Bailey
 wct03 Coffin Flores Mendes
 wct03 Slater Andino Callinan
 wct03 Christie Carmichael Moniz
-wct03 Wright Duru Igarashi
+wct03 Wright_M Duru Igarashi
 wct03 Bourez Colapinto Cardoso
 wct03 Igarashi Silva Willcox
 wct03 Fioravanti Cardoso Lau
@@ -121,7 +121,7 @@ wct03 Callinan Moniz
 wct03 Slater Wright
 wct03 Bourez Waida
 wct03 Fioravanti Medina
-wct03 Buchan Wright
+wct03 Buchan Wright_M
 wct03 Igarashi Crisanto
 wct03 Mendes Smith
 wct03 Rodrigues Wilson
@@ -191,14 +191,14 @@ wct05 Medina Bailey Buchan
 wct05 Dora Souza Andino
 wct05 Toledo Morais Zietz
 wct05 Ferreira Silva Herdy
-wct05 Florence Ibelli Ribeiro
+wct05 Florence Ibelli Ribeiro_A
 wct05 Cardoso Christie Smith
 wct05 Wilson Rodrigues Lau
 wct05 Slater Colapinto Coffin
 wct05 Moniz Wright Freestone
 wct05 Callinan Mendes Carmichael
 wct05 Bourez Duru Flores
-wct05 Zietz Andino Ribeiro
+wct05 Zietz Andino Ribeiro_A
 wct05 Kymerson Smith Buchan
 wct05 Coffin Lau Crisanto
 wct05 Carmichael Freestone Flores
@@ -377,8 +377,8 @@ wct09 Flores Ferreira
 wct10 Cardoso Igarashi Christie
 wct10 Colapinto Andino Bailey
 wct10 Dora Ferreira Morais
-wct10 Ibelli Smith Colapinto
-wct10 Toledo Ribeiro Lau
+wct10 Ibelli Smith Colapinto_C
+wct10 Toledo Ribeiro_V Lau
 wct10 Medina Duru Blanco
 wct10 Freestone Andre Wright
 wct10 Silva Flores Fioravanti
@@ -387,14 +387,14 @@ wct10 Crisanto Buchan Moniz
 wct10 Zietz Carmichael Callinan
 wct10 Rodrigues Slater Bourez
 wct10 Wright Blanco Christie
-wct10 Colapinto Fioravanti Moniz
+wct10 Colapinto_C Fioravanti Moniz
 wct10 Mendes Morais Callinan
 wct10 Bailey Bourez Lau
-wct10 Smith Colapinto
+wct10 Smith Colapinto_C
 wct10 Colapinto Buchan
 wct10 Andino Andre
 wct10 Rodrigues Silva
-wct10 Toledo Ribeiro
+wct10 Toledo Ribeiro_V
 wct10 Carmichael Dora
 wct10 Igarashi Fioravanti
 wct10 Slater Zietz

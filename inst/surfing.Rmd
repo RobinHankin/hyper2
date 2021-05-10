@@ -117,11 +117,11 @@ first-move advantage in chess, and effective coordination between
 members of doubles tennis teams.
 
 ```{r}
-players <- read.table("wct_surfers_table.txt",header=TRUE)
-head(players)
-table(players$nation)
-players$name
-wildcards <- players$name[-(1:36)]
+surfing_table <- read.table("wct_surfers_table.txt",header=TRUE)
+head(surfing_table)
+table(surfing_table$nation)
+surfing_table$name
+wildcards <- rownames(surfing_table)[-(1:36)]
 wildcards
 ```
 
@@ -181,13 +181,28 @@ pie(surfing_maxp)
 equalp.test(surfing)
 ```
 
+Now compare the finishing order based on points vs the finishing order
+on likelhood:
+
+
+```{r ordertransplotplot,fig.cap="Official ranks vs likelihood rank, WCT"}
+ rL <- sort(surfing_maxp,decreasing=TRUE)
+ rL[] <- seq_along(rL)
+ rO <- seq_len(nrow(surfing_table))
+ names(rO) <- rownames(surfing_table)
+ rO
+ rL
+
+# ordertransplot(rO,rL,xlab="offical rank",ylab="likelihood rank",main="WCT 2019")
+```
+
+
 ### Package dataset {-}
 
 Following lines create `surfing.rda`, residing in the `data/` directory
 of the package.
 
 ```{r,label=savesurfiningingdataset}
-surfing_table <- players
 save(surfing,surfing_maxp,surfing_table,file="surfing.rda")
 ```
 
