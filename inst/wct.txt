@@ -327,6 +327,13 @@ wct07 Moniz Ibelli
 wct07 Wright Smith
 wct07 Medina Moniz
 wct07 Wright Medina
+wct08 Medina Toledo
+wct08 Wright Colapinto
+wct08 Wilson Dora Buchan Smith
+wct08 Medina Smith Toledo Colapinto Wright Buchan Wilson Dora
+wct08 Cardoso Ferreira Slater Carmichael Igarashi Zietz Lau Silva
+wct08 Coffin Christie Duru Mendes Moniz Andino Bailey Matson Callinan Ibelli Flores Andre Schilling Freestone Colapinto_C Mamiya
+wct08 Rodrigues Bourez Crisanto Herdy
 wct09 Colapinto Igarashi Bailey
 wct09 Ferreira Morais Ibelli
 wct09 Fioravanti Dora Andino

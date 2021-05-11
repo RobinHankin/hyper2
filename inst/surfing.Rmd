@@ -54,6 +54,14 @@ particular heat, the order statistic---that is, which competitor
 scored most highly, second highest, and third---is informative about
 competitors' abilities: the wave environment is common to each surfer.
 
+We note in passing that `wct8`, hosted at Lemoore had a different
+format from the other venues in the championship, being held in an
+artificial wave pool in which every wave was essentially identical (up
+to a mirror reflection).  Statistically, there were seven heats of
+either 2, 4, 8, or 16 surfers.  We show below how to incorporate the
+information present in such observations with the remainder of the
+championship using a consistent and intuitive statistical model.
+
 # Previous related work
 
 @farley2013 analyse surfing results using one-way ANOVA techniques and
@@ -118,9 +126,8 @@ members of doubles tennis teams.
 
 ```{r}
 surfing_table <- read.table("wct_surfers_table.txt",header=TRUE)
+options(width=100)
 surfing_table
-table(surfing_table$nation)
-surfing_table$name
 wildcards <- rownames(surfing_table)[-(1:36)]
 wildcards
 ```
@@ -183,6 +190,21 @@ Test the null of equal strengths:
 equalp.test(surfing)
 ```
 
+
+```{r directlogplotofstrenghts}
+jjO <- surfing_table$points[1:36]
+names(jjO) <- rownames(surfing_table)[1:36]
+jjL <- surfing_maxp
+jjO <- ordertrans(jjO)
+jjL <- ordertrans(jjL)
+plot(jjO,jjL,pch=16,log='xy')
+fit <- lm(log10(jjL)~log10(jjO))
+for(i in seq_along(jjO)){
+text(jjO[i],jjL[i],names(jjL)[i],col='gray',pos=4,cex=0.5)
+}
+abline(fit)
+```
+
 Now compare the finishing order based on points vs the finishing order
 on likelhood:
 
@@ -200,6 +222,13 @@ sort(names(rO))==sort(names(rO))
 ordertransplot(rO,rL,xlab="offical rank",ylab="likelihood rank",main="WCT 2019")
 ```
 
+
+```{r dosameptest, cache=TRUE}
+samep.test(surfing, c("Ferreira","Medina"))
+samep.test(surfing, c("Ferreira","Florence"))
+samep.test(surfing, c("Florence","Medina"))
+samep.test(surfing, c("Florence","Medina","Ferreira"))
+```
 
 ### Package dataset {-}
 
