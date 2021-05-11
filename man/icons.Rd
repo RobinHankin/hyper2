@@ -31,7 +31,7 @@
     floe hunting grounds}
     \item{NB}{The Norfolk Broads, which flood due to intense rainfall
     events}
-    \item{LF}{London flooding, as a result of sea level rise}
+    \item{L}{London flooding, as a result of sea level rise}
     \item{THC}{The Thermo-haline circulation, which may slow or stop as
       a result of anthropogenic modification of the hydrological cycle}
     \item{OA}{Oceanic acidification as a result of anthropogenic emissions
