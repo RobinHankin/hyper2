@@ -125,7 +125,7 @@ first-move advantage in chess, and effective coordination between
 members of doubles tennis teams.
 
 ```{r}
-surfing_table <- read.table("wct_surfers_table.txt",header=TRUE)
+surfing_table <- read.table("wct_table2019.txt",header=TRUE)
 options(width=100)
 surfing_table
 wildcards <- rownames(surfing_table)[-(1:36)]
@@ -136,7 +136,7 @@ QS
 
 
 ```{r}
-o <- strsplit(readLines("wct.txt")," ")
+o <- strsplit(readLines("wct2019.txt")," ")
 jj <- unlist(lapply(o,paste,collapse=" "))
 head(jj)
 tail(jj)
