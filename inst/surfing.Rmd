@@ -130,6 +130,8 @@ options(width=100)
 surfing_table
 wildcards <- rownames(surfing_table)[-(1:36)]
 wildcards
+QS <- rownames(surfing_table)[c(23:33,35:36)]
+QS
 ```
 
 
@@ -148,7 +150,8 @@ function but first have to remove the wildcards and also player
 `Vries` whose maximum likelihood strength is zero.
 
 ```{r definesurfing, cache=TRUE}
-remove <- c(wildcards, "Vries")
+remove <- c(wildcards, QS, "Vries")
+wanted <- which(!(rownames(surfing_table) %in% remove)) # used at directlogplotofstrengths
 surfing <- hyper2()
 for(v in o){
    r <- v[-1]  # first entry is venue
@@ -192,8 +195,8 @@ equalp.test(surfing)
 
 
 ```{r directlogplotofstrenghts}
-jjO <- surfing_table$points[1:36]
-names(jjO) <- rownames(surfing_table)[1:36]
+jjO <- surfing_table$points[wanted]
+names(jjO) <- rownames(surfing_table)[wanted]
 jjL <- surfing_maxp
 jjO <- ordertrans(jjO)
 jjL <- ordertrans(jjL)
@@ -212,8 +215,8 @@ on likelhood:
 ```{r ordertransplotplot,fig.cap="Official ranks vs likelihood rank, WCT"}
 rL <- sort(surfing_maxp,decreasing=TRUE)
 rL[] <- seq_along(rL)    # likelihood-based rank
-rO <- seq_len(nrow(surfing_table))[1:36]
-names(rO) <- rownames(surfing_table)[1:36]
+rO <- seq_len(nrow(surfing_table))[wanted]
+names(rO) <- rownames(surfing_table)[wanted]
 rO
 rL
 sort(names(rO))
