@@ -215,7 +215,7 @@ on likelhood:
 ```{r ordertransplotplot,fig.cap="Official ranks vs likelihood rank, WCT"}
 rL <- sort(surfing_maxp,decreasing=TRUE)
 rL[] <- seq_along(rL)    # likelihood-based rank
-rO <- seq_len(nrow(surfing_table))[wanted]
+rO <- seq_len(nrow(surfing_table[wanted,]))
 names(rO) <- rownames(surfing_table)[wanted]
 rO
 rL
