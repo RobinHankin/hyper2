@@ -1,0 +1,12 @@
+comp  beachtype
+wct01 point 
+wct02 point 
+wct03 reef 
+wct04 reef 
+wct05 beach 
+wct06 reef 
+wct07 reef 
+wct08 point
+wct09 beach
+wct10 beach
+wct11 reef 

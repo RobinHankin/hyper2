@@ -125,7 +125,22 @@ first-move advantage in chess, and effective coordination between
 members of doubles tennis teams.
 
 ```{r}
+<<<<<<< HEAD
+surfing_table <- read.table("wct_surfers_table.txt",header=TRUE)
+nationality <- function(surfers){surfing_table$nation[rownames(surfing_table) %in% surfers]}
+```
+
+```{r}
+type <- read.table("venuetypes2019.txt",header=TRUE)
+type
+beachtype <- function(venue){type$beachtype[which(type$comp==venue)]}
+beachtype("wct05")
+beachtype("wct06")
+```
+
+=======
 surfing_table <- read.table("wct_table2019.txt",header=TRUE)
+>>>>>>> refs/remotes/origin/master
 options(width=100)
 surfing_table
 wildcards <- rownames(surfing_table)[-(1:36)]
@@ -231,6 +246,48 @@ samep.test(surfing, c("Ferreira","Medina"))
 samep.test(surfing, c("Ferreira","Florence"))
 samep.test(surfing, c("Florence","Medina"))
 samep.test(surfing, c("Florence","Medina","Ferreira"))
+```
+
+
+# Brazilian null
+
+One suggestion is that Brazilians do worse on reef break and better on
+point and beach break beaches.  We now assess the null that Brazilians
+perform equally well on all types of beaches.
+
+```{r surfing2, cache=TRUE}
+surfing2 <- hyper2()
+for(v in o){
+   venue <- v[1]  # first entry is venue
+   r <- v[-1] 
+   numberretained <- sum(!(r %in% remove))
+   if(numberretained > 1){
+     r <- r[!(r %in% remove)]
+     jj <- race(r)
+     surfers <- pnames(jj)
+     if(any(nationality(surfers) == "BRA")){
+       if((beachtype(venue)=="point") | (beachtype(venue) == "beach")){
+         jj %<>% pwa(surfers[nationality(surfers)=="BRA"],"Brazilian_beachtype")
+       }    	     
+     } 
+     surfing2 %<>% sum(jj)
+   }
+}	
+summary(surfing2)
+```
+
+```{r surfing2max, cache=TRUE}
+maxp(surfing2)
+specificp.gt.test(surfing2,"Brazilian_beachtype",0)
+```
+
+```{r profsuppcalcsurfing2, cache=TRUE}
+p <- seq(from=0.001,by=0.001,len=10)
+l <- profsupp(surfing2,"Brazilian_beachtype",p)
+```
+
+```{r}
+plot(p,l)
 ```
 
 ### Package dataset {-}
