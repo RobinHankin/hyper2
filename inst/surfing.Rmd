@@ -274,17 +274,64 @@ summary(surfing2)
 ```
 
 ```{r surfing2max, cache=TRUE}
-maxp(surfing2)
+(surfing2_maxp <- maxp(surfing2))
 specificp.gt.test(surfing2,"Brazilian_beachtype",0)
 ```
 
 ```{r profsuppcalcsurfing2, cache=TRUE}
-p <- seq(from=0.001,by=0.001,len=10)
-l <- profsupp(surfing2,"Brazilian_beachtype",p)
+p <- seq(from=0.0005,to=0.01,by=0.0005)
+l <- profsupp(surfing2,"Brazilian_beachtype",p,relative=FALSE)
+l0 <- loglik(indep(surfing_maxp),surfing)
 ```
 
 ```{r}
-plot(p,l)
+plot(c(0,p),c(l0,l)-max(l),type='b',xlab="Brazilian beachtype",ylab="support")
+```
+
+```{r profsuppcalcsurfing2wide, cache=TRUE}
+p_wide <- seq(from=0.002,to=0.04,by=0.002)
+l_wide <- profsupp(surfing2,"Brazilian_beachtype",p_wide,relative=FALSE)
+```
+
+```{r}
+plot(c(0,p_wide),c(l0,l_wide)-max(l),type='b',xlab="Brazilian beachtype",ylab="support")
+```
+
+## Generalized log-odds ratios
+
+```{r}
+all_Brazilian_surfers <- rownames(surfing_table)[surfing_table$nation == "BRA"]
+all_Brazilian_surfers
+pnames(surfing2)
+pnames(surfing2) %in% all_Brazilian_surfers
+table(pnames(surfing2) %in% all_Brazilian_surfers)
+Brazilian_surfers <- pnames(surfing2)[pnames(surfing2) %in% all_Brazilian_surfers]
+Brazilian_surfers
+```
+
+```{r,cache=TRUE}
+f <- function(B,...){
+  jj <- specificp.test(surfing2, "Brazilian_beachtype", B)
+  mp <- jj$null_estimate
+  n <- sum(names(mp) %in% all_Brazilian_surfers)
+  GLO <- log(mp["Brazilian_beachtype"]^n/prod(mp[which(names(mp) %in% all_Brazilian_surfers)]))
+  out <- c(B,GLO, support=jj$null_support)
+  names(out) <- c("B","GLO","support")
+  return(out)
+}
+```
+
+```{r calcbrazodr,cache=TRUE}
+braz <- c(0.0003,0.0005,0.0008, 0.001,0.002,0.005,0.01,0.02,0.03,0.05)
+M <- do.call("rbind",lapply(braz,f))
+M[,3] <- M[,3]-max(M[,3])
+M
+```
+
+```{r}
+
+plot(M[,2],M[,3]-max(M[,3]),type='b')
+plot(M[,2],M[,3]-max(M[,3]),type='b',ylim=c(-0.3,0))
 ```
 
 ### Package dataset {-}
@@ -293,7 +340,7 @@ Following lines create `surfing.rda`, residing in the `data/` directory
 of the package.
 
 ```{r,label=savesurfiningingdataset}
-save(surfing,surfing_maxp,surfing_table,file="surfing.rda")
+save(surfing,surfing_maxp,type,surfing_table,file="surfing.rda")
 ```
 
 
