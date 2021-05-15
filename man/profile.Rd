@@ -17,7 +17,7 @@ profile_support_single(H, i, p, evaluate=FALSE, ...)
 }
 \arguments{
   \item{H}{hyper2 object}
-  \item{i}{Element to be tested, character accepted}
+  \item{i}{Name of player for which profile support is to be calculated}
   \item{p}{Strength of element \code{i}}
   \item{evaluate}{Boolean, with default \code{FALSE} meaning to return
     the maximal support for \code{p_i=p} and \code{TRUE} meaning to
