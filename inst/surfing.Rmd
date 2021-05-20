@@ -121,8 +121,8 @@ for team~$2$, then a suitable likelihood function would be
 
 \noindent where $p_H$ is a quantification of the beneficial home
 ground effect.  Similar techniques have been used to account for the
-first-move advantage in chess, and effective coordination between
-members of doubles tennis teams.
+first-move advantage in chess, and here we apply it to assess the
+Brazilian  preference for reef-breaking waves.
 
 ```{r}
 surfing_table <- read.table("wct_table2019.txt",header=TRUE)
@@ -250,7 +250,10 @@ samep.test(surfing, c("Florence","Medina","Ferreira"))
 
 One suggestion is that Brazilians do worse on reef break and better on
 point and beach break beaches.  We now assess the null that Brazilians
-perform equally well on all types of beaches.
+perform equally well on all types of beaches.  To that end, we create
+a reified surfer, "Brazilian_beachtype", whose strength helps
+Brazilian surfers when surfing on their (putative) preferred
+beachtype.
 
 ```{r surfing2, cache=TRUE}
 surfing2 <- hyper2()
@@ -322,16 +325,15 @@ f <- function(B,...){
 ```
 
 ```{r calcbrazodr,cache=TRUE}
-braz <- c(0.0003,0.0005,0.0008, 0.001,0.002,0.005,0.01,0.02,0.03,0.05)
+braz <- c(0.0003,0.0005,0.0008, 0.001,0.0015,0.002,0.003,0.004,0.005,0.007,0.01,0.015,0.02,0.03,0.05)
 M <- do.call("rbind",lapply(braz,f))
 M[,3] <- M[,3]-max(M[,3])
 M
 ```
 
 ```{r}
-
-plot(M[,2],M[,3]-max(M[,3]),type='b')
-plot(M[,2],M[,3]-max(M[,3]),type='b',ylim=c(-0.3,0))
+plot(M[,2],M[,3]-max(M[,3]),type='b',xlab="Brazilian beachtype (log-odds)",ylab="support")
+plot(M[,2],M[,3]-max(M[,3]),type='b',ylim=c(-0.3,0),xlab="Brazilian beachtype (log-odds)",ylab="support")
 ```
 
 ### Package dataset {-}
