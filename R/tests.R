@@ -8,14 +8,15 @@
     
     df <- size(H)-1
 
-    null_support <- loglik(indep(equalp(H)),H)
     if(missing(p)){
       jj <- equalp(H)
     } else {
       jj <- p
     }
+
     names(jj) <- pnames(H)
     null_estimate <- jj
+    null_support <- loglik(indep(jj),H)
 
     support_difference <- alternative_support-null_support
 
