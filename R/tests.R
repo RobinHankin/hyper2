@@ -1,4 +1,4 @@
-`equalp.test` <- function(H,p,...){
+`equalp.test` <- function(H, ...){
     n <- size(H)
     m_alternative <- maxp(H,give=TRUE,...)
     alternative_support <- m_alternative$value
@@ -8,12 +8,7 @@
     
     df <- size(H)-1
 
-    if(missing(p)){
-      jj <- equalp(H)
-    } else {
-      jj <- p
-    }
-
+    jj <- equalp(H)
     names(jj) <- pnames(H)
     null_estimate <- jj
     null_support <- loglik(indep(jj),H)
@@ -46,9 +41,43 @@
 }
 
 `knownp.test` <- function(H,p,...){
-  if(missing(p)){stop("p must be supplied")}
-  equalp.test(H,p,...)
+
+    n <- size(H)
+    m_alternative <- maxp(H,give=TRUE,...)
+    alternative_support <- m_alternative$value
+    jj <- fillup(m_alternative$par)
+    names(jj) <- pnames(H)
+    alternative_estimate <- jj
+    
+    df <- size(H)-1
+
+    if(missing(p)){stop("p must be supplied")}
+    stopifnot(identical(names(p),pnames(H)))
+    null_estimate <- p
+    null_support <- loglik(indep(p),H)
+
+    support_difference <- alternative_support-null_support
+    null_hypothesis <- paste(paste(paste(names(p),"=",round(p,getOption("digits"))),collapse=", "))
+
+    rval <- list(
+        statistic = support_difference,
+        p.value = pchisq(2*support_difference,df=df,lower.tail=FALSE),
+        df = df,
+        null_hypothesis = null_hypothesis,
+        null_estimate = null_estimate,
+        null_support = null_support,
+
+        alternative_hypothesis = "sum p_i=1",
+        alternative_estimate = alternative_estimate,
+        alternative_support = alternative_support,
+        method = "Constrained support maximization",
+        data.name = deparse(substitute(H))
+        )
+    class(rval) <- "hyper2test"
+    return(rval)
 }
+
+
 
 `specificp.test` <- function(H, i, specificp=1/size(H), alternative = c("two.sided","less","greater"), ...){
     alternative <- match.arg(alternative)

@@ -15,7 +15,7 @@
   Tests different nulls against a free alternative
 }
 \usage{
-equalp.test(H, p, ...)
+equalp.test(H, ...)
 knownp.test(H, p, ...)
 samep.test(H, i, give=FALSE, ...)
 specificp.test(H, i, specificp=1/size(H),
@@ -61,9 +61,10 @@ specificp.lt.test(H, i, specificp=1/size(H), ...)
   strengths are equal to vector \code{p}.  If \code{p} is missing, it
   tests \mjeqn{H_0\colon p_1=p_2=\cdots=p_n=\frac{1}{n}}{H0:
     p1=p2=...=pn=1/n}, for example \code{equalp.test(icons)}
-  \item Function \code{knownp.test()} is effectively a synonym for
-  \code{equalp.test()} but requires argument \code{p} to be supplied,
-  for example \code{knownp.test(icons,zipf(6))}
+  \item Function \code{knownp.test()} tests the null that the strengths
+  are equal to the elements of named vector \code{p}; it is a
+  generalization of \code{equalp.test()}.  Example:
+  \code{knownp.test(icons,zipf(6))}. 
   \item Function \code{specificp.test(H,i,p)} tests
   \mjeqn{H_0\colon p_i=p}{H0: p_i=p}, for example
   \code{specificp.test(icons,"NB",0.1)}
