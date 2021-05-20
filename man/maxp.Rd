@@ -33,7 +33,8 @@ equalp(H)
   \item{SMALL}{Numerical minimum for probabilities}
   \item{maxtry}{Integer specifying maximum number of times to try
     \code{constrOptim()} with slightly differing start points, to avoid
-    the stupid \code{wmmin is not finite} bug, bugzilla id 17703}
+    a known R bug which reports \code{wmmin is not finite}, bugzilla
+    id 17703}
   \item{...}{Further arguments which \code{maxp()} passes to
     \code{constrOptim()}}
 }
@@ -93,6 +94,9 @@ equalp(H)
   default \code{n=10} or greater in production work.
 
   This functionality is peculiarly susceptible to off-by-one errors.
+
+  Function \code{maxp()} can trigger a known R bug (bugzilla id 17703)
+  which reports \dQuote{\code{wmmin is not finite}}. 
 
 }
 \seealso{\code{\link{gradient}},\code{\link{fillup}}}
