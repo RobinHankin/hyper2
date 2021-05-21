@@ -99,6 +99,10 @@ r1 <- volvo_table[,1]  # ranks race 1
 names(r1) <- rownames(volvo_table)
 ordertransplot(rL,r1,xlab="likelihood rank, all races",ylab="rank, race 1")
 
+
+ordertrans(sample(icons_maxp),icons)
+
+
 }
 
 

@@ -133,11 +133,20 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `loglik_single` <- function(p,H,log=TRUE){
-  stopifnot(length(p) == size(H)-1)
   stopifnot(all(p>=0))
-  stopifnot(sum(p)<=1)
-
-  out <- evaluate(brackets(H), powers(H), probs=fillup(p),pnames=pnames(H))
+  if(length(p) == size(H)-1){
+    stopifnot(sum(p)<=1)
+    probs <- fillup(p)
+  } else if(length(p) == size(H)){
+    if(is.null(names(p))){stop("p==size(H), p must be a named vector")}
+    stopifnot(abs(sum(p)-1) < 1e-6)  # small numerical tolerance
+    p <- ordertrans(p,H)  # no warning given if names not in correct order...
+    stopifnot(identical(names(p),pnames(H))) #...but they must match up
+    probs <- p
+  } else {
+    stop("length(p) must be either size(H) or size(H)-1")
+  }
+  out <- evaluate(brackets(H), powers(H), probs=probs, pnames=pnames(H))
   if(log){
     return(out)
   } else {
@@ -987,8 +996,15 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `ordertrans` <- function(x,players){
-    if(missing(players)){return(x[order(names(x))])}
-  
+
+    if(missing(players)){
+      return(x[order(names(x))])
+    } else {
+      if(is.hyper2(players)){
+        players <- pnames(players)
+      }
+    }
+      
     stopifnot(length(x) == length(players))
     stopifnot(all(sort(names(x)) == sort(players)))
     stopifnot(all(table(names(x))==1))

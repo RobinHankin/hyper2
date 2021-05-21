@@ -64,6 +64,9 @@ intended for use with \code{ggrl()}.
 data(chess)
 loglik(c(1/3,1/3),chess)
 
+loglik(rp(14,icons),icons)
+
+
 data(masterchef)
 
 a1 <- rep(1/13,12)                  # equal strengths
@@ -79,6 +82,7 @@ W2 <- ggrl(W, c('a','b'), c('c','d'),c('e','f'))  # 2^3=8 element list
 
 like_single_list(rep(1/6,5),W1)      # information from first observation
 like_series(rep(1/6,5),list(W1,W2))  # information from both observations
+
 
 
 }
