@@ -26,25 +26,26 @@ like_series(p,L,log=TRUE)
 }
 \details{
 
-Function \code{loglik()} is a straightforward likelihood function.  It
-takes the vector
-\eqn{p=\left(p_1,\ldots,p_{n-1}\right)}{p=(p_1,...,p_{n-1})} and returns
-the (log) likelihood.  Note that the \sQuote{fillup} value is
+Function \code{loglik_single(p,H)} takes a numeric vector and a
+\code{hyper2} object of size \code{n}.
+
+If \eqn{p=\left(p_1,\ldots,p_{n-1}\right)}{p=(p_1,...,p_{n-1})} it
+returns the (log) likelihood: note that the \sQuote{fillup} value is
 automatically appended; the elements of \code{p} are (linearly!)
 independent.
 
-Function \code{size()} returns the (nominal) length \eqn{n} of
-nonnegative vector \eqn{p=\left(p_1,\ldots,p_n\right)}{p=(p_1,...,p_n)}
-where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.
+If \eqn{p=\left(p_1,\ldots,p_{n}\right)}{p=(p_1,...,p_{n})} the function
+uses the \strong{names} of \eqn{p} to identify which player has which
+strength; thus \code{loglik_single(p,H)==loglik_single(sample(p),H)}.
+The function checks for the unit-sum constraint being satisfied to
+within a small numerical tolerance.
 
-If \code{p} is a matrix, the rows are interpreted as probability points.
-
-Function \code{loglik_single()} is a helper function that takes a single
-point in probability space.
+Function \code{loglik()} is a bit more user-friendly: if \code{p} is a
+matrix with \eqn{n} or \code{n-1} columns, the rows are interpreted as
+probability points; names are inherited from the colnames attribute.
 
 Functions \code{like_single_list()} and \code{like_series()} are
 intended for use with \code{ggrl()}.
-
 
 }
 \note{
