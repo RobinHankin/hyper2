@@ -8,7 +8,7 @@ Description: A suite of routines for the hyperdirichlet distribution; supersedes
 License: GPL (>= 2)
 LazyData: yes
 Depends: methods, magrittr, cubature, R (>= 3.5.0)
-Suggests: knitr, markdown, rmarkdown, testthat
+Suggests: knitr, markdown, rmarkdown, testthat, bookdown, rticles
 VignetteBuilder: knitr
 Imports: Rcpp (>= 0.12.5), partitions, EMC, mathjaxr
 LinkingTo: Rcpp
