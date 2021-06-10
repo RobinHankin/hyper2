@@ -26,7 +26,13 @@ less than \code{minstrength}) using \code{discard_flawed()}.
 
   This function is experimental and appears to be overly aggressive.
   For some likelihood functions \code{zapweak()} removes \emph{all} the
-  players.  I am investigating this.
+  players.
+
+  I now think that there is no consistent way to remove weaker players
+  from a likelihood function.  I think the only way to do it is to look
+  at the dataset that generates the likelihood function, somehow weed
+  out the players with the poorest performance, and generate a new
+  likelihood function without them.
 
 }
 
