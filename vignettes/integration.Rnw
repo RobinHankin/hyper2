@@ -190,9 +190,10 @@ normalization constant.  We can verify that \code{hyper2::B()} is
 operating as expected for the case $\alpha= (1,2,3,4)$:
 
 <<>>=
-x <- c(a=1,b=2,c=3,d=4)  # needs a named vector
-B(dirichlet(x))
-prod(gamma(1:4))/gamma(sum(1:4))
+x <- c(a=1, b=2, c=3, d=4)  # needs a named vector
+ans1 <- B(dirichlet(alpha = x))
+ans2 <- prod(gamma(x))/gamma(sum(x)) 
+c(numerical=ans1,theoretical=ans2)   # should agree
 @   
 
 Further, consider a Dirichlet distribution with
@@ -205,12 +206,19 @@ H <- dirichlet(alpha=c(a=3,b=3,c=3,d=3))
 probability(H,f,tol=0.1)
 @   
 
-Further, $\Prob(p_1<p_2<p_3)$ should be exactly $\frac{1}{6}$:
+(compare exact value of \code{0.5}; note the loose tolerance of
+\code{0.1}, needed to keep computational time short---the integrand
+has a severe discontinuity which is computationally expensive to
+integrate across).  Further, $\Prob(p_1<p_2<p_3)$ should be exactly
+$\frac{1}{6}$:
 
 <<>>=
 g <- function(p){(p[1]<p[2]) & (p[2]<p[3])}
 1-probability(H,disallowed=g,tol=0.1)
 @   
+
+
+(compare exact value of \code{0.1666}).
 
 \section{More results: icons dataset}
 
@@ -219,7 +227,6 @@ the following hypotheses, again following \citet{hankin2010}, and
 reproduced here for convenience. 
 
 <<>>=
-data("oneill")                    # load the dataset
 icons
 maxp(icons)
 @ 
