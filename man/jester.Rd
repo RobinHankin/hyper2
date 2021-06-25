@@ -1,6 +1,9 @@
 \name{jester}
 \alias{jester}
 \alias{maxjest}
+\alias{jokes}
+\alias{humour}
+\alias{humor}
 \alias{jester_maxp}
 \docType{data}
 \title{Jester dataset}
