@@ -336,6 +336,64 @@ plot(M[,2],M[,3]-max(M[,3]),type='b',xlab="Brazilian beachtype (log-odds)",ylab=
 plot(M[,2],M[,3]-max(M[,3]),type='b',ylim=c(-0.3,0),xlab="Brazilian beachtype (log-odds)",ylab="support")
 ```
 
+# compatriot selection
+
+```{r calculate_compatriot_monster_LF,cache=TRUE}
+scomp <- hyper2()
+for(v in o){
+   r <- v[-1]  # first entry is venue
+   numberretained <- sum(!(r %in% remove))
+   if(numberretained > 1){
+     r <- r[!(r %in% remove)]
+     ## Now add a compatriot monster if needed
+
+     if(numberretained ==3){
+       nationalities <- c(nationality(r[1]),nationality(r[2]),nationality(r[3]))
+       if(length(unique(nationalities)) == 2){
+         print(nationalities)
+         if(sum(nationality(r[1]) %in% nationalities) == 1){
+           Hjj <- pwa(race(r),pwa=r[1])
+	   print("a")
+	   print(r)
+	   print(nationalities)
+	   print(Hjj)
+         } else if(sum(nationality(r[2]) %in% nationalities) == 1){
+           Hjj <- pwa(race(r),pwa=r[2])
+	   print("b")
+	   print(r)
+	   print(nationalities)
+	   print(Hjj)
+         } else if(sum(nationality(r[3]) %in% nationalities) == 1){
+	   Hjj <- pwa(race(r),pwa=r[3])
+	   print("c")
+	   print(r)
+	   print(nationalities)
+	   print(Hjj)
+         } else {
+           stop("this cannot happen")
+         }
+         scomp <- scomp + Hjj
+       } else {  # no compatriot monster
+         scomp <- scomp + race(r)
+       }
+     }
+   }
+}
+```
+
+```{r maximize_compatriot_monster,cache=TRUE}
+maxs <- maxp(scomp)
+maxs
+```
+
+```{r}
+pie(maxs)
+```
+
+```{r testcompatriotmonster,cache=TRUE}
+specificp.gt.test(scomp,"S",0)
+```
+
 ### Package dataset {-}
 
 Following lines create `surfing.rda`, residing in the `data/` directory
