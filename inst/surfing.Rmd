@@ -138,7 +138,7 @@ beachtype("wct06")
 
 
 
-options(width=100)
+options(width=120)
 surfing_table
 wildcards <- rownames(surfing_table)[-(1:36)]
 wildcards
@@ -282,7 +282,7 @@ specificp.gt.test(surfing2,"Brazilian_beachtype",0)
 ```
 
 ```{r profsuppcalcsurfing2, cache=TRUE}
-p <- seq(from=0.0005,to=0.01,by=0.0005)
+p <- seq(from=0.001,to=0.01,by=0.0005)
 l <- profsupp(surfing2,"Brazilian_beachtype",p,relative=FALSE)
 l0 <- loglik(indep(surfing_maxp),surfing)
 ```
@@ -338,50 +338,47 @@ plot(M[,2],M[,3]-max(M[,3]),type='b',ylim=c(-0.3,0),xlab="Brazilian beachtype (l
 
 # compatriot selection
 
-```{r calculate_compatriot_monster_LF,cache=TRUE}
+```{r calculate_compatriot_monster_LF,cache=FALSE}
 scomp <- hyper2()
+scomp3 <- hyper2()  # scomp3 is the likelihood function for just the races with 3 competitors, 2 of one nationality and one odd-man-out.
 for(v in o){
-   r <- v[-1]  # first entry is venue
+   r <- v[-1]  # first entry is venue; "r" for "race"
    numberretained <- sum(!(r %in% remove))
    if(numberretained > 1){
      r <- r[!(r %in% remove)]
-     ## Now add a compatriot monster if needed
-
      if(numberretained ==3){
        nationalities <- c(nationality(r[1]),nationality(r[2]),nationality(r[3]))
        if(length(unique(nationalities)) == 2){
-         print(nationalities)
-         if(sum(nationality(r[1]) %in% nationalities) == 1){
+         if(sum(nationalities %in% nationality(r[1])) == 1){ # winner is the odd one out
            Hjj <- pwa(race(r),pwa=r[1])
-	   print("a")
-	   print(r)
-	   print(nationalities)
-	   print(Hjj)
-         } else if(sum(nationality(r[2]) %in% nationalities) == 1){
+           print("odd one out is number 1")
+           print(100*surfing_maxp[r])
+         } else if(sum(nationalities %in% nationality(r[2]) ) == 1){ # second best is the odd one out
            Hjj <- pwa(race(r),pwa=r[2])
-	   print("b")
-	   print(r)
-	   print(nationalities)
-	   print(Hjj)
-         } else if(sum(nationality(r[3]) %in% nationalities) == 1){
+           print("odd one out is number 2")
+           print(100*surfing_maxp[r])
+         } else if(sum(nationalities %in% nationality(r[3])) == 1){  # third best is the odd one out
 	   Hjj <- pwa(race(r),pwa=r[3])
-	   print("c")
-	   print(r)
-	   print(nationalities)
-	   print(Hjj)
+           print("odd one out is number 3")
+           print(100*surfing_maxp[r])
          } else {
            stop("this cannot happen")
          }
-         scomp <- scomp + Hjj
-       } else {  # no compatriot monster
-         scomp <- scomp + race(r)
+         print(Hjj)
+         print("---")
+         scomp <- scomp + Hjj      # add compatriot-monster modified likelihood 
+         scomp3 <- scomp3 + Hjj
+       } else {                    # 3 in race, but no compatriot monster...
+         scomp <- scomp + race(r)  # ... so use regular Plackett-Luce for 3-competitor race
        }
+     } else {                    # if(numberretained==3) closes...
+       scomp <- scomp + race(r)  # numberretained !=3; use regular Plackett-Luce
      }
-   }
-}
+  } # if(numberretained>1) closes
+} # for(v in o) loop closes
 ```
 
-```{r maximize_compatriot_monster,cache=TRUE}
+```{r maximize_compatriot_monster,cache=FALSE}
 maxs <- maxp(scomp)
 maxs
 ```
@@ -391,7 +388,101 @@ pie(maxs)
 ```
 
 ```{r testcompatriotmonster,cache=TRUE}
-specificp.gt.test(scomp,"S",0)
+specificp.gt.test(scomp,"S",0,n=100,maxtry=100)
+```
+
+Now profile likelihood:
+
+```{r profsuppcalcscompatriotmonster, cache=TRUE}
+p <- c(0.0002,seq(from=0.001,to=0.02,len=10))
+l <- profsupp(scomp,"S",p,relative=FALSE)
+```
+
+plot it:
+
+```{r}  
+plot(p,l,type='b',xlab="compatriot support",ylab="support")
+```
+
+
+
+
+
+
+```{r}
+scomp3
+maxp(scomp3)
+specificp.gt.test(scomp3,'S',0)
+````
+
+
+
+We can do a much more basic test on just the entries with three competitors comprising
+two of one nationality and one of a different nationality:
+
+
+```{r basicanalysis}
+##     Dora Ferreira   Slater 
+##   2.5741  12.5929   3.8933  (3)
+
+##     Smith    Buchan Freestone 
+##    5.2764    2.0552    1.8673  (1)
+
+##   Slater   Andino Callinan 
+##   3.8933   5.9190   1.8408  (3)
+
+## Crisanto   Wilson   Ibelli 
+##   2.1644   2.7100   2.2479  (2)
+
+##     Moniz    Wright Freestone 
+##    3.0250    3.6502    1.8673 (1)
+
+## Carmichael  Freestone     Flores 
+##     1.8855     1.8673     2.0480 (3)
+
+##    Bourez    Wright Freestone 
+##    1.9068    3.6502    1.8673 (1)
+
+## Colapinto    Flores    Bourez 
+##    2.9871    2.0480    1.9068  (1)
+
+## Ferreira   Morais   Ibelli 
+##  12.5929   1.0817   2.2479 (2)
+
+## Freestone    Flores    Bourez 
+##    1.8673    2.0480    1.9068  (1)
+
+##     Dora Ferreira   Morais 
+##   2.5741  12.5929   1.0817 (1)
+
+
+M <- matrix(c(
+  2.5741,12.5929,3.8933,3
+, 5.2764, 2.0552,1.8673,1
+, 3.8933, 5.9190,1.8408,3
+, 2.1644, 2.7100,2.2479,2
+, 3.0250, 3.6502,1.8673,1
+, 1.8855, 1.8673,2.0480,3
+, 1.9068, 3.6502,1.8673,1
+, 2.9871, 2.0480,1.9068,1
+,12.5929, 1.0817,2.2479,2
+, 1.8673, 2.0480,1.9068,1
+, 2.5741,12.5929,1.0817,1),byrow=TRUE, ncol=4)
+
+for(i in seq_len(nrow(M))){ M[i,1:3] <-   M[i,1:3]/sum(M[i,1:3])}
+print(M)  # rows 1-3 of M are strengths of the first, second, third
+          # competitors.  Row 4 is the place of the odd-man-out.  Thus
+          # on row 1, the odd-man-out came third, and on row 2, the
+          # odd-man-out came first.
+
+p <- M[cbind(1:11, M[,4])]
+print(p) 
+                                        ## element i of p is the probability of the odd-man-out
+                                        ## winning, given the maximum likelihood estimate.
+
+ww <-table(replicate(1e5,sum(rbinom(11,1,p))))
+print(ww)
+sum(ww[7:10])/sum(ww) # pvalue for observation of six wins by the odd-man-out
 ```
 
 ### Package dataset {-}
