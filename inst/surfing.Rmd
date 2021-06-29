@@ -401,19 +401,32 @@ l <- profsupp(scomp,"S",p,relative=FALSE)
 plot it:
 
 ```{r}  
-plot(p,l,type='b',xlab="compatriot support",ylab="support")
+plot(p,l,type='b',xlab="compatriot support",ylab="support",main="profile support for S, scomp")
 ```
 
 
 
-
-
-
-```{r}
+```{r cache=TRUE}
 scomp3
 maxp(scomp3)
-specificp.gt.test(scomp3,'S',0)
+specificp.gt.test(scomp3,'S',0,n=100)
 ````
+
+
+Now profile likelihood:
+
+```{r profsuppcalcscomp3atriotmonster, cache=TRUE}
+p <- c(0.0002,seq(from=0.001,to=0.02,len=10))
+l <- profsupp(scomp3,"S",p,relative=FALSE,n=100)
+```
+
+plot it:
+
+```{r}  
+plot(p,l,type='b',xlab="compatriot support",ylab="support",main="profile support for S, scomp3")
+```
+
+
 
 
 
