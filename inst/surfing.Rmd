@@ -287,7 +287,7 @@ l <- profsupp(surfing2,"Brazilian_beachtype",p,relative=FALSE)
 l0 <- loglik(indep(surfing_maxp),surfing)
 ```
 
-```{r}
+```{r plotpthink}
 plot(c(0,p),c(l0,l)-max(l),type='b',xlab="Brazilian beachtype",ylab="support")
 ```
 
@@ -296,13 +296,13 @@ p_wide <- seq(from=0.002,to=0.04,by=0.002)
 l_wide <- profsupp(surfing2,"Brazilian_beachtype",p_wide,relative=FALSE)
 ```
 
-```{r}
+```{r plotwidep}
 plot(c(0,p_wide),c(l0,l_wide)-max(l),type='b',xlab="Brazilian beachtype",ylab="support")
 ```
 
 ## Generalized log-odds ratios
 
-```{r}
+```{r allbrazsurf}
 all_Brazilian_surfers <- rownames(surfing_table)[surfing_table$nation == "BRA"]
 all_Brazilian_surfers
 pnames(surfing2)
@@ -312,7 +312,7 @@ Brazilian_surfers <- pnames(surfing2)[pnames(surfing2) %in% all_Brazilian_surfer
 Brazilian_surfers
 ```
 
-```{r,cache=TRUE}
+```{r biglikefun,cache=TRUE}
 f <- function(B,...){
   jj <- specificp.test(surfing2, "Brazilian_beachtype", B)
   mp <- jj$null_estimate
@@ -331,7 +331,7 @@ M[,3] <- M[,3]-max(M[,3])
 M
 ```
 
-```{r}
+```{r plotBraz}
 plot(M[,2],M[,3]-max(M[,3]),type='b',xlab="Brazilian beachtype (log-odds)",ylab="support")
 plot(M[,2],M[,3]-max(M[,3]),type='b',ylim=c(-0.3,0),xlab="Brazilian beachtype (log-odds)",ylab="support")
 ```
@@ -383,7 +383,7 @@ maxs <- maxp(scomp)
 maxs
 ```
 
-```{r}
+```{r plotpiemaxs}
 pie(maxs)
 ```
 
@@ -400,7 +400,7 @@ l <- profsupp(scomp,"S",p,relative=FALSE)
 
 plot it:
 
-```{r}  
+```{r plotprofilescomp}  
 plot(p,l,type='b',xlab="compatriot support",ylab="support",main="profile support for S, scomp")
 ```
 
@@ -422,7 +422,7 @@ l <- profsupp(scomp3,"S",p,relative=FALSE,n=100)
 
 plot it:
 
-```{r}  
+```{r plotprofilescomp3}  
 plot(p,l,type='b',xlab="compatriot support",ylab="support",main="profile support for S, scomp3")
 ```
 

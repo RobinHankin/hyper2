@@ -1,4 +1,10 @@
 % -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
+%\VignetteIndexEntry{The hyper2 package}
+%\VignetteDepends{hyper2}
+%\VignetteKeywords{hyper2,dirichlet,Bradley-Terry, reified Bradley=Terry}
+%\VignettePackage{hyper2}
+
+
 \documentclass[nojss]{jss}
 \usepackage{dsfont}
 \usepackage{bbm}
@@ -19,7 +25,6 @@
   functions for generalized Bradley-Terry models}
 
 
-%\VignetteIndexEntry{The hyper2 package}
 
 %% for pretty printing and a nice hypersummary also set:
 \Plainauthor{Robin K. S. Hankin}
@@ -87,7 +92,6 @@ optimization, Bradley-Terry}
 
 \SweaveOpts{}
 \begin{document}
-\SweaveOpts{concordance=TRUE}
 \section{Introduction}
 
 <<set_seed_chunk,echo=FALSE,print=FALSE>>=
@@ -158,7 +162,6 @@ compete; this would have likelihood~$\sum_{i\in\mathcal{A}}
 p_i/\sum_{i\in\mathcal{A}\cup\mathcal{B}} p_i$.  Such datasets
 motivate consideration of likelihood
 functions~$\mathcal{L}\left(\cdot\right)$ with
-
 \begin{equation}\label{hyper2likelihood}
 \mathcal{L}\left(\mathbf{p}\right)=
 \prod_{s\in \mathcal{O}}\left({\sum_{i\in s}}p_i\right)^{n_s}
@@ -195,6 +198,7 @@ statements are:
 typedef set<unsigned int> bracket;
 typedef map<bracket, double> hyper2;
 \end{verbatim}
+
 
 \noindent
 In the \code{STL}, a map object stores keys and associated values in
@@ -368,6 +372,7 @@ H
 came first, then Cabrera, etc).  We can add the information from
 heat~2 easily:
 
+
 <<2016_olympics_heat1_first>>=
 heat2 <- c("drysdale", "molnar", "esquivel", "garcia", "khafaji", "monasterio")
 H <- H + rankvec_likelihood(heat2)
@@ -408,6 +413,7 @@ with the highest strength is Drysdale, the gold medallist for this
 event.  The bronze and silver medallists were Synek and Martin
 respectively, whose estimated strengths were second and third highest
 in the field.
+
  
 \section{MasterChef Australia}
 
@@ -492,7 +498,6 @@ Emelia and Amy, then Brent and Tracy.  Ben and Renae's team came last:
 \left\{{\mathrm{Brent}   + \mathrm{Tracy}}\right\}\succ
 \left\{{\mathrm{Ben}    + \mathrm{Renae}}\right\}
 \end{equation}
-
 
 A plausible likelihood function can be generated using the standard
 assumption~\citep{hankin2010} that the competitive strength of a team
@@ -647,25 +652,10 @@ might be
 \nonumber
 \end{align}
 
-
-
-%\begin{align}
-%  \mathcal{L}\left({p_1,\ldots, p_8}\right) &=
-%  \Prob\left({
-%    \left\{ {p_1, p_2}\right\}\succ 
-%    \left\{ {p_3, p_4}\right\}\succ 
-%    \left\{ {p_5, p_6}\right\}\succ 
-%    \left\{ {p_7, p_8}\right\}
-%  }\right)\\ \label{ggrlmath}
-%  &=\Prob\left({\bigcup_{\left[{abc}\right]} p_1\succ p_a\succ p_b\succ p_c\succ p_5
-%  }\right)\\ \nonumber
-%  &=    \frac{p_1}{p_1+p_2+p_3+p_4+p_5}\cdot\frac{p_2}{p_2+p_3+p_4+p_5}\cdot\frac{p_3}{p_3+p_4+p_5}\cdot\frac{p_4}{p_4+p_5}\\ \nonumber
-%  &{\qquad+}\frac{p_1}{p_1+p_2+p_4+p_3+p_5}\cdot\frac{p_2}{p_2+p_4+p_3+p_5}\cdot\frac{p_4}{p_4+p_3+p_5}\cdot\frac{p_3}{p_3+p_5}\\ \nonumber
-%  &{\qquad{}+}\frac{p_1}{p_1+p_3+p_2+p_4+p_5}\cdot\frac{p_3}{p_3+p_2+p_4+p_5}\cdot\frac{p_2}{p_2+p_4+p_5}\cdot\frac{p_4}{p_4+p_5}\\ \nonumber
-%  &{\qquad{}+}\cdots
 % \end{align}
 
 \subsection{Maximum likelihood estimation}
+
 
 The package provides an overall likelihood function for all
 informative judgements in the series on the final 13 players in object
@@ -746,6 +736,7 @@ constrOptim(  # maxp() does not work for masterchef_series6
 Object \code{maxp_masterchef6_constrained} in the package is the
 result of the above optimization, at which point the likelihood is
 
+
 <<>>=
 like_series(indep(masterchef_constrained_maxp), masterchef)
 @ 
@@ -784,6 +775,10 @@ generalized Bradley-Terry strengths in two competitive situations:
 Olympic rowing, and \emph{MasterChef Australia}.  The estimates for
 the competitors' strengths are plausible; and several meaningful
 statistical hypotheses are assessed quantitatively.
+
+
+
+
 
 \bibliography{hyper2}
 \end{document}
