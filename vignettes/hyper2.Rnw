@@ -694,13 +694,13 @@ masterchef_maxp
 dotchart(masterchef_maxp)
 @
 \caption{Maximum likelihood estimate for the strengths of the top~13
-  competitors\label{masterchef} in Series~6 of \emph{MasterChef Australia}
+  competitors\label{masterchef6} in Series~6 of \emph{MasterChef Australia}
 }
 \end{center}
 \end{figure}
 
 The resulting maximum likelihood estimate, \code{masterchef_maxp} in
-the package, is shown pictorially in Figure~\ref{masterchef}.  The
+the package, is shown pictorially in Figure~\ref{masterchef6}.  The
 support at the precalculated evaluate is
 
 <<like_series2>>=
