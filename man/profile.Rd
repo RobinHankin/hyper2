@@ -28,14 +28,16 @@ profile_support_single(H, i, p, evaluate=FALSE, ...)
   \item{...}{Arguments passed to \code{maxp()}}
 }
 
-\value{Returns the support at a particular value of \eqn{p_i},  or the
+\value{Returns the support at a particular value of \eqn{p_i}, or the
   evaluate conditional on \eqn{p_i}.}
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{loglik}}}
 \examples{
 
+\dontrun{  # takes too long
 p <- seq(from=0.5,to=0.4,len=10)
 u <- profsupp(icons,"NB",p)
 plot(p,u-max(u))
 abline(h=c(0,-2))
+}
 }

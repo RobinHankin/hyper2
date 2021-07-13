@@ -26,6 +26,6 @@ rhyper2(n = 8, s = 5, pairs = TRUE, teams = TRUE, race = TRUE, pnames)
 \examples{
 
 dotchart(maxp(rhyper2(n=8,s=10)))
-dotchart(maxp(rhyper2(n=26,s=2,race=FALSE)))
+pie(maxp(rhyper2(n=4,pairs=TRUE,teams=TRUE,race=TRUE)))
 
 }

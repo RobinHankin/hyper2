@@ -54,7 +54,6 @@ discard_flawed(H, unwanted)
 \seealso{\code{\link{ordertable2supp}},\code{\link{tidy}}}
 \examples{
 
-data("oneill")
 maxp(icons)
 discard_flawed(icons,c("OA","WAIS"))
 

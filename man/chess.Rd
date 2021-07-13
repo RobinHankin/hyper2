@@ -50,7 +50,7 @@ which resides in the \code{data/} directory.
 data(chess)
 maxp(chess)
 
- mgf(chess,c(Anand=2))
+ mgf(chess,c(Anand=2),tol = 0.1)  # tolerance for speed
 
 }
 \keyword{datasets}

@@ -104,7 +104,7 @@ package uses \code{adaptIntegrate} of the cubature package.
 \examples{
 
 data(chess)
-mean_hyper2(chess)
+mean_hyper2(chess,tol=0.1)
 maxp(chess)
 
 # disallowed argument typically means slow run times; use high tol for speed

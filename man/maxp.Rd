@@ -110,6 +110,6 @@ maxp(icons)
 
 W <- hyper2(pnames=letters[1:5])
 W1 <- ggrl(W, 'a', letters[2:3],'d')  # W1 is a suplist object
-maxp(W1)
+\dontrun{maxp(W1)}  # takes a long time to maximize a suplist
 
 }

@@ -109,8 +109,7 @@ W1+W2+W3 # A 2*6*2=24-element list
 like_single_list(indep(equalp(W)),W1+W2+W3)
 
 
-dotchart(maxplist(W1+W1+W3),pch=16)
-
+\dontrun{dotchart(maxplist(W1+W1+W3),pch=16)} # takes a long time
 
 }
 \keyword{symbolmath}
