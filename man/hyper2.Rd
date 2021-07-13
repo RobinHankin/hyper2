@@ -4,6 +4,8 @@
 \alias{brackets.hyper2}
 \alias{powers}
 \alias{powers.hyper2}
+\alias{powers<-}
+\alias{powers<-.hyper2}
 \alias{pnames}
 \alias{pnames.hyper2}
 \alias{pnames.suplist}

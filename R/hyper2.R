@@ -13,18 +13,31 @@
 ## Following three functions are the only accessor methods in the package
 setGeneric("brackets",function(x){standardGeneric("brackets")})
 setGeneric("powers"  ,function(x){standardGeneric("powers"  )})
+setGeneric("powers<-",function(x,value){standardGeneric("powers<-")})
 setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
 `brackets` <- function(H){UseMethod("brackets")}
 `powers`   <- function(H){UseMethod("powers"  )}
 `pnames`   <- function(H){UseMethod("pnames"  )}
-`brackets.hyper2` <- function(H){ H$brackets }
+`brackets.hyper2` <- function(H){disord(H$brackets)}
 
 `powers.hyper2` <- function(H){
   if(is_constant(H)){
-    return(0)
+    out <- 0
   } else {
-    return(H$powers)
+    out <- H$powers
   }
+  return(disord(out))
+}
+
+`powers<-.hyper2` <- function(x,value){
+  jj <- powers(x)
+  if(is.disord(value)){
+    stopifnot(consistent(brackets(x),value))
+    jj <- value
+  } else {
+    jj[] <- value  # the meat
+  }
+  hyper2(brackets(x),jj)
 }
 
 `pnames.hyper2` <- function(H){ H$pnames }
@@ -34,7 +47,7 @@ setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
 ## Following function is the only setter method in the package
 setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `pnames<-` <- function(x,value){UseMethod("pnames<-")}
-`pnames<-.hyper2` <- function(x,value){hyper2(brackets(x),powers(x),pnames=value)}
+`pnames<-.hyper2` <- function(x,value){hyper2(elements(brackets(x)),elements(powers(x)),pnames=value)}
 
 ## setter methods end
 
@@ -84,8 +97,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
   
 `print.hyper2` <- function(x,...){
-  b <- brackets(x)
-  powers <- powers(x)
+  b <- elements(brackets(x))
+  powers <- elements(powers(x))
   if(length(b)==0){  # not is.null(b)
       out <- paste(.print.helper(pnames(x)),"^0",sep="")
   }
@@ -111,14 +124,20 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `hyper2_add` <- function(e1,e2){
-  out <- addL(brackets(e1),powers(e1),brackets(e2),powers(e2))
+  b1 <- elements(brackets(e1))
+  b2 <- elements(brackets(e2))
+  p1 <- elements(powers(e1))
+  p2 <- elements(powers(e2))
+  n1 <- pnames(e1)
+  n2 <- pnames(e2)
+  out <- addL(b1,p1,b2,p2)
   
-  if(all(pnames(e2) %in% pnames(e1))){
-      jj <- pnames(e1)
-  } else if(all(pnames(e1) %in% pnames(e2))){
-      jj <- pnames(e2)
+  if(all(n2 %in% n1)){
+      jj <- n1
+  } else if(all(n1 %in% n2)){
+      jj <- n2
   } else {
-      jj <- sort(unique(c(brackets(e1),brackets(e2),recursive=TRUE)))
+      jj <- sort(unique(c(b1,b2,recursive=TRUE)))
   }
   
   return(hyper2(out[[1]],out[[2]],pnames=jj))
@@ -260,7 +279,6 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `assign_lowlevel`<- function(x,index,value){ #H[index] <- value
-
     stopifnot(class(x) == 'hyper2')
     
     if(is.list(index)){
@@ -272,7 +290,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     } else {
         stop("replacement index must be a list, a matrix, or a vector")
     }
-
+    value <- elements(value)
     stopifnot(is.numeric(value)) # coercion to integer is done in C
     stopifnot(is.vector(value))
     if(length(value)==1){
@@ -494,7 +512,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
 }
 
-`head.hyper2` <- function(x,...){ x[head(brackets(x),...)] }
+`head.hyper2` <- function(x,...){ x[head(elements(brackets(x)),...)] }
 
 `rank_likelihood` <- function(M,times=1){
   M <- rbind(M)  # deals with vectors
@@ -904,12 +922,12 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     stopifnot(pwa %in% pnames(H))
     stopifnot(!(chameleon %in% pnames(H)))  # ... check that the chameleon isn't already a competitor, and
   
-    B <- brackets(H)
+    B <- elements(brackets(H))
     ## overwrite B in place:
     for(i in seq_along(B)){
         if(any(pwa %in% B[[i]])){ B[[i]] <- c(B[[i]],chameleon) }
     }
-    return(hyper2(B,powers(H)))
+    return(hyper2(B,elements(powers(H))))
 }
 
 `wikitable_to_ranktable`  <- function(wikitable, strict=FALSE){

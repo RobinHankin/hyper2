@@ -1,21 +1,25 @@
          
 `tidy` <- function(H){
-    hyper2(brackets(H),powers(H),pnames=sort(unique(c(brackets(H),recursive=TRUE))))
+  b <- elements(brackets(H))
+  p <- elements(powers(H))
+  hyper2(b,p,pnames=sort(unique(c(b,recursive=TRUE))))
 }
 
 `keep_flawed` <- function(H, wanted){
   p <- pnames(H)    # might be NA
+  bH <- elements(brackets(H))
+  pH <- elements(powers(H))
   stopifnot(is.character(wanted))
   stopifnot(all(wanted %in% p))
 
   bracketout <- list()
   powerout <- NULL
   for(i in seq_along(H)){
-    b <- brackets(H)[[i]]
+    b <- bH[[i]]
     jj <- b[b %in% wanted]   # the meat
     if(length(jj)>0){
       bracketout <- c(bracketout, list(jj))
-      powerout <- c(powerout, powers(H)[i])
+      powerout <- c(powerout, pH[i])
     }
   }
   hyper2(L=bracketout,d=powerout,pnames=p)

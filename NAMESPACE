@@ -10,6 +10,11 @@ importFrom("magrittr", "%>%", "%<>%")
 importFrom("cubature", "adaptIntegrate")
 importFrom("graphics", "abline", "par", "text","points")
 
+importFrom("disordR","disord")
+importFrom("disordR","consistent")
+importFrom("disordR","elements")
+importFrom("disordR","is.disord")
+
 import(methods)
 import(mathjaxr)
 
