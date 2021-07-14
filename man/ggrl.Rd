@@ -117,6 +117,6 @@ equalp.test(H) # should not be significant (null is true)
 
 H <- hyper2(pnames=letters[1:5])
 H2 <- choose_losers(H,letters[1:4],letters[1:2])   # {a,b} vs {c,d}; {a,b} lost
-maxplist(H2)
+maxplist(H2,control=list(maxit=1))  # control set to save time
 
 }

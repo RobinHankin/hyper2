@@ -40,7 +40,6 @@ The definitive source is the coloured table on the wiki page.
 }
 \seealso{\code{\link{ggrl}}}
 \examples{
-data(masterchef)
 
 a1 <- rep(1/13,12)                         # equal strengths
 a2 <- indep(masterchef_maxp)               # MLE

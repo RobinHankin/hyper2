@@ -59,9 +59,6 @@ Counterstrike dataset kindly supplied by Zachary Hankin.
   }
 }
 \examples{
-
-data(counterstrike)
-dotchart(maxp(counterstrike))
-
+dotchart(counterstrike_maxp)
 }
 \keyword{datasets}

@@ -60,21 +60,23 @@ markdown files in the \file{inst/} directory.
 \seealso{\code{\link{ordervec2supp}}}
 \examples{
 
+summary(formula1 \%>\% pwa("Hamilton","pole"))
+
 H <- ordervec2supp(c(a = 2, b = 3, c = 1, d = 5, e = 4))
 pwa(H,'a')
 
+## Four races between a,b,c,d:
+H1 <- ordervec2supp(c(a = 1, b = 3, c = 4, d = 2))
+H2 <- ordervec2supp(c(a = 0, b = 1, c = 3, d = 2))
+H3 <- ordervec2supp(c(a = 4, b = 2, c = 1, d = 3))
+H4 <- ordervec2supp(c(a = 3, b = 4, c = 1, d = 2))
 
-formula1 \%>\% pwa("Hamilton","pole")
+## Now it is revealed that a,b,c had some advantage in races 1,2,3
+## respectively.  Is there evidence that this advantage exists?
 
+\dontrun{  # takes ~10 seconds, too long for here
+specificp.test(pwa(H1,'a') + pwa(H2,'b') + pwa(H3,'c') + H4,"S")
+}
 
-## Three five-way races:
-H1 <- ordervec2supp(c(a = 1, b = 5, c = 3, d = 4, e = 2))
-H2 <- ordervec2supp(c(a = 2, b = 3, c = 1, d = 4, e = 5))
-H3 <- ordervec2supp(c(a = 4, b = 3, c = 0, d = 1, e = 2))
-
-## Now it is revealed that a,b,c had some advantage in races 1,2,3 respectively:
-Ht <- pwa(H1,'a') + pwa(H2,'b') + pwa(H2,'c')
-
-specificp.test(Ht,"S")
 
 }

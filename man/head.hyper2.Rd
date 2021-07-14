@@ -12,9 +12,10 @@
 \author{Robin K. S. Hankin}
 \examples{
 
-p <- (10:1)/55
-names(p) <- letters[1:10]
-H <- rank_likelihood(rrank(100,p))
+p <- zipf(5)
+names(p) <- letters[1:5]
+H <- rank_likelihood(rrank(20,p))
 head(H)
+
 
 }
