@@ -130,13 +130,11 @@ nationality <- function(surfers){surfing_table$nation[rownames(surfing_table) %i
 ```
 
 ```{r}
-type <- read.table("venuetypes2019.txt",header=TRUE)
-type
-beachtype <- function(venue){type$beachtype[which(type$comp==venue)]}
+surfing_venuetypes <- read.table("venuetypes2019.txt",header=TRUE)
+surfing_venuetypes
+beachtype <- function(venue){surfing_venuetypes$beachtype[which(surfing_venuetypes$comp==venue)]}
 beachtype("wct05")
 beachtype("wct06")
-
-
 
 options(width=120)
 surfing_table
@@ -427,9 +425,6 @@ plot(p,l,type='b',xlab="compatriot support",ylab="support",main="profile support
 ```
 
 
-
-
-
 We can do a much more basic test on just the entries with three competitors comprising
 two of one nationality and one of a different nationality:
 
@@ -504,7 +499,7 @@ Following lines create `surfing.rda`, residing in the `data/` directory
 of the package.
 
 ```{r,label=savesurfiningingdataset}
-save(surfing,surfing_maxp,type,surfing_table,file="surfing.rda")
+save(surfing,surfing_maxp,surfing_venuetypes,surfing_table,file="surfing.rda")
 ```
 
 
