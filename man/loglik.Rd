@@ -65,15 +65,10 @@ loglik(c(1/3,1/3),chess)
 
 loglik(rp(14,icons),icons)
 
-
-data(masterchef)
-
-a1 <- rep(1/13,12)                  # equal strengths
-a2 <- indep(masterchef_maxp)        # MLE
-
-like_series(a1,masterchef)
-like_series(a2,masterchef)
-
+\dontrun{ # takes too long
+like_series(masterchef_maxp,masterchef)
+like_series(indep(equalp(masterchef)),masterchef)
+}
 
 W <- hyper2(pnames=letters[1:6])
 W1 <- ggrl(W, 'a', letters[2:5],'f')              # 24-element list

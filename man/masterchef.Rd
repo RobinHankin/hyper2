@@ -41,13 +41,14 @@ The definitive source is the coloured table on the wiki page.
 \seealso{\code{\link{ggrl}}}
 \examples{
 
-a1 <- rep(1/13,12)                         # equal strengths
+a1 <- indep(equalp(masterchef[[1]]))            # equal strengths
 a2 <- indep(masterchef_maxp)               # MLE
 a3 <- indep(masterchef_constrained_maxp)   # constrained MLE
 
+\dontrun{ # takes too long
 like_series(a1, masterchef)
 like_series(a2, masterchef)
 like_series(a3, masterchef)
-
+}
 }
 \keyword{datasets}
