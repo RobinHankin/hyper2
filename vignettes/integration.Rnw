@@ -124,7 +124,7 @@ chess
 We can calculate the normalizing constant:
 
 <<chess_normalizing>>=
-B(chess)
+B(chess,tol=0.1)
 @ 
 
 comparing well with the value given by the \pkg{hyperdirichlet}
@@ -134,20 +134,26 @@ p=\left(\frac{1}{3},\frac{1}{3},\frac{1}{3}\right)$ as 0.395, a
 calculation which may be performed in the \pkg{hyper2} package as
 follows:
 
-<<>>=
+\begin{Sinput}
 f <- function(p){loglik(indep(p),chess) > loglik(c(1,1)/3,chess)}
-probability(chess, disallowed=f,tol=0.01)
-@ 
+probability(chess, disallowed=f,tol=0.1)
+\end{Sinput}
+\begin{Soutput}
+  [1]  0.4099
+\end{Soutput}
 
 Again comparing well with the older result (smaller values of
 \code{tol} give closer agreement at the expense of increased
 computation time).  Finally, we can calculate the probability that
 Topalov is a better player than Anand:
 
-<<>>=
+\begin{Sinput}
 T.lt.A <- function(p){p[1]<p[2]}
-probability(chess, disallowed=T.lt.A,tol=0.001)
-@
+probability(chess, disallowed=T.lt.A,tol=0.01) 
+\end{Sinput}
+\begin{Soutput}
+  [1] 0.7123
+\end{Soutput}
 
 again showing reasonable agreement with the 2010 value of 0.701.
 
@@ -191,7 +197,7 @@ operating as expected for the case $\alpha= (1,2,3,4)$:
 
 <<>>=
 x <- c(a=1, b=2, c=3, d=4)  # needs a named vector
-ans1 <- B(dirichlet(alpha = x))
+ans1 <- B(dirichlet(alpha = x),tol=0.1)
 ans2 <- prod(gamma(x))/gamma(sum(x)) 
 c(numerical=ans1,theoretical=ans2)   # should agree
 @   
@@ -279,9 +285,12 @@ p_1\leqslant\frac{1}{6}$ using the integration facilities of the
 perform a Bayesian analysis, made possible by the efficient coding of
 \pkg{hyper2}:
 
-<<>>=
+\begin{Sinput}
 probability(icons, disallowed=function(p){p[1] > 1/6}, tol=0.1)
-@ 
+\end{Sinput}
+\begin{Soutput}
+  [1]  0.01502
+\end{Soutput}
 
 See how the disallowed region is the {\em expected} bit of the
 parameter space.  Thus the probability that the $p_i$ are unexpected
