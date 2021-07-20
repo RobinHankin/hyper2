@@ -163,15 +163,25 @@ function but first have to remove the wildcards and also player
 remove <- c(wildcards, QS, "Vries")
 wanted <- which(!(rownames(surfing_table) %in% remove)) # used at directlogplotofstrengths
 surfing <- hyper2()
+surfing_pairs <- hyper2()
 for(v in o){
    r <- v[-1]  # first entry is venue
    numberretained <- sum(!(r %in% remove))
    if(numberretained > 1){
      r <- r[!(r %in% remove)]
      surfing <- surfing + race(r)
+     if(numberretained == 2){
+     r <- r[!(r %in% remove)]
+     surfing_pairs <- surfing_pairs + race(r)
+     }	      
     }
 }	
 summary(surfing)
+summary(surfing_pairs)
+```
+
+```{r showsurfing_pairs}
+summary(surfing_pairs)
 ```
 
 Object `surfing` is a loglikelihood function on the strengths of the
@@ -183,18 +193,175 @@ surfing_maxp
 sort(surfing_maxp)
 ```
 
+Now compare `surfing` with `surfing_pairs`.  First calculate
+
+```{r maxpcalcpairs,cache=TRUE}
+surfing_pairs_maxp <- maxp(surfing_pairs)
+```
+
+then plot
+
+```{r plotmaxppairs}
+surfing_pairs_maxp
+surfing_maxp
+par(pty='s')
+plot(surfing_pairs_maxp,surfing_maxp,asp=1,pch=16)
+abline(0,1)
+plot(surfing_pairs_maxp,surfing_maxp,asp=1,pch=16,log='xy',xlim=c(0.01,0.2),ylim=c(0.01,0.2))
+abline(0,1)
+plot(log(surfing_pairs_maxp/surfing_maxp),pch=16)
+abline(0,0)
+```
+
+
 and the second step is to establish its consistency:
 
 ```{r consistencycheck,cache=TRUE}
 consistency(surfing)
+consistency(surfing_pairs)
+```
+
+```{r findhessiansurfing,cache=TRUE}
+e_all <- eigen(hessian(surfing,indep(surfing_maxp)),T,T)$values
+e_pairs <- eigen(hessian(surfing_pairs,indep(surfing_pairs_maxp)),T,T)$values
+```
+
+```{r showhessiansurfing}
+e_all
+e_pairs
+f <- function(x){prod(sort(x)[-1])}
+f(e_all)
+f(e_pairs)
+f(e_all)/f(e_pairs)
 ```
 
 and we may display it using a dot chart:
+
+```{r echo=FALSE}
+`mydotchart` <- 
+function (x, labels = NULL, groups = NULL, gdata = NULL, offset = 1/8, 
+    ann = par("ann"), xaxt = par("xaxt"), frame.plot = TRUE, 
+    log = "", cex = par("cex"), pt.cex = cex, pch = 21, gpch = 21, 
+    bg = par("bg"), color = par("fg"), gcolor = par("fg"), lcolor = "gray", 
+    xlim = range(x[is.finite(x)]), main = NULL, xlab = NULL, 
+    ylab = NULL, ...) 
+{
+    opar <- par("mai", "mar", "mgp", "cex", "yaxs")
+    on.exit(par(opar))
+    par(cex = cex, yaxs = "i")
+    if (!is.numeric(x)) 
+        stop("'x' must be a numeric vector or matrix")
+    n <- length(x)
+    if (is.matrix(x)) {
+        if (is.null(labels)) 
+            labels <- rownames(x)
+        if (is.null(labels)) 
+            labels <- as.character(seq_len(nrow(x)))
+        labels <- rep_len(labels, n)
+        if (is.null(groups)) 
+            groups <- col(x, as.factor = TRUE)
+        glabels <- levels(groups)
+    }
+    else {
+        if (is.null(labels)) 
+            labels <- names(x)
+        glabels <- if (!is.null(groups)) 
+            levels(groups)
+        if (!is.vector(x)) {
+            warning("'x' is neither a vector nor a matrix: using as.numeric(x)")
+            x <- as.numeric(x)
+        }
+    }
+    linch <- if (!is.null(labels)) 
+        max(strwidth(labels, "inch"), na.rm = TRUE)
+    else 0
+    if (is.null(glabels)) {
+        ginch <- 0
+        goffset <- 0
+    }
+    else {
+        ginch <- max(strwidth(glabels, "inch"), na.rm = TRUE)
+        goffset <- offset
+    }
+    nmai <- opar[["mai"]]
+    if (ann) 
+        nm.2 <- nmai[2L]
+    if (!(is.null(labels) && is.null(glabels))) {
+        yi <- if (is.null(ylab) || !ann) 
+            0
+        else offset
+        nm.2 <- nmai[4L] + max(yi + linch + goffset, ginch) + 
+            1/16
+        if (nmai[2L] < nm.2) {
+            nmai[2L] <- nm.2
+            par(mai = nmai)
+        }
+    }
+    if (is.null(groups)) {
+        o <- seq_len(n)
+        y <- o
+        ylim <- c(0, n + 1)
+    }
+    else {
+        o <- sort.list(as.numeric(groups), decreasing = TRUE)
+        x <- x[o]
+        groups <- groups[o]
+        color <- rep_len(color, length(groups))[o]
+        lcolor <- rep_len(lcolor, length(groups))[o]
+        pch <- rep_len(pch, length(groups))[o]
+        of.1 <- cumsum(c(0, diff(as.numeric(groups)) != 0))
+        y <- seq_len(n) + 2 * of.1
+        ylim <- range(0, y + 2)
+    }
+#    plot.window(xlim = xlim, ylim = ylim, log = log)
+    lheight <- par("csi")
+    if (!is.null(labels)) {
+        loffset <- (linch + 0.1)/lheight
+        mtext(labels[o], side = 2, line = loffset, at = y, adj = 0, 
+            col = color, las = 2, cex = cex, ...)
+    }
+    abline(h = y, lty = "dotted", col = lcolor)
+    points(x, y, pch = pch, col = color, bg = bg, cex = pt.cex/cex)
+    if (!is.null(groups)) {
+        gpos <- rev(cumsum(rev(tapply(groups, groups, length)) + 
+            2) - 1)
+        ginch <- max(strwidth(glabels, "inch"), na.rm = TRUE)
+        goffset <- (max(linch + offset, ginch, na.rm = TRUE) + 
+            1/16)/lheight
+        mtext(glabels, side = 2, line = goffset, at = gpos, adj = 0, 
+            col = gcolor, las = 2, cex = cex, ...)
+        if (!is.null(gdata)) {
+            abline(h = gpos, lty = "dotted")
+            points(gdata, gpos, pch = gpch, col = gcolor, bg = bg, 
+                cex = pt.cex/cex, ...)
+        }
+    }
+    axis(1, xaxt = xaxt)
+    if (frame.plot) 
+        box()
+    if (ann) {
+        title(main = main, xlab = xlab, ...)
+        mgp <- par("mgp")
+        par(mgp = c(max(mgp[1], nm.2/lheight - 1.5), mgp[-1]))
+        title(ylab = ylab, ...)
+    }
+    invisible()
+}
+```
+
 
 ```{r showsurfingmaxppie, echo=FALSE, fig.height=8,fig.cap="dot chart of result"}
 dotchart(surfing_maxp)
 dotchart(log10(surfing_maxp))
 pie(surfing_maxp)
+jj <- log(surfing_maxp)
+kk <- log(surfing_pairs_maxp)
+names(jj) <- NULL
+names(kk) <- NULL
+l <- c(-4.6, -1.5)
+dotchart(log(surfing_maxp),pch=NA,xlim=l)
+mydotchart(jj,col="red" ,pch=16,xlim=l,xaxt='n',frame.plot=FALSE)
+mydotchart(kk,col="blue",pch=16,xlim=l,xaxt='n',frame.plot=FALSE)
 ```
 
 Test the null of equal strengths:
@@ -336,7 +503,7 @@ plot(M[,2],M[,3]-max(M[,3]),type='b',ylim=c(-0.3,0),xlab="Brazilian beachtype (l
 
 # compatriot selection
 
-```{r calculate_compatriot_monster_LF,cache=FALSE}
+```{r calculate_compatriot_monster_LF,cache=TRUE}
 scomp <- hyper2()
 scomp3 <- hyper2()  # scomp3 is the likelihood function for just the races with 3 competitors, 2 of one nationality and one odd-man-out.
 for(v in o){
@@ -376,7 +543,7 @@ for(v in o){
 } # for(v in o) loop closes
 ```
 
-```{r maximize_compatriot_monster,cache=FALSE}
+```{r maximize_compatriot_monster,cache=TRUE}
 maxs <- maxp(scomp)
 maxs
 ```
@@ -401,7 +568,6 @@ plot it:
 ```{r plotprofilescomp}  
 plot(p,l,type='b',xlab="compatriot support",ylab="support",main="profile support for S, scomp")
 ```
-
 
 
 ```{r scomp3maxp, cache=TRUE}
