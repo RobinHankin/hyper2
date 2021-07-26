@@ -9,6 +9,11 @@ library("hyper2")
 library("magrittr")
 ```
 
+
+```{r}
+ordertrans
+```
+
 # Introduction
 
 The `ordertrans()` function can be difficult to understand and this
@@ -33,7 +38,15 @@ came second?"  (see also the discussion at `rrank.Rd`).
 But note that `x` is not helpfully structured to answer either of
 these questions: you have to go searching through the names or the
 ranks respectively---both of which may appear in any order---to find
-the competitor or rank you are interested in.  What we want is to
+the competitor or rank you are interested in.  To find the rank vector
+(that is, who came first, second etc), one would use `sort()`:
+
+```{r}
+sort(x)
+```
+
+But this is suboptimal to find the order vector ["where did a
+particular competitor come?"].  For the order vector, we want to
 rearrange the elements of `x` so that the names are in alphabetical
 order.  That way we can see straighaway where competitor `a` placed
 (in this case, third).  This nontrivial task is accomplished by
