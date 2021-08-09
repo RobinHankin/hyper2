@@ -373,7 +373,7 @@ came first, then Cabrera, etc).  We can add the information from
 heat~2 easily:
 
 
-<<2016_olympics_heat1_first>>=
+<<2016_olympics_heat2_first>>=
 heat2 <- c("drysdale", "molnar", "esquivel", "garcia", "khafaji", "monasterio")
 H <- H + rankvec_likelihood(heat2)
 head(H)
