@@ -51,3 +51,6 @@
 ^inst/surfing_files$
 ^inst/surfing_cache$
 ^inst/surfing.Rmd
+^inst/monster.jpg$
+^inst/monster_blue.png$
+^inst/monster_blue.xcf$
