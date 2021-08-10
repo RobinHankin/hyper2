@@ -371,14 +371,15 @@ equalp.test(surfing)
 ```
 
 
-```{r directlogplotofstrenghts}
+```{r directlogplotofstrengths,cache=TRUE}
 jjO <- surfing_table$points[wanted]
 names(jjO) <- rownames(surfing_table)[wanted]
 jjL <- surfing_maxp
 jjO <- ordertrans(jjO)
 jjL <- ordertrans(jjL)
-plot(jjO,jjL,pch=16,log='xy')
+plot(jjO,jjL,pch=16,log='xy',xlab='points',ylab='maximum likelihood strength')
 fit <- lm(log10(jjL)~log10(jjO))
+summary(fit)
 for(i in seq_along(jjO)){
 text(jjO[i],jjL[i],names(jjL)[i],col='gray',pos=4,cex=0.5)
 }
