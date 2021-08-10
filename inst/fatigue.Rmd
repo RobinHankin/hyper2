@@ -10,6 +10,12 @@ knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+
 ## R Markdown
 
 Analysis of  the 1973 interzonal competition

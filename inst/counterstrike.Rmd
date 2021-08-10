@@ -9,6 +9,12 @@ library("hyper2")
 library("partitions") ## needed for perms()
 library("magrittr") 
 ```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
 # Abstract
 
 In this short vignette I use the `hyper2` package to analyse an

@@ -11,6 +11,11 @@ library("magrittr")
 options("digits" = 5)
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
 This short document is based on Altham and Hankin 2010, which
 discussed an interesting dataset originally presented by Lin
 et. al. (2009).  It uses more sophisticated idiom furnished by the

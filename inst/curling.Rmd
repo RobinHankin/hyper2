@@ -11,6 +11,11 @@ library("magrittr")
 options("digits" = 5)
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
 [Curling](https://en.wikipedia.org/wiki/Curling) is a sport with
 stones and brooms.  Following dataset taken from
 [wikipedia](https://en.wikipedia.org/w/index.php?title=Curling_at_the_Winter_Olympics&oldid=998891075),

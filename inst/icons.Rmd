@@ -11,6 +11,12 @@ library("magrittr")
 options("digits" = 5)
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+
 This minimal document reads file `icons.txt` and creates R objects
 `icons`, `icons_matrix`, and `icons_maxp`.  The dataset is discussed
 extensively in West and Hankin 2008, and Hankin 2010.
