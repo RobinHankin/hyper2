@@ -12,8 +12,16 @@ library("magrittr")
 options("digits" = 5)
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
 This short document creates the `volvo` suite of R objects and
-presents some preliminary analysis.
+presents some preliminary analysis.  It refers to the 12th edition of
+the Volvo Ocean Race, 2014-2015 in which seven racing teams competed
+over nine legs.  Dataset taken from the wikipedia page (see references
+below).
 
 ```{r readvolvotable}
 volvo_table <- read.table("volvo.txt")
