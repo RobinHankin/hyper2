@@ -8,6 +8,10 @@ vignette: |
   %\VignetteEncoding{UTF-8}
 ---
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
 # The Indian Premier League
 
 This script creates and analyses hyper2 object `T20` which is a
