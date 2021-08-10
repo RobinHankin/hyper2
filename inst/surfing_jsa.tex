@@ -1,0 +1,237 @@
+\documentclass{article}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\begin{document}
+\bibliographystyle{plain}
+
+\title{Analysis of professional surfing tournaments with generalized Bradley-Terry}
+
+
+\section{Introduction}
+
+Surfing is a popular and growing activity in terms of both
+participation and viewing \cite{warshaw2010}.  Competitive surfing
+involves surfers competing against one or two other surfers in heats
+lasting 30-50 minutes \cite{booth1995}.  Points are awarded on a
+10-point scale: each of five judges awards points to a surfer riding a
+particular wave.  The World Surf League (WSL) is the main governing
+body of surfing competitions \cite{wsl}.  The WSL conducts a world tour in
+which the best ranked 34 surfers compete; in addition, at each tour
+venue, two "wildcard" surfers also enter the competition, who are
+ignored here.  The 2019 WSL tour saw competitive events held at eleven
+different surf locations.
+
+The typical format is as follows.  Up to four surfers---the
+competitors---are in the water simultaneously, watched by up to five
+judges.  Subject to surfing etiquette, competitors are free to catch a
+wave at their discretion within the heat's time window, typically
+20-30 minutes.  The judges rate each wave ride and award points to the
+surfer based on a range of subjective criteria such as stylish
+execution and transition of manoeuvres, but also credit elements such
+as the difficulty and novelty of the performance.  The top score and
+bottom score among the five judges are removed and the remaining three
+judges' scores are averaged to give the final score for the surfer for
+that wave.  Each surfer's aggregate score is given by the average of
+the two highest-scoring waves.  The winner is the surfer with the
+highest aggregate score.
+
+Such scoring systems are designed to account for the random nature of
+wave quality while reflecting competitors' abilities fairly.
+Differences in wave quality between successive days mean that direct
+comparison of scores between one day and another are not informative
+about competitors' abilities as they are strongly dependent on details
+of wave quality at the time of the competition.  However, for a
+particular heat, the order statistic---that is, which competitor
+scored most highly, second highest, and third---is informative about
+competitors' abilities: the wave environment is common to each surfer.
+
+We note in passing that `wct8`, hosted at Lemoore had a different
+format from the other venues in the championship, being held in an
+artificial wave pool in which every wave was essentially identical (up
+to a mirror reflection).  Statistically, there were seven heats of
+either 2, 4, 8, or 16 surfers.  We show below how to incorporate the
+information present in such observations with the remainder of the
+championship using a consistent and intuitive statistical model.
+
+\subsection{Previous related work}
+
+\cite{farley2013} analyse surfing results using one-way ANOVA techniques and
+report comparisons between the top 10 and bottom 10 surfers in the
+2013 World Championship Tour and conclude that the top-ranked athletes
+are more consistent than the lower-ranked group. They report that "To
+date, only a limited number of research studies have reported on the
+results of competitive surfing" [p44], and the analysis presented here
+is hoped to change that.
+
+Other statistical research into competitive surfing appears to focus
+on the scoring of aerial manoeuvres compared with other manoeuvres in
+events.  \cite{undgren2014}, for example, report that aerial manoeuvres
+scored higher than other stunts but had a lower completion rate, a
+theme we return to below.
+
+\section{Bradley-Terry}
+
+The Bradley-Terry model \cite{bradley1954} assigns non-negative strengths
+$p_1,\ldots, p_n$ to each of $n$ competitors in such a way that the
+probability of $i$ beating $j\neq i$ in pairwise competition is
+$\frac{p_i}{p_i+p_j}$; it is conventional to normalize so that $\sum
+p_i=1$.  Further, we use a generalization due to \cite{luce1959}, in which
+the probability of competitor~$i$ winning in a field of $\left\lbrace
+1,\ldots, n\right\rbrace$ is $\frac{p_i}{p_1+\cdots +p_n}$.  Noting
+that there is information in the whole of the finishing order, and not
+just the first across the line, we can follow \cite{plackett1975} and
+consider the runner-up to be the winner among the remaining
+competitors, and so on down the finishing order. Without loss of
+generality, if the order of finishing were $1,2,3,4,5$, then a
+suitable Plackett-Luce likelihood function would be
+
+\begin{equation}\label{competitors_1_to_5_likelihood}
+\frac{p_1}{p_1+p_2+p_3+p_4+p_5}\cdot
+\frac{p_2}{p_2+p_3+p_4+p_5}\cdot
+\frac{p_3}{p_3+p_4+p_5}\cdot
+\frac{p_4}{p_4+p_5}\cdot
+\frac{p_5}{p_5}
+\end{equation}
+
+and this would be a forward ranking Plackett-Luce model in the
+terminology of \cite{johnson2020}.  We now use a technique due to Hankin
+(2010, 2017) and introduce fictional (reified) entities whose nonzero
+Bradley-Terry strength helps certain competitors or sets of
+competitors under certain conditions.  The original example was the
+home-ground advantage in football.  If players (teams) $1,2$ with
+strengths $p_1,p_2$ compete, and if our observation were $a$ home wins
+and $b$ away wins for team $1$, and $c$ home wins and $d$ away wins
+for team~$2$, then a suitable likelihood function would be
+
+\[
+\left(\frac{p_1+p_H}{p_1+p_2+p_H}\right)^a
+\left(\frac{p_1}{p_1+p_2+p_H}\right)^b
+\left(\frac{p_2+p_H}{p_1+p_2+p_H}\right)^c
+\left(\frac{p_2+p_H}{p_1+p_2+p_H}\right)^d,
+\]
+
+\noindent where $p_H$ is a quantification of the beneficial home
+ground effect.  Similar techniques have been used to account for the
+first-move advantage in chess, and here we apply it to assess the
+supposed Brazilian preference for reef-breaking waves.
+
+
+
+
+\section{Likelihood-based systems and points-based systems}
+
+
+\begin{table}
+\begin{tabular}{l|l|l|l|l|l|l|l|l|l|l|l|l|l}
+competitor  & nationality&wct01  &wct02  &wct03  & \ldots &wct09&wct10&wct11&points\\ \hline
+ Ferreira   &   BRA      &   1   &   5   &   17  & \ldots      &  2   &   1   &   1   &   59740\\
+ Medina     &   BRA      &   5   &   5   &   17  & \ldots      &  9   &   9   &   2   &   56475\\
+ Smith 	    &   ZAF      &   3   &   3   &   17  & \ldots      &  9   &   2   &   17  &   49985\\
+ Toledo     &   BRA      &   9   &   2   &   5   & \ldots      &  17  &   5   &   17  &   49145\\
+ Andino     &   USA      &   2   &   17  &   5   & \dots       &  5   &   5   &   9   &   46655
+\end{tabular}
+\caption{WCT tour results, conventional league table\label{resultstable}}
+\end{table}
+
+Table~\ref{resultstable} shows the official results table from the
+tour.  We see that Ferreira places first with 59740 points, Medina
+second with 56475, and so on.  The overall ranking of the surfers is
+determined by summing the season's points.  However, this system
+suffers from the defect that the points system itself is intrinsically
+arbitrary: the details of the points system does not affect the
+competitors' behaviour but can change the overall ranking.
+Plackett-Luce likelihood functions are not subject to such a
+phenomenon and furnish an objective and coherent method for ranking
+competitors.  Further, likelihood-based methods offer a further
+advantage over points-based systems: the ability to conduct
+statistically rigorous tests of meaningful nulls.  
+
+\section{The dataset and likelihood function}
+
+\begin{table}
+\begin{verbatim}
+wct01 Colapinto Bailey Wright
+wct01 Freestone Lau Smith
+wct01 Dora Ferreira Slater
+wct01 Duru Toledo Ibelli
+wct01 Moniz Heazlewood Wilson
+...
+wct11 Medina Florence
+wct11 Colapinto Bourez
+wct11 Ferreira Slater
+wct11 Medina Colapinto
+wct11 Ferreira Medina
+\end{verbatim}
+\caption{Raw results\label{rawresults}}
+\end{table}
+
+The first line of table \ref{rawresults} shows that, at one of the
+heats in {\tt wct01}, Colapinto came first, Bailey second, and Wright
+came third.  The last line shows that, at {\tt wct11}, Ferreira came
+first and Medina second.  We can convert this dataset into a
+Plackett-Luce likelihood function but first have to remove the
+wildcards and also player Vries whose maximum likelihood strength is
+zero.  For the first line we would have Plackett-Luce likelihood function as
+
+\begin{equation}
+\frac{p_\mathrm{Colapinto}}{p_\mathrm{Colapinto} + p_\mathrm{Bailey} + p_\mathrm{Wright}}\cdot
+\frac{p_\mathrm{Bailey}}{p_\mathrm{Bailey} + p_\mathrm{Wright}}
+\end{equation}
+
+[observe that there is no requirement here for the strengths to have
+unit sum].  The entire dataset has a likelihood function that
+incorporates all 477 lines, but it includes:
+
+\begin{equation}
+\frac{
+p_\mathrm{Andino}^{19}\, p_\mathrm{Callinan}^{19}\, p_\mathrm{Coffin}^{8}\ldots
+}{
+(p_\mathrm{Andino} + p_\mathrm{Bourez})  (p_\mathrm{Andino} + p_\mathrm{Buchan})(p_\mathrm{Bourez} + p_\mathrm{Flores} + p_\mathrm{Freestone})\ldots
+}
+\end{equation}
+
+\begin{figure}
+\includegraphics[width=4in]{surfing_files/figure-html/showsurfingmaxppie-3.png} % Pie chart of strengths
+\caption{Pie chart\label{piechartmax} showing maximum likelihood strengths of the 23 competitors.  Note the
+dominance of Ferreira, Florence, and Medina}
+\end{figure}
+
+Figure~\ref{piechartmax} shows the maximum likelihood estimate for the
+23 competitors' strengths, which appears to show a wide range from
+Florence at about 17.5\% down to Coffin at about 1.5\%.  The {\tt
+hyper2} software may be used to formally assess one plausible null:
+that the competitors all have equal skill, that is $H_0\colon
+p_\mathrm{Andino} = p_\mathrm{Bourez}=\ldots=
+p_\mathrm{Wright}=\frac{1}{23}$, and any differences in placings are
+due to random variation.  The Method of Support \cite{edwards1973}
+rejects the null (in favour of the evaluate) at $p=4\times 10^{-5}$.
+There is thus strong evidence to suggest that the competitors are
+indeed of different skills and the result is not random.  Note that
+the competitors' points (that is, the final column of
+table~\ref{resultstable}) does not allow one to come to this
+conclusion as the points awarded are arbitrary.
+
+However, points awarded may be compared with likelihood estimates:
+Figure~\ref{compare_likelihood_points} shows a loose correlation
+($R^2=0.64$; $p=3\times 10^{-6}$) and
+Figure~\ref{compare_likelihood_points_rankings} shows how the rankings
+differ when calculated by the points and likelihood systems.
+
+\begin{figure}[h]
+\includegraphics[width=4in]{surfing_files/figure-html/directlogplotofstrengths-1.png}
+\caption{Scatterplot of points scored  \label{compare_likelihood_points} 
+against maximum likelihood estimates}
+\end{figure}
+
+
+\begin{figure}[h]
+\includegraphics[width=4in]{surfing_files/figure-html/ordertransplotplot-1.png}
+\caption{Scatterplot of ranks \label{compare_likelihood_points_rankings} of points-based ranking
+against likelihood-based ranking.  Note the anomalous position of
+Florence}
+\end{figure}
+
+
+
+\bibliography{chess}
+\end{document}
