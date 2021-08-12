@@ -7,6 +7,11 @@
 \title{Analysis of professional surfing tournaments with generalized Bradley-Terry}
 
 
+\section*{Abstract}
+
+
+{\bf\large Tim we need to discuss this}
+
 \section{Introduction}
 
 Surfing is a popular and growing activity in terms of both
@@ -55,19 +60,19 @@ championship using a consistent and intuitive statistical model.
 
 \subsection{Previous related work}
 
-\cite{farley2013} analyse surfing results using one-way ANOVA techniques and
-report comparisons between the top 10 and bottom 10 surfers in the
-2013 World Championship Tour and conclude that the top-ranked athletes
-are more consistent than the lower-ranked group. They report that "To
-date, only a limited number of research studies have reported on the
-results of competitive surfing" [p44], and the analysis presented here
-is hoped to change that.
+Farley {\em et. al.} \cite{farley2013} analyse surfing results using
+one-way ANOVA techniques and report comparisons between the top 10 and
+bottom 10 surfers in the 2013 World Championship Tour and conclude
+that the top-ranked athletes are more consistent than the lower-ranked
+group.  They report that ``to date, only a limited number of research
+studies have reported on the results of competitive surfing" [p44],
+and the analysis presented here fills some of this gap.
 
 Other statistical research into competitive surfing appears to focus
 on the scoring of aerial manoeuvres compared with other manoeuvres in
-events.  \cite{undgren2014}, for example, report that aerial manoeuvres
-scored higher than other stunts but had a lower completion rate, a
-theme we return to below.
+events.  Lundgren {\em et. al.} \cite{lundgren2014}, for example,
+report that aerial manoeuvres scored higher than other stunts but had
+a lower completion rate, a theme we return to below.
 
 \section{Bradley-Terry}
 
@@ -115,11 +120,7 @@ ground effect.  Similar techniques have been used to account for the
 first-move advantage in chess, and here we apply it to assess the
 supposed Brazilian preference for reef-breaking waves.
 
-
-
-
 \section{Likelihood-based systems and points-based systems}
-
 
 \begin{table}
 \begin{tabular}{l|l|l|l|l|l|l|l|l|l|l|l|l|l}
@@ -139,12 +140,13 @@ second with 56475, and so on.  The overall ranking of the surfers is
 determined by summing the season's points.  However, this system
 suffers from the defect that the points system itself is intrinsically
 arbitrary: the details of the points system does not affect the
-competitors' behaviour but can change the overall ranking.
-Plackett-Luce likelihood functions are not subject to such a
-phenomenon and furnish an objective and coherent method for ranking
-competitors.  Further, likelihood-based methods offer a further
+competitors' behaviour but can change the overall ranking; this would
+suggest that more formal statistical methods are neede for analysis of
+such datasets.  The Plackett-Luce likelihood functions are not subject
+to such a phenomenon and furnish an objective and coherent method for
+ranking competitors.  Further, likelihood-based methods offer one
 advantage over points-based systems: the ability to conduct
-statistically rigorous tests of meaningful nulls.  
+statistically rigorous tests of meaningful nulls.
 
 \section{The dataset and likelihood function}
 
@@ -182,7 +184,7 @@ zero.  For the first line we would have Plackett-Luce likelihood function as
 unit sum].  The entire dataset has a likelihood function that
 incorporates all 477 lines, but it includes:
 
-\begin{equation}
+\begin{equation}\label{complete_likelihood_function}
 \frac{
 p_\mathrm{Andino}^{19}\, p_\mathrm{Callinan}^{19}\, p_\mathrm{Coffin}^{8}\ldots
 }{
@@ -190,6 +192,28 @@ p_\mathrm{Andino}^{19}\, p_\mathrm{Callinan}^{19}\, p_\mathrm{Coffin}^{8}\ldots
 }
 \end{equation}
 
+
+
+\subsection{Bradley-Terry and pairs}
+
+Paired comparisons are particularly favourable to Bradley-Terry
+because the likelihood function is exponential family and as such is
+amenable to analysis via general linear models~\cite{turner2012}.
+However, this breaks down when more than two entities are compared and
+here {\bf clumsy wording} we see comparisons between three surfers
+and, in the case of wct08, many more.  It is natural to ask how much
+information is contained in the observations where more than two
+surfers are in the water.
+
+We can directly calculate the determinant of the observed information
+matrix for the likelihood function in
+equation~\ref{complete_likelihood_function} at about $4.3\times
+10^{71}$, as compared with~$2.9\times 10^{69}$ for the pairs
+considered in isolation, a ratio of about $146.4$.  We are thus
+motivated to consider the whole dataset, not just the part which
+involves paired comparisons.  {\bf clumsy wording}.
+
+\section{Results}
 \begin{figure}
 \includegraphics[width=4in]{surfing_files/figure-html/showsurfingmaxppie-3.png} % Pie chart of strengths
 \caption{Pie chart\label{piechartmax} showing maximum likelihood strengths of the 23 competitors.  Note the
@@ -199,17 +223,20 @@ dominance of Ferreira, Florence, and Medina}
 Figure~\ref{piechartmax} shows the maximum likelihood estimate for the
 23 competitors' strengths, which appears to show a wide range from
 Florence at about 17.5\% down to Coffin at about 1.5\%.  The {\tt
-hyper2} software may be used to formally assess one plausible null:
+  hyper2} software may be used to formally assess one plausible null:
 that the competitors all have equal skill, that is $H_0\colon
 p_\mathrm{Andino} = p_\mathrm{Bourez}=\ldots=
 p_\mathrm{Wright}=\frac{1}{23}$, and any differences in placings are
-due to random variation.  The Method of Support \cite{edwards1973}
+due to random variation.  The Method of Support \cite{edwards1992}
 rejects the null (in favour of the evaluate) at $p=4\times 10^{-5}$.
 There is thus strong evidence to suggest that the competitors are
-indeed of different skills and the result is not random.  Note that
-the competitors' points (that is, the final column of
-table~\ref{resultstable}) does not admit this type of analysis, as the
-points awarded are arbitrary.
+indeed of different skills and the result actually reflects genuine
+differences in abilities, rather than the result of random chance.
+Observe that the competitors' points (that is, the final column of
+table~\ref{resultstable}) cannot be used for this type of
+probabalistic analysis: the points awarded are arbitrary and changing
+the points system would change the points scored but not affect the
+competitors' behaviour.
 
 However, points awarded may be compared with likelihood estimates, and
 one would expect high points totals to be associated with high
@@ -257,29 +284,114 @@ suggestions drawn from surfing lore {\bf Tim is there a better way to
   describe this?}.  For example, one frequent suggestion {\bf Tim I
   need citations here} is that Brazilian surfers such as Ferreira and
 Toledo have surfing skillsets that favour point and beach break
-beaches, those types of beach being readily accessible to these
-surfers' native Brazil.  We now assess the null that Brazilians
-perform equally well on all types of beaches.  To that end, we create
-a reified surfer, ``Brazilian beachtype", whose strength helps all
-Brazilian surfers when surfing on their (putative) preferred
-beachtype, analogously to the ``home ground monster" who helps the
-home team as per equation~\ref{home_ground_advantage}.  The null would
-be that this reified entity has zero strength.  We fail to reject this
-null (differential support = 0.035; $p=0.79$) and conclude that there
-is no evidence to suggest that Brazilians perform is better on their
+beaches {\bf Tim I need some help describing and defining these here},
+those types of beach being readily accessible to these surfers' native
+Brazil.  We now assess the null that Brazilians perform equally well
+on all types of beaches.  To that end, we create a reified surfer,
+``Brazilian beachtype", whose strength helps all Brazilian surfers
+when surfing on their (putative) preferred beachtype, analogously to
+the ``home ground monster" who helps the home team as per
+equation~\ref{home_ground_advantage}.  The null would be that this
+reified entity has zero strength.  We fail to reject this null
+(differential support = 0.035; $p=0.79$) and conclude that there is no
+evidence to suggest that Brazilians' performce is better on their
 preferred beach types than one would expect by chance.  We may go
-further and state that not only is the maximum likelihood estimate for
-Brazilian beachtype is very small (about 0.002), but we may rule out
-the suggestion that the strength of this entity exceeds about 0.025
-(Figure~\ref{brazilian_beachtype_support}).
+further using the method of support and state that not only is the
+maximum likelihood estimate for Brazilian beachtype is very small
+(about 0.002), but we may rule out the suggestion that the strength of
+this entity exceeds about 0.025 (Figure~\ref{brazilian_beachtype_support}).
 
 \begin{figure}
   \includegraphics[width=4in]{surfing_files/figure-html/plotwidep-1.png}
-\caption{Support \label{brazilian_beachtype_support} for the Brazilian beachtype reified entity}
+\caption{Profile support \label{brazilian_beachtype_support} for the
+  Brazilian beachtype reified entity.  The horizontal axis specifies a
+  particular strength for Brazilian beachtype, and the height of the
+  curve gives the support conditional on the x-axis}
 \end{figure}
 
-
 \section{Compatriot selection}
+
+{\bf\large Tim I am on thin ice here, I need to talk with you and
+  clarify this}
+
+One measure of the rising popularity of surfing is its inclusion in
+the 2020 Summer Olympics, and it is natural to ask whether this would
+affect the competition in some way.  One suggestion {\bf Tim?} would
+be that competitors would become more focussed on beating compatriots
+than surfers from other countries, the thinking being that admission
+to a country's Olympic squad would be of more importance to a
+competitor than their result in wct.  {\bf Tim this is clumsy
+  wording}.  We would expect competitors to value their ranking when
+restricted to within their country more than their ranking over all of
+wct.  If this is the case then we would expect competitors to change
+their behaviour if they are in the water with another surfer of the
+same nationality.  Specifically, if we have three surfers in the water
+of whom two are of one nationality and the third of another, we would
+expect the compatriots to adopt a style calculated to beat their
+countryman, possibly at the expense of performance relative to the odd
+man out.  {\bf Tim this is poor wording we need to rephrase}.
+
+Such hypotheses are difficult to test with conventional techniques as
+competitors's strengths are nuisance parameters ~\cite{basu1977}.
+However, the
+
+
+Consider, as an example, the case of Smith, Buchan, Freestone.  Buchan
+and Freestone are Australian, and Jordy Smith is South African.  It is
+reasonable to ask whether Buchan and Freestone, who are in direct
+competition with one another for a place in the Australian Olympic
+surfing squad, would be more motivated to beating each other than to
+come ahead of Smith.  This would be a rational response, but arguably
+noncompetitive.  How would such a strategy manifest itself in
+scorelines?
+
+Reified Bradley-Terry technique furnishes an intuitive statistical
+test for such a mechanism which controls for competitors' strengths.
+Noting that the compatriots effectively place themselves at a {\em
+  disadvantage} when compared with the odd man out, we introduce a
+compatriot monster whose strength $p_C$ helps the odd man out.
+Writing $p_1, p_2$ for the strengths of the compatriots and $q$ for
+the odd man out, we construct likelihood functions for the six
+possible orderings when two compatriots and an odd man out are in the
+water at the same time in Table~\ref{likelihoodcompatriot} (if we have
+either three different nationalities or three identical nationalities,
+we revert to the standard Plackett-Luce likelihood).  Note that all
+six likelihood functions in table~\ref{likelihoodcompatriot} are
+informative about $p_1,p_2,q$ in addition to being informative about
+the object of inference, $p_C$.
+
+\begin{table}
+\begin{tabular}{l|l}
+order  & ${\mathcal L}(p_1,p_2,q,p_C)$\\ \hline
+$p_1\succ p_2\succ q $ & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_2+q+p_C}$\\
+$p_2\succ p_1\succ q $ & $ \frac{p_2}{p_1+p_2+q+p_C}\cdot\frac{p_1}{p_1+q+p_C}$\\
+$p_1\succ q\succ p_2 $ & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{q+p_C}{p_2+q+p_C}$\\
+$p_2\succ q\succ p_1 $ & $ \frac{p_2}{p_1+p_2+q+p_C}\cdot\frac{q+p_C}{p_1+q+p_C}$\\
+$q\succ p_1\succ p_2 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_1}{p_1+p_2}$\\
+$q\succ p_2\succ p_1 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_1+p_2}$\\
+\end{tabular}
+\caption{The \label{likelihoodcompatriot} six possible finishing
+  orders (``$\succ$'' means ``scored more points than'') for the case
+  where two compatriot surfers and an odd man out are in the water at
+  the same time, with associated likelihood function for strengths
+  $p_1,p_2,q, p_C$.  Here $p_1,p_2$ are the strengths of two
+  compatriot surfers, $q$ the strength of the odd man out, $p_C$ the
+  strength of the compatriot monster. and nationality and a third are
+  in the water at the same time}
+\end{table}
+
+We can now apply the Method of Support to the hypothesis that $p_C=0$,
+that is, that this noncompetitive behaviour is absent.  We find that
+the maximum likelihood estimate for $p_C$ is about 0.015, weaker than
+the ``real'' surfers, but the support for a nonzero $p_C$ is about 1.8
+[asymptotic $p=0.28$], short of the two units of support required for
+rejection of our null.  We conclude that there is no strong evidence
+to suggest that such noncompetitive behaviour occurred, at least not
+from the order statistics we considered.
+
+\section{Conclusions and further work}
+
+{\bf\large Tim we need to discuss this}
 
 \bibliography{chess}
 \end{document}
