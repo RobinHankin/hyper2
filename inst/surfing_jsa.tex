@@ -103,12 +103,12 @@ strengths $p_1,p_2$ compete, and if our observation were $a$ home wins
 and $b$ away wins for team $1$, and $c$ home wins and $d$ away wins
 for team~$2$, then a suitable likelihood function would be
 
-\[
+\begin{equation}\label{home_ground_advantage}
 \left(\frac{p_1+p_H}{p_1+p_2+p_H}\right)^a
 \left(\frac{p_1}{p_1+p_2+p_H}\right)^b
 \left(\frac{p_2+p_H}{p_1+p_2+p_H}\right)^c
 \left(\frac{p_2+p_H}{p_1+p_2+p_H}\right)^d,
-\]
+\end{equation}
 
 \noindent where $p_H$ is a quantification of the beneficial home
 ground effect.  Similar techniques have been used to account for the
@@ -234,7 +234,52 @@ against likelihood-based ranking.  Note the anomalous position of
 Florence}
 \end{figure}
 
+We may ask whether the top two officially ranked competitors, Medina
+and Ferreira, have different strengths.  To test the null of equal
+strength, we maximize the likelihood subject to the null, and compare
+with the global maximum likelihood~\cite{hankin2010}.  This gives us a
+support difference of about 0.05, well short of Edwards's 2 units of
+support criterion.  Alternatively, we could observe that the
+$-2\log\left(\frac{\Lambda}{\Lambda_0}\right)\simeq 0.1$ is not in the tail
+region of its asymptotic $\chi^2_1$ distribution.  We may thus assert
+that there is no strong evidence for Ferreira's actually having a
+competitive advantage over Medina.  {\bf Tim: how about comparing
+  Medina with, say, Wilson, would that make sense from a surfing
+  perspective? Tim can you say something about Wilson's rivalry with
+  Medina?}  We may similarly wonder whether Medina is equal in
+strength to Wilson; here we reject the null with support difference of
+about 2.33, corresponding to a $p$-value of $0.031$.
 
+\section{Brazilian beach type prefereneces}
+
+The statistical method described here can test many different
+suggestions drawn from surfing lore {\bf Tim is there a better way to
+  describe this?}.  For example, one frequent suggestion {\bf Tim I
+  need citations here} is that Brazilian surfers such as Ferreira and
+Toledo have surfing skillsets that favour point and beach break
+beaches, those types of beach being readily accessible to these
+surfers' native Brazil.  We now assess the null that Brazilians
+perform equally well on all types of beaches.  To that end, we create
+a reified surfer, ``Brazilian beachtype", whose strength helps all
+Brazilian surfers when surfing on their (putative) preferred
+beachtype, analogously to the ``home ground monster" who helps the
+home team as per equation~\ref{home_ground_advantage}.  The null would
+be that this reified entity has zero strength.  We fail to reject this
+null (differential support = 0.035; $p=0.79$) and conclude that there
+is no evidence to suggest that Brazilians perform is better on their
+preferred beach types than one would expect by chance.  We may go
+further and state that not only is the maximum likelihood estimate for
+Brazilian beachtype is very small (about 0.002), but we may rule out
+the suggestion that the strength of this entity exceeds about 0.025
+(Figure~\ref{brazilian_beachtype_support}).
+
+\begin{figure}
+  \includegraphics[width=4in]{surfing_files/figure-html/plotwidep-1.png}
+\caption{Support \label{brazilian_beachtype_support} for the Brazilian beachtype reified entity}
+\end{figure}
+
+
+\section{Compatriot selection}
 
 \bibliography{chess}
 \end{document}

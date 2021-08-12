@@ -409,6 +409,7 @@ samep.test(surfing, c("Ferreira","Medina"))
 samep.test(surfing, c("Ferreira","Florence"))
 samep.test(surfing, c("Florence","Medina"))
 samep.test(surfing, c("Florence","Medina","Ferreira"))
+samep.test(surfing, c("Medina","Wilson"))
 ```
 
 
@@ -463,7 +464,8 @@ l_wide <- profsupp(surfing2,"Brazilian_beachtype",p_wide,relative=FALSE)
 ```
 
 ```{r plotwidep}
-plot(c(0,p_wide),c(l0,l_wide)-max(l),type='b',xlab="Brazilian beachtype",ylab="support")
+plot(c(0,p_wide),c(l0,l_wide)-max(l),type='b',xlab="Brazilian beachtype wide",ylab="support")
+abline(h= -2,lty=2)
 ```
 
 ## Generalized log-odds ratios
