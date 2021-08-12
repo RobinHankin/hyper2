@@ -11,6 +11,9 @@ library("magrittr")
 options("digits" = 5)
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
 
 The [modern
 pentathlon](https://en.wikipedia.org/wiki/Modern_pentathlon) is an

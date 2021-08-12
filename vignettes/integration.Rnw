@@ -116,16 +116,18 @@ This likelihood function is provided in the \pkg{hyper2} package
 as the \code{chess} dataset:
 
 <<chess_show>>=
-data(chess)
 chess
 @ 
 
 
 We can calculate the normalizing constant:
 
-<<chess_normalizing>>=
-B(chess,tol=0.1)
-@ 
+\begin{Sinput}
+  B(chess)
+\end{Sinput}
+\begin{Soutput}
+  [1] 1.442828e-28
+\end{Soutput}
 
 comparing well with the value given by the \pkg{hyperdirichlet}
 package of $1.47\times 10^{-28}$.  \citet{hankin2010} went on to
