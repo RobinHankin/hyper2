@@ -155,7 +155,20 @@ tail(jj)
 The first line shows that, at one of the heats in `wct01`, `Colapinto`
 came first, `Bailey` second, and `Wright` came third.  The last line
 shows that, at `wct11`, `Ferreira` came first and `Medina` came
-second.  We can convert this dataset into a Plackett-Luce likelihood
+second.
+
+Following idiom creates a table:
+
+
+```{r}
+table(unlist(lapply(strsplit(jj, " "),length)))
+```
+
+This shows that object `jj` has 312 lines of 2 surfers, 160 lines with
+3 surfers, 2 lines with 4 surfers, 2 lines with 8 surfers, and one
+line with 16 surfers.
+
+We can convert the dataset into a Plackett-Luce likelihood
 function but first have to remove the wildcards and also player
 `Vries` whose maximum likelihood strength is zero.
 
