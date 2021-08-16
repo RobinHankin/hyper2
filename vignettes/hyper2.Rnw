@@ -66,7 +66,9 @@ optimization, Bradley-Terry}
 \Address{
   Robin K. S. Hankin\\
   Auckland University of Technology\\
-  E-mail: \email{hankin.robin@gmail.com}
+  E-mail: \email{hankin.robin@gmail.com}\\
+
+  {\centering\includegraphics[width=0.5in]{\Sexpr{system.file("help/figures/hyper2.png",package="hyper2")}}}
 }
 %% It is also possible to add a telephone and fax number
 %% before the e-mail in the following format:
@@ -92,6 +94,9 @@ optimization, Bradley-Terry}
 
 \SweaveOpts{}
 \begin{document}
+
+
+
 \section{Introduction}
 
 <<set_seed_chunk,echo=FALSE,print=FALSE>>=
@@ -373,7 +378,7 @@ came first, then Cabrera, etc).  We can add the information from
 heat~2 easily:
 
 
-<<2016_olympics_heat2_first>>=
+<<2016_olympics_heat1_first>>=
 heat2 <- c("drysdale", "molnar", "esquivel", "garcia", "khafaji", "monasterio")
 H <- H + rankvec_likelihood(heat2)
 head(H)
