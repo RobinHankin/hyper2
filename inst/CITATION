@@ -2,7 +2,7 @@ citHeader("To cite in publications use:")
 
 citEntry(entry = "Article",
 	 title = {
-             paste("Partial rank data with the hyper2 package: likelihood functions for generalized {B}radley-{T}erry models.  ")},
+             paste("Partial rank data with the hyper2 package: likelihood functions for generalized {B}radley-{T}erry models")},
 	 author = personList(
          person(given = c("Robin", "K. S."),
 		family = "Hankin",
@@ -15,7 +15,7 @@ citEntry(entry = "Article",
 	 textVersion = {
              paste("R. K. S. Hankin",
                    "2017.",
-                   "Partial rank data with the hyper2 package: likelihood functions for generalized Bradley-Terry models.  ",
+                   "Partial rank data with the hyper2 package: likelihood functions for generalized Bradley-Terry models",
 	     	   "The R Journal",
 		   "9(2)"
 		   )
