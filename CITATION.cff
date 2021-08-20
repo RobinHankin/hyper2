@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Hankin"
+  given-names: "Robin K. S."
+  orcid: "https://orcid.org/0000-0001-5982-0415"
+title: "The hyper2 R package"
+version: 2.0-1
+url: "https://github.com/RobinHankin/hyper2"
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Hankin"
+    given-names: "Robin K. S."
+  orcid: "https://orcid.org/0000-0001-5982-0415"
+  journal: "The R Journal"
+  month: December
+  start: 429
+  end: 439
+  title: "Partial rank data with the hyper2 package: likelihood functios for generalized Bradley-Terry models"
+  issue: 2
+  volume: 9
+  year: 2017
