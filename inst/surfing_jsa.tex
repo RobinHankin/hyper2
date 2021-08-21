@@ -8,16 +8,19 @@
 
 
 \section*{Abstract}
-Here we apply a generalization of Bradley-Terry model to competitive
-surfing, specifically the 2018 World Surf League.  We use
+Here we analyse competitive surfing, specifically the 2018 World Surf
+League, using formal statistical methods.  We use generalized
 Bradley-Terry likelihoods to assess a number of hypotheses of interest
-to the surfing community with formal statistical methods.  We go on to
-study the ``Brazilian storm'' phenomenon using reified Bradley-Terry
-likelihood functions in two ways: firstly, the supposed Brazilian
-preference for point and beach break beaches; and secondly from the
-perspective of tournament theory in which we test for competitors
-modifying their strategy in the presence of compatriot rivals.
-
+to the surfing community.  Specifically, we quantify the dominance of
+the top competitors using likelihood techniques, and go on to study
+the ``Brazilian storm'' phenomenon using reified entities in two ways.
+Firstly we assess the supposed Brazilian preference for point and
+beach break beaches; and secondly we consider tournament results from
+the perspective of tournament theory and test for competitors
+modifying their strategy in the presence of compatriot rivals.  We
+quantify the evidence for these commonly assumed features of
+contemporary competitive surfing and suggest further avenues of
+research.
 
 \section{Introduction}
 
@@ -57,13 +60,13 @@ particular heat, the order statistic---that is, which competitor
 scored most highly, second highest, and third---is informative about
 competitors' abilities: the wave environment is common to each surfer.
 
-We note in passing that `wct8`, hosted at Lemoore had a different
-format from the other venues in the championship, being held in an
-artificial wave pool in which every wave was essentially identical (up
-to a mirror reflection).  Statistically, there were seven heats of
-either 2, 4, 8, or 16 surfers.  We show below how to incorporate the
-information present in such observations with the remainder of the
-championship using a consistent and intuitive statistical model.
+We note in passing that Lemoore had a different format from the other
+venues in the championship, being held in an artificial wave pool in
+which every wave was essentially identical (up to a mirror
+reflection).  Statistically, there were seven heats of either 2, 4, 8,
+or 16 surfers.  We show below how to incorporate the information
+present in such observations with the remainder of the championship
+using a consistent and intuitive statistical model.
 
 \subsection{Previous related work}
 
@@ -171,7 +174,8 @@ wct11 Ferreira Slater
 wct11 Medina Colapinto
 wct11 Ferreira Medina
 \end{verbatim}
-\caption{Raw results\label{rawresults}}
+\caption{Extract from observations: raw results\label{rawresults} from
+  WCT 2018}
 \end{table}
 
 The first line of table \ref{rawresults} shows that, at one of the
@@ -275,15 +279,13 @@ strength, we maximize the likelihood subject to the null, and compare
 with the global maximum likelihood~\cite{hankin2010}.  This gives us a
 support difference of about 0.05, well short of Edwards's 2 units of
 support criterion.  Alternatively, we could observe that the
-$-2\log\left(\frac{\Lambda}{\Lambda_0}\right)\simeq 0.1$ is not in the tail
-region of its asymptotic $\chi^2_1$ distribution.  We may thus assert
-that there is no strong evidence for Ferreira's actually having a
-competitive advantage over Medina.  {\bf Tim: how about comparing
-  Medina with, say, Wilson, would that make sense from a surfing
-  perspective? Tim can you say something about Wilson's rivalry with
-  Medina?}  We may similarly wonder whether Medina is equal in
-strength to Wilson; here we reject the null with support difference of
-about 2.33, corresponding to a $p$-value of $0.031$.
+$-2\log\left(\frac{\Lambda}{\Lambda_0}\right)\simeq 0.1$ is not in the
+tail region of its asymptotic $\chi^2_1$ distribution.  We may thus
+assert that there is no strong evidence for Ferreira's actually having
+a competitive advantage over Medina.  We may similarly wonder whether
+Medina is equal in strength to Wilson; here we reject the null with
+support difference of about 2.33, corresponding to a $p$-value of
+$0.031$.
 
 \section{The Brazilian storm}
 
@@ -303,28 +305,27 @@ noncompetitive effect of compatriot rivalry.
 
 \subsection{Brazilian beach type prefereneces}
 
-
 The statistical method described here can test many different
-suggestions drawn from surfing lore {\bf Tim is there a better way to
-  describe this?}.  For example, one frequent suggestion {\bf Tim I
-  need citations here} is that Brazilian surfers such as Ferreira and
-Toledo have surfing skillsets that favour point and beach break
-beaches {\bf Tim I need some help describing and defining these here},
-those types of beach being readily accessible to these surfers' native
-Brazil.  We now assess the null that Brazilians perform equally well
-on all types of beaches.  To that end, we create a reified surfer,
-``Brazilian beachtype", whose strength helps all Brazilian surfers
-when surfing on their (putative) preferred beachtype, analogously to
-the ``home ground monster" who helps the home team as per
-equation~\ref{home_ground_advantage}.  The null would be that this
-reified entity has zero strength.  We fail to reject this null
-(differential support = 0.035; $p=0.79$) and conclude that there is no
-evidence to suggest that Brazilians' performce is better on their
-preferred beach types than one would expect by chance.  We may go
-further using the method of support and state that not only is the
+suggestions drawn from surfing lore.  For example, one frequent
+suggestion {\bf Tim I need citations here} is that Brazilian surfers
+such as Ferreira and Toledo have surfing skillsets that favour point
+and beach break beaches {\bf Tim I need some help describing and
+  defining these here}, those types of beach being readily accessible
+to these surfers' native Brazil.  We now assess the null that
+Brazilians perform equally well on all types of beaches.  To that end,
+we create a reified surfer, ``Brazilian beachtype", whose strength
+helps all Brazilian surfers when surfing on their (putative) preferred
+beachtype, analogously to the ``home ground monster" who helps the
+home team as per equation~\ref{home_ground_advantage}.  The null would
+be that this reified entity has zero strength.  We fail to reject this
+null (differential support = 0.035; $p=0.79$) and conclude that there
+is no evidence to suggest that Brazilians' performce is better on
+their preferred beach types than one would expect by chance.  We may
+go further using the method of support and state that not only is the
 maximum likelihood estimate for Brazilian beachtype is very small
 (about 0.002), but we may rule out the suggestion that the strength of
-this entity exceeds about 0.025 (Figure~\ref{brazilian_beachtype_support}).
+this entity exceeds about 0.025
+(Figure~\ref{brazilian_beachtype_support}).
 
 \begin{figure}
   \includegraphics[width=4in]{surfing_files/figure-html/plotwidep-1.png}
@@ -336,28 +337,25 @@ this entity exceeds about 0.025 (Figure~\ref{brazilian_beachtype_support}).
 
 \section{Compatriot selection}
 
-{\bf\large Tim I am on thin ice here, I need to talk with you and
-  clarify this}
-
 One measure of the rising popularity of surfing is its inclusion in
-the 2020 Summer Olympics, and it is natural to ask whether this would
-affect the competition in some way.  One suggestion {\bf Tim?} would
-be that competitors would become more focussed on beating compatriots
-than surfers from other countries, the thinking being that admission
-to a country's Olympic squad would be of more importance to a
-competitor than their result in wct.  {\bf Tim this is clumsy
-  wording}.  We would expect competitors to value their ranking when
-restricted to within their country more than their ranking over all of
-wct.  If this is the case then we would expect competitors to change
-their behaviour if they are in the water with another surfer of the
-same nationality.  Specifically, if we have three surfers in the water
-of whom two are of one nationality and the third of another, we would
-expect the compatriots to adopt a style calculated to beat their
-countryman, possibly at the expense of performance relative to the odd
-man out.  {\bf Tim this is poor wording we need to rephrase}.  Such
-hypotheses are difficult to test with conventional techniques as
-competitors's strengths themselves are nuisance
-parameters~\cite{basu1977}.
+the 2020 Summer Olympics~\cite{tulloch2019}, and it is natural to ask
+whether this would affect the competition in some way~\cite{ho2021}.
+One suggestion would be that competitors would become more focussed on
+beating compatriots than surfers from other countries, the thinking
+being that admission to a country's Olympic squad would be of more
+importance to a competitor than their result in wct.  One might expect
+competitors to value their ranking when restricted to within their
+country more than their ranking over all of wct.  If this is the case
+then we would expect competitors to change their behaviour if they are
+in the water with another surfer of the same nationality.
+Specifically, if we have three surfers in the water of whom two are of
+one nationality and the third of another, we would expect the
+compatriots to adopt a style calculated to beat their countryman,
+possibly at the expense of performance relative to the odd man out.
+
+Such hypotheses
+are difficult to test with conventional techniques as competitors's
+strengths themselves are nuisance parameters~\cite{basu1977}.
 
 Consider, as an example, the case of Smith, Buchan, Freestone.  Buchan
 and Freestone are Australian, and Jordy Smith is South African.  It is
