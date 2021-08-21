@@ -4,13 +4,20 @@
 \begin{document}
 \bibliographystyle{plain}
 
-\title{Analysis of professional surfing tournaments with generalized Bradley-Terry}
+\title{Analysis of competitive surfing tournaments with generalized Bradley-Terry}
 
 
 \section*{Abstract}
+Here we apply a generalization of Bradley-Terry model to competitive
+surfing, specifically the 2018 World Surf League.  We use
+Bradley-Terry likelihoods to assess a number of hypotheses of interest
+to the surfing community with formal statistical methods.  We go on to
+study the ``Brazilian storm'' phenomenon using reified Bradley-Terry
+likelihood functions in two ways: firstly, the supposed Brazilian
+preference for point and beach break beaches; and secondly from the
+perspective of tournament theory in which we test for competitors
+modifying their strategy in the presence of compatriot rivals.
 
-
-{\bf\large Tim we need to discuss this}
 
 \section{Introduction}
 
@@ -199,19 +206,20 @@ p_\mathrm{Andino}^{19}\, p_\mathrm{Callinan}^{19}\, p_\mathrm{Coffin}^{8}\ldots
 Paired comparisons are particularly favourable to Bradley-Terry
 because the likelihood function is exponential family and as such is
 amenable to analysis via general linear models~\cite{turner2012}.
-However, this breaks down when more than two entities are compared and
-here {\bf clumsy wording} we see comparisons between three surfers
-and, in the case of wct08, many more.  It is natural to ask how much
-information is contained in the observations where more than two
-surfers are in the water.
+However, this is not applicable when more than two entities are
+compared; and indeed here we see comparisons between three surfers
+and, in the case of Jeep Surf Freshwater Pro (wct08), many more.  It
+is natural to ask how much information is contained in the
+observations where more than two surfers are in the water.
 
 We can directly calculate the determinant of the observed information
 matrix for the likelihood function in
 equation~\ref{complete_likelihood_function} at about $4.3\times
 10^{71}$, as compared with~$2.9\times 10^{69}$ for the pairs
-considered in isolation, a ratio of about $146.4$.  We are thus
-motivated to consider the whole dataset, not just the part which
-involves paired comparisons.  {\bf clumsy wording}.
+considered in isolation, a ratio of about $146.4$.  This ratio shows
+that there is considerable information loss in considering only the
+paired comparisons.  We are thus motivated to consider the whole
+dataset, not just the part which involves paired comparisons.
 
 \section{Results}
 \begin{figure}
@@ -277,7 +285,24 @@ competitive advantage over Medina.  {\bf Tim: how about comparing
 strength to Wilson; here we reject the null with support difference of
 about 2.33, corresponding to a $p$-value of $0.031$.
 
-\section{Brazilian beach type prefereneces}
+\section{The Brazilian storm}
+
+In surfing lore, the ``Brazilian storm'' refers to the emergence of
+Brazil as a dominant nation of elite surfers.  The term was first used
+to describe the fact six out of eight querterfinalists at 2011 Nike
+Lowers Pro were Brazilian; it rose in public conciousness following
+the victories of Medina and de Souza in the World Surf League
+championships in 2014 and 2015 respectively.  The storm shows no signs
+of abating, with commentators such as Douglas opining that this
+generation ``represents a seismic shift for Brazilian competitors onto
+an entirely new plane'' \cite{douglas2020}.
+
+Here, we study two aspects of this sporting phenomenon: the suggested
+Brazilian preference for beach break and point break reefs; and the
+noncompetitive effect of compatriot rivalry.
+
+\subsection{Brazilian beach type prefereneces}
+
 
 The statistical method described here can test many different
 suggestions drawn from surfing lore {\bf Tim is there a better way to
@@ -329,12 +354,10 @@ same nationality.  Specifically, if we have three surfers in the water
 of whom two are of one nationality and the third of another, we would
 expect the compatriots to adopt a style calculated to beat their
 countryman, possibly at the expense of performance relative to the odd
-man out.  {\bf Tim this is poor wording we need to rephrase}.
-
-Such hypotheses are difficult to test with conventional techniques as
-competitors's strengths are nuisance parameters ~\cite{basu1977}.
-However, the
-
+man out.  {\bf Tim this is poor wording we need to rephrase}.  Such
+hypotheses are difficult to test with conventional techniques as
+competitors's strengths themselves are nuisance
+parameters~\cite{basu1977}.
 
 Consider, as an example, the case of Smith, Buchan, Freestone.  Buchan
 and Freestone are Australian, and Jordy Smith is South African.  It is
