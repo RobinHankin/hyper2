@@ -445,11 +445,11 @@ for(v in o){
      r <- r[!(r %in% remove)]
      jj <- race(r)
      surfers <- pnames(jj)
-     if(any(nationality(surfers) == "BRA")){
+     if(sum(nationality(surfers)=="BRA")==1){	
        if((beachtype(venue)=="point") | (beachtype(venue) == "beach")){
          jj %<>% pwa(surfers[nationality(surfers)=="BRA"],"Brazilian_beachtype")
-       }    	     
-     } 
+       }
+     }
      surfing2 %<>% sum(jj)
    }
 }	
