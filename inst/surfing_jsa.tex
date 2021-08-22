@@ -235,16 +235,18 @@ dominance of Ferreira, Florence, and Medina}
 Figure~\ref{piechartmax} shows the maximum likelihood estimate for the
 23 competitors' strengths, which appears to show a wide range from
 Florence at about 17.5\% down to Coffin at about 1.5\%.  The {\tt
-  hyper2} software may be used to formally assess one plausible null:
-that the competitors all have equal skill, that is $H_0\colon
-p_\mathrm{Andino} = p_\mathrm{Bourez}=\ldots=
+  hyper2} software~\cite{hankin2017} may be used to formally assess
+one plausible null: that the competitors all have equal skill, that is
+$H_0\colon p_\mathrm{Andino} = p_\mathrm{Bourez}=\ldots=
 p_\mathrm{Wright}=\frac{1}{23}$, and any differences in placings are
 due to random variation.  The Method of Support \cite{edwards1992}
 rejects the null (in favour of the evaluate) at $p=4\times 10^{-5}$.
 There is thus strong evidence to suggest that the competitors are
 indeed of different skills and the result actually reflects genuine
 differences in abilities, rather than the result of random chance.
-Observe that the competitors' points (that is, the final column of
+Alternatively, we may view the dataset as being sufficiently
+informative to reveal actual differences in surfing ability.  Observe
+that the competitors' points (that is, the final column of
 table~\ref{resultstable}) cannot be used for this type of
 probabalistic analysis: the points awarded are arbitrary and changing
 the points system would change the points scored but not affect the
@@ -307,15 +309,15 @@ noncompetitive effect of compatriot rivalry.
 
 The statistical method described here can test many different
 suggestions drawn from surfing lore.  For example, one frequent
-suggestion {\bf Tim I need citations here} is that Brazilian surfers
-such as Ferreira and Toledo have surfing skillsets that favour point
+suggestion~\cite{burgess2020,ho2021} is that Brazilian surfers such as
+Ferreira and Toledo tend to have surfing skillsets that favour point
 and beach break beaches {\bf Tim I need some help describing and
   defining these here}, those types of beach being readily accessible
 to these surfers' native Brazil.  We now assess the null that
 Brazilians perform equally well on all types of beaches.  To that end,
 we create a reified surfer, ``Brazilian beachtype", whose strength
 helps all Brazilian surfers when surfing on their (putative) preferred
-beachtype, analogously to the ``home ground monster" who helps the
+beach type, an analogue of the ``home ground monster" who helps the
 home team as per equation~\ref{home_ground_advantage}.  Here we modify
 the likelihood function only when a single Brazilian is in the water,
 to avoid possible interaction with the compatriot issue discussed in
@@ -337,29 +339,31 @@ the proposal that the strength of this entity exceeds about 0.025
   curve gives the support conditional on the x-axis}
 \end{figure}
 
-\section{Compatriot selection}
+\section{Differential \label{compatriot} behaviour toward compatriotic competitors}
 
 One measure of the rising popularity of surfing is its inclusion in
 the 2020 Summer Olympics~\cite{tulloch2019}, and it is natural to ask
 whether this would affect the competition in some way~\cite{ho2021}.
-One suggestion would be that competitors would become more focussed on
+One suggestion would be that competitors become more focussed on
 beating compatriots than surfers from other countries, the thinking
 being that admission to a country's Olympic squad would be of more
-importance to a competitor than their result in wct.  One might expect
-competitors to value their ranking when restricted to within their
-country more than their ranking over all of wct.  If this is the case
-then we would expect competitors to change their behaviour if they are
-in the water with another surfer of the same nationality.
-Specifically, if we have three surfers in the water of whom two are of
-one nationality and the third of another, we would expect the
-compatriots to adopt a style calculated to beat their countryman,
-possibly at the expense of performance relative to the odd man out.
+importance to a competitor than their overall standing in the
+tournament.  One might expect competitors to value their ranking when
+restricted to within their country more than their international
+ranking.  If this is the case then we would expect competitors to
+change their behaviour if they are in the water with another surfer of
+the same nationality.  Specifically, if we have three surfers in the
+water of whom two are of one nationality and the third of another, we
+would expect the compatriots to adopt a style calculated to beat their
+countryman, possibly at the expense of performance relative to the odd
+man out.
 
-Such hypotheses
-are difficult to test with conventional techniques as competitors's
-strengths themselves are nuisance parameters~\cite{basu1977}.
+Such hypotheses are difficult to test with conventional techniques as
+competitors's strengths themselves are nuisance
+parameters~\cite{basu1977}.
 
-Consider, as an example, the case of Smith, Buchan, Freestone.  Buchan
+Consider, as an example, the case of Smith, Buchan, Freestone who were
+simultaneously in the water at Bells Beach, Australia.  Now, Buchan
 and Freestone are Australian, and Jordy Smith is South African.  It is
 reasonable to ask whether Buchan and Freestone, who are in direct
 competition with one another for a place in the Australian Olympic
@@ -369,8 +373,8 @@ noncompetitive.  How would such a strategy manifest itself in
 scorelines?
 
 Reified Bradley-Terry technique furnishes an intuitive statistical
-test for such a mechanism which controls for competitors' strengths.
-Noting that the compatriots effectively place themselves at a {\em
+test for mechanisms that control for competitors' strengths.  Noting
+that the compatriots effectively place themselves at a {\em
   disadvantage} when compared with the odd man out, we introduce a
 compatriot monster whose strength $p_C$ helps the odd man out.
 Writing $p_1, p_2$ for the strengths of the compatriots and $q$ for
@@ -404,17 +408,36 @@ $q\succ p_2\succ p_1 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_1+p_2}$\
 \end{table}
 
 We can now apply the Method of Support to the hypothesis that $p_C=0$,
-that is, that this noncompetitive behaviour is absent.  We find that
+that is, that such noncompetitive behaviour is absent.  We find that
 the maximum likelihood estimate for $p_C$ is about 0.015, weaker than
 the ``real'' surfers, but the support for a nonzero $p_C$ is about 1.8
-[asymptotic $p=0.28$], short of the two units of support required for
-rejection of our null.  We conclude that there is no strong evidence
-to suggest that such noncompetitive behaviour occurred, at least not
-from the order statistics we considered.
+[asymptotic $p=0.28$], slightly short of the two units of support
+required for rejection of our null.  We conclude that there is
+evidence, but no strong evidence, to suggest that such noncompetitive
+behaviour occurred---at least not from the order statistics we
+considered.
 
 \section{Conclusions and further work}
 
-{\bf\large Tim we need to discuss this}
+We analysed results from the 2018 World Surf League using reified
+Bradley-Terry likelihoods to assess a number of hypotheses of interest
+to the surfing community.  Reified Bradley-Terry allows the use of
+formal statistical methods in ways that analysing points scored does
+not.  For example, we can be confident that the results reflect
+differences in skill (rather than random variation); there is no
+statistical difference in strength between the top two officially
+ranked competitors, Medina and Ferreira; but we may reject the
+hypothesis that Medina and Wilson are equal in strength.
+
+We discuss and assess the ``Brazilian storm'' phenomenon using reified
+entities and show that there is no strong evidence to support the
+supposed Brazilian preference for point and beach break beaches.  We
+also find no evidence to suggest that surfing's being included in the
+2020 Summer Olympics results in modified strategies to bolster
+intranational ranking at the expense WCT performance.
+
+Further work might include  {\bf\large Tim we should discuss}
+
 
 \bibliography{chess}
 \end{document}
