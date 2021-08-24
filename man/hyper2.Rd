@@ -61,9 +61,8 @@ correspond to having no information about that particular player).
 
 Function \code{size()} returns the (nominal) length \eqn{n} of
 nonnegative vector \eqn{p=\left(p_1,\ldots,p_n\right)}{p=(p_1,...,p_n)}
-where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.  Note that function
-\code{lhyper2()} takes the vector
-\eqn{p=\left(p_1,\ldots,p_{n-1}\right)}{p=(p_1,...,p_{n-1})}.
+where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.
+
 }
 \note{The empty string is a perfectly valid name}
 \author{Robin K. S. Hankin}
