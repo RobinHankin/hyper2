@@ -326,8 +326,14 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `gradient` <- function(H,probs=indep(maxp(H))){
-  stopifnot(length(probs) == size(H)-1)
-  differentiate(brackets(H), powers(H), fillup(probs), pnames(H), size(H))$grad_comp
+    if(length(probs) == size(H)){
+        jj <- probs
+    } else if(length(probs) == size(H)-1){
+        jj <- fillup(probs)
+    } else {
+        stop("probs is wrong length")
+    }
+    differentiate(brackets(H), powers(H), jj, pnames(H), size(H))$grad_comp
 }
 
 `gradientn` <- function(H,probs=maxp(H)){

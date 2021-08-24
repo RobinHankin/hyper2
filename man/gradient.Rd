@@ -43,9 +43,9 @@ is_ok_hessian(M, give=TRUE)
 
 Function \code{gradient()} returns the gradient of the log-likelihood
 function.  If the \code{hyper2} object is of size \eqn{n}, then argument
-\code{probs} must be a vector of length \eqn{n-1}, typically
-\code{indep(p)}; and the returned gradient is also a vector of length
-\eqn{n-1}.  The hard part of this is accounting for the fillup value.
+\code{probs} may be a vector of length \eqn{n-1} or \eqn{n}; in the
+former case it is interpreted as \code{indep(p)}.  In both cases, the
+returned gradient is a vector of length \eqn{n-1}.
 The function returns the derivative of the loglikelihood with respect to
 the \eqn{n-1} independent components of
 \mjeqn{\left(p_1,\ldots,p_n\right)}{(p_1,...,p_n)}, namely
@@ -54,12 +54,12 @@ value \mjseqn{p_n} is calculated as
 \mjeqn{1-\left(p_1+\cdots + p_{n-1}\right)}{1-(p_1+...+p_n-1)}.
 
 Function \code{gradientn()} returns the gradient of the loglikelihood
-function but ignores the unit sum constraint.
-If the \code{hyper2} object is of size \eqn{n}, then argument
-\code{probs} must be a vector of length \eqn{n}, and the returned
-gradient is also a vector of length \eqn{n}.  The last element of the
-vector is not treated differently from the others; all \eqn{n} elements
-are treated as independent.  The sum need not equal one.
+function but ignores the unit sum constraint.  If the \code{hyper2}
+object is of size \eqn{n}, then argument \code{probs} must be a vector
+of length \eqn{n}, and the function returns a named vector of length
+\eqn{n}.  The last element of the vector is not treated differently from
+the others; all \eqn{n} elements are treated as independent.  The sum
+need not equal one.
 
 Function \code{hessian()} returns the \dfn{bordered Hessian}, a matrix
 of size \mjeqn{n+1\times n+1}{(n+1)*(n+1)}, which is useful when using
