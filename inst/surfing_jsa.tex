@@ -293,7 +293,7 @@ $0.031$.
 
 In surfing lore, the ``Brazilian storm'' refers to the emergence of
 Brazil as a dominant nation of elite surfers.  The term was first used
-to describe the fact six out of eight querterfinalists at 2011 Nike
+to describe the fact that six out of eight querterfinalists at the 2011 Nike
 Lowers Pro were Brazilian; it rose in public conciousness following
 the victories of Medina and de Souza in the World Surf League
 championships in 2014 and 2015 respectively.  The storm shows no signs
@@ -302,43 +302,42 @@ generation ``represents a seismic shift for Brazilian competitors onto
 an entirely new plane'' \cite{douglas2020}.
 
 Here, we study two aspects of this sporting phenomenon: the suggested
-Brazilian preference for beach break and point break reefs; and the
+Brazilian preference for beach break and point break wave types; and the
 noncompetitive effect of compatriot rivalry.
 
-\subsection{Brazilian beach type prefereneces}
+\subsection{Brazilian wave type prefereneces}
 
 The statistical method described here can test many different
-hypotheses drawn from surfing lore.  For example, one frequent
-suggestion~\cite{burgess2020,ho2021} is that Brazilian surfers such as
-Ferreira and Toledo tend to have skillsets that favour point and beach
-break beaches, those types of beach being readily accessible to these
-surfers' native Brazil; see~\cite{scarfe2003} for a scientific
-overview of surf break characteristics, and~\cite{butt2004} for a
-surfer's perspective.
+hypotheses inspired by surfing lore.  For example, one frequent
+suggestion~\cite{burgess2020,ho2021} is that Brazilian surfers tend to
+have skillsets that favour point and beach break wave types, readily
+accessible to these surfers' native Brazil; see~\cite{scarfe2003} for
+a scientific overview of surf break characteristics,
+and~\cite{butt2004} for a surfer's perspective.
 
-We now assess the null that
-Brazilians perform equally well on all types of beaches.  To that end,
-we create a reified surfer, ``Brazilian beachtype", whose strength
-helps all Brazilian surfers when surfing on their (putative) preferred
-beach type, an analogue of the ``home ground monster" who helps the
-home team as per equation~\ref{home_ground_advantage}.  Here we modify
-the likelihood function only when a single Brazilian is in the water,
-to avoid possible interaction with the compatriot issue discussed in
+We now assess the null that Brazilians perform equally well on all
+types of wave types.  To that end, we create a reified surfer,
+``Brazilian wavetype", whose strength helps all Brazilian surfers
+when surfing on their (putative) preferred wave type, an analogue of
+the ``home ground monster" who helps the home team as per
+equation~\ref{home_ground_advantage}.  Here we modify the likelihood
+function only when a single Brazilian is in the water, thus avoiding
+possible interaction with the compatriot issue discussed in
 section~\ref{compatriot}.  The null would be that this reified entity
 has zero strength.  We fail to reject this null (differential support
 = 0.035; $p=0.79$) and conclude that there is no evidence to suggest
-that Brazilians' performce is better on their preferred beach types
+that Brazilians' performce is better on their preferred wave types
 than one would expect by chance.  We may go further using the method
 of support: not only is the maximum likelihood estimate for Brazilian
-beachtype very small (about 0.002), but in addition we may reject the
+wavetype very small (about 0.002), but in addition we may reject the
 the proposal that the strength of this entity exceeds about 0.025
-(Figure~\ref{brazilian_beachtype_support}).
+(Figure~\ref{brazilian_wavetype_support}).
 
 \begin{figure}
   \includegraphics[width=4in]{surfing_files/figure-html/plotwidep-1.png}
-\caption{Profile support \label{brazilian_beachtype_support} for the
-  Brazilian beachtype reified entity.  The horizontal axis specifies a
-  particular strength for Brazilian beachtype, and the height of the
+\caption{Profile support \label{brazilian_wavetype_support} for the
+  Brazilian wavetype reified entity.  The horizontal axis specifies a
+  particular strength for Brazilian wavetype, and the height of the
   curve gives the support conditional on the x-axis}
 \end{figure}
 
@@ -349,7 +348,7 @@ the 2020 Summer Olympics~\cite{tulloch2019}, and it is natural to ask
 whether this would affect the competition in some way~\cite{ho2021}.
 One suggestion would be that competitors become more focussed on
 beating compatriots than surfers from other countries, the thinking
-being that admission to a country's Olympic squad would be of more
+being that admission to a country's Olympic team would be of more
 importance to a competitor than their overall standing in the
 tournament.  One might expect competitors to value their ranking when
 restricted to within their country more than their international
@@ -359,10 +358,8 @@ the same nationality.  Specifically, if we have three surfers in the
 water of whom two are of one nationality and the third of another, we
 would expect the compatriots to adopt a style calculated to beat their
 countryman, possibly at the expense of performance relative to the odd
-man out.
-
-Such hypotheses are difficult to test with conventional techniques as
-competitors's strengths themselves are nuisance
+man out.  Such hypotheses are difficult to test with conventional
+techniques as competitors's strengths themselves are nuisance
 parameters~\cite{basu1977}.
 
 Consider, as an example, the case of Smith, Buchan, Freestone who were
@@ -370,15 +367,18 @@ simultaneously in the water at Bells Beach, Australia.  Now, Buchan
 and Freestone are Australian, and Jordy Smith is South African.  It is
 reasonable to ask whether Buchan and Freestone, who are in direct
 competition with one another for a place in the Australian Olympic
-surfing squad, would be more motivated to beating each other than to
+surfing team, would be more motivated to beating each other than to
 come ahead of Smith.  This would be a rational response, but arguably
 noncompetitive.  How would such a strategy manifest itself in
-scorelines?  We would suggest that Smith is able to
-modify his strategy to benefit from the mutual rivalry between
-Buchan and Freestone; and indeed we see Smith winning that particular
-heat.
+scorelines?  We would suggest that Smith is able to modify his
+strategy to benefit from the mutual rivalry between Buchan and
+Freestone; and indeed we see Smith winning that particular heat.  We
+tentatively interpret this as a Nash-type equilibrium: there is no
+incentive for either Buchan nor Freestone to deviate from their
+prioritization of defeating their compatriot; and indeed neither
+Buchan nor Freestone were selected for the 2020 Olympic team.
 
-Reified Bradley-Terry technique furnishes an intuitive statistical
+The reified Bradley-Terry technique furnishes an intuitive statistical
 test for such mechanisms, that automatically controls for competitors'
 strengths.  Noting
 that the compatriots effectively place themselves at a {\em
@@ -417,12 +417,11 @@ $q\succ p_2\succ p_1 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_1+p_2}$\
 We can now apply the Method of Support to the hypothesis that $p_C=0$,
 that is, that such noncompetitive behaviour is absent.  We find that
 the maximum likelihood estimate for $p_C$ is about 0.015, weaker than
-the ``real'' surfers, but the support for a nonzero $p_C$ is about 1.8
-[asymptotic $p=0.28$], slightly short of the two units of support
-required for rejection of our null.  We conclude that there is
-evidence, but no strong evidence, to suggest that such noncompetitive
-behaviour occurred---at least not from the order statistics we
-considered.
+the ``real'' surfers, but the support for a nonzero $p_C$ is about
+0.59 [asymptotic $p=0.28$], insufficient to reject our null.  We
+conclude that there is no strong evidence to suggest that such
+noncompetitive behaviour occurred---at least not from the order
+statistics we considered.
 
 \section{Conclusions and further work}
 
@@ -437,14 +436,14 @@ ranked competitors, Medina and Ferreira; but we may reject the
 hypothesis that Medina and Wilson are equal in strength.
 
 We discuss and assess the ``Brazilian storm'' phenomenon using reified
-entities and show that there is no strong evidence to support the
-supposed Brazilian preference for point and beach break beaches.  We
-also find no evidence to suggest that surfing's being included in the
-2020 Summer Olympics results in modified strategies to bolster
-intranational ranking at the expense WCT performance.
+Bradley-Terry techniques, and show that there is no strong evidence to
+support the supposed Brazilian preference for point and beach break
+beaches.  We also find no evidence to suggest that surfing's being
+included in the 2020 Summer Olympics results in modified strategies to
+bolster intranational ranking at the expense WCT performance.
 
-Further work might include  {\bf\large Tim we should discuss}
-
+Further work might include statistical investigation of noncompetitive
+NASH STUFF compatriot priority infringements between compatriots.
 
 \bibliography{chess}
 \end{document}
