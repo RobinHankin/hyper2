@@ -62,6 +62,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   stopifnot(is.numeric(d))
   stopifnot(length(L) == length(d))
   stopifnot(all(unique(c(L,recursive=TRUE)) %in% pnames))
+
+  ## catch hyper2(list(c("a","a")),1):
+  stopifnot(all(unlist(lapply(L,function(l){all(table(l)==1)})))) 
   return(TRUE)
 }
 
@@ -832,9 +835,10 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
 
   if(teams){
-      M <- replicate(s,sample(n))
-      M[] <- pnames[M]
-      H <- H+hyper2(split(M,rep(seq_len(ncol(M)),each=nrow(M)/2)),1)  # winners
+      for(i in seq_len(s)){
+          players <- pnames[seq_len(n)]
+          H <- H + trial(sample(players,n/2,replace=FALSE),players)
+      }
   }
 
   if(race){  # Plackett-Luce

@@ -55,7 +55,10 @@ setter methods for the player names.  Length-zero character strings are
 acceptable.
 
 Function \code{is_valid_hyper2()} tests for valid input, returning a
-Boolean.  Note that it is perfectly acceptable to have an element of
+Boolean.  This function returns an error if a bracket contains a
+repeated element, as in \code{hyper2(list(c("a","a")),1)}.
+
+Note that it is perfectly acceptable to have an element of
 \code{pnames} that is not present in the likelihood function (this would
 correspond to having no information about that particular player).
 
