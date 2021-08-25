@@ -151,17 +151,6 @@ to assess the supposed Brazilian preference for reef-breaking waves.
 
 \section{Likelihood-based systems and points-based systems}
 
-\begin{table}
-\begin{tabular}{l|l|l|l|l|l|l|l|l|l|l|l|l|l}
-competitor  & nationality&wct01  &wct02  &wct03  & \ldots &wct09&wct10&wct11&points\\ \hline
- Ferreira   &   BRA      &   1   &   5   &   17  & \ldots      &  2   &   1   &   1   &   59740\\
- Medina     &   BRA      &   5   &   5   &   17  & \ldots      &  9   &   9   &   2   &   56475\\
- Smith 	    &   ZAF      &   3   &   3   &   17  & \ldots      &  9   &   2   &   17  &   49985\\
- Toledo     &   BRA      &   9   &   2   &   5   & \ldots      &  17  &   5   &   17  &   49145\\
- Andino     &   USA      &   2   &   17  &   5   & \dots       &  5   &   5   &   9   &   46655
-\end{tabular}
-\caption{WCT tour results, conventional league table\label{resultstable}}
-\end{table}
 
 Table~\ref{resultstable} shows the official results table from the
 tour.  We see that Ferreira places first with 59740 points, Medina
@@ -179,31 +168,14 @@ statistically rigorous tests of meaningful nulls.
 
 \section{The dataset and likelihood function}
 
-\begin{table}
-\begin{verbatim}
-wct01 Colapinto Bailey Wright
-wct01 Freestone Lau Smith
-wct01 Dora Ferreira Slater
-wct01 Duru Toledo Ibelli
-wct01 Moniz Heazlewood Wilson
-...
-wct11 Medina Florence
-wct11 Colapinto Bourez
-wct11 Ferreira Slater
-wct11 Medina Colapinto
-wct11 Ferreira Medina
-\end{verbatim}
-\caption{Extract from observations: raw results\label{rawresults} from
-  WCT 2018}
-\end{table}
-
-The first line of table \ref{rawresults} shows that, at one of the
-heats in {\tt wct01}, Colapinto came first, Bailey second, and Wright
-came third.  The last line shows that, at {\tt wct11}, Ferreira came
-first and Medina second.  We can convert this dataset into a
-Plackett-Luce likelihood function but first have to remove the
-wildcards and also player Vries whose maximum likelihood strength is
-zero.  For the first line we would have Plackett-Luce likelihood function as
+Table~\ref{rawresults} shows the first few and last few entries in the
+dataset we use.  The first line shows that, at one of the heats in
+{\tt wct01}, Colapinto came first, Bailey second, and Wright came
+third.  The last line shows that, at {\tt wct11}, Ferreira came first
+and Medina second.  We can convert this dataset into a Plackett-Luce
+likelihood function but first have to remove the wildcards and also
+player Vries whose maximum likelihood strength is zero.  For the first
+line we would have Plackett-Luce likelihood function as
 
 \begin{equation}
 \frac{p_\mathrm{Colapinto}}{p_\mathrm{Colapinto} + p_\mathrm{Bailey} + p_\mathrm{Wright}}\cdot
@@ -245,11 +217,6 @@ paired comparisons.  We are thus motivated to consider the whole
 dataset, not just the part which involves paired comparisons.
 
 \section{Results}
-\begin{figure}
-\includegraphics[width=4in]{surfing_files/figure-html/showsurfingmaxppie-3.png} % Pie chart of strengths
-\caption{Pie chart\label{piechartmax} showing maximum likelihood strengths of the 23 competitors.  Note the
-dominance of Ferreira, Florence, and Medina}
-\end{figure}
 
 Figure~\ref{piechartmax} shows the maximum likelihood estimate for the
 23 competitors' strengths, which appears to show a wide range from
@@ -280,19 +247,6 @@ differ when calculated by the points and likelihood systems.  Note the
 anomalous position of Florence, who did not compete in five venues due
 to injury: this strongly affecting his points total but not his
 likelihood-based ranking.
-
-\begin{figure}[h]
-\includegraphics[width=4in]{surfing_files/figure-html/directlogplotofstrengths-1.png}
-\caption{Scatterplot of points scored  \label{compare_likelihood_points} 
-against maximum likelihood estimates}
-\end{figure}
-
-\begin{figure}[h]
-\includegraphics[width=4in]{surfing_files/figure-html/ordertransplotplot-1.png}
-\caption{Scatterplot of ranks \label{compare_likelihood_points_rankings} of points-based ranking
-against likelihood-based ranking.  Note the anomalous position of
-Florence}
-\end{figure}
 
 We may ask whether the top two officially ranked competitors, Medina
 and Ferreira, have different strengths.  To test the null of equal
@@ -352,14 +306,6 @@ wavetype very small (about 0.002), but in addition we may reject the
 the proposal that the strength of this entity exceeds about 0.025
 (Figure~\ref{brazilian_wavetype_support}).
 
-\begin{figure}
-  \includegraphics[width=4in]{surfing_files/figure-html/plotwidep-1.png}
-\caption{Profile support \label{brazilian_wavetype_support} for the
-  Brazilian wavetype reified entity.  The horizontal axis specifies a
-  particular strength for Brazilian wavetype, and the height of the
-  curve gives the support conditional on the x-axis}
-\end{figure}
-
 \section{Differential \label{compatriot} behaviour toward compatriotic competitors}
 
 One measure of the rising popularity of surfing is its inclusion in
@@ -413,26 +359,6 @@ six likelihood functions in table~\ref{likelihoodcompatriot} are
 informative about $p_1,p_2,q$ in addition to being informative about
 the object of inference, $p_C$.
 
-\begin{table}
-\begin{tabular}{l|l}
-order  & ${\mathcal L}(p_1,p_2,q,p_C)$\\ \hline
-$p_1\succ p_2\succ q $ & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_2+q+p_C}$\\
-$p_2\succ p_1\succ q $ & $ \frac{p_2}{p_1+p_2+q+p_C}\cdot\frac{p_1}{p_1+q+p_C}$\\
-$p_1\succ q\succ p_2 $ & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{q+p_C}{p_2+q+p_C}$\\
-$p_2\succ q\succ p_1 $ & $ \frac{p_2}{p_1+p_2+q+p_C}\cdot\frac{q+p_C}{p_1+q+p_C}$\\
-$q\succ p_1\succ p_2 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_1}{p_1+p_2}$\\
-$q\succ p_2\succ p_1 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_1+p_2}$\\
-\end{tabular}
-\caption{The \label{likelihoodcompatriot} six possible finishing
-  orders (``$\succ$'' means ``scored more points than'') for the case
-  where two compatriot surfers and an odd man out are in the water at
-  the same time, with associated likelihood function for strengths
-  $p_1,p_2,q, p_C$.  Here $p_1,p_2$ are the strengths of two
-  compatriot surfers, $q$ the strength of the odd man out, $p_C$ the
-  strength of the compatriot monster. and nationality and a third are
-  in the water at the same time}
-\end{table}
-
 We can now apply the Method of Support to the hypothesis that $p_C=0$,
 that is, that such noncompetitive behaviour is absent.  We find that
 the maximum likelihood estimate for $p_C$ is about 0.015, weaker than
@@ -466,4 +392,96 @@ NASH STUFF compatriot priority infringements between compatriots.
 
 \bibliographystyle{agsm}
 \bibliography{chess}
+
+\clearpage
+\newpage
+
+\section*{Tables}
+
+\begin{table}[h]
+\begin{tabular}{llllllllllllll}
+competitor  & nationality&wct01  &wct02  &wct03  & \ldots &wct09&wct10&wct11&points\\ \hline
+ Ferreira   &   BRA      &   1   &   5   &   17  & \ldots      &  2   &   1   &   1   &   59740\\
+ Medina     &   BRA      &   5   &   5   &   17  & \ldots      &  9   &   9   &   2   &   56475\\
+ Smith 	    &   ZAF      &   3   &   3   &   17  & \ldots      &  9   &   2   &   17  &   49985\\
+ Toledo     &   BRA      &   9   &   2   &   5   & \ldots      &  17  &   5   &   17  &   49145\\
+ Andino     &   USA      &   2   &   17  &   5   & \dots       &  5   &   5   &   9   &   46655
+\end{tabular}
+\caption{WCT tour results, conventional league table\label{resultstable}}
+\end{table}
+
+\begin{table}[h]
+\begin{verbatim}
+wct01 Colapinto Bailey Wright
+wct01 Freestone Lau Smith
+wct01 Dora Ferreira Slater
+wct01 Duru Toledo Ibelli
+wct01 Moniz Heazlewood Wilson
+...
+wct11 Medina Florence
+wct11 Colapinto Bourez
+wct11 Ferreira Slater
+wct11 Medina Colapinto
+wct11 Ferreira Medina
+\end{verbatim}
+\caption{Extract from observations: raw results\label{rawresults} from
+  WCT 2018}
+\end{table}
+
+\begin{table}[h]
+\begin{tabular}{l|l}
+order  & ${\mathcal L}(p_1,p_2,q,p_C)$\\ \hline
+$p_1\succ p_2\succ q $ & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_2+q+p_C}$\\
+$p_2\succ p_1\succ q $ & $ \frac{p_2}{p_1+p_2+q+p_C}\cdot\frac{p_1}{p_1+q+p_C}$\\
+$p_1\succ q\succ p_2 $ & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{q+p_C}{p_2+q+p_C}$\\
+$p_2\succ q\succ p_1 $ & $ \frac{p_2}{p_1+p_2+q+p_C}\cdot\frac{q+p_C}{p_1+q+p_C}$\\
+$q\succ p_1\succ p_2 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_1}{p_1+p_2}$\\
+$q\succ p_2\succ p_1 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_1+p_2}$\\
+\end{tabular}
+\caption{The \label{likelihoodcompatriot} six possible finishing
+  orders (``$\succ$'' means ``scored more points than'') for the case
+  where two compatriot surfers and an odd man out are in the water at
+  the same time, with associated likelihood function for strengths
+  $p_1,p_2,q, p_C$.  Here $p_1,p_2$ are the strengths of two
+  compatriot surfers, $q$ the strength of the odd man out, $p_C$ the
+  strength of the compatriot monster. and nationality and a third are
+  in the water at the same time}
+\end{table}
+
+\clearpage
+\newpage
+\section*{Figures}
+
+\begin{figure}[h]
+\includegraphics[width=4in]{surfing_files/figure-html/showsurfingmaxppie-3.png} % Pie chart of strengths
+\caption{Pie chart\label{piechartmax} showing maximum likelihood strengths of the 23 competitors.  Note the
+dominance of Ferreira, Florence, and Medina}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=4in]{surfing_files/figure-html/directlogplotofstrengths-1.png}
+\caption{Scatterplot of points scored  \label{compare_likelihood_points} 
+against maximum likelihood estimates}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=4in]{surfing_files/figure-html/ordertransplotplot-1.png}
+\caption{Scatterplot of ranks \label{compare_likelihood_points_rankings} of points-based ranking
+against likelihood-based ranking.  Note the anomalous position of
+Florence}
+\end{figure}
+
+
+\begin{figure}[h]
+  \includegraphics[width=4in]{surfing_files/figure-html/plotwidep-1.png}
+\caption{Profile support \label{brazilian_wavetype_support} for the
+  Brazilian wavetype reified entity.  The horizontal axis specifies a
+  particular strength for Brazilian wavetype, and the height of the
+  curve gives the support conditional on the x-axis}
+\end{figure}
+
+
+
 \end{document}
+
+
