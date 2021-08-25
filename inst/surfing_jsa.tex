@@ -1,14 +1,31 @@
 \documentclass{article}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{natbib}
+
+
+  \author{Driver, Timothy${}^{1,2}$ \and
+    Hankin, Robin K. S.${}^{2,3}$ \\
+    \texttt{hankin.robin@gmail.com}\\(corresponding author)}
+
+
+  \date{${}^1$ {\bf Tim what do you want here you can put anything}\\
+    ${}^{1,2}$ Auckland University of Technology
+    Wellesley Street, Auckland, New Zealand\\
+    +64-9-9219999x5106\\
+    ${}^3$ Corresponding author}
+
+  \title{Analysis of competitive surfing tournaments with generalized Bradley-Terry}
+
+
 \begin{document}
-\bibliographystyle{plain}
-
-\title{Analysis of competitive surfing tournaments with generalized Bradley-Terry}
 
 
-\section*{Abstract}
-Here we analyse competitive surfing, specifically the 2018 World Surf
+
+  \maketitle
+
+\subsubsection*{Abstract}
+   Here we analyse competitive surfing, specifically the 2018 World Surf
 League, using formal statistical methods.  We use generalized
 Bradley-Terry likelihoods to assess a number of hypotheses of interest
 to the surfing community.  Specifically, we quantify the dominance of
@@ -21,18 +38,19 @@ modifying their strategy in the presence of compatriot rivals.  We
 quantify the evidence for these commonly assumed features of
 contemporary competitive surfing and suggest further avenues of
 research.
+\newpage
 
 \section{Introduction}
 
 Surfing is a popular and growing activity in terms of both
-participation and viewing \cite{warshaw2010}.  Competitive surfing
+participation and viewing \citep{warshaw2010}.  Competitive surfing
 involves surfers competing against one or two other surfers in heats
-lasting 30-50 minutes \cite{booth1995}.  Points are awarded on a
+lasting 30-50 minutes \citep{booth1995}.  Points are awarded on a
 10-point scale: each of five judges awards points to a surfer riding a
 particular wave.  The World Surf League (WSL) is the main governing
-body of surfing competitions \cite{wsl}.  The WSL conducts a world tour in
+body of surfing competitions \citep{wsl}.  The WSL conducts a world tour in
 which the best ranked 34 surfers compete; in addition, at each tour
-venue, two "wildcard" surfers also enter the competition, who are
+venue, two ``wildcard" surfers also enter the competition, who are
 ignored here.  The 2019 WSL tour saw competitive events held at eleven
 different surf locations.
 
@@ -70,7 +88,7 @@ using a consistent and intuitive statistical model.
 
 \subsection{Previous related work}
 
-Farley {\em et. al.} \cite{farley2013} analyse surfing results using
+\citet{farley2013} analyse surfing results using
 one-way ANOVA techniques and report comparisons between the top 10 and
 bottom 10 surfers in the 2013 World Championship Tour and conclude
 that the top-ranked athletes are more consistent than the lower-ranked
@@ -80,21 +98,21 @@ and the analysis presented here fills some of this gap.
 
 Other statistical research into competitive surfing appears to focus
 on the scoring of aerial manoeuvres compared with other manoeuvres in
-events.  Lundgren {\em et. al.} \cite{lundgren2014}, for example,
+events.  \citet{lundgren2014}, for example,
 report that aerial manoeuvres scored higher than other stunts but had
 a lower completion rate, a theme we return to below.
 
 \section{Bradley-Terry}
 
-The Bradley-Terry model \cite{bradley1954} assigns non-negative strengths
+The Bradley-Terry model \citep{bradley1954} assigns non-negative strengths
 $p_1,\ldots, p_n$ to each of $n$ competitors in such a way that the
 probability of $i$ beating $j\neq i$ in pairwise competition is
 $\frac{p_i}{p_i+p_j}$; it is conventional to normalize so that $\sum
-p_i=1$.  Further, we use a generalization due to \cite{luce1959}, in which
+p_i=1$.  Further, we use a generalization due to \citep{luce1959}, in which
 the probability of competitor~$i$ winning in a field of $\left\lbrace
 1,\ldots, n\right\rbrace$ is $\frac{p_i}{p_1+\cdots +p_n}$.  Noting
 that there is information in the whole of the finishing order, and not
-just the first across the line, we can follow \cite{plackett1975} and
+just the first across the line, we can follow \citet{plackett1975} and
 consider the runner-up to be the winner among the remaining
 competitors, and so on down the finishing order. Without loss of
 generality, if the order of finishing were $1,2,3,4,5$, then a
@@ -109,14 +127,15 @@ suitable Plackett-Luce likelihood function would be
 \end{equation}
 
 and this would be a forward ranking Plackett-Luce model in the
-terminology of \cite{johnson2020}.  We now use a technique due to Hankin
-(2010, 2017) and introduce fictional (reified) entities whose nonzero
-Bradley-Terry strength helps certain competitors or sets of
-competitors under certain conditions.  The original example was the
-home-ground advantage in football.  If players (teams) $1,2$ with
-strengths $p_1,p_2$ compete, and if our observation were $a$ home wins
-and $b$ away wins for team $1$, and $c$ home wins and $d$ away wins
-for team~$2$, then a suitable likelihood function would be
+terminology of \citet{johnson2020}.  We now use a technique due to
+\citet{hankin2010,hankin2017} and introduce fictional (reified)
+entities whose nonzero Bradley-Terry strength helps certain
+competitors or sets of competitors under certain conditions.  The
+original example was the home-ground advantage in football.  If
+players (teams) $1,2$ with strengths $p_1,p_2$ compete, and if our
+observation were $a$ home wins and $b$ away wins for team $1$, and $c$
+home wins and $d$ away wins for team~$2$, then a suitable likelihood
+function would be
 
 \begin{equation}\label{home_ground_advantage}
 \left(\frac{p_1+p_H}{p_1+p_2+p_H}\right)^a
@@ -127,8 +146,8 @@ for team~$2$, then a suitable likelihood function would be
 
 \noindent where $p_H$ is a quantification of the beneficial home
 ground effect.  Similar techniques have been used to account for the
-first-move advantage in chess, and here we apply it to assess the
-supposed Brazilian preference for reef-breaking waves.
+first-move advantage in chess~\citep{hankin2020}, and here we apply it
+to assess the supposed Brazilian preference for reef-breaking waves.
 
 \section{Likelihood-based systems and points-based systems}
 
@@ -209,7 +228,7 @@ p_\mathrm{Andino}^{19}\, p_\mathrm{Callinan}^{19}\, p_\mathrm{Coffin}^{8}\ldots
 
 Paired comparisons are particularly favourable to Bradley-Terry
 because the likelihood function is exponential family and as such is
-amenable to analysis via general linear models~\cite{turner2012}.
+amenable to analysis via general linear models~\citep{turner2012}.
 However, this is not applicable when more than two entities are
 compared; and indeed here we see comparisons between three surfers
 and, in the case of Jeep Surf Freshwater Pro (wct08), many more.  It
@@ -235,11 +254,11 @@ dominance of Ferreira, Florence, and Medina}
 Figure~\ref{piechartmax} shows the maximum likelihood estimate for the
 23 competitors' strengths, which appears to show a wide range from
 Florence at about 17.5\% down to Coffin at about 1.5\%.  The {\tt
-  hyper2} software~\cite{hankin2017} may be used to formally assess
+  hyper2} software~\citep{hankin2017} may be used to formally assess
 one plausible null: that the competitors all have equal skill, that is
 $H_0\colon p_\mathrm{Andino} = p_\mathrm{Bourez}=\ldots=
 p_\mathrm{Wright}=\frac{1}{23}$, and any differences in placings are
-due to random variation.  The Method of Support \cite{edwards1992}
+due to random variation.  The Method of Support \citep{edwards1992}
 rejects the null (in favour of the evaluate) at $p=4\times 10^{-5}$.
 There is thus strong evidence to suggest that the competitors are
 indeed of different skills and the result actually reflects genuine
@@ -278,7 +297,7 @@ Florence}
 We may ask whether the top two officially ranked competitors, Medina
 and Ferreira, have different strengths.  To test the null of equal
 strength, we maximize the likelihood subject to the null, and compare
-with the global maximum likelihood~\cite{hankin2010}.  This gives us a
+with the global maximum likelihood~\citep{hankin2010}.  This gives us a
 support difference of about 0.05, well short of Edwards's 2 units of
 support criterion.  Alternatively, we could observe that the
 $-2\log\left(\frac{\Lambda}{\Lambda_0}\right)\simeq 0.1$ is not in the
@@ -299,7 +318,7 @@ the victories of Medina and de Souza in the World Surf League
 championships in 2014 and 2015 respectively.  The storm shows no signs
 of abating, with commentators such as Douglas opining that this
 generation ``represents a seismic shift for Brazilian competitors onto
-an entirely new plane'' \cite{douglas2020}.
+an entirely new plane'' \citep{douglas2020}.
 
 Here, we study two aspects of this sporting phenomenon: the suggested
 Brazilian preference for beach break and point break wave types; and the
@@ -309,11 +328,11 @@ noncompetitive effect of compatriot rivalry.
 
 The statistical method described here can test many different
 hypotheses inspired by surfing lore.  For example, one frequent
-suggestion~\cite{burgess2020,ho2021} is that Brazilian surfers tend to
+suggestion~\citep{burgess2020,ho2021} is that Brazilian surfers tend to
 have skillsets that favour point and beach break wave types, readily
-accessible to these surfers' native Brazil; see~\cite{scarfe2003} for
+accessible to these surfers' native Brazil; see~\citet{scarfe2003} for
 a scientific overview of surf break characteristics,
-and~\cite{butt2004} for a surfer's perspective.
+and~\citet{butt2004} for a surfer's perspective.
 
 We now assess the null that Brazilians perform equally well on all
 types of wave types.  To that end, we create a reified surfer,
@@ -344,8 +363,8 @@ the proposal that the strength of this entity exceeds about 0.025
 \section{Differential \label{compatriot} behaviour toward compatriotic competitors}
 
 One measure of the rising popularity of surfing is its inclusion in
-the 2020 Summer Olympics~\cite{tulloch2019}, and it is natural to ask
-whether this would affect the competition in some way~\cite{ho2021}.
+the 2020 Summer Olympics~\citep{tulloch2019}, and it is natural to ask
+whether this would affect the competition in some way~\citep{ho2021}.
 One suggestion would be that competitors become more focussed on
 beating compatriots than surfers from other countries, the thinking
 being that admission to a country's Olympic team would be of more
@@ -360,7 +379,7 @@ would expect the compatriots to adopt a style calculated to beat their
 countryman, possibly at the expense of performance relative to the odd
 man out.  Such hypotheses are difficult to test with conventional
 techniques as competitors's strengths themselves are nuisance
-parameters~\cite{basu1977}.
+parameters~\citep{basu1977}.
 
 Consider, as an example, the case of Smith, Buchan, Freestone who were
 simultaneously in the water at Bells Beach, Australia.  Now, Buchan
@@ -445,5 +464,6 @@ bolster intranational ranking at the expense WCT performance.
 Further work might include statistical investigation of noncompetitive
 NASH STUFF compatriot priority infringements between compatriots.
 
+\bibliographystyle{agsm}
 \bibliography{chess}
 \end{document}
