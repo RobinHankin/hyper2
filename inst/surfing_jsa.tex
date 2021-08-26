@@ -163,12 +163,13 @@ determined by summing the season's points.  However, this system
 suffers from the defect that the points system itself is intrinsically
 arbitrary: the details of the points system does not affect the
 competitors' behaviour but can change the overall ranking; this would
-suggest that more formal statistical methods are needed for analysis of
-such datasets.  The Plackett-Luce likelihood functions are not subject
-to such a phenomenon and furnish an objective and coherent method for
-ranking competitors.  Further, likelihood-based methods offer one
-advantage over points-based systems: the ability to conduct
-statistically rigorous tests of meaningful nulls.
+suggest that more formal statistical methods are needed for analysis
+of such datasets~\citep{aldous2017}.  The Plackett-Luce likelihood
+functions are not subject to such a phenomenon and furnish an
+objective and coherent method for ranking competitors.  Further,
+likelihood-based methods offer one advantage over points-based
+systems: the ability to conduct statistically rigorous tests of
+meaningful nulls.
 
 \section{The dataset and likelihood function}
 
@@ -330,9 +331,15 @@ the same nationality.  Specifically, if we have three surfers in the
 water of whom two are of one nationality and the third of another, we
 would expect the compatriots to adopt a style calculated to beat their
 countryman, possibly at the expense of performance relative to the odd
-man out.  Such hypotheses are difficult to test with conventional
-techniques as the competitors' strengths themselves are nuisance
-parameters~\citep{basu1977}.
+man out.  In this context, risk sensitivity is likely to be become
+important.  One example might be aerial manoeuvres which are risky
+but, if successful, attract high scores~\citep{lundgren2014}.  Such
+strategies are known to occur in chess~\citep{hankin2020}: players
+suffering a sequence of defeats adopt a high-risk (all-or-nothing)
+approach, while players in a winning streak hunker down, play
+defensively, and entrench their lead.  Such hypotheses are difficult
+to test with conventional techniques as the competitors' strengths
+themselves are nuisance parameters~\citep{basu1977}.
 
 Consider, as an example, the case of Smith, Buchan, Freestone who were
 simultaneously in the water at Bells Beach, Australia.  Now, Buchan
