@@ -4,16 +4,19 @@
 \usepackage{natbib}
 \usepackage[pdftex]{hyperref}
 
-  \author{Driver, Timothy${}^{1,2}$ \and
-    Hankin, Robin K. S.${}^{2,3}$ \\
-    \texttt{hankin.robin@gmail.com}\\(corresponding author)}
+  \author{Driver, Timothy C.${}^{1}$ \and
+    Hankin, Robin K. S.${}^{1,2}$}
 
-
-  \date{${}^1$ {\bf Tim what do you want here you can put anything}\\
-    ${}^{1,2}$ Auckland University of Technology
+  \date{${}^{1}$ Auckland University of Technology\\
     Wellesley Street, Auckland, New Zealand\\
     +64-9-9219999x5106\\
-    ${}^3$ Corresponding author}
+    ${}^2$ Corresponding author\\
+    \texttt{hankin.robin@gmail.com}
+  }
+
+  % Tim:   ORCID 0000-0002-3184-2118
+  % Robin: ORCID 0000-0001-5982-0415
+
 
   \title{Analysis of competitive surfing tournaments with generalized Bradley-Terry}
 
@@ -22,22 +25,21 @@
 
 
 
-  \maketitle
-
+\maketitle
+  
 \subsubsection*{Abstract}
-   Here we analyse competitive surfing, specifically the 2018 World Surf
+Here we analyse competitive surfing, specifically the 2019 World Surf
 League, using formal statistical methods.  We use generalized
 Bradley-Terry likelihoods to assess a number of hypotheses of interest
 to the surfing community.  Specifically, we quantify the dominance of
 the top competitors using likelihood techniques, and go on to study
 the ``Brazilian storm'' phenomenon using reified entities in two ways.
-Firstly we assess the supposed Brazilian preference for point and
-beach break beaches; and secondly we consider tournament results from
-the perspective of tournament theory and test for competitors
-modifying their strategy in the presence of compatriot rivals.  We
-quantify the evidence for these commonly assumed features of
-contemporary competitive surfing and suggest further avenues of
-research.
+Firstly we assess the supposed Brazilian preference for beach break
+and point break wave types; and secondly we consider results from the
+perspective of tournament theory and test for competitors modifying
+their strategy in the presence of compatriot rivals.  We quantify the
+evidence for these commonly assumed features of contemporary
+competitive surfing and suggest further avenues of research.
 \newpage
 
 \section{Introduction}
@@ -57,16 +59,16 @@ different surf locations.
 The typical format is as follows.  Up to four surfers---the
 competitors---are in the water simultaneously, watched by up to five
 judges.  Subject to surfing etiquette, competitors are free to catch a
-wave at their discretion within the heat's time window, typically
-20-30 minutes.  The judges rate each wave ride and award points to the
-surfer based on a range of subjective criteria such as stylish
-execution and transition of manoeuvres, but also credit elements such
-as the difficulty and novelty of the performance.  The top score and
-bottom score among the five judges are removed and the remaining three
-judges' scores are averaged to give the final score for the surfer for
-that wave.  Each surfer's aggregate score is given by the average of
-the two highest-scoring waves.  The winner is the surfer with the
-highest aggregate score.
+wave at their discretion within the heat's time window.  The judges
+rate each wave ride and award points to the surfer based on a range of
+subjective criteria such as stylish execution and transition of
+manoeuvres, but also credit elements such as the difficulty and
+novelty of the performance.  The top score and bottom score among the
+five judges are removed and the remaining three judges' scores are
+averaged to give the final score for the surfer for that wave.  Each
+surfer's aggregate score is given by the average of the two
+highest-scoring waves.  The winner is the surfer with the highest
+aggregate score.
 
 Such scoring systems are designed to account for the random nature of
 wave quality while reflecting competitors' abilities fairly.
@@ -104,18 +106,19 @@ a lower completion rate, a theme we return to below.
 
 \section{Bradley-Terry}
 
-The Bradley-Terry model \citep{bradley1954} assigns non-negative strengths
-$p_1,\ldots, p_n$ to each of $n$ competitors in such a way that the
-probability of $i$ beating $j\neq i$ in pairwise competition is
-$\frac{p_i}{p_i+p_j}$; it is conventional to normalize so that $\sum
-p_i=1$.  Further, we use a generalization due to \citep{luce1959}, in which
-the probability of competitor~$i$ winning in a field of $\left\lbrace
-1,\ldots, n\right\rbrace$ is $\frac{p_i}{p_1+\cdots +p_n}$.  Noting
-that there is information in the whole of the finishing order, and not
-just the first across the line, we can follow \citet{plackett1975} and
-consider the runner-up to be the winner among the remaining
-competitors, and so on down the finishing order. Without loss of
-generality, if the order of finishing were $1,2,3,4,5$, then a
+The Bradley-Terry model \citep{bradley1954} assigns non-negative
+strengths $p_1,\ldots, p_n$ to each of $n$ competitors in such a way
+that the probability of $i$ beating $j\neq i$ in pairwise competition
+is $\frac{p_i}{p_i+p_j}$; it is conventional to normalize so that
+$\sum p_i=1$.  Further, we use a generalization due to
+\citep{luce1959}, in which the probability of competitor~$i$ winning
+in a field of $\left\lbrace 1,\ldots, n\right\rbrace$ is
+$\frac{p_i}{p_1+\cdots +p_n}$.  Noting that there is information in
+the whole of the finishing order, and not just the first across the
+line, we can follow \citet{plackett1975} and consider the runner-up to
+be the winner among the remaining competitors, and so on down the
+finishing order. Without loss of generality, if the order of finishing
+were $1,2,3,4,5$ [we write $1\succ 2\succ 3\succ 4\succ5$], then a
 suitable Plackett-Luce likelihood function would be
 
 \begin{equation}\label{competitors_1_to_5_likelihood}
@@ -159,7 +162,7 @@ determined by summing the season's points.  However, this system
 suffers from the defect that the points system itself is intrinsically
 arbitrary: the details of the points system does not affect the
 competitors' behaviour but can change the overall ranking; this would
-suggest that more formal statistical methods are neede for analysis of
+suggest that more formal statistical methods are needed for analysis of
 such datasets.  The Plackett-Luce likelihood functions are not subject
 to such a phenomenon and furnish an objective and coherent method for
 ranking competitors.  Further, likelihood-based methods offer one
@@ -170,21 +173,25 @@ statistically rigorous tests of meaningful nulls.
 
 Table~\ref{rawresults} shows the first few and last few entries in the
 dataset we use.  The first line shows that, at one of the heats in
-{\tt wct01}, Colapinto came first, Bailey second, and Wright came
-third.  The last line shows that, at {\tt wct11}, Ferreira came first
-and Medina second.  We can convert this dataset into a Plackett-Luce
-likelihood function but first have to remove the wildcards and also
-player Vries whose maximum likelihood strength is zero.  For the first
-line we would have Plackett-Luce likelihood function as
+WCT01 (Coolangatta, QLD), Colapinto came first, Bailey second, and
+Wright came third: we write
+$\mbox{Colapinto}\succ\mbox{Bailey}\succ\mbox{Wright}$.  The last line
+shows that, at WCT11 (Banzai Pipeline), Ferreira came first and Medina
+second: $\mbox{Ferreira}\succ\mbox{Medina}$.  We can convert this
+dataset into a Plackett-Luce likelihood function but first have to
+remove the wildcards and also player Vries whose maximum likelihood
+strength is zero.  For the first line we would have Plackett-Luce
+likelihood function as
 
 \begin{equation}
 \frac{p_\mathrm{Colapinto}}{p_\mathrm{Colapinto} + p_\mathrm{Bailey} + p_\mathrm{Wright}}\cdot
 \frac{p_\mathrm{Bailey}}{p_\mathrm{Bailey} + p_\mathrm{Wright}}
 \end{equation}
 
-[observe that there is no requirement here for the strengths to have
-unit sum].  The entire dataset has a likelihood function that
-incorporates all 477 lines, but it includes:
+\noindent [observe that there is no requirement here for the strengths
+  to have unit sum].  The entire dataset has a likelihood function
+that incorporates all 477 lines of Table~\ref{rawresults}, but it
+includes:
 
 \begin{equation}\label{complete_likelihood_function}
 \frac{
@@ -195,7 +202,6 @@ p_\mathrm{Andino}^{19}\, p_\mathrm{Callinan}^{19}\, p_\mathrm{Coffin}^{8}\ldots
 \end{equation}
 
 
-
 \subsection{Bradley-Terry and pairs}
 
 Paired comparisons are particularly favourable to Bradley-Terry
@@ -203,7 +209,7 @@ because the likelihood function is exponential family and as such is
 amenable to analysis via general linear models~\citep{turner2012}.
 However, this is not applicable when more than two entities are
 compared; and indeed here we see comparisons between three surfers
-and, in the case of Jeep Surf Freshwater Pro (wct08), many more.  It
+and, in the case of Jeep Surf Freshwater Pro WCT08, many more.  It
 is natural to ask how much information is contained in the
 observations where more than two surfers are in the water.
 
@@ -234,7 +240,7 @@ Alternatively, we may view the dataset as being sufficiently
 informative to reveal actual differences in surfing ability.  Observe
 that the competitors' points (that is, the final column of
 table~\ref{resultstable}) cannot be used for this type of
-probabalistic analysis: the points awarded are arbitrary and changing
+probabilistic analysis: the points awarded are arbitrary and changing
 the points system would change the points scored but not affect the
 competitors' behaviour.
 
@@ -266,8 +272,8 @@ $0.031$.
 
 In surfing lore, the ``Brazilian storm'' refers to the emergence of
 Brazil as a dominant nation of elite surfers.  The term was first used
-to describe the fact that six out of eight querterfinalists at the 2011 Nike
-Lowers Pro were Brazilian; it rose in public conciousness following
+to describe the fact that six out of eight quarterfinalists at the 2011 Nike
+Lowers Pro were Brazilian; it rose in public consciousness following
 the victories of Medina and de Souza in the World Surf League
 championships in 2014 and 2015 respectively.  The storm shows no signs
 of abating, with commentators such as Douglas opining that this
@@ -278,7 +284,7 @@ Here, we study two aspects of this sporting phenomenon: the suggested
 Brazilian preference for beach break and point break wave types; and the
 noncompetitive effect of compatriot rivalry.
 
-\subsection{Brazilian wave type prefereneces}
+\subsection{Brazilian wave type preferences}
 
 The statistical method described here can test many different
 hypotheses inspired by surfing lore.  For example, one frequent
@@ -299,7 +305,7 @@ possible interaction with the compatriot issue discussed in
 section~\ref{compatriot}.  The null would be that this reified entity
 has zero strength.  We fail to reject this null (differential support
 = 0.035; $p=0.79$) and conclude that there is no evidence to suggest
-that Brazilians' performce is better on their preferred wave types
+that Brazilians' performance is better on their preferred wave types
 than one would expect by chance.  We may go further using the method
 of support: not only is the maximum likelihood estimate for Brazilian
 wavetype very small (about 0.002), but in addition we may reject the
@@ -324,7 +330,7 @@ water of whom two are of one nationality and the third of another, we
 would expect the compatriots to adopt a style calculated to beat their
 countryman, possibly at the expense of performance relative to the odd
 man out.  Such hypotheses are difficult to test with conventional
-techniques as competitors's strengths themselves are nuisance
+techniques as the competitors' strengths themselves are nuisance
 parameters~\citep{basu1977}.
 
 Consider, as an example, the case of Smith, Buchan, Freestone who were
@@ -370,7 +376,7 @@ statistics we considered.
 
 \section{Conclusions and further work}
 
-We analysed results from the 2018 World Surf League using reified
+We analysed results from the 2019 World Surf League using reified
 Bradley-Terry likelihoods to assess a number of hypotheses of interest
 to the surfing community.  Reified Bradley-Terry allows the use of
 formal statistical methods in ways that analysing points scored does
@@ -397,37 +403,51 @@ infringements between compatriots.
 \clearpage
 \newpage
 
-\section*{Tables}
 
 \begin{table}[h]
 \begin{tabular}{llllllllllllll}
-competitor  & nationality&wct01  &wct02  &wct03  & \ldots &wct09&wct10&wct11&points\\ \hline
+competitor  & nationality&WCT01  &WCT02  &WCT03  & \ldots &WCT09&WCT10&WCT11&points\\ \hline
  Ferreira   &   BRA      &   1   &   5   &   17  & \ldots      &  2   &   1   &   1   &   59740\\
  Medina     &   BRA      &   5   &   5   &   17  & \ldots      &  9   &   9   &   2   &   56475\\
  Smith 	    &   ZAF      &   3   &   3   &   17  & \ldots      &  9   &   2   &   17  &   49985\\
  Toledo     &   BRA      &   9   &   2   &   5   & \ldots      &  17  &   5   &   17  &   49145\\
- Andino     &   USA      &   2   &   17  &   5   & \dots       &  5   &   5   &   9   &   46655
+ Andino     &   USA      &   2   &   17  &   5   & \dots       &  5   &   5   &   9   &   46655\\
+ $\ldots$   &            &   &   &       &       & \dots       &      &       &       &
 \end{tabular}
-\caption{WCT tour results, conventional league table\label{resultstable}}
+\caption{Conventional league table for the top five competitors in WCT
+  2019 tour. \label{resultstable} Thus at WCT01 (Coolangatta, QLD) we see
+  Ferreira coming first, Andino second and Smith third}
 \end{table}
+
+\clearpage
+\newpage
+
 
 \begin{table}[h]
 \begin{verbatim}
-wct01 Colapinto Bailey Wright
-wct01 Freestone Lau Smith
-wct01 Dora Ferreira Slater
-wct01 Duru Toledo Ibelli
-wct01 Moniz Heazlewood Wilson
+WCT01 Colapinto Bailey Wright
+WCT01 Freestone Lau Smith
+WCT01 Dora Ferreira Slater
+WCT01 Duru Toledo Ibelli
+WCT01 Moniz Heazlewood Wilson
 ...
-wct11 Medina Florence
-wct11 Colapinto Bourez
-wct11 Ferreira Slater
-wct11 Medina Colapinto
-wct11 Ferreira Medina
+WCT11 Medina Florence
+WCT11 Colapinto Bourez
+WCT11 Ferreira Slater
+WCT11 Medina Colapinto
+WCT11 Ferreira Medina
 \end{verbatim}
 \caption{Extract from observations: raw results\label{rawresults} from
-  WCT 2018}
+  WCT 2019.  Thus the first heat at WCT01 (Coolangatta, QLD) shows
+  competitors Colapinto, Bailey, and Wright in the water at the same
+  time, the competition order being
+  $\mbox{Colapinto}\succ\mbox{Bailey}\succ\mbox{Wright}$; as discussed
+  in the text we use only the competition order for our likelihood
+  function}
 \end{table}
+
+\clearpage
+\newpage
 
 \begin{table}[h]
 \begin{tabular}{l|l}
@@ -451,7 +471,6 @@ $q\succ p_2\succ p_1 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_1+p_2}$\
 
 \clearpage
 \newpage
-\section*{Figures}
 
 \begin{figure}[h]
 \includegraphics[width=4in]{showsurfingmaxppie.pdf} % Pie chart of strengths
@@ -459,11 +478,17 @@ $q\succ p_2\succ p_1 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_1+p_2}$\
 dominance of Ferreira, Florence, and Medina}
 \end{figure}
 
+\clearpage
+\newpage
+
 \begin{figure}[h]
 \includegraphics[width=4in]{directlogplotofstrengths.pdf}
-\caption{Scatterplot of points scored  \label{compare_likelihood_points} 
+\caption{Scatterplot of points scored  \label{compare_likelihood_points}
 against maximum likelihood estimates}
 \end{figure}
+
+\clearpage
+\newpage
 
 \begin{figure}[h]
 \includegraphics[width=4in]{ordertransplotplot.pdf}
@@ -471,6 +496,9 @@ against maximum likelihood estimates}
 against likelihood-based ranking.  Note the anomalous position of
 Florence}
 \end{figure}
+
+\clearpage
+\newpage
 
 \begin{figure}[h]
   \includegraphics[width=4in]{plotwidep.pdf}
@@ -481,5 +509,3 @@ Florence}
 \end{figure}
 
 \end{document}
-
-
