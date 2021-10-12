@@ -85,10 +85,110 @@ would rather have Beethoven.
 THERE IS ALSO THE THING WITH THE HOLIDAY IN CALIFORNIA AND THE HOLIDAY
 IN FLORIDA AND THE HOLIDAY IN FLORIDA PLUS TEN BUCKS
 
+```
+a,b,c in a race; a and b have an advantage S
 
-```{r loadlib}
-library("hyper2")
-2+4
+finishing order a>b>c:   L = (a+S)/(a+b+c+2S) * (b+S)/(b+c+ S)
+finishing order a>c>b:   L = (a+S)/(a+b+c+2S) * (c  )/(a+b+2S)
+finishing order c>a>b:   L = (c  )/(a+b+c+2S) * (a+S)/(a+b+2S)
+
+
+a,b,c,d in teams {a,b} and {c,d}
+
+
+{a+b} wins, a and c have S:       (a+b+S)/(a+b+c+d+2S)
+{a+b} wins, c and d have S:       (a+b)/(a+b+c+d+2S)
+{a+b} wins, a and b have S:       (a+b+2S)/(a+b+c+d+2S)
+{a+b} wins, a and b and c have S:  (a+b+2S)/(a+b+c+d+3S)
+
+
+
+Car, red bus blue bus:
+
+C  wins:  2C/(2C+RB+BB)
+RB wins:  RB/(2C+RB+BB)
+BB wins:  BB/(2C+RB+BB)
+
+[NB if red and blue are really equivalent, then RB=BB=B, say and we have
+
+C wins:  C/(C+B)
+RB wins: B/(2C+2B) = 0.5*B/(C+B)
+BB wins: B/(2C+2B) = 0.5*B/(C+B)
+
+
+holidays:  Florida, California, California plus a nickel:
+
+
+
+{F,C}       :  (F,C)/(F+C)  # nickel ignored in likelihood function
+{F,CN}      :  (F,C)/(F+C)  # nickel ignored in likelihood function
+{FN,C}      :  (F,C)/(F+C)  # nickel ignored in likelihood function
+{FN,CN}     :  (F,C)/(F+C)  # nickel ignored in likelihood function
+
+{F,FN}      :  (F,F+N)/(2F+N)
+{C,CN}      :  (C,C+N)/(2C+N)
+
+{F,C,CN}    :  (F,C,C+N)/(F+2C+N)   # FN missing
+{F,FN,C}    :  (F,F+N,C)/(2F+C+N)   # CN missing
+
+{FN,C,CN}   :  (F,C,C+N)/(F+2C+N)   # F missing
+{F,FN,CN}   :  (F,F+N,C)/(2F+C+N)   # C missing
+
+{F,FN,C,CN} :  (F,F+N,C,C+N)/(2F+2C+2N)  ??????????????
+
+Last line (viz {F,FN,C,CN} is problematic.  Suppose that N is actually
+important [as in, eg {F,FN} and N=0.999] but also N is immaterial when
+comparing Florida with California.  This is a perfectly reasonable
+scenario.  Then in the last line we have pretty much 50-50 probability
+between {F+N,C+N}.  But this is not consistent with {F,C} which shows
+that the chooser is not indifferent between Florida and California.
+He might be 75% Florida and 25% California; and if this is the case we
+should have {F,C} = (0.75,0.25) and {FN,CN}= (0.75,0.25) [because the
+Nickel is immaterial when comparing F and C].  So what we need is for
+{F,F+N,C,C+N} and N=0.999 to reduce to {F+N,C+N} which itself should
+reduce to {F,C}.  And the last line above has {F,FN,C,CN} =
+(0,0.5,0,0.5) which is effectively stating that he is indifferent
+between Florida and California, or at least they have equal BT
+strength.  This probability model is flawed because the only effect of
+the nickel in {F,FN,C,CN} should be to reduce the probability of F and
+C and {FN,CN} should be (F,C).
+
+
+The correct probability model is to use a two-stage process as
+follows:
+
+{F,FN,FC,CN}  :  p(F)  = F/(F+C) * F/(F+N)
+              :  p(FN) = F/(F+C) * N/(F+N) 
+              :  p(C)  = C/(F+C) * C/(C+N) 
+              :  p(CN) = C/(F+C) * N/(C+N)
+
+
+Then
+
+{F,C,CN}    :  p(F)  = F/(F+C)
+            :  p(C)  = C/(F+C) * C/(C+N)
+            :  p(CN) = C/(F+C) * N/(C+N)
+
+etc.
+
+
+Try this approach with red bus blue bus:
+
+
+L = L(C,B,red,blue)
+
+{C,RB}    : p(C)  = C/(C+B)
+{C,RB}    : p(RB) = B/(C+B)
+
+{C,BB}    : p(C)  = C/(C+B)
+{C,BB}    : p(BB) = B/(C+B)  # (same as above)
+
+{RB,BB}   : p(RB) =  red/(red+blue)
+          : p(BB) = blue/(red+blue)
+
+{C,RB,BB} :  p(C)  = C/(C+B) 
+{C,RB,BB} :  p(RB) = B/(C+B) * red/(red+blue)
+{C,RB,BB} :  p(BB) = B/(C+B) * blue/(red+blue)
 ```
 
 
