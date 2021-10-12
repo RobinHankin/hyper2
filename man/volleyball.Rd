@@ -51,7 +51,7 @@ resides in the \code{data/} directory.
   Robin K. S. Hankin (2010).
   \dQuote{A Generalization of the Dirichlet Distribution},
   \emph{Journal of Statistical Software}, 33(11), 1-18,
-  \url{https://www.jstatsoft.org/v33/i11/}
+  \doi{10.18637/jss.v033.i11}
 }
 \examples{
 

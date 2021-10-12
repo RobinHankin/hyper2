@@ -27,7 +27,7 @@ Maintainer: \packageMaintainer{hyper2}
     \item 
     R. K. S. Hankin (2010). \dQuote{A Generalization of the Dirichlet Distribution},
     \emph{Journal of Statistical Software}, 33(11), 1-18,
-    \url{https://www.jstatsoft.org/v33/i11/}
+    \doi{10.18637/jss.v033.i11}
     \item R. K. S. Hankin 2017. \dQuote{Partial Rank Data with the hyper2
       Package: Likelihood Functions for Generalized Bradley-Terry Models}.
     \emph{The R Journal} 9:2, pages 429-439.
