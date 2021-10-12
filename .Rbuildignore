@@ -3,6 +3,7 @@
 ^README.Rmd$
 ^\.travis.yml$
 .gitignore
+.Rbuildignore
 CITATION.cff
 ^inst/counterstrike_cache$
 ^inst/counterstrike_files$
