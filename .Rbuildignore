@@ -67,6 +67,7 @@ CITATION.cff
 ^inst/counterstrike.R$
 ^inst/counterstrike_random.R$
 ^inst/counterstrike.Rmd$
+^inst/counterstrike.bib$
 ^inst/curacao1962_candidates.txt$
 ^inst/curacao1962_individual_games.R$
 ^inst/curacao1962_threeplayers.R$
