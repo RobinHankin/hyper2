@@ -90,8 +90,8 @@ is obsolete in the name paradigm.
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{ordertable}}}
 \examples{
-data(formula1)
-ordertable2supp(F1_table_2017)
+ordertable2supp(soling_table)
+
 
 a1 <- c(a=2,b=3,c=1,d=5,e=4) # a: 2nd, b: 3rd, c: 1st, d: 5th, e: 4th
 a2 <- c(a=1,b=0,c=0,d=2,e=3) # a: 2nd, b: DNF, c: DNF, d: 2nd, e: 3rd

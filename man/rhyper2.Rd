@@ -25,7 +25,7 @@ rhyper2(n = 8, s = 5, pairs = TRUE, teams = TRUE, race = TRUE, pnames)
 \seealso{\code{\link{rp}}}
 \examples{
 
-dotchart(maxp(rhyper2(n=8,s=10)))
-pie(maxp(rhyper2(n=4,pairs=TRUE,teams=TRUE,race=TRUE)))
+rhyper2()
+rp(2,icons)
 
 }

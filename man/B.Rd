@@ -107,8 +107,13 @@ data(chess)
 mean_hyper2(chess,tol=0.1)
 maxp(chess)
 
-# disallowed argument typically means slow run times; use high tol for speed
-probability(chess,disallowed=function(p){p[1]>p[2]},tol=0.1)
-probability(chess,disallowed=function(p){p[1]<p[2]},tol=0.1)
+# Using the 'disallowed' argument typically results in slow run times;
+# use high tol for speed:
+
+probability(chess,disallowed=function(p){p[1]>p[2]},tol=0.5)
+probability(chess,disallowed=function(p){p[1]<p[2]},tol=0.5)
+
+# Above should sum to 1 [they are exclusive and exhaustive events]
+
 
 }

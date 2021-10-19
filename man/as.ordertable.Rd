@@ -25,6 +25,6 @@ returns a \code{hyper2} object directly.
 \examples{
 
 as.ordertable(F1_table_2017)
-pie(maxp(ordertable2supp(as.ordertable(F1_table_2017[1:9,]))))
+ordertable2supp(as.ordertable(F1_table_2017[1:9,]))
 
 }
