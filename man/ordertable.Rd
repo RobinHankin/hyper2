@@ -28,8 +28,8 @@ dataset is also included in the \code{inst/} directory as file
 \code{pentathlon.txt}; use idiom like
 \code{read.table("inst/pentathlon.txt")} to load the order table.
 
-Object \code{pentathlon_table} is a representative example of
-ordertabless.  Each row is a competitor, each column an event (venue,
+Object \code{pentathlon_table} is a representative example of an
+ordertable.  Each row is a competitor, each column an event (venue,
 judge, \ldots).  The first row shows Moiseev's ranking in shooting
 (5th), fencing (1st), and so on.  The first column shows the ranks of
 the competitors in shooting.  Thus Moiseev came fifth, Zadneprovskis

@@ -18,7 +18,7 @@ pair_grid(a,b)
 }
 \details{
 Function \code{pair_grid(a,b)} returns a matrix with each column of
-\code{a} \code{cbind()}-ed to each colum of \code{b}.
+\code{a} \code{cbind()}-ed to each column of \code{b}.
 
 Function \code{mult_grid()} takes a list of matrices; it is designed for
 use by \code{ggrl()}.

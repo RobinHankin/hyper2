@@ -16,7 +16,7 @@ rrank(n = 1, p, pnames=NULL, fill = FALSE, rnames=NULL)
   \item{pnames}{Character vector (\dQuote{player names}) specifying
     names of the columns}
   \item{rnames}{Character vector (\dQuote{row names} or \dQuote{race
-      names}) specifying names of the rows}mv
+      names}) specifying names of the rows}
   \item{fill}{Boolean, with default \code{FALSE} meaning to interpret
     the elements of \code{p} as strengths, notionally summing to one;
     and \code{TRUE} meaning to augment \code{p} with a fillup value}

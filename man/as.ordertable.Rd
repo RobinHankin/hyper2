@@ -14,7 +14,7 @@ returns a \code{hyper2} object directly.
 \usage{as.ordertable(w)}
 \arguments{\item{w}{A generalized ordertable, a wikitable}}
 \details{
-  Operates columnwise, and treats any entry not coercable to numeric as
+  Operates columnwise, and treats any entry not coercible to numeric as
   DNF.
 }
 \value{

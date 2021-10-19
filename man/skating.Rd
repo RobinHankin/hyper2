@@ -53,7 +53,7 @@ rL[] <- seq_along(rL)
 rO <- seq_len(nrow(skating_table))
 names(rO) <- rownames(skating_table)
 ordertransplot(rO,rL,
-   xlab="offical rank",ylab="likelihood rank",
+   xlab="official rank",ylab="likelihood rank",
    main="Ladies free skating, 2002 Winter Olympics")
 
 }

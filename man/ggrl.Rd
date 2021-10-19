@@ -36,7 +36,7 @@ race(v)
     row corresponding to a race (or judge).  The columns
     correspond to the finishing order; thus \code{a=M[i,j]} means that
     competitor \code{a} finished in place \code{j} in race \code{i}}
-  \item{times}{Vector specifiying the number of times each row is
+  \item{times}{Vector specifying the number of times each row is
     observed}
   \item{v}{A character vector specifying ranks.  Thus
   \code{c("b","c","a")} means that \code{b} came first, \code{c} second,
@@ -73,7 +73,7 @@ race(v)
 
   Function \code{rank_likelihood()} takes a matrix \code{M} with rows
   corresponding to a judge (or race); column names are interpreted as
-  competitor names.  qA named vector is coerced to a one-row matrix.
+  competitor names.  A named vector is coerced to a one-row matrix.
   Each row of \code{M} is an order statistic: thus \code{c(3,4,2,1)}
   means that person 3 came first, person 4 came second, person 2 came
   third and person 1 came last.  Note that in data frames like

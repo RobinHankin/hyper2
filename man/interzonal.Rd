@@ -12,7 +12,7 @@
 \docType{data}
 \title{1963 World Chess Championships}
 \description{
-Likelihood functions for players' strengths in the fith Interzonal
+Likelihood functions for players' strengths in the fifth Interzonal
 tournament which occurred as part of the 1963 Chess world Championships
 in Stockholm, 1962.
 }

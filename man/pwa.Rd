@@ -30,7 +30,7 @@ as a reified entity.
 \details{
 
 Given an object of class \code{hyper2} and a competitor \code{a}, we
-replace every occurence of \code{a} with \code{a+S}, with \code{S}
+replace every occurrence of \code{a} with \code{a+S}, with \code{S}
 representing the extra strength conferred.
 
 However, the function also takes a vector of competitors.  If there is

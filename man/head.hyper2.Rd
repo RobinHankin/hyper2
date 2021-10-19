@@ -5,7 +5,7 @@
 \usage{\method{head}{hyper2}(x, ...)}
 \arguments{
   \item{x}{Object of class \code{hyper2}}
-  \item{\dots}{Further argments, passed to \code{head()}}
+  \item{\dots}{Further arguments, passed to \code{head()}}
 }
 \details{Function is  \code{x[head(brackets(x), ...)]}}
 \value{Returns a \code{hyper2} object}
