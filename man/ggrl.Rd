@@ -110,13 +110,13 @@ colnames(r1) <- letters[1:7]
 W <- rank_likelihood(r1)
 
 H <- hyper2()
-for(i in 1:10){
-  H <- H + race(sample(letters[1:9],sample(6,1),replace=FALSE))
+for(i in 1:20){
+  H <- H + race(sample(letters[1:5],sample(3,1),replace=FALSE))
 }
 equalp.test(H) # should not be significant (null is true)
 
-H <- hyper2(pnames=letters[1:5])
-H2 <- choose_losers(H,letters[1:4],letters[1:2])   # {a,b} vs {c,d}; {a,b} lost
+H1 <- hyper2(pnames=letters[1:5])
+H2 <- choose_losers(H1,letters[1:4],letters[1:2])   # {a,b} vs {c,d}; {a,b} lost
 maxplist(H2,control=list(maxit=1))  # control set to save time
 
 }
