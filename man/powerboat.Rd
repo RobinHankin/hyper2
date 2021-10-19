@@ -47,10 +47,8 @@ Championship. In \emph{Wikipedia, The Free Encyclopedia}.  Retrieved
 }
 \seealso{\code{\link{ordertable2supp}}}
 \examples{
-data(powerboat)
-jj <-
-  read.table(system.file("powerboat.txt",package="hyper2"))
-identical(jj,powerboat_table)  # should be TRUE
+pie(powerboat_maxp)
+
 }
 
 
