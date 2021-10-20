@@ -52,7 +52,14 @@ suitable form; for example, a matrix is interpreted as rows of brackets.
 
 Functions \code{pnames()} and \code{pnames<-()} are the accessor and
 setter methods for the player names.  Length-zero character strings are
-acceptable.
+acceptable player names.  The setter method \code{pnames<-()} can be
+confusing.  Idiom such as \code{pnames(H) <- value} does not change the
+likelihood function of \code{H} (except possibly its domain).  When
+called, it changes the \code{pnames} internal vector, and will throw an
+error if any element of \code{c(brackets(H))} is not present in
+\code{value}.  It has two uses: firstly, to add players who do not
+appear in the brackets; and secondly to rearrange the \code{pnames}
+vector (the canonical use-case is \code{pnames(H) <- rev(pnames(H))}).
 
 Function \code{is_valid_hyper2()} tests for valid input, returning a
 Boolean.  This function returns an error if a bracket contains a
@@ -67,7 +74,6 @@ nonnegative vector \eqn{p=\left(p_1,\ldots,p_n\right)}{p=(p_1,...,p_n)}
 where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.
 
 }
-\note{The empty string is a perfectly valid name}
 \author{Robin K. S. Hankin}
 \seealso{
   \code{\link{Ops.hyper2}},
