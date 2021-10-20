@@ -60,6 +60,8 @@ error if any element of \code{c(brackets(H))} is not present in
 \code{value}.  It has two uses: firstly, to add players who do not
 appear in the brackets; and secondly to rearrange the \code{pnames}
 vector (the canonical use-case is \code{pnames(H) <- rev(pnames(H))}).
+If you want to change the player names, use \code{psubs()} to substitute
+players for other players.
 
 Function \code{is_valid_hyper2()} tests for valid input, returning a
 Boolean.  This function returns an error if a bracket contains a
@@ -80,6 +82,7 @@ where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.
   \code{\link{Extract.hyper2}},
   \code{\link{loglik}},
   \code{\link{hyper2-package}}
+  \code{\link{change}}
 }
 \examples{
 o <- hyper2(list("a","b","c",c("a","b"),letters[1:3]),1:5) 
