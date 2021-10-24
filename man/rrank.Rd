@@ -103,9 +103,12 @@ ptrue <- (4:1)/10
 names(ptrue) <- letters[1:4]
 rrank(10,p=ptrue)
 
-H <- rank_likelihood(rrank(10,p=ptrue))
+H <- rank_likelihood(rrank(40,p=ptrue))
 mH <- maxp(H)   # should be close to ptrue
 
-H <- H + rank_likelihood(rrank(20,mH)) # run some more races
-maxp(H)
+## Following code commented out because it takes too long:
+# H <- H + rank_likelihood(rrank(30,mH)) # run some more races
+# maxp(H)
+
+
 }

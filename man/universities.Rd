@@ -25,7 +25,11 @@ resides in the \code{data/} directory.
 \seealso{\code{\link{ordertable}}}
 \examples{
 
-pie(maxp(universities))
+summary(universities)
+
+psubs(universities,c("AUT","UoA"),c("University of Auckland","Auckland University of Technology"))
+
+pie(universities_maxp)
 
 }
 

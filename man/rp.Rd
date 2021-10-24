@@ -40,6 +40,5 @@ rp(n, H, startp = NULL, fcm = NULL, fcv = NULL, SMALL = 1e-06, l=loglik,...)
 \examples{
 rp(10,icons)
 
-plot(loglik(indep(rp(100,icons)),icons))
-
+plot(loglik(rp(30,icons),icons),type='b')
 }
