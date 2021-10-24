@@ -82,7 +82,7 @@ where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.
   \code{\link{Extract.hyper2}},
   \code{\link{loglik}},
   \code{\link{hyper2-package}}
-  \code{\link{change}}
+  \code{\link{psubs}}
 }
 \examples{
 o <- hyper2(list("a","b","c",c("a","b"),letters[1:3]),1:5) 
