@@ -17,6 +17,7 @@ setGeneric("powers<-",function(x,value){standardGeneric("powers<-")})
 setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
 `brackets` <- function(H){UseMethod("brackets")}
 `powers`   <- function(H){UseMethod("powers"  )}
+`powers<-` <- function(H,value){UseMethod("powers<-")}
 `pnames`   <- function(H){UseMethod("pnames"  )}
 `brackets.hyper2` <- function(H){disord(H$brackets,h=hashcal(H))}
 
@@ -29,15 +30,9 @@ setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
   return(disord(out,h=hashcal(H)))
 }
 
-`powers<-.hyper2` <- function(x,value){
-  jj <- powers(x)
-  if(is.disord(value)){
-    stopifnot(consistent(brackets(x),value))
-    jj <- value
-  } else {
-    jj[] <- value  # the meat
-  }
-  hyper2(brackets(x),jj)
+`powers<-.hyper2` <- function(H,value){
+    stopifnot(consistent(powers(H),value))
+    hyper2(elements(brackets(H)),elements(value))
 }
 
 `pnames.hyper2` <- function(H){ H$pnames }

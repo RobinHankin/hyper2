@@ -27,6 +27,7 @@ export(pnames)
   
 S3method(brackets,hyper2)
 S3method(powers,hyper2)
+S3method("powers<-",hyper2)
 S3method(pnames,hyper2)
 S3method(pnames,suplist)
 S3method("pnames<-",hyper2)
