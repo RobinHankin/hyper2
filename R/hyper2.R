@@ -18,7 +18,7 @@ setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
 `brackets` <- function(H){UseMethod("brackets")}
 `powers`   <- function(H){UseMethod("powers"  )}
 `pnames`   <- function(H){UseMethod("pnames"  )}
-`brackets.hyper2` <- function(H){disord(H$brackets)}
+`brackets.hyper2` <- function(H){disord(H$brackets,h=hashcal(H))}
 
 `powers.hyper2` <- function(H){
   if(is_constant(H)){
@@ -26,7 +26,7 @@ setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
   } else {
     out <- H$powers
   }
-  return(disord(out))
+  return(disord(out,h=hashcal(H)))
 }
 
 `powers<-.hyper2` <- function(x,value){

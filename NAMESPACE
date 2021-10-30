@@ -11,6 +11,7 @@ importFrom("cubature", "adaptIntegrate")
 importFrom("graphics", "abline", "par", "text","points")
 
 importFrom("disordR","disord")
+importFrom("disordR","hashcal")
 importFrom("disordR","consistent")
 importFrom("disordR","elements")
 importFrom("disordR","is.disord")
