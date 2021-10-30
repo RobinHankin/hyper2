@@ -188,9 +188,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `hyper2_prod` <- function(H,n){
-  stopifnot(is.numeric(n))
-  stopifnot(length(n)==1)
-  return(hyper2(brackets(H),powers(H)*n,pnames=pnames(H)))
+    powers(H) <- powers(H)*n
+    return(H)
 }
 
 `Ops.hyper2` <-

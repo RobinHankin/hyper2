@@ -15,7 +15,7 @@
   Specifically, \code{H1 + H2} implements addition of two log-likelihood
   functions, corresponding to incorporation of additional independent
   observational data; and \code{n*H1} implements \code{H1+H1+...+H1},
-  corresponding to repeated observations of the same data.
+  corresponding to repeated independent observations of the same data.
 
   There are no unary operations for this class.
 
