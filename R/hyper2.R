@@ -95,6 +95,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
   
 `print.hyper2` <- function(x,...){
+  if(!isFALSE(getOption("give_warning_on_nonzero_power_sum"))){
+      if(sum(powers(x)) !=0){
+          warning("powers have nonzero sum")
+      }
+  }
   b <- elements(brackets(x))
   powers <- elements(powers(x))
   if(length(b)==0){  # not is.null(b)
