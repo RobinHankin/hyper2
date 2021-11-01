@@ -1,0 +1,102 @@
+---
+title: "Analysis of puddings following Davidson 1970"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+library("PlackettLuce")
+options("digits" = 5)
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+This short document creates the `pudding` suite of R objects and
+presents some preliminary analysis.  It follows Davidson 1970 and the
+`PlackettLuce` package.
+
+Here is the pudding result:
+
+```{r}
+pudding
+```
+
+Here is a method to convert the pudding matrix to a likelihood function:
+
+
+```{r}
+
+    numbers <- as.character(1:6)
+    puddings <- paste("pudding",numbers,sep="_")
+    tyers    <- paste("tie",numbers,sep="_")
+
+
+
+`convert` <- function(M){
+
+    H <- hyper2()
+    I <- hyper2()
+    for(i in seq_len(nrow(M))){
+        r_ij <- M[i,3]
+        w_ij <- M[i,4]
+        w_ji <- M[i,5]
+        t_ij <- M[i,6]
+        H[c(puddings[c(M[i,1]       )]      )] %<>% inc(w_ij)
+        H[c(puddings[c(       M[i,2])]      )] %<>% inc(w_ji)
+        H[c(                           "tie")] %<>% inc(t_ij) 
+        H[c(puddings[c(M[i,1],M[i,2])],"tie")] %<>% dec(r_ij)
+        
+        I[c(puddings[c(M[i,1]       )]      )] %<>% inc(w_ij)
+        I[c(puddings[c(       M[i,2])]      )] %<>% inc(w_ji)
+        I[c(tyers   [c(M[i,1],M[i,2])]      )] %<>% inc(t_ij)
+        I[c(puddings[c(M[i,1],M[i,2])],tyers[c(M[i,1],M[i,2])])] %<>% dec(r_ij)    
+    }
+
+    return(list(H,I))
+}
+```
+
+
+Now use it:
+
+
+```{r calculatelikelihoodfunctionsandmaximize,cache=TRUE}
+lf <- convert(pudding)
+H1 <- lf[[1]]
+H2 <- lf[[2]]
+m1 <- maxp(H1)
+m2 <- maxp(H2)
+```
+
+
+```{r}
+m1
+m2
+```
+
+We will analyse `m1` first:
+
+```{r}
+pie(m1)
+```
+
+First we use `H1` to test a null of equal pudding strengths:
+
+```{r,m1test}
+samep.test(H1,puddings)
+```
+
+so according to `samep.test()` the puddings are all the same strength.
+Now some tests where the puddings' tying ability is allowed to vary:
+
+```{r,m2test,cache=TRUE}
+samep.test(H2,puddings)
+samep.test(H2,tyers)
+```
+

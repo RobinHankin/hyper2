@@ -186,3 +186,4 @@ CITATION.cff
 ^inst/wikipedia.txt$
 ^inst/zurich1953_candidates.txt$
 ^inst/dg_template.tex
+^inst/pudding.Rmd
