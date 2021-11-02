@@ -1,5 +1,5 @@
 ---
-title: "Analysis of puddings following Davidson 1970"
+title: "Analysis of pudding following Davidson 1970"
 output: bookdown::html_document2
 ---
 
@@ -9,13 +9,13 @@ knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 library("magrittr")
 library("PlackettLuce")
+library("partitions")
 options("digits" = 5)
 ```
 
 <p style="text-align: right;">
 ![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
 </p>
-
 
 This short document creates the `pudding` suite of R objects and
 presents some preliminary analysis.  It follows Davidson 1970 and the
@@ -24,24 +24,24 @@ presents some preliminary analysis.  It follows Davidson 1970 and the
 Here is the pudding result:
 
 ```{r}
-pudding
+pudding_table <- pudding  # standard hyper2 terminology
+pudding_table
 ```
 
 Here is a method to convert the pudding matrix to a likelihood function:
 
 
-```{r}
+```{r,cache=TRUE}
 
     numbers <- as.character(1:6)
     puddings <- paste("pudding",numbers,sep="_")
     tyers    <- paste("tie",numbers,sep="_")
 
-
-
 `convert` <- function(M){
 
     H <- hyper2()
     I <- hyper2()
+    J <- hyper2()
     for(i in seq_len(nrow(M))){
         r_ij <- M[i,3]
         w_ij <- M[i,4]
@@ -56,47 +56,199 @@ Here is a method to convert the pudding matrix to a likelihood function:
         I[c(puddings[c(       M[i,2])]      )] %<>% inc(w_ji)
         I[c(tyers   [c(M[i,1],M[i,2])]      )] %<>% inc(t_ij)
         I[c(puddings[c(M[i,1],M[i,2])],tyers[c(M[i,1],M[i,2])])] %<>% dec(r_ij)    
+
+        J[c(puddings[c(M[i,1]       )],"first")] %<>% inc(w_ij)
+        J[c(puddings[c(       M[i,2])]        )] %<>% inc(w_ji)
+        J[c(tyers   [c(M[i,1],M[i,2])]        )] %<>% inc(t_ij)
+        J[c(puddings[c(M[i,1],M[i,2])],tyers[c(M[i,1],M[i,2])],"first")] %<>% dec(r_ij)
     }
 
-    return(list(H,I))
+    return(list(H,I,J))
 }
 ```
-
 
 Now use it:
 
 
 ```{r calculatelikelihoodfunctionsandmaximize,cache=TRUE}
-lf <- convert(pudding)
-H1 <- lf[[1]]
-H2 <- lf[[2]]
-m1 <- maxp(H1)
-m2 <- maxp(H2)
+lf <- convert(pudding_table)
+pudding <- lf[[1]] # standard hyper2 terminology
+pudding2 <- lf[[2]]
+pudding3 <- lf[[3]]
+pudding_maxp  <- maxp(pudding)
+pudding2_maxp <- maxp(pudding2)
+pudding3_maxp <- maxp(pudding3)
 ```
-
 
 ```{r}
-m1
-m2
+pudding_maxp
+pudding2_maxp
+pudding3_maxp
 ```
 
-We will analyse `m1` first:
+# Pudding 1
+
+We will analyse `pudding` first:
 
 ```{r}
-pie(m1)
+summary(pudding)
+pie(pudding_maxp)
 ```
 
-First we use `H1` to test a null of equal pudding strengths:
+First we use `pudding` to test a null of equal pudding strengths:
 
-```{r,m1test}
-samep.test(H1,puddings)
+```{r,puddingtest,cache=TRUE}
+samep.test(pudding,puddings)
 ```
 
 so according to `samep.test()` the puddings are all the same strength.
-Now some tests where the puddings' tying ability is allowed to vary:
+
+# Pudding 2
+
+Object `pudding2` includes a pudding-specific propensity to tie.  We
+can test different nulls:
 
 ```{r,m2test,cache=TRUE}
-samep.test(H2,puddings)
-samep.test(H2,tyers)
+samep.test(pudding2,puddings)
+samep.test(pudding2,tyers)
 ```
 
+# Pudding 3
+
+Object `pudding3` includes a first-mover advantage:
+
+```{r}
+summary(pudding3)
+pudding3_maxp
+```
+
+
+
+# Davidson's analysis 
+
+Davidson (1970) considers the following probability model:
+
+\[
+\operatorname{Prob}(i\succ j) = \frac{\pi_i}{\pi_i+\pi_j+\nu\sqrt{\pi_i\pi_j}}\\
+\operatorname{Prob}(j\succ i) = \frac{\pi_j}{\pi_i+\pi_j+\nu\sqrt{\pi_i\pi_j}}\\
+\operatorname{Prob}(i\sim  j) = \frac{\nu\sqrt{\pi_i\pi_j}}{\pi_i+\pi_j+\nu\sqrt{\pi_i\pi_j}}
+\]
+
+and gives the following estimate for the pudding data:
+
+```{r}
+davidson <- c(0.1388005,0.1729985, 0.1617420, 0.1653930, 0.1586805, 0.2023855, 0.7468147)
+names(davidson) <- c(puddings,"tie")
+davidson
+par(pty='s')
+plot(davidson[1:6],pudding_maxp[1:6]/(1-pudding_maxp[7]),asp=1,xlim=c(0.13,0.2),ylim=c(0.13,0.2),pch=16)
+abline(0,1)
+```
+
+Although the probability model is different, we may compare the
+probabilities of $i\succ j$, $j\succ i$, and $i\sim j$ for $i<j$ with
+the two models.  This gives us a total of $3{6\choose 2}=45$
+(nonindependent) probabilities and we may plot a scattergraph:
+
+```{r,davidsonvshyper2,cache=TRUE}
+ph <- pudding_maxp # ph == 'pudding hankin'; saves typing
+pd <- davidson     # pd == 'pudding davidson'
+print(ph)
+print(pd)
+th <- ph[7]        # th == 'tie hankin'
+td <- pd[7]        # td == 'tie davidson'
+hankin <- matrix(NA,15,3)
+davidson <- matrix(NA,15,3)
+m <- allbinom(6,2)
+m
+
+colnames(hankin) <- c("i","j","tie")
+colnames(davidson) <- c("i","j","tie")
+rownames(hankin) <- apply(m,2,paste,collapse="")
+rownames(davidson) <- apply(m,2,paste,collapse="")
+for(n in seq_len(15)){
+      i <- m[1,n]
+      j <- m[2,n]
+      dh <- ph[i] + ph[j] + th    # dh == 'denominator hankin'
+      hankin[n,1] <- ph[i]/dh
+      hankin[n,2] <- ph[j]/dh
+      hankin[n,3] <- th   /dh
+
+      dd <- pd[i] + pd[j] + td*sqrt(pd[i]*pd[j])  # dd == 'denominator davidson'
+      davidson[n,1] <- pd[i]/dd
+      davidson[n,2] <- pd[j]/dd
+      davidson[n,3] <- td*sqrt(pd[i]*pd[j])/dd
+}
+```
+
+```{r}
+print(hankin)
+print(davidson)
+par(pty="s")
+plot(c(t(hankin)),c(t(davidson)),col=c('red','green','blue'),pch=16,asp=1,xlim=c(0.25,0.45),ylim=c(0.25,0.45),type='b')
+	
+abline(0,1)
+```
+
+
+# Appendix: a synthetic dataset
+
+Above we see that, according to this model, there is no evidence to
+suggest that the puddings' strengths, or their tying ability, differ.
+But we can adduce a dataset for which the tying ability _does_ differ.
+Consider this:
+
+```{r, makem}
+p <- pudding_table
+p[1 ,4:6] <- c(10,10,37)  # 1v2
+p[2 ,4:6] <- c(10,10,27)  # 1v3
+p[4 ,4:6] <- c(10,10,24)  # 1v4
+p[7 ,4:6] <- c(10,10,20)  # 1v5
+p[11,4:6] <- c(10,10,31)  # 1v6
+p
+```
+
+(above, we doctor the dataset so that any comparison involving pudding
+1 has a high probability of tying).
+
+Then:
+
+```{r,tiepud,cache=TRUE}
+Hp <- convert(p)[[2]]
+mHp <- maxp(Hp)
+mHpt <- mHp[7:12]  #just the tyers
+```
+
+visualise:
+
+```{r}
+mHpt
+plot(mHpt)
+```
+
+(above we see that pudding 1 does indeed have a highing tie
+probability).  Test the null of equal tying probabilities:
+
+```{r,thptest,cache=TRUE}
+(tHp <- samep.test(Hp,tyers))
+```
+
+Further, test the null the pudding 1 has zero tying probability:
+
+```{r,thpzero,cache=TRUE}
+(tHpzero <- specificp.test(Hp,"tie_3"))
+```
+
+
+# References
+
+* R. D. Davidson 1970. "On extending the Bradley-Terry model to accommodate ties in paired comparison experiments".  _Journal of the American Statistical Association_, Volume 65, Number 329, pp317--328
+
+
+### Package dataset
+
+Following lines create `pudding.rda`, residing in the `data/` directory of the package.
+
+```{r,label=savecurlingdataset}
+save(pudding_table,pudding,pudding_maxp,curling2_maxp,file="pudding.rda")
+```
