@@ -185,8 +185,15 @@ for(n in seq_len(15)){
 print(hankin)
 print(davidson)
 par(pty="s")
-plot(c(t(hankin)),c(t(davidson)),col=c('red','green','blue'),pch=16,asp=1,xlim=c(0.25,0.45),ylim=c(0.25,0.45),type='b')
-	
+plot(c(t(hankin)),c(t(davidson)),col=c('red','green','blue'),pch=16,asp=1,xlim=c(0.25,0.45),ylim=c(0.25,0.45))
+for(i in seq_len(nrow(hankin))){
+text(hankin[i,1],davidson[i,1],rownames(hankin)[i],pos=4)
+text(hankin[i,2],davidson[i,2],rownames(hankin)[i],pos=4)
+text(hankin[i,3],davidson[i,3],rownames(hankin)[i],pos=4)
+
+segments(x0=hankin[i,1],y0=davidson[i,1], x1=hankin[i,2],y1=davidson[i,2])
+}
+
 abline(0,1)
 ```
 
