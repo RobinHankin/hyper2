@@ -11,6 +11,12 @@ library("magrittr")
 library("PlackettLuce")
 library("partitions")
 options("digits" = 5)
+showsome <- function(D){
+jj <- round(D[c(1:4,nrow(D)),],4)
+jj[4,] <- "..."
+rownames(jj)[4] <- "..."
+noquote(jj)
+}
 ```
 
 <p style="text-align: right;">
@@ -25,6 +31,7 @@ Here is the pudding result:
 
 ```{r}
 pudding_table <- pudding  # standard hyper2 terminology
+rownames(pudding_table) <- apply(allbinom(6,2),2,paste,collapse="v")
 pudding_table
 ```
 
@@ -163,7 +170,7 @@ print(pd)
   m <- allbinom(n,2)
   out <- matrix(NA,nrow=ncol(m),ncol=3)
   colnames(out) <- c("i","j","tie")
-  rownames(out) <- apply(m,2,paste,collapse="")
+  rownames(out) <- apply(m,2,paste,collapse="v")
   th <- ph[n+1]
   for(o in seq_len(ncol(m))){
       i <- m[1,o]
@@ -185,11 +192,8 @@ print(pd)
   m <- allbinom(n,2)
   out <- matrix(NA,nrow=ncol(m),ncol=3)
   colnames(out) <- c("i","j","tie")
-
-  rownames(out) <- apply(m,2,paste,collapse="")
-
+  rownames(out) <- apply(m,2,paste,collapse="v")
   nu <- pd[n+1]
-
   for(o in seq_len(ncol(m))){
       i <- m[1,o]
       j <- m[2,o]
@@ -224,17 +228,27 @@ grid()
 Now calculate likelihoods:
 
 ```{r}
-n <- pudding_table[,-(1:3),]
+n <- pudding_table[,-(1:3)]
 h <- hankin(ph)
 d <- davidson(pd)
-n
-h
-d
+showsome(n)
+showsome(h)
+showsome(d)
 sum(n*log(h))
 sum(n*log(d))
-sum(n*log(h))-sum(n*log(d))
+(suppdiff <- sum(n*log(d))-sum(n*log(h)))
 ```
 
+Above we see that Davidson's method has almost 3 units of support more
+than RBT.  However, we note that Davidson's model has seven degrees of
+freedom while RBT has only six (because of the the unit sum
+constraint).  Here Wilks's theorem is not applicable because the two
+models are not nested but even so the likelihood ratio is a meaningful
+statistic.  
+
+```{r}
+pchisq(suppdiff,df=1,lower.tail=FALSE)
+```
 
 # Appendix:  synthetic datasets
 
@@ -254,9 +268,7 @@ p
 ```
 
 (above, we doctor the dataset so that any comparison involving pudding
-1 has a high probability of tying).
-
-Then:
+1 has a high probability of tying).  Then:
 
 ```{r,tiepud,cache=TRUE}
 Hp <- convert(p)[[2]]
@@ -278,11 +290,8 @@ probability).  Test the null of equal tying probabilities:
 (tHp <- samep.test(Hp,tyers))
 ```
 
-Further, test the null the pudding 1 has zero tying probability:
-
-```{r,thpzero,cache=TRUE}
-(tHpzero <- specificp.test(Hp,"tie_3"))
-```
+Above analysis shows that we can reject the null that all puddings
+have the same tying propensity.
 
 ## Test of Davidson vs Hankin
 
@@ -293,7 +302,7 @@ model.  I will then test the hypothesis that the data is in fact drawn
 from an RBT distribution by calculating a likelihood ratio.
 
 ```{r,synthmaker}
-set.seed(2)
+set.seed(0)
 f <- function(i){rmultinom(1,50,prob=h[i,])} # f(i) = sample from row i of h
 synth <- pudding_table
 synth[,-(1:3)] <- t(sapply(1:15,f))  # random sample
@@ -317,7 +326,7 @@ ph_synth
 ```
 
 The above strengths are different from (but not too different from)
-the value obtaine from `maxp(H)` above.  Now analyse the same dataset
+the value obtained from `maxp(H)` above.  Now analyse the same dataset
 but using the method given in the `PlackettLuce` vignette:
 
 ```{r}
@@ -329,7 +338,7 @@ j_wins <- data.frame(Winner = pudding_table$j, Loser = pudding_table$i)
 R <- as.rankings(rbind(i_wins, j_wins, ties),
                  input = "orderings")
 w <- unlist(pudding_table[c("w_ij", "w_ji", "t_ij")])
-mod <- PlackettLuce(R, weights = w, npseudo = 0, maxit = 7)
+mod <- PlackettLuce(R, weights = w, npseudo = 0, maxit = 70)
 return(coef(mod,log=FALSE))
 }	
 ```
@@ -350,22 +359,88 @@ Now apply the same method to the synthetic dataset `synth`:
 Now we need to calculate the probabilities:
 
 ```{r}
-(h_synth <- hankin(ph_synth))
-(d_synth <- davidson(pd_synth))
+showsome(h_synth <- hankin(ph_synth))
+showsome(d_synth <- davidson(pd_synth))
 ```
 
 And calculate a likelihood ratio for the two hypotheses, RBT and
 Davidson:
 
 ```{r}
-(n <- synth[,-(1:3),])
-(lh_synth <- sum(n*log(h_synth)))
-(ld_synth <- sum(n*log(d_synth)))
+showsome(n <- synth[,-(1:3),])
+(lh_synth <- sum(n*log(h_synth)))  # Hankin; RBT
+(ld_synth <- sum(n*log(d_synth)))  # Davidson
 lh_synth - ld_synth
 ```
 
 So reified Bradley-Terry is better than Davidson, but (in this case at
-least) not by much.
+least) not by much.  The difference is small because the puddings have
+very similar strengths.  We can repeat the analysis but with puddings
+of different strengths:
+
+```{r}
+dpudstrengths <- c(zipf(6)*0.9,tie=0.1)  # different pudding strengths
+names(dpudstrengths) <- c(puddings,"tie")
+dpudstrengths
+```
+
+Above we see that `pudding_1` is six times stronger than `pudding_6`
+in accordance with Zipf's law.  Same analysis as before:
+
+```{r}
+showsome(h2 <- hankin(dpudstrengths))
+f <- function(i){rmultinom(1,50,prob=h2[i,])} 
+synth2 <- pudding_table
+synth2[,-(1:3)] <- t(sapply(1:15,f))  # random sample
+synth2[,3] <- 50
+rownames(synth2) <- rownames(p)
+colnames(synth2) <- colnames(p)
+showsome(synth2)
+```
+
+OK so `synth2` is a different synthetic dataset but this time with
+pudding strengths following Zipf.  As before, create a `hyper2`
+object and find the evaluate:
+
+```{r,synth2maxp,cache=TRUE}
+H_synth2 <- convert(synth2)[[1]] # a hyper2 likelihood function
+ph_synth2 <- maxp(H_synth2)
+```
+
+```{r}
+ph_synth2
+```
+
+As a consistency check compare estimate with true value:
+
+```{r}
+ph_synth2-dpudstrengths  # difference is small
+```
+
+Now Davidson estimate using `synth2`:
+
+```{r,synth2david,cache=TRUE}
+(pd_synth2 <- PlackettLuce_coef(synth2))
+```
+
+```{r}
+h_synth2 <- hankin(ph_synth2)
+d_synth2 <- davidson(pd_synth2)
+showsome(h_synth2)  # same as before
+```
+
+And calculate a support function:
+
+```{r}
+n <- synth2[,-(1:3),]  # as before, extract just the counts
+(lh_synth2 <- sum(n*log(h_synth2)))
+(ld_synth2 <- sum(n*log(d_synth2)))
+lh_synth2 - ld_synth2
+```
+
+So this time the difference in support is larger, due to the puddings
+having different strengths.
+
 
 # References
 
