@@ -236,8 +236,7 @@ sum(n*log(h))-sum(n*log(d))
 ```
 
 
-
-# Appendix: a synthetic dataset
+# Appendix:  synthetic datasets
 
 Above we see that, according to this model, there is no evidence to
 suggest that the puddings' strengths, or their tying ability, differ.
@@ -272,7 +271,7 @@ mHpt
 plot(mHpt)
 ```
 
-(above we see that pudding 1 does indeed have a highing tie
+(above we see that pudding 1 does indeed have a higher tie
 probability).  Test the null of equal tying probabilities:
 
 ```{r,thptest,cache=TRUE}
@@ -285,6 +284,88 @@ Further, test the null the pudding 1 has zero tying probability:
 (tHpzero <- specificp.test(Hp,"tie_3"))
 ```
 
+## Test of Davidson vs Hankin
+
+Although the likelihood for Davidson's model was higher than mine for
+the original dataset, we can create a synthetic dataset which is a
+random observation drawn from a reified Bradley-Terry probability
+model.  I will then test the hypothesis that the data is in fact drawn
+from an RBT distribution by calculating a likelihood ratio.
+
+```{r,synthmaker}
+set.seed(2)
+f <- function(i){rmultinom(1,50,prob=h[i,])} # f(i) = sample from row i of h
+synth <- pudding_table
+synth[,-(1:3)] <- t(sapply(1:15,f))  # random sample
+synth[,3] <- 50
+rownames(synth) <- rownames(p)
+colnames(synth) <- colnames(p)
+synth
+```
+
+Above, `synth` is a dataset drawn from an RBT model with maximum
+likelihood parameters obtained from the original dataset.  We now use
+both methods.  First reified Bradley-Terry:
+
+```{r,useboth,cache=TRUE}
+(H_synth <- convert(synth)[[1]])
+ph_synth <- maxp(H_synth)
+```
+
+```{r}
+ph_synth
+```
+
+The above strengths are different from (but not too different from)
+the value obtaine from `maxp(H)` above.  Now analyse the same dataset
+but using the method given in the `PlackettLuce` vignette:
+
+```{r}
+PlackettLuce_coef <- function(pudding_table){
+i_wins <- data.frame(Winner = pudding_table$i, Loser = pudding_table$j)
+j_wins <- data.frame(Winner = pudding_table$j, Loser = pudding_table$i)
+  ties <- data.frame(Winner = asplit(pudding_table[c("i", "j")], 1),
+                     Loser = rep(NA, 15))
+R <- as.rankings(rbind(i_wins, j_wins, ties),
+                 input = "orderings")
+w <- unlist(pudding_table[c("w_ij", "w_ji", "t_ij")])
+mod <- PlackettLuce(R, weights = w, npseudo = 0, maxit = 7)
+return(coef(mod,log=FALSE))
+}	
+```
+
+As a consistency check, try verifying the original result:
+
+```{r,verifypl,cache=TRUE}
+PlackettLuce_coef(pudding_table)
+```
+
+Above, we see values that match those in the `PlackettLuce` vignette.
+Now apply the same method to the synthetic dataset `synth`:
+
+```{r,calcpdsynth,cache=TRUE}
+(pd_synth <- PlackettLuce_coef(synth))
+```
+
+Now we need to calculate the probabilities:
+
+```{r}
+(h_synth <- hankin(ph_synth))
+(d_synth <- davidson(pd_synth))
+```
+
+And calculate a likelihood ratio for the two hypotheses, RBT and
+Davidson:
+
+```{r}
+(n <- synth[,-(1:3),])
+(lh_synth <- sum(n*log(h_synth)))
+(ld_synth <- sum(n*log(d_synth)))
+lh_synth - ld_synth
+```
+
+So reified Bradley-Terry is better than Davidson, but (in this case at
+least) not by much.
 
 # References
 
