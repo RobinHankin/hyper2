@@ -155,47 +155,86 @@ ph <- pudding_maxp # ph == 'pudding hankin'; saves typing
 pd <- davidson     # pd == 'pudding davidson'
 print(ph)
 print(pd)
-th <- ph[7]        # th == 'tie hankin'
-td <- pd[7]        # td == 'tie davidson'
-hankin <- matrix(NA,15,3)
-davidson <- matrix(NA,15,3)
-m <- allbinom(6,2)
-m
 
-colnames(hankin) <- c("i","j","tie")
-colnames(davidson) <- c("i","j","tie")
-rownames(hankin) <- apply(m,2,paste,collapse="")
-rownames(davidson) <- apply(m,2,paste,collapse="")
-for(n in seq_len(15)){
-      i <- m[1,n]
-      j <- m[2,n]
+`hankin` <- function(ph){
+  ##  ph a vector of length n+1; first n entries are strengths, last one
+  ##  propensity to tie
+  n <- length(ph)-1
+  m <- allbinom(n,2)
+  out <- matrix(NA,nrow=ncol(m),ncol=3)
+  colnames(out) <- c("i","j","tie")
+  rownames(out) <- apply(m,2,paste,collapse="")
+  th <- ph[n+1]
+  for(o in seq_len(ncol(m))){
+      i <- m[1,o]
+      j <- m[2,o]
       dh <- ph[i] + ph[j] + th    # dh == 'denominator hankin'
-      hankin[n,1] <- ph[i]/dh
-      hankin[n,2] <- ph[j]/dh
-      hankin[n,3] <- th   /dh
+      out[o,1] <- ph[i]/dh
+      out[o,2] <- ph[j]/dh
+      out[o,3] <- th/dh
+  }
+  return(out)
+}  
 
-      dd <- pd[i] + pd[j] + td*sqrt(pd[i]*pd[j])  # dd == 'denominator davidson'
-      davidson[n,1] <- pd[i]/dd
-      davidson[n,2] <- pd[j]/dd
-      davidson[n,3] <- td*sqrt(pd[i]*pd[j])/dd
+`davidson` <- function(pd){
+
+  ##  pd a vector of length n+1; first n entries are strengths, last one
+  ##  nu
+  n <- length(pd)-1  # how many puddings
+  nu <- pd[n+1]  
+  m <- allbinom(n,2)
+  out <- matrix(NA,nrow=ncol(m),ncol=3)
+  colnames(out) <- c("i","j","tie")
+
+  rownames(out) <- apply(m,2,paste,collapse="")
+
+  nu <- pd[n+1]
+
+  for(o in seq_len(ncol(m))){
+      i <- m[1,o]
+      j <- m[2,o]
+      dd <- pd[i] + pd[j] + nu*sqrt(pd[i]*pd[j])  # dd == 'denominator davidson'
+      out[o,1] <- pd[i]/dd
+      out[o,2] <- pd[j]/dd
+      out[o,3] <- nu*sqrt(pd[i]*pd[j])/dd
+  }
+  return(out)
+}
+
+plotter <- function(ph,pd,...){
+  h <- hankin(ph)
+  d <- davidson(pd)
+  nh <- nrow(h)
+  plot(c(h),c(d),pch=16,asp=1,col=c(rep("red",nh),rep("blue",nh),rep("green",nh)),...)
 }
 ```
 
 ```{r}
-print(hankin)
-print(davidson)
-par(pty="s")
-plot(c(t(hankin)),c(t(davidson)),col=c('red','green','blue'),pch=16,asp=1,xlim=c(0.25,0.45),ylim=c(0.25,0.45))
-for(i in seq_len(nrow(hankin))){
-text(hankin[i,1],davidson[i,1],rownames(hankin)[i],pos=4)
-text(hankin[i,2],davidson[i,2],rownames(hankin)[i],pos=4)
-text(hankin[i,3],davidson[i,3],rownames(hankin)[i],pos=4)
-
-segments(x0=hankin[i,1],y0=davidson[i,1], x1=hankin[i,2],y1=davidson[i,2])
-}
-
-abline(0,1)
+print(ph)
+print(hankin(ph))
+print(pd)
+print(davidson(pd))
+jj <- c(2,5)/10
+par(pty='s')
+plotter(ph,pd,xlim=jj,ylim=jj)
+grid()
 ```
+
+
+Now calculate likelihoods:
+
+```{r}
+n <- pudding_table[,-(1:3),]
+h <- hankin(ph)
+d <- davidson(pd)
+n
+h
+d
+sum(n*log(h))
+sum(n*log(d))
+sum(n*log(h))-sum(n*log(d))
+```
+
 
 
 # Appendix: a synthetic dataset
