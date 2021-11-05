@@ -102,8 +102,6 @@ where $\sum p_i+D_i=1$.  The third element is a generalization of the
 second, giving the first pudding a "first-mover" advantage analogous
 to the home-team advantage in football, or playing white in chess:
 
-Now use it:
-
 \[
 \operatorname{Prob}(i\succ j) = \frac{\pi_i+F}{\pi_i+\pi_j+D_i+D_j+F}\\
 \operatorname{Prob}(j\succ i) = \frac{\pi_j}{\pi_i+\pi_j+D_i+D_j+F}\\
@@ -145,6 +143,23 @@ samep.test(pudding,puddings)
 ```
 
 so according to `samep.test()` the puddings are all the same strength.
+We note that the propensity to tie cannot possibly be zero but we can
+give a profile likelihood curve:
+
+```{r,calcptie,cache=TRUE}
+ptie <- seq(from=0.08,len=20,to=0.15)
+l <- profsupp(pudding,"tie",ptie)
+```
+
+```{r}
+plot(ptie,l,type='b',lwd=2)
+abline(h=c(0,-2))
+#abline(v=c(0.095,0.127))
+grid()
+```			
+
+and we see that a credible interval for the proclivity to tie would be
+$(0.095,0.127)$.
 
 # Pudding 2
 
@@ -165,7 +180,8 @@ summary(pudding3)
 pudding3_maxp
 ```
 
-
+We can see above that the first-mover advantage is small (and indeed a
+"second-mover advantage") is also very small.
 
 # Davidson's analysis 
 
@@ -345,7 +361,7 @@ synth[,-(1:3)] <- t(sapply(1:15,f))  # random sample
 synth[,3] <- 50
 rownames(synth) <- rownames(p)
 colnames(synth) <- colnames(p)
-synth
+showsome(synth)
 ```
 
 Above, `synth` is a dataset drawn from an RBT model with maximum
