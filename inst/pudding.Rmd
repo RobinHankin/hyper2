@@ -24,8 +24,9 @@ noquote(jj)
 </p>
 
 This short document creates the `pudding` suite of R objects and
-presents some preliminary analysis.  It follows Davidson 1970 and the
-`PlackettLuce` package.
+presents some preliminary analysis.  It is not particularly
+well-structured or terse and is essentially a sequence of notes.  It
+follows Davidson 1970 and the `PlackettLuce` package.
 
 Here is the pudding result:
 
@@ -35,14 +36,14 @@ rownames(pudding_table) <- apply(allbinom(6,2),2,paste,collapse="v")
 pudding_table
 ```
 
-Here is a method to convert the pudding matrix to a likelihood function:
+Here is a method to convert the pudding matrix to a `hyper2`
+likelihood function:
 
 
 ```{r,cache=TRUE}
-
-    numbers <- as.character(1:6)
-    puddings <- paste("pudding",numbers,sep="_")
-    tyers    <- paste("tie",numbers,sep="_")
+numbers <- as.character(1:6)
+puddings <- paste("pudding",numbers,sep="_")
+tyers    <- paste("tie",numbers,sep="_")
 
 `convert` <- function(M){
 
@@ -74,8 +75,43 @@ Here is a method to convert the pudding matrix to a likelihood function:
 }
 ```
 
+Function `convert()` gives a list of three `hyper2` objects.  The
+first assumes that each pudding has a strength $p_i$, $1\leq i\leq 6$
+and
+
+\[
+\operatorname{Prob}(i\succ j) = \frac{\pi_i}{\pi_i+\pi_j+D}\\
+\operatorname{Prob}(j\succ i) = \frac{\pi_j}{\pi_i+\pi_j+D}\\
+\operatorname{Prob}(i\sim  j) = \frac{D}{\pi_i+\pi_j+D}
+\]
+
+
+where $p_i,D\geq 0$ and $\sum p_i+D=1$ (here $i\succ j$ means $i$ is
+preferred to $j$ and $i\sim j$ means no preference).  The second
+element is a generalization of the first, allowing the tying
+propensities to differ:
+
+\[
+\operatorname{Prob}(i\succ j) = \frac{\pi_i}{\pi_i+\pi_j+D_i+D_j}\\
+\operatorname{Prob}(j\succ i) = \frac{\pi_j}{\pi_i+\pi_j+D_i+D_j}\\
+\operatorname{Prob}(i\sim  j) = \frac{D}{\pi_i+\pi_j+D_i+D_j}
+\]
+
+
+where $\sum p_i+D_i=1$.  The third element is a generalization of the
+second, giving the first pudding a "first-mover" advantage analogous
+to the home-team advantage in football, or playing white in chess:
+
 Now use it:
 
+\[
+\operatorname{Prob}(i\succ j) = \frac{\pi_i+F}{\pi_i+\pi_j+D_i+D_j+F}\\
+\operatorname{Prob}(j\succ i) = \frac{\pi_j}{\pi_i+\pi_j+D_i+D_j+F}\\
+\operatorname{Prob}(i\sim  j) = \frac{D}{\pi_i+\pi_j+D_i+D_j+F}
+\]
+
+Above, the first-mover advantage is given to pudding $i$.  We can use
+these now:
 
 ```{r calculatelikelihoodfunctionsandmaximize,cache=TRUE}
 lf <- convert(pudding_table)
