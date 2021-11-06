@@ -1,0 +1,101 @@
+---
+title: "Some thoughts on Zermelo's iteration process in the context of the hyper2 package"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+This short document sets out a use-case for functions `zermelo()` and
+`pairwise()`.  First I create `n=10` competitors with Zipf strengths:
+
+```{r}
+n <- 10
+p <- zipf(n)
+names(p) <- letters[seq_len(n)]
+p
+```
+
+Now I create `M`, a matrix holding pairwise comparisons between the
+competitors:
+
+```{r}
+M <- matrix(0,n,n)
+rownames(M) <- names(p)
+colnames(M) <- names(p)
+index <- which(upper.tri(M),arr.ind=TRUE)
+for(o in seq_len(nrow(index))){
+  i <- index[o,1]
+  j <- index[o,2]
+  prob <- p[i]/(p[i] + p[j]) # Bradley-Terry
+  nobs <- 80 
+  i_wins <- rbinom(1,nobs,prob)
+  j_wins <- nobs - i_wins
+  M[i,j] <- i_wins
+  M[j,i] <- j_wins
+}
+M
+```
+
+Above we see that `a` plays `b` a total of $48+32=80$ times, winning
+$48$ and losing $32$.  The probability of `a` winning is
+$\frac{p_1}{p_1+p_2}=\frac{1}{1+\frac{1}{2}}=\frac{2}{3}$ so we would
+expect $80\cdot\frac{2}{3}=53.3$ victories.  We can estimate the
+strengths of the competitors using either Zermelo's iteration scheme
+or function `maxp()`.  First Zermelo:
+
+```{r}
+(pZ <- zermelo(M))
+```
+
+And now hyper2:
+
+```{r,cache=TRUE}
+(H <- pairwise(M))
+(pH <- maxp(H))
+```
+
+We can compare the two using scattergraphs and likelihood:
+
+```{r}
+par(pty='s')
+plot(pZ,pH,asp=1,log='xy')
+abline(0,1)
+```
+
+```{r}
+plot(log(pZ),log(abs(pH-pZ)/pZ))
+abline(h=0)
+```
+
+```{r}
+loglik(pZ,H)-loglik(pH,H)
+```
+
+Above we see that the two methods agree closely in both point and
+likelihood.  Also, both evaluates are reasonably close to the true Zipf
+strengths:
+
+```{r}
+par(pty='s')
+plot(zipf(n),log(abs(zipf(n)-pZ)/zipf(n)),pch=16,col='black',log='x')
+```
+
+Now we can have a bit of fun with Zermelo:
+
+```{r}
+o <- zermelo(M,give=TRUE)
+head(o)
+l <- apply(o,1,loglik,H)
+plot(log(abs(l-max(l))))
+```

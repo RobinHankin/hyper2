@@ -7,6 +7,8 @@
 CITATION.cff
 ^inst/counterstrike_cache$
 ^inst/counterstrike_files$
+^inst/handover_cache$
+^inst/handover_files$
 ^inst/formula1_points_cache$
 ^inst/formula1_points_files$
 ^inst/formula1_top9_cache$
@@ -187,3 +189,5 @@ CITATION.cff
 ^inst/zurich1953_candidates.txt$
 ^inst/dg_template.tex
 ^inst/pudding.Rmd
+^inst/pudding_cache$
+^inst/draws.txt

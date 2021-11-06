@@ -20,7 +20,10 @@ options("digits" = 5)
 Here I analyse a [karate](https://en.wikipedia.org/wiki/Karate)
 dataset taken from
 [wikipedia](https://en.wikipedia.org/wiki/2018_World_Karate_Championships).
-
+Short story: the dataset has too many degrees of freedom to be easily
+analysed with `hyper2` and Zermelo's iteration scheme as implemented
+by the `BradleyTerry` package exploits the special pairwise structure
+of the likelihood function very effectively.
 
 ```{r readkaratetable}
 karate_table  <- read.table("karate.txt",header=TRUE)
@@ -29,7 +32,7 @@ head(karate_table)
 
 Converting it to a likelihood function is straightforward:
 
-```{r converttolikelihood}
+```{r converttolikelihood,cache=TRUE}
 karate <- hyper2()
 for(i in seq_len(nrow(karate_table))){
 
@@ -43,10 +46,63 @@ for(i in seq_len(nrow(karate_table))){
   karate[p2] %<>% inc(w2)
   karate[c(p1,p2)] %<>% dec(w1+w2)
 }
-karate
-karate_maxp <- maxp(karate)
-karate_maxp
+summary(karate)
 ```
+
+In the summary above (in the summary of bracket lengths), we see how
+the likelihood function comprises only singletons [which appear on the
+numerator] and pairs [on the denominator].
+
+```{r}
+karate_maxp <- maxp(karate)
+```
+
+```{r}
+dotchart(log10(karate_maxp))
+```
+
+
+
+# MM analysis
+
+We will define a matrix of win-loss statistics:
+
+```{r}
+pk <- pnames(karate)
+M <- matrix(0,length(pk),length(pk))
+rownames(M) <- pk
+colnames(M) <- pk
+o <- karate_table # saves typing
+for(i in seq_len(nrow(o))){
+  M[o[i,1],o[i,3]] %<>% `+`(o[i,2])
+  M[o[i,3],o[i,1]] %<>% `+`(o[i,4])
+}
+```
+
+```{r,cache=TRUE}
+pM <- pairwise(M)
+pM == karate  # consistency check; should be TRUE
+```
+
+Now use Zermelo's iteration method and compare with `hyper2`'s `maxp()`:
+
+```{r}
+iM <- zermelo(M)
+loglik(iM,karate)
+loglik(karate_maxp,karate)
+```
+
+Above we see that Zermelo gives a much more likely point in parameter
+space than `maxp()`.
+
+
+```{r}
+par(pty='s')
+plot(log10(iM),log10(karate_maxp),asp=1,xlim=c(-4,0),ylim=c(-4,0))
+abline(0,1)
+grid()
+```
+
 
 ### Package dataset
 
