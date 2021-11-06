@@ -87,18 +87,17 @@ pM == karate  # consistency check; should be TRUE
 Now use Zermelo's iteration method and compare with `hyper2`'s `maxp()`:
 
 ```{r}
-iM <- zermelo(M)
-loglik(iM,karate)
+karate_zermelo <- zermelo(M)
+loglik(karate_zermelo,karate)
 loglik(karate_maxp,karate)
 ```
 
 Above we see that Zermelo gives a much more likely point in parameter
 space than `maxp()`.
 
-
 ```{r}
 par(pty='s')
-plot(log10(iM),log10(karate_maxp),asp=1,xlim=c(-4,0),ylim=c(-4,0))
+plot(log10(karate_zermelo),log10(karate_maxp),asp=1,xlim=c(-4,0),ylim=c(-4,0))
 abline(0,1)
 grid()
 ```
@@ -110,5 +109,5 @@ Following lines create `karate.rda`, residing in the `data/` directory
 of the package.
 
 ```{r,label=savekaratedataset}
-save(karate_table,karate,karate_maxp,file="karate.rda")
+save(karate_table,karate,karate_maxp,karate_zermelo,file="karate.rda")
 ```
