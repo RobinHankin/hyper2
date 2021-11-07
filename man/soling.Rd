@@ -33,7 +33,6 @@ which includes some further discussion and technical documentation, and
 creates file \code{soling.rda} which resides in the \code{data/}
 directory.
 
-
 }
 \references{
 
