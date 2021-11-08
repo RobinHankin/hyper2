@@ -269,7 +269,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     } else if(is.list(first)){
       wanted <- dots[[1]]
     } else if(is.matrix(first)){
-      wanted <- as.list(as.data.frame(t(first)))
+        wanted <- as.list(as.data.frame(t(first)))
+    } else if(is.disord(first)){
+        return(hyper2(elements(brackets(x)[first]),elements(powers(x)[first])))
     } else if(is.vector(first)){
       wanted <- list(first)
     } else {

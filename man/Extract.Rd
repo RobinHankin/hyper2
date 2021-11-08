@@ -30,13 +30,10 @@ overwrite_lowlevel(x,value)
   These methods should work as expected, although the off-by-one issue
   might be a gotcha.
 
- For the extract method, a numeric vector is returned but the elements
- may be in any order (the brackets and indeed the powers are not stored
- in any particular order).
-
- The replace method, \code{H[L] <- value}, the index \code{L} is a list
- specifying the brackets to be overwritten; argument \code{value} is not
- recycled unless it is of length 1.
+ For the extract method, \code{H[L]}, a \code{hyper2} object is
+ returned.  The replace method, \code{H[L] <- value}, the index
+ specifies the brackets whose powers are to be overwritten; standard
+ \code{disordR} protocol is used.
 
  If the index argument is missing, viz \code{H1[] <- H2}, this is a
  special case.  Argument \code{H1} must be a \code{hyper2} object, and
@@ -91,9 +88,10 @@ chess[c("Topalov","Anand")] <- chess[c("Topalov","Anand")]-1
 chess["Topalov"] \%<>\% inc
 chess[c("Topalov","Kasparov")] \%<>\% dec
 
-
 # overwriting idiom:
 H <- hyper2(list("Topalov","X"),6)
 chess[] <- H
+
+H <- icons
 
 }
