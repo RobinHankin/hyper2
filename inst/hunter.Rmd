@@ -1,0 +1,91 @@
+---
+title: "Iteration techniques for Plackett-Luce likelihood functions and the `hyper2` package"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+Here I discuss why implementing equation 30 of Hunter (2004) for
+`hyper2` objects representing Plackett-Luce likelihood functions is
+difficult.  Consider the following rank observations: `724356` [that
+is, 7 came first, then 2, then 4 then 3 then 5 then 6] and `1372`
+[that is, 1 came first, then 3 then 7 then 2].  This would have a
+Plackett-Luce likelihood function of
+
+\[
+\left(
+\frac{[7]}{[234567]}\cdot\frac{[2]}{[23456]}\cdot\frac{[4]}{[3456]}\cdot\frac{[3]}{[356]}\cdot\frac{[5]}{[56]}
+\right)\left(\frac{[1]}{[1237]}\cdot\frac{[3]}{[237]}\cdot\frac{[7]}{[27]}\right)
+\]
+
+(where $[1234]$ is short for $p_1+p_2+p_3+p_4$).  Then Hunter's
+iteration formula gives, for example:
+
+\[
+p_3\longrightarrow\frac{p_3}{(p_7+p_2+p_4+p_3)^{-1}+(p_1+p_3)^{-1}}=
+\frac{[3]}{[7243]^{-1}+[13]^{-1}}
+\]
+
+However, the `hyper2` object corresponding to the PL likelihood function would be
+
+\[
+\frac{
+  [1][2][3]^2[4][5][7]^2
+}{
+  [1237]\cdot [23456]\cdot [234567]\cdot [237]\cdot [27]
+\cdot [3456] \cdot [356]\cdot[56]
+}
+\]
+
+(Note that the brackets have been rearranged and also the brackets
+themselves.  Also we have no idea which term on the numerator goes
+with which one on the denominator).  The desired iterative step would
+be
+
+$p_1 \longrightarrow [1]$
+
+$p_2 \longrightarrow\frac{[2]}{[27]^{-1}+[1237]^{-1}}$
+
+$p_3 \longrightarrow\frac{[3]}{[2347]^{-1}+[13]^{-1}}$
+
+$p_4 \longrightarrow\frac{[4]}{[247]^{-1}}$
+
+$p_5 \longrightarrow\frac{[5]}{[23457]^{-1}}$
+
+$p_6 \longrightarrow\frac{[6]}{[234567]^{-1}}$
+
+$p_7 \longrightarrow\frac{[7]}{[137]^{-1}}$
+
+
+and it does not seem at all easy to convert the `hyper2` object to
+Hunter's iteration scheme.  To update $p_3$, for example, we would
+start with the denominator $[1237]\cdot[23456]\cdot[234567]\cdot
+[237]\cdot[27]\cdot[3456]\cdot[356]\cdot[56]$ and then extract just
+the brackets containing 3 to get $[1237]\cdot[23456]\cdot[234567]\cdot
+[237]\cdot[3456]\cdot[356]$ and then somehow identify two increasing chains
+
+$[27]\longrightarrow[237]\longrightarrow [1237]$
+
+and 
+
+$[356]\longrightarrow[3456]\longrightarrow[23456]\longrightarrow[234567]$
+
+and _then_ somehow identify from these two chains that 1 beats 3
+(leading to $[13]$ in the iteration) and also that $\left\lbrace
+2,4,7\right\rbrace$ beat 3 (leading to $[2347]$).
+
+
+### Reference {-}
+
+* D. R. Hunter 2004.  "MM algorithms for generalized Bradley-Terry
+  models".  _The Annals of Statistics_, 32(1):384

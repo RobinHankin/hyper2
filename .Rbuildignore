@@ -191,3 +191,4 @@ CITATION.cff
 ^inst/pudding.Rmd
 ^inst/pudding_cache$
 ^inst/draws.txt
+^inst/hunter.Rmd
