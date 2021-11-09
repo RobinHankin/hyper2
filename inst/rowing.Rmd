@@ -20,12 +20,12 @@ olympics.  It is not really standalone and is here as part of a
 consistent dataset generation mechanism used in the `hyper2` package.
 See the `hyper2` vignette for a more formal discussion.  In Olympic
 sculling, up to six individual competitors race a small boat called a
-scull over a course of length 2\,km; the object is to cross the
-finishing line first.  Note that actual timings are irrelevant, given
-the model, as the sufficient statistic is the order in which
+scull over a course of length $2\,\mathrm{km}$; the object is to cross
+the finishing line first.  Note that actual timings are irrelevant,
+given the model, as the sufficient statistic is the order in which
 competitors cross the finishing line.  The 2016 Summer Olympics is a
-case in point: the gold and silver medallists finished less than~5
-milliseconds apart, corresponding to a lead of~$\sim
+case in point: the gold and silver medallists finished less than $\sim
+5$ milliseconds apart, corresponding to a lead of $\sim
 2.5\,\mathrm{cm}$.  The dataset is as follows;
 
 ```{r}
