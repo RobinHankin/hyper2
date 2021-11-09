@@ -4,7 +4,7 @@
         pnames = pnames(object),
         no.of.brackets = length(brackets(object)),
         sumofpowers = sum(powers(object)),
-        tableoflengths = table(c(lapply(brackets(object),length),recursive=TRUE)),
+        tableoflengths = table(c(lapply(elements(brackets(object)),length),recursive=TRUE)),
         tableofpowers = table(powers(object))
   )
   class(out) <- "summary.hyper2"

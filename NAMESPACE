@@ -15,6 +15,7 @@ importFrom("disordR","hashcal")
 importFrom("disordR","consistent")
 importFrom("disordR","elements")
 importFrom("disordR","is.disord")
+importFrom("disordR","lapply")
 
 import(methods)
 import(mathjaxr)
