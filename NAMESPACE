@@ -17,6 +17,10 @@ importFrom("disordR","elements")
 importFrom("disordR","is.disord")
 importFrom("disordR","lapply")
 
+importFrom("alabama","constrOptim.nl")
+
+
+
 import(methods)
 import(mathjaxr)
 

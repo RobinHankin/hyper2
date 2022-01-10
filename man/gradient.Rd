@@ -82,8 +82,8 @@ Function \code{hessian_lowlevel()} is a low-level helper function that
 calls the \code{C++} routine.
 
 Further examples and discussion is given in file
-\code{inst/gradient.Rmd}.
-
+\code{inst/gradient.Rmd}.  See also the discussion at \code{man/maxp.Rd}
+on the different optimization routines available.
 }
 
 \value{

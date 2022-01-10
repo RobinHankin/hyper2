@@ -388,14 +388,14 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `maxp` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, n=10, show=FALSE, justlikes=FALSE, ...){
-
+    if(isTRUE(getOption("use_alabama"))){ms <- maxp_single2} else {ms <- maxp_single}
     best_so_far <- -Inf # best (i.e. highest) likelihood found to date
     likes <- rep(NA,n)
     if(is.null(startp)){ startp <- indep(equalp(H)) }
 
     for(i in seq_len(n)){
         if(i>1){startp <- startp+runif(size(H)-1,max=SMALL/size(H))}
-        jj <- maxp_single(H, startp=startp, give=TRUE, fcm=fcm, fcv=fcv, SMALL=SMALL, ...)
+        jj <- ms(H, startp=startp, give=TRUE, fcm=fcm, fcv=fcv, SMALL=SMALL, ...)
         likes[i] <- jj$value
         if(show){cat(paste(i,"; ", best_so_far, "  " , jj$value,"\n", sep=""))}
         if(jj$value > best_so_far){ # that is, if we have found something better
@@ -468,11 +468,60 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }
 }
 
+## Function maxp_single2() is like maxp_single() but uses the alabama
+## package for constrained optimization instead of constrOptim() with
+## its stupid wmmin finite error.
+
+
+
+
+## above takes UI and CI [intended for constrOptim()] and returns a function
+
+`maxp_single2` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, maxtry=100, ...){
+    if(inherits(H,"suplist")){return(maxplist(Hlist=H,startp=startp,give=give,fcm=fcm,fcv=fcv,...))}
+    
+    n <- size(H)
+    if(is.null(startp)){
+        startp <- rep(1/n,n-1)
+    }
+
+    objective <- function(p){ -loglik(p,H) }
+    gradfun   <- function(p){ -(gradient(H,p))} #NB minus signs
+    
+    UI <- rbind(
+        diag(nrow=n-1),  # regular: p1 >=0, p2 >= 0, ..., p_{n-1} >= 0
+        -1,              # fillup: p_n = 1-(p1+p2+...+p_{n-1}) >= 0
+        fcm)             # further problem-specific constraints
+    CI <- c(
+        rep(SMALL,n-1),  # regular
+        -1+SMALL,        # fillup
+        fcv)             # further contraint vector
+
+        out <- constrOptim.nl(
+            par = startp,
+            fn = objective,
+            gr  = gradfun,
+            hin = function(x){drop(UI%*%x - CI)},
+            control.outer = list(trace=FALSE),
+            ...)
+   
+    out$value <- -out$value # correct for -ve sign in objective()
+    
+    if(give){
+      return(out)
+    } else {
+      jj <- fillup(out$par)
+      if(!identical(pnames(H),NA)){names(jj) <- pnames(H)}
+      return(jj)
+    }
+}
+
 `maxp_simplex` <- function(H, n=100, show=FALSE, give=FALSE, ...){
+    if(isTRUE(getOption("use_alabama"))){ms <- maxp_single2} else {ms <- maxp_single}
     best_so_far <- -Inf # best (i.e. highest) likelihood found to date
     likes <- rep(NA,n)
     for(i in seq_len(n)){
-        jj <- maxp_single(H, startp=indep(rp_unif(1,H)), give=TRUE, ...)
+        jj <- ms(H, startp=indep(rp_unif(1,H)), give=TRUE, ...)
         likes[i] <- jj$value
         if(show){cat(paste(i,"; ", best_so_far, "  " , jj$value,"\n", sep=""))}
         if(jj$value > best_so_far){ # that is, if we have found something better
@@ -500,10 +549,17 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     
     UI <- rbind(diag(nrow = n - 1), -1, fcm)
     CI <- c(rep(SMALL, n - 1), -1 + SMALL, fcv)
-    out <- constrOptim(theta = startp, f = objective, grad = NULL, 
-        ui = UI, ci = CI, ...)
-    out$value <- -out$value
-    if (give) {
+
+    if(isTRUE(getOption("use_alabama"))){
+        out <- constrOptim.nl(par = startp, fn = objective, gr = NULL, 
+                              hin = function(x){drop(UI%*%x - CI)},
+                              control.outer = list(trace=FALSE),...)
+    } else {
+        out <- constrOptim(theta = startp, f = objective, grad = NULL, 
+                           ui = UI, ci = CI, ...)
+    }
+        out$value <- -out$value
+        if (give) {
         return(out)
     }
     else {
