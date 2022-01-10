@@ -94,8 +94,7 @@ won_match =c(FALSE,TRUE))
 M
 ```
 
-We may reject homogoneity of proportion (Fisher's exact test, $p= `r
-round(fisher.test(M)$p.value,3)`$).  Recalling that a slight majority
+We may reject homogoneity of proportion (Fisher's exact test, $p= `r round(fisher.test(M)$p.value,3)`$).  Recalling that a slight majority
 of toss winners elect to field first (361 out of 633), we see that
 this is a consistent result.
 
