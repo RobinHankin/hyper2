@@ -58,6 +58,25 @@ this. Especially as some of the wildcards competed in more than one of
 the competitions. So some form of statement to validate why you omit
 the wildcards would be good.
 
+\textcolor{blue}{See the table of results at the end of this document.
+  We see that the wildcards participate in very few venues: of the 25
+  wildcards, 20 appear at only a single venue, four at two venues, and
+  only one (Willcox) at three venues.  Further, the wildcards perform
+  poorly: of the 31 ranked scores, only 5 are better than last or
+  second to last.  Maximum likelihood Bradley-Terry strengths for such
+  competitors are either exactly zero or very small (here $\sim
+  10^{-5}$) and are neither interesting from a surfing lore
+  perspective, nor susceptible to meaningful statistical
+  inference.\newline Quite apart from the fact that our focus was on
+  the top-performing competitors, including such datapoints is
+  problematic for several reasons.  Firstly, numerical optimization
+  techniques tend to struggle as one increases the number of players:
+  one is necessarily working with a higher-dimensional problem,
+  leading to poorly defined maxima [the Jacobian becomes very small];
+  in addition, local maxima become more numerous and difficult to
+  identify.\newline We have added a brief summary of this to the
+  manuscript.}
+
 \subsection*{Direct comparison on particular waves}
 
 
@@ -131,12 +150,13 @@ This only constitutes for male competition
 
 {\bf intent}  sorted above
 
-
-
 in addition, at each tour venue, two "wildcard" surfers also enter the
 competition, who are ignored here
 
 Why are they ignored? Especially as some of the wildcards competed in multiple events.
+
+\textcolor{blue}{Discussed above}
+
 
 
 {\bf intent}  sorted above.
@@ -175,6 +195,7 @@ higher placing in a competition will award you a greater number of
 points. Impacting upon your placing in the rankings for the subsequent
 competition. And therefore, your seeding for the next competition.
 
+{\footnotesize
 \begin{verbatim}
              nation wct01 wct02 wct03 wct04 wct05 wct06 wct07 wct08 wct09 wct10 wct11 points
  Ferreira       BRA     1     5    17     5    17     2    17     9     2     1     1  59740
@@ -239,6 +260,9 @@ competition. And therefore, your seeding for the next competition.
  Newton         HAW     -     -     -     -     -     -    33     -     -     -     -    265
  Drollet        PYF     -     -     -     -     -     -    33     -     -     -     -    265
 \end{verbatim}
+}
+The wildcards are from Willcox onwards.
+
 \end{document}
 
 

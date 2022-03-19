@@ -144,6 +144,28 @@ QS <- rownames(surfing_table)[c(23:33,35:36)]
 QS
 ```
 
+Some quick analysis of the wildcard surfers.  First, how did the wildcards perform?
+
+```{r}
+wilds <- as.matrix(surfing_table[-(1:36),2:12])
+wilds[wilds == "INJ"] <- NA
+wilds[wilds == "-"] <- NA
+table(wilds)
+```
+
+Above we see that 10 wildcards placed "33" [meaning last place], 16
+placed "17" [second to last] three placed "9" and two placed "5".
+[the placings are treated as character strings which is why they are
+not in numerical orer].  Next, how many venues did each wildcard
+participate at?
+
+```{r}
+table(apply(wilds,1,function(x){sum(!is.na(x))}))
+```
+
+We see that 20 wildcards appeared at 1 venue, 4 at two venues, and one
+(Willcox) at three venues.q
+
 
 ```{r}
 o <- strsplit(readLines("wct2019.txt")," ")
