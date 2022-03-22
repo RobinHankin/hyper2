@@ -26,13 +26,19 @@ given the model, as the sufficient statistic is the order in which
 competitors cross the finishing line.  The 2016 Summer Olympics is a
 case in point: the gold and silver medallists finished less than $\sim
 5$ milliseconds apart, corresponding to a lead of $\sim
-2.5\,\mathrm{cm}$.  The dataset is as follows;
+2.5\,\mathrm{cm}$.  The package dataset is file `rowing.txt`, here are
+the first three lines:
 
 ```{r}
-show <- function(filename){
-  unlist(lapply(strsplit(readLines(filename)," "),paste,collapse=" "))
-}					       
-show("rowing.txt")
+readLines("rowing.txt")[1:3]
+```
+
+We can process this file using standard R functions.
+
+```{r}
+o <- sapply(readLines("rowing.txt"),strsplit," ")
+names(o) <- NULL  # names are pointless here
+o[1:3]
 ```				 
 
 The first line shows that `fournier` came first, `cabrera` second, and
@@ -40,17 +46,8 @@ so on.  We can convert this dataset into a Plackett-Luce likelihood
 function as follows:
 
 ```{r definerowing, cache=TRUE}
-
-f <- function(filename){
-  o <- strsplit(readLines(filename)," ")
-  H <- hyper2()
-  for(v in o){H <- H + race(v)}
-  return(H)
-}	
-
-rowing <- f("rowing.txt")
-pnames(rowing)
-head(rowing)
+rowing <- Reduce("+",sapply(o,race))
+summary(rowing)
 ```
 
 Object `rowing` is a loglikelihood function on the strengths of the 32
@@ -97,10 +94,11 @@ show("rowing_minimal.txt")
 strength would be 1).  We may then analyse this:
 
 ```{r rowingminimaldef}
-rowing_minimal <- f("rowing_minimal.txt")
-head(rowing_minimal)
-pnames(rowing_minimal)
-```
+o <- sapply(readLines("rowing_minimal.txt"),strsplit," ")
+names(o) <- NULL  
+rowing_minimal  <- Reduce("+",sapply(o,race))
+summary(rowing_minimal)
+```				 
 
 This is a much more manageable dataset, much easier to study and less
 cluttered, as competitors with zero estimated strength are not
