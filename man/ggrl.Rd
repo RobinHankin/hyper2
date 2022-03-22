@@ -102,6 +102,7 @@ W2 <- ggrl(W, 'b', letters[3:5],'a')  # 6-element list
 like_single_list(equalp(W1),W1)
 like_series(equalp(W1),list(W1,W2))
 
+if(FALSE){  # takes too long
 # run 10 races:
 r1 <- rrank(10,p=(7:1)/28)
 colnames(r1) <- letters[1:7]
@@ -118,5 +119,6 @@ equalp.test(H) # should not be significant (null is true)
 H1 <- hyper2(pnames=letters[1:5])
 H2 <- choose_losers(H1,letters[1:4],letters[1:2])   # {a,b} vs {c,d}; {a,b} lost
 maxplist(H2,control=list(maxit=1))  # control set to save time
+}
 
 }

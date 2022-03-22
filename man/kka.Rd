@@ -68,8 +68,6 @@ resides in the \code{data/} directory.
 }
 \seealso{\code{\link{chess}}}
 \examples{
-data(karpov_kasparov_anand)
-maxp(karpov_kasparov_anand)
 pie(maxp(karpov_kasparov_anand))
 }
 \keyword{datasets}

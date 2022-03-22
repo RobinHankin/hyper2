@@ -40,7 +40,7 @@ consistency(H, plot=TRUE, ...)
 \seealso{\code{\link{ordertrans}}}
 \examples{
 
-consistency(icons)
+# consistency(icons)
 
 x <- icons
 y <- icons

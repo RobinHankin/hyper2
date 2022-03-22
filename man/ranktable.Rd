@@ -65,7 +65,6 @@ xorder <- ranktable_to_ordertable(xrank)
 ## Can convert back and forth:
 identical(xrank,ordertable_to_ranktable(ranktable_to_ordertable(xrank)))
 
-maxp(ordertable2supp(xorder))  # should be close to p
-
+# maxp(ordertable2supp(xorder))  # should be close to p
 ordertable_to_ranktable(skating_table)
 }

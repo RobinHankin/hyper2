@@ -118,11 +118,7 @@ idiom is involved.
 
 equalp.test(chess)
 
-samep.test(icons,c("NB","L"))
-knownp.test(icons,zipf(icons))
-
-
-
-
+# samep.test(icons,c("NB","L"))
+# knownp.test(icons,zipf(icons))
 
 }

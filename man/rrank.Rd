@@ -104,11 +104,12 @@ names(ptrue) <- letters[1:4]
 rrank(10,p=ptrue)
 
 H <- rank_likelihood(rrank(40,p=ptrue))
-mH <- maxp(H)   # should be close to ptrue
 
-## Following code commented out because it takes too long:
+## Following code commented out because they take too long:
+
+# mH <- maxp(H)   # should be close to ptrue
 # H <- H + rank_likelihood(rrank(30,mH)) # run some more races
-# maxp(H)
+# maxp(H)  # revised estimate with additional data
 
 
 }

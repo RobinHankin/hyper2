@@ -24,7 +24,6 @@ which includes some further discussion and technical documentation and
 creates file \code{volvo.rda} which resides in the \code{data/}
 directory.
 
-
 }
 \references{
 Wikipedia contributors, 2019.
@@ -36,5 +35,5 @@ Retrieved 22:21, February 28, 2020.
 \seealso{\code{\link{ordertable2supp}}}
 \examples{
 pie(volvo_maxp)
-equalp.test(volvo)
+# equalp.test(volvo)   # takes ~10 seconds to run
 }
