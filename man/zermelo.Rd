@@ -51,9 +51,11 @@ M <- matrix(c(
 0, 0,0,15,0,
 0, 8,0, 0,7,
 1 ,0,3, 0,0
-),5,5,byrow=TRUE) # e.g. Agassi beats Becker 10 times and loses 4 times
-rownames(M) <- c("Agassi","Becker","Borg","Connors","Courier")
-colnames(M) <- rownames(M)
+),5,5,byrow=TRUE) 
+players <-  c("Agassi","Becker","Borg","Connors","Courier")
+dimnames(M) <- list(winner=players,loser=players)
+M
+# e.g. Agassi beats Becker 10 times and loses 4 times
 pairwise(M)
 zermelo(M)
 maxp(pairwise(M))
