@@ -19,7 +19,7 @@ importFrom("disordR","lapply")
 
 importFrom("alabama","constrOptim.nl")
 
-
+importFrom("calibrator","MH")
 
 import(methods)
 import(mathjaxr)

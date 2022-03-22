@@ -1,7 +1,7 @@
 Package: hyper2
 Type: Package
 Title: The Hyperdirichlet Distribution, Mark 2
-Version: 2.0-2
+Version: 2.0-3
 Authors@R: person(given=c("Robin", "K. S."), family="Hankin", role = c("aut","cre"), email="hankin.robin@gmail.com", comment = c(ORCID = "0000-0001-5982-0415"))
 Maintainer: Robin K. S. Hankin <hankin.robin@gmail.com>
 Description: A suite of routines for the hyperdirichlet distribution; supersedes the 'hyperdirichlet' package.
@@ -10,7 +10,7 @@ LazyData: yes
 Depends: methods, magrittr, cubature, R (>= 3.5.0)
 Suggests: knitr, markdown, rmarkdown, testthat, bookdown, rticles
 VignetteBuilder: knitr
-Imports: Rcpp (>= 1.0-7), partitions, EMC, mathjaxr, disordR (>= 0.0-8), alabama
+Imports: Rcpp (>= 1.0-7), partitions, mathjaxr, disordR (>= 0.0-8), alabama, calibrator
 LinkingTo: Rcpp
 URL: https://github.com/RobinHankin/hyper2
 BugReports: https://github.com/RobinHankin/hyper2/issues
