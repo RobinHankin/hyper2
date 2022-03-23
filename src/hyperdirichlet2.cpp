@@ -1,21 +1,25 @@
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
+
 #include "hyperdirichlet2.h"
 
-hyper2 prepareL(const List &L, const NumericVector &d){
+hyper2 prepareL(const List &L, const NumericVector &d, const List &W){
     hyper2 H;   
-    bracket b;
     unsigned int i,j;
     const unsigned n=L.size();
+    psub term;
     
     for(i=0; i<n ; i++){
         if(d[i] != 0){
-            b.clear();
+            term.clear();
 
-            const SEXP jj = L[i];  // jj is temporary
+            const SEXP jj = L[i];  // jj,kk  temporary
+            const SEXP kk = W[i];
+            psub term;
             const Rcpp::CharacterVector names(jj);
             for(j=0 ; j<(unsigned int) names.size(); j++){
-                b.insert((string) names[j]);
+                term[(string) names[j]] += kk[j];  // meat part 1
             }
-            H[b] += d[i];  // the meat
+            H[term] += d[i];  // meat part 2
         } // else do nothing, a zero power 
     } // i loop closes
     return(H);
@@ -30,12 +34,12 @@ psub preparepmap(const NumericVector &probs, const CharacterVector &pnames){
     return(out);
 }
 
-List makebrackets(const hyper2 H){  // takes a hyper2, returns the brackets
+List maketerms(const hyper2 H){  // takes a hyper2, returns a list of terms (which are psub objects)
     List out;
     hyper2::const_iterator ih;
-    
+
     for(ih=H.begin(); ih != H.end(); ++ih){
-        out.push_back(ih->first);
+        out.push_back(psub p=ih->first);  
     }
     return(out);
 }
@@ -46,42 +50,42 @@ NumericVector makepowers(const hyper2 H){  // takes a hyper2, returns powers
     hyper2::const_iterator it;   // it iterates through a hyper2 object
     
     for(it=H.begin(); it != H.end(); ++it){
-        out(i++) = it->second;   // initialize-and-fill is more efficient than  out.push_back(it->second) 
+        out(i++) = it->second;   // initialize-and-fill is more efficient than out.push_back(it->second) 
     }
     return(out);
 }
 
 List retval(const hyper2 &H){  // used to return a list to R
     
-        return List::create(Named("brackets") =  makebrackets(H),
-                            Named("powers")   =  makepowers(H)
-                            );
+    return List::create(Named("terms")  =  maketerms(H),
+                        Named("powers") =  makepowers(H)
+                        );
 }
 
 // [[Rcpp::export]]
-List identityL(const List &L, const NumericVector &p){
-    const hyper2 out = prepareL(L,p);
+List identityL(const List &L, const NumericVector &p, const NumericVector &W){
+    const hyper2 out = prepareL(L,p,W);
     return retval(out);
 }
  
 //[[Rcpp::export]]
 List addL(
-          const List L1, const NumericVector p1,
-          const List L2, const NumericVector p2  // p==powers
+          const List L1, const NumericVector p1, const List W1,
+          const List L2, const NumericVector p2, const List W2
           ){
-    hyper2 h1 = prepareL(L1,p1);
-    hyper2 h2 = prepareL(L2,p2);
+    hyper2 h1 = prepareL(L1,p1,W1);
+    hyper2 h2 = prepareL(L2,p2,W2);
     hyper2::const_iterator it;
     if(L1.size() > L2.size()){ // L1 is bigger, so iterate through L2
         for (it=h2.begin(); it != h2.end(); ++it){
-            const bracket b = it->first;
-            h1[b] += h2[b];  
+            const pmap p = it->first;
+            h1[p] += h2[p];  
         }
         return(retval(h1));
     } else {  // L2 is bigger
         for (it=h1.begin(); it != h1.end(); ++it){
-            const bracket b = it->first;
-            h2[b] += h1[b];  
+            const pmap p = it->first;
+            h2[p] += h1[p];  
         }
         return(retval(h2));
     }
@@ -89,8 +93,8 @@ List addL(
 
 //[[Rcpp::export]]
 bool equality(  // modelled on spray_equality()
-          const List L1, const NumericVector p1,
-          const List L2, const NumericVector p2  // p==powers
+              const List L1, const NumericVector p1, const List W1,
+              const List L2, const NumericVector p2, const List W2
            ){
     hyper2 h1,h2;
     hyper2::const_iterator it;
@@ -99,15 +103,15 @@ bool equality(  // modelled on spray_equality()
         return false;
     }
 
-    h1 = prepareL(L1,p1);
-    h2 = prepareL(L2,p2);
+    h1 = prepareL(L1,p1,W1);
+    h2 = prepareL(L2,p2,W2);
 
     for (it=h1.begin(); it != h1.end(); ++it){
-            const bracket b = it->first;
-            if(h1[b] != h2[b]){
+            const psub p = it->first;
+            if(h1[p] != h2[p]){
                 return false;
             } else {
-                h2.erase(b);
+                h2.erase(p);
             }
         }
 
@@ -122,17 +126,18 @@ bool equality(  // modelled on spray_equality()
 List accessor(
               const List L,
               const NumericVector powers,
+              const List W, // weights
               const List Lwanted
               ){
 
-    const hyper2 h=prepareL(L,powers);
+    const hyper2 h=prepareL(L,powers,W);
     hyper2 out;
-    bracket b;
+    psub p;
     const unsigned int n=Lwanted.size();
     unsigned int i,j;
 
     for(i=0; i<n ; i++){
-            b.clear();
+            p.clear();
             const SEXP jj = Lwanted[i]; // jj is temporary
             const Rcpp::CharacterVector names(jj);
 

@@ -12,8 +12,9 @@ using namespace std;
 using namespace Rcpp;
 
 typedef set<string> bracket;
-typedef map<bracket, long double> hyper2;
-typedef map<string, long double> psub;   // prob substitute object
+typedef map<string, long double> psub; // prob substitute object
+typedef map<psub, long double> hyper2;
+
 
 // again it might be nice to use unsigned_map above, but this would
 // need a hash function and this would require further work.

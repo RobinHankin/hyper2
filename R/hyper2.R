@@ -1,15 +1,19 @@
 
 
-`hyper2` <-  function(L=list(), d=0, pnames){
+`hyper2` <-  function(L=list(), d=0, pnames,weights){
+  if(missing(weights)){weights <- lapply(L,function(o){rep(1,length(o))})}
   if(length(d)==1){d <- rep(d,length(L))}
   if(missing(pnames)){pnames <- sort(unique(c(L,recursive=TRUE)))}
-  stopifnot(is_valid_hyper2(L,d,pnames))
-  out <- identityL(L,d)
+  stopifnot(is_valid_hyper2(L,d,pnames,weights))
+  out <- identityL(L,d,weights)
   out$pnames <- pnames
   class(out) <- 'hyper2'  # This is the only class assignment in the package
   return(out)
 }
 
+unit_weights <- function(L){
+    lapply(L,function(
+    
 ## Following three functions are the only accessor methods in the package
 setGeneric("brackets",function(x){standardGeneric("brackets")})
 setGeneric("powers"  ,function(x){standardGeneric("powers"  )})
