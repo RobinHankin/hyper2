@@ -104,8 +104,8 @@ package uses \code{adaptIntegrate} of the cubature package.
 \examples{
 
 # Two different measures of central tendency:
-mean_hyper2(chess,tol=0.1)
-maxp(chess)
+# mean_hyper2(chess,tol=0.1)   # takes ~10s to run
+maxp(chess)                    # faster
 
 # Using the 'disallowed' argument typically results in slow run times;
 # use high tol for speed:

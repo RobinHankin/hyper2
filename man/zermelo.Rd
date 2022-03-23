@@ -58,6 +58,6 @@ M
 # e.g. Agassi beats Becker 10 times and loses 4 times
 pairwise(M)
 zermelo(M)
-maxp(pairwise(M))
+# maxp(pairwise(M))  # should be identical (takes ~10s to run)
 
 }
