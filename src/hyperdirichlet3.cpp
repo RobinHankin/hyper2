@@ -1,22 +1,8 @@
 // -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
 
-#include <set>
-#include <map>
-#include <iostream>
-#include <Rcpp.h>
-#include <iterator>
-#include <vector>
-#include <assert.h>
-
-using namespace std;
-using namespace Rcpp;
-
-typedef map<string, long double> namedvector;  // c(ham=3,lec=1,lam=5) names=ham/lec/lam -- weights 3,1,5
-typedef map<namedvector, long double> hyper3;  // value = power
+#include "hyperdirichlet2.h"
 
 
-// again it might be nice to use unsigned_map above, but this would
-// need a hash function and this would require further work.
 
 hyper3 prepareL3(const List &L, const List &W, const NumericVector &d){
     hyper3 H;   
