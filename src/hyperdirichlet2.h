@@ -18,5 +18,6 @@ typedef map<string, long double> psub;   // prob substitute object
 // again it might be nice to use unsigned_map above, but this would
 // need a hash function and this would require further work.
 
-typedef map<string, long double> namedvector;  // c(ham=3,lec=1,lam=5) names=ham/lec/lam -- weights 3,1,5
-typedef map<namedvector, long double> hyper3;  // value = power
+typedef map<string, long double> weightedplayervector;  // c(ham=3,lec=5) names=ham/lec-- weights 3,5 (3ham+5lec)^n
+typedef map<string, long double> playerstrengths;  // c(ham=0.3,lec=0.2,lam=0.5) names=ham/lec/lam -- 
+typedef map<weightedplayervector, long double> hyper3;  // value = power
