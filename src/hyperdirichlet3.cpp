@@ -41,30 +41,32 @@ playerstrengths preparepmap3(const NumericVector &probs, const CharacterVector &
 List makebrackets3(const hyper3 H){// Returns a list of players, eg list('a',c('a','b'),c('a','xt'))
     List out;
     hyper3::const_iterator ih;
-    
+    int i;
     for(ih=H.begin(); ih != H.end(); ++ih){
         weightedplayervector nv = ih->first;
         weightedplayervector::iterator ion;
         CharacterVector t(nv.size());
-        int i=0;
-        for(ion=nv.begin() ; ion != nv.end() ; ion++){
-            t[i++] = ion->first;
+        for(i=0 , ion=nv.begin() ; ion != nv.end() ; ion++, i++){
+            t[i] = ion->first;
         }
         out.push_back(t);
     }
     return(out);
 }
 
-List makeweights3(const hyper3 H){// Returns a list of players, eg list(1,1:2,2.2)
+List makeweights3(const hyper3 H){// Returns a list of weights, eg list(1,1:2,2.2)
     List out;
     hyper3::const_iterator ih;
+    int i;
+    weightedplayervector::iterator ion;
     
      for(ih=H.begin(); ih != H.end(); ++ih){
         weightedplayervector nv = ih->first;
-        for(weightedplayervector::iterator in=nv.begin() ; in != nv.end() ; in++){
-            t[i] = in->second;  // cf makebrackets3() [otherwise identical]
+        Rcpp::NumericVector t(nv.size());
+        for(i=0 , ion=nv.begin() ; ion != nv.end() ; ion++, i++){
+            t[i] = ion->second;  // cf makebrackets3() [otherwise identical]
         }
-        out.push_back(ip->first);
+        out.push_back(t);
      }
      return(out);
  }
