@@ -110,13 +110,13 @@ List addL3(
             const weightedplayervector n = it->first;
             h1[n] += h2[n];  // the meat
         }
-        return(retval(h1));
+        return(retval3(h1));
     } else {  // L2 is bigger
         for (it=h1.begin(); it != h1.end(); ++it){
             const weightedplayervector n = it->first;
             h2[n] += h1[n];  
         }
-        return(retval(h2));
+        return(retval3(h2));
     }
 }
 
@@ -162,21 +162,18 @@ List accessor(
 
     const hyper3 h=prepareL3(L,W,powers);
     hyper3 out;
-    weightedplayervector n;
-    const unsigned int n=Lwanted.size();
+    const int n=Lwanted.size();
     unsigned int i,j;
+    weightedplayervector b;
 
     for(i=0; i<n ; i++){
-            n.clear();
             const SEXP jj = Lwanted[i];
             const SEXP kk = Wwanted[i];
             const Rcpp::CharacterVector players(jj);
-            const Rcpp::CharacterVector weights(kk);
+            const Rcpp::NumericVector weights(kk);
+            assert(players.size() == weights.size());
+            b = makeweightedplayervector3(players,weights);
 
-            for(j=0 ; j<(unsigned int) names.size(); j++){
-                b.insert((string) names[j]);
-            }
-            
             if(h.count(b)>0){
                 out[b] = h.at(b);
             }
@@ -186,8 +183,8 @@ List accessor(
     
 //[[Rcpp::export]]
 List overwrite3(  // H1[] <- H2
-                const List L1, const W1, const NumericVector powers1,
-                const List L2, const W2, const NumericVector powers2
+                const List L1, const List W1, const NumericVector powers1,
+                const List L2, const List W2, const NumericVector powers2
               ){
 
           hyper3 h1=prepareL3(L1,W1,powers1);
@@ -196,32 +193,33 @@ List overwrite3(  // H1[] <- H2
 
     for(it=h2.begin(); it != h2.end(); ++it){
         const weightedplayervector nv = it->first;
-        h1[nv] = h2.nv(b);
+        h1[nv] = h2.at(nv);
     }
     return retval3(h1);
 }
 
 //[[Rcpp::export]]
 List assigner3(  // H[L] <- v
-               const List L, const List W, const NumericVector p,
+               const List L , const List W, const NumericVector p,
                const List L2, const List W2,
                const NumericVector value
               ){
     hyper3 h=prepareL3(L,W,p);
-    weightedplayervector n;
+    weightedplayervector wp;
     hyper3::const_iterator it;
     const unsigned int n=L2.size();
     unsigned int i,j;
 
     for(i=0 ; i<n ; i++){
-        n.clear();
+        wp.clear();
         const SEXP jj = L2[i];  // jj is temporary
         const SEXP kk = W2[i];  // kk is temporary
 
         const Rcpp::CharacterVector iv(jj);
         const Rcpp::NumericVector iw(kk);
         for(j=0 ; j<(unsigned int) iv.size(); j++){
-            n[(string) iv[j]] = iw[j];
+            wp[(string) iv[j]] = iw[j];
+            wp[makeweightedplayervector(iv,iw)] = iw[j];
         } 
         h[n] = value[i]; // RHS might be zero in which case this entry is deleted from h
     }
