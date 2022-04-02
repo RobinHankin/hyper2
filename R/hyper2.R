@@ -11,9 +11,6 @@
   return(out)
 }
 
-unit_weights <- function(L){
-    lapply(L,function(
-    
 ## Following three functions are the only accessor methods in the package
 setGeneric("brackets",function(x){standardGeneric("brackets")})
 setGeneric("powers"  ,function(x){standardGeneric("powers"  )})
