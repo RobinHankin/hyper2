@@ -53,8 +53,8 @@ equality3 <- function(L1, W1, p1, L2, W2, p2) {
     .Call(`_hyper2_equality3`, L1, W1, p1, L2, W2, p2)
 }
 
-accessor <- function(L, W, powers, Lwanted, Wwanted) {
-    .Call(`_hyper2_accessor`, L, W, powers, Lwanted, Wwanted)
+accessor3 <- function(L, W, powers, Lwanted, Wwanted) {
+    .Call(`_hyper2_accessor3`, L, W, powers, Lwanted, Wwanted)
 }
 
 overwrite3 <- function(L1, W1, powers1, L2, W2, powers2) {

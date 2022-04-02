@@ -152,7 +152,7 @@ bool equality3(  // modelled on spray_equality()
 }
 
 //[[Rcpp::export]]
-List accessor(
+List accessor3(
               const List L,
               const List W,
               const NumericVector powers,

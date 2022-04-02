@@ -195,9 +195,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// accessor
-List accessor(const List L, const List W, const NumericVector powers, const List Lwanted, const List Wwanted);
-RcppExport SEXP _hyper2_accessor(SEXP LSEXP, SEXP WSEXP, SEXP powersSEXP, SEXP LwantedSEXP, SEXP WwantedSEXP) {
+// accessor3
+List accessor3(const List L, const List W, const NumericVector powers, const List Lwanted, const List Wwanted);
+RcppExport SEXP _hyper2_accessor3(SEXP LSEXP, SEXP WSEXP, SEXP powersSEXP, SEXP LwantedSEXP, SEXP WwantedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -206,7 +206,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector >::type powers(powersSEXP);
     Rcpp::traits::input_parameter< const List >::type Lwanted(LwantedSEXP);
     Rcpp::traits::input_parameter< const List >::type Wwanted(WwantedSEXP);
-    rcpp_result_gen = Rcpp::wrap(accessor(L, W, powers, Lwanted, Wwanted));
+    rcpp_result_gen = Rcpp::wrap(accessor3(L, W, powers, Lwanted, Wwanted));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -272,7 +272,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_hyper2_identityL3", (DL_FUNC) &_hyper2_identityL3, 3},
     {"_hyper2_addL3", (DL_FUNC) &_hyper2_addL3, 6},
     {"_hyper2_equality3", (DL_FUNC) &_hyper2_equality3, 6},
-    {"_hyper2_accessor", (DL_FUNC) &_hyper2_accessor, 5},
+    {"_hyper2_accessor3", (DL_FUNC) &_hyper2_accessor3, 5},
     {"_hyper2_overwrite3", (DL_FUNC) &_hyper2_overwrite3, 6},
     {"_hyper2_assigner3", (DL_FUNC) &_hyper2_assigner3, 6},
     {"_hyper2_evaluate3", (DL_FUNC) &_hyper2_evaluate3, 5},
