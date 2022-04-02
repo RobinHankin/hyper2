@@ -29,7 +29,7 @@ hyper3 prepareL3(const List &L, const List &W, const NumericVector &d){
     return(H);
 }
 
-playerstrengths preparepmap3(const NumericVector &probs, const CharacterVector &pnames){
+playerstrengths preparepmap3(const NumericVector &probs, const CharacterVector &pnames){// hamilton=0.7,vettel=0.2,button=0.1
     playerstrengths out;
 
     for(int i=0; i<probs.length() ; i++){
@@ -217,17 +217,13 @@ List assigner3(  // H[L] <- v
 
         const Rcpp::CharacterVector iv(jj);
         const Rcpp::NumericVector iw(kk);
-        for(j=0 ; j<(unsigned int) iv.size(); j++){
-            wp[(string) iv[j]] = iw[j];
-            wp[makeweightedplayervector(iv,iw)] = iw[j];
-        } 
-        h[n] = value[i]; // RHS might be zero in which case this entry is deleted from h
+        h[makeweightedplayervector3(iv,iw)] = value[i];
     }
     return retval3(h);
 }
                      
 //[[Rcpp::export]]
-double evaluate3(  // returns log-likelihood
+double evaluate3(  // reibturns log-likelihood
                 const List &L,
                 const List &W,  // weights
                 const NumericVector &powers,
@@ -237,8 +233,6 @@ double evaluate3(  // returns log-likelihood
 
     const hyper3 h = prepareL3(L,W,powers);
     playerstrengths psp = preparepmap3(probs,pnames);
-    playerstrengths psw = preparepmap3(weights,pnames);
-    
     hyper3::const_iterator it;
     double out=0;
     double bracket_total=0;
@@ -248,7 +242,8 @@ double evaluate3(  // returns log-likelihood
         const weightedplayervector n = it->first;
         bracket_total = 0;
         for (in=n.begin(); in != n.end(); ++in){
-            bracket_total += psp[*ib] * psw[*ib]; // the meat
+            bracket_total += psp[in->first] * (in->second); // the meat
+                /*            bracket_total += psp[*in] * psw[*in]; */
         }
         out += log(bracket_total) * (it->second); // also the meat
     }
