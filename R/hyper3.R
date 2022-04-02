@@ -1,8 +1,16 @@
 `hyper3` <- function(B=list(), W=list(), powers=0,pnames){
-                                        # hyper3(list(c("a","b"),c("b","c","e")),list(c(1,4),c(1,3,9)),1:2,letters[1:5])
-    if(length(powers)==1){powers <- rep(powers,length(L))}
-    if(missing(pnames)){pnames <- sort(unique(names(c(L ,recursive=TRUE))))}
+    if(all(unlist(lapply(B,is_ok_weightedplayers)))){
+        return(hyper3_nv(B,powers,pnames))
+    } else {
+        return(hyper3_bw(B,W,powers,pnames))
+    }
+}
 
+`hyper3_bw` <- function(B=list(), W=list(), powers=0,pnames){
+                                        # hyper3_bw(list(c("a","b"),c("b","c","e")),list(c(1,4),c(1,3,9)),1:2,letters[1:5]) 
+    stopifnot(length(B) == length(W))
+    if(length(powers)==1){powers <- rep(powers,length(B))}
+    if(missing(pnames)){pnames <- sort(unique(c(B ,recursive=TRUE)))}
     out <- identityL3(B,W,powers)  # the meat
     out$pnames <- pnames
     class(out) <- c('hyper3','hyper2')  # this is the only place class hyper3  is set
@@ -12,15 +20,23 @@
 `hyper3_nv` <-  function(L=list(), powers=0, pnames){ # "nv" = Named Vectors
     ## hyper3_nv(list(c(a=1,b=4),c(b=1,c=3,e=9)),1:2,letters[1:5])
     stopifnot(all(unlist(lapply(L,is_ok_weightedplayers))))
-    stopifnot(is_valid_hyper3(L,powers,pnames))
-    hyper3(lapply(L,names),lapply(L,as.vector),powers,pnames)
+    hyper3_bw(lapply(L,names),lapply(L,as.vector),powers,pnames)
 }
 
+
 `is_ok_weightedplayers` <- function(x){ # x=c(a=33,b=4,c=65)
-    if(is.null(names(x))){stop("must be a named vector")}
-    if(any(is.null(names(x)))){stop("all members must be named")}
-    if(any(x<0)){stop("negative members not allowed")}
-    if(any(table(names(x))>1)){stop("repeated player [maybe this should not be an error]")}
+    if(is.null(names(x))){
+        return(FALSE)
+    }
+    if(any(is.null(names(x)))){
+        return(FALSE)
+    }
+    if(any(x<0)){
+        return(FALSE)
+    }
+    if(any(table(names(x))>1)){
+        return(FALSE)
+    }
     return(TRUE)
 }
 
@@ -68,17 +84,18 @@
 
 `powers<-.hyper3` <- function(H,value){
     stopifnot(consistent(powers(H),value))
-    hyper3(as.namedvectorlist(H),value,pnames=pnames(H))
+    if(!is.disord(value) & length(value)>1){stop("replacement not defined")}
+    hyper3_nv(as.namedvectorlist(H),powers=value,pnames=pnames(H))
 }
 
 `hyper3_equal` <- function(e1,e2){
   equality3(
       elements(brackets(e1)), elements(weights(e1)),elements(powers(e1)),
-      elements(brackets(e2)), elements(weights(e2)),elements(powers(e2)),
+      elements(brackets(e2)), elements(weights(e2)),elements(powers(e2))
       )
 }
 
-`hyper3_add` <- function(e1,e2){stop()
+`hyper3_add` <- function(e1,e2){
   b1 <- elements(brackets(e1))
   b2 <- elements(brackets(e2))
   w1 <- elements(weights(e1))
@@ -87,7 +104,7 @@
   p2 <- elements(powers(e2))
   n1 <- pnames(e1)
   n2 <- pnames(e2)
-  out <- addL3(L1,W1,p1,L2,W2,p2)
+  out <- addL3(b1,w1,p1,b2,w2,p2)
   
   if(all(n2 %in% n1)){
       jj <- n1
@@ -102,19 +119,24 @@
 
 `Ops.hyper3` <-  function (e1, e2 = NULL) 
 {
-  stop("not implemented yet")
   f <- function(...){stop("odd---neither argument has class hyper3?")}
   unary <- nargs() == 1
   lclass <- inherits(e1,"hyper3")
   rclass <- !unary && inherits(e2,"hyper3")
   
   if(unary){
-      stop(gettextf("Unary operator %s not defined for hyper3 objects", dQuote(.Generic)))
-    }
+      if(.Generic == "+"){
+          return(e1)
+      } else if (.Generic == "-"){
+          return(hyper2_prod(e1,-1))
+      } else {
+          stop(gettextf("Unary operator %s not defined for hyper3 objects", dQuote(.Generic)))
+      }
+  }  # if(unary) closes
 
   if (!is.element(.Generic, c("+", "-", "==", "!=", "*", "^" ))){
       stop(gettextf("binary operator %s not defined for hyper3 objects", dQuote(.Generic)))
-   }
+  }
   
   if(lclass && rclass){  
     if (.Generic == "+"){
