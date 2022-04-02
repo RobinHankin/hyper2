@@ -93,6 +93,7 @@ List retval3(const hyper3 &H){  // used to return a list to R
 
 // [[Rcpp::export]]
 List identityL3(const List &L, const List &W, const NumericVector &p){
+    assert(L.size() == W.size());
     const hyper3 out = prepareL3(L,W,p);
     return retval3(out);
 }
