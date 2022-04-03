@@ -200,13 +200,11 @@
 }
 
 `assign_lowlevel3`<- function(x,index,value){ #H[index] <- value
-    stopifnot(class(x) == 'hyper2')
+    stopifnot('hyper2' %in% class(x))
     
     if(is.list(index)){
         ignore <- 3  # 'index' is supposed to be a list
-    } else if(is.matrix(index)){
-        index <- as.list(as.data.frame(t(index)))
-    } else if(is.vector(index)){
+    } else if(is_ok_weightedplayers(index)){
         index <- list(index)
     } else {
         stop("replacement index must be a list, a matrix, or a vector")
@@ -217,30 +215,35 @@
     if(length(value)==1){
         value <- rep(value, length(index))
     }
-    return(assigner(brackets(x),powers(x),index,value))
+    return(assigner3(elements(brackets(x    )),elements(weights(x    )),elements(powers(x)),
+                     elements(brackets(index)),elements(weights(index)),
+                     value))
 }
 
 `overwrite_lowlevel3` <- function(x,value){
-  stopifnot(class(x)     == 'hyper2')
-  stopifnot(class(value) == 'hyper2')
+  stopifnot(class(x    ) == 'hyper3')
+  stopifnot(class(value) == 'hyper3')
 
-  overwrite(brackets(x), powers(x), brackets(value), powers(value))
+  overwrite3(
+      elements(brackets(x    )), elements(weights(x    )), elements(powers(x    )), 
+      elements(brackets(value)), elements(weights(value)), elements(powers(value))
+  )
 }
 
-`[<-.hyper3` <- function(x, index, ..., value){
+`[<-.hyper3` <- function(x, index, ..., value){  # index must be a list of named vectors
     if(missing(index)){  # A[] <- B
-        jj <- overwrite_lowlevel(x,value)
+        jj <- overwrite_lowlevel3(x,value)
         if(all(pnames(value) %in% pnames(x))){
-            out <- hyper2(jj[[1]],jj[[2]],pnames=pnames(x))
+            out <- hyper3_bw(jj[[1]],jj[[2]],jj[[3]],pnames=pnames(x))
         } else {
-            out <- hyper2(jj[[1]],jj[[2]])
+            out <- hyper3(jj[[1]],jj[[2]],jj[[3]])
         }
     } else { # index supplied
-        jj <- assign_lowlevel(x,index,value)
+        jj <- assign_lowlevel3(x,index,value)
         if(all(c(index,recursive=TRUE) %in% pnames(x))){
-            out <- hyper2(jj[[1]],jj[[2]],pnames=pnames(x)) # do not change pnames
+            out <- hyper3_bw(jj[[1]],jj[[2]],jj[[3]],pnames=pnames(x)) # do not change pnames
         } else { # index introduces a new pname
-            out <- hyper2(jj[[1]],jj[[2]])
+            out <- hyper2_bw(jj[[1]],jj[[2]],jj[[3]])
         }
     }
     return(out)
