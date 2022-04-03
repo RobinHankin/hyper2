@@ -179,6 +179,67 @@
   }
 }
 
+# accessor3 <- function(L, W, powers, Lwanted, Wwanted) {}
 
-#x <- hyper3(list(c(a=1,b=4),c(b=1,c=3,e=9)),c(1,104),letters[1:5])
-#y <- hyper3(list(c(a=1,b=4),c(b=2,c=3,e=9)),c(1,104),letters[1:5])
+
+`[.hyper3` <- function(x, ...){ # H3[list(c(a=1),c(a=1,b=2))]
+    dots <- list(...)
+    stopifnot(is.list(dots))
+    dots <- dots[[1]]
+
+    out <- accessor3(
+        L       = elements(brackets(x)),
+        W       = elements(weights(x)),
+        powers  = elements(powers(x)),
+        Lwanted = lapply(dots,names),
+        Wwanted = lapply(dots,as.vector)
+                     )
+    return(hyper3_bw(out[[1]],out[[2]],out[[3]],pnames=pnames(x)))
+}
+
+`assign_lowlevel3`<- function(x,index,value){ #H[index] <- value
+    stopifnot(class(x) == 'hyper2')
+    
+    if(is.list(index)){
+        ignore <- 3  # 'index' is supposed to be a list
+    } else if(is.matrix(index)){
+        index <- as.list(as.data.frame(t(index)))
+    } else if(is.vector(index)){
+        index <- list(index)
+    } else {
+        stop("replacement index must be a list, a matrix, or a vector")
+    }
+    value <- elements(value)
+    stopifnot(is.numeric(value)) # coercion to integer is done in C
+    stopifnot(is.vector(value))
+    if(length(value)==1){
+        value <- rep(value, length(index))
+    }
+    return(assigner(brackets(x),powers(x),index,value))
+}
+
+`overwrite_lowlevel3` <- function(x,value){
+  stopifnot(class(x)     == 'hyper2')
+  stopifnot(class(value) == 'hyper2')
+
+  overwrite(brackets(x), powers(x), brackets(value), powers(value))
+}
+
+`[<-.hyper3` <- function(x, index, ..., value){
+    if(missing(index)){  # A[] <- B
+        jj <- overwrite_lowlevel(x,value)
+        if(all(pnames(value) %in% pnames(x))){
+            out <- hyper2(jj[[1]],jj[[2]],pnames=pnames(x))
+        } else {
+            out <- hyper2(jj[[1]],jj[[2]])
+        }
+    } else { # index supplied
+        jj <- assign_lowlevel(x,index,value)
+        if(all(c(index,recursive=TRUE) %in% pnames(x))){
+            out <- hyper2(jj[[1]],jj[[2]],pnames=pnames(x)) # do not change pnames
+        } else { # index introduces a new pname
+            out <- hyper2(jj[[1]],jj[[2]])
+        }
+    }
+    return(out)
+}
