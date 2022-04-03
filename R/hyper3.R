@@ -184,8 +184,10 @@
 
 `[.hyper3` <- function(x, ...){ # H3[list(c(a=1),c(a=1,b=2))]
     dots <- list(...)
-    stopifnot(is.list(dots))
-    dots <- dots[[1]]
+    if(nargs() == 2){ # need to distinguish x[c(a=1,b=1)] or x[list(c(a=1,b=2),c(a=1,b=3))]
+        if(is.list(dots[[1]])){dots <- dots[[1]]}
+    }
+    dots <- list(dots[[1]])
 
     out <- accessor3(
         L       = elements(brackets(x)),
