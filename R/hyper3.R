@@ -207,7 +207,7 @@
     } else if(is_ok_weightedplayers(index)){
         index <- list(index)
     } else {
-        stop("replacement index must be a list, a matrix, or a vector")
+        stop("replacement index must be a named vector, eg c(a=1,b=2)")
     }
     value <- elements(value)
     stopifnot(is.numeric(value)) # coercion to integer is done in C
@@ -215,9 +215,10 @@
     if(length(value)==1){
         value <- rep(value, length(index))
     }
-    return(assigner3(elements(brackets(x    )),elements(weights(x    )),elements(powers(x)),
-                     elements(brackets(index)),elements(weights(index)),
-                     value))
+    ## assigner3 <- function(L, W, p, L2, W2, value)
+
+    return(assigner3(elements(brackets(x)),elements(weights(x)),elements(powers(x)),
+                     names(index),as.vector(index),value))
 }
 
 `overwrite_lowlevel3` <- function(x,value){
@@ -239,11 +240,14 @@
             out <- hyper3(jj[[1]],jj[[2]],jj[[3]])
         }
     } else { # index supplied
+        dput(x)
         jj <- assign_lowlevel3(x,index,value)
+        dput(index)
+        dput(jj)
         if(all(c(index,recursive=TRUE) %in% pnames(x))){
             out <- hyper3_bw(jj[[1]],jj[[2]],jj[[3]],pnames=pnames(x)) # do not change pnames
         } else { # index introduces a new pname
-            out <- hyper2_bw(jj[[1]],jj[[2]],jj[[3]])
+            out <- hyper3_bw(jj[[1]],jj[[2]],jj[[3]])
         }
     }
     return(out)
