@@ -46,7 +46,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 ## setter methods end
 
-`is.hyper2` <- function(H){inherits(H,"hyper2")}
+`is.hyper2` <- function(H){inherits(H,"hyper2") & !inherits(H,"hyper3")}
+`is.hyper3` <- function(H){inherits(H,"hyper2") &  inherits(H,"hyper3")}
+
 `length.hyper2` <- function(x){length(x$brackets)}
 
 `is_constant` <- function(H){ length(H)==0 }
@@ -168,7 +170,14 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   } else {
     stop("length(p) must be either size(H) or size(H)-1")
   }
-  out <- evaluate(brackets(H), powers(H), probs=probs, pnames=pnames(H))
+  if(is.hyper2(H)){
+      out <- evaluate(brackets(H), powers(H), probs=probs, pnames=pnames(H))
+  } else if(is.hyper3(H)){
+      out <- evaluate3(brackets(H), weights(H),powers(H), probs=probs, pnames=pnames(H))
+  } else {
+      stop("H must be a hyper2 or hyper3 object")
+  }
+
   if(log){
     return(out)
   } else {
@@ -1085,7 +1094,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     if(missing(players)){
       return(x[order(names(x))])
     } else {
-      if(is.hyper2(players)){
+      if(is.hyper2(players) | is.hyper3(players)){
         players <- pnames(players)
       }
     }

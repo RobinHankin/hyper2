@@ -247,3 +247,30 @@
     }
     return(out)
 }
+
+
+`loglik_single_redundant` <- function(p,H,log=TRUE){
+  stopifnot(all(p>=0))
+  if(length(p) == size(H)-1){
+    stopifnot(sum(p)<=1)
+    probs <- fillup(p)
+  } else if(length(p) == size(H)){
+    if(is.null(names(p))){stop("p==size(H), p must be a named vector")}
+    stopifnot(abs(sum(p)-1) < 1e-6)  # small numerical tolerance
+    p <- ordertrans(p,H)  # no warning given if names not in correct order...
+    stopifnot(identical(names(p),pnames(H))) #...but they must match up
+    probs <- p
+  } else {
+    stop("length(p) must be either size(H) or size(H)-1")
+  }
+  out <- evaluate3(brackets(H), weights(H),powers(H), probs=probs, pnames=pnames(H))
+  if(log){
+    return(out)
+  } else {
+    return(exp(out))
+  }
+}
+
+
+
+
