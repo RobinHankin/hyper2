@@ -52,6 +52,8 @@
     paste(paste(names(x),unname(x),sep="="),collapse=", ")
 }
 
+`weights.hyper3` <- function(object, ...){object$weights}
+
 `as.namedvectorlist` <- function(H3){
     out <- list()
     b <- disordR::elements(brackets(H3))
@@ -200,13 +202,9 @@
 }
 
 `assign_lowlevel3`<- function(x,index,value){ #H[index] <- value
-    stopifnot('hyper2' %in% class(x))
+    stopifnot('hyper3' %in% class(x))
     
-    if(is.list(index)){
-        ignore <- 3  # 'index' is supposed to be a list
-    } else if(is_ok_weightedplayers(index)){
-        index <- list(index)
-    } else {
+    if(!is_ok_weightedplayers(index)){
         stop("replacement index must be a named vector, eg c(a=1,b=2)")
     }
     value <- elements(value)
@@ -240,10 +238,7 @@
             out <- hyper3(jj[[1]],jj[[2]],jj[[3]])
         }
     } else { # index supplied
-        dput(x)
         jj <- assign_lowlevel3(x,index,value)
-        dput(index)
-        dput(jj)
         if(all(c(index,recursive=TRUE) %in% pnames(x))){
             out <- hyper3_bw(jj[[1]],jj[[2]],jj[[3]],pnames=pnames(x)) # do not change pnames
         } else { # index introduces a new pname
