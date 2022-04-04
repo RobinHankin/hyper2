@@ -204,8 +204,8 @@
 `assign_lowlevel3`<- function(x,index,value){ #H[index] <- value
     stopifnot('hyper3' %in% class(x))
     
-    if(!is_ok_weightedplayers(index)){
-        stop("replacement index must be a named vector, eg c(a=1,b=2)")
+    if(is_ok_weightedplayers(index)){
+        index <- list(index)
     }
     value <- elements(value)
     stopifnot(is.numeric(value)) # coercion to integer is done in C
@@ -216,7 +216,7 @@
     ## assigner3 <- function(L, W, p, L2, W2, value)
 
     return(assigner3(elements(brackets(x)),elements(weights(x)),elements(powers(x)),
-                     names(index),as.vector(index),value))
+                     lapply(index,names),lapply(index,as.vector),value))
 }
 
 `overwrite_lowlevel3` <- function(x,value){
@@ -229,7 +229,7 @@
   )
 }
 
-`[<-.hyper3` <- function(x, index, ..., value){  # index must be a list of named vectors
+`[<-.hyper3` <- function(x, index, ..., value){  # index must be a named vector or a list of named vectors
     if(missing(index)){  # A[] <- B
         jj <- overwrite_lowlevel3(x,value)
         if(all(pnames(value) %in% pnames(x))){
