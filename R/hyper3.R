@@ -52,6 +52,7 @@
     paste(paste(names(x),unname(x),sep="="),collapse=", ")
 }
 
+setGeneric("weights",function(object, ...){standardGeneric("weights")})
 `weights.hyper3` <- function(object, ...){object$weights}
 
 `as.namedvectorlist` <- function(H3){
@@ -322,7 +323,7 @@
 `rhyper3` <- function(n=5,s=3,type='race'){
     switch(type,
            race = rrace3(n=n,s=s),
-           pair = pair3(n=n,s=s)
+           pair = rpair3(n=n,s=s)
            )
     }
 
