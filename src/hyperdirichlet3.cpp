@@ -251,13 +251,9 @@ double evaluate3(  // returns log-likelihood
     return out;
 }
 
-
-
-
 double differentiate_single_independent3( // d(log-likelihod)/dp; see also differentiate_single_weight3()
-
                  const hyper3 h,
-                 unsigned int i,   // component to diff WRT [yes it's ugly]
+                 const unsigned int i,   // component to diff WRT [yes it's ugly]
                  const unsigned int n,   // p_1 + ...+p_n = 1
                  const NumericVector probs,
                  const CharacterVector pnames
@@ -274,13 +270,14 @@ double differentiate_single_independent3( // d(log-likelihod)/dp; see also diffe
     double out = 0;
     for (ih=h.begin(); ih != h.end(); ++ih){  // standard hyper3 loop
         weightedplayervector wp = ih->first;
+        weightedplayervector ps = makeweightedplayervector3(pnames,probs); //ps == "player strengths"
 
         const double total_weight_diff = wp[(string) pnames[i  ]];
         const double total_weight_fill = wp[(string) pnames[n-1]];
         
         double bracket_total = 0;
         for (weightedplayervector::iterator iw=wp.begin(); iw != wp.end(); ++iw){
-            bracket_total += wp[iw->first] * (iw->second);  // the meat
+            bracket_total += ps[iw->first] * (iw->second);  // the meat
         }
 
         const double power = ih->second;
