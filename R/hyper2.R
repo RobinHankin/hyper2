@@ -346,7 +346,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     } else {
         stop("probs is wrong length")
     }
-    differentiate(brackets(H), powers(H), jj, pnames(H), size(H))$grad_comp
+    if(is.hyper2(H)){
+        return(differentiate(brackets(H), powers(H), jj, pnames(H), size(H))$grad_comp)
+    } else {
+        return(differentiate3(brackets(H), weights(H), powers(H), jj, pnames(H), size(H))$grad_comp)
+    }
 }
 
 `gradientn` <- function(H,probs=maxp(H)){
