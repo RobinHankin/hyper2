@@ -279,7 +279,6 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
         raceorder <- rep(1,n)
         raceorder[sample(n,1)] <- w
         names(raceorder) <- sample(players)
-        print(raceorder)
         for(j in seq_along(raceorder[-1])){
             out[raceorder[1]] %<>% inc
             out[raceorder] %<>% dec
