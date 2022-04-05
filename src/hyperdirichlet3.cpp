@@ -285,8 +285,8 @@ double differentiate_single_independent3( // d(log-likelihod)/dp; see also diffe
 
         const double power = ih->second;
         // the 'meat':
-        out += total_weight_diff_terms*power/bracket_total;
-        out -= total_weight_fill_terms*power/bracket_total; 
+
+        out += (total_weight_diff_terms-total_weight_fill_terms)*power/bracket_total;
     }
     return out;
 }
