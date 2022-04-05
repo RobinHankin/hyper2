@@ -69,3 +69,7 @@ evaluate3 <- function(L, W, powers, probs, pnames) {
     .Call(`_hyper2_evaluate3`, L, W, powers, probs, pnames)
 }
 
+differentiate3 <- function(L, W, powers, probs, pnames, n) {
+    .Call(`_hyper2_differentiate3`, L, W, powers, probs, pnames, n)
+}
+

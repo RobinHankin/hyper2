@@ -224,7 +224,7 @@ List assigner3(  // H[L] <- v
 }
                      
 //[[Rcpp::export]]
-double evaluate3(  // reibturns log-likelihood
+double evaluate3(  // returns log-likelihood
                 const List &L,
                 const List &W,  // weights
                 const NumericVector &powers,
@@ -251,20 +251,80 @@ double evaluate3(  // reibturns log-likelihood
     return out;
 }
 
+
+
+
+double differentiate_single_independent3( // d(log-likelihod)/dp; see also differentiate_single_weight3()
+
+                 const hyper3 h,
+                 unsigned int i,   // component to diff WRT [yes it's ugly]
+                 const unsigned int n,   // p_1 + ...+p_n = 1
+                 const NumericVector probs,
+                 const CharacterVector pnames
+                      ){
+                                  
+                 /* probs[0] == p_1, ..., probs[n-1] = p_n.  
+                    probs[n-1] = p_n = fillup value. */
+
+    hyper3::const_iterator ih;
+
+    assert(i > 0); 
+    assert(i < n);  // sic; strict
+
+    double out = 0;
+    for (ih=h.begin(); ih != h.end(); ++ih){  // standard hyper3 loop
+        weightedplayervector wp = ih->first;
+
+        const double total_weight_diff_terms = wp[(string) pnames[i  ]];
+        const double total_weight_fill_terms = wp[(string) pnames[n-1]];
+        
+        double bracket_total = 0;
+        for (weightedplayervector::iterator iw=wp.begin(); iw != wp.end(); ++iw){
+            bracket_total += wp[iw->first] * (iw->second);  // the meat
+        }
+
+        const double power = ih->second;
+        // the 'meat':
+        out += total_weight_diff_terms*power/bracket_total;
+        out -= total_weight_fill_terms*power/bracket_total; 
+    }
+    return out;
+}
+
+
+//[[Rcpp::export]]
+List differentiate3(  // returns gradient of log-likelihood for hyper3 object
+                const List &L,
+                const List &W,
+                const NumericVector &powers,
+                const NumericVector &probs,
+                const CharacterVector &pnames,
+                const NumericVector &n
+                  ){
+
+    unsigned int i;
+    const unsigned int nn=n[0];
+    NumericVector out(nn-1);  
+    const hyper3 h=prepareL3(L,W,powers);
+
+    for(i=0; i<nn-1; i++){
+        out[i] = differentiate_single_independent3(h,i,nn,probs,pnames);
+    }
+        return List::create(Named("grad_comp") =  out);
+}
+
+
 // following functions have a natural interpretation in terms of
-// hyper3 objects but not coded up for hyper3 (function headers
-// included below for reference)
+// hyper3 objects [the differentiation is with respect to p, with
+// weights held constant] but not coded up for hyper3 (function
+// headers included below for reference)
 
 /*
-  double differentiate_single_independent( // d(log-likelihod)/dp
   double differentiate_single_alln( // d(log-likelihod)/dp
   double second_derivative( // evaluate terms of the lower-right block of the bordered Hessian
 
 \\[[Rcpp::export]]
 List hessian_lowlevel
-
-\\[[Rcpp::export]]
-List differentiate
 
 \\[[Rcpp::export]]
 List differentiate_n

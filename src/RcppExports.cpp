@@ -257,6 +257,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// differentiate3
+List differentiate3(const List& L, const List& W, const NumericVector& powers, const NumericVector& probs, const CharacterVector& pnames, const NumericVector& n);
+RcppExport SEXP _hyper2_differentiate3(SEXP LSEXP, SEXP WSEXP, SEXP powersSEXP, SEXP probsSEXP, SEXP pnamesSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const List& >::type L(LSEXP);
+    Rcpp::traits::input_parameter< const List& >::type W(WSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type powers(powersSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type probs(probsSEXP);
+    Rcpp::traits::input_parameter< const CharacterVector& >::type pnames(pnamesSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(differentiate3(L, W, powers, probs, pnames, n));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_hyper2_identityL", (DL_FUNC) &_hyper2_identityL, 2},
@@ -276,6 +292,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_hyper2_overwrite3", (DL_FUNC) &_hyper2_overwrite3, 6},
     {"_hyper2_assigner3", (DL_FUNC) &_hyper2_assigner3, 6},
     {"_hyper2_evaluate3", (DL_FUNC) &_hyper2_evaluate3, 5},
+    {"_hyper2_differentiate3", (DL_FUNC) &_hyper2_differentiate3, 6},
     {NULL, NULL, 0}
 };
 
