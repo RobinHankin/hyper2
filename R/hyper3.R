@@ -171,9 +171,9 @@
       }
     } else if (.Generic == "-"){
       if(lclass && !rclass){
-        return(hyper3_sum_numeric(e1,-e2))
+        return(hyper2_sum_numeric(e1,-e2))
       } else if (!lclass && rclass){
-        return(hyper3_sum_numeric(e2,-e1))
+        return(hyper2_sum_numeric(e2,-e1))
       } else {
         stop("this cannot happen")
       }
@@ -271,6 +271,66 @@
   }
 }
 
+`rrace3` <- function(n=5,s=3,w=2){
+    players <- letters[seq_len(n)]
+    out <- hyper3()
+    for(i in seq_len(s)){
+        raceorder <- rep(1,n)
+        raceorder[sample(n,1)] <- w
+        names(raceorder) <- sample(players)
+        print(raceorder)
+        for(j in seq_along(raceorder[-1])){
+            out[raceorder[1]] %<>% inc
+            out[raceorder] %<>% dec
+            raceorder <- raceorder[-1]
+        }
+    }
+    return(out)
+}
+
+`rpair3` <- function(n=5,s=3,lambda=1.3){ # s = number of matches
+    players <- letters[seq_len(n)]
+    strengths <- zipf(n)
+    names(strengths) <- players
+    out <- hyper3()
+    for(i in seq_len(s)){  # iterate through matches
+        jj <- sample(players,2,replace=FALSE)
+        white <- jj[1]
+        black <- jj[2]
+       
+        prob_white_win <- strengths[white]*lambda / (strengths[white]*lambda + strengths[black])
+        if(runif(1)>prob_white_win){ # white wins
+            jj <- lambda
+            names(jj) <- white
+            out[jj] %<>% inc  # e.g. jj: c(a=1.1)
+            jj <- c(jj,1)
+            names(jj)[2] <- black
+            out[jj] %<>% dec # e.g. jj: c(a=1.1,b=1)
+        } else { # black wins
+            jj <- lambda
+            names(jj) <- black
+            out[jj] %<>% inc
+            jj <- c(jj,1)
+            names(jj)[2] <- white
+            out[jj] %<>% dec # e.g. jj: c(a=1.1,b=1)
+        }
+    }
+    return(out)
+}
+
+       
+`rhyper3` <- function(n=5,s=3,type='race'){
+    switch(type,
+           race = rrace3(n=n,s=s),
+           pair = pair3(n=n,s=s)
+           )
+    }
+
+
+maxp3 <- function(H3,startp,give=FALSE,fcm = NULL, fcv = NULL, 
+                  SMALL = 1e-06, maxtry = 100, ...){
 
 
 
+
+}
