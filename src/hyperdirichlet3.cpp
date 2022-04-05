@@ -275,8 +275,8 @@ double differentiate_single_independent3( // d(log-likelihod)/dp; see also diffe
     for (ih=h.begin(); ih != h.end(); ++ih){  // standard hyper3 loop
         weightedplayervector wp = ih->first;
 
-        const double total_weight_diff_terms = wp[(string) pnames[i  ]];
-        const double total_weight_fill_terms = wp[(string) pnames[n-1]];
+        const double total_weight_diff = wp[(string) pnames[i  ]];
+        const double total_weight_fill = wp[(string) pnames[n-1]];
         
         double bracket_total = 0;
         for (weightedplayervector::iterator iw=wp.begin(); iw != wp.end(); ++iw){
@@ -284,9 +284,9 @@ double differentiate_single_independent3( // d(log-likelihod)/dp; see also diffe
         }
 
         const double power = ih->second;
-        // the 'meat':
 
-        out += (total_weight_diff_terms-total_weight_fill_terms)*power/bracket_total;
+        // the 'meat':
+        out += (total_weight_diff-total_weight_fill)*power/bracket_total;
     }
     return out;
 }
