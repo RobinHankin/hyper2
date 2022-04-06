@@ -265,14 +265,14 @@ double differentiate_single_independent3( // d(log-likelihod)/dp; see also diffe
                     probs[n-1] = p_n = fillup value. */
 
     hyper3::const_iterator ih;
-
+    weightedplayervector ps = makeweightedplayervector3(pnames,probs); //ps == "player strengths"
     assert(i > 0); 
     assert(i < n);  // sic; strict
 
     double out = 0;
     for (ih=h.begin(); ih != h.end(); ++ih){  // standard hyper3 loop
         weightedplayervector wp = ih->first;
-        weightedplayervector ps = makeweightedplayervector3(pnames,probs); //ps == "player strengths"
+  
 
         const double total_weight_diff = wp[(string) pnames[i  ]];
         const double total_weight_fill = wp[(string) pnames[n-1]];
@@ -289,6 +289,7 @@ double differentiate_single_independent3( // d(log-likelihod)/dp; see also diffe
     }
     return out;
 }
+
 
 
 //[[Rcpp::export]]
