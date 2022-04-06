@@ -181,13 +181,22 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
 
 # accessor3 <- function(L, W, powers, Lwanted, Wwanted) {}
 
+char2nv <- function(x){
+    jj <- table(x)
+    out <- as.numeric(jj)
+    names(out) <- names(jj)
+    return(out)
+}
+    
+
 
 `[.hyper3` <- function(x, ...){ # H3[list(c(a=1),c(a=1,b=2))]
-    dots <- list(...)
-    if(nargs() == 2){ # need to distinguish x[c(a=1,b=1)] or x[list(c(a=1,b=2),c(a=1,b=3))]
-        if(is.list(dots[[1]])){dots <- dots[[1]]}
+    stopifnot(nargs() == 2)
+    dots <- list(...)[[1]]
+    if(!is.list(dots)){
+        if(is.character(dots)){dots <- char2nv(dots)}
+        dots <- list(dots)
     }
-    dots <- list(dots[[1]])
 
     out <- accessor3(
         L       = elements(brackets(x)),
