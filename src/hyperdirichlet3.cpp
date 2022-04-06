@@ -6,7 +6,9 @@ weightedplayervector makeweightedplayervector3(const CharacterVector players, co
     assert(players.size() == weights.size());
     weightedplayervector out;
     for(int i=0 ; i<players.size() ; i++){
-        out[(string) players[i]] = weights[i];
+        if(weights[i] != 0){
+            out[(string) players[i]] += weights[i];
+        }
     }
     return(out);
 }
