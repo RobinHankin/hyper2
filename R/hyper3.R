@@ -34,9 +34,6 @@
     if(any(x<0)){
         return(FALSE)
     }
-    if(any(table(names(x))>1)){
-        return(FALSE)
-    }
     return(TRUE)
 }
 
@@ -215,7 +212,7 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
         value <- rep(value, length(index))
     }
     ## assigner3 <- function(L, W, p, L2, W2, value)
-
+    print(index)
     return(assigner3(elements(brackets(x)),elements(weights(x)),elements(powers(x)),
                      lapply(index,names),lapply(index,as.vector),value))
 }
