@@ -78,14 +78,16 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `as.hyper2` <- function(L,d,pnames){
-  if(is.matrix(L)){
-    L <- as.list(as.data.frame(t(L)))
-  } else if(is.list(L)){
-    ignore <- 0
-  } else {
-    stop("first argument must be a list or a matrix")
-  }
-  return(hyper2(L,d,pnames))
+    if(is.matrix(L)){
+        L <- as.list(as.data.frame(t(L)))
+    } else if(is.hyper3(L)){
+        return(hyper3_to_hyper2(L))
+    } else if(is.list(L)){
+        ignore <- 0
+    } else {
+        stop("first argument must be a list or a matrix")
+    }
+    return(hyper2(L,d,pnames))
 }
 
 `.print.helper` <- function(cv){  # Character vector

@@ -52,6 +52,32 @@
 setGeneric("weights",function(object, ...){standardGeneric("weights")})
 `weights.hyper3` <- function(object, ...){object$weights}
 
+`hyper3_to_hyper2` <- function(x){
+    if(any(c(weights(x),recursive=TRUE) != 1)){
+        warning("not all weights are equal to one")
+    }
+    return(hyper2(L=elements(brackets(x)),d=elements(powers(x)),pnames=pnames(x)))
+}
+
+
+
+
+
+
+
+`as.hyper3` <- function(x){
+    if(is.hyper2(x)){
+        return(hyper3_bw(
+            B=brackets(x),
+            W=lapply(brackets(x),function(x){rep(1,length(x))}),
+            powers=powers(x),
+            pnames=pnames(x)
+        ))
+    } else {
+        stop("only hyper2 objects can be coerced at this time")
+    }
+}
+
 `as.namedvectorlist` <- function(H3){
     out <- list()
     b <- disordR::elements(brackets(H3))
