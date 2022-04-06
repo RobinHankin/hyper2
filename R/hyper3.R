@@ -221,7 +221,6 @@ char2nv <- function(x){
         value <- rep(value, length(index))
     }
     ## assigner3 <- function(L, W, p, L2, W2, value)
-    print(index)
     return(assigner3(elements(brackets(x)),elements(weights(x)),elements(powers(x)),
                      lapply(index,names),lapply(index,as.vector),value))
 }
@@ -245,6 +244,7 @@ char2nv <- function(x){
             out <- hyper3(jj[[1]],jj[[2]],jj[[3]])
         }
     } else { # index supplied
+        if(is.character(index)){index <- char2nv(index)}
         jj <- assign_lowlevel3(x,index,value)
         if(all(c(index,recursive=TRUE) %in% pnames(x))){
             out <- hyper3_bw(jj[[1]],jj[[2]],jj[[3]],pnames=pnames(x)) # do not change pnames
