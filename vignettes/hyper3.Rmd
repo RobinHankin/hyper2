@@ -32,7 +32,7 @@ likelihood function might be
 $$
 \left(\frac{\lambda p_1}{\lambda p_1 + p_2}\right)^{A}
 \left(\frac{p_2        }{\lambda p_1 + p_2}\right)^{B}
-\left(\frac{p_1    <    }{p_1 + \lambda p_2}\right)^{C}
+\left(\frac{p_1        }{p_1 + \lambda p_2}\right)^{C}
 \left(\frac{\lambda p_2}{p_1 + \lambda p_2}\right)^{D}.
 $$
 
@@ -76,7 +76,7 @@ unit sum.  These players might be conceputalised as F1 constructors
 argument).  Each constructor fields two cars and the order statistic
 might be
 
-\newcommand{\pr }{p_\mathrm{RB}}
+\newcommand{\pr}{p_\mathrm{RB}}
 \newcommand{\pm}{p_\mathrm{M}}
 \newcommand{\pf}{p_\mathrm{F}}
 
