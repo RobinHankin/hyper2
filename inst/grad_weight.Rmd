@@ -150,7 +150,6 @@ brackfunc <- function(w,D){
 }
 
 wanted <- list("p1",NULL,NULL,"p1","p2",NULL,"p2","p3","p3")
-wanted
 
 `f2` <- function(w,D, a=3,b=12,c=1,d=5,e=6,f=6){
   H <- hyper3()	      
@@ -201,4 +200,23 @@ We may even be a little clever  and use a central difference:
 ```{r}
 RHS2 <- (loglik(probs,f2(w=w+dw/2,D=D)) - loglik(probs,f2(w=w-dw/2,D=D)))/dw  # differential via numerics
 c(LHS,RHS2,LHS-RHS2)
+```
+
+If we wish to differentiate with respect to `D` we need to change the `wanted` list:
+
+```{r}
+o <- c("p1","p2")
+n <- NULL
+wantedD <- list(n,o,n,o,n,n,o,n,n)
+
+diff <- 0
+dD <- 1e-5
+B <- brackfunc(w,D)
+for(i in seq_along(wanted)){
+   diff <- diff +  grad_weight_single(H, probs, wpv=B[[i]],wanted=wantedD[[i]])
+}
+
+LHS <- diff  # using grad_weight_single()
+RHS <- (loglik(probs,f2(w,D=D+dD)) - loglik(probs,f2(w,D)))/dD  # differential via numerics
+c(LHS,RHS,LHS-RHS)
 ```
