@@ -92,20 +92,42 @@ print(c(lhs=LHS,rhs=RHS,diff=RHS-LHS))
 above we see very close agreement.
 
 
+# Slightly more complicated example
 
-## A slightly more complicated example
+```{r}
+H <- hyper3()
+f <- function(w){
+  H <- hyper3()
+  H[c(p1=1 , p2=w , p3=w , p4=1)] <- 5
+  H
+}
+w <- 1.4
+dw <- 1e-6
+HH <- f(w)
+HH
+probs <- c(p1=0.1,p2=0.2,p3=0.3,p4=0.4)
+wpv <- c(p1=1 , p2=w , p3=w , p4=1)
+LHS <- grad_weight_single(HH, probs, wpv, c("p2","p3"))
+RHS <-  (loglik(probs,f(w=w+dw)) - loglik(probs,f(w=w)))/dw
+c(RHS,LHS,LHS-RHS)
+```
 
 
-Two chess players, 1, and 2, play chess.  Our observations (chess
+## An example from chess
+
+
+Two chess players, 1, 2, and 3, play chess.  Our observations (chess
 games, say) comprise $a+b+c$ games in which $p_1$ played White,
 winning $a$ games, drawing $b$ and losing $c$ [we write $+a=b-c$]; and
-$d+e+f$ games in which $p_2$ played White, with $+d=e-f$.  Consider
-the following likelihood function:
+$d+e+f$ games in which $p_2$ played White, with $+d=e-f$.  There is
+also a single game between $p_3$ (white) who beat $p_1$ (black).
+Consider the following likelihood function:
 
 
 $$
 \frac{(w p_1)^a\cdot(D(p_1+p_2))^b\cdot p_2^c}{(w p_1+D(p_1+p_2)+p_2)^{a+b+c}}
 \frac{(w p_2)^d\cdot(D(p_1+p_2))^e\cdot p_1^f}{(w p_2+D(p_1+p_2)+p_1)^{d+e+f}}
+\frac{ w p_3}{wp_3+p_1}
 $$
 
 
@@ -123,12 +145,14 @@ brackfunc <- function(w,D){
   b4 = c(p1=w+D,p2=1+D),
   b5 = c(p2=w),
   b6 = c(p1=1),
-  b7 = c(p1=1+D,p2=w+D)
+  b7 = c(p1=1+D,p2=w+D),
+  b8 = c(p3=w),
+  b9 = c(p3=w,p1=1)
 )
 }
 brackfunc(w,D)
 
-wanted <- list(NULL,c("p1","p2"),NULL,c("p1","p2"), NULL,NULL,c("p1","p2"))
+wanted <- list(NULL,c("p1","p2"),NULL,c("p1","p2"), NULL,NULL,c("p1","p2"),NULL,NULL)
 wanted
 
 `f2` <- function(w,D, a=3,b=12,c=1,d=5,e=6,f=6){
@@ -142,6 +166,8 @@ wanted
   H[brackets[[2]]] %<>% inc(e)	 # sic, the draw brackets are the same
   H[brackets[[6]]] %<>% inc(f)	
   H[brackets[[7]]] %<>% dec(d+e+f)
+  H[brackets[[8]]] %<>% inc
+  H[brackets[[9]]] %<>% dec
   return(H)
 }
 
@@ -149,12 +175,10 @@ H <- f2(w=w, D=D)
 H
 ```
 
-
-
-
 $$
-\frac{(w p_1)^3\cdot(D(p_1+p_2))^{12}\cdot p_2^1}{(w p_1+D(p_1+p_2)+p_2)^{16}}
-\frac{(w p_2)^5\cdot(D(p_1+p_2))^6\cdot p_1^6}{(w p_2+D(p_1+p_2)+p_1)^{17}}
+\frac{(w p_1)^a\cdot(D(p_1+p_2))^b\cdot p_2^c}{(w p_1+D(p_1+p_2)+p_2)^{a+b+c}}
+\frac{(w p_2)^d\cdot(D(p_1+p_2))^e\cdot p_1^f}{(w p_2+D(p_1+p_2)+p_1)^{d+e+f}}
+\frac{ w p_3}{wp_3+p_1}
 $$
 
 
@@ -164,7 +188,7 @@ Differentiate with respect to `D`:
 ```{r}
 diff <- 0
 dw <- 1e-4
-probs <- c(p1=0.35 , p2=0.65)
+probs <- c(p1=0.15 , p2=0.45, p3=0.4)
 B <- brackfunc(w,D)
 for(i in seq_along(wanted)){
                                    diff <- diff +  grad_weight_single(H, probs, wpv=B[[i]],wanted=wanted[[i]])
