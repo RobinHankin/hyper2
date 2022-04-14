@@ -1,5 +1,8 @@
 useDynLib(hyper2, .registration=TRUE)
 
+import("Rdpack")
+importFrom("Rdpack",reprompt)
+
 exportPattern("^[[:alpha:]]+")
 
 importFrom(Rcpp, evalCpp)
@@ -56,3 +59,12 @@ S3method(sum,suplist)
 
 S3method("print",summary.hyper2)
 S3method("summary",hyper2)
+
+
+
+S3method(print,hyper3)
+S3method("powers<-",hyper3)
+S3method(Ops,hyper3)
+S3method("[", hyper3)
+S3method("[<-", hyper3)
+S3method("weights", hyper3)

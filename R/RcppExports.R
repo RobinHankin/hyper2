@@ -41,3 +41,35 @@ differentiate_n <- function(L, powers, probs, pnames, n) {
     .Call(`_hyper2_differentiate_n`, L, powers, probs, pnames, n)
 }
 
+identityL3 <- function(L, W, p) {
+    .Call(`_hyper2_identityL3`, L, W, p)
+}
+
+addL3 <- function(L1, W1, p1, L2, W2, p2) {
+    .Call(`_hyper2_addL3`, L1, W1, p1, L2, W2, p2)
+}
+
+equality3 <- function(L1, W1, p1, L2, W2, p2) {
+    .Call(`_hyper2_equality3`, L1, W1, p1, L2, W2, p2)
+}
+
+accessor3 <- function(L, W, powers, Lwanted, Wwanted) {
+    .Call(`_hyper2_accessor3`, L, W, powers, Lwanted, Wwanted)
+}
+
+overwrite3 <- function(L1, W1, powers1, L2, W2, powers2) {
+    .Call(`_hyper2_overwrite3`, L1, W1, powers1, L2, W2, powers2)
+}
+
+assigner3 <- function(L, W, p, L2, W2, value) {
+    .Call(`_hyper2_assigner3`, L, W, p, L2, W2, value)
+}
+
+evaluate3 <- function(L, W, powers, probs, pnames) {
+    .Call(`_hyper2_evaluate3`, L, W, powers, probs, pnames)
+}
+
+differentiate3 <- function(L, W, powers, probs, pnames, n) {
+    .Call(`_hyper2_differentiate3`, L, W, powers, probs, pnames, n)
+}
+

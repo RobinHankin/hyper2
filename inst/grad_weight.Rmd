@@ -1,0 +1,222 @@
+<---
+title: "grad_weight"
+author: "Robin KS Hankin"
+date: "10/04/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("disordR")
+```
+
+## Differentiate with respect to weights for a `hyper3` object
+
+We will start with a simple example.  Consider two players $p_1$ and
+$p_2$ who play tennis say, $a+b$ times with $p_1$ winning $a$ times
+and $p_2$ winning $b$ times.  We use the following likelihood function:
+
+$$
+\frac{(wp_1)^ap_2^b}{(wp_1+p_2)^{a+b}}
+$$
+
+where $w$ represents some form of competitive advantage present in the
+$a+b$ trials but perhaps absent in subsequent trials [this might be
+home ground advantage in soccer or the first-mover advantage in
+chess].  We may represent the log-likelihood in `hyper` idiom as
+follows:
+
+
+```{r,label=definefw}
+f <- function(w,a=5,b=5){
+    H <- hyper3()
+    H[c(p1=w)] <- a
+    H[c(p2=1)] <- b
+    H[c(p2=1,p1=w)] <- -(a+b)
+    H
+}
+```
+
+Thus
+
+```{r,label=showfinuse}
+f(w=1.1)
+```
+
+Here I consider how we may differentiate this support function with respect to $w$:
+
+```{r,label=definegws}
+grad_weight_single <- function(H, probs, wpv, wanted){
+    jj <- H[wpv]
+    alpha <- drop(powers(jj))
+    powers(jj) <- 1
+    alpha*sum(probs[names(probs) %in% wanted])/loglik(probs,jj,log=FALSE)
+}
+```
+
+Function `grad_weight_single()` takes a `hyper3` object `H`, a vector
+of non-negative probabilities `p` with unit sum, a named vector `wpv`
+corresponding to one of the brackets of `H`, and a character vector
+`wanted` that specifies which term(s) in bracket `wpv` have a weight
+that is to be differentiated with respect to.  If the weight appears
+in multiple brackets we need to call `grad_weight_single()` once for
+each bracket the weight appears in, and add the results.  For example:
+
+```{r,label=testthederiv}
+w <- 1.1
+dw <- 1e-4
+H <- f(w)
+probs <- c(p1=0.35, p2=0.65)
+
+wpv <- c(p1=w)
+wanted <- "p1"
+d1 <- grad_weight_single(H, probs, wpv, wanted)
+
+
+wpv <- c(p2=1,p1=w)
+wanted <- "p1"
+d2 <- grad_weight_single(H, probs, wpv, wanted)
+
+
+print(c(d1,d2))
+
+
+LHS <- (d1+d2)                                          # differential from grad_weight_single()
+RHS <- (loglik(probs,f(w+dw)) - loglik(probs,f(w)))/dw  # differential via numerics
+
+print(c(lhs=LHS,rhs=RHS,diff=RHS-LHS))
+```
+
+above we see very close agreement.
+
+
+# Slightly more complicated example
+
+```{r}
+H <- hyper3()
+f <- function(w){
+  H <- hyper3()
+  H[c(p1=1 , p2=w , p3=w , p4=1)] <- 5
+  H
+}
+w <- 1.4
+dw <- 1e-6
+HH <- f(w)
+HH
+probs <- c(p1=0.1,p2=0.2,p3=0.3,p4=0.4)
+wpv <- c(p1=1 , p2=w , p3=w , p4=1)
+LHS <- grad_weight_single(HH, probs, wpv, c("p2","p3"))
+RHS <-  (loglik(probs,f(w=w+dw)) - loglik(probs,f(w=w)))/dw
+c(RHS,LHS,LHS-RHS)
+```
+
+
+## An example from chess
+
+
+Two chess players, 1, 2, and 3, play chess.  Our observations (chess
+games, say) comprise $a+b+c$ games in which $p_1$ played White,
+winning $a$ games, drawing $b$ and losing $c$ [we write $+a=b-c$]; and
+$d+e+f$ games in which $p_2$ played White, with $+d=e-f$.  There is
+also a single game between $p_3$ (white) who beat $p_1$ (black).
+Consider the following likelihood function:
+
+
+$$
+\frac{(w p_1)^a\cdot(D(p_1+p_2))^b\cdot p_2^c}{(w p_1+D(p_1+p_2)+p_2)^{a+b+c}}
+\frac{(w p_2)^d\cdot(D(p_1+p_2))^e\cdot p_1^f}{(w p_2+D(p_1+p_2)+p_1)^{d+e+f}}
+\frac{ w p_3}{wp_3+p_1}
+$$
+
+
+```{r}
+
+w <- 1.2
+D <- 0.3
+
+brackfunc <- function(w,D){
+  list(
+  b1 = c(p1=w),
+  b2 = c(p1=D, p2=D),	
+  b3 = c(p2=1),
+  b4 = c(p1=w+D,p2=1+D),
+  b5 = c(p2=w),
+  b6 = c(p1=1),
+  b7 = c(p1=1+D,p2=w+D),
+  b8 = c(p3=w),
+  b9 = c(p3=w,p1=1)
+)
+}
+
+wanted <- list("p1",NULL,NULL,"p1","p2",NULL,"p2","p3","p3")
+
+`f2` <- function(w,D, a=3,b=12,c=1,d=5,e=6,f=6){
+  H <- hyper3()	      
+  brackets <- brackfunc(w,D)
+  H[brackets[[1]]] %<>% inc(a)	
+  H[brackets[[2]]] %<>% inc(b)	
+  H[brackets[[3]]] %<>% inc(c)	
+  H[brackets[[4]]] %<>% dec(a+b+c)
+  H[brackets[[5]]] %<>% inc(d)	
+  H[brackets[[2]]] %<>% inc(e)	 # sic, the draw brackets are the same
+  H[brackets[[6]]] %<>% inc(f)	
+  H[brackets[[7]]] %<>% dec(d+e+f)
+  H[brackets[[8]]] %<>% inc
+  H[brackets[[9]]] %<>% dec
+  return(H)
+}
+
+H <- f2(w=w, D=D)
+H
+```
+
+$$
+\frac{(w p_1)^a\cdot(D(p_1+p_2))^b\cdot p_2^c}{(w p_1+D(p_1+p_2)+p_2)^{a+b+c}}
+\frac{(w p_2)^d\cdot(D(p_1+p_2))^e\cdot p_1^f}{(w p_2+D(p_1+p_2)+p_1)^{d+e+f}}
+\frac{ w p_3}{wp_3+p_1}
+$$
+
+
+Differentiate with respect to `w`:
+
+```{r}
+diff <- 0
+dw <- 1e-4
+probs <- c(p1=0.15 , p2=0.45, p3=0.4)
+B <- brackfunc(w,D)
+for(i in seq_along(wanted)){
+   diff <- diff +  grad_weight_single(H, probs, wpv=B[[i]],wanted=wanted[[i]])
+}
+
+LHS <- diff  # using grad_weight_single()
+RHS <- (loglik(probs,f2(w=w+dw,D=D)) - loglik(probs,f2(w=w,D=D)))/dw  # differential via numerics
+c(LHS,RHS,LHS-RHS)
+```
+
+We may even be a little clever  and use a central difference:
+
+
+```{r}
+RHS2 <- (loglik(probs,f2(w=w+dw/2,D=D)) - loglik(probs,f2(w=w-dw/2,D=D)))/dw  # differential via numerics
+c(LHS,RHS2,LHS-RHS2)
+```
+
+If we wish to differentiate with respect to `D` we need to change the `wanted` list:
+
+```{r}
+o <- c("p1","p2")
+n <- NULL
+wantedD <- list(n,o,n,o,n,n,o,n,n)
+
+diff <- 0
+dD <- 1e-5
+B <- brackfunc(w,D)
+for(i in seq_along(wanted)){
+   diff <- diff +  grad_weight_single(H, probs, wpv=B[[i]],wanted=wantedD[[i]])
+}
+
+LHS <- diff  # using grad_weight_single()
+RHS <- (loglik(probs,f2(w,D=D+dD)) - loglik(probs,f2(w,D)))/dD  # differential via numerics
+c(LHS,RHS,LHS-RHS)
+```
