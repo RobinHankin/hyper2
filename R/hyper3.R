@@ -362,7 +362,57 @@ char2nv <- function(x){
 maxp3 <- function(H3,startp,give=FALSE,fcm = NULL, fcv = NULL, 
                   SMALL = 1e-06, maxtry = 100, ...){
 
+stop("not yet written")
+
+
+}
 
 
 
+`num3` <- function(v){  # numerators
+    out <- hyper3()
+    tv <- table(v)
+    for(i in seq_along(tv)){
+        jj <- 1
+        names(jj) <- names(tv)[i]
+        out[jj] <- tv[i]
+    }
+    return(out)
+}
+    
+`den3` <- function(v){  # denominators
+    tv <- table(v)
+    out <- as.vector(tv)
+    names(out) <- names(tv)
+    return(out)
+}
+       
+
+`race3` <- function(v,nonfinishers=NULL){ # v = c("a","b","a","a","c","a")
+    out <- num3(v)
+    for(i in seq_along(v)){
+        out[den3(c(v[i:length(v)],nonfinishers))] %<>% dec
+    }
+    return(out)
+}
+
+
+    
+## a <- read.table("constructor_2020.txt",header=TRUE)
+## constructor(a[,-ncol(a)])  # final column is points
+
+constructor <- function(a){  
+    out <- hyper3()
+    n <- a[,1]  # names of constructors
+    for(i in seq(from=2,to=ncol(a)-1)){
+        jj <- n[order(suppressWarnings(as.numeric(a[,i])),na.last=TRUE)]
+        n_finishers    <- sum(!is.na(jj))
+        n_nonfinishers <- sum( is.na(jj))
+        if(n_nonfinishers==0){
+            out <- out + race3(jj)
+        } else { 
+            out <- out + race3(jj[seq_len(finishers)],jj[finishers + seq_len(non_finishers)])
+        }
+    }
+    return(out)
 }
