@@ -304,22 +304,6 @@ char2nv <- function(x){
   }
 }
 
-`rrace3` <- function(n=5,s=3,w=2){
-    players <- letters[seq_len(n)]
-    out <- hyper3()
-    for(i in seq_len(s)){
-        raceorder <- rep(1,n)
-        raceorder[sample(n,1)] <- w
-        names(raceorder) <- sample(players)
-        for(j in seq_along(raceorder[-1])){
-            out[raceorder[1]] %<>% inc
-            out[raceorder] %<>% dec
-            raceorder <- raceorder[-1]
-        }
-    }
-    return(out)
-}
-
 `rpair3` <- function(n=5,s=3,lambda=1.3){ # s = number of matches
     players <- letters[seq_len(n)]
     strengths <- zipf(n)
@@ -397,18 +381,25 @@ stop("not yet written")
 }
 
 
+`rrace3` <- function(n=5,s=10,w=3){
+    out <- hyper3()
+    for(i in seq_len(w)){
+        out <- out + race3(sample(letters[seq_len(n)],s,replace=TRUE))
+    }
+    return(out)
+}
     
-## a <- read.table("constructor_2020.txt",header=TRUE)
+## a <- read.table("constructor_2021.txt",header=TRUE)
 ## constructor(a[,-ncol(a)])  # final column is points
 
-constructor <- function(a){  
+`constructor` <- function(a){  
     out <- hyper3()
     n <- a[,1]  # names of constructors
     for(i in seq(from=2,to=ncol(a)-1)){
         jj <- n[order(suppressWarnings(as.numeric(a[,i])),na.last=TRUE)]
         n_finishers    <- sum(!is.na(jj))
         n_nonfinishers <- sum( is.na(jj))
-        if(n_nonfinishers==0){
+        if(n_nonfinishers==0){ # technically not necessary:  "else" clause works for ==0
             out <- out + race3(jj)
         } else { 
             out <- out + race3(jj[seq_len(finishers)],jj[finishers + seq_len(non_finishers)])
