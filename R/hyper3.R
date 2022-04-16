@@ -335,15 +335,14 @@ char2nv <- function(x){
 }
 
        
-`rhyper3` <- function(n=5,s=3,type='race'){
+`rhyper3` <- function(n=5,s=3,type='race',...){
     switch(type,
-           race = rrace3(n=n,s=s),
-           pair = rpair3(n=n,s=s)
+           race = rracehyer3(n=n,size=s,...),
+           pair = rpair3(n=n,s=s,...)
            )
     }
 
-
-maxp3 <- function(H3,startp,give=FALSE,fcm = NULL, fcv = NULL, 
+`maxp3` <- function(H3,startp,give=FALSE,fcm = NULL, fcv = NULL, 
                   SMALL = 1e-06, maxtry = 100, ...){
 
 stop("not yet written")
@@ -371,8 +370,7 @@ stop("not yet written")
     return(out)
 }
        
-
-`race3` <- function(v,nonfinishers=NULL){ # v = c("a","b","a","a","c","a")
+`race_to_hyper3` <- function(v,nonfinishers=NULL){ # v = c("a","b","a","a","c","a")
     out <- num3(v)
     for(i in seq_along(v)){
         out[den3(c(v[i:length(v)],nonfinishers))] %<>% dec
@@ -380,11 +378,40 @@ stop("not yet written")
     return(out)
 }
 
+`rwinner3` <- function(pn,ps){    # returns a randomly generated race winner
+    ## pn = c(a=3,b=1,c=2)        # player numbers (three "a"s, one "b" and two "c"s) NB can include zeros
+    ## ps = c(a=0.1, b=0.7, c=0.2)  # player strengths
+    stopifnot(all(table(names(pn))<=1))
+    stopifnot(all(table(names(ps))<=1))
+    stopifnot(identical(names(pn),names(ps)))
 
-`rrace3` <- function(n=5,s=10,w=3){
+    sample(names(ps),1,prob=(pn*ps)/sum(pn*ps))
+}
+
+`rrace3` <- function(pn,ps){
+    ## pn = c(a=2,b=4,c=2,d=1) # player numbers (three "a"s, one "b" and two "c"s)
+    ## ps = c(a=0.3, b=0.1,c=0.2,d=0.4)  # player strengths    
+    out <- NULL
+    for(i in seq_len(sum(pn))){
+        nextfinisher <- rwinner3(pn,ps)
+        out <- c(out,nextfinisher)
+        pn[nextfinisher] <- pn[nextfinisher] - 1
+    }
+    return(out)
+}
+
+`rracehyper3` <- function(n=4,size=9,ps=NULL,races=3){
+    players <- letters[seq_len(n)]
+    if(is.null(ps)){
+        ps <- zipf(n)
+        names(ps) <- players
+    }
+    pn <- as.vector(table(factor(sample(players,size,replace=TRUE),levels=players)))  
+    names(pn) <- players
+
     out <- hyper3()
-    for(i in seq_len(w)){
-        out <- out + race3(sample(letters[seq_len(n)],s,replace=TRUE))
+    for(i in seq_len(races)){
+        out <- out + race_to_hyper3(rrace3(pn,ps))
     }
     return(out)
 }
