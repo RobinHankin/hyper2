@@ -17,13 +17,11 @@ ordertransplot(ox,oy,...)
   \item{ox,oy}{Rank vectors}
   \item{...}{Further arguments, passed to \code{plot()}}
 }
-
 \details{
   
   The best way to describe this function is with an example:
 
   \preformatted{
-
 > x <- c(d=2,a=3,b=1,c=4)
 > x
 d a b c 
@@ -79,12 +77,10 @@ a a b d
 }
   
 Object \code{x} shows that \code{d} came second, \code{a} came third and
-fourth, and `codeb} came first.  We can see that \code{ordertrans()}
+fourth, and \code{b} came first.  We can see that \code{ordertrans()}
 gives the same information in a more intelligible format.  This
 functionality is useful in the context of \code{hyper3} likelihood
 functions.
-
-
 }
 \value{Returns a named vector}
 \author{Robin K. S. Hankin}

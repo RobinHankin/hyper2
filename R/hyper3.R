@@ -59,12 +59,6 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
     return(hyper2(L=elements(brackets(x)),d=elements(powers(x)),pnames=pnames(x)))
 }
 
-
-
-
-
-
-
 `as.hyper3` <- function(x){
     if(is.hyper2(x)){
         return(hyper3_bw(
@@ -370,7 +364,7 @@ stop("not yet written")
     return(out)
 }
        
-`race_to_hyper3` <- function(v,nonfinishers=NULL){ # v = c("a","b","a","a","c","a")
+`ordervec2supp3` <- function(v,nonfinishers=NULL){ # v = c("a","b","a","a","c","a")
     out <- num3(v)
     for(i in seq_along(v)){
         out[den3(c(v[i:length(v)],nonfinishers))] %<>% dec
@@ -411,7 +405,7 @@ stop("not yet written")
 
     out <- hyper3()
     for(i in seq_len(races)){
-        out <- out + race_to_hyper3(rrace3(pn,ps))
+        out <- out + ordervec2supp3(rrace3(pn,ps))
     }
     return(out)
 }
@@ -419,7 +413,7 @@ stop("not yet written")
 ## a <- read.table("constructor_2021.txt",header=TRUE)
 ## constructor(a[,-ncol(a)])  # final column is points
 
-`constructor` <- function(a){  
+`ordertable2supp3` <- function(a){  
     out <- hyper3()
     n <- a[,1]  # names of constructors
     for(i in seq(from=2,to=ncol(a)-1)){
@@ -427,9 +421,9 @@ stop("not yet written")
         n_finishers    <- sum(!is.na(jj))
         n_nonfinishers <- sum( is.na(jj))
         if(n_nonfinishers==0){ # technically not necessary:  "else" clause works for ==0
-            out <- out + race3(jj)
+            out <- out + ordervec2supp3(jj)
         } else { 
-            out <- out + race3(jj[seq_len(finishers)],jj[finishers + seq_len(non_finishers)])
+            out <- out + ordervec2supp3(jj[seq_len(finishers)],jj[finishers + seq_len(non_finishers)])
         }
     }
     return(out)
