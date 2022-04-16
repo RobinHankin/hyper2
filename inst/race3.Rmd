@@ -12,6 +12,8 @@ library("hyper2")
 library("disordR")
 ```
 
+(takes about 15 minutes to process)
+
 Consider a race in which there are six runners 1-6 but we happen to
 know that three of the runners (1,2,3) are clones of strength $p_a$,
 say, two of the runners (4,5) have strength $p_b$, and the final
@@ -150,11 +152,25 @@ maxp(ordervec2supp3(c("a","b","a","b")))
 If we allow non-finishers there is another nontrivial order statistic,
 viz $\left(a,b,\left\lbrace a,b\right\rbrace\right)$:
 
+$$
+\mathcal{L}(a)=
+\frac{a}{2a+2b}\cdot
+\frac{b}{ a+2b}\propto\frac{a(1-a)}{2-a}
+$$
 
-# The constructors championship
+(see how the likelihood function is actually simpler than for the
+complete order statistic).  The evaluate would be $2-\sqrt{2}\simeq
+0.586$:
+
+```{r label=maxnonfinishers,cache=TRUE}
+o <- ordervec2supp3(c("a","b"),nonfinishers=c("a","b"))
+o
+maxp(o)
+```
+
+# The constructors' championship
 
 Here we define  likelihood function for the constructors' championship.
-
 
 ```{r,dotheconst}
 jj <- read.table("constructor_2021.txt",header=TRUE)
@@ -162,10 +178,16 @@ constructor_table_2021 <- jj[,-ncol(jj)]
 constructor_table_2021[,1:10]
 ```
 
+Looking at the first column we see that the constructors are Mercedes
+("`Merc`"), Red Bull Racing Honda ("`RBRH`"), and so on.  Each
+constructor fields two cars in each race.  Looking at the next column,
+we see the order statistic for Bahrain (`BHR`).  We see that Mercedes
+came first and third, Red Bull came second and fifth, Ferrari sixth
+and eighth, and so on.
+
 ```{r,maketheconst,cache=TRUE}
 constructor_2021 <- ordertable2supp3(constructor_table_2021)
 ```
-
 
 Then
 
@@ -175,7 +197,23 @@ mc <- maxp(constructor_2021)
 mc
 ```
 
-
-```{r}
+```{r,label=drawaconstructorpie}
 pie(mc)
 ```
+
+We may test the null of equal strengths:
+
+```{r,label=testequalityconstructor,cache=TRUE}
+equalp.test(constructor_2021)
+```
+
+and see that there is (very) strong evidence to reject this null.
+Further, we may test the hypothesis that the big four (viz Mercedies,
+Ferrari, Red Bull Racing Honda, and McLaren-Mercedes) are equal:
+
+```{r,label=testsameconstructor,cache=TRUE}
+samep.test(constructor_2021,c("Merc","Ferrari","RBRH","MM")) # ~10 mins
+```
+
+and fail to reject that null.
+
