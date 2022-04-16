@@ -1,0 +1,181 @@
+---
+title: "Races with hyper3 objects"
+author: "Robin KS Hankin"
+date: "10/04/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(1)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("disordR")
+```
+
+Consider a race in which there are six runners 1-6 but we happen to
+know that three of the runners (1,2,3) are clones of strength $p_a$,
+say, two of the runners (4,5) have strength $p_b$, and the final
+runner (6) is of strength $p_c$.  The runners race and the finishing order is:
+
+
+$$a\succ c\succ b\succ a\succ a \succ b$$
+
+Thus the winner was $a$, second place for $b$, third for $a$, and so
+on.  Alternatively we might say that $a$ came first, fourth, and
+fifth; $b$ came third and sixth, and $c$ came second.  The
+Plackett-Luce likelihood function for $p_a,p_b,p_c$ would be
+
+$$
+\frac{p_a}{3p_a+2p_b+p_c}\cdot
+\frac{p_c}{2p_a+2p_b+p_c}\cdot
+\frac{p_b}{2p_a+2p_b    }\cdot
+\frac{p_a}{2p_a+ p_b    }\cdot
+\frac{p_a}{ p_a+ p_b    }\cdot
+\frac{p_b}{      p_b    },\qquad p_a+p_b+p_c=1
+$$
+
+The likelihood function is easily specified in package idiom:
+
+
+```{r, label=definehyper3}
+H <- ordervec2supp3(c("a","c","b","a","a","b"))
+H
+```
+
+```{r, label=maximizeprobs, cache=TRUE}
+mH  <-  maxp(H)
+mH
+```
+
+We can test various hypotheses, for example that the competitors are of equal strength:
+
+```{r testequality, cache=TRUE}
+equalp.test(H)
+```
+
+showing that this small dataset does not allow one to say that the
+competitors differ.  However, it is easy to generate synthetic order
+statistics where one can reject the null of equality of strength:
+
+
+```{r,biggerrace,cache=TRUE}
+o <- rrace3(pn=c(a=20,b=11,c=7),ps=c(a=0.7,b=0.2,c=0.1))
+o
+H <- ordervec2supp3(o)
+H
+```
+
+Above, we specify that there are 20 $a$'s, 11 $b$'s and 7 $c$'s with
+strength $70\%$, $20\%$, and $10\%$ respectively.  Recall this means
+that, in a head-to-head between $a$ and $b$ we would have $a$ winning
+with probability $0.7/(0.7+0.2)=\frac{7}{9}$.
+
+```{r,bigraceestimation,cache=TRUE}
+mH <- maxp(H)
+mH
+pTRUE <- c(a=0.7,b=0.2,c=0.1)   # true values 
+mH - pTRUE # residual
+```
+
+Above we see a reasonably close agreement between the true values and the estimate.
+
+```{r,dothetest,cache=TRUE}
+equalp.test(H)
+```
+
+Above we see strong evidence to reject the hypothesis that
+$p_a=p_b=p_c=\frac{1}{3}$.  We may also test the hypothesis that the
+strength vector is equal to its true value:
+
+
+```{r,isittrue,cache=TRUE}
+knownp.test(H,pTRUE)
+```
+
+And above we see that there is no evidence to reject the hypothesis
+that the strengths are in fact the specified strengths in `pTRUE`.
+
+# Some simple cases
+
+The simplest nontrivial case is three competitors with strengths
+$a,a,b$ and finishing ordr $a\succ b\succ a$.  The likelihood
+function would be
+
+$$
+\frac{a}{2a+b}\cdot\frac{b}{a+b}
+$$
+
+In this case we know that $a+b=1$ so this is equal to
+$\mathcal{L}=\mathcal{L}(a)=\frac{a(1-a)}{1+a}$.
+
+$$
+\frac{d\mathcal{L}}{da}=\frac{(1+a)(1-2a)-a(1-a)}{(1+a)^2}=
+\frac{1-2a+a-2a^2 -a + a^2}{(1+a)^2}=
+\frac{1-2a-a^2}{(1+a)^2}
+$$
+
+This will be zero at $\sqrt{2}\pm 1$; we also note that
+$d^2\mathcal{L}/da^2=-4(1+a)^{-3}$, manifestly strictly negative for
+$0\leq a\leq 1$: the root is a maximum.
+
+
+```{r label=maxaba,cache=TRUE}
+maxp(ordervec2supp3(c("a","b","a")))
+```
+
+above, we see close agreement with the theoretical value of
+$(\sqrt{2}-1,1-\sqrt{2})\simeq (0.414,0.586)$
+
+With four competitors we have five nontrivial order statistics which,
+without loss of generality, are $(a,b,a,a)$ and $(a,a,b,a)$.
+$(a,b,a,b)$, $(a,b,b,a)$, $(a,b,c,a)$. Taking $(a,b,a,b)$ as an
+example we have
+
+$$
+\mathcal{L}(a)=
+\frac{a}{2a+2b}\cdot
+\frac{b}{ a+2b}\cdot
+\frac{a}{ a+ b}\cdot
+\frac{b}{    b}=\frac{a^2-a^3}{4-2a}
+$$
+
+the evaluate would be a root of $2a^2-7a+4$, or $(7-\sqrt{17})/4\simeq
+0.72$:
+
+
+```{r label=maxabab,cache=TRUE}
+maxp(ordervec2supp3(c("a","b","a","b")))
+```
+
+If we allow non-finishers there is another nontrivial order statistic,
+viz $\left(a,b,\left\lbrace a,b\right\rbrace\right)$:
+
+
+# The constructors championship
+
+Here we define  likelihood function for the constructors' championship.
+
+
+```{r,dotheconst}
+jj <- read.table("constructor_2021.txt",header=TRUE)
+constructor_table_2021 <- jj[,-ncol(jj)]
+constructor_table_2021[,1:10]
+```
+
+```{r,maketheconst,cache=TRUE}
+constructor_2021 <- ordertable2supp3(constructor_table_2021)
+```
+
+
+Then
+
+
+```{r,label=maxconstr,cache=TRUE}
+mc <- maxp(constructor_2021)
+mc
+```
+
+
+```{r}
+pie(mc)
+```
