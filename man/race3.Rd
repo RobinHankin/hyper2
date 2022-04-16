@@ -22,7 +22,7 @@ rracehyper3(n=4,size=9,ps=NULL,races=3)
 }
 
 \arguments{
-  \item{v}{Object}
+  \item{v}{Character vector showing finishing order.}
   \item{nonfinishers}
   \item{pn}{object}
   \item{pn}{object}
@@ -34,7 +34,7 @@ rracehyper3(n=4,size=9,ps=NULL,races=3)
   indicated by the \code{3} in their names.
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{rrank}},\code{\link{ordertable2supp}}}
+\seealso{\code{\link{rrank}},\code{\link{ordertable2supp}},\code{\link{ordertrans}}}
 \examples{
 
 
