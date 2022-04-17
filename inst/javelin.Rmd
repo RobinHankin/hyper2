@@ -1,0 +1,59 @@
+---
+title: "Javelins with hyper3 objects"
+author: "Robin KS Hankin"
+date: "10/04/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(1)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("disordR")
+```
+
+
+`https://en.wikipedia.org/w/index.php?title=Athletics_at_the_2020_Summer_Olympics_%E2%80%93_Men%27s_javelin_throw&oldid=1051014985`
+
+
+```{r}
+a <- read.table("javelin.txt",header=TRUE)
+a
+a <- t(a)
+a
+o <- NULL
+for(i in seq_len(ncol(a))){
+  jj <- as.numeric(a[,i])
+  names(jj) <- rep(colnames(a)[i],length(jj))
+  o <- c(o,jj)
+}
+o <-sort(o,na.last=TRUE,decreasing=TRUE)
+o
+names(o)
+plot(o)
+```
+
+Now process it:
+
+```{r,label=dothething1,cache=TRUE}    	   
+H1 <- ordervec2supp3(v=names(o)[!is.na(o)],nonfinishers=names(o)[ is.na(o)])
+m1 <- maxp(H1)
+m1
+```
+
+
+```{r,label=dothething2,cache=TRUE}    	   
+H2 <- ordervec2supp3(v=names(o)[!is.na(o)])
+m2 <- maxp(H2)
+m2
+```
+
+```{r,plotm}
+pie(m1)
+pie(m2)
+dotchart(m1,pch=16)
+dotchart(m2,pch=16)
+par(pty="s")
+plot(m1,m2,pch=16,type="p",asp=1)
+abline(0,1)
+```
