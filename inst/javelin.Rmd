@@ -19,18 +19,15 @@ library("disordR")
 ```{r}
 a <- read.table("javelin.txt",header=TRUE)
 a
-a <- t(a)
-a
-o <- NULL
-for(i in seq_len(ncol(a))){
-  jj <- as.numeric(a[,i])
-  names(jj) <- rep(colnames(a)[i],length(jj))
-  o <- c(o,jj)
-}
-o <-sort(o,na.last=TRUE,decreasing=TRUE)
+
+o <- c(matrix(suppressWarnings(as.numeric(c(a,recursive=TRUE))),nrow(a),ncol(a)))
+names(o) <- c(matrix(rownames(a),nrow(a),ncol(a)))
+o <- sort(o,na.last=TRUE,decreasing=TRUE)
 o
 names(o)
-plot(o)
+n <- length(levels(as.factor(names(o))))
+plot(o,pch=16,col=rainbow(n))
+legend("topright",pch=16,col=rainbow(n),legend=levels(as.factor(names(o))))
 ```
 
 Now process it:
