@@ -205,7 +205,7 @@ constructor_points_2021 <- sort(constructor_points_2021,dec=TRUE)
 constructor_points_2021 
 
 constructor_table_2021 <- jj[,-ncol(jj)]
-constructor_table_2021[,1:10]
+constructor_table_2021[,1:17]
 constructor_2021_table <- constructor_table_2021
 ```
 
