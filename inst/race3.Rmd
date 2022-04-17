@@ -168,12 +168,42 @@ o
 maxp(o)
 ```
 
+Now consider
+
+$$a\succ b\succ c\succ a$$
+
+with likelihood function
+
+$$
+\mathcal{L} =
+\frac{a}{2a+b+c}\cdot
+\frac{b}{ a+b+c}\cdot
+\frac{c}{ a  +c},\qquad a+b+c=1$$
+
+It can be shown that this has a maximum if $a^3+4a^2+4a-1=0$.
+Although cubic equations have analytical roots, the expression is
+complicated, and equal to about `c(a=0.2056,b=0.5466,c=0.2478)`:
+
+```{r,label=abca,cache=TRUE}
+maxp(ordervec2supp3(c("a","b","c","a")))
+```
+
+
+
+
 # The constructors' championship
 
 Here we define  likelihood function for the constructors' championship.
 
 ```{r,dotheconst}
 jj <- read.table("constructor_2021.txt",header=TRUE)
+i <- seq(from=1,by=2,to=nrow(jj)) # extract every second entry for points
+constructor_points_2021 <- jj[i,ncol(jj)]
+names(constructor_points_2021) <- jj[i,1]
+
+constructor_points_2021 <- sort(constructor_points_2021,dec=TRUE)
+constructor_points_2021 
+
 constructor_table_2021 <- jj[,-ncol(jj)]
 constructor_table_2021[,1:10]
 ```
@@ -187,18 +217,21 @@ and eighth, and so on.
 
 ```{r,maketheconst,cache=TRUE}
 constructor_2021 <- ordertable2supp3(constructor_table_2021)
+pnames(constructor_2021) <- names(constructor_points_2021)
 ```
 
 Then
 
 
 ```{r,label=maxconstr,cache=TRUE}
-mc <- maxp(constructor_2021)
-mc
+constructor_2021_maxp <-  maxp(constructor_2021)
+mc <- constructor_2021_maxp  # saves typing
 ```
 
 ```{r,label=drawaconstructorpie}
 pie(mc)
+dotchart(mc,pch=16)
+ordertransplot(rank(-mc),rank(-constructor_points_2021),xlab="likelihood rank",ylab="points rank")
 ```
 
 We may test the null of equal strengths:
@@ -215,5 +248,18 @@ Ferrari, Red Bull Racing Honda, and McLaren-Mercedes) are equal:
 samep.test(constructor_2021,c("Merc","Ferrari","RBRH","MM")) # ~10 mins
 ```
 
-and fail to reject that null.
+and fail to reject that null.  How about the mid-range constructors:
 
+```{r,label=testsameconstructorlowscores,cache=TRUE}
+samep.test(constructor_2021,c("ATH","ARRF","AR","AMM")) # ~ 10 mins
+```
+
+
+### Package dataset {-}
+
+Following lines create `constructor.rda`, residing in the `data/`
+directory of the package.
+
+```{r,label=saveconstructordataset}
+save(constructor_2021_maxp,constructor_2021,constructor_table_2021,file="constructor.rda")
+```

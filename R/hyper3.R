@@ -331,7 +331,7 @@ char2nv <- function(x){
        
 `rhyper3` <- function(n=5,s=3,type='race',...){
     switch(type,
-           race = rracehyer3(n=n,size=s,...),
+           race = rracehyper3(n=n,size=s,...),
            pair = rpair3(n=n,s=s,...)
            )
     }
@@ -343,7 +343,6 @@ stop("not yet written")
 
 
 }
-
 
 
 `num3` <- function(v){  # numerators
@@ -409,7 +408,15 @@ stop("not yet written")
     }
     return(out)
 }
-    
+
+`pnames<-.hyper3` <- function(x,value){
+    hyper3(
+        elements(brackets(x)),
+        elements(weights(x)),
+        elements(powers(x)),
+        pnames=value)
+}
+
 ## a <- read.table("constructor_2021.txt",header=TRUE)
 ## constructor(a[,-ncol(a)])  # final column is points
 
