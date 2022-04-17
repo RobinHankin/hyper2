@@ -7,9 +7,9 @@
 \alias{race_to_hyper3}
 \title{Various functionality for races and hyper3 likelihood functions}
 \description{
-  Various functions for calculating the likelihood function for order
+Various functions for calculating the likelihood function for order
 statistics in the context of hyper3 likelihood functions.  Compare
-\code{ggol()} for \code{hyper2} objects.    Used in the
+\code{ggol()} for \code{hyper2} objects.  Used in the
 \code{constructor()} suite of analysis.
 }
 \usage{
@@ -20,13 +20,14 @@ rwinner3(pn,ps)
 rrace3(pn,ps)
 rracehyper3(n=4,size=9,ps=NULL,races=3)
 }
-
 \arguments{
-  \item{v}{Character vector showing finishing order.}
-  \item{nonfinishers}
-  \item{pn}{object}
-  \item{pn}{object}
-  \item{n,size,races}
+  \item{v}{Ranks in the form of a character vector}
+  \item{nonfinishers}{Character vector (a set) showing players that did
+    not finish}
+  \item{pn}{A named integer vector showing numbers of each player}
+  \item{ps}{A named vector showing strengths of each bplayer}
+  \item{n,size,races}{Arguments specifying the complexity of the random
+    \code{hyper3} object returned by \code{rracehyper3()}}
 }
 \details{
 
@@ -36,7 +37,6 @@ rracehyper3(n=4,size=9,ps=NULL,races=3)
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{rrank}},\code{\link{ordertable2supp}},\code{\link{ordertrans}}}
 \examples{
-
 
 ## player numbers (two "a"s, four "b"s, two "c"s and a "d"):
 pn <- c(a=2,b=4,c=2,d=1) 

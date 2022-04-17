@@ -206,6 +206,7 @@ constructor_points_2021
 
 constructor_table_2021 <- jj[,-ncol(jj)]
 constructor_table_2021[,1:10]
+constructor_2021_table <- constructor_table_2021
 ```
 
 Looking at the first column we see that the constructors are Mercedes
@@ -217,7 +218,6 @@ and eighth, and so on.
 
 ```{r,maketheconst,cache=TRUE}
 constructor_2021 <- ordertable2supp3(constructor_table_2021)
-pnames(constructor_2021) <- names(constructor_points_2021)
 ```
 
 Then
@@ -261,5 +261,9 @@ Following lines create `constructor.rda`, residing in the `data/`
 directory of the package.
 
 ```{r,label=saveconstructordataset}
-save(constructor_2021_maxp,constructor_2021,constructor_table_2021,file="constructor.rda")
+save(
+constructor_2021_maxp,
+constructor_2021,
+constructor_2021_table,
+file="constructor.rda")
 ```

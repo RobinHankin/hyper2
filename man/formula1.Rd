@@ -18,6 +18,7 @@
 \alias{F1_2017}
 \alias{F1_2018}
 \alias{F1_2019}
+\alias{constructor}
 \docType{data}
 \title{Formula 1 dataset}
 \description{Race results from 2017 Formula One World Championship}
@@ -34,7 +35,7 @@ formula1_points_systems(top=11)
 
 Object \code{formula1} is a \code{hyper2} object that gives a likelihood
 function for the strengths of the competitors of the 2017 Formula One
-World Championship.  Object \code{F1_table_2017} is an order table: a
+(Drivers') World Championship.  Object \code{F1_table_2017} is an order table: a
 data frame with rows being drivers, columns being venues, and entries
 being places.  Thus looking at the first row, first column we see that
 Hamilton placed second in Austria.
@@ -47,6 +48,8 @@ Object \code{F1_table_2017} is simply the first 20 columns of
 Function \code{formula1_points_system()} gives various possible points
 systems for the winner, second, third, etc, placing drivers.  
 
+The constructors' championship is discussed at \code{constructor.Rd}
+
 }
 \references{
 
@@ -55,7 +58,7 @@ systems for the winner, second, third, etc, placing drivers.
   \url{https://en.wikipedia.org/w/index.php?title=2017_Formula_One_World_Championship&oldid=839923210}
   [Online; accessed 14-May-2018]
   }
-\seealso{\code{\link{ordertable2supp}}}
+\seealso{\code{\link{ordertable2supp}},\code{\link{constructor}}}
 \examples{
 summary(formula1)
 \dontrun{#Takes too long
