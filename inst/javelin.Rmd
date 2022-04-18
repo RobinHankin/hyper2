@@ -16,17 +16,19 @@ library("disordR")
 `https://en.wikipedia.org/w/index.php?title=Athletics_at_the_2020_Summer_Olympics_%E2%80%93_Men%27s_javelin_throw&oldid=1051014985`
 
 
-```{r}
+```{r,label=loadjavelinandconvert}
 a <- read.table("javelin.txt",header=TRUE)
 a
-
-o <- c(matrix(suppressWarnings(as.numeric(c(a,recursive=TRUE))),nrow(a),ncol(a)))
-names(o) <- c(matrix(rownames(a),nrow(a),ncol(a)))
-o <- sort(o,na.last=TRUE,decreasing=TRUE)
+o <- attemptstable2supp3(a,decreasing=TRUE,give.supp=FALSE)
 o
-names(o)
+```
+
+
+Plot the data in visual form:
+
+```{r, label=plotjav}
 n <- length(levels(as.factor(names(o))))
-plot(o,pch=16,col=rainbow(n))
+plot(o,pch=16,col=rainbow(n)[as.factor(names(o))])
 legend("topright",pch=16,col=rainbow(n),legend=levels(as.factor(names(o))))
 ```
 

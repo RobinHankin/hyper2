@@ -435,3 +435,27 @@ stop("not yet written")
     }
     return(out)
 }
+
+
+wtest <- function(formula,data){
+    stopifnot(is.formula(formula))
+    
+
+
+}
+
+`attemptstable2supp3` <- function(a, decreasing, give.supp=TRUE, dnf.last=TRUE){
+    o <- c(matrix(suppressWarnings(as.numeric(c(a,recursive=TRUE))),nrow(a),ncol(a)))
+    names(o) <- c(matrix(rownames(a),nrow(a),ncol(a)))
+    o <- sort(o,na.last=TRUE,decreasing=TRUE)
+    if(give.supp){
+        if(dnf.last){
+            nf <- names(o)[is.na(o)]
+        } else {
+            nf <- NULL
+        }
+        return(ordervec2supp3(v=names(o)[!is.na(o)], nonfinishers=nf))
+    } else {
+        return(o)
+    }
+}
