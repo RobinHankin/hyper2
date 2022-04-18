@@ -17,7 +17,7 @@ num3(v)
 den3(v)
 race_to_hyper3(v,nonfinishers=NULL)
 rwinner3(pn,ps)
-rrace3(pn,ps)
+rrace3(pn=c(a=2,b=4,c=2,d=1),ps=c(a=0.3, b=0.1,c=0.2,d=0.4))
 rracehyper3(n=4,size=9,ps=NULL,races=3)
 }
 \arguments{
@@ -37,6 +37,8 @@ rracehyper3(n=4,size=9,ps=NULL,races=3)
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{rrank}},\code{\link{ordertable2supp}},\code{\link{ordertrans}}}
 \examples{
+
+rrace3() # moderate-sized default
 
 ## player numbers (two "a"s, four "b"s, two "c"s and a "d"):
 pn <- c(a=2,b=4,c=2,d=1) 

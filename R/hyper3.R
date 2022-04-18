@@ -381,9 +381,10 @@ stop("not yet written")
     sample(names(ps),1,prob=(pn*ps)/sum(pn*ps))
 }
 
-`rrace3` <- function(pn,ps){
-    ## pn = c(a=2,b=4,c=2,d=1) # player numbers (three "a"s, one "b" and two "c"s)
-    ## ps = c(a=0.3, b=0.1,c=0.2,d=0.4)  # player strengths    
+`rrace3` <- function(pn=c(a=2,b=4,c=2,d=1),ps=c(a=0.3, b=0.1,c=0.2,d=0.4)){
+    ## pn: c(a=2,b=4,c=2,d=1) # player numbers (two "a"s, four "b"s etc)
+    ## ps: c(a=0.3, b=0.1,c=0.2,d=0.4)  # player strengths
+    
     out <- NULL
     for(i in seq_len(sum(pn))){
         nextfinisher <- rwinner3(pn,ps)
