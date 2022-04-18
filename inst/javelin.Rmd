@@ -17,12 +17,11 @@ library("disordR")
 
 
 ```{r,label=loadjavelinandconvert}
-a <- read.table("javelin.txt",header=TRUE)
-a
-o <- attemptstable2supp3(a,decreasing=TRUE,give.supp=FALSE)
-o
-```
+javelin_table <- read.table("javelin.txt",header=TRUE)
+a <- javelin_table # saves typing
 
+o <- attemptstable2supp3(a,decreasing=TRUE,give.supp=FALSE)
+```
 
 Plot the data in visual form:
 
@@ -35,16 +34,17 @@ legend("topright",pch=16,col=rainbow(n),legend=levels(as.factor(names(o))))
 Now process it:
 
 ```{r,label=dothething1,cache=TRUE}    	   
-H1 <- ordervec2supp3(v=names(o)[!is.na(o)],nonfinishers=names(o)[ is.na(o)])
-m1 <- maxp(H1)
-m1
+javelin <- attemptstable2supp3(a,decreasing=TRUE,give.supp=TRUE)
+H1 <- javelin # saves typing
+javelin1_maxp <- maxp(H1)
+m1 <- javelin1_maxp
 ```
 
 
 ```{r,label=dothething2,cache=TRUE}    	   
 H2 <- ordervec2supp3(v=names(o)[!is.na(o)])
-m2 <- maxp(H2)
-m2
+javelin2_maxp  <- maxp(H2)
+m2 <- javelin2_maxp
 ```
 
 ```{r,plotm}
@@ -56,3 +56,15 @@ par(pty="s")
 plot(m1,m2,pch=16,type="p",asp=1)
 abline(0,1)
 ```
+
+
+
+### Package dataset {-}
+
+Following lines create `javelin.rda`, residing in the `data/`
+directory of the package.
+
+```{r,label=savejavelindataset}
+save(javelin,javelin_table,javelin1_maxp,javelin2_maxp,  file="javelin.rda")
+```
+
