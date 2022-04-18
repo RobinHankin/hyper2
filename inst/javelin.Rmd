@@ -19,11 +19,25 @@ library("disordR")
 ```{r,label=loadjavelinandconvert}
 javelin_table <- read.table("javelin.txt",header=TRUE)
 a <- javelin_table # saves typing
-
-o <- attemptstable2supp3(a,decreasing=TRUE,give.supp=FALSE)
+javelin_table
 ```
 
-Plot the data in visual form:
+Above, we see that Chopra threw 87.03m on his first throw, 87.58m on
+his second, and so on.  Vadlejch threw 83.98m on his first throw, etc.
+We may convert this to a named vector with elements being the throw
+distances, and names being the competitors, using
+`attemptstable2supp3()`:
+
+```{r,label=converttosupp3,cache=TRUE}
+javelin_vector <- attemptstable2supp3(a,decreasing=TRUE,give.supp=FALSE)
+javelin_vector
+o <- javelin_vector # saves typing
+```
+
+Above we see that Chopra threw the longest and second-longest throws
+of 87.58m and 87.03 respectively; Vadlejch threw the third-longest
+throw of 86.67m, and so on.  It is easy to plot the data in visual
+form:
 
 ```{r, label=plotjav}
 n <- length(levels(as.factor(names(o))))
@@ -31,23 +45,36 @@ plot(o,pch=16,col=rainbow(n)[as.factor(names(o))])
 legend("topright",pch=16,col=rainbow(n),legend=levels(as.factor(names(o))))
 ```
 
-Now process it:
+Now convert the attempts table to a `hyper3` object, again using
+function `attemptstable2supp3()` but this time pass `give.supp=TRUE`.
+However, note that there are two reasonable interpretations: firstly,
+we simply ignore no-throws [in the package docs, these are sometimes
+referred to as "DNF", or "Did not finish", following Formula 1
+terminology]:
 
-```{r,label=dothething1,cache=TRUE}    	   
-javelin <- attemptstable2supp3(a,decreasing=TRUE,give.supp=TRUE)
-H1 <- javelin # saves typing
-javelin1_maxp <- maxp(H1)
+```{r,label=dothething2,cache=TRUE}    	   
+javelin1 <- ordervec2supp3(v=names(o)[!is.na(o)])
+H1 <- javelin1 # saves typing
+javelin1_maxp  <- maxp(H1)
 m1 <- javelin1_maxp
 ```
 
+Secondly, we may treat no-throws as being inferior to any actual
+measured throw.  To do this it is easiest to pass `give.supp=TRUE` to
+`attemptstable2supp3()`:
 
-```{r,label=dothething2,cache=TRUE}    	   
-H2 <- ordervec2supp3(v=names(o)[!is.na(o)])
-javelin2_maxp  <- maxp(H2)
+```{r,label=dothething1,cache=TRUE}    	   
+javelin2 <- attemptstable2supp3(a,decreasing=TRUE,give.supp=TRUE)
+H2 <- javelin2 # saves typing
+javelin2_maxp <- maxp(H2)
 m2 <- javelin2_maxp
 ```
 
+Inveestigation:
+
+
 ```{r,plotm}
+rbind(one=m1,two=m2)
 pie(m1)
 pie(m2)
 dotchart(m1,pch=16)
