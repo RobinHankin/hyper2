@@ -47,7 +47,7 @@ ps <- c(a=0.3, b=0.1,c=0.2,d=0.4)  # player strengths
 
 rwinner3(pn,ps)              # winner, randomly chosen
 rrace3(pn,ps)                 # A random race
-race_to_hyper3(rrace3(pn,ps))  # a hyper3 object
+ordervec2supp3(rrace3(pn,ps))  # a hyper3 object
 rrace3()                        # a hyper3 object for multiple races
 
 }
