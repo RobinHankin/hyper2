@@ -34,8 +34,8 @@ o <- javelin_vector # saves typing
 
 Above we see that Chopra threw the longest and second-longest throws
 of 87.58m and 87.03 respectively; Vadlejch threw the third-longest
-throw of 86.67m, and so on.  It is easy to plot the data in visual
-form:
+throw of 86.67m, and so on.  `NA` entries correspond to no-throws.  It
+is easy to plot the data in visual form:
 
 ```{r, label=plotjav}
 n <- length(levels(as.factor(names(o))))
@@ -70,16 +70,14 @@ m2 <- javelin2_maxp
 
 Investigation:
 
-
 ```{r,plotm}
 rbind(one=m1,two=m2)
 pie(m1)
 pie(m2)
 dotchart(m1,pch=16)
 dotchart(m2,pch=16)
-par(pty="s")
-plot(m1,m2,pch=16,type="p",asp=1)
 abline(0,1)
+ordertransplot(m1,m2)
 ```
 
 
