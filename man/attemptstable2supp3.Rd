@@ -1,5 +1,6 @@
-\name{attemptstable2supp}
+\name{attemptstable2supp3}
 \alias{attemptstable2supp}
+\alias{attemptstable2supp3}
 \title{Translate attempt tables to hyper3 support functions}
 \description{\loadmathjax
 description here

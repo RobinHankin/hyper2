@@ -18,7 +18,6 @@
 \alias{F1_2017}
 \alias{F1_2018}
 \alias{F1_2019}
-\alias{constructor}
 \docType{data}
 \title{Formula 1 dataset}
 \description{Race results from 2017 Formula One World Championship}

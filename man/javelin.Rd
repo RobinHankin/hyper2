@@ -2,6 +2,7 @@
 \alias{javelin}
 \alias{javelin1}
 \alias{javelin2}
+\alias{javelin_vector}
 \alias{javelin_maxp}
 \alias{javelin1_maxp}
 \alias{javelin2_maxp}

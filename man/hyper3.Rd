@@ -29,7 +29,6 @@
 \alias{print.hyper3}
 \alias{rhyper3}
 \alias{rpair3}
-\alias{rrace3}
 \alias{weights}
 \alias{weights.hyper3}
 \title{Weighted probability vectors: \code{hyper3} objects
