@@ -1,6 +1,7 @@
-\name{zermelo}
-\alias{zermelo}
+\name{pairwise}
 \alias{pairwise}
+\alias{zermelo}
+\alias{home_away}
 \title{Pairwise comparisons}
 \description{
 
@@ -10,9 +11,15 @@
   maximization of pairwise Bradley-Terry likelihoods (such as those
   produced by function \code{pairwise()}).
 
+  Function \code{home_away()} takes two matrices, one for home wins and
+  one for away wins.  It returns a \code{hyper2} support function that
+  includes a home advantage ghost.
+  
 }
 \usage{
+pairwise(M)
 zermelo(M, maxit = 100, start, tol = 1e-10, give = FALSE)
+home_away(home_games_won, away_games_won)
 }
 \arguments{
   \item{M}{Matrix of pairwise comparison results}
@@ -22,10 +29,16 @@ zermelo(M, maxit = 100, start, tol = 1e-10, give = FALSE)
   \item{tol}{Numerical tolerance for stopping criterion}
   \item{give}{Boolean with default \code{FALSE} meaning to return the
     evaluate and \code{TRUE} meaning to return all iterations}
+\item{home_games_won, away_games_won}{Matrices showing home games won
+  and away games won}
 }
 \details{
   In function \code{zermelo()}, the diagonal is disregarded.
 
+  If \code{home_games_won} is complex, then the real parts of the
+  entries are interpreted as home games won, and the imaginary parts as
+  away games won.
+  
 }
 \references{
   \itemize{
@@ -39,8 +52,12 @@ number 1, pages 384--406
 }
 \author{Robin K. S. Hankin}
 \note{
-An extended discussion is given in \code{inst/zermelo.Rmd} and also
-\code{inst/karate.Rmd}. 
+
+An extended discussion of \code{pairwise()} is given in
+\code{inst/zermelo.Rmd} and also \code{inst/karate.Rmd}.  Function
+\code{home_away()} is described and used in
+\code{inst/home_advantage.Rmd}.
+
 }
 \seealso{\code{\link{maxp}}}
 \examples{ #Data is the top 5 players from Borozki's table 1

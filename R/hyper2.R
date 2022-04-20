@@ -1181,3 +1181,38 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     dirichlet(rowSums(M)) - hyper2(apply(index,1,function(x){rownames(M)[x]},simplify=FALSE),jj[index])
 }
 
+`home_away` <- function(home_games_won,away_games_won){
+    if(is.complex(home_games_won)){
+        away_games_won <- Im(home_games_won)
+        home_games_won <- Re(home_games_won) # note, away_games_won is assigned first
+    }
+    teams <- rownames(home_games_won)
+    stopifnot(identical(teams,colnames(home_games_won)))
+    stopifnot(identical(teams,rownames(away_games_won)))
+    stopifnot(identical(teams,colnames(away_games_won)))
+    teams <- c(teams,"home")
+    
+    H <- hyper2(pnames=teams)
+
+    for(i in seq_len(nrow(home_games_won))){
+        for(j in seq_len(ncol(home_games_won))){
+            if(i != j){  # diagonal means a team plays itself, meaningless.
+                ## First deal with home_games:
+                game_winner <- teams[i]
+                game_loser  <- teams[j]
+                no_of_matches <- home_games_won[i,j] # won with home strength helping
+                H[c(game_winner,           "home")] %<>% inc(no_of_matches)  # won with home strength helping
+                H[c(game_winner,game_loser,"home")] %<>% dec(no_of_matches)
+
+                ## now away games:
+                no_of_matches <- away_games_won[i,j] # won without the benefit of home strength
+                H[c(game_winner                  )] %<>% inc(no_of_matches)  # won without home ground helping...
+                H[c(game_winner,game_loser,"home")] %<>% dec(no_of_matches)  # home strength nevertheless on denominator
+                                
+            } # if(i != j) closes
+        } # j loop closes
+    } # i loop closes
+    return(H)
+}
+
+
