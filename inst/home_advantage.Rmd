@@ -13,17 +13,18 @@ vignette: >
 </p>
 
 
+(takes about ten minutes to run without cache)
+
 Here I analyse a small synthetic dataset for home ground advantage.
 
-
 First load the package:
-```{r}
+```{r,label=libload}
 library(hyper2)
 ```
 
 Now generate the dataset:
 
-```{r}
+```{r,label=genthedata}
 home_games_won <- matrix(c(
     NA, 16, 12, 11,
     19, NA, 19, 16,
@@ -57,14 +58,14 @@ times and lost 5 times.
 
 We will create a hyper2 object with the teams and home ground advantage term:
 
-```{r}
+```{r,label=makehyper2}
 H <- hyper2(pnames=c(teams,"home"))
 ```
 
 
 First include the home games won:
 
-```{r}
+```{r,label=includehome}
 for(i in seq_len(nrow(home_games_won))){
   for(j in seq_len(ncol(home_games_won))){
     if(i != j){  # diagonal means a team plays itself, meaningless
@@ -80,7 +81,7 @@ for(i in seq_len(nrow(home_games_won))){
 
 Now away games won:
 
-```{r}
+```{r,label=awaygameswon}
 for(i in seq_len(nrow(away_games_won))){
   for(j in seq_len(ncol(away_games_won))){
     if(i != j){
@@ -96,14 +97,14 @@ for(i in seq_len(nrow(away_games_won))){
 
 Thus
 
-```{r}
+```{r,label=showH}
 H
 ```
 
 Visually:
 
 
-```{r}
+```{r,label=showvisH}
 dotchart(maxp(H))
 ```
   
@@ -113,7 +114,7 @@ likelihood subject to the home strength being *less than* its
 argument:
 
 
-```{r}
+```{r,label=nullofzerohomestrength}
 f <- function(home){
 	small <- 1e-3
 	maxp(H,startp=rep((1-small)/4,4),give=TRUE,fcm=t(rep(1,4)),fcv=1-home)$value
@@ -126,7 +127,7 @@ $p_\mathrm{home}=1-(p_A+p_B+p_C+p_D)$] is constrained to be less than
 argument `home`.  Using this function, the likelihood ratio test is
 straightforward:
 
-```{r}
+```{r,label=showLambda,cache=TRUE}
 Lambda <- -2*(f(0.01)-maxp(H,give=TRUE)$value)
 Lambda
 ```
@@ -137,7 +138,7 @@ is always interesting to plot likelihood functions.  To plot a profile
 likelihood we can constrain the home to be greater than a particular
 value:
 
-```{r}
+```{r,calcprofilelikelihood}
 g <- function(home){
 	small <- 1e-3
 	maxp(H,startp=rep(small/4,4),give=TRUE,fcm=-t(rep(1,4)),fcv=home-1)$value
@@ -145,7 +146,7 @@ g <- function(home){
 ```
 
 
-```{r}
+```{r,showprofilelikelihood,cache=TRUE}  # this one takes the time
 home_strength <- seq(from=0.2,to=0.6,length=30)
 support <- pmin(sapply(home_strength,f),sapply(home_strength,g))
 plot(home_strength,support-max(support),
