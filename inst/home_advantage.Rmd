@@ -13,17 +13,19 @@ vignette: >
 </p>
 
 
-(takes about fifteen minutes to run without cache)
-
-Here I analyse a small synthetic dataset for home ground advantage, then go on to discuss
-a dataset presented by Agresti.
-
-First load the package:
-```{r,label=libload}
-library(hyper2)
+```{r,label=libload,echo=FALSE,print=FALSE,warning=FALSE,include=FALSE}
+defaultW <- getOption("warn") 
+options(warn = -1) 
+library("hyper2",quietly=TRUE)
+options(warn = defaultW)
 ```
 
-Now generate the dataset:
+
+(takes about fifteen minutes to run without cache)
+
+Here I analyse a small synthetic dataset for home ground advantage,
+then go on to discuss a dataset presented by Agresti.  First generate
+the dataset by hand:
 
 ```{r,label=genthedata}
 home_games_won <- matrix(c(
