@@ -13,9 +13,10 @@ vignette: >
 </p>
 
 
-(takes about ten minutes to run without cache)
+(takes about fifteen minutes to run without cache)
 
-Here I analyse a small synthetic dataset for home ground advantage.
+Here I analyse a small synthetic dataset for home ground advantage, then go on to discuss
+a dataset presented by Agresti.
 
 First load the package:
 ```{r,label=libload}
@@ -65,8 +66,15 @@ options("use_alabama" = TRUE) # to avoid the stupid wmmin bug
 specificp.gt.test(H,"home",0)
 ```
 
-We see strong evidence to support the contention that home advantage is real.
-Visually:
+We see strong evidence to support the contention that home advantage
+is real.  Further, we may test the hypothesis that all the teams have
+the same strength, after accounting for the home team advantage:
+
+```{r,label=testhomegroundadvantageAgresti,cache=TRUE}
+samep.test(H,teams)
+```
+
+Above, we see no evidence for a difference in team strengths.  Visually:
 
 ```{r,label=showvisH}
 dotchart(maxp(H))
@@ -83,3 +91,94 @@ abline(h=c(0,-2))
 
 The figure give a support interval between about 0.3 and 0.5 for home
 ground advantage.
+
+
+# Example in Agresti
+
+Agresti considers a dataset of seven baseball teams who play one
+another repeatedly.  Each game is played at the home ground of one
+team, the other playing away.  The dataset is as follows:
+
+```{r,label=makeAgrestimatrix}
+baseball_table <- matrix(c(
+NA,   4+3i, 4+2i, 4+3i, 6+1i, 4+2i, 6+0i,
+3+3i, NA  , 4+2i, 4+3i, 6+0i, 6+1i, 4+3i,
+2+5i, 4+3i, NA  , 2+4i, 4+3i, 4+2i, 6+0i,
+3+3i, 5+1i, 2+5i, NA  , 4+3i, 4+2i, 6+1i,
+5+1i, 2+5i, 3+3i, 4+2i, NA  , 5+2i, 6+0i,
+2+5i, 3+3i, 3+4i, 4+3i, 4+2i, NA  , 2+4i,
+2+5i, 1+5i, 1+6i, 2+4i, 1+6i, 3+4i, NA),7,7)
+teams <- c("Miulwaukee", "Detroit", "Toronto", "New York", "Boston","Cleveland","Baltimore")
+rownames(baseball_table) <- teams
+colnames(baseball_table) <- teams
+M <- baseball_table # saves typing
+```
+
+Above, we represent home team wins with the real part of the matrix,
+the imaginary component being away wins.  Now process it:
+
+```{r,label=makesuppfrommatrix}
+baseball <- home_away(M)
+baseball
+```
+
+Maximum likelihood:
+
+```{r,label=calculatemaxpAgresti,cache=TRUE}
+baseball_maxp <- maxp(baseball)
+baseball_maxp
+```
+
+Visually:
+
+```{r,label=showmaxpAgresti}
+dotchart(baseball_maxp,pch=16)
+pie(baseball_maxp)
+```
+
+Above, we see that the teams are all of roughly equal strength, and
+the home advantage is small.  However, we may easily assess the null
+that the home strength is zero:
+
+```{r,analyseAgresti,cache=TRUE}
+specificp.gt.test(baseball,"home",0)
+```
+
+```{r,Agrestiprofsupp,cache=TRUE}
+home_strength <- seq(from=0.005,to=0.1,length=20)
+plot(home_strength,profsupp(baseball,"home",home_strength),type="b",pch=16,
+     xlab="home strength",ylab="support",main="profile likelihood for home advantage")
+abline(h=c(0,-2))
+```
+
+Further, we may test the hypothesis that the baseball teams have the same strength:
+
+```{r,label=testhomegroundadvantage,cache=TRUE}
+samep.test(baseball,teams)
+```
+
+Above, we see no evidence for the teams having differential strengths.
+
+### Some further thoughts on the home ground monster and Agresti's analysis.
+
+Considering the simplest case of two teams, a and b, with results:
+
+* $a$ at home, $b$ away, $a,b$ wins with probability $\frac{\lambda a,b}{\lambda a+b}$ (Agresti), or $\frac{a+H,b}{a+b+H}$ (me). 
+* $a$ away, $b$ at home, $a,b$ wins with probability $\frac{a,\lambda b}{\lambda a+b}$ (Agresti), or $\frac{a,b+H}{a+b+H}$ (me).
+
+Matching the probabilities for $a$ at home gives us $H=a(\lambda-1)$
+and matching the probabilities for $a$ away gives $H=b(\lambda-1)$.
+These cannot both be true unless $a=b$ or $\lambda=1$.  But we can, in principle,
+test which one is a better model.
+                                                     
+
+### Package dataset {-}
+
+Following lines create `home_advantage.rda`, residing in the `data/`
+directory of the package.
+
+```{r,label=savesolingdataset}
+save(baseball_table, baseball, baseball_maxp, 
+  file="baseball.rda")
+```
+
