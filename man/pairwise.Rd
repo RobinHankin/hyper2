@@ -65,6 +65,7 @@ An extended discussion of \code{pairwise()} is given in
 \code{home_away()} is described and used in
 \code{inst/home_advantage.Rmd}.
 
+
 }
 \seealso{\code{\link{maxp}}}
 \examples{ #Data is the top 5 players from Borozki's table 1
@@ -91,6 +92,12 @@ teams <- LETTERS[1:4]
 dimnames(M2) <- list("@home" = teams,"@away"=teams)
 home_away(M2)
 home_away3(M2)
+
+
+M <- kka_array[,,1] + 1i*kka_array[,,3] # ignore draws
+home_away(M)
+home_away3(M)
+
 
 
 }

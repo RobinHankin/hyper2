@@ -70,5 +70,11 @@ resides in the \code{data/} directory.
 \examples{
 karpov_kasparov_anand
 # pie(maxp(karpov_kasparov_anand))  # takes ~10s
+
+M <- kka_array[,,1] + 1i*kka_array[,,3]
+home_away(M)
+home_away3(M)
+
+
 }
 \keyword{datasets}
