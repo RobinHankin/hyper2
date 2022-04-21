@@ -38,7 +38,7 @@ technical documentation, and creates file \code{javelin.rda} which
 resides in the \code{data/} directory.
 
 }
-\seealso{\code{\link{attempttable2supp3}}}
+\seealso{\code{\link{attemptstable2supp3}}}
 \examples{
 pie(javelin1_maxp)
 }

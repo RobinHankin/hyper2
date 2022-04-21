@@ -70,7 +70,7 @@ We see strong evidence to support the contention that home advantage
 is real.  Further, we may test the hypothesis that all the teams have
 the same strength, after accounting for the home team advantage:
 
-```{r,label=testhomegroundadvantageAgresti,cache=TRUE}
+```{r,label=homegroundAgresti,cache=TRUE}
 samep.test(H,teams)
 ```
 
@@ -108,7 +108,7 @@ NA,   4+3i, 4+2i, 4+3i, 6+1i, 4+2i, 6+0i,
 5+1i, 2+5i, 3+3i, 4+2i, NA  , 5+2i, 6+0i,
 2+5i, 3+3i, 3+4i, 4+3i, 4+2i, NA  , 2+4i,
 2+5i, 1+5i, 1+6i, 2+4i, 1+6i, 3+4i, NA),7,7)
-teams <- c("Miulwaukee", "Detroit", "Toronto", "New York", "Boston","Cleveland","Baltimore")
+teams <- c("Milwaukee", "Detroit", "Toronto", "New York", "Boston","Cleveland","Baltimore")
 rownames(baseball_table) <- teams
 colnames(baseball_table) <- teams
 M <- baseball_table # saves typing
@@ -159,6 +159,34 @@ samep.test(baseball,teams)
 
 Above, we see no evidence for the teams having differential strengths.
 
+As an interesting aside, suppose we have some additional data from
+games in which (for some reason), the home advantage was not
+operating.  
+
+```{r,label=newinfotobaseball}
+M2 <- matrix(c(0,1,2,0),2,2)
+dimnames(M2) <- list(winner=teams[1:2],loser=teams[1:2])
+M2
+```
+
+Thus we have additional data from three games in which Milwaukee won
+twice and lost once.  This additional information may easily be
+incorporated into our likelihood function, at least on the assumption
+of independence:
+
+```{r,label=addsomenewinfotobaseball}
+baseball <- baseball + pairwise(M2)
+```
+
+We may assess the difference that the new information makes:
+
+```{r,label=baseballtransplot,cache=TRUE}
+ordertransplot(baseball_maxp[1:7],maxp(baseball)[1:7],xlab="old",ylab="new",plotlims=c(0.1,0.16))
+```
+
+Above, we see very little difference in the two evaluates, except for
+Detroit and Milwaukee, as expected.
+    
 ### Some further thoughts on the home ground monster and Agresti's analysis.
 
 Considering the simplest case of two teams, a and b, with results:
@@ -168,8 +196,8 @@ Considering the simplest case of two teams, a and b, with results:
 
 Matching the probabilities for $a$ at home gives us $H=a(\lambda-1)$
 and matching the probabilities for $a$ away gives $H=b(\lambda-1)$.
-These cannot both be true unless $a=b$ or $\lambda=1$.  But we can, in principle,
-test which one is a better model.
+These cannot both be true unless $a=b$ or $\lambda=1$.  But we can, in
+principle, test which one is a better model.
                                                      
 
 ### Package dataset {-}
