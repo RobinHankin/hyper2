@@ -5,7 +5,7 @@
 weightedplayervector makeweightedplayervector3(const CharacterVector players, const NumericVector weights){
     assert(players.size() == weights.size());
     weightedplayervector out;
-    for(int i=0 ; i<players.size() ; i++){
+    for(size_t i=0 ; i<players.size() ; i++){
         if(weights[i] != 0){
             out[(string) players[i]] += weights[i];
         }
@@ -16,10 +16,9 @@ weightedplayervector makeweightedplayervector3(const CharacterVector players, co
 hyper3 prepareL3(const List &L, const List &W, const NumericVector &d){
     hyper3 H;   
     weightedplayervector nv;
-    unsigned int i,j;
     const unsigned n=L.size();
     
-    for(i=0; i<n ; i++){
+    for(size_t i=0; i<n ; i++){
         if(d[i] != 0){
             const SEXP jj = L[i];  // jj is temporary
             const SEXP kk = W[i];  // jj is temporary
@@ -34,7 +33,7 @@ hyper3 prepareL3(const List &L, const List &W, const NumericVector &d){
 playerstrengths preparepmap3(const NumericVector &probs, const CharacterVector &pnames){// hamilton=0.7,vettel=0.2,button=0.1
     playerstrengths out;
 
-    for(int i=0; i<probs.length() ; i++){
+    for(size_t i=0; i<probs.length() ; i++){
         out[(string) pnames[i]] = probs[i];
     }
     return(out);
@@ -42,9 +41,8 @@ playerstrengths preparepmap3(const NumericVector &probs, const CharacterVector &
 
 List makebrackets3(const hyper3 H){// Returns a list of players, eg list('a',c('a','b'),c('a','xt'))
     List out;
-    hyper3::const_iterator ih;
-    int i;
-    for(ih=H.begin(); ih != H.end(); ++ih){
+    size_t i;
+    for(auto ih=H.begin(); ih != H.end(); ++ih){
         weightedplayervector nv = ih->first;
         weightedplayervector::iterator ion;
         CharacterVector t(nv.size());
@@ -59,7 +57,7 @@ List makebrackets3(const hyper3 H){// Returns a list of players, eg list('a',c('
 List makeweights3(const hyper3 H){// Returns a list of weights, eg list(1,1:2,2.2)
     List out;
     hyper3::const_iterator ih;
-    int i;
+    size_t i;
     weightedplayervector::iterator ion;
     
      for(ih=H.begin(); ih != H.end(); ++ih){
@@ -75,10 +73,9 @@ List makeweights3(const hyper3 H){// Returns a list of weights, eg list(1,1:2,2.
  
 NumericVector makepowers3(const hyper3 H){
     NumericVector out(H.size());   // data
-    unsigned int i=0;
-    hyper3::const_iterator it;
+    size_t i=0;
     
-    for(it=H.begin(); it != H.end(); ++it){
+    for(auto it=H.begin(); it != H.end(); ++it){
         out(i++) = it->second;
     }
     return(out);
@@ -107,15 +104,14 @@ List addL3(
           ){
     hyper3 h1 = prepareL3(L1,W1,p1);
     hyper3 h2 = prepareL3(L2,W2,p2);
-    hyper3::const_iterator it;
     if(L1.size() > L2.size()){ // L1 is bigger, so iterate through L2
-        for (it=h2.begin(); it != h2.end(); ++it){
+        for (auto it=h2.begin(); it != h2.end(); ++it){
             const weightedplayervector n = it->first;
             h1[n] += h2[n];  // the meat
         }
         return(retval3(h1));
     } else {  // L2 is bigger
-        for (it=h1.begin(); it != h1.end(); ++it){
+        for (auto it=h1.begin(); it != h1.end(); ++it){
             const weightedplayervector n = it->first;
             h2[n] += h1[n];  
         }
@@ -129,7 +125,6 @@ bool equality3(  // modelled on spray_equality()
                const List L2, const List W2, const NumericVector p2
            ){
     hyper3 h1,h2;
-    hyper3::const_iterator it;
     
     if(L1.size() != L2.size()){
         return false;
@@ -138,7 +133,7 @@ bool equality3(  // modelled on spray_equality()
     h1 = prepareL3(L1,W1,p1);
     h2 = prepareL3(L2,W2,p2);
 
-    for (it=h1.begin(); it != h1.end(); ++it){
+    for (auto it=h1.begin(); it != h1.end(); ++it){
             const weightedplayervector n = it->first;
             if(h1[n] != h2[n]){
                 return false;
@@ -166,10 +161,9 @@ List accessor3(
     const hyper3 h=prepareL3(L,W,powers);
     hyper3 out;
     const int n=Lwanted.size();
-    unsigned int i,j;
     weightedplayervector b;
 
-    for(i=0; i<n ; i++){
+    for(size_t i=0; i<n ; i++){
             const SEXP jj = Lwanted[i];
             const SEXP kk = Wwanted[i];
             const Rcpp::CharacterVector players(jj);
@@ -192,9 +186,8 @@ List overwrite3(  // H1[] <- H2
 
           hyper3 h1=prepareL3(L1,W1,powers1);
     const hyper3 h2=prepareL3(L2,W2,powers2);
-    hyper3::const_iterator it;
 
-    for(it=h2.begin(); it != h2.end(); ++it){
+    for(auto it=h2.begin(); it != h2.end(); ++it){
         const weightedplayervector nv = it->first;
         h1[nv] = h2.at(nv);
     }
@@ -209,11 +202,9 @@ List assigner3(  // H[L] <- v
               ){
     hyper3 h=prepareL3(L,W,p);
     weightedplayervector wp;
-    hyper3::const_iterator it;
     const unsigned int n=L2.size();
-    unsigned int i,j;
 
-    for(i=0 ; i<n ; i++){
+    for(size_t i=0 ; i<n ; i++){
         wp.clear();
         const SEXP jj = L2[i];  // jj is temporary
         const SEXP kk = W2[i];  // kk is temporary
@@ -236,15 +227,13 @@ double evaluate3(  // returns log-likelihood
 
     const hyper3 h = prepareL3(L,W,powers);
     playerstrengths psp = preparepmap3(probs,pnames);
-    hyper3::const_iterator it;
     double out=0;
     double bracket_total=0;
-    weightedplayervector::const_iterator in;
 
-    for (it=h.begin(); it != h.end(); ++it){
+    for (auto it=h.begin(); it != h.end(); ++it){
         const weightedplayervector n = it->first;
         bracket_total = 0;
-        for (in=n.begin(); in != n.end(); ++in){
+        for (auto in=n.begin(); in != n.end(); ++in){
             bracket_total += psp[in->first] * (in->second); // the meat
                 /*            bracket_total += psp[*in] * psw[*in]; */
         }
@@ -264,21 +253,19 @@ double differentiate_single_independent3( // d(log-likelihod)/dp; see also diffe
                  /* probs[0] == p_1, ..., probs[n-1] = p_n.  
                     probs[n-1] = p_n = fillup value. */
 
-    hyper3::const_iterator ih;
     weightedplayervector ps = makeweightedplayervector3(pnames,probs); //ps == "player strengths"
     assert(i > 0); 
     assert(i < n);  // sic; strict
 
     double out = 0;
-    for (ih=h.begin(); ih != h.end(); ++ih){  // standard hyper3 loop
+    for (auto ih=h.begin(); ih != h.end(); ++ih){  // standard hyper3 loop
         weightedplayervector wp = ih->first;
   
-
         const double total_weight_diff = wp[(string) pnames[i  ]];
         const double total_weight_fill = wp[(string) pnames[n-1]];
         
         double bracket_total = 0;
-        for (weightedplayervector::iterator iw=wp.begin(); iw != wp.end(); ++iw){
+        for (auto iw=wp.begin(); iw != wp.end(); ++iw){
             bracket_total += ps[iw->first] * (iw->second);  // the meat
         }
 
@@ -302,12 +289,11 @@ List differentiate3(  // returns gradient of log-likelihood for hyper3 object
                 const NumericVector &n
                   ){
 
-    unsigned int i;
     const unsigned int nn=n[0];
     NumericVector out(nn-1);  
     const hyper3 h=prepareL3(L,W,powers);
 
-    for(i=0; i<nn-1; i++){
+    for(size_t i=0; i<nn-1; i++){
         out[i] = differentiate_single_independent3(h,i,nn,probs,pnames);
     }
         return List::create(Named("grad_comp") =  out);
