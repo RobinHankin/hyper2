@@ -8,13 +8,15 @@ order.
 }
 \usage{
 ordertrans(x,players)
-ordertransplot(ox,oy,...)
+ordertransplot(ox,oy,plotlims, ...)
 }
 \arguments{
   \item{x}{A (generalized) order vector}
   \item{players}{A character vector specifying the order in which the
     players will be listed; if missing, use \code{sort(names(x))}}
   \item{ox,oy}{Rank vectors}
+  \item{plotlims}{Length two numeric vector giving x and y plot limits.
+    If missing, use sensible default}
   \item{...}{Further arguments, passed to \code{plot()}}
 }
 \details{

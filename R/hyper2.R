@@ -1111,13 +1111,13 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     x[apply(outer(players,names(x),`==`),1,which)]
 }
 
-`ordertransplot` <- function(ox,oy, ...){
+`ordertransplot` <- function(ox,oy, plotlims, ...){
   stopifnot(all(sort(names(ox))==sort(names(oy))))
   ox <- ordertrans(ox)
   oy <- ordertrans(oy)
   par(pty='s') # square plot
-  jj <- c(0,max(c(ox,oy)))
-  plot(ox,oy,asp=1,pty='s',xlim=jj,ylim=jj,pch=16,...)
+  if(missing(plotlims)){plotlims <- c(0,max(c(ox,oy)))}
+  plot(ox,oy,asp=1,pty='s',xlim=plotlims,ylim=plotlims,pch=16,...)
   abline(0,1)
   for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray',cex=0.7)}
 }
