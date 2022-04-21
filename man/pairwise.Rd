@@ -2,6 +2,7 @@
 \alias{pairwise}
 \alias{zermelo}
 \alias{home_away}
+\alias{home_away3}
 \title{Pairwise comparisons}
 \description{
 
@@ -13,13 +14,17 @@
 
   Function \code{home_away()} takes two matrices, one for home wins and
   one for away wins.  It returns a \code{hyper2} support function that
-  includes a home advantage ghost.
+  includes a home advantage ghost.  Function \code{home_away3()} is the
+  same, but returns a \code{hyper3} object.  A complex matrix is
+  interpreted as real parts being the home wins and imaginary parts away
+  wins.
   
 }
 \usage{
 pairwise(M)
 zermelo(M, maxit = 100, start, tol = 1e-10, give = FALSE)
 home_away(home_games_won, away_games_won)
+home_away3(home_games_won, away_games_won,lambda)
 }
 \arguments{
   \item{M}{Matrix of pairwise comparison results}
@@ -29,8 +34,10 @@ home_away(home_games_won, away_games_won)
   \item{tol}{Numerical tolerance for stopping criterion}
   \item{give}{Boolean with default \code{FALSE} meaning to return the
     evaluate and \code{TRUE} meaning to return all iterations}
-\item{home_games_won, away_games_won}{Matrices showing home games won
-  and away games won}
+  \item{home_games_won, away_games_won}{Matrices showing home games won
+    and away games won}
+  \item{lambda}{In function \code{home_away3()}, the home ground advantage
+    (or white advantage in chess)}
 }
 \details{
   In function \code{zermelo()}, the diagonal is disregarded.
@@ -76,5 +83,14 @@ M
 pairwise(M)
 zermelo(M)
 # maxp(pairwise(M))  # should be identical (takes ~10s to run)
+
+
+M2 <- matrix(c(NA,19+2i,17,11+2i,16+5i,NA,12+4i,12+6i,12+2i,19+10i,
+NA,12+4i,11+2i,16+2i,11+7i,NA),4,4)
+teams <- LETTERS[1:4]
+dimnames(M2) <- list("@home" = teams,"@away"=teams)
+home_away(M2)
+home_away3(M2)
+
 
 }

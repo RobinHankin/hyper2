@@ -431,18 +431,10 @@ stop("not yet written")
         if(n_nonfinishers==0){ # technically not necessary:  "else" clause works for ==0
             out <- out + ordervec2supp3(jj)
         } else { 
-            out <- out + ordervec2supp3(jj[seq_len(finishers)],jj[finishers + seq_len(non_finishers)])
+            out <- out + ordervec2supp3(jj[seq_len(n_finishers)],jj[n_finishers + seq_len(n_finishers)])
         }
     }
     return(out)
-}
-
-
-wtest <- function(formula,data){
-    stopifnot(is.formula(formula))
-    
-
-
 }
 
 `attemptstable2supp3` <- function(a, decreasing, give.supp=TRUE, dnf.last=TRUE){
@@ -460,3 +452,69 @@ wtest <- function(formula,data){
         return(o)
     }
 }
+
+`args2ordervec` <- function(...){
+    l <- list(...)
+    if(any(names(l) == "") & !all(names(l)=="")){
+        stop("either name all of the arguments, or none of them")
+    }
+    if(all(names(l)=="")){
+        names(l) <- paste("X",seq_len(nargs()),sep="")
+    }
+    x <- unlist(l,use.names=FALSE)
+    if(any(table(x)>1)){stop("ties not implemented")}
+    names(x) <- rep(names(l),lapply(l,length))
+    return(names(sort(x)))
+}
+   
+
+`home_away3` <- function(home_games_won,away_games_won,lambda){
+
+    if(is.complex(home_games_won)){
+        if(missing(lambda)){lambda <- away_games_won}
+        away_games_won <- Im(home_games_won)
+        home_games_won <- Re(home_games_won) 
+    }
+
+    teams <- rownames(home_games_won)
+    stopifnot(identical(teams,colnames(home_games_won)))
+    stopifnot(identical(teams,rownames(away_games_won)))
+    stopifnot(identical(teams,colnames(away_games_won)))
+
+    H <- hyper3(pnames=c(teams,"lambda"))
+
+    for(i in seq_len(nrow(home_games_won))){
+        for(j in seq_len(ncol(home_games_won))){
+            if(i != j){  # diagonal means a team plays itself, meaningless.
+                ## First deal with home_games:
+                game_winner <- teams[i]
+                game_loser  <- teams[j]
+                no_of_matches <- home_games_won[i,j] # won with home strength helping
+
+                jj <- lambda
+                names(jj) <- game_winner
+                H[jj] %<>% inc(no_of_matches)  # won with home strength helping
+
+                jj <- c(lambda,1)
+                names(jj) <- c(game_winner,game_loser)
+                H[jj] %<>% dec(no_of_matches)
+
+
+                ## now away games:
+                no_of_matches <- away_games_won[i,j] # won without the benefit of home strength
+                jj <- 1
+                names(jj) <- game_winner
+                H[jj] %<>% inc(no_of_matches)  # won without home ground helping...
+
+                jj <- c(1,lambda)
+                names(jj) <- c(game_winner,game_loser)
+                H[jj] %<>% dec(no_of_matches)  # home strength nevertheless on denominator
+                                
+            } # if(i != j) closes
+        } # j loop closes
+    } # i loop closes
+    return(H)
+}
+
+
+
