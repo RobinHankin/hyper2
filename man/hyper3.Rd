@@ -26,6 +26,7 @@
 \alias{overwrite_lowlevel3}
 \alias{pnv}
 \alias{powers<-.hyper3}
+\alias{pnames<-.hyper3}
 \alias{print.hyper3}
 \alias{rhyper3}
 \alias{rpair3}
