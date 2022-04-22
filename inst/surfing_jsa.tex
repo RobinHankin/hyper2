@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{amssymb}
+\usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{natbib}
 \usepackage[pdftex]{hyperref}
@@ -225,16 +226,41 @@ and, in the case of Jeep Surf Freshwater Pro WCT08, many more.  It
 is natural to ask how much information is contained in the
 observations where more than two surfers are in the water.
 
-We can directly calculate the determinant of the observed information
-matrix for the likelihood function in
-equation~\ref{complete_likelihood_function} at about $4.3\times
-10^{71}$, as compared with~$2.9\times 10^{69}$ for the pairs
-considered in isolation, a ratio of about $146.4$.  This ratio shows
-that there is considerable information loss in considering only the
-paired comparisons.  We are thus motivated to consider the whole
-dataset, not just the part which involves paired comparisons.
+To answer this, we directly calculate the observed information matrix
+for the log-likelihood function in
+equation~\ref{complete_likelihood_function}.  Observing that
+differentiation is linear, we may calculate second derivatives by
+summing individual terms of the support function and further observing
+that, for a typical term of the form $\log\left(\sum_{k\in K}
+p_k\right)^n$ [where the sum is over some subset $K$ of strengths] we
+have
+
+\begin{equation}
+  \frac{\partial^2}{\partial p_i\partial p_j}
+  \log\left(\sum p_k\right)^n=
+  \begin{cases}
+    -n/\left(p_i+p_j+\sum p_k\right)^2\qquad\mbox{if $i,j\in K$}\\
+    0\qquad\mbox{otherwise.}
+    \end{cases}
+\end{equation}
+
+The {\tt hyper2} package includes function {\tt hessian()} which
+returns this matrix for any given support function.  For
+equation~\ref{complete_likelihood_function} we find that the
+determinant is about $4.3\times 10^{71}$.  Compare this with
+~$2.9\times 10^{69}$ for the pairs considered in isolation, a ratio of
+about $146.4$.  This ratio shows that there is considerable
+information loss in considering only the paired comparisons.  We are
+thus motivated to consider the whole dataset, not just the part which
+involves paired comparisons.
 
 \section{Results}
+
+For any likelihood function, one important diagnostic is the maximum
+likelihood estimate.  The {\tt hyper2} package facilitates the finding
+of maximum likelihood estimates using the bespoke {\tt maxp()}
+function, which uses standard optimization techniques.  Derivatives
+are available which ensures rapid convergence to the evaluate.
 
 Figure~\ref{piechartmax} shows the maximum likelihood estimate for the
 23 competitors' strengths, which appears to show a wide range from
@@ -243,18 +269,19 @@ Florence at about 17.5\% down to Coffin at about 1.5\%.  The {\tt
 one plausible null: that the competitors all have equal skill, that is
 $H_0\colon p_\mathrm{Andino} = p_\mathrm{Bourez}=\ldots=
 p_\mathrm{Wright}=\frac{1}{23}$, and any differences in placings are
-due to random variation.  The Method of Support \citep{edwards1992}
-rejects the null (in favour of the evaluate) at $p=4\times 10^{-5}$.
-There is thus strong evidence to suggest that the competitors are
-indeed of different skills and the result actually reflects genuine
-differences in abilities, rather than the result of random chance.
-Alternatively, we may view the dataset as being sufficiently
-informative to reveal actual differences in surfing ability.  Observe
-that the competitors' points (that is, the final column of
-table~\ref{resultstable}) cannot be used for this type of
-probabilistic analysis: the points awarded are arbitrary and changing
-the points system would change the points scored but not affect the
-competitors' behaviour.
+due to random variation.  This test is performed by function {\tt
+  equalp.test()} in the package which uses the method of support
+\citep{edwards1992}.  The test rejects the null (in favour of the
+evaluate) at $p=4\times 10^{-5}$.  There is thus strong evidence to
+suggest that the competitors are indeed of different skills and the
+result actually reflects genuine differences in abilities, rather than
+the result of random chance.  Alternatively, we may view the dataset
+as being sufficiently informative to reveal actual differences in
+surfing ability.  Observe that the competitors' points (that is, the
+final column of table~\ref{resultstable}) cannot be used for this type
+of probabilistic analysis: the points awarded are arbitrary and
+changing the points system would change the points scored but not
+affect the competitors' behaviour.
 
 However, points awarded may be compared with likelihood estimates, and
 one would expect high points totals to be associated with high
@@ -269,9 +296,11 @@ likelihood-based ranking.
 We may ask whether the top two officially ranked competitors, Medina
 and Ferreira, have different strengths.  To test the null of equal
 strength, we maximize the likelihood subject to the null, and compare
-with the global maximum likelihood~\citep{hankin2010}.  This gives us a
-support difference of about 0.05, well short of Edwards's 2 units of
-support criterion.  Alternatively, we could observe that the
+with the global maximum likelihood~\citep{hankin2010}; package idiom
+is to use {\tt equalp.test()} which reports its findings in a
+standardised format.  This gives us a support difference of about
+0.05, well short of Edwards's 2 units of support criterion.
+Alternatively, we could observe that the
 $-2\log\left(\frac{\Lambda}{\Lambda_0}\right)\simeq 0.1$ is not in the
 tail region of its asymptotic $\chi^2_1$ distribution.  We may thus
 assert that there is no strong evidence for Ferreira's actually having
@@ -314,15 +343,18 @@ the ``home ground monster" who helps the home team as per
 equation~\ref{home_ground_advantage}.  Here we modify the likelihood
 function only when a single Brazilian is in the water, thus avoiding
 possible interaction with the compatriot issue discussed in
-section~\ref{compatriot}.  The null would be that this reified entity
-has zero strength.  We fail to reject this null (differential support
-= 0.035; $p=0.79$) and conclude that there is no evidence to suggest
-that Brazilians' performance is better on their preferred wave types
-than one would expect by chance.  We may go further using the method
-of support: not only is the maximum likelihood estimate for Brazilian
-wavetype very small (about 0.002), but in addition we may reject the
-the proposal that the strength of this entity exceeds about 0.025
-(Figure~\ref{brazilian_wavetype_support}).
+section~\ref{compatriot}.
+
+To illustrate the concept, we show a simple likelihood function in
+Table~\ref{probabilitybrazilian}.  The null would be that this reified
+entity has zero strength.  We fail to reject this null (differential
+support = 0.035; $p=0.79$) and conclude that there is no evidence to
+suggest that Brazilians' performance is better on their preferred wave
+types than one would expect by chance.  We may go further using the
+method of support: not only is the maximum likelihood estimate for
+Brazilian wavetype very small (about 0.002), but in addition we may
+reject the the proposal that the strength of this entity exceeds about
+0.025 (Figure~\ref{brazilian_wavetype_support}).
 
 \section{Differential \label{compatriot} behaviour toward compatriotic competitors}
 
@@ -485,6 +517,22 @@ $q\succ p_2\succ p_1 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_1+p_2}$\
   compatriot surfers, $q$ the strength of the odd man out, $p_C$ the
   strength of the compatriot monster. and nationality and a third are
   in the water at the same time}
+\end{table}
+
+\clearpage
+\newpage
+
+\begin{table}[h]
+\begin{tabular}{l|l|l}
+wave type  & $\operatorname{Prob}(p_1\succ p_2)$ & $\operatorname{Prob}(p_2\succ p_1)$\\ \hline
+beach & $\frac{p_1+B}{p_1+p_2+B}$ & $\frac{p_2}{p_1+p_2+B}$\\
+point & $\frac{p_1+B}{p_1+p_2+B}$ & $\frac{p_2}{p_1+p_2+B}$\\
+reef  & $\frac{p_1\vphantom{B}}{p_1+p_2}$ & $\frac{p_2}{p_1+p_2}$\\
+\end{tabular}
+\caption{Likelihood function for results between surfer 1 (Brazilian)
+  and surfer 2 (non-Brazilian) with \label{probabilitybrazilian} Bradley-Terry
+  strengths $p_1,p_2$ respectively, and a ``Brazilian wavetype" entity with
+  strength $B$ that quantifies the enhanced Brazilian performance on reef wave types}
 \end{table}
 
 \clearpage
