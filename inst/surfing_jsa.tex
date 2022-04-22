@@ -91,7 +91,7 @@ or 16 surfers.  We show below how to incorporate the information
 present in such observations with the remainder of the championship
 using a consistent and intuitive statistical model.
 
-\subsection{Previous related work}
+\section{Previous statistical analysis of competitive surfing}
 
 \citet{farley2013} analyse surfing results using
 one-way ANOVA techniques and report comparisons between the top 10 and
@@ -107,7 +107,33 @@ events.  \citet{lundgren2014}, for example,
 report that aerial manoeuvres scored higher than other stunts but had
 a lower completion rate, a theme we return to below.
 
-\section{Bradley-Terry}
+\section{Likelihood-based systems and points-based systems}
+
+Table~\ref{resultstable} shows the official results table from the
+tour.  We see that Ferreira places first with 59740 points, Medina
+second with 56475, and so on.  The overall ranking of the surfers is
+determined by summing the season's points.
+
+As in many subjective sports, points are awarded to competitors on the
+basis that a better performance attracts a higher number of points.
+However, such systems are difficult to analyse statistically, because
+the points awarded are intrinsically arbitrary: provided that better
+performances attract more points, the precise number of points awarded
+does not change the competitors' behaviour.  Competitors will
+endeavour to earn the maximum number of points possible, and to do
+this will deliver the best performance they are able to give.
+
+As discussed above, analysis of order statistics does not suffer from
+this particular defect~\citep{aldous2017}.  Order statistics can be
+analysed using a number of formal statistical methods, but here we
+focus on one method that has been successfully applied in many
+competitive sporting contexts: here we suggest that Plackett-Luce
+likelihood functions furnish an objective and coherent method for
+ranking competitors.  Further, likelihood-based methods offer one
+signal advantage over points-based systems: the ability to conduct
+statistically rigorous tests of meaningful nulls.
+
+\section{The Bradley-Terry class of probability models for order statistics}
 
 The Bradley-Terry model \citep{bradley1954} assigns non-negative
 strengths $p_1,\ldots, p_n$ to each of $n$ competitors in such a way
@@ -154,21 +180,6 @@ function would be
 ground effect.  Similar techniques have been used to account for the
 first-move advantage in chess~\citep{hankin2020}, and here we apply it
 to assess the supposed Brazilian preference for particular wave types.
-
-\section{Likelihood-based systems and points-based systems}
-
-
-Table~\ref{resultstable} shows the official results table from the
-tour.  We see that Ferreira places first with 59740 points, Medina
-second with 56475, and so on.  The overall ranking of the surfers is
-determined by summing the season's points.  However, this system
-suffers from the defect that the points system itself is intrinsically
-arbitrary: this would suggest that more formal statistical methods are
-needed for analysis of such datasets~\citep{aldous2017}.  We suggest
-here that Plackett-Luce likelihood functions furnish an objective and
-coherent method for ranking competitors.  Further, likelihood-based
-methods offer one advantage over points-based systems: the ability to
-conduct statistically rigorous tests of meaningful nulls.
 
 \section{The dataset and likelihood function}
 
