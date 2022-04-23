@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{natbib}
+\usepackage{diagbox}
 \usepackage[pdftex]{hyperref}
 
   \author{Driver, Timothy C.${}^{1}$ \and
@@ -401,12 +402,11 @@ Buchan nor Freestone were selected for the 2020 Olympic team.
 
 The reified Bradley-Terry technique furnishes an intuitive statistical
 test for such mechanisms, that automatically controls for competitors'
-strengths.  Noting
-that the compatriots effectively place themselves at a {\em
-  disadvantage} when compared with the odd man out, we introduce a
-compatriot monster whose strength $p_C$ helps the odd man out.
-Writing $p_1, p_2$ for the strengths of the compatriots and $q$ for
-the odd man out, we construct likelihood functions for the six
+strengths.  Noting that the compatriots effectively place themselves
+at a {\em disadvantage} when compared with the odd man out, we
+introduce a compatriot monster whose strength $p_C$ helps the odd man
+out.  Writing $p_1, p_2$ for the strengths of the compatriots and $q$
+for the odd man out, we construct likelihood functions for the six
 possible orderings when two compatriots and an odd man out are in the
 water at the same time in Table~\ref{likelihoodcompatriot} (if we have
 either three different nationalities or three identical nationalities,
@@ -533,6 +533,36 @@ reef  & $\frac{p_1\vphantom{B}}{p_1+p_2}$ & $\frac{p_2}{p_1+p_2}$\\
   and surfer 2 (non-Brazilian) with \label{probabilitybrazilian} Bradley-Terry
   strengths $p_1,p_2$ respectively, and a ``Brazilian wavetype" entity with
   strength $B$ that quantifies the enhanced Brazilian performance on reef wave types}
+\end{table}
+\clearpage
+\newpage
+
+\begin{table}[h]
+  \begin{tabular}{l|l|l|l}\\
+    \backslashbox{order}{value}          & B & F & S\\ \hline
+    $\mbox{B}\succ\mbox{F}\succ\mbox{S}$ & 1 & 0 & 0\\
+    $\mbox{B}\succ\mbox{S}\succ\mbox{F}$ & 1 & 0 & 1\\
+    $\mbox{F}\succ\mbox{B}\succ\mbox{S}$ & 0 & 1 & 0\\
+    $\mbox{F}\succ\mbox{S}\succ\mbox{B}$ & 0 & 1 & 1\\
+    $\mbox{S}\succ\mbox{B}\succ\mbox{F}$ & 1 & 0 & 2\\
+    $\mbox{S}\succ\mbox{F}\succ\mbox{B}$ & 0 & 1 & 2\\
+  \end{tabular}
+  \caption{Simplified payoff table\label{valuetable} for Buchan (B),
+    Freestone (F), and Smith (S).  Buchan and Freestone, being
+    Australian, have a payoff that reflects their likelihood of being
+    picked for the national Olympic squad: they are interested in
+    whether or not they beat their countryman.  Thus Buchan's payoff
+    shows whether or not he beat Freestone, and vice versa.  Smith,
+    being South African, is motivated by his ranking against his
+    competitors and here we show Smith with a Borda-type payoff.
+    Smith observes that {\em both} Buchan and Freestone are
+    indifferent between outcomes $\left\lbrace
+    \mbox{B}\succ\mbox{F}\succ\mbox{S},
+    \mbox{B}\succ\mbox{S}\succ\mbox{F},
+    \mbox{S}\succ\mbox{B}\succ\mbox{F}\right\rbrace$, and may be able
+    to exploit this indifference by strategies increasing the
+    probability of his desired outcome,
+    $\mbox{S}\succ\mbox{B}\succ\mbox{F}$}
 \end{table}
 
 \clearpage
