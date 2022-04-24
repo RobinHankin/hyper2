@@ -317,10 +317,17 @@ whether there is statistical evidence to support the assertion that he
 performed better under the more controlled conditions of the Lemoore
 Surf Ranch.  To do this, we create an artificial surfer, {\tt
   Medina\_wct08}, who competes at Lemoore, and test the null that {\tt
-  Medina} has the same Plackett-Luce strength as {\tt Medina\_wct08}.
+  Medina} has the same competitive strength as {\tt Medina\_wct08}.
 We reject this null at a $p$-value of 0.043 and conclude that Medina's
 performance at Lemoore is significantly better than his performance at
-natural venues.
+natural venues.  From an inferential perspective, this test is
+interesting because competitor {\tt Medina} never faces {\tt
+  Medina\_wct08}.  It is as though competitor A consistently beats B,
+and B consistently beats C in pairwise competition, but A has never
+directly competed against C.  Nevertheless we may assert with some
+confidence that the Bradley-Terry strength of A exceeds that of C in
+the absence of nontransitive effects~\citep{west2008}, via indirect
+comparison.
 
 \section{The Brazilian storm}
 
