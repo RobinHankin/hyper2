@@ -462,6 +462,46 @@ samep.test(surfing, c("Florence","Medina","Ferreira"))
 samep.test(surfing, c("Medina","Wilson"))
 ```
 
+# Medina's performance at the Surf Ranch
+
+
+We will test the null that Medina's performance at the Surf Ranch wa
+the same as his performance in the remainder of the tourament.
+
+
+```{r label=medinaattheranchlike, cache=TRUE}
+surfing_wct08     <- hyper2()
+surfing_elsewhere <- hyper2()
+
+for(v in o){
+   venue <- v[1]
+   r <- v[-1]  # first entry is venue
+
+   r <- r[!(r %in% remove)]
+   if(length(r)>1){
+       if(venue == "wct08"){
+           rmod <- r
+           rmod[rmod == "Medina"] <- "Medina_wct08"
+           surfing_wct08 <- surfing_wct08 + race(rmod)
+       } else {
+           surfing_elsewhere <- surfing_elsewhere + race(r)
+       } 
+   }
+} # v loop closes	
+both_together <- surfing_wct08 + surfing_elsewhere
+```
+
+Now test the null that Medina's performance is identical at wct08 and
+elsewhere:
+
+```{r, label=testmedinasranchperformance,cache=TRUE}
+samep.test(both_together,c("Medina","Medina_wct08"))
+```
+
+
+
+
+
 
 # Brazilian null
 
