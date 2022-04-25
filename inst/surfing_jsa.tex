@@ -263,7 +263,7 @@ of maximum likelihood estimates using the bespoke {\tt maxp()}
 function, which uses standard optimization techniques.  Derivatives
 are available which ensures rapid convergence to the evaluate.
 
-Figure~\ref{piechartmax} shows the maximum likelihood estimate for the
+Figure~\ref{dotchartmax} shows the maximum likelihood estimate for the
 23 competitors' strengths, which appears to show a wide range from
 Florence at about 17.5\% down to Coffin at about 1.5\%.  The {\tt
   hyper2} software~\citep{hankin2017} may be used to formally assess
@@ -475,13 +475,13 @@ infringements between compatriots.
 
 \begin{table}[h]
 \begin{tabular}{llllllllllllll}
-competitor  & nationality&WCT01  &WCT02  &WCT03  & \ldots &WCT09&WCT10&WCT11&points\\ \hline
- Ferreira   &   BRA      &   1   &   5   &   17  & \ldots      &  2   &   1   &   1   &   59740\\
- Medina     &   BRA      &   5   &   5   &   17  & \ldots      &  9   &   9   &   2   &   56475\\
- Smith 	    &   ZAF      &   3   &   3   &   17  & \ldots      &  9   &   2   &   17  &   49985\\
- Toledo     &   BRA      &   9   &   2   &   5   & \ldots      &  17  &   5   &   17  &   49145\\
- Andino     &   USA      &   2   &   17  &   5   & \dots       &  5   &   5   &   9   &   46655\\
- $\ldots$   &            &   &   &       &       & \dots       &      &       &       &
+competitor  & nationality&WCT01  &WCT02  &WCT03  & \ldots  &WCT10&WCT11&points\\ \hline
+ Ferreira   &   BRA      &   1   &   5   &   17  & \ldots  &   1   &   1   &   59740\\
+ Medina     &   BRA      &   5   &   5   &   17  & \ldots  &   9   &   2   &   56475\\
+ Smith 	    &   ZAF      &   3   &   3   &   17  & \ldots  &   2   &   17  &   49985\\
+ Toledo     &   BRA      &   9   &   2   &   5   & \ldots  &   5   &   17  &   49145\\
+ Andino     &   USA      &   2   &   17  &   5   & \dots   &   5   &   9   &   46655\\
+ $\vdots$   &            &   &   &       &       & $\vdots$&       &       &
 \end{tabular}
 \caption{Conventional league table for the top five competitors in WCT
   2019 tour. \label{resultstable} Thus at WCT01 (Coolangatta, QLD) we see
@@ -521,12 +521,12 @@ WCT11 Ferreira Medina
 \begin{table}[h]
 \begin{tabular}{l|l}
 order  & ${\mathcal L}(p_1,p_2,q,p_C)$\\ \hline
-$p_1\succ p_2\succ q $ & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_2+q+p_C}$\\
-$p_2\succ p_1\succ q $ & $ \frac{p_2}{p_1+p_2+q+p_C}\cdot\frac{p_1}{p_1+q+p_C}$\\
-$p_1\succ q\succ p_2 $ & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{q+p_C}{p_2+q+p_C}$\\
-$p_2\succ q\succ p_1 $ & $ \frac{p_2}{p_1+p_2+q+p_C}\cdot\frac{q+p_C}{p_1+q+p_C}$\\
-$q\succ p_1\succ p_2 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_1}{p_1+p_2}$\\
-$q\succ p_2\succ p_1 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_1+p_2}$\\
+$p_1\succ p_2\succ q $ & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{p_2^{\vphantom{h}}}{p_2+q+p_C}$\\
+$p_2\succ p_1\succ q $ & $ \frac{p_2}{p_1+p_2+q+p_C}\cdot\frac{p_1^{\vphantom{h}}}{p_1+q+p_C}$\\
+$p_1\succ q\succ p_2 $ & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{q+p_C^{\vphantom{h}}}{p_2+q+p_C}$\\
+$p_2\succ q\succ p_1 $ & $ \frac{p_2}{p_1+p_2+q+p_C}\cdot\frac{q+p_C^{\vphantom{h}}}{p_1+q+p_C}$\\
+$q\succ p_1\succ p_2 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_1^{\vphantom{h}}}{p_1+p_2}$\\
+$q\succ p_2\succ p_1 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_2^{\vphantom{h}}}{p_1+p_2}$\\
 \end{tabular}
 \caption{The \label{likelihoodcompatriot} six possible finishing
   orders (``$\succ$'' means ``scored more points than'') for the case
@@ -543,10 +543,10 @@ $q\succ p_2\succ p_1 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_2}{p_1+p_2}$\
 
 \begin{table}[h]
 \begin{tabular}{l|l|l}
-wave type  & $\operatorname{Prob}(p_1\succ p_2)$ & $\operatorname{Prob}(p_2\succ p_1)$\\ \hline
-beach & $\frac{p_1+B}{p_1+p_2+B}$ & $\frac{p_2}{p_1+p_2+B}$\\
-point & $\frac{p_1+B}{p_1+p_2+B}$ & $\frac{p_2}{p_1+p_2+B}$\\
-reef  & $\frac{p_1\vphantom{B}}{p_1+p_2}$ & $\frac{p_2}{p_1+p_2}$\\
+wave type  & $\operatorname{Prob}(p_1\succ p_2)$ & $\operatorname{Prob}(p_2\succ p_1^{\vphantom{h}})$\\ \hline
+beach & $\frac{p_1+B}{p_1+p_2^{\vphantom{h}}+B}$ & $\frac{p_2^{\vphantom{h}}}{p_1+p_2^{\vphantom{h}}+B}$\\
+point & $\frac{p_1+B}{p_1+p_2^{\vphantom{h}}+B}$ & $\frac{p_2^{\vphantom{h}}}{p_1+p_2^{\vphantom{h}}+B}$\\
+reef  & $\frac{p_1\vphantom{B}}{p_1+p_2}$ & $\frac{p_2^{\vphantom{h}}}{p_1^{\vphantom{h}}+p_2}$\\
 \end{tabular}
 \caption{Likelihood function for results between surfer 1 (Brazilian)
   and surfer 2 (non-Brazilian) with \label{probabilitybrazilian} Bradley-Terry
@@ -588,16 +588,17 @@ reef  & $\frac{p_1\vphantom{B}}{p_1+p_2}$ & $\frac{p_2}{p_1+p_2}$\\
 \newpage
 
 \begin{figure}[h]
-\includegraphics[width=4in]{showsurfingmaxppie.pdf} % Pie chart of strengths
-\caption{Pie chart\label{piechartmax} showing maximum likelihood strengths of the 23 competitors.  Note the
-dominance of Ferreira, Florence, and Medina}
+\includegraphics[width=4in]{showsurfingmaxpdotchart.pdf} % pdf produced by surfing.Rmd
+\caption{Dot chart\label{dotchartmax} showing maximum likelihood
+  strengths of the 23 competitors in alphabetic order, logarithmic
+  axis.  Note the dominance of Ferreira, Florence, and Medina}
 \end{figure}
 
 \clearpage
 \newpage
 
 \begin{figure}[h]
-\includegraphics[width=4in]{directlogplotofstrengths.pdf}
+\includegraphics[width=4in]{directlogplotofstrengths_postinkscape.pdf}
 \caption{Scatterplot of points scored  \label{compare_likelihood_points}
 against maximum likelihood estimates}
 \end{figure}

@@ -400,6 +400,11 @@ l <- c(-4.6, -1.5)
 dotchart(log(surfing_maxp),pch=NA,xlim=l)
 mydotchart(jj,col="red" ,pch=16,xlim=l,xaxt='n',frame.plot=FALSE)
 mydotchart(kk,col="blue",pch=16,xlim=l,xaxt='n',frame.plot=FALSE)
+
+pdf(file="showsurfingmaxpdotchart.pdf")
+jj <- log10(surfing_maxp)
+dotchart(jj,pch=16,xlab="Log of Bradley-Terry strength of competitors (base 10)")
+dev.off()
 ```
 
 Test the null of equal strengths:
@@ -424,11 +429,13 @@ text(jjO[i],jjL[i],names(jjL)[i],col='gray',pos=4,cex=0.5)
 abline(fit)
 
 pdf(file="directlogplotofstrengths.pdf")
-plot(jjO,jjL,pch=16,log='xy',xlab='points',ylab='maximum likelihood strength')
+par(xpd=NA)
+plot(jjO,jjL,pch=16,log='xy',xlab='points',ylab='maximum likelihood strength',cex=1.5)
 fit <- lm(log10(jjL)~log10(jjO))
 for(i in seq_along(jjO)){
-text(jjO[i],jjL[i],names(jjL)[i],col='gray',pos=4,cex=0.5)
+text(jjO[i],jjL[i],names(jjL)[i],col='gray',pos=4,cex=0.8)
 }
+par(xpd=FALSE)
 abline(fit)
 dev.off()
 ```
@@ -557,7 +564,7 @@ l_wide <- profsupp(surfing2,"Brazilian_beachtype",p_wide,relative=FALSE)
 plot(c(0,p_wide),c(l0,l_wide)-max(l),type='b',xlab="Brazilian beachtype wide",ylab="support")
 abline(h= -2,lty=2)
 pdf(file="plotwidep.pdf")
-plot(c(0,p_wide),c(l0,l_wide)-max(l),type='b',xlab="Brazilian beachtype wide",ylab="support")
+plot(c(0,p_wide),c(l0,l_wide)-max(l),type='b',xlab="Bradley-Terry strength of the Brazilian beachtype reified entity",ylab="support")
 abline(h= -2,lty=2)
 dev.off()
 ```
