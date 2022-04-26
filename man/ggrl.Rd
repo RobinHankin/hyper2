@@ -1,6 +1,7 @@
 \name{ggol}
 \alias{ggol}
 \alias{ggrl}
+\alias{goodbad}
 \alias{choose_losers}
 \alias{choose_winners}
 \alias{general_grouped_rank_likelihood}
@@ -17,8 +18,7 @@ statistics
 \usage{
 ggrl(H, ...)
 general_grouped_rank_likelihood(H, ...)
-choose_losers(H, all_players, losers)
-choose_winners(H, all_players, winners)
+goodbad(winners,losers)
 elimination(all_players)
 rank_likelihood(M,times=1)
 rankvec_likelihood(v)
@@ -51,11 +51,14 @@ race(v)
   Function \code{ggrl()} is an easily-typed alias for
   \code{general_grouped_rank_likelihood()}.
 
-  Functions \code{choose_winners()} and \code{choose_losers()} take a
-  \code{hyper2} object \code{H} (a likelihood function) and return a
-  list of \code{hyper2} objects.  The evaluate may be found with
-  function \code{maxplist()}.
-
+  Function \code{goodbad()} is a convenience function for \code{ggrl()}
+  in which a bunch of contestants is judged.  It returns a likelihood
+  function for the observation that the members of one subset were
+  better than those of another.  Thus
+  \code{goodbad(letters[1:3],letters[4:5])} corresponds to the
+  observation that \code{d} and \code{e} were put into an elimination
+  trial (and \code{abc} were not).
+  
   Function \code{elimination()} gives a likelihood function for situations
   where the \emph{weakest} player is identified at each stage and
   subsequently eliminated from the competition.  It is intended for

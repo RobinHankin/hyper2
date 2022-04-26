@@ -763,16 +763,22 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   ggrl(H,winners,losers)
 }
 
+
+`goodbad` <- function(winners,losers){
+    stopifnot(!any(winners %in% losers))
+    ggrl(hyper2(pnames=c(winners,losers),winners,losers))
+}
+
 `elimination` <- function(all_players){
     if(is.numeric(all_players) & (length(all_players)==1)){
       all_players <- letters[seq_len(all_players)]
     }
     all_players <- rev(all_players)
-    H <- choose_losers(hyper2(pnames=sort(all_players)),all_players,all_players[length(all_players)])
+    H <- ggrl(hyper2(pnames=sort(all_players)),all_players,all_players[length(all_players)])
     players <- all_players[-length(all_players)]
     while(length(players)>1){
         for(i in seq_along(H)){
-            H[[i]] <- choose_losers(H[[i]],players,players[length(players)])
+            H[[i]] <- ggrl(H[[i]],players,players[length(players)])
         }
         H <- unlist(H,recursive=FALSE)
         players <- players[-length(players)]
