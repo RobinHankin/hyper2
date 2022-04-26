@@ -91,12 +91,12 @@ NA,12+4i,11+2i,16+2i,11+7i,NA),4,4)
 teams <- LETTERS[1:4]
 dimnames(M2) <- list("@home" = teams,"@away"=teams)
 home_away(M2)
-home_away3(M2)
+home_away3(M2,lambda=1.2)
 
 
 M <- kka_array[,,1] + 1i*kka_array[,,3] # ignore draws
 home_away(M)
-home_away3(M)
+home_away3(M,lambda=1.3)
 
 
 

@@ -73,7 +73,7 @@ karpov_kasparov_anand
 
 M <- kka_array[,,1] + 1i*kka_array[,,3]
 home_away(M)
-home_away3(M)
+home_away3(M,lambda=1.2)
 
 
 }
