@@ -33,6 +33,9 @@ resides in the \code{data/} directory.
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{ordertable2supp}},\code{\link{javelin}}}
 \examples{
-2+2
+
+jj <- javelin_table[1:3,]
+jj
+attemptstable2supp3(jj)
 
 }
