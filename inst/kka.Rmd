@@ -87,8 +87,7 @@ but we need a likelihood function.  Here I define likelihood function
 `karpov_kasparov_anand` but to save typing we work with temporary
 object `H` and rename it at the end:
 
-```{r defineH}
-
+```{r defineH,cache=TRUE}
 results <- as.list(kka)
 attach(results)
 H <- hyper2()
@@ -132,7 +131,7 @@ karpov_kasparov_anand
 
 Test the hypothesis that all three players have the same strength; first do the free optimization:
 
-```{r testall3}
+```{r testall3,cache=TRUE}
 samep.test(karpov_kasparov_anand,c("Karpov","Kasparov","Anand"))
 ```
 
@@ -308,6 +307,91 @@ kka_array <- abind(
 dimnames(kka_array)[[3]] <- c("plays_white_wins", "plays_white_draws", "plays_white_loses")
 kka_array
 ```
+
+
+# Some ideas for `hyper3` analysis.
+
+First we ignore the draws and create a matrix with real parts
+representing white wins (home wins in the context of football) and
+imaginary parts representing black (away) wins.  A pairwise likelihood function would be
+
+$$
+\left(\frac{\lambda p_1}{\lambda p_1+p_2}\right)^a
+\left(\frac{        p_2}{\lambda p_1+p_2}\right)^b
+\left(\frac{        p_1}{p_1+\lambda p_2}\right)^c
+\left(\frac{\lambda p_1}{p_1+\lambda p_2}\right)^d
+$$
+
+for the observation of $+a\,=0\,-b$ for $p_1$ playing white and
+$+c\,=0\,-d$ for $p_2$ playing white.  We then translate this into a
+`hyper3` likelihood function as follows
+
+```{r,label=kka_hyper3,cache=TRUE}
+(M <- kka_array[,,1] + 1i*kka_array[,,3])
+home_away3(M,lambda=1.1)
+```
+
+Above we use $\lambda=1.1$, as a specific numeric value is required by
+the idiom.
+
+```{r, showhyper3kkamaxlikeexists,cache=TRUE}
+l <- function(lambda){
+  H <- home_away3(M,lambda=lambda)
+  loglik(maxp(H),H)
+}
+lam <- seq(from=1.2,to=3.5,len=10)
+like <- sapply(lam,l)
+```
+
+and plot it:
+
+```{r,label=plothyper3likecurve}
+plot(lam,like-max(like),type="b",pch=16)
+abline(h=c(0,-2),lty=2)
+```
+
+Above we see a credible interval for $\lambda$ being about
+$(1.4,2.9)$.  Of course, this is crude and it would be betterto have
+more transparent package idiom.  But I'm working on this.
+
+We can now introduce draws but first a change of notation.  The
+previous likelihood function can be represented thus:
+
+$$
+\left(\frac{\lambda p_1, p_2}{\lambda p_1+p_2}\right)^{(a,b)}
+\left(\frac{p_1, \lambda p_2}{p_1+\lambda p_2}\right)^{(c,d)}
+$$
+
+Draws would change this by introducing a weighted Draw monster D$:
+
+$$
+\left(\frac{\lambda p_1, D(p_1+p_2),p_2}{\lambda p_1+D(p_1+p_2)+p_2}\right)^{(a,b,c)}
+\left(\frac{p_1, D(p_1+p_2),\lambda p_2}{p_1+D(p_1+p_2)+\lambda p_2}\right)^{(d,e,f)}
+$$
+
+or possibly an individual Draw monster:
+
+$$
+\left(\frac{\lambda p_1, D_1p_1+D_2p_2,p_2}{\lambda p_1+D_1p_1+D_2p_2+p_2}\right)^{(a,b,c)}
+\left(\frac{p_1, D_1p_1+D_2p_2),\lambda p_2}{p_1+D_1p_1+D_2p_2+\lambda p_2}\right)^{(d,e,f)}
+$$
+
+Note that in neither of these models do we have the probability of a
+draw for $p_1$ playing white being the same as for $p_2$ playing
+white.  In the first case the two probabilities are
+
+$$
+\frac{D(p_1+p_2)}{(\lambda +D)p_1 + (1+D)p_2},\qquad
+\frac{D(p_1+p_2)}{(1+D)p_1 + (\lambda+D)p_2}
+$$
+
+
+and in the second they are
+
+$$
+\frac{D_1p_1+D_2p_2}{(\lambda +D_1)p_1 + (1+D_2)p_2},\qquad
+\frac{D_1p_1+D_2p_2}{(1 +D_1)p_1 + (\lambda+D_2)p_2}
+$$
 
 ### Package dataset
 
