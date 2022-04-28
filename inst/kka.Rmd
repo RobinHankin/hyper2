@@ -362,7 +362,7 @@ $$
 \left(\frac{p_1, \lambda p_2}{p_1+\lambda p_2}\right)^{(c,d)}
 $$
 
-Draws would change this by introducing a weighted Draw monster D$:
+Draws would change this by introducing a weighted Draw monster $D$:
 
 $$
 \left(\frac{\lambda p_1, D(p_1+p_2),p_2}{\lambda p_1+D(p_1+p_2)+p_2}\right)^{(a,b,c)}
@@ -392,6 +392,50 @@ $$
 \frac{D_1p_1+D_2p_2}{(\lambda +D_1)p_1 + (1+D_2)p_2},\qquad
 \frac{D_1p_1+D_2p_2}{(1 +D_1)p_1 + (\lambda+D_2)p_2}
 $$
+
+With strictly positive $D,D_1,D_2$ these are equal if and only if
+$(\lambda-1)(p_1-p_2)=0$, that is, if the white advantage is
+nonexistant, or if the players have the same strength.
+
+We can use the bespoke function `white_draw3()` to make a likelihood
+function:
+
+
+```{r,makewhitedrawlike,cache=TRUE}
+white_draw3(kka_array, 1.1, 2.3)
+```
+
+
+Then make a wrapper:
+
+
+```{r,maxewhitedrawlike,cache=TRUE}
+f <- function(v){
+    lambda <- v[1]
+    D      <- v[2]
+    H <- white_draw3(kka_array, lambda,D)
+    max(maxp(H,justlikes=TRUE))
+}	
+f(c(1.5,2.3))
+```
+
+```{r,contourlikewhite,cache=TRUE}
+n <- 10
+lambda <- seq(from=1.4,to=2.9,len=n)
+D <- seq(from=1.6,to=3.4,len=n)	
+M <- as.matrix(expand.grid(lambda=lambda,D=D))
+l <- matrix(apply(M,1,f),n,n)
+```
+
+```{r}
+l <- l-max(l)
+contour(lambda,D,l,nlevels=30,xlab="lambda",ylab="D")
+abline(v=lambda,col='gray',lwd=0.2)
+abline(h=D,col='gray',lwd=0.2)
+lambda
+D
+```
+
 
 ### Package dataset
 

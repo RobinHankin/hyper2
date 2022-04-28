@@ -3,8 +3,10 @@
 \alias{zermelo}
 \alias{home_away}
 \alias{home_away3}
+\alias{white_draw}
+\alias{white_draw3}
 \title{Pairwise comparisons}
-\description{
+\description{\loadmathjax
 
   Function \code{pairwise()} takes a matrix of pairwise comparisons and
   returns a \code{hyper2} likelihood function.  Function
@@ -18,13 +20,20 @@
   same, but returns a \code{hyper3} object.  A complex matrix is
   interpreted as real parts being the home wins and imaginary parts away
   wins.
-  
+
+  Function \code{white_draw3()} returns a \code{hyper3} likelihood
+  function for pairwise comparisons, one of whom has a home team-type
+  advantage (white player in the case of chess).  It is designed to work
+  with an array of dimensions \mjeqn{n\times n\times 3}{n*n*3}, where
+  \mjseqn{n} is the number of players.
+      
 }
 \usage{
 pairwise(M)
 zermelo(M, maxit = 100, start, tol = 1e-10, give = FALSE)
 home_away(home_games_won, away_games_won)
 home_away3(home_games_won, away_games_won,lambda)
+white_draw3(A,lambda,D)
 }
 \arguments{
   \item{M}{Matrix of pairwise comparison results}
@@ -36,8 +45,9 @@ home_away3(home_games_won, away_games_won,lambda)
     evaluate and \code{TRUE} meaning to return all iterations}
   \item{home_games_won, away_games_won}{Matrices showing home games won
     and away games won}
-  \item{lambda}{In function \code{home_away3()}, the home ground advantage
+  \item{lambda}{The home ground advantage
     (or white advantage in chess)}
+  \item{D}{Weight of draw}
 }
 \details{
   In function \code{zermelo()}, the diagonal is disregarded.

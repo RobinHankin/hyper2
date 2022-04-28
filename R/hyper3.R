@@ -516,5 +516,46 @@ stop("not yet written")
     return(H)
 }
 
+## kka_array is arranged differently from the previous; it uses
+## white_wins and white_losses, not white wins and white losses
 
-
+`white_draw3` <- function(A,lambda,D){ # white_draw3(kka_array,1.1,0.2)
+    stopifnot(identical(dimnames(A)[[1]],dimnames(A)[[2]]))
+    players <- dimnames(A)[[1]] 
+    H <- hyper3(pnames=c(players,"lambda","D"))
+    d <- dim(A)
+    
+    for(i in seq_len(d[1])){
+        for(j in seq_len(d[2])[-i]){
+            white_player <- players[i]
+            black_player <- players[j]
+            
+            white_player_wins  <- A[i,j,1]
+            white_player_draws <- A[i,j,2]
+            white_player_loses <- A[i,j,3]
+            
+            total_matches <- white_player_wins + white_player_draws + white_player_loses 
+            
+            ## white player wins:
+            jj <- lambda
+            names(jj) <- white_player
+            H[jj] %<>% inc(white_player_wins)
+            
+            ## white player loses (so the black player wins):
+            jj <- 1
+            names(jj) <- black_player
+            H[jj] %<>% inc(white_player_loses)
+            
+            ## draw:
+            jj <- c(D,D)
+            names(jj) <- c(white_player,black_player)
+            H[jj] %<>% inc(white_player_draws)
+            
+            ## lastly, change the denominator so the powers sum to zero:
+            jj <- c(lambda+D , 1+D)
+            names(jj) <- c(white_player,black_player)
+            H[jj] %<>% dec(total_matches)
+        } # j loop closes
+    } # i loop closes
+    return(H)
+}
