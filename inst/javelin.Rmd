@@ -80,6 +80,11 @@ abline(0,1)
 ordertransplot(m1,m2)
 ```
 
+```{r,dothetests,cache=TRUE}
+equalp.test(javelin1)
+equalp.test(javelin2)
+```
+
 
 Reference
 
