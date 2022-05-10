@@ -48,6 +48,10 @@ white_draw3(A,lambda,D)
   \item{lambda}{The home ground advantage
     (or white advantage in chess)}
   \item{D}{Weight of draw}
+  \item{A}{Array of dimension \code{n*n*3}, with \code{A[,,i]}
+  corresponding to white wins, white draws, and white losses for
+  \code{i=1,2,3}.  The canonical example would be \code{kka_array},
+  see \code{inst/kka.Rmd} for details}
 }
 \details{
   In function \code{zermelo()}, the diagonal is disregarded.
@@ -107,7 +111,5 @@ home_away3(M2,lambda=1.2)
 M <- kka_array[,,1] + 1i*kka_array[,,3] # ignore draws
 home_away(M)
 home_away3(M,lambda=1.3)
-
-
 
 }
