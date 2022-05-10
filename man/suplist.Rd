@@ -1,5 +1,6 @@
 \name{suplist}
 \alias{suplist}
+\alias{supplist}
 \alias{Ops.suplist}
 \alias{suplist_add}
 \alias{as.suplist}
@@ -16,6 +17,7 @@
 \method{Ops}{suplist}(e1, e2)
 \method{sum}{suplist}(x,...,na.rm=FALSE)
 suplist_add(e1,e2)
+suplist_times_scalar(e1,e2)
 as.suplist(L)
 }
 \arguments{

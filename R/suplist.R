@@ -11,16 +11,42 @@
 {
   f <- function(...){stop("odd---neither argument has class suplist?")}
   unary <- nargs() == 1
-  lclass <- inherits(e1,"hyper2")
-  rclass <- !unary && inherits(e2,"hyper2")
+  lclass <- inherits(e1,"suplist")
+  rclass <- !unary && inherits(e2,"suplist")
   
   if(unary){stop("Unary operators not implemented for suplist objects")}
   
-    if (.Generic == "+"){
+  if(.Generic == "+"){
+      stopifnot(lclass & rclass)    
       return(suplist_add(e1,e2))
+    } else if (.Generic == "*"){
+      if(lclass & rclass){
+          stop("<suplist> * <suplist> not defined")
+      } else if(lclass & !rclass){  # W*6
+          return(suplist_times_scalar(e1,e2))
+      } else if (!lclass & rclass){ # 6*W
+          return(suplist_times_scalar(e2,e1))
+      } else {
+	  f()
+      }
     } else {
       stop("Binary operator '", .Generic, "' is not implemented for hyper2 objects")
     }
+}
+
+`suplist_times_scalar` <- function(e1,e2){
+   stopifnot(e2==round(e2))
+   stopifnot(length(e2)==1)
+   stopifnot(e2>=0)
+   if(e2==0){
+     return(as.suplist*lapply(e1,function(x){x*0}))
+   } else if(e2==1){
+     return(e1)
+   } else {
+     out <- e1
+     for(i in seq_len(e2-1)){out <- out + e1}
+     return(out)
+   }
 }
 
 `suplist_add` <- function(e1,e2){
