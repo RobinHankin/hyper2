@@ -32,9 +32,7 @@ resides in the \code{data/} directory.
 \examples{
 baseball_table
 baseball_table[1:3,1:3] 
-home_away3(baseball_table[1:3,1:3])
-
-
+home_away3(baseball_table[1:3,1:3],1.3)
 
 }
 
