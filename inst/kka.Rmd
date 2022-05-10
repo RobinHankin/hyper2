@@ -78,7 +78,7 @@ To investigate the effect of playing white we might do this:
 
 ```{r anamwa}
 M <- rbind(a1,rev(a2))
-dimnames(M) <- list(karpov_plays=c("White","Black"),result=c("karpov wins","karpov draws","kaprov loses"))
+dimnames(M) <- list(karpov_plays=c("White","Black"),result=c("karpov wins","karpov draws","karpov loses"))
 M
 fisher.test(M)
 ```
