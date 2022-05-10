@@ -12,7 +12,7 @@ library("hyper2")
 library("disordR")
 ```
 
-(takes about 15 minutes to process)
+(takes about an hour to process)
 
 Consider a race in which there are six runners 1-6 but we happen to
 know that three of the runners (1,2,3) are clones of strength $p_a$,
@@ -97,11 +97,12 @@ knownp.test(H,pTRUE)
 And above we see that there is no evidence to reject the hypothesis
 that the strengths are in fact the specified strengths in `pTRUE`.
 
-# Some simple cases
+# Some simple cases: likelihood functions for order statistics with clones
 
-The simplest nontrivial case is three competitors with strengths
-$a,a,b$ and finishing ordr $a\succ b\succ a$.  The likelihood
-function would be
+Here I consider some order statistics with nontrivial maximum
+likelihood Bradley-Terry strength.   The simplest nontrivial case is
+three competitors with strengths $a,a,b$ and finishing order $a\succ
+b\succ a$.  The likelihood function would be
 
 $$
 \frac{a}{2a+b}\cdot\frac{b}{a+b}
@@ -188,7 +189,9 @@ complicated, and equal to about `c(a=0.2056,b=0.5466,c=0.2478)`:
 maxp(ordervec2supp3(c("a","b","c","a")))
 ```
 
+# Some simple cases: Fisher information for simple cases
 
+(work in progress).
 
 
 # The constructors' championship
@@ -241,7 +244,7 @@ equalp.test(constructor_2021)
 ```
 
 and see that there is (very) strong evidence to reject this null.
-Further, we may test the hypothesis that the big four (viz Mercedies,
+Further, we may test the hypothesis that the big four (viz Mercedes,
 Ferrari, Red Bull Racing Honda, and McLaren-Mercedes) are equal:
 
 ```{r,label=testsameconstructor,cache=TRUE}
