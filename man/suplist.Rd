@@ -5,6 +5,11 @@
 \alias{suplist_add}
 \alias{as.suplist}
 \alias{sum.suplist}
+\alias{suplist_times_scalar}
+\alias{lsl}
+\alias{loglik_lsl}
+\alias{Ops.lsl}
+\alias{lsl_add}
 \title{Methods for suplist objects}
 \description{\loadmathjax
 
@@ -84,13 +89,16 @@ as.suplist(L)
     +\cdots+
     \mbox{Prob}(p|I_s)
     \right)}{omitted; see PDF}
-
-
   
   However, \code{S1+S2} is typically a large and unwieldy object, and
   can be very slow to evaluate.  These functions are here because they
   provide slick R idiom.
 
+  The experimental \code{lsl} mechanism furnishes an alternative
+  methodology which is more computationally efficient at the expense of
+  a non-expicit likelihood function.  It is not clear at present (2022)
+  which of the two systems is better.
+  
 }
 \value{
 Returns a \code{suplist} object.
@@ -109,9 +117,10 @@ W3 <- ggrl(W, 'c', letters[4:5],'a')  # 2-element list
 W1+W2+W3 # A 2*6*2=24-element list
 
 like_single_list(indep(equalp(W)),W1+W2+W3)
-
-
 \dontrun{dotchart(maxplist(W1+W1+W3),pch=16)} # takes a long time
+
+a <- lsl(list(W1,W2,W3),4:6)  # observe W1 four times, W2 five times and W3 six times
+loglik_lsl(equalp(W),a,log=TRUE)
 
 }
 \keyword{symbolmath}
