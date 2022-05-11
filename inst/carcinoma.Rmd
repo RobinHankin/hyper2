@@ -1,0 +1,81 @@
+---
+title: "Carcinoma"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+
+```{r loadlib}
+carcinoma_table <- read.table("carcinoma.txt",header=TRUE)
+carcinoma_table[,1:7] <- carcinoma_table[,1:7] > 0
+wanted <- !(apply(carcinoma_table[,1:7],1,sum) %in% c(0,7))
+carcinoma_table <- carcinoma_table[wanted,]
+carcinoma_table
+```
+
+```{r makeggrllist,cache=TRUE}
+W <- hyper2(pnames=LETTERS[1:7])
+Wi <- list()
+
+for(i in seq_len(nrow(carcinoma_table))){
+      jj <- unlist(carcinoma_table[i,1:7])
+      negative <- names(jj)[jj==0]
+      positive <- names(jj)[jj==1]
+      print(negative)
+      print(positive)
+      Wi[[i]] <- ggrl(W,positive,negative)
+}
+HL <- lsl(Wi,powers= carcinoma_table$n)
+```
+
+Now 
+
+
+```{r,label=calccloglikzipf,cache=TRUE}
+z <- zipf(7)
+names(z) <- LETTERS[1:7]
+system.time(lz <- loglik_lsl(z,HL))
+lz
+```
+
+```{r,label-calcloglikequalp,cache=TRUE}
+e <- equalp(W)
+system.time(le <- loglik_lsl(e,HL))
+le
+```
+
+
+
+
+Agresti, table 13.1, p542.
+
+Landis, J. R., and G. G. Koch. 1977. An application of hierarchical
+kappa-type statistics in the assessment of majority agreement among
+multiple observers. Biometrics 33: 363-374.
+
+### Package dataset {-}
+
+Following lines create `carcinoma.rda`, residing in the `data/`
+directory of the package.
+
+
+```{r}
+carcinoma <- 5
+
+```{r,label=savecarcinomadataset}
+save(carcinoma_table,carcinoma, file="carcinoma.rda")
+```
+
+
