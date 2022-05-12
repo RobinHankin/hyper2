@@ -45,7 +45,7 @@ chess_maxp
 (we refer to this as the "TAK" model).  We might ask whether there is
 evidence for the players having differing strengths:
 
-```{r}
+```{r equalptestchunk,cache=TRUE}
 equalp.test(chess)
 ```
 
@@ -78,7 +78,7 @@ $$
 
 
 (a "procyclic win" is a win that would be expected under a strong
-monster).  Here we also have $3\alpha+M=0$, so to estimate the
+monster).  Here we also have $3\alpha+M=1$, so to estimate the
 strength of the monster we would solve
 
 $$
@@ -103,9 +103,48 @@ $$
 \left(\frac{1-M}{2+M}\right)^b
 $$
 
-(a graph is given below).  We may relax the assumption of equal
-strength of the real players by using a more sophisticated hyper2
-construction:
+and here we have $a=22+23+10=55$ and $b=13+12+8=33$ (a graph is given
+below).  It is straightforward but not trivial to translate this into
+`hyper3` idiom.  Noting that $3\alpha+M=1$ we define $\beta=3\alpha$
+and then the unit sum constraint is $\beta+M=1$ and our probabilities
+are
+
+$$
+\frac{\alpha+M;\alpha}{2\alpha+M   } =
+\frac{\beta/3+M;\beta/3}{2\beta/3+M} =
+\frac{1+2M;1-M}{2+M}
+$$
+
+(where the last expression is obtained using $\beta+M=1$).  We may set
+up a log-likelihood function of $a,b$ using `hyper3` idiom as follows:
+
+```{r,usehyper3}
+TqAqK <- function(a,b){
+  H3 <- hyper3(pnames=c("beta","M"))
+  H3[c(beta=1/3,M=1)] %<>% inc(a  )
+  H3[c(beta=1/3    )] %<>% inc(  b)
+  H3[c(beta=2/3,M=1)] %<>% dec(a+b)
+  return(H3)
+}
+H3 <- TqAqK(55,33)
+loglik(c(M=0.1,beta=0.9),H3)
+loglik(c(beta=0.9,M=0.1),H3)  #  NB: identical!
+```
+
+[above, we note that $\beta+M=3\alpha+M=1$, so the monster is the
+fillup value with respect to $\beta$].  This is easy to maximize:
+
+```{r,maximizeTqAqK}
+optimize(function(M){loglik(c(M=M,beta=1-M),H3)},c(0.01,0.99),maximum=TRUE)
+```
+
+This gives maximum likelihood estimates of $M=0.18$ as would be
+expected from the simple binomia model; the probability of a procyclic
+win is about $0.625$.
+
+
+We may relax the assumption of equal strength of the real
+players by using a more sophisticated hyper2 construction:
 
 ```{r,setupH}
 H <- hyper2()
@@ -137,7 +176,7 @@ assumption $p_T=p_A=p_K$.  Further, under TAKM, the three "real"
 players are again all of approximately equal strength, and we may test
 this:
 
-```{r,testequalTAKM}
+```{r,testequalTAKM,cache=TRUE}
 samep.test(H,c("Topalov","Anand","Karpov"))
 ```
 
@@ -146,7 +185,7 @@ previous estimate).  Thus the p-value of about 0.77 indicates failure
 to reject the null (compare 0.39 under TAK).  Now we can test
 $H_0\colon p_M=0$ under TAKM:
 
-```{r}
+```{r,specmtest,cache=TRUE}
 specificp.gt.test(H,"M",0)
 ```
 
@@ -160,7 +199,7 @@ hypothesis that $p_M=0$ under TAKM with a p-value of $0.04$ (compare
 
 We may plot a profile likelihood curve for $M$:
 
-```{r}
+```{r,label=plotproflik,cache=TRUE}
 M <- seq(from=0.001,to=0.4,len=40)
 L1 <- profsupp(H,"M",M)
 L1 <- L1-max(L1)
@@ -175,7 +214,9 @@ legend("topright",col=c("black","red"),lty=1,legend=c("TAKM","T=A=K"))
 ```
 
 Above we see support curves for RPS monster strength using TAKM and
-$T=A=K$, showing very similar results.
+$T=A=K$, showing very similar results.  Note that the T=A=K curve
+could have been obtained more nicely with function `TqAqK` but I
+haven't got round to changing it yet.
 
 # Generalized RPS
 
@@ -241,7 +282,7 @@ HW
 
 (likelihood function `HW` has no monster).  We can then analyse this:
 
-```{r,label=testHW}
+```{r,label=testHW,cache=TRUE}
 maxp(HW)
 equalp.test(HW)
 ```
@@ -265,13 +306,13 @@ HWM
 
 Then the same analysis applies:
 
-```{r,label=maxpHWM}
+```{r,label=maxpHWM,cache=TRUE}
 maxp(HWM)
 ```
 
 and we can test the hypothesis that $p_M=0$:
 
-```{r}
+```{r,label=specicifgtest,cache=TRUE}
 specificp.gt.test(HWM,"M",0)
 ```
 
