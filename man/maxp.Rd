@@ -112,6 +112,9 @@ equalp(H)
 
   This functionality is peculiarly susceptible to off-by-one errors.
 
+  Function \code{maxp()} does not currently work with \code{lsl}
+  objects.
+
   The built-in datasets generally include a pre-calculated result of
   running \code{maxp()}; thus hyper2 object \code{icons} and
   \code{icons_maxp} are included in the same \code{.rda} file.

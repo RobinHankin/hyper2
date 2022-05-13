@@ -430,6 +430,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 `maxp_single` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, maxtry=100, ...){
     if(inherits(H,"suplist")){return(maxplist(Hlist=H,startp=startp,give=give,fcm=fcm,fcv=fcv,...))}
+    if(inherits(H,"lsl"    )){return(maxplsl (Hlist=H,startp=startp,give=give,fcm=fcm,fcv=fcv,...))}
     
     n <- size(H)
     if(is.null(startp)){
@@ -561,6 +562,38 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     objective <- function(p) {
         -like_single_list(p, Hlist)
     }
+    
+    UI <- rbind(diag(nrow = n - 1), -1, fcm)
+    CI <- c(rep(SMALL, n - 1), -1 + SMALL, fcv)
+
+    if(isTRUE(getOption("use_alabama"))){
+        out <- constrOptim.nl(par = startp, fn = objective, gr = NULL, 
+                              hin = function(x){drop(UI%*%x - CI)},
+                              control.outer = list(trace=FALSE),...)
+    } else {
+        out <- constrOptim(theta = startp, f = objective, grad = NULL, 
+                           ui = UI, ci = CI, ...)
+    }
+        out$value <- -out$value
+        if (give) {
+        return(out)
+    }
+    else {
+        jj <- fillup(out$par)
+        return(jj)
+    }
+}
+
+`maxp_lsl` <- function (HLSL, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, SMALL=1e-6, ...){
+    allpnames <- sort(unique(unlist(lapply(unlist(a[[1]],recursive=F),pnames))))
+    n <- length(allpnames)
+    stop("maxp_lsl() currently under development")
+
+    if (is.null(startp)) {
+        startp <- rep(1/n, n - 1)
+	names(startp) <- allpnames
+    }
+    objective <- function(p) { -loglik_lsl(p, HLSL) }
     
     UI <- rbind(diag(nrow = n - 1), -1, fcm)
     CI <- c(rep(SMALL, n - 1), -1 + SMALL, fcv)
