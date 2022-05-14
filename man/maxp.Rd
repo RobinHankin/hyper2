@@ -1,6 +1,7 @@
 \name{maxp}
 \alias{maxp}
 \alias{maxplist}
+\alias{maxp_lsl}
 \alias{maxp_single}
 \alias{maxp_single2}
 \alias{maxp_simplex}
@@ -19,11 +20,13 @@ maxp_single(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6,
 maxp_single2(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6,
    maxtry=100, ...)
 maxp_simplex(H, n=100, show=FALSE, give=FALSE, ...)
+maxp_lsl(HLSL, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, SMALL=1e-6, ...)
 equalp(H)
 }
 \arguments{
   \item{H}{A \code{hyper2} object}
   \item{Hlist}{A list with elements all \code{hyper2} objects}
+  \item{HLSL}{An \code{lsl} object}
   \item{startp}{A vector of probabilities}
   \item{give}{Boolean, with default \code{FALSE} meaning to return just
     the evaluate (including fillup), and \code{TRUE} meaning to return
