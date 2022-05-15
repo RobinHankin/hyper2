@@ -88,24 +88,19 @@ for(i in seq_len(nrow(carcinoma_table))){
 carcinoma <- lsl(Wi,powers= carcinoma_table$n)
 ```
 
-To maximize the likelihood we need a good starting point and rather
-than use the default `equalp()` we could simply count how many times
-each clinician diagnoses carcinoma:
+There are several natural BT strengths to consider.  First, we could
+simply count how many times each clinician diagnoses carcinoma:
 
-```{r,label=countcarcinoma}
-count <- colSums(sweep(carcinoma_table[,1:7],1,carcinoma_table$n,"*"))
-names(count) <- colnames(carcinoma_table)[1:7]
-count <- count/sum(count)
-count
-pie(count)
-carcinoma_count <- count
+```{r,label=countcarcinoma,cache=TRUE}
+carcinoma_count <- colSums(sweep(carcinoma_table[,1:7],1,carcinoma_table$n,"*"))
+names(carcinoma_count) <- colnames(carcinoma_table)[1:7]
+carcinoma_count <- carcinoma_count/sum(carcinoma_count)
+carcinoma_count
+system.time(lc <- loglik_lsl(carcinoma_count,carcinoma))
 ```
 
-We can compare this to other reasonable starting points:
+Secondly, Zipf:
 
-```{r,label=calccloglikcount,cache=TRUE}
-system.time(lc <- loglik_lsl(count,carcinoma))
-```
 
 ```{r,label=calccloglikzipf,cache=TRUE}
 z <- zipf(7)
@@ -113,21 +108,41 @@ names(z) <- LETTERS[1:7]
 system.time(lz <- loglik_lsl(z,carcinoma))
 ```
 
-```{r,label-calcloglikequalp,cache=TRUE}
+Thirdly, equal probabilities:
+
+
+```{r,label=calcloglikequalp,cache=TRUE}
 e <- equalp(W)
 system.time(le <- loglik_lsl(e,carcinoma))
 ```
 
-```{r,label=showthreemethods}
-c(count=lc, zipf=lz, equal=le)
-```
-
-To find the maximum likelihood estimate we would use:
+The maximum likelihood estimate is somewhat more demanding.  To find
+the maximum likelihood estimate we would use:
 
 `maxp_lsl(carcinoma,startp=indep(carcinoma_count), control=list(trace=100))`
 
 
-but this will take many hours (a week?) to run.
+but this takes many hours to run.  It gives the following:
+
+
+```{r,label=calculateloglikformaxp, cache=TRUE}
+carcinoma_maxp <- 
+c(A = 0.118778759012282, B = 0.542873969223425, C = 0.00654044305270073, 
+D = 0.00242693714895262, E = 0.202821434317779, F = 0.00130596252816986, 
+G = 0.125252494716691)
+system.time(lmax <- loglik_lsl(carcinoma_maxp,carcinoma))
+```
+
+
+We are now in a position to compare  these three points:
+
+```{r,label=showthreemethods}
+results <- c(count=lc, zipf=lz, equal=le,maxp=lmax)
+results <- results - max(results)
+results
+```
+
+
 
 Agresti, table 13.1, p542.
 
@@ -144,7 +159,7 @@ directory of the package.
 
 
 ```{r,label=savecarcinomadataset}
-save(carcinoma_table,carcinoma, carcinoma_count, file="carcinoma.rda")
+save(carcinoma_table,carcinoma, carcinoma_count, carcinoma_maxp,file="carcinoma.rda")
 ```
 
 
