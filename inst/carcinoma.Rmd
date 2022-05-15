@@ -16,6 +16,54 @@ options("digits" = 5)
 </p>
 
 
+This is a short analysis of the carcinoma dataset presented by
+Agresti, table 13.1, p542.  Seven pathologists classified each of 118
+slides on the presence or absence of carcinoma in the uterine
+cervix.  
+
+The probability model is as follows.  To each pathologist $i,1\leq i
+\leq 7$, we assign a non-negative Bradley-Terry strength and require
+$\sum p_i=1$.  Given that two pathologists $i$ and $j$ differ in their
+diagnosis then the probability of $i$ diagnosing the presence, and $j$
+diagnosing the absence, of carcinoma is given by
+
+\begin{equation}\tag{1}
+i^+,j^-\frac{p_i}{p_i+p_j},\qquad i^-,j^+\frac{p_j}{p_i+p_j}
+\end{equation}
+
+Operationally the way we implement this in `hyper2` idiom is to posit
+an (unobservable) ranking on the clinicians: we place the clinicians
+in order from most convinced of the presence of carcinoma to the least
+convinced.  Thus a ranking of `DACBEGF` means that clinician `D` was
+most convinced of the presense of carcinoma and `F` least convinced.
+Given this, and given a single slide, our actual observation might be
+that `D` and `A` diagnosed presence, and the others diagosed absence,
+of carcinoma.  The corresponding entry would be
+
+```
+A B C D E F G
+T F F T F F F
+```
+
+We ask what rankings are consistent with this observation.  Any
+ranking with `A` and `D` ahead of `BCEFG` would be admissible.  In
+`hyper2` notation we would say
+
+$$\left\lbrace A,D\right\rbrace\succ\left\lbrace B,C,E,F,G\right\rbrace$$
+
+Any ranking where `A` and `D` occupy the first two ranks and
+`B`,`C`,`E`,`F`,`G` ranks three to seven, would be admissible.  We
+would have $2!5!=240$ rankings.  The probability of the actual ranking
+being one of these is simply the sum of these 48 as the rankings are
+mutually exclusive.
+
+Each ranking has a Plackett-Luce likelihood function which is created
+in `hyper2` idiom using the bespoke `race()` function.  Here, we use
+generalized grouped rank likelihood (`ggrl()`) to create an `lsl`
+object, as used by Hankin 2019 for the MasterChef analysis.  This
+furnishes a Bradley-Terry model for the clinicians' strength that
+recovers equation (1).
+
 
 ```{r loadlib}
 carcinoma_table <- read.table("carcinoma.txt",header=TRUE)
@@ -37,29 +85,53 @@ for(i in seq_len(nrow(carcinoma_table))){
       print(positive)
       Wi[[i]] <- ggrl(W,positive,negative)
 }
-HL <- lsl(Wi,powers= carcinoma_table$n)
+carcinoma <- lsl(Wi,powers= carcinoma_table$n)
 ```
 
-Now 
+To maximize the likelihood we need a good starting point and rather
+than use the default `equalp()` we could simply count how many times
+each clinician diagnoses carcinoma:
 
+```{r,label=countcarcinoma}
+count <- colSums(sweep(carcinoma_table[,1:7],1,carcinoma_table$n,"*"))
+names(count) <- colnames(carcinoma_table)[1:7]
+count <- count/sum(count)
+count
+pie(count)
+carcinoma_count <- count
+```
+
+We can compare this to other reasonable starting points:
+
+```{r,label=calccloglikcount,cache=TRUE}
+system.time(lc <- loglik_lsl(count,carcinoma))
+```
 
 ```{r,label=calccloglikzipf,cache=TRUE}
 z <- zipf(7)
 names(z) <- LETTERS[1:7]
-system.time(lz <- loglik_lsl(z,HL))
-lz
+system.time(lz <- loglik_lsl(z,carcinoma))
 ```
 
 ```{r,label-calcloglikequalp,cache=TRUE}
 e <- equalp(W)
-system.time(le <- loglik_lsl(e,HL))
-le
+system.time(le <- loglik_lsl(e,carcinoma))
 ```
 
+```{r,label=showthreemethods}
+c(count=lc, zipf=lz, equal=le)
+```
+
+To find the maximum likelihood estimate we would use:
+
+`maxp_lsl(carcinoma,startp=indep(carcinoma_count), control=list(trace=100))`
 
 
+but this will take many hours (a week?) to run.
 
 Agresti, table 13.1, p542.
+
+
 
 Landis, J. R., and G. G. Koch. 1977. An application of hierarchical
 kappa-type statistics in the assessment of majority agreement among
@@ -71,11 +143,8 @@ Following lines create `carcinoma.rda`, residing in the `data/`
 directory of the package.
 
 
-```{r}
-carcinoma <- 5
-
 ```{r,label=savecarcinomadataset}
-save(carcinoma_table,carcinoma, file="carcinoma.rda")
+save(carcinoma_table,carcinoma, carcinoma_count, file="carcinoma.rda")
 ```
 
 
