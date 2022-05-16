@@ -16,6 +16,10 @@ options("digits" = 5)
 </p>
 
 
+(takes maybe twenty minutes to run without cache.  The value of
+`carcinoma_maxp` is calculated separately [discussed below], and that
+takes a few days to run).
+
 This is a short analysis of the carcinoma dataset presented by
 Agresti, table 13.1, p542.  Seven pathologists classified each of 118
 slides on the presence or absence of carcinoma in the uterine
@@ -28,17 +32,20 @@ diagnosis then the probability of $i$ diagnosing the presence, and $j$
 diagnosing the absence, of carcinoma is given by
 
 \begin{equation}\tag{1}
-i^+,j^-\frac{p_i}{p_i+p_j},\qquad i^-,j^+\frac{p_j}{p_i+p_j}
+\operatorname{Prob}(i^+,j^-) = \frac{p_i}{p_i+p_j},\qquad
+\operatorname{Prob}(i^-,j^+) = \frac{p_j}{p_i+p_j}
 \end{equation}
 
-Operationally the way we implement this in `hyper2` idiom is to posit
-an (unobservable) ranking on the clinicians: we place the clinicians
-in order from most convinced of the presence of carcinoma to the least
-convinced.  Thus a ranking of `DACBEGF` means that clinician `D` was
-most convinced of the presense of carcinoma and `F` least convinced.
-Given this, and given a single slide, our actual observation might be
-that `D` and `A` diagnosed presence, and the others diagosed absence,
-of carcinoma.  The corresponding entry would be
+(here superscripts $+$ and $-$ refer to a positive and negative
+diagnosis respectively).  Operationally the way we implement this in
+`hyper2` idiom is to posit an (unobservable) ranking on the
+clinicians: we place the clinicians in order from most convinced of
+the presence of carcinoma to the least convinced.  Thus a ranking of
+`DACBEGF` means that clinician `D` was most convinced of the presense
+of carcinoma and `F` least convinced.  Given this, and given a single
+slide, our actual observation might be that `D` and `A` diagnosed
+presence, and the others diagosed absence, of carcinoma.  The
+corresponding entry would be
 
 ```
 A B C D E F G
@@ -81,8 +88,6 @@ for(i in seq_len(nrow(carcinoma_table))){
       jj <- unlist(carcinoma_table[i,1:7])
       negative <- names(jj)[jj==0]
       positive <- names(jj)[jj==1]
-      print(negative)
-      print(positive)
       Wi[[i]] <- ggrl(W,positive,negative)
 }
 carcinoma <- lsl(Wi,powers= carcinoma_table$n)
@@ -96,7 +101,7 @@ carcinoma_count <- colSums(sweep(carcinoma_table[,1:7],1,carcinoma_table$n,"*"))
 names(carcinoma_count) <- colnames(carcinoma_table)[1:7]
 carcinoma_count <- carcinoma_count/sum(carcinoma_count)
 carcinoma_count
-system.time(lc <- loglik_lsl(carcinoma_count,carcinoma))
+lc <- loglik_lsl(carcinoma_count,carcinoma)
 ```
 
 Secondly, Zipf:
@@ -105,7 +110,8 @@ Secondly, Zipf:
 ```{r,label=calccloglikzipf,cache=TRUE}
 z <- zipf(7)
 names(z) <- LETTERS[1:7]
-system.time(lz <- loglik_lsl(z,carcinoma))
+z
+lz <- loglik_lsl(z,carcinoma)  # takes about 30 seconds to run
 ```
 
 Thirdly, equal probabilities:
@@ -113,7 +119,8 @@ Thirdly, equal probabilities:
 
 ```{r,label=calcloglikequalp,cache=TRUE}
 e <- equalp(W)
-system.time(le <- loglik_lsl(e,carcinoma))
+e
+le <- loglik_lsl(e,carcinoma) # takes about 30 seconds to run
 ```
 
 The maximum likelihood estimate is somewhat more demanding.  To find
@@ -130,19 +137,38 @@ carcinoma_maxp <-
 c(A = 0.118778759012282, B = 0.542873969223425, C = 0.00654044305270073, 
 D = 0.00242693714895262, E = 0.202821434317779, F = 0.00130596252816986, 
 G = 0.125252494716691)
-system.time(lmax <- loglik_lsl(carcinoma_maxp,carcinoma))
+carcinoma_maxp
+lmax <- loglik_lsl(carcinoma_maxp,carcinoma)
 ```
 
-
-We are now in a position to compare  these three points:
+[of course, if `carcinoma_maxp` is available, we would use this as a
+starting point, viz
+`maxp_lsl(carcinoma,startp=indep(carcinoma_maxp))`].  With this, we
+are now in a position to compare these four points:
 
 ```{r,label=showthreemethods}
-results <- c(count=lc, zipf=lz, equal=le,maxp=lmax)
+(results <- c(count=lc, zipf=lz, equal=le,maxp=lmax))
 results <- results - max(results)
 results
 ```
 
+We can use Wilks here to assess the null of `carcinoma_count`.  We
+have $-2\log(\Lambda/\Lambda_0)\sim\chi^2_6$, giving us a $p$-value of
 
+```{r,label=calculatechisquaredpvalueforcount}
+pchisq(-2*results[1],df=6,lower.tail=FALSE)
+```
+
+
+What is the difference between `carcinoma_count` and `carcinoma_maxp`?
+
+
+```{r}
+carcinoma_count
+carcinoma_maxp
+ordertransplot(carcinoma_count,carcinoma_maxp)
+ordertransplot(log(carcinoma_count),log(carcinoma_maxp),plotlims=c(-8,0))
+```
 
 Agresti, table 13.1, p542.
 
