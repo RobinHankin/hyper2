@@ -1,0 +1,114 @@
+---
+title: "Hepatitis"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+
+```{r loadlib}
+hepatitis_table <- read.table("hepatitis.txt",header=TRUE)
+hepatitis_table[,1:3] <- hepatitis_table[,1:3] > 0
+wanted <- !(apply(hepatitis_table[,1:3],1,sum) %in% c(0,3))
+hepatitis_table <- hepatitis_table[wanted,]
+hepatitis_table
+```
+
+```{r makeggrllist,cache=TRUE}
+W <- hyper2(pnames=c("P","Q","E"))
+Wi <- list()
+for(i in seq_len(nrow(hepatitis_table))){
+      jj <- unlist(hepatitis_table[i,1:3])
+      negative <- names(jj)[jj==0]
+      positive <- names(jj)[jj==1]
+      Wi[[i]] <- ggrl(W,positive,negative)
+}
+hepatitis <- lsl(Wi,powers= hepatitis_table$OC)
+```
+
+
+```{r}
+hepatitis
+```			
+
+
+There are several natural BT strengths to consider.  First, we could
+simply count how many times each clinician gives a positive diagnosis:
+
+```{r,label=counthep,cache=TRUE}
+hepatitis_count <- colSums(sweep(hepatitis_table[,1:3],1,hepatitis_table$OC,"*"))
+names(hepatitis_count) <- colnames(hepatitis_table)[1:3]
+hepatitis_count <- hepatitis_count/sum(hepatitis_count)
+hepatitis_count
+```
+
+Secondly, Zipf:
+
+
+```{r,label=calccloglikzipf,cache=TRUE}
+z <- zipf(3)
+names(z) <- c("P","Q","E")
+z
+```
+
+Thirdly, equal probabilities:
+
+
+```{r,label=calcloglikequalp,cache=TRUE}
+e <- equalp(W)
+e
+```
+
+To find the maximum likelihood estimate we would use:
+
+```{r,label=calculatehepmaxl,cache=TRUE}
+hepatitis_maxp <- maxp_lsl(hepatitis,startp=indep(hepatitis_count), control=list(trace=110))
+```
+
+```{r,label=calculateloglikformaxp, cache=TRUE}
+hepatitis_maxp
+```
+
+With this, we are now in a position to compare these four points:
+
+```{r,label=showthreemethods}
+lz <- loglik_lsl(z,hepatitis) 
+le <- loglik_lsl(e,hepatitis)
+lm <- loglik_lsl(hepatitis_maxp,hepatitis)
+lc <- loglik_lsl(hepatitis_count,hepatitis)
+(results <- c(zipf=lz, equal=le, maxlike=lm, count=lc))
+results <- results - max(results)
+results
+```
+
+We can use Wilks here to assess the null of `hepatitis_count`.  We
+have $-2\log(\Lambda/\Lambda_0)\sim\chi^2_6$, giving us a $p$-value of
+
+```{r,label=calculatechisquaredpvalueforcount}
+pchisq(-2*results[4],df=2,lower.tail=FALSE)
+```
+
+
+
+Agresti, table 13.1, p542.
+
+### Package dataset {-}
+
+Following lines create `hepatitis.rda`, residing in the `data/`
+directory of the package.
+
+
+```{r,label=savehepatitisdataset}
+save(hepatitis_table, hepatitis, hepatitis_count, hepatitis_maxp, file="hepatitis.rda")
+```
