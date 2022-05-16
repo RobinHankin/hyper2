@@ -585,7 +585,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `maxp_lsl` <- function (HLSL, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, SMALL=1e-6, ...){
-    allpnames <- sort(unique(unlist(lapply(unlist(HLSL[[1]],recursive=F),pnames))))
+    allpnames <- pnames(hepatitis[[1]][[1]])
     n <- length(allpnames)
 
     if (is.null(startp)) {
