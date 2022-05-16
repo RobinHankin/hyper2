@@ -22,8 +22,9 @@ takes a few days to run).
 
 This is a short analysis of the carcinoma dataset presented by
 Agresti, table 13.1, p542.  Seven pathologists classified each of 118
-slides on the presence or absence of carcinoma in the uterine
-cervix.  
+slides on the presence or absence of carcinoma in the uterine cervix.
+
+Here, the object of inference is the set of pathologists.  Informative 
 
 The probability model is as follows.  To each pathologist $i,1\leq i
 \leq 7$, we assign a non-negative Bradley-Terry strength and require
@@ -75,30 +76,35 @@ recovers equation (1).
 ```{r loadlib}
 carcinoma_table <- read.table("carcinoma.txt",header=TRUE)
 carcinoma_table[,1:7] <- carcinoma_table[,1:7] > 0
-wanted <- !(apply(carcinoma_table[,1:7],1,sum) %in% c(0,7))
-carcinoma_table <- carcinoma_table[wanted,]
 carcinoma_table
 ```
+
+
+
+```{r makeshorttable}
+wanted <- !(apply(carcinoma_table[,1:7],1,sum) %in% c(0,7))
+carcinoma_table_short <- carcinoma_table[wanted,]
+```		      
 
 ```{r makeggrllist,cache=TRUE}
 W <- hyper2(pnames=LETTERS[1:7])
 Wi <- list()
 
-for(i in seq_len(nrow(carcinoma_table))){
-      jj <- unlist(carcinoma_table[i,1:7])
+for(i in seq_len(nrow(carcinoma_table_short))){
+      jj <- unlist(carcinoma_table_short[i,1:7])
       negative <- names(jj)[jj==0]
       positive <- names(jj)[jj==1]
       Wi[[i]] <- ggrl(W,positive,negative)
 }
-carcinoma <- lsl(Wi,powers= carcinoma_table$n)
+carcinoma <- lsl(Wi,powers= carcinoma_table_short$n)
 ```
 
 There are several natural BT strengths to consider.  First, we could
 simply count how many times each clinician diagnoses carcinoma:
 
 ```{r,label=countcarcinoma,cache=TRUE}
-carcinoma_count <- colSums(sweep(carcinoma_table[,1:7],1,carcinoma_table$n,"*"))
-names(carcinoma_count) <- colnames(carcinoma_table)[1:7]
+carcinoma_count <- colSums(sweep(carcinoma_table_short[,1:7],1,carcinoma_table_short$n,"*"))
+names(carcinoma_count) <- colnames(carcinoma_table_short)[1:7]
 carcinoma_count <- carcinoma_count/sum(carcinoma_count)
 carcinoma_count
 lc <- loglik_lsl(carcinoma_count,carcinoma)
