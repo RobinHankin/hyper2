@@ -1,0 +1,131 @@
+---
+title: "plackett_luce_monster"
+output: html_document
+date: '2022-05-16'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("partitions")
+```
+
+We will calculate a Plackett-Luce likelihood function for four runners 1,2,3,4  but with a reified
+Bradley-Terry monster that corresponds
+to having 1 and 2 tethered by an elastic string and 3 and 4 also tethered by an elastic string.  The string 
+acts to bring the two runners together and makes it more likely that such attached runners will place consecutively.
+ 
+ 
+ first do three: 1 and 2 tethered,  3 not tethered to anyone
+ 
+ 123: $\frac{1}{1+2+3}\cdot\frac{2+M}{2+3+M}$
+ 
+ 132: $\frac{1}{1+3+2}\cdot\frac{3}{3+2+M}$
+ 
+ 213: $\frac{2}{2+1+3}\cdot\frac{1+M}{1+3+M}$
+ 
+ 231: $\frac{2}{2+3+1}\cdot\frac{3}{3+1+M}$
+ 
+ 312: $\frac{3}{3+1+2}\cdot\frac{1}{2+1}$
+ 
+ 321: $\frac{3}{3+2+1}\cdot\frac{2}{2+1}$
+
+
+
+
+new stuff here
+
+new stuff here
+
+now 1 and 2 tethered, 3 and 4 tethered.
+
+
+ 1234: $\frac{1}{1+2+3+4}\cdot\frac{2+M}{2+3+4+M}\cdot\frac{3}{3+4}$
+
+ 1243: $\frac{1}{1+2+4+3}\cdot\frac{2+M}{2+4+3+M}\cdot\frac{4}{4+3}$
+
+ 1324: $\frac{1}{1+3+2+4}\cdot\frac{3}{3+2+4+M}\cdot\frac{2}{2+4+M}$
+
+ 1342: $\frac{1}{1+3+4+2}\cdot\frac{3}{3+4+2+M}\cdot\frac{4+M}{2+4+M}$
+
+ 1423: $\frac{1}{1+4+2+3}\cdot\frac{4}{4+2+3+M}\cdot\frac{2}{2+3}$
+
+ 1432: $\frac{1}{1+4+3+2}\cdot\frac{4}{4+3+2+M}\cdot\frac{3}{2+3}$
+
+ 2134: $\frac{2}{2+1+3+4}\cdot\frac{1+M}{1+3+4+M}\cdot\frac{3}{3+4}$
+
+ 2143: $\frac{2}{2+1+4+3}\cdot\frac{1+M}{1+4+3+M}\cdot\frac{4}{4+3}$
+
+ 2314: $\frac{2}{2+3+1+4}\cdot\frac{3}{3+1+4+M}\cdot\frac{1}{1+4+M}$
+
+ 2341: $\frac{2}{2+3+4+1}\cdot\frac{3}{3+4+1+M}\cdot\frac{4+M}{1+4+M}$
+
+ 2413: $\frac{2}{2+4+1+3}\cdot\frac{4}{4+1+3+M}\cdot\frac{1}{1+3}$
+
+ 2431: $\frac{2}{2+4+3+1}\cdot\frac{4}{4+3+1+M}\cdot\frac{3}{1+3}$
+
+etc.
+
+
+Now 123 tethered, 45 tethered:
+
+
+12345: $\frac{1}{1+2+3+4+5}\cdot\frac{2+M}{2+3+4+5+M}\cdot\frac{3+M}{3+4+5+M}\cdot\frac{4}{4+5}$
+
+12354: $\frac{1}{1+2+3+5+4}\cdot\frac{2+M}{2+3+5+4+M}\cdot\frac{3+M}{3+5+4+M}\cdot\frac{5}{5+4}$
+
+12435: $\frac{1}{1+2+3+5+4}\cdot\frac{2+M}{2+3+5+4+M}\cdot\frac{4}{3+5+4+M}\cdot\frac{3}{3+5+M}$
+
+12453: $\frac{1}{1+2+3+5+4}\cdot\frac{2+M}{2+3+5+4+M}\cdot\frac{4}{3+5+4+M}\cdot\frac{5+M}{5+3+M}$
+
+12534: $\frac{1}{1+2+3+5+4}\cdot\frac{2+M}{2+5+3+4+M}\cdot\frac{5}{3+5+4+M}\cdot\frac{3}{3+4+M}$
+
+12543: $\frac{1}{1+2+3+5+4}\cdot\frac{2+M}{2+5+4+3+M}\cdot\frac{5}{3+5+4+M}\cdot\frac{4+M}{4+3+M}$
+
+
+
+Might be better to consider ${5\choose 2\,3}$ arrangements of $aaabb\ldots bbaaa$.
+
+aaabb: $\frac{a}{a+a+a+b+b}\cdot\frac{a+M}{a+a+b+b+M}\cdot\frac{a+M}{a+b+b+M}\cdot\frac{b}{b+b+M}$
+
+aabab: $\frac{a}{a+a+a+b+b}\cdot\frac{a+M}{a+a+b+b+M}\cdot\frac{b}{a+b+b+M}\cdot\frac{a}{a+b+M}$
+
+aabba: $\frac{a}{a+a+a+b+b}\cdot\frac{a+M}{a+a+b+b+M}\cdot\frac{b}{a+b+b+M}\cdot\frac{b+M}{b+a+M}$
+
+abaab: $\frac{a}{a+a+a+b+b}\cdot\frac{b}{a+a+b+b+M}\cdot\frac{a}{a+a+b+M}\cdot\frac{a+M}{a+b+M}$
+ 
+ababa: $\frac{a}{a+a+a+b+b}\cdot\frac{b}{a+a+b+b+M}\cdot\frac{a}{a+a+b+M}\cdot\frac{b}{b+a+M}$
+
+abbaa: $\frac{a}{a+a+a+b+b}\cdot\frac{b}{a+a+b+b+M}\cdot\frac{b+M}{b+a+a+M}\cdot\frac{a}{a+a+M}$
+
+baaab: $\frac{b}{a+a+a+b+b}\cdot\frac{a}{a+a+a+b+M}\cdot\frac{a+M}{a+a+b+M}\cdot\frac{a+M}{a+b+M}$
+ 
+baaba: $\frac{b}{a+a+a+b+b}\cdot\frac{a}{a+a+a+b+M}\cdot\frac{a+M}{a+a+b+M}\cdot\frac{b}{a+b+M}$
+ 
+babaa: $\frac{b}{a+a+a+b+b}\cdot\frac{a}{a+a+a+b+M}\cdot\frac{b}{b+a+a+M}\cdot\frac{a}{a+a}$
+ 
+bbaaa: $\frac{b}{a+a+a+b+b}\cdot\frac{b+M}{a+a+a+b+M}\cdot\frac{a}{a+a+a}\cdot\frac{a}{a+a}$
+
+
+
+```{r,label=definefunctionf}
+f <- function (a,b,M){
+return(factorial(3)*factorial(2)*(
+(a)/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(a+M)/(a+b+b+M)*(b)/(b+b+M)+
+(a)/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(b)/(a+b+b+M)*(a)/(a+b+M)+
+(a)/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(b)/(a+b+b+M)*(b+M)/(b+a+M)+
+(a)/(a+a+a+b+b)*(b)  /(a+a+b+b+M)*(a)/(a+a+b+M)*(a+M)/(a+b+M)+
+(a)/(a+a+a+b+b)*(b)  /(a+a+b+b+M)*(a)/(a+a+b+M)*(b)/(b+a+M)+
+(a)/(a+a+a+b+b)*(b)  /(a+a+b+b+M)*(b+M)/(b+a+a+M)*(a)/(a+a+M)+
+(b)/(a+a+a+b+b)*(a)  /(a+a+a+b+M)*(a+M)/(a+a+b+M)*(a+M)/(a+b+M)+
+(b)/(a+a+a+b+b)*(a)  /(a+a+a+b+M)*(a+M)/(a+a+b+M)*(b)/(a+b+M)+
+(b)/(a+a+a+b+b)*(a)  /(a+a+a+b+M)*(b)/(b+a+a)*(a)/(a+a)+
+(b)/(a+a+a+b+b)*(b+M)/(a+a+a+b+M)*(a)/(a+a+a)*(a)/(a+a)))
+}
+```
+
+
+```{r}
+f(4.4,3.3, 0.2)*12
+f(4.4,3.3, 0.0)*12
+```
