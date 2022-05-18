@@ -149,9 +149,22 @@
 \node at (10.6,-2.8) {$a$};
 \node at (10.6,-3.3) {$b$};
 
+\fill (7.4, 1) circle[radius=2pt];  % da finishes; paths bce
+
+\draw (7.4, 1) -- (8.4,2);
+\draw (7.4, 1) -- (8.4,1);
+\draw (7.4, 1) -- (8.4,0);
+
+\node at (7.9,1.7) {$b$};
+\node at (7.9,1.2) {$c$};
+\node at (7.9,0.7) {$e$};
+
+\node at (9.3, 2) {$\frac{b+M}{b+c+e+2M}$};
+\node at (9.3, 1) {$\frac{c+M}{b+c+e+2M}$};
+\node at (9.3, 0) {$\frac{e}{b+c+e+2M}$};
 
 
-
+\fill (10.2, 1) circle[radius=2pt];  % da finishes; paths bce
 \end{tikzpicture}
 \end{document}
 
