@@ -139,9 +139,8 @@ optimize(function(M){loglik(c(M=M,beta=1-M),H3)},c(0.01,0.99),maximum=TRUE)
 ```
 
 This gives maximum likelihood estimates of $M=0.18$ as would be
-expected from the simple binomia model; the probability of a procyclic
-win is about $0.625$.
-
+expected from the simple binomial model; the probability of a
+procyclic win is about $0.625$.
 
 We may relax the assumption of equal strength of the real
 players by using a more sophisticated hyper2 construction:
