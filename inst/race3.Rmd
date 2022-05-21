@@ -129,6 +129,30 @@ maxp(ordervec2supp3(c("a","b","a")))
 above, we see close agreement with the theoretical value of
 $(\sqrt{2}-1,1-\sqrt{2})\simeq (0.414,0.586)$
 
+At the evaluate of $\hat{a}=\sqrt{2}-1$ we can show that
+$\log\mathcal{l}(\hat{a})=\log\left(3-2\sqrt{2}\right)\simeq -1.76$.
+Defining $\mathcal{S}=\log\mathcal{L}$ as the support [log-likelihood]
+we have
+
+$$\mathcal{S}=\mathcal{S}(a)=\log\left(\frac{a(1-a)}{1+a}\right)-\log\left(3-2\sqrt{2}\right)$$
+
+as a standard support function which has a maximum value of zero.
+Further, we can use either analytical or numerical methods to find a
+credible interval.  With an $n$-unit of support criterion the
+analytical solution to $\mathcal{S}(p)=-2$ is given by defining
+$X=\log(3-2\sqrt{2})-n$ and solving $p(1-p)/(1+p)=X, or
+$\left(1-X\pm\sqrt{1+4X+X^2}\right)/2$, the two roots being the lower
+and upper limits of the credible interval.  Graphically:
+
+```{r}
+a <- seq(from=0,by=0.005,to=1)
+S <- function(a){log(a*(1-a)/((1+a)*(3-2*sqrt(2))))}
+plot(a,S(a),type='b')
+abline(h=c(0,-2))
+abline(v=c(0.02438102,0.9524271),col='red')
+abline(v=sqrt(2)-1)
+```
+
 With four competitors we have five nontrivial order statistics which,
 without loss of generality, are $(a,b,a,a)$ and $(a,a,b,a)$.
 $(a,b,a,b)$, $(a,b,b,a)$, $(a,b,c,a)$. Taking $(a,b,a,b)$ as an
@@ -189,9 +213,33 @@ complicated, and equal to about `c(a=0.2056,b=0.5466,c=0.2478)`:
 maxp(ordervec2supp3(c("a","b","c","a")))
 ```
 
-# Some simple cases: Fisher information for simple cases
+# Fisher information for simple cases for aab
 
-(work in progress).
+
+We have three possible finishing orders:
+
+$b\succ a\succ a$, probability $\frac{b}{2a+b}=\frac{1-a}{1+a}$.  And
+$\frac{\partial\log\mathcal{L}}{\partial a}=\frac{2}{p^2-1}$.
+
+$a\succ b\succ a$, probability $\frac{a}{2a+b}\cdot\frac{b}{a+b}=\frac{a(1-a)}{1+a}$. And
+$\frac{\partial\log\mathcal{L}}{\partial a}=\frac{a^2+2a-1}{a^3-a}$.
+
+$a\succ a\succ b$, probability $\frac{a}{2a+b}\cdot\frac{a}{a+b}=\frac{a^2}{1+a}$.  And
+$\frac{\partial\log\mathcal{L}}{\partial a}=\frac{a+2}{a^2+a}$.
+
+
+Thus the Fisher information is
+
+$$
+\frac{1-a}{1+a}\cdot\left(\frac{2}{a^2-1}\right)^2
++
+\frac{a(1-a)}{1+a}\cdot\left(\frac{a^2+2a-1}{a^3-a}\right)^2
++\frac{a^2}{1+a}\cdot\left(\frac{a+2}{a^2+a}\right)^2
+$$
+
+Simplifying,
+
+$$\mathcal{I}(a)=\frac{1+16a+18a^2-4a^3-15a^4-7a^5-a^6}{a(1-a)(1+a)^3}$$
 
 
 # The constructors' championship
