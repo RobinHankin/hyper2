@@ -154,12 +154,18 @@ abline(v=sqrt(2)-1)
 ```
 
 With four competitors we have five nontrivial order statistics which,
-without loss of generality, are $(a,b,a,a)$ and $(a,a,b,a)$.
-$(a,b,a,b)$, $(a,b,b,a)$, $(a,b,c,a)$. Taking $(a,b,a,b)$ as an
-example we have
+without loss of generality, are:
+
+* $a\succ b\succ a\succ a$
+* $a\succ a\succ b\succ a$
+* $a\succ b\succ a\succ b$
+* $a\succ b\succ b\succ a$
+* $a\succ b\succ c\succ a$.
+
+Taking $a\succ b\succ a\succ b$ as an example we have
 
 $$
-\mathcal{L}(a)=
+\mathcal{L}_{a\succ b\succ a\succ b}(a)=
 \frac{a}{2a+2b}\cdot
 \frac{b}{ a+2b}\cdot
 \frac{a}{ a+ b}\cdot
@@ -175,7 +181,9 @@ maxp(ordervec2supp3(c("a","b","a","b")))
 ```
 
 If we allow non-finishers there is another nontrivial order statistic,
-viz $\left(a,b,\left\lbrace a,b\right\rbrace\right)$:
+viz $a\succ b\succ\left\lbrace a,b\right\rbrace$ [thus one of the two
+$a$'s won, one of the $b$'s came second, and one of each of $a$ and
+$b$ failed to finish].
 
 $$
 \mathcal{L}(a)=
@@ -240,6 +248,15 @@ $$
 Simplifying,
 
 $$\mathcal{I}(a)=\frac{1+16a+18a^2-4a^3-15a^4-7a^5-a^6}{a(1-a)(1+a)^3}$$
+
+
+```{r}
+fisher <- function(a){(1+16*a+18*a^2-4*a^3-15*a^4-7*a^5-a^6)/(a*(1-a)*(1+a)^3)}
+a <- seq(from=0.05,to=0.95,by=0.01)
+plot(a,fisher(a))
+```
+
+
 
 
 # The constructors' championship
