@@ -127,22 +127,48 @@ maxp(ordervec2supp3(c("a","b","a")))
 ```
 
 above, we see close agreement with the theoretical value of
-$(\sqrt{2}-1,1-\sqrt{2})\simeq (0.414,0.586)$
-
-At the evaluate of $\hat{a}=\sqrt{2}-1$ we can show that
-$\log\mathcal{l}(\hat{a})=\log\left(3-2\sqrt{2}\right)\simeq -1.76$.
+$(\sqrt{2}-1,1-\sqrt{2})\simeq (0.414,0.586)$.  Observe that the
+maximum likelihood estimate for $a$ is strictly less than 0.5, even
+though the finishing order is symmetric.  Using
+$\mathcal{L}(a)=\frac{a(1-a)}{1+a}$, we can show that
+$\log\mathcal{L}(\hat{a})=\log\left(3-2\sqrt{2}\right)\simeq -1.76$,
+where $\hat{a}=\sqrt{2}-1$ is the maximum likelihood estimate for $a$.
 Defining $\mathcal{S}=\log\mathcal{L}$ as the support [log-likelihood]
 we have
 
 $$\mathcal{S}=\mathcal{S}(a)=\log\left(\frac{a(1-a)}{1+a}\right)-\log\left(3-2\sqrt{2}\right)$$
 
-as a standard support function which has a maximum value of zero.
+as a standard support function which has a maximum value of zero when
+evaluated at $\hat{a]=\sqrt{2}-1$.  For example, we can test the null
+that $a=b=\frac{1}{2}$, the statement that the competitors have equal
+Bradley-Terry strengths:
+
+
+```{r}
+a <- 1/2 # null
+(S_delta <- log( a*(1-a)/(1+a))- log(3-2*sqrt(2)))
+```
+
+Thus the additional support gained in moving from $a=\frac{1}{2}$ to
+the evaluate of $a=\sqrt{2}-1$ is 0.029, rather small [as might be
+expected given that we have only one rather uninformative observation,
+and also given that the maximum likelihood estimate ($\simeq 0.41$) is
+quite close to the null ($0.5$).  Nevertheless we can apply Wilks's
+theorem for a $p$-value:
+
+```{r}
+pchisq(-2*S_delta,df=1,lower.tail=FALSE)
+```
+
+The $p$-value is about 0.81, exceeding 0.05; thus we have no strong
+evidence to reject the null of $a=\frac{1}{2}.
+
 Further, we can use either analytical or numerical methods to find a
 credible interval.  With an $n$-unit of support criterion the
 analytical solution to $\mathcal{S}(p)=-2$ is given by defining
-$X=\log(3-2\sqrt{2})-n$ and solving $p(1-p)/(1+p)=X, or
-$\left(1-X\pm\sqrt{1+4X+X^2}\right)/2$, the two roots being the lower
-and upper limits of the credible interval.  Graphically:
+$X=\log(3-2\sqrt{2})-n$ and solving $p(1-p)/(1+p)=X$, or
+$p_\pm=\left(1-X\pm\sqrt{1+4X+X^2}\right)/2$, the two roots being the
+lower and upper limits of the credible interval.  Graphically:
 
 ```{r}
 a <- seq(from=0,by=0.005,to=1)
