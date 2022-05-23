@@ -28,7 +28,7 @@ volvo_table <- read.table("volvo.txt")
 volvo_table
 ```
 
-Thus the first column refers to leg 1, in which competitor AbuDhavi
+Thus the first column refers to leg 1, in which competitor Abu Dhabi
 came first, Brunel third, and so on.  Here, `DNF` signifies "did not
 finish" and `DNS` "did not start".  We can conver the table to a
 support function with `ordertable2supp()`, remembering to specify the
