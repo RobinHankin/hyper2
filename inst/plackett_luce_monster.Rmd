@@ -10,35 +10,38 @@ library("hyper2")
 library("partitions")
 ```
 
-We will calculate a Plackett-Luce likelihood function for four runners 1,2,3,4  but with a reified
-Bradley-Terry monster that corresponds
-to having 1 and 2 tethered by an elastic string and 3 and 4 also tethered by an elastic string.  The string 
-acts to bring the two runners together and makes it more likely that such attached runners will place consecutively.
+We will calculate a Plackett-Luce likelihood function for four runners
+$\left\lbrace 1,2,3,4\right\rbrace$ but with a reified Bradley-Terry
+monster that corresponds to having subsets of mutual friends who
+support one another.  For example, we might have runners 1 and 2 being
+friends, and runners 3 and 4 being friends: we would represent this as
+$\left\lbrace\left\lbrace 1,2\right\rbrace,\left\lbrace
+3,4\right\rbrace\right\rbrace$.
+
+The statistical model is as follows.  If a runner finishes, then he
+cheers on all his friends who are still running, thereby adding to
+their strength.  This is a very simple form of non-independence.
  
- 
- first do three: 1 and 2 tethered,  3 not tethered to anyone
- 
- 123: $\frac{1}{1+2+3}\cdot\frac{2+M}{2+3+M}$
- 
- 132: $\frac{1}{1+3+2}\cdot\frac{3}{3+2+M}$
- 
- 213: $\frac{2}{2+1+3}\cdot\frac{1+M}{1+3+M}$
- 
- 231: $\frac{2}{2+3+1}\cdot\frac{3}{3+1+M}$
- 
- 312: $\frac{3}{3+1+2}\cdot\frac{1}{2+1}$
- 
- 321: $\frac{3}{3+2+1}\cdot\frac{2}{2+1}$
+First do three runners, and suppose the equivalence classes are
+$\left\lbrace\left\lbrace 1,2\right\rbrace,\left\lbrace
+3\right\rbrace\right\rbrace$.
 
 
+ 123: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{p_2+M}{p_2+p_3+M}\qquad\frac{p_1}{p_1+p_2+p_3}\cdot\frac{\lambda p_2}{\lambda p_2+p_3}$
+ 
+ 132: $\frac{p_1}{p_1+p_3+p_2}\cdot\frac{p_3}{p_3+p_2+M}\qquad\frac{p_1}{p_1+p_3+p_2}\cdot\frac{p_3}{p_3+\lambda p_2}$
+ 
+ 213: $\frac{p_2}{p_2+p_1+p_3}\cdot\frac{p_1+M}{p_1+p_3+M}\qquad\frac{p_2}{p_2+p_1+p_3}\cdot\frac{\lambda p_1}{\lambda p_1+p_3}$
+ 
+ 231: $\frac{p_2}{p_2+p_3+p_1}\cdot\frac{p_3}{p_3+p_1+M}$
+ 
+ 312: $\frac{p_3}{p_3+p_1+p_2}\cdot\frac{p_1}{p_2+p_1}$
+ 
+ 321: $\frac{p_3}{p_3+p_2+p_1}\cdot\frac{p_2}{p_2+p_1}$
 
 
-new stuff here
-
-new stuff here
-
-now 1 and 2 tethered, 3 and 4 tethered.
-
+Now four runners with classes $\left\lbrace\left\lbrace
+1,2\right\rbrace,\left\lbrace 3,4\right\rbrace\right\rbrace$.
 
  1234: $\frac{1}{1+2+3+4}\cdot\frac{2+M}{2+3+4+M}\cdot\frac{3}{3+4}$
 
