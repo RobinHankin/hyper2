@@ -1,6 +1,7 @@
 \name{carcinoma}
 \alias{carcinoma}
 \alias{carcinoma_table}
+\alias{carcinoma_maxp}
 \alias{carcinoma_count}
 \docType{data}
 \title{Carcinoma dataset discussed by Agresti}
@@ -35,10 +36,8 @@ directory.
 A. Agresti, 2002.  "Categorical data analysis".  John Wiley and
 Sons. Table 13.1, p542.
  }
-\seealso{\code{\link{race3}}}
+\seealso{\code{\link{race3}},\code{\link{hepatitis}}}
 \examples{
-data(carcinoma)
-ordertable_to_ranktable(carcinoma_table)
 pie(carcinoma_maxp)
 }
 
