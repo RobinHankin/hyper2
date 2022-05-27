@@ -71,21 +71,29 @@ H
 (p2=1)^2 * (p2=1.3)^4)
 }
 
-
-
-
 }
 \usage{
 hyper3(B = list(), W = list(), powers = 0, pnames)
+hyper3_bw(B = list(), W = list(), powers = 0, pnames)
+hyper3_nv(L=list(),powers=0,pnames)
 }
 \arguments{
   \item{B}{A list of brackets}
   \item{W}{A list of weights}
+  \item{L}{A list of named vectors}
   \item{powers}{Numeric vector of powers}
   \item{pnames}{Character vector of player names}
 }
 \details{
-Details here
+
+Function \code{hyper3()} is the user-friendly creation method, which
+dispatches to helper functions \code{hyper3_bw()} and
+\code{hyper3_nv()} depending on its arguments.  Function
+\code{hyper3_bw()} takes a list of brackets (character vectors) and a
+list of weights (numeric vectors); and \code{hyper2_nv()} takes a list
+of named vectors.
+
+
 }
 \value{
 Generally return or deal with \code{hyper3} objects
@@ -98,12 +106,17 @@ a \dQuote{\code{3}} to function names, eg \code{gradient()} goes to
 }
 \seealso{\code{\link{hyper2}}}
 
+\examples{
+
+hyper3(list(c(a=1.2),c(b=1),c(a=1.2,b=1)),c(3,4,-7))  # dispatches to hyper3_nv()
+hyper3(B=list("a","b",c("a","b")),W=list(c(1.2,1),c(1.2,1)),powers=c(3,4,-7))
+## Above two objecgt should be identical
 
 
+a <- hyper3()  # default creation method [empty object]
 
-\runExamples{
-a <- hyper3()
-a[c(p1=1.3)] <- a[c(p1=1.3)] + 1
+a[c(p1=1.3)] <- 5
+a[c(p1=1.3)] <- a[c(p1=1.3)] + 3
 a[c(p1=1.3,p2=1)]  <- a[c(p1=1.3,p2=1)] -1
 a
 }
