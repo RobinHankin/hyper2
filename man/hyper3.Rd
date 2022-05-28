@@ -3,7 +3,6 @@
 \alias{as.hyper3}
 \alias{Ops.hyper3}
 \alias{accessor3}
-\alias{addL3}
 \alias{char2nv}
 \alias{hyper3_to_hyper2}
 \alias{as.namedvectorlist}
@@ -12,9 +11,7 @@
 \alias{differentiate3}
 \alias{equality3}
 \alias{evaluate3}
-\alias{hyper3_add}
 \alias{hyper3_bw}
-\alias{hyper3_equal}
 \alias{hyper3_nv}
 \alias{identityL3}
 \alias{is.hyper3}
@@ -116,7 +113,8 @@ a \dQuote{\code{3}} to function names, eg \code{gradient()} goes to
 \examples{
 
 hyper3(B=list("a",c("a","b"),"b"),W=list(1.2,c(1.2,1),1),powers=c(3,4,-7))
-hyper3(list(c(a=1.2),c(b=1),c(a=1.2,b=1)),c(3,4,-7))
+hyper3(list(c(a=1.2),c(b=1),c(a=1.2,b=1)),powers=c(3,4,-7))
+
 
 ## Above two objects should be identical
 
