@@ -1,4 +1,4 @@
-\name{race3}
+\name{ordervec2supp3}
 \alias{race3}
 \alias{num3}
 \alias{den3}
@@ -37,8 +37,8 @@ args2ordervec(...)
   indicated by the \code{3} in their names.
 
   Function \code{args2ordervec()} takes named arguments and returns a
-  sensible race result (essentially the same as the output of
-  \code{rrace3()}).
+  sensible race result, essentially the same as the output of
+  \code{rrace3()}.
 
   Function \code{ordervec2supp3()} takes character vector showing the
   order of finishing, and returns a generalized Plackett-Luce support

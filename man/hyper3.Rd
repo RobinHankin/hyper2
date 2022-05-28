@@ -28,8 +28,6 @@
 \alias{powers<-.hyper3}
 \alias{pnames<-.hyper3}
 \alias{print.hyper3}
-\alias{rhyper3}
-\alias{rpair3}
 \alias{weights}
 \alias{weights.hyper3}
 \title{Weighted probability vectors: \code{hyper3} objects
@@ -98,6 +96,8 @@ hyper3_nv(L=list(),powers=0,pnames)
 
     \item Function \code{hyper2_nv()} takes a list of named vectors and
     returns a \code{hyper3} object.
+
+    \item
 
 }
 

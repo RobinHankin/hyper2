@@ -1,24 +1,18 @@
-\name{race3}
-\alias{race3}
-\alias{num3}
-\alias{den3}
-\alias{ordervec2supp3}
-\alias{ordertable2supp3}
-\alias{args2ordervec}
-\alias{race_to_hyper3}
-\title{Various functionality for races and hyper3 likelihood functions}
+\name{rhyper3}
+\alias{rracehyper3}
+\alias{rwinner3}
+\alias{rhyper3}
+\alias{rpair3}
+\title{Random hyper3 objects}
 \description{
-Various functions for calculating the likelihood function for order
-statistics in the context of hyper3 likelihood functions.  Compare
-\code{ggol()} for \code{hyper2} objects.  Used in the
-\code{constructor()} suite of analysis.
+
+Various random hyper3 objects, in the context of the race metaphor.
 }
 \usage{
-num3(v)
-den3(v)
-ordervec2supp3(v,nonfinishers=NULL)
-ordertable2supp3(a)
-args2ordervec(...)
+rwinner3(pn,ps)
+rpair3(n=5,s=3,lambda=1.3)
+rrace3(pn=c(a=2,b=4,c=2,d=1),ps=c(a=0.3, b=0.1,c=0.2,d=0.4))
+rracehyper3(n=4,size=9,ps=NULL,races=3)
 }
 \arguments{
   \item{v}{Ranks in the form of a character vector}
@@ -29,6 +23,7 @@ args2ordervec(...)
   \item{ps}{A named vector showing strengths of each bplayer}
   \item{n,size,races}{Arguments specifying the complexity of the random
     \code{hyper3} object returned by \code{rracehyper3()}}
+  \item{lambda}{Parameter}
   \item{...}{Arguments passed to \code{args2ordervec()}}
 }
 \details{
@@ -37,8 +32,8 @@ args2ordervec(...)
   indicated by the \code{3} in their names.
 
   Function \code{args2ordervec()} takes named arguments and returns a
-  sensible race result (essentially the same as the output of
-  \code{rrace3()}).
+  sensible race result, essentially the same as the output of
+  \code{rrace3()}.
 
   Function \code{ordervec2supp3()} takes character vector showing the
   order of finishing, and returns a generalized Plackett-Luce support
