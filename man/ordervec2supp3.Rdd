@@ -33,17 +33,18 @@ args2ordervec(...)
 }
 \details{
 
-  These functions are intended to work with \code{hyper3} objects, as
-  indicated by the \code{3} in their names.
-
-  Function \code{args2ordervec()} takes named arguments and returns a
-  sensible race result, essentially the same as the output of
-  \code{rrace3()}.
+  Function \code{args2ordervec()} takes arguments with names
+  corresponding to players, and entries corresponding to performances
+  (e.g. distances thrown by a javelin, or times for completing a
+  race).  It returns a character vector indicating the rank statistic.
+  See examples, and also the javelin vignette.
 
   Function \code{ordervec2supp3()} takes character vector showing the
-  order of finishing, and returns a generalized Plackett-Luce support
-  function in the form of a \code{hyper3} object.  See the examples
-  section below.
+  order of finishing [i.e. a rank statistic], and returns a
+  generalized Plackett-Luce support function in the form of a
+  \code{hyper3} object.  It can take the output of
+  \code{args2ordervec()} or \code{rrace3()}.  See the examples section
+  below.
 
   Function \code{ordertable2supp3()} takes an order table (the canonical
   example is the constructors' formula 1 grand prix results, see
@@ -55,26 +56,18 @@ args2ordervec(...)
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{rrank}},\code{\link{ordertable2supp}},\code{\link{ordertrans}}}
+\seealso{\code{\link{ordertable2supp}},\code{\link{ordertrans}}}
 \examples{
 
-rrace3() # moderate-sized default
 
-## player numbers (two "a"s, four "b"s, two "c"s and a "d"):
-pn <- c(a=2,b=4,c=2,d=1) 
+ordervec2supp3(c("a","a","b","c","a","b","c"))
 
-ps <- c(a=0.3, b=0.1,c=0.2,d=0.4)  # player strengths    
+ordervec2supp3(rrace3())
 
-rwinner3(pn,ps)              # winner, randomly chosen
-rrace3(pn,ps)                 # A random race
-ordervec2supp3(rrace3(pn,ps))  # a hyper3 object
-rrace3()                        # a hyper3 object for multiple races
-
-o <- args2ordervec(a=c(1,6,9), b=c(2,3,4), c=c(1.1,11.1))
+(o <- args2ordervec(a=c(1,6,9), b=c(2,3,4), c=c(1.1,11.1)))
 H <- ordervec2supp3(o)
 H
-equalp.test(H)
- 
+# equalp.test(H)   # takes too long for here
 
 
 }

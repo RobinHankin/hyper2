@@ -27,19 +27,30 @@ rracehyper3(n=4,size=9,ps=NULL,races=3)
   These functions are intended to work with \code{hyper3} objects, as
   indicated by the \code{3} in their names.
 
-  Function \code{args2ordervec()} takes named arguments and returns a
-  sensible race result, essentially the same as the output of
-  \code{rrace3()}.
+  \itemize{
 
-  Function \code{ordervec2supp3()} takes character vector showing the
-  order of finishing, and returns a generalized Plackett-Luce support
-  function in the form of a \code{hyper3} object.  See the examples
-  section below.
+    \item Function \code{rwinner3()} returns the winner of a race,
+    chosen according to Plackett-Luce probabilities.
+    
+    \item Function \code{rpair3()} returns a \code{hyper3} object
+    corresponding to repeated pairwise comparisons including a
+    white-player advantage.
+    
+   \item Function \code{rwinner3()} returns a \code{hyper3} support
+   function corresponding to repeated pairwise competition, with a white
+   advantage represented by \code{lambda}.
 
-  Function \code{ordertable2supp3()} takes an order table (the canonical
-  example is the constructors' formula 1 grand prix results, see
-  \code{constructor.Rd} and returns a generalized Plackett-Luce support
-  function in the form of a \code{hyper3} object.
+   \item Function \code{rrace3()} returns a rank statistic corresponding
+   to finishing order for a Plackett-Luce race.  The output can be
+   passed to \code{ordervec2supp3()}.
+
+   \item Function \code{rracehyper3()} returns a more complicated
+   \code{hyper3} object corresponding to repeated races.
+
+   \item Function \code{rhyper3()} returns an even more complicated
+   \code{hyper3} object corresponding to repeated races and pairwise
+   comparisons.
+}
 
   File \code{inst/javelin.Rmd} and \code{inst/race3.Rmd} show some
   use-cases for these functions.
@@ -65,9 +76,4 @@ o <- args2ordervec(a=c(1,6,9), b=c(2,3,4), c=c(1.1,11.1))
 H <- ordervec2supp3(o)
 H
 equalp.test(H)
- 
-
-
 }
-
-
