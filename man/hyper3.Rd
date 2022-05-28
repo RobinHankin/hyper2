@@ -86,13 +86,20 @@ hyper3_nv(L=list(),powers=0,pnames)
 }
 \details{
 
-Function \code{hyper3()} is the user-friendly creation method, which
-dispatches to helper functions \code{hyper3_bw()} and
-\code{hyper3_nv()} depending on its arguments.  Function
-\code{hyper3_bw()} takes a list of brackets (character vectors) and a
-list of weights (numeric vectors); and \code{hyper2_nv()} takes a list
-of named vectors.
+  \itemize{
 
+    \item Function \code{hyper3()} is the user-friendly creation method,
+    which dispatches to helper functions \code{hyper3_bw()} and
+    \code{hyper3_nv()} depending on its arguments.
+
+    \item Function \code{hyper3_bw()} takes a list of brackets
+    (character vectors) and a list of weights (numeric vectors)  and
+    returns a \code{hyper3} object.
+
+    \item Function \code{hyper2_nv()} takes a list of named vectors and
+    returns a \code{hyper3} object.
+
+}
 
 }
 \value{
@@ -108,9 +115,10 @@ a \dQuote{\code{3}} to function names, eg \code{gradient()} goes to
 
 \examples{
 
-hyper3(list(c(a=1.2),c(b=1),c(a=1.2,b=1)),c(3,4,-7))  # dispatches to hyper3_nv()
-hyper3(B=list("a","b",c("a","b")),W=list(c(1.2,1),c(1.2,1)),powers=c(3,4,-7))
-## Above two objecgt should be identical
+hyper3(B=list("a",c("a","b"),"b"),W=list(1.2,c(1.2,1),1),powers=c(3,4,-7))
+hyper3(list(c(a=1.2),c(b=1),c(a=1.2,b=1)),c(3,4,-7))
+
+## Above two objects should be identical
 
 
 a <- hyper3()  # default creation method [empty object]
