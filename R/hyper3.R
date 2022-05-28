@@ -309,7 +309,7 @@ char2nv <- function(x){
         black <- jj[2]
        
         prob_white_win <- strengths[white]*lambda / (strengths[white]*lambda + strengths[black])
-        if(runif(1)>prob_white_win){ # white wins
+        if(runif(1) < prob_white_win){ # white wins
             jj <- lambda
             names(jj) <- white
             out[jj] %<>% inc  # e.g. jj: c(a=1.1)
