@@ -25,10 +25,6 @@ args2ordervec(...)
   \item{nonfinishers}{Character vector (a set) showing players that did
     not finish}
   \item{a}{An ordertable}
-  \item{pn}{A named integer vector showing numbers of each player}
-  \item{ps}{A named vector showing strengths of each bplayer}
-  \item{n,size,races}{Arguments specifying the complexity of the random
-    \code{hyper3} object returned by \code{rracehyper3()}}
   \item{...}{Arguments passed to \code{args2ordervec()}}
 }
 \details{
