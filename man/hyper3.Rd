@@ -1,7 +1,6 @@
 \name{hyper3}
 \alias{hyper3}
 \alias{as.hyper3}
-\alias{Ops.hyper3}
 \alias{accessor3}
 \alias{char2nv}
 \alias{hyper3_to_hyper2}

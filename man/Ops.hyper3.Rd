@@ -22,9 +22,7 @@
 }
 \usage{
 \method{Ops}{hyper3}(e1, e2 = NULL)
-\method{sum}{hyper3}(x,...,na.rm=FALSE)
 hyper3_add(e1,e2)
-hyper3_sum_numeric(H,r)
 }
 \arguments{
   \item{e1,e2}{Objects of class \code{hyper3}}
