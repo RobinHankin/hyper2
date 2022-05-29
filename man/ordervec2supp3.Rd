@@ -2,6 +2,7 @@
 \alias{race3}
 \alias{num3}
 \alias{den3}
+\alias{char2nv}
 \alias{ordervec2supp3}
 \alias{ordertable2supp3}
 \alias{args2ordervec}
@@ -16,6 +17,7 @@ statistics in the context of hyper3 likelihood functions.  Compare
 \usage{
 num3(v)
 den3(v)
+char2nv(x)
 ordervec2supp3(v,nonfinishers=NULL)
 ordertable2supp3(a)
 args2ordervec(...)
@@ -25,6 +27,7 @@ args2ordervec(...)
   \item{nonfinishers}{Character vector (a set) showing players that did
     not finish}
   \item{a}{An ordertable}
+  \item{x}{A character vector of competitors}
   \item{...}{Arguments passed to \code{args2ordervec()}}
 }
 \details{
@@ -47,6 +50,10 @@ args2ordervec(...)
   \code{constructor.Rd} and returns a generalized Plackett-Luce support
   function in the form of a \code{hyper3} object.
 
+  Function \code{char2nv()} takes a character vector and returns a named
+  vector with entries corresponding to their names' counts.  It is used
+  in the extraction and replacement methods for \code{hyper3} objects.
+  
   File \code{inst/javelin.Rmd} and \code{inst/race3.Rmd} show some
   use-cases for these functions.
 

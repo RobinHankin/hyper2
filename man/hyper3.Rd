@@ -93,8 +93,20 @@ hyper3_nv(L=list(),powers=0,pnames)
     \item Function \code{hyper2_nv()} takes a list of named vectors and
     returns a \code{hyper3} object.
 
-    \item
+    \item Function \code{evaluate3()} is a low-level helper function
+    that evaluates a log-likelihood at a point in probability space.
+    Don't use this: use the user-friendly \code{loglik()} instead, which
+    dispatches to \code{evaluate3()}.
 
+    \item Function \code{maxp3()} is a placeholder (it is not yet
+    written).  But the intention is that it will maximize the
+    log-likelihood of a \code{hype3} object over the Bradley Terry
+    strengths \emph{and} any weights given.  This might not be possible
+    as envisaged right now; I present some thoughts in
+    \code{inst/kka.Rmd}.
+
+    
+    
 }
 
 }

@@ -24,7 +24,7 @@ maxp_lsl(HLSL, startp = NULL, give = FALSE, fcm = NULL, fcv = NULL, SMALL=1e-6, 
 equalp(H)
 }
 \arguments{
-  \item{H}{A \code{hyper2} object}
+  \item{H}{A \code{hyper2} or \code{hyper3} object}
   \item{Hlist}{A list with elements all \code{hyper2} objects}
   \item{HLSL}{An \code{lsl} object}
   \item{startp}{A vector of probabilities}
@@ -115,13 +115,14 @@ equalp(H)
 
   This functionality is peculiarly susceptible to off-by-one errors.
 
-  Function \code{maxp()} does not currently work with \code{lsl}
-  objects.
+  Function \code{maxp()} takes \code{hyper2} or \code{hyper3} objects
+  but it does not currently work with \code{lsl} objects; use
+  \code{maxp_lsl()}.
 
   The built-in datasets generally include a pre-calculated result of
   running \code{maxp()}; thus hyper2 object \code{icons} and
   \code{icons_maxp} are included in the same \code{.rda} file.
-
+  
   Function \code{maxp()} can trigger a known R bug (bugzilla id 17703)
   which reports \dQuote{\code{wmmin is not finite}}.  Setting option
   \code{use_alabama} to \code{TRUE} makes the package use a different

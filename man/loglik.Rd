@@ -7,7 +7,8 @@
 Log likelihood functions
 }
 \description{\loadmathjax
-Returns a log-likelihood for a given hyper2 object at a specific point
+  Returns a log-likelihood for a given \code{hyper2} or \code{hyper3}
+  object at a specific point in probability space
 }
 \usage{
 loglik(p, H, log = TRUE)
@@ -17,7 +18,7 @@ like_series(p,L,log=TRUE)
 
 }
 \arguments{
-  \item{H}{An object of class \code{hyper2}}
+  \item{H}{An object of class \code{hyper2} or \code{hyper3}}
   \item{p}{A probability point.  See details}
   \item{log}{Boolean with default \code{TRUE} meaning to return the
     log-likelihood and \code{FALSE} meaning to return the likelihood}
