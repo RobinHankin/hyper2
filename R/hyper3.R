@@ -115,6 +115,11 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
       )
 }
 
+`hyper3_prod` <- function(e1,n){
+    powers(e1) <- powers(e1)*n
+    return(e1)
+}
+
 `hyper3_add` <- function(e1,e2){
   b1 <- elements(brackets(e1))
   b2 <- elements(brackets(e2))
@@ -148,7 +153,7 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
       if(.Generic == "+"){
           return(e1)
       } else if (.Generic == "-"){
-          return(hyper2_prod(e1,-1))
+          return(hyper3_prod(e1,-1))
       } else {
           stop(gettextf("Unary operator %s not defined for hyper3 objects", dQuote(.Generic)))
       }
@@ -173,9 +178,9 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
   } else {  # one of lclass,rclass
     if (.Generic == "*"){    # H * n
       if(lclass && !rclass){
-        return(hyper2_prod(e1,e2))
+        return(hyper3_prod(e1,e2))
       } else if (!lclass && rclass){
-        return(hyper2_prod(e2,e1))
+        return(hyper3_prod(e2,e1))
       } else {
         stop("method not defined for hyper3")
       }

@@ -22,14 +22,11 @@
 \usage{
 \method{Ops}{hyper3}(e1, e2 = NULL)
 hyper3_add(e1,e2)
+hyper3_prod(e1,n)
 }
 \arguments{
   \item{e1,e2}{Objects of class \code{hyper3}}
-  \item{x,...,na.rm}{In the \code{sum()} method, objects to be summed;
-    \code{na.rm} is currently ignored}
-  \item{H,r}{In function \code{hyper3_sum_numeric()}, object \code{H} is
-    a \code{hyper3} object and \code{r} is a length-one real vector (a
-    number)}
+  \item{n}{Numeric vector of length 1}
 }
 \details{
 
