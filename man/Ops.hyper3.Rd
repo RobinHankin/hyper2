@@ -2,7 +2,6 @@
 \alias{Ops.hyper3}
 \alias{hyper3_add}
 \alias{hyper3_prod}
-\alias{addL3}
 \alias{hyper3_sum_numeric}
 \alias{hyper3_add}
 \alias{sum.hyper3}
