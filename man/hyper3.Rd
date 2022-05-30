@@ -126,5 +126,8 @@ a[c(p1=1.3)] <- 5
 a[c(p1=1.3)] <- a[c(p1=1.3)] + 3
 a[c(p1=1.3,p2=1)]  <- a[c(p1=1.3,p2=1)] -1
 a
+
+chess3  # representative simple hyper3 object
+
 }
 

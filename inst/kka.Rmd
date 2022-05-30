@@ -445,6 +445,7 @@ Optimize:
 ```{r,createchess3}
 jj <- round(o$par,2)
 (chess3 <-  white_draw3(kka_array, lambda=jj[1],D=jj[2]))
+(chess3_maxp <-  maxp(chess3))
 ```
 
 
@@ -455,5 +456,5 @@ Following lines create `kka.rda`, residing in the `data/` directory of
 the package.
 
 ```{r,label=savecurlingdataset,cache=FALSE}
-save(kka,karpov_kasparov_anand,kka_3draws,kka_3whites,kka_array,chess3,file="kka.rda")
+save(kka,karpov_kasparov_anand,kka_3draws,kka_3whites,kka_array,chess3,chess3_maxp,file="kka.rda")
 ```

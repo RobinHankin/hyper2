@@ -2,6 +2,7 @@
 \alias{karpov_kasparov_anand}
 \alias{kka}
 \alias{chess3}
+\alias{chess3_maxp}
 \alias{kka_3draws}
 \alias{kka_3whites}
 \alias{white_wins}
@@ -43,8 +44,10 @@ of game results}
   we have a total of 18 games between Karpov and Kasparov in which
   Karpov played white and beat Kasparov.
 
-  Object \code{chess3} is a simple \code{hyper3} object corresponding to
-  pairwise comparison with draws.
+  Object \code{chess3} is a simple \code{hyper3} object corresponding
+  to pairwise comparison with draws; \code{chess3_maxp} is the
+  evaluate, conditional on estimated the white-player advantage and
+  draw proclivity.
 
   The three matrices \code{plays_white_wins}, \code{plays_white_draws},
   and \code{plays_white_loses} tabulate this information in a coherent
