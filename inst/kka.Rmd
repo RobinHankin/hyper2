@@ -414,7 +414,7 @@ f <- function(v){
     lambda <- v[1]
     D      <- v[2]
     H <- white_draw3(kka_array, lambda,D)
-    max(maxp(H,justlikes=TRUE))
+    max(maxp(H,n=1,justlikes=TRUE))
 }	
 f(c(1.5,2.3))
 ```
@@ -436,6 +436,17 @@ lambda
 D
 ```
 
+Optimize:
+
+```{r,label=useoptimopencloseforf,cache=TRUE}
+(o <- optim(par=c(2.1,2.4),fn=f,control=list(fnscale = -1)))
+```
+
+```{r,createchess3}
+(chess3 <- f(o$par))
+```
+
+
 
 ### Package dataset
 
@@ -443,5 +454,5 @@ Following lines create `kka.rda`, residing in the `data/` directory of
 the package.
 
 ```{r,label=savecurlingdataset,cache=TRUE}
-save(kka,karpov_kasparov_anand,kka_3draws,kka_3whites,kka_array,file="kka.rda")
+save(kka,karpov_kasparov_anand,kka_3draws,kka_3whites,kka_array,chess3,file="kka.rda")
 ```
