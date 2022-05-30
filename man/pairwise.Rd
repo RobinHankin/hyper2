@@ -23,9 +23,10 @@
 
   Function \code{white_draw3()} returns a \code{hyper3} likelihood
   function for pairwise comparisons, one of whom has a home team-type
-  advantage (white player in the case of chess).  It is designed to work
-  with an array of dimensions \mjeqn{n\times n\times 3}{n*n*3}, where
-  \mjseqn{n} is the number of players.
+  advantage (white player in the case of chess).  It is designed to
+  work with an array of dimensions \mjeqn{n\times n\times 3}{n*n*3},
+  where \mjseqn{n} is the number of players.  It is used in
+  \code{inst/kka.Rmd} to create \code{chess3} likelihood function.
       
 }
 \usage{
