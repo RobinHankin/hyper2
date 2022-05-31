@@ -47,7 +47,7 @@
 
   Object \code{chess3} is a simple \code{hyper3} object corresponding
   to pairwise comparison with draws; \code{chess3_maxp} is the
-  evaluate, conditional on estimated the white-player advantage and
+  evaluate, conditional on the estimated white-player advantage and
   draw proclivity.  This object is created and discussed in
   \code{inst/kka.Rmd}.  Array \code{kka_array} presents the same
   information in a 3D array.

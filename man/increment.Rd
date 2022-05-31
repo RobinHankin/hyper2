@@ -75,9 +75,8 @@ containing all players.  The winners are expected to be players.
 
 Using \code{trial()} in this way ensures that the powers sum to zero.
 
-The \code{inc} and \code{dec} operators are used in
-\code{inst/rowing_analysis.R}; and the \code{trial()} function is used
-in \code{inst/kka_draws.R}. 
+The \code{inc} and \code{dec} operators and the \code{trial()}
+function are used in \code{inst/kka.Rmd}.
 
 }
 \author{Robin K. S. Hankin}
