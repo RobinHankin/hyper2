@@ -1,5 +1,5 @@
 ---
-title: "Karpov, Kasprov, Anand"
+title: "Karpov, Kasparov, Anand"
 output: html_document
 ---
 
@@ -11,16 +11,19 @@ library("magrittr")
 options("digits" = 5)
 ```
 
+(takes about 45 minutes to process without cache)
+
 <p style="text-align: right;">
 ![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
 </p>
 
 This file defines dataset `kka` which is the observed scorelines
-between the three players.  It is used to calculate likelihood
-functions: `karpov_kasparov_anand`, `kka_3whites` and `kka_3draws`
-This Rmd file supercedes files `inst/karpov_kasparov_anand.R` and
-`inst/kka_3draws.R` and `inst/kka_array.R`.  Some more detail is given
-in `man/karpov_kasparov_anand.Rd`.
+between players Karpov, Kasparov, and Anand.  It is used to calculate
+likelihood functions: `karpov_kasparov_anand`, `kka_3whites` and
+`kka_3draws`.  This Rmd file supercedes files
+`inst/karpov_kasparov_anand.R` and `inst/kka_3draws.R` and
+`inst/kka_array.R`.  Some more detail is given in
+`man/kka.Rd`.
 
 
 ```{r setupkka}
@@ -322,9 +325,9 @@ $$
 \left(\frac{\lambda p_1}{p_1+\lambda p_2}\right)^d
 $$
 
-for the observation of $+a\,=0\,-b$ for $p_1$ playing white and
-$+c\,=0\,-d$ for $p_2$ playing white.  We then translate this into a
-`hyper3` likelihood function as follows
+for the observation of $+a$ $\text{=}0$ $-b$ for $p_1$ playing white
+and $+c$ $\text{=}0$ $-d$ for $p_2$ playing white.  We then translate
+this into a `hyper3` likelihood function as follows
 
 ```{r,label=kka_hyper3,cache=TRUE}
 (M <- kka_array[,,1] + 1i*kka_array[,,3])
@@ -351,7 +354,7 @@ abline(h=c(0,-2),lty=2)
 ```
 
 Above we see a credible interval for $\lambda$ being about
-$(1.4,2.9)$.  Of course, this is crude and it would be betterto have
+$(1.4,2.9)$.  Of course, this is crude and it would be better to have
 more transparent package idiom.  But I'm working on this.
 
 We can now introduce draws but first a change of notation.  The
@@ -442,7 +445,7 @@ Optimize:
 (o <- optim(par=c(2.1,2.4),fn=f,control=list(fnscale = -1)))
 ```
 
-```{r,createchess3}
+```{r,createchess3,cache=TRUE}
 jj <- round(o$par,2)
 (chess3 <-  white_draw3(kka_array, lambda=jj[1],D=jj[2]))
 (chess3_maxp <-  maxp(chess3))
