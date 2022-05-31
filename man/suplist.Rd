@@ -116,7 +116,7 @@ W3 <- ggrl(W, 'c', letters[4:5],'a')  # 2-element list
 
 W1+W2+W3 # A 2*6*2=24-element list
 
-like_single_list(indep(equalp(W)),W1+W2+W3)
+like_single_list(equalp(W),W1+W2+W3)
 \dontrun{dotchart(maxplist(W1+W1+W3),pch=16)} # takes a long time
 
 a <- lsl(list(W1,W2,W3),4:6)  # observe W1 four times, W2 five times and W3 six times
