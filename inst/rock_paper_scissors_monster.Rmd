@@ -10,6 +10,11 @@ library("magrittr")
 abbreviated <- TRUE  # change to FALSE for full names
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
 ## Abstract
 
 Here I use the `hyper2` package (Hankin 2017) to quantify the strength
@@ -311,7 +316,7 @@ maxp(HWM)
 
 and we can test the hypothesis that $p_M=0$:
 
-```{r,label=specicifgtest,cache=TRUE}
+```{r,label=specificgtesthwm,cache=TRUE}
 specificp.gt.test(HWM,"M",0)
 ```
 
