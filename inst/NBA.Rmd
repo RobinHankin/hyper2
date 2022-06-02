@@ -1,5 +1,5 @@
---
-title: "Basketball: an analysis of a single game"
+---
+title: "An analysis of a single basketball game"
 output: html_document
 ---
 
@@ -10,6 +10,10 @@ library("hyper2")
 library("magrittr")
 options("digits" = 5)
 ```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
 
 File `NBA.txt` contains a point-by-point analysis of a basketball
 match between the Cleveland Cavaliers and the Golden State Warriors on
@@ -63,8 +67,6 @@ for(i in seq_len(nrow(NBA_table))){
   } else {
     stop("scorint team must be either W or C")
   }
-  print(onpitch_scored)
-  print(onpitch_noscore)
   if(possession[i] == 'W'){
     onpitch_scored1 <- c(onpitch_scored,"possession")
     onpitch_scored2 <- c(onpitch_scored,"W_possession")
