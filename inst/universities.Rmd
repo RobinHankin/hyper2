@@ -1,5 +1,5 @@
 ---
-title: "universitiy ranking data"
+title: "university ranking data"
 output: bookdown::html_document2
 ---
 
@@ -12,10 +12,15 @@ library("magrittr")
 options("digits" = 5)
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
 Here I analyse a dataset on NZ university rankings, taken from the
 Times Higher Educational Supplement.  First load the data:
 
-```{r cars}
+```{r loadthetable}
 universities_table <- read.table("universities.txt",header=TRUE)
 head(universities_table,12)
 ```
