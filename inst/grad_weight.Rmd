@@ -11,6 +11,12 @@ library("hyper2")
 library("disordR")
 ```
 
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
 ## Differentiate with respect to weights for a `hyper3` object
 
 We will start with a simple example.  Consider two players $p_1$ and
