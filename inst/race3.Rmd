@@ -12,7 +12,12 @@ library("hyper2")
 library("disordR")
 ```
 
-(takes about an hour to process)
+(takes about an hour to process without cache)
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
 
 Consider a race in which there are six runners 1-6 but we happen to
 know that three of the runners (1,2,3) are clones of strength $p_a$,
@@ -139,7 +144,7 @@ we have
 $$\mathcal{S}=\mathcal{S}(a)=\log\left(\frac{a(1-a)}{1+a}\right)-\log\left(3-2\sqrt{2}\right)$$
 
 as a standard support function which has a maximum value of zero when
-evaluated at $\hat{a]=\sqrt{2}-1$.  For example, we can test the null
+evaluated at $\hat{a}=\sqrt{2}-1$.  For example, we can test the null
 that $a=b=\frac{1}{2}$, the statement that the competitors have equal
 Bradley-Terry strengths:
 
@@ -161,12 +166,11 @@ pchisq(-2*S_delta,df=1,lower.tail=FALSE)
 ```
 
 The $p$-value is about 0.81, exceeding 0.05; thus we have no strong
-evidence to reject the null of $a=\frac{1}{2}.
-
-Further, we can use either analytical or numerical methods to find a
-credible interval.  With an $n$-unit of support criterion the
-analytical solution to $\mathcal{S}(p)=-2$ is given by defining
-$X=\log(3-2\sqrt{2})-n$ and solving $p(1-p)/(1+p)=X$, or
+evidence to reject the null of $a=\frac{1}{2}$.  Further, we can use
+either analytical or numerical methods to find a credible interval.
+With an $n$-unit of support criterion the analytical solution to
+$\mathcal{S}(p)=-2$ is given by defining $X=\log(3-2\sqrt{2})-n$ and
+solving $p(1-p)/(1+p)=X$, or
 $p_\pm=\left(1-X\pm\sqrt{1+4X+X^2}\right)/2$, the two roots being the
 lower and upper limits of the credible interval.  Graphically:
 
