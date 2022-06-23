@@ -357,8 +357,28 @@ Above we see a credible interval for $\lambda$ being about
 $(1.4,2.9)$.  Of course, this is crude and it would be better to have
 more transparent package idiom.  But I'm working on this.
 
-We can now introduce draws but first a change of notation.  The
-previous likelihood function can be represented thus:
+We can now introduce draws but first a change of notation.
+Considering repeated trials between entities $1,2,\ldots, r$ with
+Bradley-Terry strengths $p_1,\ldots, p_r$ and counts $n_1,\ldots, n_r$ a
+suitable likelihood function would be
+
+
+$$
+\left(\frac{p_1}{\sum p_i}\right)^{n_1}\cdot
+\left(\frac{p_2}{\sum p_i}\right)^{n_2}\ldots
+\left(\frac{p_r}{\sum p_i}\right)^{n_r}
+$$
+
+but we may represent this in the following compact form:
+
+$$
+\left(\frac{p_1,p_2,\ldots, p_r}{\sum p_i}\right)^{\left(n_1,\ldots n_r\right)}
+$$
+
+Or, noting that the sum of the numerators is equal to the common
+denominator, even more compactly as $\left(p_1,p_2,\ldots, p_r\right)^{\left(n_1,\ldots n_r\right)}$.
+
+The previous likelihood function can be represented thus:
 
 $$
 \left(\frac{\lambda p_1, p_2}{\lambda p_1+p_2}\right)^{(a,b)}
@@ -378,6 +398,15 @@ $$
 \left(\frac{\lambda p_1, D_1p_1+D_2p_2,p_2}{\lambda p_1+D_1p_1+D_2p_2+p_2}\right)^{(a,b,c)}
 \left(\frac{p_1, D_1p_1+D_2p_2),\lambda p_2}{p_1+D_1p_1+D_2p_2+\lambda p_2}\right)^{(d,e,f)}
 $$
+
+
+Package idiom for this would require the following form:
+
+$$
+\left(\frac{\lambda p_1, D_1p_1+D_2p_2,p_2}{(\lambda+D_1)p_1+(1+D_2)p_2}\right)^{(a,b,c)}
+\left(\frac{p_1, D_1p_1+D_2p_2,\lambda p_2}{(1+D_1)p_1+(\lambda+D_2)p_2}\right)^{(d,e,f)}
+$$
+
 
 Note that in neither of these models do we have the probability of a
 draw for $p_1$ playing white being the same as for $p_2$ playing
