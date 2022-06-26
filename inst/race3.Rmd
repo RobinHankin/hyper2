@@ -14,6 +14,11 @@ library("disordR")
 
 (takes about an hour to process)
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
 Consider a race in which there are six runners 1-6 but we happen to
 know that three of the runners (1,2,3) are clones of strength $p_a$,
 say, two of the runners (4,5) have strength $p_b$, and the final
@@ -99,6 +104,8 @@ that the strengths are in fact the specified strengths in `pTRUE`.
 
 # Some simple cases: likelihood functions for order statistics with clones
 
+## Three competitors
+
 Here I consider some order statistics with nontrivial maximum
 likelihood Bradley-Terry strength.   The simplest nontrivial case is
 three competitors with strengths $a,a,b$ and finishing order $a\succ
@@ -178,6 +185,34 @@ abline(h=c(0,-2))
 abline(v=c(0.02438102,0.9524271),col='red')
 abline(v=sqrt(2)-1)
 ```
+
+
+### all results for AAB
+
+* $A\succ A\succ B\longrightarrow\frac{a^2}{1+a}$
+* $A\succ B\succ A\longrightarrow\frac{1-2a-a^2}{(1+a)^2}$
+* $B\succ A\succ A\longrightarrow\frac{1-a}{1+a}$
+
+Graphically
+
+```{r}
+f_aab <- function(a){a^2/(1+a)}
+f_aba <- function(a){a*(1-a)/(1+a)^2}
+f_baa <- function(a){(1-a)/(1+a)}
+
+p <- function(f,...){points(a,f(a)/max(f(a)),...)}
+plot(0:1,0:1,xlab="p(a)",ylab="Likelihood",type="n")
+p(f_aab,type="l",col="black")
+p(f_aba,type="l",col="red")
+p(f_baa,type="l",col="blue")
+legend(x=0.85,y=0.7,col=c("black","red","blue"),lty=1,pch=NA,legend=c("AAB","ABA","BAA"))
+abline(h=exp(-2),lty=2)
+```
+
+
+
+## Four competitors
+
 
 With four competitors we have five nontrivial order statistics which,
 without loss of generality, are:
