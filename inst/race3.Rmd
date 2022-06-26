@@ -209,8 +209,6 @@ legend(x=0.85,y=0.7,col=c("black","red","blue"),lty=1,pch=NA,legend=c("AAB","ABA
 abline(h=exp(-2),lty=2)
 ```
 
-
-
 ## Four competitors
 
 
@@ -280,6 +278,30 @@ complicated, and equal to about `c(a=0.2056,b=0.5466,c=0.2478)`:
 
 ```{r,label=abca,cache=TRUE}
 maxp(ordervec2supp3(c("a","b","c","a")))
+```
+
+## Results for AAAB
+
+```{r,plotaaab,cache=TRUE}
+Hab <- function(i,n=4){
+  jj <- rep("a",n)
+  jj[i] <- "b"
+  ordervec2supp3(jj)
+}
+
+small <- 1e-5
+a <- seq(from=small,to=1-small,len=100)
+plot(0:1,c(0,1),type="n",xlab="p[a]",ylab="likelihood")
+dop <- function(w, ...){
+  Hjj <- Hab(w)
+  y <- sapply(a,function(p){loglik(c(a=p,b=1-p),Hjj,log=FALSE)})
+  points(a,y/max(y),type="l",...)
+}
+dop(1,col="black")
+dop(2,col="red")
+dop(3,col="blue")
+dop(4,col="green")
+
 ```
 
 # Fisher information for simple cases for aab
