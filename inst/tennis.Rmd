@@ -1,4 +1,4 @@
-s---
+---
 title: "Tennis doubles and ghosts"
 output: bookdown::html_document2
 ---
@@ -155,6 +155,58 @@ See how one eigenvalue is zero (to numerical precision) and the rest
 are strictly negative, corresponding to the support function having a
 well-defined maximum.
 
+
+
+
+
+
+### Analysis with `hyper3` {-}
+
+The likelihood for the 9-2 scoreline between $\left\lbrace
+p1,p2\right\rbrace$ and $\left\lbrace p3,p4\right\rbrace$ would have a
+likelihood function of
+
+$$
+\frac{
+\left(\lambda p_1 +\lambda p_2\right)^{9}
+\left(p_2 + p_3\right)^{2}
+}{
+\left(\lambda p_1 +\lambda p_2+p_2 + p_3\right)^{11}
+}
+$$
+
+
+
+```{r printH}
+H3 <- as.hyper3(H)
+H3
+
+## 1&2 vs 3&4;  scoreline 9-2 (again), with lambda=1.2
+
+f <- function(lambda){
+  H3[c(p1=lambda,p2=lambda)] %<>% inc(9)
+  H3[c(p3=1,p2=1)] %<>% dec(2)
+  H3[c(p1=lambda,p2=lambda,p3=1,p2=1)] %<>% dec(11)
+  return(H3)
+}
+f(1.1443345)
+f(1.888888)
+```
+
+
+maximize:
+
+```{r,maxH3,cache=TRUE}
+tennis_H3_maxp <- maxp(H3)
+tennis_H3_maxp
+```
+
+Compare the `hyper2` evaluates:
+
+```{r}
+tennis_maxp
+tennis_ghost_maxp
+```
 
 
 ### References {-}
