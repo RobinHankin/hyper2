@@ -290,19 +290,35 @@ Hab <- function(i,n=4){
 }
 
 small <- 1e-5
-a <- seq(from=small,to=1-small,len=100)
+a <- seq(from=small,to=1-small,len=400)
+
 plot(0:1,c(0,1),type="n",xlab="p[a]",ylab="likelihood")
-dop <- function(w, ...){
-  Hjj <- Hab(w)
+dop <- function(w, n, ...){
+  Hjj <- Hab(w,n)
   y <- sapply(a,function(p){loglik(c(a=p,b=1-p),Hjj,log=FALSE)})
   points(a,y/max(y),type="l",...)
 }
-dop(1,col="black")
-dop(2,col="red")
-dop(3,col="blue")
-dop(4,col="green")
-
+dop(1,4,col="black")
+dop(2,4,col="red")
+dop(3,4,col="blue")
+dop(4,4,col="green")
 ```
+
+```{r,plotaaaaaaab,cache=TRUE}
+plot(0:1,c(0,1),type="n",xlab="p[a]",ylab="likelihood")
+for(i in 1:10){dop(i,10,col=rainbow(10)[i])}
+```
+
+```{r,plot40ab,cache=TRUE}
+plot(0:1,c(0,1),type="n",xlab="p[a]",ylab="likelihood")
+for(i in 1:40){dop(i,40,col=rainbow(40)[i])}
+```
+
+
+
+
+
+
 
 # Fisher information for simple cases for aab
 
