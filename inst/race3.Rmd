@@ -364,7 +364,7 @@ plot(a,fisher(a))
 
 # The constructors' championship
 
-Here we define  likelihood function for the constructors' championship.
+Here we define likelihood function for the constructors' championship.
 
 ```{r,dotheconst}
 jj <- read.table("constructor_2021.txt",header=TRUE)
@@ -381,7 +381,8 @@ constructor_2021_table <- constructor_table_2021
 ```
 
 Looking at the first column we see that the constructors are Mercedes
-("`Merc`"), Red Bull Racing Honda ("`RBRH`"), and so on.  Each
+("`Merc`"), Red Bull Racing Honda ("`RBRH`"), and so on (see file
+`inst/constructor_names.txt` for a list of abbreviations).  Each
 constructor fields two cars in each race.  Looking at the next column,
 we see the order statistic for Bahrain (`BHR`).  We see that Mercedes
 came first and third, Red Bull came second and fifth, Ferrari sixth
