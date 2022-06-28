@@ -384,7 +384,7 @@ H3 <- H3seven(lambda=1.66)
 H3
 ```
 
-And try a profile likelihood:
+
 
 
 ```{r,label=defineproflikeh3}
@@ -394,18 +394,30 @@ profl <- function(lambda){
 }
 ```
 
+First optimize the likelihood:
 
-```{r,label=proflikh3,cache=TRUE}
-lam <- seq(from=0.8,to=2.6,len=15)
-like3 <- sapply(lam,profl)
-like3 <- like3-max(like3)
+
+```{r,optlike,cache=TRUE}
+o <- optimize(profl,c(1.4,1.6),maximum=TRUE)
+```
+
+```{r}
+o
 ```
 
 
+So now plot a profile likelihood curve:
+
+
+```{r,label=proflikh3,cache=TRUE}
+lam <- seq(from=0.8,to=2.6,len=30)
+like3 <- sapply(lam,profl)
+```
+
 ```{r,plotproflike3}
-plot(lam,like3,type='b')
+plot(lam,like3-o$objective,type='b',ylab="likelihood",xlab="lambda")
 abline(h=c(0,-2))
-abline(v=1)
+abline(v=c(1,o$maximum))
 ```
 
 
