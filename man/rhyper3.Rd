@@ -72,8 +72,4 @@ rrace3(pn,ps)                 # A random race
 ordervec2supp3(rrace3(pn,ps))  # a hyper3 object
 rrace3()                        # a hyper3 object for multiple races
 
-o <- args2ordervec(a=c(1,6,9), b=c(2,3,4), c=c(1.1,11.1))
-H <- ordervec2supp3(o)
-H
-equalp.test(H)
 }

@@ -11,6 +11,10 @@ library("magrittr")
 options("digits" = 5)
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
 
 This short document defines and analyses a small dataset originally
 considered by Hankin (2010).  There, results from tennis games among
@@ -38,7 +42,7 @@ the stength of a doubles partnership is the sum of the strength of the
 players; and one that accounts for team cohesion.
 
 
-```{r}
+```{r defineHhyper2}
 H <- hyper2()
 
 ## 1&3 vs 2&4, scoreline 4-4:
@@ -81,7 +85,7 @@ Thus `H` is a hyper2 object corresponding to results except the first
 line.  We include this in two ways.  Firstly, treating the first
 scoreline like the others:
 
-```{r}
+```{r addtohyper2H}
 tennis <- H
 
 ## 1&2 vs 3&4, scoreline 9-2:
@@ -97,7 +101,7 @@ ghost player `G`:
 
 
 
-```{r}
+```{r doghoststuff}
 tennis_ghost <- H
 
 ## 1&2 vs 3&4 (NB: includes ghost!), scoreline 9-2 (again):
@@ -108,11 +112,9 @@ tennis_ghost[c("p1","p2","p3","p4","G")] %<>% dec(11)
 tennis_ghost
 ```
 
-
 standard evaluates:
 
-
-```{r}
+```{r maximizeghostlike,cache=TRUE}
 (tennis_maxp <- maxp(tennis))
 (tennis_ghost_maxp <- maxp(tennis_ghost))
 ```
@@ -120,14 +122,14 @@ standard evaluates:
 First test the null of equal strength:
 
 
-```{r}
+```{r doequalptest,cache=TRUE}
 equalp.test(tennis)
 ```
 
 not significant.  Is the ghost real?
 
 
-```{r}
+```{r specificptesthere,cache=TRUE}
 specificp.test(tennis_ghost,"G",0.0001)  # nonzero value needed to avoid triggering known R bug
 ```
 
@@ -136,7 +138,7 @@ p_G=0$.
 
 We can use the Hessian matrix:
 
-```{r}
+```{r hessianmatrix}
 (M <- hessian(tennis,indep(tennis_maxp),border=TRUE))
 ```
 
@@ -145,7 +147,7 @@ defined as $p_4=1-p_1-p_2-p_3$].  Matrix `M` should be
 negative-semidefinite:
 
 
-```{r}
+```{r eigenwork}
 eigen(M,TRUE,TRUE)$values # one value is zero to numerical precision; the rest should be <0
 ```
 
@@ -153,6 +155,58 @@ See how one eigenvalue is zero (to numerical precision) and the rest
 are strictly negative, corresponding to the support function having a
 well-defined maximum.
 
+
+
+
+
+
+### Analysis with `hyper3` {-}
+
+The likelihood for the 9-2 scoreline between $\left\lbrace
+p1,p2\right\rbrace$ and $\left\lbrace p3,p4\right\rbrace$ would have a
+likelihood function of
+
+$$
+\frac{
+\left(\lambda p_1 +\lambda p_2\right)^{9}
+\left(p_2 + p_3\right)^{2}
+}{
+\left(\lambda p_1 +\lambda p_2+p_2 + p_3\right)^{11}
+}
+$$
+
+
+
+```{r printH}
+H3 <- as.hyper3(H)
+H3
+
+## 1&2 vs 3&4;  scoreline 9-2 (again), with lambda=1.2
+
+f <- function(lambda){
+  H3[c(p1=lambda,p2=lambda)] %<>% inc(9)
+  H3[c(p3=1,p2=1)] %<>% dec(2)
+  H3[c(p1=lambda,p2=lambda,p3=1,p2=1)] %<>% dec(11)
+  return(H3)
+}
+f(1.1443345)
+f(1.888888)
+```
+
+
+maximize:
+
+```{r,maxH3,cache=TRUE}
+tennis_H3_maxp <- maxp(H3)
+tennis_H3_maxp
+```
+
+Compare the `hyper2` evaluates:
+
+```{r}
+tennis_maxp
+tennis_ghost_maxp
+```
 
 
 ### References {-}
@@ -168,6 +222,6 @@ well-defined maximum.
 
 Following lines create `tennis.rda`, residing in the `data/` directory of the package.
 
-```{r,label=savecurlingdataset}
+```{r,label=saveghosttennisdataset}
 save(tennis,tennis_maxp,tennis_ghost, tennis_ghost_maxp,file="tennis.rda")
 ```
