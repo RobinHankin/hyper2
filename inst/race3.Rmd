@@ -19,11 +19,6 @@ library("disordR")
 </p>
 
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
-
-
 Consider a race in which there are six runners 1-6 but we happen to
 know that three of the runners (1,2,3) are clones of strength $p_a$,
 say, two of the runners (4,5) have strength $p_b$, and the final
