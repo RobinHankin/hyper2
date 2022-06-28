@@ -10,6 +10,10 @@ library("hyper2")
 library("partitions")
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
 We will calculate a Plackett-Luce likelihood function for four runners
 $\left\lbrace 1,2,3,4\right\rbrace$ but with a reified Bradley-Terry
 monster that corresponds to having subsets of mutual friends who
