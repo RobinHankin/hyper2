@@ -356,6 +356,59 @@ plot(a,fisher(a))
 
 
 
+# Power test for `hyper3` objects compared with Mann-Whitney-Wilcox
+
+
+
+
+First do some stuff where the null is true:
+
+```{r,label=definepower}
+wilcox_pval <- function(a,b,pa,pb){
+  o <- rrace3(pn=c(a=a,b=b),ps=c(a=pa,b=pb))
+  wilcox.test(which(o=='a'),which(o=='b'))$p.value
+}
+
+hyper3_pval <- function(a,b,pa,pb){
+  o <- rrace3(pn=c(a=a,b=b),ps=c(a=pa,b=pb))
+  equalp.test(ordervec2supp3(o))$p.value
+}
+```
+
+
+
+```{r,label=dopowernulltrue,cache=TRUE}
+wil_p_h0 <- replicate(100,wilcox_pval(10,10,0.5,0.5))
+hyp_p_h0 <- replicate(100,hyper3_pval(10,10,0.5,0.5))
+```
+
+
+```{r,label=plotpvalnulltrue}
+plot(ecdf(wil_p_h0),col="black")
+plot(ecdf(hyp_p_h0),col="red",add=TRUE)
+legend("topleft",pch=16,lty=1,col=c("black","red"),legend=c("Wilcox","hyper3"))
+```
+
+Now some stuff where the null is false:
+
+
+```{r,label=dopower,cache=TRUE}
+wil_p <- replicate(100,wilcox_pval(10,10,0.7,0.3))
+hyp_p <- replicate(100,hyper3_pval(10,10,0.7,0.3))
+```
+
+```{r,label=plotpower}
+hist(wil_p)
+hist(hyp_p)
+par(pty="s")
+qqplot(wil_p,hyp_p,asp=1,xlim=c(0,1),ylim=c(0,1),pty="m")
+abline(0,1)
+qqplot(log(wil_p),log(hyp_p),asp=1,xlim=c(-6,1),ylim=c(-6,1),pty="m")
+abline(0,1)
+ks.test(wil_p,hyp_p)
+```
+
+
 
 # The constructors' championship
 
