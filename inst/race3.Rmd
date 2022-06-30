@@ -170,7 +170,7 @@ The $p$-value is about 0.81, exceeding 0.05; thus we have no strong
 evidence to reject the null of $a=\frac{1}{2}$.  Further, we can use
 either analytical or numerical methods to find a credible interval.
 With an $n$-unit of support criterion the analytical solution to
-$\mathcal{S}(p)=-2$ is given by defining $X=\log(3-2\sqrt{2})-n$ and
+$\mathcal{S}(p)=-n$ is given by defining $X=\log(3-2\sqrt{2})-n$ and
 solving $p(1-p)/(1+p)=X$, or
 $p_\pm=\left(1-X\pm\sqrt{1+4X+X^2}\right)/2$, the two roots being the
 lower and upper limits of the credible interval.  Graphically:
