@@ -1,0 +1,15 @@
+abbreviation name			y2021 y2020 y2019
+Merc	    "Mercedes" 			T     T	    T
+RBRH	    "Red Bull Racing-Honda" 	T     T	    T
+Ferrari	    "Ferrari" 			T     T	    T
+MM	    "McLaren-Mercedes" 		T     F	    F
+AR	    "Alpine-Renault" 		T     F	    F
+ATH	    "AlphaTauri-Honda" 		T     T	    F
+AMM	    "Aston Martin-Mercedes" 	T     F	    F
+WM	    "Williams-Mercedes" 	T     T     T
+ARRF	    "Alfa Romeo Racing-Ferrari" T     T     T
+HF	    "Haas-Ferrari" 		T     T	    T
+MR	    "McLaren-Renault"		F     T	    T
+RPBWTM	    "Racing Point-BWT Mercedes" F     T	    T
+R	    "Renault"	      		F     T	    T
+STRH	    "Scuderia Toro Rosso-Honda"	F     F	    T
