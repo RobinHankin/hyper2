@@ -41,20 +41,20 @@ Note that noone is allowed to vote for themselves.  We may find
 maximum likelihood estimate for the strengths,
 $\operatorname{argmax}\mathcal{L}\left(p_1,\ldots,p_5\right)$:
 
-```{r}
+```{r,label=maxH,cache=TRUE}
 maxp(H)
 ```
 
 Graphically:
 
-```{r maxlike, echo=FALSE}
+```{r maxlike, echo=FALSE,cache=TRUE}
 dotchart(maxp(H),pch=16,main="probabilities")
 dotchart(log(maxp(H)),pch=16,main="log probabilities")
 ```
 
 We can assess the hypothesis that all players have the same strength:
 
-```{r}
+```{r,equaltest,cache=TRUE}
 equalp.test(H)
 ```
 
@@ -63,7 +63,7 @@ the hypothesis that person `a` does in fact have the highest strength
 of the five.  We can follow the reasoning in the _icons_
 demonstration and test $H_0\colon p_1=p_2$:
 
-```{r}
+```{r,samtest,cache=TRUE}
 samep.test(H,c("p1","p2"))
 ```
 
@@ -81,7 +81,7 @@ It is possible to perform a permutation test on this as follows.
 First, calculate the probability of each of the $5!=120$ possible
 observations (up to a constant):
 
-```{r}
+```{r,label=obscons,cache=TRUE}
 library(partitions)
 M <- perms(5)
 M[] <- paste("p",M,sep="")
@@ -100,7 +100,7 @@ permutation to be "more extreme" if it has a smaller probability than
 the observed permutation of `5,4,3,2,1` (under the null).  This is
 easily calculated:
 
-```{r}
+```{r,label=obspv}
 obs <- c(5,4,3,2,1)
 (pval <- sum(LL[LL <= f(obs)])/sum(LL))
 ```
@@ -110,7 +110,7 @@ observation was drawn from the same distribution as the others, and
 infer that it was suspect.
 
 
-## Changes in cooking strength.
+## Changes in cooking strength
 
 We now consider a sequence of observations where one person, say
 person 1, is suspected of an increase in strength (perhaps they
@@ -120,7 +120,7 @@ Unlike the previous cases, here we have a full order statistic without
 the complication of not being allowed to vote for oneself (perhaps a
 professional chef puts the dishes in order).  First, before:
 
-```{r,beforetraining}
+```{r,label=beforetraining,cache=TRUE}
 # observations before training:
 Hbefore <- 
   race(c("p5","p2","p3","p4","p1")) + #  5 is the best, 4 the worst.
@@ -167,7 +167,7 @@ Hafter
 In the above, the additional strength conferred by the training is
 represented by `S`.  We can estimate the effect of training:
 
-```{r,addbeforeandafter}
+```{r,addbeforeandafter,cache=TRUE}
 maxp(Hbefore+Hafter)
 ```
 
@@ -176,7 +176,7 @@ two likelihood functions for independent observations].  The evaluate
 suggests that the training had a sizable effect; we may use
 \code{specficp.gt.test()} to test a null of zero strength:
 
-```{r,testnullzerotrainingeffect}
+```{r,testnullzerotrainingeffect,cache=TRUE}
 specificp.gt.test(Hbefore+Hafter, "S", 0)
 ```
 
