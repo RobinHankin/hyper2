@@ -142,7 +142,7 @@ be
 \frac{p_2  }{      p_2+p_3+p_4+p_5}\cdot
 \frac{p_3  }{          p_3+p_4+p_5}\cdot
 \frac{p_4  }{              p_4+p_5}\cdot
-\frac{p_5  }{                  p_5}\cdot
+\frac{p_5  }{                  p_5}
 \]
 
 and the likelihood for the second observation would be
@@ -181,3 +181,96 @@ specificp.gt.test(Hbefore+Hafter, "S", 0)
 ```
 
 thus we have strong evidence for the training being effective.
+
+
+# Analysis with `hyper3` objects
+
+We can take the "changes in cooking strength" augmented Plackett-Luce
+likelihood functions above, and apply `hyper3` idiom to it.  Instead
+of using a reified entity $S$ we have likelihood functions 
+
+\[
+\frac{\lambda p_1}{\lambda p_1+p_2+p_3+p_4+p_5}\cdot
+\frac{p_2  }{                  p_2+p_3+p_4+p_5}\cdot
+\frac{p_3  }{                      p_3+p_4+p_5}\cdot
+\frac{p_4  }{                          p_4+p_5}\cdot
+\frac{p_5  }{                              p_5}
+\]
+
+\[
+\frac{p_3  }{\lambda p_1+p_2+p_3+p_4+p_5}\cdot
+\frac{\lambda p_1}{\lambda p_1+p_2+    p_4+p_5}\cdot
+\frac{p_5  }{                  p_2+    p_4+p_5}\cdot
+\frac{p_2  }{                  p_2+    p_4    }\cdot
+\frac{p_4  }{                          p_4    }\cdot
+\]
+
+and then test $H_0\colon\lambda=1$.  The `hyper3` likelihood function
+is mathematically the same as the reified `hyper2` BT likelihood
+function provided $p_1+S=\lambda p_1$ (the likelihood functions differ
+only if more than one player has increased strength); note that
+$\lambda < 1$ is not possible with reified BT because it implies
+negative $S$.  We will create a `hyper3` object for the post-training
+observations:
+
+```{r,hyper3post}
+Hpost1 <- function(lambda){
+   out <- hyper3()
+   out[c(p1=lambda)] %<>% inc
+   out[c(p1=lambda,p2=1,p3=1,p4=1,p5=1)] %<>% dec
+
+   out[c(p2=1)] %<>% inc
+   out[c(p2=1,p3=1,p4=1,p5=1)] %<>% dec
+
+   out[c(p3=1)] %<>% inc
+   out[c(p3=1,p4=1,p5=1)] %<>% dec
+
+   out[c(p4=1)] %<>% inc
+   out[c(p4=1,p5=1)] %<>% dec
+   return(out)
+}
+
+Hpost2 <- function(lambda){
+   out <- hyper3()
+   out[c(p3=1)] %<>% inc
+   out[c(p1=lambda,p2=1,p3=1,p4=1,p5=1)] %<>% dec
+
+   out[c(p1=lambda)] %<>% inc
+   out[c(p1=lambda,p2=1,p4=1,p5=1)] %<>% dec
+
+   out[c(p5=1)] %<>% inc
+   out[c(p2=1,p4=1,p5=1)] %<>% dec
+
+   out[c(p2=1)] %<>% inc
+   out[c(p2=1,p4=1)] %<>% dec
+   return(out)
+}
+```
+
+Now The likelihood functions for the "before"  observations simply add, so for example
+
+```{r,showclever}
+as.hyper3(Hbefore) + Hpost1(1.8888) + Hpost2(1.8888)
+```
+
+Then we can calculate a profile likelihood curve:
+
+```{r,label=calculatesupportlambda,cache=TRUE}
+H3 <- function(lambda){as.hyper3(Hbefore) + Hpost1(lambda) + Hpost2(lambda)}
+supplam <- function(lambda){maxp(H3(lambda),n=1,give=TRUE)$likes}
+lam <- exp(seq(from=log(0.8),to=log(100),len=50))
+L <- sapply(lam,supplam)
+```
+
+```{r,label=plotsupp}
+plot(lam,L-max(L),type="l",lwd=2)
+abline(h=c(0,-2),col='gray')
+abline(v=1,col='red')
+text(0,-0.2,"lambda=1",col="red",pos=4)
+```
+
+We see that we can reject $H_0\colon\lambda=1$ but for this dataset
+there does not appear to be a clear upper bound on $\lambda$.
+
+
+
