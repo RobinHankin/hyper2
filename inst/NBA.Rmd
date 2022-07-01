@@ -44,7 +44,7 @@ Thus the identity of the scoring team is not independent of the
 identity of the possessing team (as one might expect).  
 We can convert `NBA_table` to a likelihood function:
 
-```{r,definsupportb,cache=TRUE}
+```{r,label=definesupportb,cache=TRUE}
 allplayers <- as.matrix(NBA_table[,5:23])
 NBA <- hyper2()
 NBA2 <- hyper2()
@@ -110,12 +110,12 @@ NBA_maxp <- maxp(NBA)
 NBA_maxp %<>% ordertrans(c(colnames(NBA_table)[-(1:4)],"possession"))
 
 
-dotchart(NBA_maxp,col=c(rep("black",9),rep("red",10),rep("blue",1)),pch=16)
+Dotchart(NBA_maxp,col=c(rep("black",9),rep("red",10),rep("blue",1)),pch=16)
 ```
 
 # Statistical analysis
 
-```{r,statsanal,cache=TRUE}
+```{r,label=statsanal,cache=TRUE}
 samep.test(NBA2,c("C_possession","W_possession"))
 ```
 
@@ -124,7 +124,7 @@ strength as the Warriors having possession, and from now on we work
 with `NBA` rather than `NBA2`.
 
 
-```{r,cache=TRUE}
+```{r,label=doCWtest, cache=TRUE}
 (C_allstrengths <- sort(NBA_maxp[01:9],decreasing=TRUE))
 (W_allstrengths <- sort(NBA_maxp[10:19],decreasing=TRUE))
 samep.test(NBA, names(C_allstrengths))
