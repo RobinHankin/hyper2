@@ -7,6 +7,12 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+
 ## The `hyper2` package
 
 We consider the likelihood function given by a single observation of

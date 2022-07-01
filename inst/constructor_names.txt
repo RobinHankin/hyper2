@@ -1,0 +1,25 @@
+abbreviation name			y2021 y2020 y2019 y2018 y2017 y2016 y2015
+Merc	    "Mercedes" 			T     T	    T	  T	T     T	    T
+RBRH	    "Red Bull Racing-Honda" 	T     T	    T	  F	F     F	    F
+Ferrari	    "Ferrari" 			T     T	    T	  T	T     T	    T	
+MM	    "McLaren-Mercedes" 		T     F	    F	  F	F     F	    F
+AR	    "Alpine-Renault" 		T     F	    F	  F	F     F	    F
+ATH	    "AlphaTauri-Honda" 		T     T	    F	  F	F     F	    F
+AMM	    "Aston Martin-Mercedes" 	T     F	    F	  F	F     F	    F
+WM	    "Williams-Mercedes" 	T     T     T	  T	T     T	    T
+ARRF	    "Alfa Romeo Racing-Ferrari" T     T     T	  F	F     F	    F
+HF	    "Haas-Ferrari" 		T     T	    T	  T	T     T	    F
+MR	    "McLaren-Renault"		F     T	    T	  T	F     F	    F
+RPBWTM	    "Racing Point-BWT Mercedes" F     T	    T	  F	F     F	    F
+R	    "Renault"	      		F     T	    T	  T	T     T	    F
+STRH	    "Scuderia Toro Rosso-Honda"	F     F	    T	  T	F     F	    F
+RBRTH	    "Red Bull Racing-TAG Heuer" F     F	    F	  T	T     T	    F
+FIM	    "Force India"		F     F	    F	  T	T     T	    T
+SF	    "Sauber-Ferrari"		F     F	    F	  T	T     T	    T
+TR	    "Toro Rosso"		F     F	    F	  F	T     F	    F
+MH	    "McLaren-Honda"		F     F	    F	  F	T     T	    T
+TRF	    "Toro Rosso-Ferrari"	F     F	    F	  F	F     T	    F
+MRTM	    "MRT-Mercedes"		F     F	    F	  F	F     T	    F
+RBR	    "Red Bull-Renault"		F     F	    F	  F	F     F	    T
+TRR	    "Toro Rosso-Renault"	F     F	    F	  F	F     F	    T
+MF	    "Marussia-Ferrari"		F     F	    F	  F	F     F	    T
