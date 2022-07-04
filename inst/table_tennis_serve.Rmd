@@ -9,7 +9,10 @@ vignette: >
 ---
 
 
-# The importance of serve in table tennis.
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
 
 (In this vignette, object `H` is created.  It is identical to
 object `table_tennis` in the package; to see it type

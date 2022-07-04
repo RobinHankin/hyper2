@@ -11,24 +11,22 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
-
-
 (takes maybe twenty minutes to run without cache.  The value of
 `carcinoma_maxp` is calculated separately [discussed below], and that
 takes a few days to run).
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
 
 This is a short analysis of the carcinoma dataset presented by
 Agresti, table 13.1, p542.  Seven pathologists classified each of 118
 slides on the presence or absence of carcinoma in the uterine cervix.
 
-Here, the object of inference is the set of pathologists.  Informative 
-
-The probability model is as follows.  To each pathologist $i,1\leq i
-\leq 7$, we assign a non-negative Bradley-Terry strength and require
-$\sum p_i=1$.  Given that two pathologists $i$ and $j$ differ in their
+Here, the object of inference is the set of pathologists.  The
+probability model is as follows.  To each pathologist $i,1\leq i \leq
+7$, we assign a non-negative Bradley-Terry strength and require $\sum
+p_i=1$.  Given that two pathologists $i$ and $j$ differ in their
 diagnosis then the probability of $i$ diagnosing the presence, and $j$
 diagnosing the absence, of carcinoma is given by
 
@@ -42,10 +40,10 @@ diagnosis respectively).  Operationally the way we implement this in
 `hyper2` idiom is to posit an (unobservable) ranking on the
 clinicians: we place the clinicians in order from most convinced of
 the presence of carcinoma to the least convinced.  Thus a ranking of
-`DACBEGF` means that clinician `D` was most convinced of the presense
+`DACBEGF` means that clinician `D` was most convinced of the presence
 of carcinoma and `F` least convinced.  Given this, and given a single
 slide, our actual observation might be that `D` and `A` diagnosed
-presence, and the others diagosed absence, of carcinoma.  The
+presence, and the others diagnosed absence, of carcinoma.  The
 corresponding entry would be
 
 ```
