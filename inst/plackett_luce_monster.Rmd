@@ -22,10 +22,42 @@ friends, and runners 3 and 4 being friends: we would represent this as
 $\left\lbrace\left\lbrace 1,2\right\rbrace,\left\lbrace
 3,4\right\rbrace\right\rbrace$.
 
-The statistical model is as follows.  If a runner finishes, then he
-cheers on all his friends who are still running, thereby adding to
-their strength.  This is a very simple form of non-independence.
- 
+There seem to be a few distinct statistical models for nonindependence:
+
+* Runner $i$ might wish to support $j$.  If runner $i$ finishes, once
+  his rank is established he might be able to help $j$ in some way.
+  He might cheer his still-running friend.  In general, we can
+  consider $n$ ordered pairs $(i_r,j_r)$, $1\leq r\leq n$, with runner
+  $i_1$ helping runner $j_1$, runner $i_2$ helping $j_2$, and so on.
+  One simple case would be equivalence classes of
+  $[n]=\{1,2,\ldots,n\}$ with each equivalence class comprising
+  mutually supporting runners.  In this model, with a pair of mutually
+  supporting runners only the higher-placed competitor can affect the
+  other.  The causation is not symmetrical.
+* Runner $i$ might hate runner $j$.  If $i$ finishes, he might expend
+  his spare energy hinderig $j$ (by throwing stones, for example).
+  Note that equivalence classes of mutual hatred might exist.  Again
+  note that the link is not symmetrical.
+* The help or hindrance discussed above might be contingent on
+  placing: perhaps only the winnner (that is, first-placing
+  competitor) would be able to influence other competitors.  Or maybe
+  competitors with any placing could influence other competitors.
+* Runners $i$ and $j$ might elect to cross the finishing line holding
+  hands, with the apparent tie broken randomly.  This would be a
+  symmetrical relationship.  In general, we could consider
+  hand-holding equivalence classes.
+* We might have a resource allocation problem, with runners having a
+  certain [possibly unknown] amount of "strength" but also the ability
+  to expend this strength on objectives other than ranking in the
+  race.  A runner might be able to expend just enough energy to remain
+  slightly ahead of a rival, reserving energy for other purposes.  If
+  runner $i$ wishes to beat runner $j$, and has sufficient resources
+  to do so, then runners $i$ and $j$ will finish consecutively with
+  $i$ ahead of $j$.
+
+
+
+
 First do three runners, and suppose the equivalence classes are
 $\left\lbrace\left\lbrace 1,2\right\rbrace,\left\lbrace
 3\right\rbrace\right\rbrace$.
