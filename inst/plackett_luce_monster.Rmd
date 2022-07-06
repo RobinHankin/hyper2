@@ -33,19 +33,30 @@ There seem to be a few distinct statistical models for nonindependence:
   $[n]=\{1,2,\ldots,n\}$ with each equivalence class comprising
   mutually supporting runners.  In this model, with a pair of mutually
   supporting runners only the higher-placed competitor can affect the
-  other.  The causation is not symmetrical.
+  other.  Each equivalence class might have a different supportive
+  proclivity.
+  
 * Runner $i$ might hate runner $j$.  If $i$ finishes, he might expend
-  his spare energy hinderig $j$ (by throwing stones, for example).
-  Note that equivalence classes of mutual hatred might exist.  Again
-  note that the link is not symmetrical.
+  his spare energy hindering $j$ (by throwing stones or booing , for
+  example).  Note that equivalence classes of mutual hatred might
+  exist.
+  
+* Also, the help or hindrance might have a finite lifetime.  Under one
+  model, if $i$ finishes then he can stay helping (or hindering) $j$
+  wherever $j$ places.  Alternatively, suppose $i$ places $n$th.  Then
+  perhaps he can affect $j$ only place $n+1$, and after a competitor
+  finishes in place $n+1$, then $i$ can exert no further influence.
+
 * The help or hindrance discussed above might be contingent on
   placing: perhaps only the winnner (that is, first-placing
   competitor) would be able to influence other competitors.  Or maybe
   competitors with any placing could influence other competitors.
+
 * Runners $i$ and $j$ might elect to cross the finishing line holding
   hands, with the apparent tie broken randomly.  This would be a
   symmetrical relationship.  In general, we could consider
   hand-holding equivalence classes.
+
 * We might have a resource allocation problem, with runners having a
   certain [possibly unknown] amount of "strength" but also the ability
   to expend this strength on objectives other than ranking in the
@@ -54,7 +65,6 @@ There seem to be a few distinct statistical models for nonindependence:
   runner $i$ wishes to beat runner $j$, and has sufficient resources
   to do so, then runners $i$ and $j$ will finish consecutively with
   $i$ ahead of $j$.
-
 
 
 
@@ -169,7 +179,8 @@ f(4.4,3.3, 0.2)*12
 f(4.4,3.3, 0.0)*12
 ```
 
-```{tikz, fig.cap = "Partial probability tree for five competitors $a$-$e$ with mutually supporting subsets $(abc)$ and $(de)$, reified approach", fig.ext = 'png', echo=FALSE}
+
+```{tikz, fig.cap = "Partial probability tree for five competitors $a-e$ with $a$ supporting $b$, hyper3 approach", fig.ext = 'png', echo=FALSE}
 \usetikzlibrary{arrows}
 \usetikzlibrary{patterns}
 \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
@@ -179,182 +190,7 @@ f(4.4,3.3, 0.0)*12
 \draw (0,0) -- (2,1);
 \draw (0,0) -- (2,0);
 \draw (0,0) -- (2,-1);
-\node at (0,2.5) (eq1) {$(abc)(de)$};
-
-\node at (1.5,2.5) {$a$};
-\node at (1.5,1.7) {$b$};
-\node at (1.5,1.0) {$c$};
-\node at (1.5,0.2) {$d$};
-\node at (1.5,-0.5) {$e$};
-
-\node at (3, 3)  {$\frac{a}{a+b+c+d+e}$};
-\node at (3, 2)  {$\frac{b}{a+b+c+d+e}$};
-\node at (3, 1)  {$\frac{c}{a+b+c+d+e}$};
-\node at (3, 0)  {$\frac{d}{a+b+c+d+e}$};
-\node at (3,-1)  {$\frac{e}{a+b+c+d+e}$};
-
-\fill  (4, 3) circle[radius=2pt];  % a finishes; paths bcde
-\fill  (4, 2) circle[radius=2pt];  % terminal node
-\fill  (4, 1) circle[radius=2pt];  % terminal node
-\fill  (4, 0) circle[radius=2pt];  % d finishes; paths abce
-\fill  (4,-1) circle[radius=2pt];  % terminal node
-
-\draw (4,3) -- (5,5); 
-\draw (4,3) -- (5,4); 
-\draw (4,3) -- (5,3); 
-\draw (4,3) -- (5,2); 
-
-\node at (4.5,4.6) {$b$};
-\node at (4.5,3.7) {$c$};
-\node at (4.5,3.2) {$d$};
-\node at (4.5,2.7) {$e$};
-
-\node at (6, 5)  {$\frac{b+M}{b+c+d+e+2M}$};
-\node at (6, 4)  {$\frac{c+M}{b+c+d+e+2M}$};
-\node at (6, 3)  {$\frac{d}{b+c+d+e+2M}$};
-\node at (6, 2)  {$\frac{e}{b+c+d+e+2M}$};
-
-\fill (7.4, 5) circle[radius=2pt];  % ab finishes; pahts cde
-\draw (7.4,5) -- (8.4,6);
-\draw (7.4,5) -- (8.4,5);
-\draw (7.4,5) -- (8.4,4);
-
-
-\node at (7.9,5.7) {$c$};
-\node at (7.9,5.2) {$d$};
-\node at (7.9,4.7) {$e$};
-
-\node at (9.3, 6) {$\frac{c+M}{c+d+e+M}$};
-\node at (9.3, 5) {$\frac{d}{c+d+e+M}$};
-\node at (9.3, 4) {$\frac{e}{c+d+e+M}$};
-
-\fill (10.2, 6) circle[radius=2pt];  % abc finishes; paths de
-\draw (10.2, 6) -- (11.2,7);
-\node at (10.7,6.8) {$d$};
-
-\node at (11.8, 7) {$\frac{d}{d+e}$};
-
-\draw (10.2, 6) -- (11.2,6.2);
-\node at (11.8, 6.2) {$\frac{e}{d+e}$};
-\node at (10.7,6.3) {$e$};
-
-\fill (10.2, 5) circle[radius=2pt];
-\draw (10.2, 5) -- (11.2,5.3);
-\node at (11.8, 5.3) {$\frac{c}{c+e+M}$};
-\node at (10.7,5.3) {$c$};
-
-\draw (10.2, 5) -- (11.2,4.7);
-\node at (11.8, 4.7) {$\frac{e+M}{c+e+M}$};
-\node at (10.7,4.7) {$e$};
-
-\fill (10.2, 4) circle[radius=2pt];
-\draw (10.2, 4) -- (11.2,3.9);
-\node at (11.8, 3.9) {$\frac{c}{c+e+M}$};
-\node at (10.7,4.1) {$c$};
-
-\draw (10.2, 4) -- (11.2,3.1);
-\node at (11.8, 3.1) {$\frac{e+M}{c+e+M}$};
-\node at (10.7,3.7) {$e$};
-
-\draw (4, 0) -- (5,1);
-\node at (6, 1)  {$\frac{a}{a+b+c+e+M}$};
-
-\draw (4, 0) -- (5,0);
-\node at (6, 0)  {$\frac{b}{a+b+c+e+M}$};
-
-\draw (4, 0) -- (5,-1);
-\node at (6, -1)  {$\frac{c}{a+b+c+e+M}$}; 
-
-\draw (4, 0) -- (5,-2);
-\node at (6, -2)  {$\frac{e+M}{a+b+c+e+M}$};
-
-\node at (4.5,0.7) {$a$};
-\node at (4.5,0.2) {$b$};
-\node at (4.5,-0.3) {$c$};
-\node at (4.5,-0.8) {$e$};
-
-
-\fill (7.4, -2) circle[radius=2pt];  % de finishes; paths abc
-\draw (7.4, -2) -- (8.4,-1);
-\draw (7.4, -2) -- (8.4,-2);
-\draw (7.4, -2) -- (8.4,-3);
-
-\node at (7.9,-1.2) {$a$};
-\node at (7.9,-1.8) {$b$};
-\node at (7.9,-2.3) {$c$};
-
-\node at (9.3, -1) {$\frac{a}{a+b+c}$};
-\node at (9.3, -2) {$\frac{b}{a+b+c}$};
-\node at (9.3, -3) {$\frac{c}{a+b+c}$};
-
-\fill (10.2, -1) circle[radius=2pt];  % dea finishes; paths bc
-\fill (10.2, -2) circle[radius=2pt];  % deb finishes; paths ac
-\fill (10.2, -3) circle[radius=2pt];  % dec finishes; paths ab
-
-\draw (10.2, -1) -- (11.2,-0);
-\node at (10.6,-0.4) {$b$};
-\node at (10.6,-0.8) {$c$};
-
-
-\node at (11.8, 0) {$\frac{b+M}{b+c+2M}$};
-\draw (10.2, -1) -- (11.2,-1);
-
-\node at (11.8, -1) {$\frac{c+M}{b+c+2M}$};
-
-
-\draw (10.2, -2) -- (11.2,-1.6);
-\node at (11.8, -1.6) {$\frac{a+M}{a+c+2M}$};
-
-\node at (10.6,-1.7) {$a$};
-\node at (10.6,-2) {$c$};
-
-\draw (10.2, -2) -- (11.2,-2.2);
-\node at (11.8, -2.2) {$\frac{c+M}{a+c+2M}$};
-
-\draw (10.2, -3) -- (11.2,-2.9);
-\node at (11.8, -2.9) {$\frac{a+M}{a+b+2M}$};
-
-\draw (10.2, -3) -- (11.2,-3.4);
-\node at (11.8, -3.4) {$\frac{b+M}{a+b+2M}$};
-
-\node at (10.6,-2.8) {$a$};
-\node at (10.6,-3.3) {$b$};
-
-\fill (7.4, 1) circle[radius=2pt];  % da finishes; paths bce
-
-\draw (7.4, 1) -- (8.4,2);
-\draw (7.4, 1) -- (8.4,1);
-\draw (7.4, 1) -- (8.4,0);
-
-\node at (7.9,1.7) {$b$};
-\node at (7.9,1.2) {$c$};
-\node at (7.9,0.7) {$e$};
-
-\node at (9.3, 2) {$\frac{b+M}{b+c+e+2M}$};
-\node at (9.3, 1) {$\frac{c+M}{b+c+e+2M}$};
-\node at (9.3, 0) {$\frac{e}{b+c+e+2M}$};
-
-
-\fill (10.2, 1) circle[radius=2pt];  % da finishes; paths bce
-\draw (10.2, 1) -- (11.2,2);
-\node at (11.8, 2) {$\frac{b+M}{b+e+M}$};
-\draw (10.2, 1) -- (11.2,1);
-\node at (11.8, 1) {$\frac{e}{b+e+M}$};
-
-\end{tikzpicture}
-```
-
-```{tikz, fig.cap = "Partial probability tree for five competitors $a$-$e$ with mutually supporting subsets $(abc)$ and $(de)$, hyper3 approach", fig.ext = 'png', echo=FALSE}
-\usetikzlibrary{arrows}
-\usetikzlibrary{patterns}
-\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
-\fill (0,0) circle[radius=2pt]; % root; paths abcde
-\draw (0,0) -- (2,3); 
-\draw (0,0) -- (2,2);
-\draw (0,0) -- (2,1);
-\draw (0,0) -- (2,0);
-\draw (0,0) -- (2,-1);
-\node at (0,2.5) (eq1) {$(abc)(de)$};
+\node at (0,2.5) (eq1) {$a\longrightarrow b$};
 
 \node at (1.5,2.5) {$a$};
 \node at (1.5,1.7) {$b$};
@@ -387,12 +223,12 @@ f(4.4,3.3, 0.0)*12
 \newcommand{\lb}{\lambda b }
 \newcommand{\lc}{\lambda c }
 \newcommand{\lee}{\lambda e }
-\node at (6, 5)  {$\frac{\lb}{\lb+\lc+d+e}$};
-\node at (6, 4)  {$\frac{\lc}{\lb+\lc+d+e}$};
-\node at (6, 3)  {$\frac{d  }{\lb+\lc+d+e}$};
-\node at (6, 2)  {$\frac{e  }{\lb+\lc+d+e}$};
+\node at (6, 5)  {$\frac{\lb}{\lb+c+d+e}$};
+\node at (6, 4)  {$\frac{c}{\lb+c+d+e}$};
+\node at (6, 3)  {$\frac{d  }{\lb+c+d+e}$};
+\node at (6, 2)  {$\frac{e  }{\lb+c+d+e}$};
 
-\fill (7.4, 5) circle[radius=2pt];  % ab finishes; pahts cde
+\fill (7.4, 5) circle[radius=2pt];  % ab finishes; paths cde
 \draw (7.4,5) -- (8.4,6);
 \draw (7.4,5) -- (8.4,5);
 \draw (7.4,5) -- (8.4,4);
@@ -401,9 +237,9 @@ f(4.4,3.3, 0.0)*12
 \node at (7.9,5.7) {$c$};
 \node at (7.9,5.2) {$d$};
 \node at (7.9,4.7) {$e$};
-\node at (9.3, 6) {$\frac{\lc}{\lc+d+e}$};
-\node at (9.3, 5) {$\frac{d  }{\lc+d+e}$};
-\node at (9.3, 4) {$\frac{e  }{\lc+d+e}$};
+\node at (9.3, 6) {$\frac{c}{c+d+e}$};
+\node at (9.3, 5) {$\frac{d  }{c+d+e}$};
+\node at (9.3, 4) {$\frac{e  }{c+d+e}$};
 
 \fill (10.2, 6) circle[radius=2pt];  % abc finishes; paths de
 \draw (10.2, 6) -- (11.2,7);
@@ -417,33 +253,33 @@ f(4.4,3.3, 0.0)*12
 
 \fill (10.2, 5) circle[radius=2pt];
 \draw (10.2, 5) -- (11.2,5.3);
-\node at (11.8, 5.3) {$\frac{c}{c+\lee}$};
+\node at (11.8, 5.3) {$\frac{c}{c+e}$};
 \node at (10.7,5.3) {$c$};
 
 \draw (10.2, 5) -- (11.2,4.7);
-\node at (11.8, 4.7) {$\frac{\lee}{c+\lee}$};
+\node at (11.8, 4.7) {$\frac{e}{c+e}$};
 \node at (10.7,4.7) {$e$};
 
 \fill (10.2, 4) circle[radius=2pt];
 \draw (10.2, 4) -- (11.2,3.9);
-\node at (11.8, 3.9) {$\frac{c}{c+\lee}$};
+\node at (11.8, 3.9) {$\frac{c}{c+e}$};
 \node at (10.7,4.1) {$c$};
 
 \draw (10.2, 4) -- (11.2,3.1);
-\node at (11.8, 3.1) {$\frac{\lee}{c+\lee}$};
+\node at (11.8, 3.1) {$\frac{e}{c+e}$};
 \node at (10.7,3.7) {$e$};
 
 \draw (4, 0) -- (5,1);
-\node at (6, 1)  {$\frac{a}{a+b+c+\lee}$};
+\node at (6, 1)  {$\frac{a}{a+b+c+e}$};
 
 \draw (4, 0) -- (5,0);
-\node at (6, 0)  {$\frac{b}{a+b+c+\lee}$};
+\node at (6, 0)  {$\frac{b}{a+b+c+e}$};
 
 \draw (4, 0) -- (5,-1);
-\node at (6, -1)  {$\frac{c}{a+b+c+\lee}$}; 
+\node at (6, -1)  {$\frac{c}{a+b+c+e}$}; 
 
 \draw (4, 0) -- (5,-2);
-\node at (6, -2)  {$\frac{\lee}{a+b+c+\lee}$};
+\node at (6, -2)  {$\frac{e}{a+b+c+e}$};
 
 \node at (4.5,0.7) {$a$};
 \node at (4.5,0.2) {$b$};
@@ -473,10 +309,10 @@ f(4.4,3.3, 0.0)*12
 \node at (10.6,-0.8) {$c$};
 
 
-\node at (11.8, 0) {$\frac{b}{b+c}$};
+\node at (11.8, 0) {$\frac{\lb}{\lb+c}$};
 \draw (10.2, -1) -- (11.2,-1);
 
-\node at (11.8, -1) {$\frac{c}{b+c}$};
+\node at (11.8, -1) {$\frac{c}{\lb+c}$};
 
 
 \draw (10.2, -2) -- (11.2,-1.6);
@@ -507,10 +343,9 @@ f(4.4,3.3, 0.0)*12
 \node at (7.9,1.2) {$c$};
 \node at (7.9,0.7) {$e$};
 
-\node at (9.3, 2) {$\frac{\lb}{\lb+\lc+e}$};
-\node at (9.3, 1) {$\frac{\lc}{\lb+\lc+e}$};
-\node at (9.3, 0) {$\frac{e  }{\lb+\lc+e}$};
-
+\node at (9.3, 2) {$\frac{\lb}{\lb+c+e}$};
+\node at (9.3, 1) {$\frac{  c}{\lb+c+e}$};
+\node at (9.3, 0) {$\frac{e  }{\lb+c+e}$};
 
 \fill (10.2, 1) circle[radius=2pt];  % da finishes; paths bce
 \draw (10.2, 1) -- (11.2,2);
@@ -518,6 +353,359 @@ f(4.4,3.3, 0.0)*12
 \draw (10.2, 1) -- (11.2,1);
 \node at (11.8, 1) {$\frac{e}{\lb+e}$};
 
+\end{tikzpicture}
+```
+
+```{tikz, fig.cap = "Partial probability tree for five competitors $a-e$ with mutually supporting  group $abc$, hyper3 approach.  If any competitor in the set {$a,b,c$} finishes, they lend their strength to the other competitors in the set who are still running", fig.ext = 'png', echo=FALSE}
+\usetikzlibrary{arrows}
+\usetikzlibrary{patterns}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+\fill (0,0) circle[radius=2pt]; % root; paths abcde
+\draw (0,0) -- (2,3); 
+\draw (0,0) -- (2,2);
+\draw (0,0) -- (2,1);
+\draw (0,0) -- (2,0);
+\draw (0,0) -- (2,-1);
+\node at (0,2.5) (eq1) {$\underbrace{\left\lbrace a,b,c\right\rbrace}_{\lambda}$};
+
+\node at (1.5,2.5) {$a$};
+\node at (1.5,1.7) {$b$};
+\node at (1.5,1.0) {$c$};
+\node at (1.5,0.2) {$d$};
+\node at (1.5,-0.5) {$e$};
+
+\node at (3, 3)  {$\frac{a}{a+b+c+d+e}$};
+\node at (3, 2)  {$\frac{b}{a+b+c+d+e}$};
+\node at (3, 1)  {$\frac{c}{a+b+c+d+e}$};
+\node at (3, 0)  {$\frac{d}{a+b+c+d+e}$};
+\node at (3,-1)  {$\frac{e}{a+b+c+d+e}$};
+
+\fill  (4, 3) circle[radius=2pt];  % a finishes; paths bcde
+\fill  (4, 2) circle[radius=2pt];  % terminal node
+\fill  (4, 1) circle[radius=2pt];  % terminal node
+\fill  (4, 0) circle[radius=2pt];  % d finishes; paths abce
+\fill  (4,-1) circle[radius=2pt];  % terminal node
+
+\draw (4,3) -- (5,5); 
+\draw (4,3) -- (5,4); 
+\draw (4,3) -- (5,3); 
+\draw (4,3) -- (5,2); 
+
+\node at (4.5,4.6) {$b$};
+\node at (4.5,3.7) {$c$};
+\node at (4.5,3.2) {$d$};
+\node at (4.5,2.7) {$e$};
+
+\newcommand{\la}{\lambda a }
+\newcommand{\lb}{\lambda b }
+\newcommand{\lc}{\lambda c }
+\newcommand{\lee}{\lambda e }
+ \node at (6, 5)  {$\frac{\lb}{\lb+\lc+d+e}$};
+ \node at (6, 4)  {$\frac{\lc}{\lb+\lc+d+e}$};
+ \node at (6, 3)  {$\frac{d  }{\lb+\lc+d+e}$};
+ \node at (6, 2)  {$\frac{e  }{\lb+\lc+d+e}$};
+ 
+ \fill (7.4, 5) circle[radius=2pt];  % ab finishes; paths cde
+ \draw (7.4,5) -- (8.4,6);
+ \draw (7.4,5) -- (8.4,5);
+ \draw (7.4,5) -- (8.4,4);
+ 
+ \node at (7.9,5.7) {$c$};
+ \node at (7.9,5.2) {$d$};
+ \node at (7.9,4.7) {$e$};
+ \node at (9.3, 6) {$\frac{\lc}{\lc+d+e}$};
+ \node at (9.3, 5) {$\frac{d  }{\lc+d+e}$};
+ \node at (9.3, 4) {$\frac{e  }{\lc+d+e}$};
+ 
+ \fill (10.2, 6) circle[radius=2pt];  % abc finishes; paths de
+ \draw (10.2, 6) -- (11.2,7);
+ \node at (10.7,6.8) {$d$};
+ 
+ \node at (11.8, 7) {$\frac{d}{d+e}$};
+ 
+ \draw (10.2, 6) -- (11.2,6.2);
+ \node at (11.8, 6.2) {$\frac{e}{d+e}$};
+ \node at (10.7,6.3) {$e$};
+ 
+ \fill (10.2, 5) circle[radius=2pt];
+ \draw (10.2, 5) -- (11.2,5.3);
+ \node at (11.8, 5.3) {$\frac{\lc}{\lc+e}$};
+ \node at (10.7,5.3) {$c$};
+ 
+ \draw (10.2, 5) -- (11.2,4.7);
+ \node at (11.8, 4.7) {$\frac{e}{\lc+e}$};
+ \node at (10.7,4.7) {$e$};
+ 
+ \fill (10.2, 4) circle[radius=2pt];
+ \draw (10.2, 4) -- (11.2,3.9);
+ \node at (11.8, 3.9) {$\frac{\lc}{\lc+e}$};
+ \node at (10.7,4.1) {$c$};
+ 
+ \draw (10.2, 4) -- (11.2,3.1);
+ \node at (11.8, 3.1) {$\frac{e}{\lc+e}$};
+ \node at (10.7,3.7) {$e$};
+ 
+ \draw (4, 0) -- (5,1);
+ \node at (6, 1)  {$\frac{a}{a+b+c+e}$};
+ 
+ \draw (4, 0) -- (5,0);
+ \node at (6, 0)  {$\frac{b}{a+b+c+e}$};
+ 
+ \draw (4, 0) -- (5,-1);
+ \node at (6, -1)  {$\frac{c}{a+b+c+e}$}; 
+ 
+ \draw (4, 0) -- (5,-2);
+ \node at (6, -2)  {$\frac{e}{a+b+c+e}$};
+ 
+ \node at (4.5,0.7) {$a$};
+ \node at (4.5,0.2) {$b$};
+ \node at (4.5,-0.3) {$c$};
+ \node at (4.5,-0.8) {$e$};
+ 
+ 
+ \fill (7.4, -2) circle[radius=2pt];  % de finishes; paths abc
+ \draw (7.4, -2) -- (8.4,-1);
+ \draw (7.4, -2) -- (8.4,-2);
+ \draw (7.4, -2) -- (8.4,-3);
+ 
+ \node at (7.9,-1.2) {$a$};
+ \node at (7.9,-1.8) {$b$};
+ \node at (7.9,-2.3) {$c$};
+ 
+ \node at (9.3, -1) {$\frac{a}{a+b+c}$};
+ \node at (9.3, -2) {$\frac{b}{a+b+c}$};
+ \node at (9.3, -3) {$\frac{c}{a+b+c}$};
+ 
+ \fill (10.2, -1) circle[radius=2pt];  % dea finishes; paths bc
+ \fill (10.2, -2) circle[radius=2pt];  % deb finishes; paths ac
+ \fill (10.2, -3) circle[radius=2pt];  % dec finishes; paths ab
+ 
+ \draw (10.2, -1) -- (11.2,-0);
+ \node at (10.6,-0.4) {$b$};
+ \node at (10.6,-0.8) {$c$};
+ 
+ 
+ \node at (11.8, 0) {$\frac{\lb}{\lb+\lc}$};
+ \draw (10.2, -1) -- (11.2,-1);
+ 
+ \node at (11.8, -1) {$\frac{c}{\lb+\lc}$};
+ 
+ 
+ \draw (10.2, -2) -- (11.2,-1.6);
+ \node at (11.8, -1.6) {$\frac{\la}{\la+\lc}$};
+ 
+ \node at (10.6,-1.7) {$a$};
+ \node at (10.6,-2) {$c$};
+ 
+ \draw (10.2, -2) -- (11.2,-2.2);
+ \node at (11.8, -2.2) {$\frac{\lc}{\la+\lc}$};
+ 
+ \draw (10.2, -3) -- (11.2,-2.9);
+ \node at (11.8, -2.9) {$\frac{\la}{\la+\lb}$};
+ 
+ \draw (10.2, -3) -- (11.2,-3.4);
+ \node at (11.8, -3.4) {$\frac{\lb}{\la+\lb}$};
+ 
+ \node at (10.6,-2.8) {$a$};
+ \node at (10.6,-3.3) {$b$};
+ 
+ \fill (7.4, 1) circle[radius=2pt];  % da finishes; paths bce
+ 
+ \draw (7.4, 1) -- (8.4,2);
+ \draw (7.4, 1) -- (8.4,1);
+ \draw (7.4, 1) -- (8.4,0);
+ 
+ \node at (7.9,1.7) {$b$};
+ \node at (7.9,1.2) {$c$};
+ \node at (7.9,0.7) {$e$};
+ 
+ \node at (9.3, 2) {$\frac{\lb}{\lb+\lc+e}$};
+ \node at (9.3, 1) {$\frac{\lc}{\lb+\lc+e}$};
+ \node at (9.3, 0) {$\frac{e  }{\lb+\lc+e}$};
+ 
+ \fill (10.2, 1) circle[radius=2pt];  % da finishes; paths bce
+ \draw (10.2, 1) -- (11.2,2);
+ \node at (11.8, 2) {$\frac{\lb}{\lb+e}$};
+ \draw (10.2, 1) -- (11.2,1);
+ \node at (11.8, 1) {$\frac{e}{\lb+e}$};
+
+\end{tikzpicture}
+```
+
+
+
+```{tikz, fig.cap = "Partial probability tree for five competitors $a$-$e$ with mutually supporting subsets $\\left\\lbrace a,b,c\\right\\rbrace$ [with support term $\\lambda$] and $(de)$ [with support term $\\mu$], hyper3 approach", fig.ext = 'png', echo=FALSE}
+\usetikzlibrary{arrows}
+\usetikzlibrary{patterns}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+\fill (0,0) circle[radius=2pt]; % root; paths abcde
+\draw (0,0) -- (2,3); 
+\draw (0,0) -- (2,2);
+\draw (0,0) -- (2,1);
+\draw (0,0) -- (2,0);
+\draw (0,0) -- (2,-1);
+\node at (0,2.5) (eq1) {$\underbrace{\left\lbrace a,b,c\right\rbrace}_{\lambda}\underbrace{\left\lbrace d,e\right\rbrace}_{\mu}$};
+
+\node at (1.5,2.5) {$a$};
+\node at (1.5,1.7) {$b$};
+\node at (1.5,1.0) {$c$};
+\node at (1.5,0.2) {$d$};
+\node at (1.5,-0.5) {$e$};
+
+\node at (3, 3)  {$\frac{a}{a+b+c+d+e}$};
+\node at (3, 2)  {$\frac{b}{a+b+c+d+e}$};
+\node at (3, 1)  {$\frac{c}{a+b+c+d+e}$};
+\node at (3, 0)  {$\frac{d}{a+b+c+d+e}$};
+\node at (3,-1)  {$\frac{e}{a+b+c+d+e}$};
+
+\fill  (4, 3) circle[radius=2pt];  % a finishes; paths bcde
+\fill  (4, 2) circle[radius=2pt];  % terminal node
+\fill  (4, 1) circle[radius=2pt];  % terminal node
+\fill  (4, 0) circle[radius=2pt];  % d finishes; paths abce
+\fill  (4,-1) circle[radius=2pt];  % terminal node
+
+\draw (4,3) -- (5,5); 
+\draw (4,3) -- (5,4); 
+\draw (4,3) -- (5,3); 
+\draw (4,3) -- (5,2); 
+
+\node at (4.5,4.6) {$b$};
+\node at (4.5,3.7) {$c$};
+\node at (4.5,3.2) {$d$};
+\node at (4.5,2.7) {$e$};
+
+\newcommand{\la}[1]{\lambda{#1}}
+\newcommand{\ld}[1]{\mu    {#1}}
+\node at (6, 5)  {$\frac{\la{b}}{\la{b}+\la{c}+d+e}$};
+\node at (6, 4)  {$\frac{\la{c}}{\la{b}+\la{c}+d+e}$};
+\node at (6, 3)  {$\frac{d     }{\la{b}+\la{c}+d+e}$};
+\node at (6, 2)  {$\frac{e     }{\la{b}+\la{c}+d+e}$};
+
+\fill (7.4, 5) circle[radius=2pt];  % ab finishes; pahts cde
+\draw (7.4,5) -- (8.4,6);
+\draw (7.4,5) -- (8.4,5);
+\draw (7.4,5) -- (8.4,4);
+
+
+\node at (7.9,5.7) {$c$};
+\node at (7.9,5.2) {$d$};
+\node at (7.9,4.7) {$e$};
+\node at (9.3, 6) {$\frac{\la{c}}{\la{c}+d+e}$};
+\node at (9.3, 5) {$\frac{d  }{\la{c}+d+e}$};
+\node at (9.3, 4) {$\frac{e  }{\la{c}+d+e}$};
+
+\fill (10.2, 6) circle[radius=2pt];  % abc finishes; paths de
+\draw (10.2, 6) -- (11.2,7);
+\node at (10.7,6.8) {$d$};
+
+\node at (11.8, 7) {$\frac{d}{d+e}$};
+
+\draw (10.2, 6) -- (11.2,6.2);
+\node at (11.8, 6.2) {$\frac{e}{d+e}$};
+\node at (10.7,6.3) {$e$};
+
+\fill (10.2, 5) circle[radius=2pt];
+\draw (10.2, 5) -- (11.2,5.3);
+\node at (11.8, 5.3) {$\frac{\la{c}}{\la{c}+\ld{e}}$};
+\node at (10.7,5.3) {$c$};
+
+\draw (10.2, 5) -- (11.2,4.7);
+\node at (11.8, 4.7) {$\frac{\ld{e}}{\la{c}+\ld{e}}$};
+\node at (10.7,4.7) {$e$};
+
+\fill (10.2, 4) circle[radius=2pt];
+\draw (10.2, 4) -- (11.2,3.9);
+\node at (11.8, 3.9) {$\frac{\la{c}}{\la{c}+\ld{e}}$};
+\node at (10.7,4.1) {$c$};
+
+\draw (10.2, 4) -- (11.2,3.1);
+\node at (11.8, 3.1) {$\frac{\ld{e}}{\la{c}+\ld{e}}$};
+\node at (10.7,3.7) {$e$};
+
+\draw (4, 0) -- (5,1);
+\node at (6, 1)  {$\frac{a}{a+b+c+\ld{e}}$};
+
+\draw (4, 0) -- (5,0);
+\node at (6, 0)  {$\frac{b}{a+b+c+\ld{e}}$};
+
+\draw (4, 0) -- (5,-1);
+\node at (6, -1)  {$\frac{c}{a+b+c+\ld{e}}$}; 
+
+\draw (4, 0) -- (5,-2);
+\node at (6, -2)  {$\frac{\ld{e}}{a+b+c+\ld{e}}$};
+
+\node at (4.5,0.7) {$a$};
+\node at (4.5,0.2) {$b$};
+\node at (4.5,-0.3) {$c$};
+\node at (4.5,-0.8) {$e$};
+
+
+\fill (7.4, -2) circle[radius=2pt];  % de finishes; paths abc
+\draw (7.4, -2) -- (8.4,-1);
+\draw (7.4, -2) -- (8.4,-2);
+\draw (7.4, -2) -- (8.4,-3);
+
+\node at (7.9,-1.2) {$a$};
+\node at (7.9,-1.8) {$b$};
+\node at (7.9,-2.3) {$c$};
+
+\node at (9.3, -1) {$\frac{a}{a+b+c}$};
+\node at (9.3, -2) {$\frac{b}{a+b+c}$};
+\node at (9.3, -3) {$\frac{c}{a+b+c}$};
+
+\fill (10.2, -1) circle[radius=2pt];  % dea finishes; paths bc
+\fill (10.2, -2) circle[radius=2pt];  % deb finishes; paths ac
+\fill (10.2, -3) circle[radius=2pt];  % dec finishes; paths ab
+
+\draw (10.2, -1) -- (11.2,-0);
+\node at (10.6,-0.4) {$b$};
+\node at (10.6,-0.8) {$c$};
+
+
+\node at (11.8, 0) {$\frac{\la{b}}{\la{b}+\la{c}}$};
+\draw (10.2, -1) -- (11.2,-1);
+
+\node at (11.8, -1) {$\frac{\la{c}}{\la{b}+\la{c}}$};
+
+
+\draw (10.2, -2) -- (11.2,-1.6);
+\node at (11.8, -1.6) {$\frac{\la{a}}{\la{a}+\la{c}}$};
+
+\node at (10.6,-1.7) {$a$};
+\node at (10.6,-2) {$c$};
+
+\draw (10.2, -2) -- (11.2,-2.2);
+\node at (11.8, -2.2) {$\frac{\la{c}}{\la{a}+\la{c}}$};
+
+\draw (10.2, -3) -- (11.2,-2.9);
+\node at (11.8, -2.9) {$\frac{\la{a}}{\la{a}+\la{b}}$};
+
+\draw (10.2, -3) -- (11.2,-3.4);
+\node at (11.8, -3.4) {$\frac{\la{b}}{\la{a}+\la{b}}$};
+
+\node at (10.6,-2.8) {$a$};
+\node at (10.6,-3.3) {$b$};
+
+\fill (7.4, 1) circle[radius=2pt];  % da finishes; paths bce
+
+\draw (7.4, 1) -- (8.4,2);
+\draw (7.4, 1) -- (8.4,1);
+\draw (7.4, 1) -- (8.4,0);
+
+\node at (7.9,1.7) {$b$};
+\node at (7.9,1.2) {$c$};
+\node at (7.9,0.7) {$e$};
+
+\node at (9.3, 2) {$\frac{\la{b}}{\la{b}+\la{c}+e}$};
+\node at (9.3, 1) {$\frac{\la{c}}{\la{b}+\la{c}+e}$};
+\node at (9.3, 0) {$\frac{e     }{\la{b}+\la{c}+e}$};
+
+
+\fill (10.2, 1) circle[radius=2pt];  % da finishes; paths bce
+\draw (10.2, 1) -- (11.2,2);
+\node at (11.8, 2) {$\frac{\la{b}}{\la{b}+\ld{e}}$};
+\draw (10.2, 1) -- (11.2,1);
+\node at (11.8, 1) {$\frac{\ld{e}}{\la{b}+e}$};
 
 \end{tikzpicture}
 ```
