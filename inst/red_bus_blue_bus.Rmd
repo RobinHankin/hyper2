@@ -8,8 +8,11 @@ bibliography: chess.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The red bus-blue bus problem was originally stated by
-@davidson1970.  The other one was the holiday problem.
+The red bus-blue bus problem was originally stated by @chipman1960 and
+discussed by @davidson1970 and @alvo2010 (page 153).
+
+
+The other one was the holiday problem.
 
 A traveller has a choice of going to work by car or taking a bus.  The
 bus may be red or blue.  Here, we assume that the traveller has strong
@@ -194,3 +197,4 @@ L = L(C,B,red,blue)
 
 
 # References
+
