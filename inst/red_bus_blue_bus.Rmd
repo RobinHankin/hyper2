@@ -1,5 +1,5 @@
 ---
-title: "Red bus, blue bus"
+title: "Red bus, blue bus; and the choice between Florida, California, and Florida plus a nickel"
 output: pdf_document
 bibliography: chess.bib
 ---
@@ -8,11 +8,16 @@ bibliography: chess.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+In this short discussion document I discuss three related problems:
+
+* The red bus-blue bus problem
+* Debussy-Beethoven problem
+* Holiday problem
+
 The red bus-blue bus problem was originally stated by @chipman1960 and
 discussed by @davidson1970 and @alvo2010 (page 153).
-
-
-The other one was the holiday problem.
+Debussy-Beethoven was @debreu1960.  I have lost the original reference
+to the Holiday problem.
 
 A traveller has a choice of going to work by car or taking a bus.  The
 bus may be red or blue.  Here, we assume that the traveller has strong
@@ -85,8 +90,6 @@ would rather have Beethoven.
 
 
 
-THERE IS ALSO THE THING WITH THE HOLIDAY IN CALIFORNIA AND THE HOLIDAY
-IN FLORIDA AND THE HOLIDAY IN FLORIDA PLUS TEN BUCKS
 
 ```
 a,b,c in a race; a and b have an advantage S
@@ -138,7 +141,9 @@ holidays:  Florida, California, California plus a nickel:
 {F,FN,CN}   :  (F,F+N,C)/(2F+C+N)   # C missing
 
 {F,FN,C,CN} :  (F,F+N,C,C+N)/(2F+2C+2N)  ??????????????
+```
 
+	       
 Last line (viz {F,FN,C,CN} is problematic.  Suppose that N is actually
 important [as in, eg {F,FN} and N=0.999] but also N is immaterial when
 comparing Florida with California.  This is a perfectly reasonable
@@ -160,24 +165,28 @@ C and {FN,CN} should be (F,C).
 The correct probability model is to use a two-stage process as
 follows:
 
+
+```
 {F,FN,FC,CN}  :  p(F)  = F/(F+C) * F/(F+N)
               :  p(FN) = F/(F+C) * N/(F+N) 
               :  p(C)  = C/(F+C) * C/(C+N) 
               :  p(CN) = C/(F+C) * N/(C+N)
-
+```
 
 Then
 
+```
 {F,C,CN}    :  p(F)  = F/(F+C)
             :  p(C)  = C/(F+C) * C/(C+N)
             :  p(CN) = C/(F+C) * N/(C+N)
+```
 
 etc.
 
 
 Try this approach with red bus blue bus:
 
-
+```
 L = L(C,B,red,blue)
 
 {C,RB}    : p(C)  = C/(C+B)

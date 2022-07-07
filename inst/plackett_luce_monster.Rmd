@@ -67,6 +67,9 @@ There seem to be a few distinct statistical models for nonindependence:
   $i$ ahead of $j$.
 
 
+The runner metaphor is not the only one.  We can apply the resulting
+likelihood functions to other cases including the red bus-blue bus
+problem (see `inst/red_bus_blue_bus.Rmd` for more discussion).
 
 First do three runners, and suppose the equivalence classes are
 $\left\lbrace\left\lbrace 1,2\right\rbrace,\left\lbrace
@@ -79,11 +82,11 @@ $\left\lbrace\left\lbrace 1,2\right\rbrace,\left\lbrace
  
  213: $\frac{p_2}{p_2+p_1+p_3}\cdot\frac{p_1+M}{p_1+p_3+M}\qquad\frac{p_2}{p_2+p_1+p_3}\cdot\frac{\lambda p_1}{\lambda p_1+p_3}$
  
- 231: $\frac{p_2}{p_2+p_3+p_1}\cdot\frac{p_3}{p_3+p_1+M}$
+ 231: $\frac{p_2}{p_2+p_3+p_1}\cdot\frac{p_3}{p_3+p_1+M}\qquad\frac{p_2}{p_2+p_1+p_3}\cdot\frac{\lambda p_1}{p_3+\lambda p_1}$
  
- 312: $\frac{p_3}{p_3+p_1+p_2}\cdot\frac{p_1}{p_2+p_1}$
+ 312: $\frac{p_3}{p_3+p_1+p_2}\cdot\frac{p_1}{p_2+p_1}\qquad\frac{p_3}{p_3+p_1+p_2}\cdot\frac{\lambda p_1}{p_3+p_1}$
  
- 321: $\frac{p_3}{p_3+p_2+p_1}\cdot\frac{p_2}{p_2+p_1}$
+ 321: $\frac{p_3}{p_3+p_2+p_1}\cdot\frac{p_2}{p_2+p_1}\qquad\frac{p_3}{p_3+p_2+p_1}\cdot\frac{p_2}{p_2+p_1}$
 
 
 Now four runners with classes $\left\lbrace\left\lbrace
