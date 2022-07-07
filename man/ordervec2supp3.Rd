@@ -7,6 +7,8 @@
 \alias{ordertable2supp3}
 \alias{args2ordervec}
 \alias{race_to_hyper3}
+\alias{cheering}
+\alias{cheering3}
 \title{Various functionality for races and hyper3 likelihood functions}
 \description{
 Various functions for calculating the likelihood function for order
@@ -20,13 +22,23 @@ den3(v)
 char2nv(x)
 ordervec2supp3(v,nonfinishers=NULL)
 ordertable2supp3(a)
+cheering3(v,e,help)
 args2ordervec(...)
 }
 \arguments{
-  \item{v}{Ranks in the form of a character vector}
+  \item{v}{Ranks in the form of a character vector.  Element \code{v[1]}
+    is the first-placed competitor, element \code{v[2]} the second, and
+    so on}
   \item{nonfinishers}{Character vector (a set) showing players that did
     not finish}
   \item{a}{An ordertable}
+
+  \item{e,help}{Parameters controlling non-independence in
+    \code{cheering3()} with \code{e} a named integer vector specifying
+    equivalence classes of the competitors: names correspond to the
+    competitors, values to their equivalence class, and \code{help} a
+    numeric vector with entries corresponding to the equivalence classes
+    of \code{e} and values the strength of the support}
   \item{x}{A character vector of competitors}
   \item{...}{Arguments passed to \code{args2ordervec()}}
 }
@@ -53,6 +65,10 @@ args2ordervec(...)
   Function \code{char2nv()} takes a character vector and returns a named
   vector with entries corresponding to their names' counts.  It is used
   in the extraction and replacement methods for \code{hyper3} objects.
+
+  Function \code{cheering()} is a generalization of
+  \code{ordervec2supp3()}.  An extensive discussion is presented at
+  \code{inst/plackett_luce_monster.Rmd}.
   
   File \code{inst/javelin.Rmd} and \code{inst/race3.Rmd} show some
   use-cases for these functions.
