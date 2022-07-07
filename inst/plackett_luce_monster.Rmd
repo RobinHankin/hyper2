@@ -742,22 +742,23 @@ reported ranks for the five options:
     ec <- c(C=1,T=2,RB=3,BB=3,W=4) # equivalence classes
     h <- c(1,1,s,1)                # strength of support
     (
-        cheering3(v=c("RB","BB","C" ,"T","W"),e=ec,h=h)*7 + 
-        cheering3(v=c("BB","RB","T" ,"C","W"),e=ec,h=h)*4 + 
-        cheering3(v=c("T" ,"BB","RB","C","W"),e=ec,h=h)*5 + 
-        cheering3(v=c("W" ,"BB","RB","T","C"),e=ec,h=h)*8 + 
-        cheering3(v=c("C" ,"RB","BB","W","T"),e=ec,h=h)*9 + 
-        cheering3(v=c("BB","C" ,"RB","T","W"),e=ec,h=h)*5
+        cheering3(v=c("RB","BB","C" ,"T","W"),e=ec,h=h)*3 + 
+        cheering3(v=c("BB","RB","T" ,"C","W"),e=ec,h=h)*2 + 
+        cheering3(v=c("T" ,"BB","RB","C","W"),e=ec,h=h)*2 + 
+        cheering3(v=c("W" ,"BB","RB","T","C"),e=ec,h=h)*4 + 
+        cheering3(v=c("C" ,"RB","BB","W","T"),e=ec,h=h)*4 + 
+        cheering3(v=c("BB","C" ,"RB","T","W"),e=ec,h=h)*3
     )
 }
 ```
 
 Above, we see from the function body that he reported `RB,BB,C,T,W`
-seven times, `BB,RB,T,C,W` four times, and so on; perhaps his ranking
-depends on the weather or how tired he is on any given day.  Observe
-that in almost every case he ranks `RB` and `BB` consecutively.
-Function `RB_BB_LF()` takes argument `s` that quantifies the perceived
-similarity between `RB` and `BB`.  For example:
+three times[first row], `BB,RB,T,C,W` twice [second row], and so on;
+perhaps his ranking depends on the weather or how tired he is on any
+given day.  Observe that in almost every case he ranks `RB` and `BB`
+consecutively.  Function `RB_BB_LF()` takes argument `s` that
+quantifies the perceived similarity between `RB` and `BB`.  For
+example:
 
 ```{r,examplerbbblf,cache=TRUE}
 (H <- RB_BB_LF(s=1.8888))
@@ -768,7 +769,7 @@ Now to find a profile likelihood function for `s`:
 
 ```{r,label=proflikeredbus,cache=TRUE}
 o <- function(s){maxp(RB_BB_LF(s),give=TRUE,n=1)$likes} # optimand
-s <- exp(seq(from=log(1.3),to=log(37),len=17)) # putative similarity measures
+s <- exp(seq(from=log(1.3),to=log(47),len=17)) # putative similarity measures
 L <- sapply(s,o)
 L <- L-max(L)
 ```
@@ -795,8 +796,13 @@ And formally maximize the likelihood:
 So a likelihood ratio test of the null that $S=1$ would be:
 
 ```{r,label=LRT_RB,cache=TRUE}
-(suppdif <- o(osup$maximum) - o(1))
+(suppdiff <- o(osup$maximum) - o(1))
 ```
 
 
-Falling just shy of Edwards's two-units-of-support criterion.
+Easily satisfying Edwards's two-units-of-support criterion; Wilks gives us an asymptotic $p$-value:
+
+```{r,label=RBBBpval}
+pchisq(suppdiff*2,df=1,lower.tail=FALSE)
+```
+
