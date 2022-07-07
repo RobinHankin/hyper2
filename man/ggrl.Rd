@@ -10,6 +10,8 @@
 \alias{rankvec_likelihood}
 \alias{elimination}
 \alias{race}
+\alias{Plackett}
+\alias{Plackett-Luce}
 \title{Order statistics}
 \description{
   Various functions for calculating the likelihood function for order
