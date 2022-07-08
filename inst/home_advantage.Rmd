@@ -200,7 +200,55 @@ Matching the probabilities for $a$ at home gives us $H=a(\lambda-1)$
 and matching the probabilities for $a$ away gives $H=b(\lambda-1)$.
 These cannot both be true unless $a=b$ or $\lambda=1$.  But we can, in
 principle, test which one is a better model.
-                                                     
+
+
+# hyper3 idiom
+
+We may apply `hyper3` idiom to the dataset.  First we show
+`home_away3()` being used with a specific value for $\lambda$:
+
+```{r, label=hyper3_homeaway,cache=TRUE}
+(o <- home_games_won + 1i*away_games_won)
+f <- function(l){ maxp(home_away3(o,l),give=TRUE,n=1)$likes}
+l <- exp(seq(from=log(2),to=log(6),len=10))
+L <- sapply(l,f)
+L <- L - max(L)
+```
+
+```{r,label=plothyper3home}
+plot(l,L,type="b")
+abline(h=c(0,-2))
+plot(log(l),L,type="b")
+abline(h=c(0,-2))
+```
+
+
+```{r, label=hyper3_baseball,cache=TRUE}
+baseball_table
+f <- function(l){ maxp(home_away3(baseball_table,l),give=TRUE,n=1)$likes}
+l <- exp(seq(from=log(0.8),to=log(1.9),len=14))
+L <- sapply(l,f)
+L <- L - max(L)
+```
+
+```{r,label=plothyper3baseball}
+plot(log(l),L,type="b")
+abline(h=c(0,-2))
+abline(v=0)
+```
+
+
+Now a formal test:
+
+
+```{r,label=optimizebasebasll,cache=TRUE}
+o <- optimize(f,c(0.2,0.4),maximum=TRUE)
+o
+```
+
+```{r}
+f(o$maximum) - f(0)
+```
 
 ### Package dataset {-}
 
