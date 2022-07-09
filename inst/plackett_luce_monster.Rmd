@@ -861,5 +861,15 @@ H3 <- function(oxcam){
 ```
 
 ```{r,label=calculateoxcam,cache=TRUE}
-maxp(H3(oxcam=1.8888),give=TRUE,n=6)$likes
+o <- function(oxcam){maxp(H3(oxcam),give=TRUE,n=1)$likes}
+oc <- exp(seq(from=log(0.5),to=log(5),len=15))
+L <- sapply(oc,o)
+L <- L - max(L)
 ```
+
+
+```{r,label=plotoxcam}
+plot(log(oc),L,type="b")
+abline(v=0)
+```
+
