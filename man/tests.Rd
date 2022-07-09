@@ -48,7 +48,7 @@ specificp.lt.test(H, i, specificp=1/size(H), ...)
 \details{
 
   Given a \code{hyper2} likelihood function, there are a number of
-  natural questions to ask about the strengths of the players; see the
+  natural questions to ask about the strengths of the players; see
   Hankin 2010 (JSS) for examples.  An extended discussion is presented
   in vignette \dQuote{\code{hyper2}} and the functions documented here
   cover most of the tests used in the vignette.
