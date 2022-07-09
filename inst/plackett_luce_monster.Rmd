@@ -8,12 +8,15 @@ date: '2022-05-16'
 knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 library("partitions")
+library("pdftools")
 ```
 
 <p style="text-align: right;">
 ![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
 </p>
 
+%
+    
 We will calculate a Plackett-Luce likelihood function for four runners
 $\left\lbrace 1,2,3,4\right\rbrace$ but with a reified Bradley-Terry
 monster that corresponds to having subsets of mutual friends who
@@ -806,3 +809,50 @@ Easily satisfying Edwards's two-units-of-support criterion; Wilks gives us an as
 pchisq(suppdiff*2,df=1,lower.tail=FALSE)
 ```
 
+# University ranking analysis
+
+Here we use a dataset of university rankings, `timesData.csv`, taken
+from
+`https://github.com/arnaudbenard/university-ranking/blob/master/timesData.csv`.
+
+```{r}
+a <- read.table("timesData.csv",sep=",", header=TRUE)
+wanted <- c("California Institute of Technology", "Harvard University", 
+"Massachusetts Institute of Technology", "Princeton University", 
+"Stanford University", "University of Cambridge", "University of Oxford")
+names(wanted) <- c("cal","harv","mass","prin","stan","cam","ox")
+
+a <- a[a$university_name %in% wanted,]
+a <- cbind(a,"top7rank"=0)
+for(y in unique(a$year)){
+    a[a$year==y,"top7rank"] <- order(
+     			  as.numeric(a[a$year==y,"world_rank"]) + 
+                                     a[a$year==y,"research"]/1e6,
+decreasing=TRUE)}
+a <- a[,c("top7rank","university_name","year")]
+a <- reshape(a,idvar="university_name",timevar="year",direction="wide")
+for(i in seq_len(nrow(a))){
+   a$university_name[i] <- names(which(wanted == a$university_name[i]))
+}
+rownames(a) <- a$university_name
+a <- a[,-1]
+colnames(a) <- paste("Y",2011:2016,sep="")
+a
+H <- ordertable2supp(a)
+```
+
+```{r,label=testuniv,cache=TRUE}
+equalp.test(H)
+samep.test(H,c("ox","cam"))
+```
+
+Start to use `hyper3` idiom:
+
+```{r}
+H3 <- hyper3()
+for(i in seq_len(ncol(a))){
+  jj <- rep("",nrow(a))
+  jj[a[,i]] <- rownames(a)
+  print(jj)
+}
+```
