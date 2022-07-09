@@ -848,11 +848,18 @@ samep.test(H,c("ox","cam"))
 
 Start to use `hyper3` idiom:
 
-```{r}
-H3 <- hyper3()
-for(i in seq_len(ncol(a))){
-  jj <- rep("",nrow(a))
-  jj[a[,i]] <- rownames(a)
-  print(jj)
+```{r,label=defineoxcam}
+H3 <- function(oxcam){
+  out <- hyper3()
+  for(i in seq_len(ncol(a))){
+    jj <- rep("",nrow(a))
+    jj[a[,i]] <- rownames(a)
+    out <- out + cheering3(v=jj,e=c(ox=1,cam=1,prin=2, stan=3, mass=4, harv=5, cal=6), help=c(oxcam,1,1,1,1,1))
+  }
+  return(out)
 }
+```
+
+```{r,label=calculateoxcam,cache=TRUE}
+maxp(H3(oxcam=1.8888),give=TRUE,n=6)$likes
 ```
