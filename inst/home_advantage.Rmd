@@ -204,51 +204,40 @@ principle, test which one is a better model.
 
 # hyper3 idiom
 
-We may apply `hyper3` idiom to the dataset.  First we show
-`home_away3()` being used with a specific value for $\lambda$:
+We may apply `hyper3` idiom to the dataset. First a formal test:
 
-```{r, label=hyper3_homeaway,cache=TRUE}
-(o <- home_games_won + 1i*away_games_won)
-f <- function(l){ maxp(home_away3(o,l),give=TRUE,n=1)$likes}
-l <- exp(seq(from=log(2),to=log(6),len=10))
-L <- sapply(l,f)
-L <- L - max(L)
-```
-
-```{r,label=plothyper3home}
-plot(l,L,type="b")
-abline(h=c(0,-2))
-plot(log(l),L,type="b")
-abline(h=c(0,-2))
-```
-
-
-```{r, label=hyper3_baseball,cache=TRUE}
+```{r,label=optimizebaseball,cache=TRUE}
 baseball_table
 f <- function(l){ maxp(home_away3(baseball_table,l),give=TRUE,n=1)$likes}
-l <- exp(seq(from=log(0.8),to=log(1.9),len=14))
-L <- sapply(l,f)
-L <- L - max(L)
+o <- optimize(f,c(0.8,1.6),maximum=TRUE)
+o
+maxL <- f(o$maximum)
+W <- maxL - f(1)    # f(1) being the likelihood of the null
+W
+pchisq(2*W,df=1,lower.tail=FALSE)
+```
+
+The pvalue is significant.  Now plot a profile likelihood (support)
+curve:
+
+```{r, label=hyper3_baseball,cache=TRUE}
+jj1  <- seq(from=log(o$maximum),to=log(1.9),len=7)
+jj2  <- seq(from=log(o$maximum),to=log(0.8),len=7)
+l <- sort(unique(exp(c(jj1,jj2))))
+lam  <- sort(c(l,o$maximum))
+L <- sapply(lam,f) - maxL
 ```
 
 ```{r,label=plothyper3baseball}
-plot(log(l),L,type="b")
+plot(log(lam),L,type="b")
 abline(h=c(0,-2))
 abline(v=0)
+
+plot(lam,L,type="b")
+abline(h=c(0,-2))
 ```
 
 
-Now a formal test:
-
-
-```{r,label=optimizebasebasll,cache=TRUE}
-o <- optimize(f,c(0.2,0.4),maximum=TRUE)
-o
-```
-
-```{r}
-f(o$maximum) - f(0)
-```
 
 ### Package dataset {-}
 
