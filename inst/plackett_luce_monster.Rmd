@@ -756,7 +756,7 @@ reported ranks for the five options:
 ```
 
 Above, we see from the function body that he reported `RB,BB,C,T,W`
-three times[first row], `BB,RB,T,C,W` twice [second row], and so on;
+three times [first row], `BB,RB,T,C,W` twice [second row], and so on;
 perhaps his ranking depends on the weather or how tired he is on any
 given day.  Observe that in almost every case he ranks `RB` and `BB`
 consecutively.  Function `RB_BB_LF()` takes argument `s` that
