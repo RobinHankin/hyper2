@@ -14,7 +14,7 @@ country year place
  Netherlands 2003	13 
  Ukraine 2003	14 
  Croatia 2003	15 
- Bosnia 2003	16 
+ BosHerz 2003	16 
  Greece 2003	17 
  France 2003	18 
  Israel 2003	19 
@@ -455,7 +455,7 @@ country year place
 	 Germany 2021 25
 	 UK 2021 26
 	 Ukraine 2022 1
-	 United 2022 2
+	 UK 2022 2
 	 Spain 2022 3
 	 Sweden 2022 4
 	 Serbia 2022 5
