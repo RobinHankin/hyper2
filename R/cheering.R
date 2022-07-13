@@ -1,6 +1,12 @@
 `cheering3` <- function(v,e,help){
-  ## competitors abcdef, with (abc) 1.1 mutual friends with helpfulness 1.1 and (de) helpfulness 1.3:
-  ## cheering3(c("a","b","c","d","e","f"),c(a=1,b=1,c=1,d=2,e=2,f=3), help=c(1.1,1.3))
+
+  ## competitors abcdef, with two groups of mutual friends: (abc) with
+  ## mutual helpfulness 1.1, and (de) with mutual helpfulness 1.3:
+
+  ## use-case:
+  ## cheering3(c("a","b","c","d","e","f"),c(a=1,b=1,c=1,d=2,e=2,f=3),help=c(1.1,1.3))
+
+  
 
 
   stopifnot(all(table(names(e))==1))
