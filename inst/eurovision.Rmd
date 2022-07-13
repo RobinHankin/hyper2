@@ -107,7 +107,7 @@ not compete and therefore cast votes for all competitors.
 We need to convert matrix `preference` into a likelihood function,
 here `eurovision`:
  
-```{r,morestuff}
+```{r,morestuff,cache=TRUE}
 eurovision <- hyper2()
 
 for(i in seq_len(ncol(preference))){   # cycle through the rows; each row is a voter
@@ -158,6 +158,37 @@ for(i in seq_along(ox)){text(ox[i],oyp[i],names(ox)[i],pos=4,col='gray') }
 par(xpd=FALSE) # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
+
+
+## Testing nonindependence using `hyper3` idiom
+
+First we use `hyper2`:
+
+```{r,label=loadeurohyper2,cache=TRUE}
+a <- read.table("euro_ranks.txt",header=TRUE)
+jj <- table(a$country)
+wanted_countries <- names(jj[jj >= 10])
+a <- a[a$country %in% wanted_countries,]
+H <- hyper2()
+for(y in unique(a$year)){
+   H <- H + race((a$country)[a$year == y])
+}
+H
+```
+
+Find the evaluate:
+
+```{r,findhyper2euroevaluate,cache=TRUE}
+mH <- maxp(H)
+```
+
+```{r,plotmH}
+dotchart(mH)
+```
+
+Now use `hyper3` and follow `RB_BB_LF()` in
+`plackett_luce_monster.Rmd`
+
 
 ### Package dataset {-}
 
