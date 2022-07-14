@@ -213,8 +213,6 @@ list2ec <- function(l){
   return(out)
 }
 
-print(a$year)
-
 bloc <- function(lam){
   out <- hyper3()
   e <- list2ec(l)
@@ -225,31 +223,22 @@ bloc <- function(lam){
    } 
   return(out)
 }
-
-Ha <- bloc(1.888)
-Hb <- bloc(1.9)
 ```
 
-Now maximize it:
-
-```{r,maxbloc,cache=TRUE}
-maxp(Ha,n=2,give=TRUE)
-maxp(Hb,n=2,give=TRUE)
-```
-
-```{r,maxhelp,cache=TRUE}
-o <- function(lam){
+```{r,defineoptimand}
+o <- function(lam){  # maximize function o()
    H <- bloc(lam)
-   return(maxp(Hb,give=TRUE,n=1)$likes)
+   return(maxp(H,give=TRUE,n=1)$likes)
 }
 
-o(1)
-o(2)
-
-lam <- seq(from=0.6,to=1.5,len=4)
+```{r,maximi,cache=TRUE}
+lam <- seq(from=0.5,to=2,len=10)
+L <- sapply(lam,o)
 ```
 
-
+```{r,plotmaximi}
+plot(lam,L-max(L),type="b",pch=16)
+```
 
 
 
