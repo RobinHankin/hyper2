@@ -232,17 +232,15 @@ o <- function(lam){  # maximize function o()
 }
 
 ```{r,maximi,cache=TRUE}
-lam <- seq(from=0.5,to=2,len=10)
+lam <- seq(from=0.6,to=2,len=20)
 L <- sapply(lam,o)
 ```
 
 ```{r,plotmaximi}
 plot(lam,L-max(L),type="b",pch=16)
+abline(h=c(0,-2))
+abline(v=1)
 ```
-
-
-
-
 
 
 # References {-}
