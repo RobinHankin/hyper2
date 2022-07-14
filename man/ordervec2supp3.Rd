@@ -66,9 +66,13 @@ args2ordervec(...)
   vector with entries corresponding to their names' counts.  It is used
   in the extraction and replacement methods for \code{hyper3} objects.
 
-  Function \code{cheering()} is a generalization of
-  \code{ordervec2supp3()}.  An extensive discussion is presented at
-  \code{inst/plackett_luce_monster.Rmd}.
+  Function \code{cheering3()} is a generalization of
+  \code{ordervec2supp3()}.  Competitors who are not mentioned in
+  argument \code{e} are assumed to be in an equivalence class of size 1,
+  that is, they are not supported (or indeed suppressed) by anyone else:
+  they are singletons in the terminology of Hankin (2006).  Extensive
+  discussions are presented at \code{inst/plackett_luce_monster.Rmd} and
+  \code{inst/eurovision.Rmd}.
   
   File \code{inst/javelin.Rmd} and \code{inst/race3.Rmd} show some
   use-cases for these functions.
@@ -88,6 +92,16 @@ H <- ordervec2supp3(o)
 H
 # equalp.test(H)   # takes too long for here
 
+
+## Race: six competitors a-f finishing in alphabetical order.  Mutually
+## supporting groups: (acd), (bf), (e).  Competitor "e" is not
+## suppported by anyone else (he is a singleton) so does not need to be
+## mentioned in argument 'e' and there are only two helpfulnesses to be
+## considered: that of (acd) and that of (bf), which we will take to be
+## 1.88 and 1.1111 respectively:
+
+
+cheering3(v=letters[1:6],e=c(a=1,c=1,b=2,d=1,e=2),help=c(1.88,1.1111))
 
 }
 

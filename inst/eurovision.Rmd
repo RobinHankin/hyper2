@@ -88,7 +88,7 @@ third, etc choice.  A zero entry means no points (nul punkte!) and
 first 18 countries (the last two countries,
 Germany and the UK, voted but did not compete).  
 
-```{r}
+```{r,printpref}
 preference
 ```
 Now, take the first column of `preference`.  This represents the order
@@ -173,7 +173,7 @@ H <- hyper2()
 for(y in unique(a$year)){
    H <- H + race((a$country)[a$year == y])
 }
-H
+summary(H)
 ```
 
 Find the evaluate:
@@ -187,7 +187,79 @@ dotchart(mH)
 ```
 
 Now use `hyper3` and follow `RB_BB_LF()` in
-`plackett_luce_monster.Rmd`
+`plackett_luce_monster.Rmd`.  The blocs follow those of Price 2020.
+
+
+```{r,plm}
+scandinavia <- c("Denmark","Finland","Iceland","Norway","Sweden")
+
+balkans  <- c("Italy","Serbia","Albania","BosHerz") # red
+eastern  <- c("Russia","Ukraine","Moldova","Armenia","Azerbaijan", "Malta","Israel") # purple
+black    <- c("Hungary","Romania","Greece","Cyprus") # orange
+iberia   <- c("Spain","Germany") # blue
+northern <- c("Denmark", "Estonia", "Finland", "France", "Iceland", "Lithuania", "Netherlands", "Norway", "Sweden", "UK") # green
+
+l <- list(balkans=balkans,eastern=eastern,black=black,iberia=iberia,northern=northern)
+
+ab <- c(balkans,eastern,black,iberia,northern)
+stopifnot(all(ab %in% wanted_countries))
+stopifnot(all(wanted_countries %in% ab))
+
+
+list2ec <- function(l){
+  jj <- stack(setNames(l,seq_along(l)))
+  out <- as.integer(c(jj$ind))
+  names(out) <- jj$values
+  return(out)
+}
+
+print(a$year)
+
+bloc <- function(lam){
+  out <- hyper3()
+  e <- list2ec(l)
+  for(y in unique(a$year)){
+     v <- a$country[a$year==y]
+     ec <- e[names(e) %in% v]
+     out <- out + cheering3(v=v, e=ec,h=rep(lam,length(unique(e))))
+   } 
+  return(out)
+}
+
+Ha <- bloc(1.888)
+Hb <- bloc(1.9)
+```
+
+Now maximize it:
+
+```{r,maxbloc,cache=TRUE}
+maxp(Ha,n=2,give=TRUE)
+maxp(Hb,n=2,give=TRUE)
+```
+
+```{r,maxhelp,cache=TRUE}
+o <- function(lam){
+   H <- bloc(lam)
+   return(maxp(Hb,give=TRUE,n=1)$likes)
+}
+
+o(1)
+o(2)
+
+lam <- seq(from=0.6,to=1.5,len=4)
+```
+
+
+
+
+
+
+
+
+# References {-}
+
+A. Price 2020. "Identifying voting blocs in the Eurovision Song Contest".  Towards Data Science,
+`https://medium.com/towards-data-science/identifying-voting-blocs-in-the-eurovision-song-contest-4792065fc337`
 
 
 ### Package dataset {-}
@@ -197,3 +269,4 @@ Following lines create `eurovision.rda`, residing in the `data/` directory of th
 ```{r,label=saveeurovisiondataset}
 save(eurovision_table,eurovision_maxp,eurovision,file="eurovision.rda")
 ```
+
