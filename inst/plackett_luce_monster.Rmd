@@ -873,3 +873,50 @@ plot(log(oc),L,type="b")
 abline(v=0)
 ```
 
+
+# Five nations championship
+
+The five nations rugby championship was held from 1910 to 1999 and
+file five_nations.txt` shows the order statistic for England (E),
+Scotland (S), Ireland (I), Wales (W), and France (F).
+
+`https://en.wikipedia.org/wiki/Six_Nations_Championship`
+
+Here is `hyper2` analysis:
+
+
+```{r,load5nationsdata,cache=TRUE}
+a <- as.matrix(read.table("five_nations.txt",header=FALSE))
+head(a)
+H <- hyper2()
+for(i in seq_len(nrow(a))){
+  H <- H + race(a[i,-1])
+} 
+mH <- maxp(H)
+pie(mH)
+equalp.test(H)
+```
+
+
+Now use `hyper3` to see whether teams do better following a win:
+
+```{r,rugby3,cache=TRUE}
+rugby <- function(lambda){
+  H3a <- hyper3()
+  for(i in seq(from=2,to=nrow(a))){
+        last_year_winner <- a[i-1,2] # e.g. "W" or "E"
+        H3a <- H3a + ordervec2supp3a(a[i,-1],nonfinishers=NULL,helped=last_year_winner,lambda=lambda)
+  }
+  return(H3a)
+}
+rugby(1.888)
+rugby(1.111111)
+```
+
+
+```{r,rugby3max, cache=TRUE}
+maxp(rugby(1.8),n=1,give=TRUE)
+maxp(rugby(1.9),n=1,give=TRUE)
+```
+
+      
