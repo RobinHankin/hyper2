@@ -14,7 +14,7 @@ RPBWTM	    "Racing Point-BWT Mercedes" F     T	    T	  F	F     F	    F
 R	    "Renault"	      		F     T	    T	  T	T     T	    F
 STRH	    "Scuderia Toro Rosso-Honda"	F     F	    T	  T	F     F	    F
 RBRTH	    "Red Bull Racing-TAG Heuer" F     F	    F	  T	T     T	    F
-FIM	    "Force India"		F     F	    F	  T	T     T	    T
+FIM	    "Force India-Mercedes"	F     F	    F	  T	T     T	    T
 SF	    "Sauber-Ferrari"		F     F	    F	  T	T     T	    T
 TR	    "Toro Rosso"		F     F	    F	  F	T     F	    F
 MH	    "McLaren-Honda"		F     F	    F	  F	T     T	    T
