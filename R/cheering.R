@@ -12,7 +12,7 @@
   stopifnot(all(e>0))
   stopifnot(all(e==round(e)))
   stopifnot(all(table(v)==1))
-  stopifnot(all(names(e) %in% v)) 
+
 
   no_group <- !(v %in% names(e))
   if(any(no_group)){
