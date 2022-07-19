@@ -1,0 +1,93 @@
+---
+title: "Global liveability ranking"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+[The global liveability ranking](https://en.wikipedia.org/wiki/Global_Liveability_Ranking)
+shows where you would like to live.
+
+
+```{r showglrtable}
+readLines("global_liveability_ranking.txt")
+```
+
+First we will turn it into a `hyper2` object:
+
+
+```{r readglrtable}
+o <- readLines("global_liveability_ranking.txt") %>% strsplit(" ") %>% lapply(function(l){l[-1]})
+H <- hyper2()
+for(i in seq_along(o)){
+  H <- H  + race(o[[i]])
+}
+```
+
+And do some tests:
+
+```{r testgrl, cache=TRUE}
+mH <- maxp(H)
+pie(mH)
+equalp.test(H)
+```
+
+Now we tether some of the cities together:
+
+```{r, tether}
+elastic <- list(
+Austria = c("Vienna"),
+Denmark = c("Copenhagen"),
+Switzerland = c("Zurich","Geneva"),
+Canada = c("Calgary","Vancouver","Toronto"),
+Germany = c("Frankfurt","Hamburg"),
+Netherlands = c("Amsterdam"),
+Japan = c("Osaka","Tokyo"),
+Australia = c("Melbourne","Adelaide","Perth","Brisbane","Sydney"),
+NZ = c("Auckland","Wellington"),
+Finland = c("Helsinki")
+)
+e <- NULL
+for(i in seq_along(elastic)){
+  jj <- rep(i,length(elastic[[i]]))
+  names(jj) <- elastic[[i]]
+  e <- c(e,jj)
+}
+e 
+```
+
+Now create a `hyper3` object:
+
+```{r,createhyper3func}
+ML <- function(h){
+   H3 <- hyper3()
+   for(r in o){ H3 <- H3 + cheering3(r,e=e,help=rep(h,10))}
+   return(H3)
+}
+f <- function(h){maxp(ML(h),give=TRUE,n=1)$likes}
+```
+
+And plot a profile likelihood
+
+```{r,plliveable,cache=TRUE}
+l <- seq(from=1,to=5,len=10)
+L <- sapply(l,f)
+```
+
+and plot it:
+
+```{r}
+plot(log(l),L-max(L),type='b')
+```
+
