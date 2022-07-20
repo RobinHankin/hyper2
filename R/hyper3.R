@@ -350,18 +350,7 @@ stop("not yet written")
 }
 
 
-`num3` <- function(v){  # numerators
-    out <- hyper3()
-    tv <- table(v)
-    for(i in seq_along(tv)){
-        jj <- 1
-        names(jj) <- names(tv)[i]
-        out[jj] <- tv[i]
-    }
-    return(out)
-}
-
-`num3a` <- function(v,helped=NULL,lambda=1){  # numerators
+`num3` <- function(v,helped=NULL,lambda=1){  # numerators
     out <- hyper3()
     tv <- table(v)
     for(i in seq_along(tv)){
@@ -377,14 +366,7 @@ stop("not yet written")
     return(out)
 }
     
-`den3` <- function(v){  # denominators
-    tv <- table(v)
-    out <- as.vector(tv)
-    names(out) <- names(tv)
-    return(out)
-}
-       
-`den3a` <- function(v,helped=NULL,lambda=1){  # denominators
+`den3` <- function(v,helped=NULL,lambda=1){  # denominators
     tv <- table(v)
     out <- as.vector(tv)
     names(out) <- names(tv)
@@ -393,7 +375,7 @@ stop("not yet written")
 }
        
 `ordervec2supp3` <- function(v,nonfinishers=NULL){ # v = c("a","b","a","a","c","a")
-    out <- num3a(v)
+    out <- num3(v)
     for(i in seq_along(v)){
         out[den3(c(v[i:length(v)],nonfinishers))] %<>% dec
     }
@@ -401,9 +383,9 @@ stop("not yet written")
 }
 
 `ordervec2supp3a` <- function(v,nonfinishers=NULL,helped=NULL,lambda=1){
-  out <- num3a(v,helped=helped,lambda=lambda)  # numerator
+  out <- num3(v,helped=helped,lambda=lambda)  # numerator
     for(i in seq_along(v)){
-      out[den3a(c(v[i:length(v)],nonfinishers))] %<>% dec  # denominator
+      out[den3(c(v[i:length(v)],nonfinishers))] %<>% dec  # denominator
     }
   return(out)
 }
