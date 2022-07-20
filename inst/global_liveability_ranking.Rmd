@@ -21,14 +21,27 @@ shows where you would like to live.
 
 
 ```{r showglrtable}
-readLines("global_liveability_ranking.txt")
+(glr <- readLines("global_liveability_ranking.txt"))
 ```
 
 First we will turn it into a `hyper2` object:
 
 
 ```{r readglrtable}
-o <- readLines("global_liveability_ranking.txt") %>% strsplit(" ") %>% lapply(function(l){l[-1]})
+(o <- glr  %>% strsplit(" ") %>% lapply(function(l){l[-1]}))
+```
+
+Will remove Helsinki, Brisbane, and Hamburg on account of their having
+very low rank scores (if we leave them in, the Hessian becomes
+non-positive-definite at the evaluate).
+
+```{r,removeHelsinki_and_Hamburg}
+o %<>%  lapply(function(x){x[!(x %in% c("Hamburg","Helsinki","Brisbane"))]})
+o
+```
+
+
+```{r,turnintohyper2,cache=TRUE}
 H <- hyper2()
 for(i in seq_along(o)){
   H <- H  + race(o[[i]])
@@ -38,10 +51,31 @@ for(i in seq_along(o)){
 And do some tests:
 
 ```{r testgrl, cache=TRUE}
-mH <- maxp(H)
+(mH <- maxp(H))
 pie(mH)
 equalp.test(H)
 ```
+
+```{r,calculatemoreinfo,cache=TRUE}
+jjm <- maxp(H,n=1,give=TRUE,hessian=TRUE)
+```
+
+```{r}
+jjm$hessian
+diag(jjm$hessian)
+eigen(jjm$hessian)$values
+```
+
+So the Hessian is positive-definite [all the eigenvalues are
+positive].  Also, the evaluate is robust, as indicated by
+`consistency()`:
+
+```{r,doconsis,cache=TRUE}
+consistency(H)
+```
+
+
+
 
 Now we tether some of the cities together:
 
@@ -90,4 +124,44 @@ and plot it:
 ```{r}
 plot(log(l),L-max(L),type='b')
 ```
+
+
+
+# A More coarse division
+
+We will try dividing the countries into continents:
+
+```{r,label=elasticcontinent}
+elastic_continent <- list(
+Europe      = c("Vienna","Copenhagen","Zurich","Geneva","Frankfurt","Hamburg","Amsterdam","Helsinki"),
+America     = c("Calgary","Vancouver","Toronto"),
+Asia        = c("Osaka","Tokyo"),
+Australasia = c("Melbourne","Adelaide","Perth","Brisbane","Sydney","Auckland","Wellington")
+)
+
+ec <- NULL
+for(i in seq_along(elastic_continent)){
+  jj <- rep(i,length(elastic_continent[[i]]))
+  names(jj) <- elastic_continent[[i]]
+  ec <- c(ec,jj)
+}
+ec 
+MLc <- function(h){
+   H3 <- hyper3()
+   for(r in o){ H3 <- H3 + cheering3(r,e=ec,help=rep(h,4))}
+   return(H3)
+}
+fc <- function(h){maxp(ML(h),give=TRUE,n=1)$likes}
+```
+
+```{r,evaluatefc,cache=TRUE}
+l <- seq(from=0.8,to=3,len=10)
+L <- sapply(l,fc)
+```
+
+
+```{r,plotfc}
+plot(l,L-max(L),type="b")
+```
+
 
