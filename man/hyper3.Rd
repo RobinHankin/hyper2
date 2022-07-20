@@ -11,6 +11,7 @@
 \alias{is_valid_hyper3}
 \alias{loglik_single_redundant}
 \alias{maxp3}
+\alias{list2nv}
 \alias{overwrite_lowlevel3}
 \alias{powers<-.hyper3}
 \alias{pnames<-.hyper3}
@@ -95,8 +96,10 @@ hyper3_nv(L=list(),powers=0,pnames)
     as envisaged right now; I present some thoughts in
     \code{inst/kka.Rmd}.
 
-    
-    
+    \item Function \{code{list2nv()} converts a list of character vectors
+    into a named vector suitable for use as argument \code{e} of
+    function \code{cheering3()}.  It is used in
+    \code{inst/global_liveability_ranking.Rmd}.
 }
 
 }

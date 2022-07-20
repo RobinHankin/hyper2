@@ -578,3 +578,10 @@ stop("not yet written")
     } # i loop closes
     return(H)
 }
+
+
+`list2nv` <- function(L){
+  out <- rep(seq_along(L),times=unlist(lapply(L,length)))
+  names(out) <- c(L,recursive=TRUE)
+  return(out)
+}

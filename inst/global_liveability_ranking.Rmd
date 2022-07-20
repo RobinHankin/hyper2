@@ -81,24 +81,17 @@ Now we tether some of the cities together:
 
 ```{r, tether}
 elastic <- list(
-Austria = c("Vienna"),
-Denmark = c("Copenhagen"),
+Austria     = c("Vienna"),
+Denmark     = c("Copenhagen"),
 Switzerland = c("Zurich","Geneva"),
-Canada = c("Calgary","Vancouver","Toronto"),
-Germany = c("Frankfurt","Hamburg"),
+Canada      = c("Calgary","Vancouver","Toronto"),
+Germany     = c("Frankfurt","Hamburg"),
 Netherlands = c("Amsterdam"),
-Japan = c("Osaka","Tokyo"),
-Australia = c("Melbourne","Adelaide","Perth","Brisbane","Sydney"),
-NZ = c("Auckland","Wellington"),
-Finland = c("Helsinki")
+Japan       = c("Osaka","Tokyo"),
+Australia   = c("Melbourne","Adelaide","Perth","Brisbane","Sydney"),
+NZ          = c("Auckland","Wellington"),
+Finland     = c("Helsinki")
 )
-e <- NULL
-for(i in seq_along(elastic)){
-  jj <- rep(i,length(elastic[[i]]))
-  names(jj) <- elastic[[i]]
-  e <- c(e,jj)
-}
-e 
 ```
 
 Now create a `hyper3` object:
@@ -106,7 +99,7 @@ Now create a `hyper3` object:
 ```{r,createhyper3func}
 ML <- function(h){
    H3 <- hyper3()
-   for(r in o){ H3 <- H3 + cheering3(r,e=e,help=rep(h,10))}
+   for(r in o){ H3 <- H3 + cheering3(r,e=list2nv(elastic),help=rep(h,10))}
    return(H3)
 }
 f <- function(h){maxp(ML(h),give=TRUE,n=1)$likes}
@@ -165,3 +158,10 @@ plot(l,L-max(L),type="b")
 ```
 
 
+
+## Country-level analysis
+
+
+```{r}
+glr
+```
