@@ -11,13 +11,20 @@ library("magrittr")
 options("digits" = 5)
 ```
 
+_This analysis is essentially without value, see the very end for why_
+
+(takes about an hour to process without cache)
+
+
+
 <p style="text-align: right;">
 ![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
 </p>
 
 
-[The global liveability ranking](https://en.wikipedia.org/wiki/Global_Liveability_Ranking)
-shows where you would like to live.
+[The global liveability
+ranking](https://en.wikipedia.org/wiki/Global_Liveability_Ranking)
+shows the nicest places to live.
 
 
 ```{r showglrtable}
@@ -120,7 +127,7 @@ plot(log(l),L-max(L),type='b')
 
 
 
-# A More coarse division
+# A coarser division
 
 We will try dividing the countries into continents:
 
@@ -155,13 +162,28 @@ L <- sapply(l,fc)
 
 ```{r,plotfc}
 plot(l,L-max(L),type="b")
+abline(v=1)
 ```
-
-
 
 ## Country-level analysis
 
 
-```{r}
-glr
+We need to replace each city with its country:
+
+
+```{r,label=replacecity}
+elastic
+(jj <- list2nv(elastic,FALSE))
+o_countries <- lapply(o, function(x){jj[names(jj) %in% x]})
+(o_countries <- lapply(o_countries,as.vector))
 ```
+
+We see that NZ and Australia are dominated so we should remove them:
+
+```{r}
+(o_countries <- lapply(o_countries,function(x){x[!(x %in% c("NZ","Australia","Japan"))]}))
+```
+
+But hang on, if we continue to remove dominated countries we
+eventually remove every country that is not Austria.  So that was a big
+fat waste of time.
