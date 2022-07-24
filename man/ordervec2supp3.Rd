@@ -100,8 +100,18 @@ H
 ## considered: that of (acd) and that of (bf), which we will take to be
 ## 1.88 and 1.1111 respectively:
 
-
 cheering3(v=letters[1:6],e=c(a=1,c=1,b=2,d=1,e=2),help=c(1.88,1.1111))
+
+
+
+
+
+## Another race: four competitors, including two clones of "a", and two
+## singletons "b" and "c".  Here "a" helps his clone at 1.88; and "b"
+## and "c" help one another at 1.111:
+
+cheering3(v=c("a","b","a","c"),e=c(a=1,b=2,c=2),help=c(1.8,1.111))
+
 
 }
 
