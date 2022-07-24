@@ -1,6 +1,6 @@
 Constructor AUT STY	HUN	GBR	70A	ESP	BEL	ITA	TUS	RUS	EIF	POR	EMI	TUR	BHR	SKH	ABU	Points
 Merc	    1	1	1	1	2	1	1	5	1	1	1	1	1	1	1	8	2	573
-Merc	    4	2	3	11	3	3	2	7	2	3	Ret	2	2	14	8	9	3       NA
+Merc	    4	2	3	11	3	3	2	7	2	3	Ret	2	2	14	8	9	3	NA
 RBRH	    13	3	2	2	1	2	3	15	3	2	2	3	15	6	2	6	1	319
 RBRH	    Ret	4	5	8	5	8	6	Ret	Ret	10	Ret	12	Ret	7	3	Ret	4	NA
 MR	    3	5	9	5	9	6	7	2	6	15	5	6	7	5	4	4	5	202
