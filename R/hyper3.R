@@ -580,8 +580,13 @@ stop("not yet written")
 }
 
 
-`list2nv` <- function(L){
-  out <- rep(seq_along(L),times=unlist(lapply(L,length)))
+`list2nv` <- function(L,integers=TRUE){
+  if(integers){
+      jj <- seq_along(L)
+  } else {
+    jj <- names(L)
+  }
+  out <- rep(jj,times=unlist(lapply(L,length)))
   names(out) <- c(L,recursive=TRUE)
   return(out)
 }
