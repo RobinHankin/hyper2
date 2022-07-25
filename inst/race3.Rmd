@@ -488,6 +488,90 @@ samep.test(constructor_2021,c("ATH","ARRF","AR","AMM")) # ~ 10 mins
 ```
 
 
+## Constructors championship with `cheering` or `tether` functionality
+
+
+```{r,Bahrain2021_to_support3}
+constructor_2021_table
+(cons <- constructor_2021_table[,1])
+(BHR <- as.numeric(constructor_2021_table[,2]))  # Bahrain
+names(BHR) <- cons
+BHR
+finishers <- BHR[!is.na(BHR)]
+finishers <- names(finishers[order(finishers)])  # in order
+nonfinishers <- names(BHR[is.na(BHR)])  # no particular order
+finishers
+nonfinishers
+u <- unique(finishers)
+e <- seq_along(u)
+names(e) <- u
+e
+help <- rep(1.8,length(u))
+e
+help
+cheering3(v=finishers,e=e,help=help,nonfinishers=nonfinishers)
+```
+
+OK so now generalize it:
+
+```{r,definevenue3}
+venue3 <- function(ven,cons,help){
+   suppressWarnings(names(ven) <- cons)
+   finishers <- ven[!is.na(ven)]
+   finishers <- names(finishers[order(finishers)])  # in order
+   nonfinishers <- names(ven[is.na(ven)])  # no particular order
+   u <- unique(finishers)
+   e <- seq_along(u)
+   names(e) <- u
+   help <- rep(help,length(u))
+   cheering3(v=finishers,e=e,help=help,nonfinishers=nonfinishers)
+}  # venue3() definition closes
+```
+
+Now use `venue3()` for all the venues in the 2021 season, with a common help:
+
+```{r,defineallvenues}
+allvenues <- function(h){
+  H3 <- hyper3()
+  cons <- constructor_2021_table[,1]
+  for(i in seq_len(ncol(constructor_2021_table)-1)){
+     H3 <- H3 + venue3(ven=as.numeric(constructor_2021_table[,i]), cons=cons,help=h)
+  }
+  return(H3)
+}
+```
+
+And maximize it for different help values:
+
+```{r,helpseqsupport,cache=TRUE}
+o <- function(h){maxp(allvenues(h),give=TRUE,n=1)$likes}
+l <- seq(from=0.5,to=4,len=6)
+L <- sapply(l,o)
+```
+
+```{r,plotsupport}
+plot(l,L-max(L),type='b')
+```
+
+Above, we are testing (and rejecting) the hypothesis that the various
+constructors are independent of one another.  We reject the hypothesis
+that $h=1$.  Noting that we control both for constructors'
+Plackett-Luce strengths, and on the assumption that the two drivers of
+any given constructor are of equal strengths, we still reject the
+hypothesis of conditional independence.
+
+
+
+```{r,label=maxwithfour,cache=TRUE}
+o <- maxp(allvenues(4),give=TRUE,n=1,hessian=TRUE)
+```
+
+```{r,analyse4}
+pie(o$par)
+eigen(o$hessian)$values
+```
+
+
 ### Package dataset {-}
 
 Following lines create `constructor.rda`, residing in the `data/`

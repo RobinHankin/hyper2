@@ -22,7 +22,7 @@ den3(v)
 char2nv(x)
 ordervec2supp3(v,nonfinishers=NULL)
 ordertable2supp3(a)
-cheering3(v,e,help)
+cheering3(v,e,help,nonfinishers=NULL)
 args2ordervec(...)
 }
 \arguments{
@@ -105,12 +105,19 @@ cheering3(v=letters[1:6],e=c(a=1,c=1,b=2,d=1,e=2),help=c(1.88,1.1111))
 
 
 
-
 ## Another race: four competitors, including two clones of "a", and two
 ## singletons "b" and "c".  Here "a" helps his clone at 1.88; and "b"
 ## and "c" help one another at 1.111:
 
 cheering3(v=c("a","b","a","c"),e=c(a=1,b=2,c=2),help=c(1.8,1.111))
+
+
+## Same race as above but this time there are two clones of "b", one of
+## whom did not finish:
+
+cheering3(v=c("a","b","a","c"),e=c(a=1,b=2,c=2),help=c(1.8,1.111),"b")
+
+
 
 
 }

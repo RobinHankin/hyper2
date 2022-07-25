@@ -1,4 +1,4 @@
-`cheering3` <- function(v,e,help){
+`cheering3` <- function(v,e,help,nonfinishers=NULL){
 
   ## competitors abcdef, with two groups of mutual friends: (abd) with
   ## mutual helpfulness 1.1, and (cf) with mutual helpfulness 1.3;
@@ -36,23 +36,20 @@
       jjn[] <- help[winner_ec_number]   # ...then he gets extra strength.
     }
 
-    jjd <- rep(1,length(still_running)) # denominator
-    names(jjd) <- still_running
-    for(i in seq_along(still_running)){
-      runner_ec_number <- e[names(e) == still_running[i]]
+    jjd <- rep(1,length(c(still_running,nonfinishers))) # denominator
+    names(jjd) <- c(still_running,nonfinishers)
+    for(i in seq_along(c(still_running))){
+      runner_ec_number <- e[names(e) == c(still_running,nonfinishers)[i]]
       if(length(finished_ec_number)>0){
         if(length(runner_ec_number) ==0){browser()}
-        if(runner_ec_number %in% finished_ec_number){
-          jjd[i] <- help[runner_ec_number]
-        }
+        if(runner_ec_number %in% finished_ec_number){ jjd[i] <- help[runner_ec_number] }
       }
     }
     out[jjn] %<>% inc   # numerator
     out[jjd] %<>% dec   # denominator
-    
     finished <- c(finished,winner)     # the winner is now finished ...
     still_running <- still_running[-1] # ... and not still running
-  } #while loop closes
+  } # while(length(still_running)>0) loop closes
   return(out)
 }
 
