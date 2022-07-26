@@ -1,6 +1,6 @@
 Constructor BHR EMI	POR	ESP	MON	AZE	FRA	STY	AUT	GBR	HUN	BEL	NED	ITA	RUS	TUR	USA	MXC	SAP	QAT	SAU	ABU	Points
-Merc	    1	2	1	1	7	12	2	2	2	12	2	3	2	3	1	1	2	2	1	1	1	2	613.5
-Merc	    3	Ret	3	3	Ret	15	4	3	4	33	Ret	12	3	Ret	5	5	6	15	3	Ret	3	6	NA
+Merc	    1	2	1	1	7	12	2	2	2	1	2	3	2	3	1	1	2	2	1	1	1	2	613.5
+Merc	    3	Ret	3	3	Ret	15	4	3	4	3	Ret	12	3	Ret	5	5	6	15	3	Ret	3	6	NA
 RBRH	    2	1	2	2	1	1	1	1	1	16	9	1	1	5	2	2	1	1	2	2	2	1	585.5
 RBRH	    5	11	4	5	4	18	3	4	6	Ret 	Ret	19	8	Ret	9	3	3	3	4	4	Ret	15	NA
 Ferrari	    6	4	6	4	2	4	11	6	5	2	3	8	5	4	3	4	4	5	5	7	7	3	323.5
