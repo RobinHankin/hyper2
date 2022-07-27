@@ -38,7 +38,7 @@
 
     jjd <- rep(1,length(c(still_running,nonfinishers))) # denominator
     names(jjd) <- c(still_running,nonfinishers)
-    for(i in seq_along(c(still_running))){
+    for(i in seq_along(jjd)){
       runner_ec_number <- e[names(e) == c(still_running,nonfinishers)[i]]
       if(length(finished_ec_number)>0){
         if(length(runner_ec_number) ==0){browser()}

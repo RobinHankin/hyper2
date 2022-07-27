@@ -118,6 +118,11 @@ cheering3(v=c("a","b","a","c"),e=c(a=1,b=2,c=2),help=c(1.8,1.111))
 cheering3(v=c("a","b","a","c"),e=c(a=1,b=2,c=2),help=c(1.8,1.111),"b")
 
 
+## Most common case would be that the clones help each other but noone
+## else:
+
+cheering3(v=c("a","b","a","c"),e=c(a=1,b=2,c=3),help=c(1.8,1.111,1),"b")
+
 
 
 }
