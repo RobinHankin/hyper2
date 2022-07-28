@@ -483,6 +483,7 @@ samep.test(constructor_2021,c("Merc","Ferrari","RBRH","MM")) # ~10 mins
 
 and fail to reject that null.  How about the mid-range constructors:
 
+
 ```{r,label=testsameconstructorlowscores,cache=TRUE}
 samep.test(constructor_2021,c("ATH","ARRF","AR","AMM")) # ~ 10 mins
 ```
@@ -502,7 +503,7 @@ finishers <- names(finishers[order(finishers)])  # in order
 nonfinishers <- names(BHR[is.na(BHR)])  # no particular order
 finishers
 nonfinishers
-u <- unique(finishers)
+u <- unique(c(finishers,nonfinishers))
 e <- seq_along(u)
 names(e) <- u
 e
@@ -520,7 +521,7 @@ venue3 <- function(ven,cons,help){
    finishers <- ven[!is.na(ven)]
    finishers <- names(finishers[order(finishers)])  # in order
    nonfinishers <- names(ven[is.na(ven)])  # no particular order
-   u <- unique(finishers)
+   u <- unique(c(finishers,nonfinishers))
    e <- seq_along(u)
    names(e) <- u
    help <- rep(help,length(u))
@@ -530,22 +531,21 @@ venue3 <- function(ven,cons,help){
 
 Now use `venue3()` for all the venues in the 2021 season, with a common help:
 
-```{r,defineallvenues}
+```{r,defineallvenues,cache=TRUE}
+set.seed(9)
 allvenues <- function(h){
   H3 <- hyper3()
   cons <- constructor_2021_table[,1]
-  for(i in seq_len(ncol(constructor_2021_table)-1)){
+  for(i in seq(from=2,to=ncol(constructor_2021_table),by=1)){
      H3 <- H3 + venue3(ven=as.numeric(constructor_2021_table[,i]), cons=cons,help=h)
   }
   return(H3)
 }
-```
+## And maximize it for different help values:
 
-And maximize it for different help values:
 
-```{r,helpseqsupport,cache=TRUE}
 o <- function(h){maxp(allvenues(h),give=TRUE,n=1)$likes}
-l <- seq(from=0.5,to=4,len=6)
+l <- seq(from=0.9,to=4,len=11)
 L <- sapply(l,o)
 ```
 
