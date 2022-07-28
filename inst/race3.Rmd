@@ -545,7 +545,7 @@ allvenues <- function(h){
 
 
 o <- function(h){maxp(allvenues(h),give=TRUE,n=1)$likes}
-l <- seq(from=0.9,to=4,len=11)
+l <- seq(from=0.9,to=2.5,len=11)
 L <- sapply(l,o)
 ```
 
@@ -561,14 +561,33 @@ any given constructor are of equal strengths, we still reject the
 hypothesis of conditional independence.
 
 
+```{r,findmaxlikeusingoptim,cache=TRUE}
+jj <- optimize(o,c(1.3,1.5),maximum=TRUE)
+jj
+```
+
+```{r,likelihoodnull,cache=TRUE}
+(jjnull <- o(1))
+```
+
+```{r}
+pchisq(2*(jj$objective-jjnull),df=1,lower.tail=FALSE)
+```
+
+
 
 ```{r,label=maxwithfour,cache=TRUE}
-o <- maxp(allvenues(4),give=TRUE,n=1,hessian=TRUE)
+mv_max  <- maxp(allvenues(jj$maximum),give=TRUE,n=1)
+mv_null <- maxp(allvenues(1),give=TRUE,n=1)
 ```
 
 ```{r,analyse4}
-pie(o$par)
-eigen(o$hessian)$values
+x <- mv_max$par
+y <- mv_null$par
+par(pty='s')
+plot(x,y,asp=1,pch=16,xlim=c(0,0.2),ylim=c(0,0.2),xlab="null",ylab="max like")
+for(i in seq_along(x)){text(x[i],y[i],names(x)[i],pos=4,cex=0.7,col='gray')}
+abline(0,1)
 ```
 
 
