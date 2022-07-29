@@ -14,7 +14,8 @@ library("partitions")
 ![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
 </p>
 
-Here we will sum likelihoods across a sample space and verify that the total is constant.
+Here we will sum likelihoods across a sample space and verify that the
+total is constant.
 
 
 ```{r}
@@ -23,9 +24,20 @@ M
 ```
 
 ```{r}
-f <- function(strength,help,vec){loglik(strength,cheering3(v=vec[1:4],e=c(a=1,b=2,c=3),help=help,vec[5]))}
-help <- c(1.11,2.222,1.7345)
-strength <- 1
+f <- function(strength,help,vec){
+loglik(strength,cheering3(v=vec[1:4],e=c(a=1,b=2,c=3),help=help,vec[5]),log=FALSE)
+}
+
+tfun <- function(help,strength){
+   out <- 0
+   for(i in seq_len(ncol(M))){
+      out <- out + f(strength,help,vec=M[i,])
+   } 
+   return(out)
+}
+
+print(tfun(help=c(1.11,2.222,1.7345), strength= c(0.1,0.3,0.6)))
+print(tfun(help=c(1.,2.2,1.2), strength= c(0.3,0.2,0.5)))
 ```
 
 
