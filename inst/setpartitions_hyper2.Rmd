@@ -1,0 +1,35 @@
+---
+title: "setpartitions_hyper2"
+output: html_document
+date: "2022-07-28"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("partitions")
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+Here we will sum likelihoods across a sample space and verify that the total is constant.
+
+
+```{r}
+M <- apply(setparts(c(2,2,1)),2,function(x){letters[x]})
+M
+```
+
+```{r}
+f <- function(strength,help,vec){loglik(strength,cheering3(v=vec[1:4],e=c(a=1,b=2,c=3),help=help,vec[5]))}
+help <- c(1.11,2.222,1.7345)
+strength <- 1
+```
+
+
+
+
+
+

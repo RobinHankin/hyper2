@@ -192,3 +192,4 @@ CITATION.cff
 ^inst/pudding_cache$
 ^inst/draws.txt
 ^inst/hunter.Rmd
+^inst/setpartitions_hyper2.Rmd$
