@@ -19,29 +19,24 @@ total is constant.
 
 
 ```{r}
-M <- apply(setparts(c(2,2,1)),2,function(x){letters[x]})
-M
+M <- apply(multiset(c(1,1,2,2,3)),2,function(x){letters[x]})
+noquote(M)
 ```
 
 ```{r}
-f <- function(strength,help,vec){
-loglik(strength,cheering3(v=vec[1:4],e=c(a=1,b=2,c=3),help=help,vec[5]),log=FALSE)
-}
-
 tfun <- function(help,strength){
    out <- 0
-   for(i in seq_len(ncol(M))){
-      out <- out + f(strength,help,vec=M[i,])
-   } 
+     for(i in seq_len(ncol(M))){
+     vec <- M[,i]
+     out <- out +
+       loglik(strength,cheering3(v=vec,e=c(a=1,b=2,c=3),help=help),log=FALSE)
+   }
    return(out)
 }
 
-print(tfun(help=c(1.11,2.222,1.7345), strength= c(0.1,0.3,0.6)))
-print(tfun(help=c(1.,2.2,1.2), strength= c(0.3,0.2,0.5)))
+h <- c(1.11,2.222,1.7345)
+print(tfun(help=(1:3)/10, strength= c(a=0.1,b=0.3,c=0.6)))
+print(tfun(help=(7:5)/22, strength= c(a=0.3,b=0.2,c=0.5)))
+
+
 ```
-
-
-
-
-
-
