@@ -1,5 +1,5 @@
 ---
-title: "setpartitions_hyper2"
+title: "multiset_hyper2"
 output: html_document
 date: "2022-07-28"
 ---
@@ -14,29 +14,88 @@ library("partitions")
 ![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
 </p>
 
-Here we will sum likelihoods across a sample space and verify that the
-total is constant.
+Here we will sum probabilities across a sample space and verify that
+the total is constant.  In theory the sum of the probabilities of all
+members of the sample space is 1, but in practice the likelihood
+calculation includes an indeterminate constant which means that all we
+can say is that the total probability is not a function of the
+parameters of the distribution.
 
 
-```{r}
+```{r defineM}
 M <- apply(multiset(c(1,1,2,2,3)),2,function(x){letters[x]})
 noquote(M)
 ```
 
-```{r}
+```{r definetfun}
 tfun <- function(help,strength){
-   out <- 0
-     for(i in seq_len(ncol(M))){
+  out <- 0
+  for(i in seq_len(ncol(M))){
      vec <- M[,i]
      out <- out +
        loglik(strength,cheering3(v=vec,e=c(a=1,b=2,c=3),help=help),log=FALSE)
-   }
-   return(out)
+  }
+  return(out)
 }
+```
 
-h <- c(1.11,2.222,1.7345)
+```{r showtisconstant,cache=TRUE}
 print(tfun(help=(1:3)/10, strength= c(a=0.1,b=0.3,c=0.6)))
 print(tfun(help=(7:5)/22, strength= c(a=0.3,b=0.2,c=0.5)))
-
-
 ```
+
+Above we see that the sum of the likelihoods is constant.  The value
+turns out to be $\frac{1}{1!2!2!}=0.25$.  This is because the
+likelihood function (being Plackett-Luce) considers the observation to
+be one of the $5!=120$ ways of ordering five distinct competitors.
+Matrix `M` has only $\frac{5!}{2!2!1!}=30$ columns, each one of which
+corresponds to four different observations, all of which have the same
+probability.  Much of the confusion arises from the practice of
+identifying a competitor with his strength; we write "$p_a$'' [or
+sometimes just "$a$''] to signify both a particular competitor, and
+his Bradley-Terry strength.
+
+
+To explain the factor of $1/4$ discussed above we need some new
+notation.  We have five competitors who I will call $\mathbf{do}$,
+$\mathbf{re}$, $\mathbf{me}$, $\mathbf{fa}$, and $\mathbf{sol}$.  Now
+$p_X$ means "the Bradley Terry strength of $X$''.  The setup here is
+that $\mathbf{do}$ and $\mathbf{re}$ are twins, and that are twins
+(and $\mathbf{sol}$ is a singleton).  We have that the Bradley-Terry
+stregth of $\mathbf{do}$ and $\mathbf{re}$ is `a`, the strength of
+$\mathbf{me}$ and $\mathbf{fa}$ is `b`, and the strength of
+$\mathbf{sol}$ is `c`.
+
+Consider, for example, the first column of `M` which is `a c b b a`.
+In theory, this means the competitor who came first had strength `a`,
+the competitor who came second had strength `c`.  So the order
+statistic is one of
+
+$$\mathbf{do}\succ\mathbf{sol}\succ\mathbf{me}\succ\mathbf{fa}\succ\mathbf{re}$$
+$$\mathbf{do}\succ\mathbf{sol}\succ\mathbf{fa}\succ\mathbf{me}\succ\mathbf{re}$$
+$$\mathbf{re}\succ\mathbf{sol}\succ\mathbf{me}\succ\mathbf{fa}\succ\mathbf{do}$$
+$$\mathbf{re}\succ\mathbf{sol}\succ\mathbf{fa}\succ\mathbf{me}\succ\mathbf{do}$$
+
+Above we see that $\mathbf{do}$ and $\mathbf{re}$ come first and last
+(or last and first), and $\mathbf{me}$ and $\mathbf{fa}$ come third
+and fourth (or fourth and third), while $\mathbf{sol}$ comes second.
+All four possibilities have the same probability and all four are
+admissible order statistics for the five solfeggio syllables.
+
+But the `hyper2` package [specifically the `loglik()` and
+`cheering3()` functions] consider `a c b b a` to mean something
+different.  It considers it to be an observation of
+
+$$\mathbf{do}\succ\mathbf{sol}\succ\mathbf{me}\succ\mathbf{fa}\succ\mathbf{re}$$
+
+followed by an identification of $\mathbf{do}$ with (BT strength) `a`,
+$\mathbf{sol}$ with strength `c`, and so on.  Any of the four
+possibilities above would be equally admissible, and they all have the
+same probability.  So to get "real'' probabilities [real in the sense
+that summing the probabilities over the columns in matrix `M`], we
+have to multiply by four to include all the admissible order
+statistics.
+
+The difference between these two interpretations does not matter from
+a likelihood perspective as likelihood is defined only up to a
+multiplicative constant.
