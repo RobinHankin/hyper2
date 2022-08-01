@@ -24,11 +24,20 @@ parameters of the distribution.
 
 ```{r defineM}
 M <- apply(multiset(c(1,1,2,2,3)),2,function(x){letters[x]})
-noquote(M)
+colnames(M) <- rep("",ncol(M))   # tidier and more compact appearance
+M <- noquote(M)
+M
 ```
 
+Above, we use `multiset()` to enumerate the sample space of five
+competitors comprising two twins denoted `a`, two twins denoted `b`,
+and a singleton `c`.  This document discusses the issue of whether the
+twins are identical twins and hence indistinguishable.  Matrix `M` has
+${5\choose2\,2\,1}=30$ columns, one per possible result.  We will
+calculate the likelihood of each column and calculate their sum:
+
 ```{r definetfun}
-tfun <- function(help,strength){
+tfun <- function(help,strength,M){
   out <- 0
   for(i in seq_len(ncol(M))){
      vec <- M[,i]
@@ -40,8 +49,8 @@ tfun <- function(help,strength){
 ```
 
 ```{r showtisconstant,cache=TRUE}
-print(tfun(help=(1:3)/10, strength= c(a=0.1,b=0.3,c=0.6)))
-print(tfun(help=(7:5)/22, strength= c(a=0.3,b=0.2,c=0.5)))
+print(tfun(help=(1:3)/10, strength= c(a=0.1,b=0.3,c=0.6),M))
+print(tfun(help=(7:5)/22, strength= c(a=0.3,b=0.2,c=0.5),M))
 ```
 
 Above we see that the sum of the likelihoods is constant.  The value
@@ -76,7 +85,7 @@ $$\mathbf{do}\succ\mathbf{sol}\succ\mathbf{fa}\succ\mathbf{me}\succ\mathbf{re}$$
 $$\mathbf{re}\succ\mathbf{sol}\succ\mathbf{me}\succ\mathbf{fa}\succ\mathbf{do}$$
 $$\mathbf{re}\succ\mathbf{sol}\succ\mathbf{fa}\succ\mathbf{me}\succ\mathbf{do}$$
 
-Above we see that $\mathbf{do}$ and $\mathbf{re}$ come first and last
+heAbove we see that $\mathbf{do}$ and $\mathbf{re}$ come first and last
 (or last and first), and $\mathbf{me}$ and $\mathbf{fa}$ come third
 and fourth (or fourth and third), while $\mathbf{sol}$ comes second.
 All four possibilities have the same probability and all four are
@@ -99,3 +108,26 @@ statistics.
 The difference between these two interpretations does not matter from
 a likelihood perspective as likelihood is defined only up to a
 multiplicative constant.
+
+
+## A more exacting numerical test
+
+```{r,exactingtest,cache=TRUE}
+rs <- fillup(rp(100,dirichlet(c(a=1,b=1,c=1)))) # random strengths
+colnames(rs) <- letters[1:3]
+head(rs)
+f <- function(s){
+  jj <- s
+  names(jj) <- letters[1:3]
+  tfun(help=1:3,strength=jj,M=M)
+}
+x <- apply(rs,1,f)
+```
+
+
+```{r}
+hist(x-mean(x))
+```
+
+Above we see very tight clustering about the mean value of 0.25
+
