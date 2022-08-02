@@ -176,7 +176,7 @@ functions~$\mathcal{L}\left(\cdot\right)$ with
 where~$\mathcal{O}$ is a set of observations and~$s$ a subset
 of~$\left[n\right]=\left\{1,2,\ldots,n\right\}$; numbers~$n_s$ are
 integers which may be positive or negative.  The approach adopted by
-the~\pkg{hyperdirichlet} package~ is to store each of the~$2^n$
+the~\pkg{hyperdirichlet} package is to store each of the~$2^n$
 possible subsets of~$\left[n\right]$ together with an exponent:
 
 \begin{equation}\label{hyperdirichletlikelihood}
