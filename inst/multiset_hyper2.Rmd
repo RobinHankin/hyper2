@@ -125,7 +125,7 @@ x <- apply(rs,1,f)
 ```
 
 
-```{r}
+```{r,plotdifferences}
 hist(x-mean(x))
 ```
 
