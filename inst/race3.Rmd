@@ -591,6 +591,9 @@ abline(0,1)
 ```
 
 
+Note that the analysis in `javelin.Rmd` is appropriate here too, a
+nice example.
+
 ### Package dataset {-}
 
 Following lines create `constructor.rda`, residing in the `data/`
