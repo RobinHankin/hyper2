@@ -1,0 +1,90 @@
+\documentclass[article]{jss}
+
+
+\author{Robin K. S. Hankin\\Auckland University of Technology}
+\title{Generalized Plackett-Luce Likelihoods}
+\Plainauthor{Robin K. S. Hankin} %% comma-separated
+\Plaintitle{Generalized Plackett-Luce Likelihoods}
+
+%% an abstract and keywords
+\Abstract{
+  The \code{hyper2} package is improved here to include \code{hyper3}
+  objects.
+}
+\Keywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
+\Plainkeywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
+
+%% publication information
+%% NOTE: Typically, this can be left commented and will be filled out by the technical editor
+%% \Volume{50}
+%% \Issue{9}
+%% \Month{June}
+%% \Year{2012}
+%% \Submitdate{2012-06-04}
+%% \Acceptdate{2012-06-04}
+
+%% The address of (at least) one author should be given
+%% in the following format:
+\Address{
+  Robin K. S. Hankin\\
+  School of Engineering and Mathematical Sciences\\
+  Auckland University of Technology\\
+  Wellesley Street\\
+  Auckland, New Zealand\\
+  E-mail: \email{hankin.robin@gmail.com}\\
+  URL: \url{https://academics.aut.ac.nz/robin.hankin}
+}
+
+%% for those who use Sweave please include the following line (with % symbols):
+%% need no \usepackage{Sweave.sty}
+
+%% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim
+ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+aliquip ex ea commodo consequat.  Duis aute irure dolor in
+reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum
+
+The \code{hyper2} package~\cite{hankin2017} furnishes computational
+support for generalized Plackett-Luce~\citep{plackett1975} likelihood
+functions.  Our preferred interpretation is a race (as in track and
+field atheletics): given six competitors $1-6$, we ascribe to them
+nonnegative strengths $p_1\ldots p_6$; the probability that $i$ beats
+$j$ is $p_i/(p_i+p_j)$.  It is conventional to normalise so that the
+total strength is unity, and to identify a competitor with his
+strength.  Given an order statistic, say $p_1\succ p_2\succ p_3\succ
+p_4$, the Plackett-Luce likelihood function would be
+
+\begin{equation}
+  \frac{p_1}{p_1+p_2+p_3+p_4}\cdot
+  \frac{p_2}{    p_2+p_3+p_4}\cdot
+  \frac{p_3}{        p_3+p_4}\cdot
+  \frac{p_4}{            p_4}.
+\end{equation}
+
+The \code{hyper2} package generalized this likelihood function to
+functions of ${\mathbf p}=(p_1,\ldots,p_n)$ with
+
+\begin{equation}\label{hyper2likelihood}
+\mathcal{L}\left(\mathbf{p}\right)=
+\prod_{s\in \mathcal{O}}\left({\sum_{i\in s}}p_i\right)^{n_s}
+\end{equation}
+
+\noindent
+where~$\mathcal{O}$ is a set of observations and~$s$ a subset
+of~$\left[n\right]=\left\{1,2,\ldots,n\right\}$; numbers~$n_s$ are
+integers which may be positive or negative.  The approach adopted by
+the~\pkg{hyperdirichlet} package~ is to sptore each of the~$2^n$
+possible subsets of~$\left[n\right]$ together with an exponent:
+
+
+
+
+
+\end{document}
