@@ -1,3 +1,4 @@
+% -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
 \documentclass[article]{jss}
 
 
@@ -79,11 +80,10 @@ functions of ${\mathbf p}=(p_1,\ldots,p_n)$ with
 \noindent
 where~$\mathcal{O}$ is a set of observations and~$s$ a subset
 of~$\left[n\right]=\left\{1,2,\ldots,n\right\}$; numbers~$n_s$ are
-integers which may be positive or negative.  The approach adopted by
-the~\pkg{hyperdirichlet} package~ is to sptore each of the~$2^n$
-possible subsets of~$\left[n\right]$ together with an exponent:
+integers which may be positive or negative.  
 
-
+<<>>=
+2+2
 
 
 
