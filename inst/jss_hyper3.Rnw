@@ -52,15 +52,16 @@ reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
 pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
 culpa qui officia deserunt mollit anim id est laborum
 
-The \code{hyper2} package~\cite{hankin2017} furnishes computational
-support for generalized Plackett-Luce~\citep{plackett1975} likelihood
-functions.  Our preferred interpretation is a race (as in track and
-field atheletics): given six competitors $1-6$, we ascribe to them
-nonnegative strengths $p_1\ldots p_6$; the probability that $i$ beats
-$j$ is $p_i/(p_i+p_j)$.  It is conventional to normalise so that the
-total strength is unity, and to identify a competitor with his
-strength.  Given an order statistic, say $p_1\succ p_2\succ p_3\succ
-p_4$, the Plackett-Luce likelihood function would be
+The \code{hyper2} package~\citep{hankin2009,hankin2017} furnishes
+computational support for generalized
+Plackett-Luce~\citep{plackett1975} likelihood functions.  Our
+preferred interpretation is a race (as in track and field atheletics):
+given six competitors $1-6$, we ascribe to them nonnegative strengths
+$p_1\ldots p_6$; the probability that $i$ beats $j$ is
+$p_i/(p_i+p_j)$.  It is conventional to normalise so that the total
+strength is unity, and to identify a competitor with his strength.
+Given an order statistic, say $p_1\succ p_2\succ p_3\succ p_4$, the
+Plackett-Luce likelihood function would be
 
 \begin{equation}
   \frac{p_1}{p_1+p_2+p_3+p_4}\cdot
@@ -69,7 +70,7 @@ p_4$, the Plackett-Luce likelihood function would be
   \frac{p_4}{            p_4}.
 \end{equation}
 
-The \code{hyper2} package generalized this likelihood function to
+The \code{hyper2} package generalizes this likelihood function to
 functions of ${\mathbf p}=(p_1,\ldots,p_n)$ with
 
 \begin{equation}\label{hyper2likelihood}
@@ -77,14 +78,58 @@ functions of ${\mathbf p}=(p_1,\ldots,p_n)$ with
 \prod_{s\in \mathcal{O}}\left({\sum_{i\in s}}p_i\right)^{n_s}
 \end{equation}
 
-\noindent
-where~$\mathcal{O}$ is a set of observations and~$s$ a subset
-of~$\left[n\right]=\left\{1,2,\ldots,n\right\}$; numbers~$n_s$ are
-integers which may be positive or negative.  
+\noindent where~$\mathcal{O}$ is a set of observations and~$s$ a
+subset of~$\left[n\right]=\left\{1,2,\ldots,n\right\}$; numbers~$n_s$
+are integers which may be positive or negative.  It becomes possible
+to analyse a wider range of observations such as incomplete order
+statistics or teams; and the introduction of reified entities allows
+one to consider draws~\citep{hankin2009}, noncompetitive tactics such
+as collusion~\citep{hankin2020}, and the phenomenon of team cohesion
+wherein the team becomes stronger than the sum of its parts.
+
+However, consider a race in which there are six runners 1-6 but we
+happen to know that three of the runners (1,2,3) are clones of
+strength $p_a$, say, two of the runners (4,5) have strength $p_b$, and
+the final runner (6) is of strength $p_c$.  The runners race and the
+finishing order is:
+
+$$a\succ c\succ b\succ a\succ a \succ b$$
+
+Thus the winner was $a$, second place for $b$, third for $a$, and so
+on.  Alternatively we might say that $a$ came first, fourth, and
+fifth; $b$ came third and sixth, and $c$ came second.  The
+Plackett-Luce likelihood function for $p_a,p_b,p_c$ would be
+
+\begin{equation}
+\frac{p_a}{3p_a+2p_b+p_c}\cdot
+\frac{p_c}{2p_a+2p_b+p_c}\cdot
+\frac{p_b}{2p_a+2p_b    }\cdot
+\frac{p_a}{2p_a+ p_b    }\cdot
+\frac{p_a}{ p_a+ p_b    }\cdot
+\frac{p_b}{      p_b    },\qquad p_a+p_b+p_c=1
+\end{equation}
+
+
+Existing \code{hyper2} formalism as described by \citet{hankin2017}
+cannot represent this likelihood function, because
+Equation~\ref{hyper2likelihood} uses sets as the indexing elements,
+and in this case we need multisets\footnote{Note that the version of
+\code{hyper2} presented by \citet{hankin2017} used integer-valued sets
+together with a print method that used a complicated mapping system
+from integers to competitor names.  Current methodology [following
+commit \code{51a8b46}] is to use sets of character strings which
+represent the competitors directly; this allows for easier combination
+of observations including different competitors.}.
+
+
+
+
 
 <<>>=
 2+2
+@
 
+\bibliography{chess}
 
 
 \end{document}
