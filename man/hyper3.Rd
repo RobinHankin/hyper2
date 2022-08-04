@@ -97,7 +97,7 @@ hyper3_nv(L=list(),powers=0,pnames)
     as envisaged right now; I present some thoughts in
     \code{inst/kka.Rmd}.
 
-    \item Function \{code{list2nv()} converts a list of character vectors
+    \item Function \code{list2nv()} converts a list of character vectors
     into a named vector suitable for use as argument \code{e} of
     function \code{cheering3()}.  It is used in
     \code{inst/global_liveability_ranking.Rmd}.
