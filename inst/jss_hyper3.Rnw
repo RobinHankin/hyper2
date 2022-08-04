@@ -42,28 +42,29 @@
 %% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+
+
 \begin{document}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim
-ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat.  Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum
+<<setup, cache=FALSE,echo=FALSE>>=
+library("knitr")
+opts_chunk$set(cache=TRUE, autodep=TRUE)
+@
+
+\section{introduction}
 
 The \code{hyper2} package~\citep{hankin2009,hankin2017} furnishes
 computational support for generalized
 Plackett-Luce~\citep{plackett1975} likelihood functions.  Our
 preferred interpretation is a race (as in track and field atheletics):
 given six competitors $1-6$, we ascribe to them nonnegative strengths
-$p_1\ldots p_6$; the probability that $i$ beats $j$ is
+$p_1,\ldots, p_6$; the probability that $i$ beats $j$ is
 $p_i/(p_i+p_j)$.  It is conventional to normalise so that the total
 strength is unity, and to identify a competitor with his strength.
 Given an order statistic, say $p_1\succ p_2\succ p_3\succ p_4$, the
 Plackett-Luce likelihood function would be
 
-\begin{equation}
+\begin{equation}\label{PL_like}
   \frac{p_1}{p_1+p_2+p_3+p_4}\cdot
   \frac{p_2}{    p_2+p_3+p_4}\cdot
   \frac{p_3}{        p_3+p_4}\cdot
@@ -89,9 +90,9 @@ wherein the team becomes stronger than the sum of its parts.
 
 However, consider a race in which there are six runners 1-6 but we
 happen to know that three of the runners (1,2,3) are clones of
-strength $p_a$, say, two of the runners (4,5) have strength $p_b$, and
-the final runner (6) is of strength $p_c$.  The runners race and the
-finishing order is:
+strength $p_a$, two of the runners (4,5) have strength $p_b$, and the
+final runner (6) is of strength $p_c$.  We normalise so
+$p_a+p_b+p_c=1$.  The runners race and the finishing order is:
 
 $$a\succ c\succ b\succ a\succ a \succ b$$
 
@@ -100,7 +101,7 @@ on.  Alternatively we might say that $a$ came first, fourth, and
 fifth; $b$ came third and sixth, and $c$ came second.  The
 Plackett-Luce likelihood function for $p_a,p_b,p_c$ would be
 
-\begin{equation}
+\begin{equation}\label{plackettluce}
 \frac{p_a}{3p_a+2p_b+p_c}\cdot
 \frac{p_c}{2p_a+2p_b+p_c}\cdot
 \frac{p_b}{2p_a+2p_b    }\cdot
@@ -119,17 +120,432 @@ together with a print method that used a complicated mapping system
 from integers to competitor names.  Current methodology [following
 commit \code{51a8b46}] is to use sets of character strings which
 represent the competitors directly; this allows for easier combination
-of observations including different competitors.}.
+of observations including different competitors.}.  The declarations
+
+\begin{verbatim}
+typedef map<string, long double> weightedplayervector;
+typedef map<weightedplayervector, long double> hyper3;
+\end{verbatim}
+
+show how the \proglang{map} class of the Standard Template Library are
+used: \proglang{weightedplayervector} objects map strings to long
+doubles (specifically, mapping player names to their multiplicities),
+and objects of class \proglang{hyper3} are maps from a
+\proglang{weightedplayervector} object to long doubles.  One advantage
+of this is efficiency: Search, removal, and insertion operations have
+logarithmic complexity.  As an example, the following \proglang{C++}
+pseudo code would create a log-likelihood function for the first term
+in Equation~\ref{plackettluce}:
+
+\begin{verbatim}
+weightedplayervector n,d;
+n["a"] = 1; // n for numerator
+d["a"] = 3; // d for denominator
+d["b"] = 2;
+d["c"] = 1;
+
+hyper3 L;
+L[n] = 1;
+L[d] = -1;
+\end{verbatim}
+
+Above, object \code{L} is an object of class \code{hyper3}; it may be
+evaluated at points in probability space [that is, a vector
+\code{[a,b,c]} of nonnegative values with unit sum] using standard
+\proglang{R} idiom wrapping \proglang{C++} back end.
+
+The package includes an \proglang{S4} class \code{hyper3} for this
+type of object.  Package idiom for creating such objects uses named
+vectors:
+
+<<>>=
+library("hyper2")
+H <- hyper3()
+H[c(a=1)] <- 1
+H[c(a=3,b=2,c=1)] <- -1
+H
+@
+
+Above, we see object \code{H} is a log-likelihood function of the
+players' strengths, which may be evaluated at specified points in
+probability space.  If, for example, we wish to assess $H_1\colon
+p_a=0.9,p_b=0.05,p_c=0.05$ and $H_2\colon p_a=0.01,p_b=0.01,p_c=0.98$,
+we can evaluate these hypotheses using generic function
+\code{loglik()}:
+
+<<>>=
+loglik(c(a=0.01,b=0.01,c=0.98),H)
+loglik(c(a=0.9,b=0.05,c=0.05),H)
+@
+
+Thus we prefer $H_1$ over $H_2$ with about 3.5 units of support,
+satisfying the standard two units of support
+criterion~\citep{edwards1972}, and we conclude that our observation
+[in this case, that one of the three clones of player $a$ beat the $b$
+twins and the singleton $c$] furnishes strong support against $H_2$ in
+favour of $H_1$.
 
 
+The package includes many helper functions to work with order
+statistics of this type.  Function \code{ordervec2supp3()}, for
+example, can be used to generate a loglikelihood function for
+Equation~\ref{PL_like}:
 
+<<>>=
+(H <- ordervec2supp3(c("a","c","b","a","a","b")))
+@
+
+
+We may find a maximum likelihood estimate for the players' strengths:
+
+
+<<maxexamp,cache=TRUE>>=
+(mH <- maxp(H))
+@
+
+We may use a selection of statistical tests on the order statistic,
+modified from~\citep{hankin2017} to work with \code{hyper3} objects.
+For example, we may assess the hypothesis that all three players are
+of equal strength [viz $H_0\colon p_a=p_b=p_c=\frac{1}{3}$]:
+
+<<testequality,cache=TRUE>>=
+equalp.test(H)
+@
+
+showing, perhaps unsurprisingly, that this small dataset is consistent
+with $H_0$. 
+
+\section{Some simple cases}
+
+
+Here I consider some order statistics with nontrivial maximum
+likelihood Bradley-Terry strength.  The simplest nontrivial case would
+be three competitors with strengths $a,a,b$ and finishing order
+$a\succ b\succ a$.  The likelihood function would be
+
+\begin{equation}\label{aba}
+\frac{a}{2a+b}\cdot\frac{b}{a+b}
+\end{equation}
+
+In this case we know that $a+b=1$ so this is equal to
+$\mathcal{L}=\mathcal{L}(a)=\frac{a(1-a)}{1+a}$.
+
+\begin{equation}\label{aba_mle}
+\frac{d\mathcal{L}}{da}=\frac{(1+a)(1-2a)-a(1-a)}{(1+a)^2}=
+\frac{1-2a+a-2a^2 -a + a^2}{(1+a)^2}=
+\frac{1-2a-a^2}{(1+a)^2}
+\end{equation}
+
+This will be zero at $\sqrt{2}\pm 1$; we also note that
+$d^2\mathcal{L}/da^2=-4(1+a)^{-3}$, manifestly strictly negative for
+$0\leq a\leq 1$: the root is a maximum.
+
+
+<<maxpaba,cache=TRUE>>=
+maxp(ordervec2supp3(c("a","b","a")))
+@
+
+above, we see close agreement with the theoretical value of
+$(\sqrt{2}-1,1-\sqrt{2})\simeq (0.414,0.586)$.  Observe that the
+maximum likelihood estimate for $a$ is strictly less than 0.5, even
+though the finishing order is symmetric.  Using
+$\mathcal{L}(a)=\frac{a(1-a)}{1+a}$, we can show that
+$\log\mathcal{L}(\hat{a})=\log\left(3-2\sqrt{2}\right)\simeq -1.76$,
+where $\hat{a}=\sqrt{2}-1$ is the maximum likelihood estimate for $a$.
+Defining $\mathcal{S}=\log\mathcal{L}$ as the support [log-likelihood]
+we have
+
+\begin{equation}
+\mathcal{S}=\mathcal{S}(a)=\log\left(\frac{a(1-a)}{1+a}\right)-\log\left(3-2\sqrt{2}\right)
+\end{equation}
+
+as a standard support function which has a maximum value of zero when
+evaluated at $\hat{a}=\sqrt{2}-1$.  For example, we can test the null
+that $a=b=\frac{1}{2}$, the statement that the competitors have equal
+Bradley-Terry strengths:
 
 
 <<>>=
-2+2
+a <- 1/2 # null
+(S_delta <- log( a*(1-a)/(1+a))- log(3-2*sqrt(2)))
 @
 
-\bibliography{chess}
+Thus the additional support gained in moving from $a=\frac{1}{2}$ to
+the evaluate of $a=\sqrt{2}-1$ is 0.029, rather small [as might be
+expected given that we have only one rather uninformative observation,
+and also given that the maximum likelihood estimate ($\simeq 0.41$) is
+quite close to the null of $0.5$].  Nevertheless we can apply Wilks's
+theorem for a $p$-value:
+
+<<>>=
+pchisq(-2*S_delta,df=1,lower.tail=FALSE)
+@
+
+The $p$-value is about 0.81, exceeding 0.05; thus we have no strong
+evidence to reject the null of $a=\frac{1}{2}$.  The observation is
+informative, in the sense that we can find a credible interval for
+$a$.  With an $n$-unit of support criterion the analytical solution to
+$\mathcal{S}(p)=-n$ is given by defining $X=\log(3-2\sqrt{2})-n$ and
+solving $p(1-p)/(1+p)=X$, or
+$p_\pm=\left(1-X\pm\sqrt{1+4X+X^2}\right)/2$, the two roots being the
+lower and upper limits of the credible interval;
+Figure~\ref{ABA_likelihood}.
+
+\begin{figure}[htbp]
+  \begin{center}
+<<figaba>>=
+a <- seq(from=0,by=0.005,to=1)
+S <- function(a){log(a*(1-a)/((1+a)*(3-2*sqrt(2))))}
+plot(a,S(a),type='b')
+abline(h=c(0,-2))
+abline(v=c(0.02438102,0.9524271),col='red')
+abline(v=sqrt(2)-1)
+@
+\caption{A\label{ABA_likelihood} support function for $p_a$ with observation $a\succ b\succ a$}
+\end{center}
+\end{figure}
+
+
+\subsection{All results for AAB}
+
+
+\begin{itemize}
+\item $A\succ A\succ B\longrightarrow\frac{a^2}{1+a}$
+\item $A\succ B\succ A\longrightarrow\frac{1-2a-a^2}{(1+a)^2}$
+\item $B\succ A\succ A\longrightarrow\frac{1-a}{1+a}$
+\end{itemize}
+
+Likelihood functions for these order statistics are given in
+Figure~\ref{ABAetc_likelihood}.  It can be shown that the Fisher
+information for such observations is
+
+\begin{equation}
+\mathcal{I}(a)=\frac{1+16a+18a^2-4a^3-15a^4-7a^5-a^6}{a(1-a)(1+a)^3}
+\end{equation}
+
+which has a minimum at about $0.575$.
+
+\begin{figure}[htbp]
+  \begin{center}
+<<figabbabb,echo=FALSE>>=
+f_aab <- function(a){a^2/(1+a)}
+f_aba <- function(a){a*(1-a)/(1+a)^2}
+f_baa <- function(a){(1-a)/(1+a)}
+
+p <- function(f,...){points(a,f(a)/max(f(a)),...)}
+plot(0:1,0:1,xlab="p(a)",ylab="Likelihood",type="n")
+p(f_aab,type="l",col="black")
+p(f_aba,type="l",col="red")
+p(f_baa,type="l",col="blue")
+legend(x=0.85,y=0.7,col=c("black","red","blue"),lty=1,pch=NA,legend=c("AAB","ABA","BAA"))
+abline(h=exp(-2),lty=2)
+@
+\caption{Likelihood \label{ABAetc_likelihood} functions for
+observations $a\succ a\succ b$, $a\succ b\succ a$, $b\succ a\succ a$}
+\end{center}
+\end{figure}
+
+
+
+\subsection{Nonfinishers}
+
+If we allow non-finishers [that is, a subset of competitors who are
+classified as being beaten by any finishing competitors], there is
+another nontrivial order statistic, viz $a\succ b\succ\left\lbrace
+a,b\right\rbrace$ [thus one of the two $a$'s won, one of the $b$'s
+came second, and one of each of $a$ and $b$ failed to finish].
+
+\begin{equation}
+\mathcal{L}(a)=
+\frac{a}{2a+2b}\cdot
+\frac{b}{ a+2b}\propto\frac{a(1-a)}{2-a}
+\end{equation}
+
+(see how the likelihood function is actually simpler than for the
+complete order statistic).  The evaluate would be $2-\sqrt{2}\simeq
+0.586$:
+
+<<cache=TRUE>>=
+maxp(ordervec2supp3(c("a","b"),nonfinishers=c("a","b")))
+@
+
+
+\section{Mann-Whitney test}
+
+The ideas presented above can easily be extended to arbitrarily large
+numbers of competitors.  Given an order statistic of the type
+considered above, the Mann-Whitney-Wilcoxon test assesses a null of
+identity of underlying distributions.  Consider the fly spray dataset
+presented by \cite{wilcoxon1945}:
+
+<<defineAB>>=
+A <- c(68,68,59,72,64,67,70,74)
+B <- c(60,67,61,62,67,63,56,58)
+@
+
+Above we see the percentage mortality of two preparations, A and B,
+each applied eight times.  We may easily convert this dataset to a
+rank order statistic:
+
+<<makeABorderstatistic>>=
+names(A) <- rep("a",length(A))
+names(B) <- rep("b",length(B))
+sort(c(A,B))
+names(sort(c(A,B)))
+@
+
+And thence to a likelihood function:
+
+<<definehyper3AB,cache=TRUE>>=
+(Hab <- ordervec2supp3(names(sort(c(A,B)))))
+@
+
+Package idiom for testing the null of equality is straightforward:
+
+<<testABforequality,cache=TRUE>>=
+equalp.test(Hab)
+@
+
+Compare \citeauthor{wilcoxon1945}'s $p$-value of $1.77\%$.  However,
+observe that the \code{hyper3} likelihood approach gives more
+information than Wilcoxon's analysis: Firstly, we see from the
+evaluate that the probability of a single application of preparation A
+killing more flies than B is about 15\%.  Further, we may plot a
+support curve for this dataset as above:
+
+
+\begin{figure}[htbp]
+  \begin{center}
+<<plotwilcoxlike,cache=TRUE>>=
+a <- seq(from=0.02,to=0.5,len=50)
+L <- sapply(a,function(p){loglik(p,Hab)})
+plot(a,L-max(L),type='b')
+abline(h=c(0,-2))
+abline(v=0.1558)
+@
+\caption{A\label{wilcox_likelihood} support for the Bradley-Terry
+strength $p_a$ of preparation A~\citep{wilcoxon1945}.  The evaluate of
+0.1558 is shown; and the two-units-of support credible interval, which
+excludes $p_a=0.5$}
+\end{center}
+\end{figure}
+
+\section{Multiple competitors: javelin}
+
+The ideas presented above are easily extended to multiple types of
+competitors.  Consider the following table, drawn from the men's
+javelin, 2020 Olympics:
+
+<<javelintable>>=
+javelin_table
+@
+
+This Chopra threw 87.03m on his first throw, 87.58m on his second, and
+so on.  No-throws, ignored here, are indicated with a \code{X}.  We
+may convert this to a named vector with elements being the throw
+distances, and names being the competitors, using
+`attemptstable2supp3()`:
+
+<<label=converttosupp3,cache=TRUE>>=
+javelin_vector <- attemptstable2supp3(javelin_table,decreasing=TRUE,give.supp=FALSE)
+javelin_vector
+@
+
+Above we see that Chopra threw the longest and second-longest throws
+of 87.58m and 87.03 respectively; Vadlejch threw the third-longest
+throw of 86.67m, and so on (\code{NA} entries correspond to
+no-throws.)  Now convert the attempts table to a \code{hyper3} object,
+again using function \code{attemptstable2supp3()} but this time pass
+\code{give.supp=TRUE}:
+
+<<dothething2,cache=TRUE>>=
+javelin <- ordervec2supp3(v=names(javelin_vector)[!is.na(javelin_vector)])
+@
+
+Above, object \code{javelin} is a \code{hyper3} likelihood function,
+so one has access to the standard likelihood-based methods, such as
+finding and displaying the maximum likelihood estimate:
+
+
+<<setdigits,echo=FALSE>>=
+options(digits=3)
+@
+
+ 
+\begin{figure}[htbp]
+  \begin{center}
+<<testthejav,cache=TRUE>>=
+(mj <- maxp(javelin))
+dotchart(mj,pch=16)
+@
+\caption{Maximum likelihood estimate for javelin throwers' Bradley-Terry strengths}
+\end{center}
+\end{figure}
+
+
+Above, we see that Vadlejch has the highest estimated Bradley-Terry
+strength, but further analysis with \code{equalp.test()} reveals that
+there is no strong evidence in the datast to reject the hypothesis of
+equal competitive strength ($p=0.26$), or that Vadlejch has a strength
+higher than the null value of $\frac{1}{8}$ ($p=0.1$). 
+
+
+\section{Formula 1 motor racing: the constructors' championship}
+
+In Formula 1 motor racing, the constructors' championship takes place
+between {\em manufacturers} of racing cars (compare the drivers'
+championship).  Here, we consider the constructor to be the object of
+inference.  Each constructor typically fields two cars, each of which
+separately accumulates ranking-based points at each venue.  Here we
+use generalized Plackett-Luce to assess the contructors' performance.
+The following table shows rankings for the first 9 venues of the 2021
+season:
+
+<<showconstructortable>>=
+constructor_2021_table[,1:9]
+@
+
+Above, we see that Mercedes (``\code{Merc}'') came first and third at
+Bahrain (\code{BHR}, and at Emilia Romagna (\code{EMI} came second and
+retired (full details of the notation and conventions is given in the
+package at \code{constructor.Rd}).  The identity of the driver is not
+admissible information and indeed may change during a season.
+Alternatively, we may regard the driver and the constructor as a joint
+entity, with the constructor's ability to attract and retain a skilled
+driver being part of the object of inference.
+
+The associated generalized Plackett-Luce \code{hyper3} object is as follows:
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{constructor_2021}
+\end{alltt}
+\begin{verbatim}
+## log( (AMM=1)^38 * (AMM=1, AR=1)^-1 * (AMM=1, AR=1, ARRF=1, ATH=1, HF=2,
+## MM=1, Merc=1, WM=2)^-1 * (AMM=1, AR=1, ARRF=1, ATH=1, HF=2, MM=1,
+## WM=2)^-2 * (AMM=1, AR=1, ARRF=1, ATH=1, HF=2, MM=2, Merc=1, WM=2)^-1 *
+## (AMM=1, AR=1, ARRF=1, ATH=1, HF=2, RBRH=1, WM=1)^-1 * (AMM=1, AR=1,
+## ARRF=1, ATH=1, HF=2, RBRH=1, WM=2)^-1 * (AMM=1, AR=1, ARRF=1, ATH=1,
+## HF=2, WM=2)^-1 * (AMM=1, AR=1, ARRF=1, ATH=2, Ferrari=1, HF=2, WM=1)^-1
+## * (AMM=1, AR=1, ARRF=1, HF=2, Merc=2, RBRH=1, WM=2)^-1 * (AMM=1, AR=1,
+## ARRF=1, HF=2, WM=1)^-1 * (AMM=1, AR=1, ARRF=2, ATH=1, Ferrari=1, HF=2,
+## MM=1, Merc=1, RBRH=1)^-1 * (AMM=1, AR=1, ARRF=2, ATH=1, Ferrari=1,
+## HF=2, MM=1, Merc=1, RBRH=1, WM=1)^-1 * (AMM=1, AR=1, ARRF=2, ATH=1,
+## Ferrari=1, HF=2, MM=1, Merc=2, RBRH=1, WM=2)^-1 * (AMM=1, AR=1, ARRF=2,
+...
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+
+
+
+ \bibliography{chess}
 
 
 \end{document}
+
