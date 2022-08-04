@@ -1,0 +1,78 @@
+---
+title: "Mann-Whitney-Wilcoxon test with `hyper3` objects"
+author: "Robin KS Hankin"
+date: "10/04/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(1)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+We do some work with Mann-Whitney test, using the chorioamnion dataset at `wilcox.test.Rd`:
+
+```{r,label=defineAB}
+x <- c(0.80, 0.83, 1.89, 1.04, 1.45, 1.38, 1.91, 1.64, 0.73, 1.46)
+y <- c(1.15, 0.88, 0.90, 0.74, 1.21)
+```
+
+First do the Mann-Whitney-Wilcox test:
+
+```{r,domwwtest}
+wilcox.test(x,y)
+```
+
+Now use `hyper3`:
+
+
+```{r,hyper3AB,cache=TRUE}
+names(x) <- rep("x",length(x))
+names(y) <- rep("y",length(y))
+equalp.test(ordervec2supp3(names(sort(c(x,y)))))
+```
+
+Now some permutation tests under the null:
+
+
+```{r,repeat_mww_H0,cache=TRUE}
+n <- 10
+mww_pval <- rep(NA,n)
+for(i in seq_len(n)){
+      jj <- sample(c(x,y))
+      xstar <- jj[seq(from=1,length=length(x))]
+      ystar <- jj[seq(from=length(x)+1,to=length(x)+length(y))]
+      mww_pval[i] <- suppressWarnings(wilcox.test(xstar,ystar)$p.value)
+}
+```
+
+```{r,histmww}
+mww_pval
+hist(mww_pval)
+```
+
+
+```{r,repeat_hyper3_H0,cache=TRUE}
+n <- 10
+hyper3_pval <- rep(NA,n)
+for(i in seq_len(n)){
+      jj <- sample(c(x,y))
+      xstar <- jj[seq(from=1,length=length(x))]
+      ystar <- jj[seq(from=length(x)+1,to=length(x)+length(y))]
+      hyper3_pval[i] <- equalp.test(ordervec2supp3(args2ordervec(x=xstar,y=ystar)))$p.value
+}
+```
+
+
+```{r,histhyper3}
+hyper3_pval
+hist(hyper3_pval)
+```		
+
+
