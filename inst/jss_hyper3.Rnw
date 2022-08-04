@@ -374,9 +374,10 @@ maxp(ordervec2supp3(c("a","b"),nonfinishers=c("a","b")))
 
 The ideas presented above can easily be extended to arbitrarily large
 numbers of competitors.  Given an order statistic of the type
-considered above, the Mann-Whitney-Wilcoxon test assesses a null of
-identity of underlying distributions.  Consider the fly spray dataset
-presented by \cite{wilcoxon1945}:
+considered above, the Mann-Whitney-Wilcoxon
+test~\citep{mann1947,wilcoxon1945} assesses a null of identity of
+underlying distributions.  Consider the fly spray dataset presented by
+\citeauthor{wilcoxon1945}:
 
 <<defineAB>>=
 A <- c(68,68,59,72,64,67,70,74)
