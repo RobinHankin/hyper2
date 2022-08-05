@@ -350,10 +350,10 @@ observations $a\succ a\succ b$, $a\succ b\succ a$, $b\succ a\succ a$}
 \subsection{Nonfinishers}
 
 If we allow non-finishers [that is, a subset of competitors who are
-classified as being beaten by any finishing competitors], there is
-another nontrivial order statistic, viz $a\succ b\succ\left\lbrace
-a,b\right\rbrace$ [thus one of the two $a$'s won, one of the $b$'s
-came second, and one of each of $a$ and $b$ failed to finish].
+beaten by all the ranked competitors], there is another nontrivial
+order statistic, viz $a\succ b\succ\left\lbrace a,b\right\rbrace$
+[thus one of the two $a$'s won, one of the $b$'s came second, and one
+of each of $a$ and $b$ failed to finish].
 
 \begin{equation}
 \mathcal{L}(a)=
@@ -368,7 +368,6 @@ complete order statistic).  The evaluate would be $2-\sqrt{2}\simeq
 <<cache=TRUE>>=
 maxp(ordervec2supp3(c("a","b"),nonfinishers=c("a","b")))
 @
-
 
 \section{Mann-Whitney test}
 
