@@ -40,9 +40,8 @@ equalp.test(ordervec2supp3(names(sort(c(x,y)))))
 
 Now some permutation tests under the null:
 
-
 ```{r,repeat_mww_H0,cache=TRUE}
-n <- 10
+n <- 100
 mww_pval <- rep(NA,n)
 for(i in seq_len(n)){
       jj <- sample(c(x,y))
@@ -59,7 +58,7 @@ hist(mww_pval)
 
 
 ```{r,repeat_hyper3_H0,cache=TRUE}
-n <- 10
+n <- 100
 hyper3_pval <- rep(NA,n)
 for(i in seq_len(n)){
       jj <- sample(c(x,y))
@@ -69,10 +68,33 @@ for(i in seq_len(n)){
 }
 ```
 
-
 ```{r,histhyper3}
-hyper3_pval
 hist(hyper3_pval)
+ks.test(hyper3_pval,"punif")
+
+plot(ecdf(hyper3_pval))
+par(pty="s")
+qqplot(mww_pval,hyper3_pval,asp=1)
+abline(0,1)
 ```		
 
 
+
+
+```{r,dosomepvals,cache=TRUE}
+n <- 100
+a <- matrix(0,n,2)
+colnames(a) <- c("mww","hyper3")
+for(i in seq_len(n)){
+  d <- rrace3(pn=c(a=10,b=10),ps=c(a=0.2,b=0.8))
+  jj <- seq_along(d)
+  a[i,1] <- wilcox.test(jj[d=="a"],jj[d=="b"])$p.value
+  a[i,2] <- equalp.test(ordervec2supp3(d))$p.value
+}
+```
+
+```{r,showpvals}
+a
+plot(a)
+table(a[,1]<0.05,a[,2]<0.05)
+```
