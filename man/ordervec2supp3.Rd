@@ -4,6 +4,7 @@
 \alias{den3}
 \alias{char2nv}
 \alias{ordervec2supp3}
+\alias{ordervec2supp3a}
 \alias{ordertable2supp3}
 \alias{args2ordervec}
 \alias{race_to_hyper3}
@@ -17,10 +18,11 @@ statistics in the context of hyper3 likelihood functions.  Compare
 \code{constructor()} suite of analysis.
 }
 \usage{
-num3(v)
-den3(v)
+num3(v,helped=NULL,lambda=1)
+den3(v,helped=NULL,lambda=1)
 char2nv(x)
 ordervec2supp3(v,nonfinishers=NULL)
+ordervec2supp3a(v,nonfinishers=NULL,helped=NULL,lambda=1)
 ordertable2supp3(a)
 cheering3(v,e,help,nonfinishers=NULL)
 args2ordervec(...)
@@ -32,13 +34,12 @@ args2ordervec(...)
   \item{nonfinishers}{Character vector (a set) showing players that did
     not finish}
   \item{a}{An ordertable}
-
-  \item{e,help}{Parameters controlling non-independence in
-    \code{cheering3()} with \code{e} a named integer vector specifying
-    equivalence classes of the competitors: names correspond to the
-    competitors, values to their equivalence class, and \code{help} a
-    numeric vector with entries corresponding to the equivalence classes
-    of \code{e} and values the strength of the support}
+  \item{e,help,lambda}{Parameters controlling non-independence with
+    \code{e} a named integer vector specifying equivalence classes of
+    the competitors: names correspond to the competitors, values to
+    their equivalence class, and \code{help} a numeric vector with
+    entries corresponding to the equivalence classes of \code{e} and
+    values the strength of the support}
   \item{x}{A character vector of competitors}
   \item{...}{Arguments passed to \code{args2ordervec()}}
 }
@@ -57,6 +58,14 @@ args2ordervec(...)
   \code{args2ordervec()} or \code{rrace3()}.  See the examples section
   below.
 
+  Experimental function \code{ordervec2supp3a()} is a generalized
+  version of \code{ordervec2supp3()} that allows for cheering effects.
+
+  Functions \code{num3()} and \code{den3()} are low-level helper
+  functions that calculate the numerator and denominator for
+  Plackett-Luce likelihood functions with clones; used in
+  \code{ordervec2supp3()} and \code{ordervec2supp3a()}.
+  
   Function \code{ordertable2supp3()} takes an order table (the canonical
   example is the constructors' formula 1 grand prix results, see
   \code{constructor.Rd} and returns a generalized Plackett-Luce support

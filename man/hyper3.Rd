@@ -66,7 +66,6 @@ hyper3_nv(L=list(),powers=0,pnames)
   \item{B}{A list of brackets}
   \item{W}{A list of weights}
   \item{L}{A list of named vectors}
-  \item{integers}{Boolean: should \code{list2nv()} return integers or character}
   \item{powers}{Numeric vector of powers}
   \item{pnames}{Character vector of player names}
 }
