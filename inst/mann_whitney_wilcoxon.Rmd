@@ -38,47 +38,37 @@ names(y) <- rep("y",length(y))
 equalp.test(ordervec2supp3(names(sort(c(x,y)))))
 ```
 
-Now some permutation tests under the null:
+#  Some permutation tests under the null:
 
-```{r,repeat_mww_H0,cache=TRUE}
+
+```{r,dosomepvalsNULL,cache=TRUE}
 n <- 100
-mww_pval <- rep(NA,n)
+a <- matrix(0,n,2)
+colnames(a) <- c("mww","hyper3")
 for(i in seq_len(n)){
-      jj <- sample(c(x,y))
-      xstar <- jj[seq(from=1,length=length(x))]
-      ystar <- jj[seq(from=length(x)+1,to=length(x)+length(y))]
-      mww_pval[i] <- suppressWarnings(wilcox.test(xstar,ystar)$p.value)
+  d <- rrace3(pn=c(a=10,b=10),ps=c(a=0.5,b=0.5))  #null 
+  jj <- seq_along(d)
+  a[i,1] <- wilcox.test(jj[d=="a"],jj[d=="b"])$p.value
+  a[i,2] <- equalp.test(ordervec2supp3(d))$p.value
 }
 ```
 
-```{r,histmww}
-mww_pval
-hist(mww_pval)
-```
-
-
-```{r,repeat_hyper3_H0,cache=TRUE}
-n <- 100
-hyper3_pval <- rep(NA,n)
-for(i in seq_len(n)){
-      jj <- sample(c(x,y))
-      xstar <- jj[seq(from=1,length=length(x))]
-      ystar <- jj[seq(from=length(x)+1,to=length(x)+length(y))]
-      hyper3_pval[i] <- equalp.test(ordervec2supp3(args2ordervec(x=xstar,y=ystar)))$p.value
-}
-```
-
-```{r,histhyper3}
-hist(hyper3_pval)
-ks.test(hyper3_pval,"punif")
-
-plot(ecdf(hyper3_pval))
+```{r,showpvalsNULL}
+head(a)
 par(pty="s")
-qqplot(mww_pval,hyper3_pval,asp=1)
+plot(log10(a),asp=1,xlim=c(-2,0),ylim=c(-2,0),main="p-values under the NULL (log scale)",
+xlab="log(p),Wilcox",ylab="log(p), hyper3")
 abline(0,1)
-```		
+plot(a,asp=1,xlim=c(0,1),ylim=c(0,1),main="p-values under the NULL (linear scale)",xlab="p,Wilcox",ylab="p,hyper3")
+abline(0,1)
+(size_wilcox <- sum(a[,1]<0.05)/nrow(a))
+(size_hyper3 <- sum(a[,2]<0.05)/nrow(a))
+
+table(type_I_wilcox=a[,1]<0.05,type_I_hyper3=a[,2]<0.05)
+```
 
 
+# Some permutation tests under the alternative
 
 
 ```{r,dosomepvals,cache=TRUE}
@@ -94,7 +84,12 @@ for(i in seq_len(n)){
 ```
 
 ```{r,showpvals}
-a
-plot(a)
-table(a[,1]<0.05,a[,2]<0.05)
+head(a)
+par(pty="s")
+plot(log10(a),asp=1,xlim=c(-4,0),ylim=c(-4,0))
+abline(0,1)
+(power_wilcox <- sum(a[,1]<0.05)/nrow(a))
+(power_hyper3 <- sum(a[,2]<0.05)/nrow(a))
+
+table(wilcox=a[,1]<0.05,hyper3=a[,2]<0.05)
 ```
