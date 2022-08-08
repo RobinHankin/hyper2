@@ -590,6 +590,44 @@ for(i in seq_along(x)){text(x[i],y[i],names(x)[i],pos=4,cex=0.7,col='gray')}
 abline(0,1)
 ```
 
+# Constructors' championship 2020
+
+```{r,label=constructor2020,cache=TRUE}
+jj <- read.table("constructor_2020.txt",header=TRUE)
+i <- seq(from=1,by=2,to=nrow(jj)) # extract every second entry for points
+constructor_points_2020 <- jj[i,ncol(jj)]
+names(constructor_points_2020) <- jj[i,1]
+
+constructor_points_2020 <- sort(constructor_points_2020,dec=TRUE)
+constructor_points_2020
+
+constructor_table_2020 <- jj[,-ncol(jj)]
+constructor_table_2020[,1:17]
+constructor_2020_table <- constructor_table_2020
+constructor_2020 <- ordertable2supp3(constructor_table_2020)
+```
+
+```{r,label=maxpconstructor2020,cache=TRUE}
+constructor_2020_maxp <- maxp(constructor_2020,n=1)
+constructor_2020_maxp <- sort(constructor_2020_maxp,dec=TRUE)
+constructor_2021_maxp <- sort(constructor_2021_maxp,dec=TRUE)
+constructor_2020_maxp
+constructor_2021_maxp
+```
+
+```{r,label=changenames,cache=TRUE}
+constructor_2020_and_2021 <- psubs(constructor_2020,"Merc","Merc2020") + psubs(constructor_2021,"Merc","Merc2021")
+```
+
+
+```{r,doconstructor20202021test,cache=TRUE}
+ans <- samep.test(constructor_2020_and_2021,c("Merc2020","Merc2021"))
+```
+
+```{r,show20201test}
+ans
+```
+
 
 Note that the analysis in `javelin.Rmd` is appropriate here too, a
 nice example.
@@ -601,8 +639,7 @@ directory of the package.
 
 ```{r,label=saveconstructordataset}
 save(
-constructor_2021_maxp,
-constructor_2021,
-constructor_2021_table,
+constructor_2020_maxp,constructor_2020,constructor_2020_table,
+constructor_2021_maxp,constructor_2021,constructor_2021_table,
 file="constructor.rda")
 ```
