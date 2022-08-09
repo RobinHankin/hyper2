@@ -375,64 +375,63 @@ The ideas presented above can easily be extended to arbitrarily large
 numbers of competitors.  Given an order statistic of the type
 considered above, the Mann-Whitney-Wilcoxon
 test~\citep{mann1947,wilcoxon1945} assesses a null of identity of
-underlying distributions.  Consider the fly spray dataset presented by
-\citeauthor{wilcoxon1945}:
+underlying distributions.  Consider the chorioamnion dataset at
+\code{wilcox.test.Rd}:
 
-<<defineAB>>=
-A <- c(68,68,59,72,64,67,70,74)
-B <- c(60,67,61,62,67,63,56,58)
+<<define_xy_wilcox>>=
+x <- c(0.80, 0.83, 1.89, 1.04, 1.45, 1.38, 1.91, 1.64, 0.73, 1.46)
+y <- c(1.15, 0.88, 0.90, 0.74, 1.21)
 @
 
-Above we see the percentage mortality of two preparations, A and B,
-each applied eight times.  We may easily convert this dataset to a
-rank order statistic:
+Here we see permeability constants of the human chorioamnion at term
+(\code{x}) and between 12 to 26 weeks gestational age (\code{y}).  The
+order statistic is straightforward to calculate:
 
-<<makeABorderstatistic>>=
-names(A) <- rep("a",length(A))
-names(B) <- rep("b",length(B))
-sort(c(A,B))
-names(sort(c(A,B)))
+<<hyper3osdef,cache=TRUE>>=
+names(x) <- rep("x",length(x))
+names(y) <- rep("y",length(y))
+(os <- names(sort(c(x,y))))
 @
 
-And thence to a likelihood function:
+Then object \code{os} is converted to a \code{hyper3} object, again
+with \code{ordervec2supp3()}, which may be assessed using the Method
+of Support:
 
-<<definehyper3AB,cache=TRUE>>=
-(Hab <- ordervec2supp3(names(sort(c(A,B)))))
+<<hyper3xytest,cache=TRUE>>=
+Hxy <- ordervec2supp3(os)
+equalp.test(Hxy)
 @
 
-Package idiom for testing the null of equality is straightforward:
-
-<<testABforequality,cache=TRUE>>=
-equalp.test(Hab)
-@
-
-Compare \citeauthor{wilcoxon1945}'s $p$-value of $1.77\%$.  However,
-observe that the \code{hyper3} likelihood approach gives more
-information than Wilcoxon's analysis: Firstly, we see from the
-evaluate that the probability of a single application of preparation A
-killing more flies than B is about 15\%.  Further, we may plot a
-support curve for this dataset as above:
-
+Above, we use generic function \code{equalp.test()} to test the null
+that the permeability of the two groups both have Bradley-Terry
+strength of $0.5$.  We see a p-value of about 0.09; compare 0.25 from
+\code{wilcox.test()}.  However, observe that the \code{hyper3}
+likelihood approach gives more information than Wilcoxon's analysis:
+Firstly, we see that the maximum likelihood estimate for the
+Bradley-Terry strength of \code{x} is about 0.24, considerably less
+than the null of 0.5; further, we may plot a support curve for this
+dataset, given in Figure~\ref{wilcox_likelihood}.
 
 \begin{figure}[htbp]
   \begin{center}
 <<plotwilcoxlike,cache=TRUE>>=
-a <- seq(from=0.02,to=0.5,len=50)
-L <- sapply(a,function(p){loglik(p,Hab)})
+a <- seq(from=0.02,to=0.8,len=40)
+L <- sapply(a,function(p){loglik(p,Hxy)})
 plot(a,L-max(L),type='b')
 abline(h=c(0,-2))
-abline(v=0.1558)
+abline(v=c(0.24))
+abline(v=c(0.5),lty=2)
 @
 \caption{A\label{wilcox_likelihood} support for the Bradley-Terry
-strength $p_a$ of preparation A~\citep{wilcoxon1945}.  The evaluate of
-0.1558 is shown; and the two-units-of support credible interval, which
-excludes $p_a=0.5$}
+strength $p_a$ of permeability at term.  The evaluate of 0.24 is
+shown; and the two-units-of support credible interval, which does not
+exclude $H_0\colon p_a=0.5$ (dotted line), is also shown}
 \end{center}
 \end{figure}
 
 \section{Multiple competitors: javelin}
 
-The ideas presented above are easily extended to multiple types of
+The ideas presented above may be extended to more than two types of
 competitors.  Consider the following table, drawn from the men's
 javelin, 2020 Olympics:
 
@@ -444,7 +443,7 @@ This Chopra threw 87.03m on his first throw, 87.58m on his second, and
 so on.  No-throws, ignored here, are indicated with a \code{X}.  We
 may convert this to a named vector with elements being the throw
 distances, and names being the competitors, using
-`attemptstable2supp3()`:
+\code{attemptstable2supp3()}:
 
 <<label=converttosupp3,cache=TRUE>>=
 javelin_vector <- attemptstable2supp3(javelin_table,decreasing=TRUE,give.supp=FALSE)
@@ -498,8 +497,8 @@ championship).  Here, we consider the constructor to be the object of
 inference.  Each constructor typically fields two cars, each of which
 separately accumulates ranking-based points at each venue.  Here we
 use generalized Plackett-Luce to assess the contructors' performance.
-The following table shows rankings for the first 9 venues of the 2021
-season:
+The following table, included in the \code{hyper2} package as a
+dataset, shows rankings for the first 9 venues of the 2021 season:
 
 <<showconstructortable>>=
 constructor_2021_table[,1:9]
@@ -508,43 +507,54 @@ constructor_2021_table[,1:9]
 Above, we see that Mercedes (``\code{Merc}'') came first and third at
 Bahrain (\code{BHR}, and at Emilia Romagna (\code{EMI} came second and
 retired (full details of the notation and conventions is given in the
-package at \code{constructor.Rd}).  The identity of the driver is not
-admissible information and indeed may change during a season.
-Alternatively, we may regard the driver and the constructor as a joint
-entity, with the constructor's ability to attract and retain a skilled
-driver being part of the object of inference.
+package at \code{constructor.Rd}).  The identity of the driver is
+viewed as inadmissible information and indeed may change during a
+season.  Alternatively, we may regard the driver and the constructor
+as a joint entity, with the constructor's ability to attract and
+retain a skilled driver being part of the object of inference.  The
+associated generalized Plackett-Luce \code{hyper3} object is easily
+constructed using package idiom, in this case
+\code{ordertable2supp3()}, and we may use this to assess the
+Plackett-Luce strengths of the constructors:
 
-The associated generalized Plackett-Luce \code{hyper3} object is as follows:
+<<maxpconstructor2021, cache=TRUE>>=
+const2020 <- ordertable2supp3(constructor_2020_table)
+const2021 <- ordertable2supp3(constructor_2021_table)
+maxp(const2020,n=1)
+maxp(const2021,n=1)
+@
+
+Above, we see the strength of Mercedes falling from about 0.38 in 2020
+to less than 0.20 in 2021 and it is natural to wonder whether this can
+be ascribed to random variation.  Observe that testing such a
+hypothesis is complicated by the fact that constructors field multiple
+cars, and also that constructors come and go, with two 2020 teams
+dropping out between years and two joining.  Package idiom to test
+this statistically would be to define a combined likelihood function
+for both years, keeping track of the year:
+
+<<definecombinedlikelihoodfunction,cache=TRUE>>=
+H <- psubs(constructor_2020,"Merc","Merc2020") + psubs(constructor_2021,"Merc","Merc2021")
+@
+
+Above, we use generic function \code{psubs()} to change the name of
+Mercedes from \code{Merc} to \code{Merc2020} and \code{Merc2021}
+respectively.  Note the use of ``\code{+}" to represent addition of
+log-likelihoods, corresponding to the assumption of conditional
+independence of results.  The null would be simply that the strengths
+of \code{Merc2020} and of \code{Merc2021} are identical.  Package
+idiom would be to use generic function \code{samep.test()}:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{constructor_2021}
-\end{alltt}
-\begin{verbatim}
-## log( (AMM=1)^38 * (AMM=1, AR=1)^-1 * (AMM=1, AR=1, ARRF=1, ATH=1, HF=2,
-## MM=1, Merc=1, WM=2)^-1 * (AMM=1, AR=1, ARRF=1, ATH=1, HF=2, MM=1,
-## WM=2)^-2 * (AMM=1, AR=1, ARRF=1, ATH=1, HF=2, MM=2, Merc=1, WM=2)^-1 *
-## (AMM=1, AR=1, ARRF=1, ATH=1, HF=2, RBRH=1, WM=1)^-1 * (AMM=1, AR=1,
-## ARRF=1, ATH=1, HF=2, RBRH=1, WM=2)^-1 * (AMM=1, AR=1, ARRF=1, ATH=1,
-## HF=2, WM=2)^-1 * (AMM=1, AR=1, ARRF=1, ATH=2, Ferrari=1, HF=2, WM=1)^-1
-## * (AMM=1, AR=1, ARRF=1, HF=2, Merc=2, RBRH=1, WM=2)^-1 * (AMM=1, AR=1,
-## ARRF=1, HF=2, WM=1)^-1 * (AMM=1, AR=1, ARRF=2, ATH=1, Ferrari=1, HF=2,
-## MM=1, Merc=1, RBRH=1)^-1 * (AMM=1, AR=1, ARRF=2, ATH=1, Ferrari=1,
-## HF=2, MM=1, Merc=1, RBRH=1, WM=1)^-1 * (AMM=1, AR=1, ARRF=2, ATH=1,
-## Ferrari=1, HF=2, MM=1, Merc=2, RBRH=1, WM=2)^-1 * (AMM=1, AR=1, ARRF=2,
-...
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<usesamep,cache=TRUE>>=
+samep.test(H,c("Merc2020","Merc2021"))
+@
 
 
+Above, we see strong evidence for a real decrease in the strength of
+the Mercedes team from 2020 to 2021, with $p=0.002$.
 
-
-
-
- \bibliography{chess}
+\bibliography{chess}
 
 
 \end{document}
