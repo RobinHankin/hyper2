@@ -9,8 +9,17 @@
 
 %% an abstract and keywords
 \Abstract{
-  The \code{hyper2} package is improved here to include \code{hyper3}
-  objects.
+
+  The \code{hyper2} package furnishes extensive idiom to work with
+  extensions of the Bradley-Terry probability model such as
+  Plackett-Luce likelihood functions, team strengths, and reified
+  entities (monsters).  Here, I present a generalization of
+  \code{hyper2} in which multiple entities are constrained to have
+  identical Bradley-Terry strengths.  A new \proglang{S3} class
+  \code{hyper3}, along with associated methods, is motivated and
+  introduced.  Four datasets are analysed, each analysis furnishing
+  new insight, and each highlighting different capabilities of the
+  package.
 }
 \Keywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
 \Plainkeywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
@@ -414,7 +423,7 @@ dataset, given in Figure~\ref{wilcox_likelihood}.
 
 \begin{figure}[htbp]
   \begin{center}
-<<plotwilcoxlike,cache=TRUE>>=
+<<plotwilcoxlike,echo=FALSE>>=
 a <- seq(from=0.02,to=0.8,len=40)
 L <- sapply(a,function(p){loglik(p,Hxy)})
 plot(a,L-max(L),type='b')
@@ -453,9 +462,9 @@ javelin_vector
 Above we see that Chopra threw the longest and second-longest throws
 of 87.58m and 87.03 respectively; Vadlejch threw the third-longest
 throw of 86.67m, and so on (\code{NA} entries correspond to
-no-throws.)  Now convert the attempts table to a \code{hyper3} object,
-again using function \code{attemptstable2supp3()} but this time pass
-\code{give.supp=TRUE}:
+no-throws.)  The attempts table may be converted to a \code{hyper3}
+object, again using function \code{attemptstable2supp3()} but this
+time passing \code{give.supp=TRUE}:
 
 <<dothething2,cache=TRUE>>=
 javelin <- ordervec2supp3(v=names(javelin_vector)[!is.na(javelin_vector)])
