@@ -57,6 +57,7 @@
 
 <<setup, cache=FALSE,echo=FALSE>>=
 library("knitr")
+library("hyper2")
 opts_chunk$set(cache=TRUE, autodep=TRUE)
 @
 
@@ -136,7 +137,7 @@ typedef map<string, long double> weightedplayervector;
 typedef map<weightedplayervector, long double> hyper3;
 \end{verbatim}
 
-show how the \proglang{map} class of the Standard Template Library are
+show how the \proglang{map} class of the Standard Template Library is
 used: \proglang{weightedplayervector} objects map strings to long
 doubles (specifically, mapping player names to their multiplicities),
 and objects of class \proglang{hyper3} are maps from a
@@ -168,7 +169,6 @@ type of object.  Package idiom for creating such objects uses named
 vectors:
 
 <<>>=
-library("hyper2")
 H <- hyper3()
 H[c(a=1)] <- 1
 H[c(a=3,b=2,c=1)] <- -1
@@ -554,17 +554,41 @@ independence of results.  The null would be simply that the strengths
 of \code{Merc2020} and of \code{Merc2021} are identical.  Package
 idiom would be to use generic function \code{samep.test()}:
 
-
 <<usesamep,cache=TRUE>>=
 samep.test(H,c("Merc2020","Merc2021"))
 @
 
-
 Above, we see strong evidence for a real decrease in the strength of
 the Mercedes team from 2020 to 2021, with $p=0.002$.
 
+\section{Conclusions and further work}
+
+Plackett-Luce likelihood functions for rank datasets have been
+generalized to impose identity of Bradley-Terry strengths for certain
+groups; the preferred interpretation is a running race in which the
+competitors are split into equivalence classes of clones.
+Implementing this in \proglang{R} is accomplished via a \proglang{C++}
+back-end making use of the \proglang{STL} ``map" class which offers
+efficiency advantages, especially for large objects.
+
+New likelihood functions for simple cases with three or four
+competitors were presented, and extending to larger numbers furnishes
+a generalization of the Mann-Whitney-Wilcoxon test that offers a
+specific alternative (Bradley-Terry strength) with a clear operational
+definition.  Further generalizations allow the analysis of more than
+two groups, here applied to Olympic Javelin throw distances.
+Generalized Plackett-Luce likelihood functions were used to assess the
+constructors' championship and a reasonable null.  Specifically, the
+hypothesis that the strength of the Mercedes team remained unchanged
+between 2020 and 2021 was tested and rejected.
+
+Further work might include a systematic comparison between
+\code{hyper3} approach and the Mann-Whitney-Wilcoxon test, including
+the characterisation of the power function of both tests.  Further,
+the package could easily be extended to allow non-integer
+multiplicities, which might prove useful in the context of reified
+Bradley Terry techniques~\citep{hankin2020}.
+
 \bibliography{chess}
-
-
 \end{document}
 
