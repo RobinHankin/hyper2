@@ -283,8 +283,8 @@ Thus the additional support gained in moving from $a=\frac{1}{2}$ to
 the evaluate of $a=\sqrt{2}-1$ is 0.029, rather small [as might be
 expected given that we have only one rather uninformative observation,
 and also given that the maximum likelihood estimate ($\simeq 0.41$) is
-quite close to the null of $0.5$].  Nevertheless we can apply Wilks's
-theorem for a $p$-value:
+quite close to the null of $0.5$].  Nevertheless we can follow
+\cite{edwards1972} and apply Wilks's theorem for a $p$-value:
 
 <<>>=
 pchisq(-2*S_delta,df=1,lower.tail=FALSE)
@@ -381,8 +381,9 @@ maxp(ordervec2supp3(c("a","b"),nonfinishers=c("a","b")))
 \section{Mann-Whitney test}
 
 The ideas presented above can easily be extended to arbitrarily large
-numbers of competitors.  Given an order statistic of the type
-considered above, the Mann-Whitney-Wilcoxon
+numbers of competitors, although the analytical expressions tend to be
+intractable and numerical methods must be used.  Given an order
+statistic of the type considered above, the Mann-Whitney-Wilcoxon
 test~\citep{mann1947,wilcoxon1945} assesses a null of identity of
 underlying distributions.  Consider the chorioamnion dataset at
 \code{wilcox.test.Rd}:
