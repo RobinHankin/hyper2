@@ -50,24 +50,21 @@
 
 %% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
-
 \begin{document}
 
 <<setup, cache=FALSE,echo=FALSE>>=
-library("knitr")
-library("hyper2")
+source("loadlibrary.R",echo=FALSE)  # to avoid stupid messages 
 opts_chunk$set(cache=TRUE, autodep=TRUE)
 @
 
 \section{introduction}
 
+
 The \code{hyper2} package~\citep{hankin2009,hankin2017} furnishes
 computational support for generalized
 Plackett-Luce~\citep{plackett1975} likelihood functions.  Our
 preferred interpretation is a race (as in track and field atheletics):
-given six competitors $1-6$, we ascribe to them nonnegative strengths
+Given six competitors $1-6$, we ascribe to them nonnegative strengths
 $p_1,\ldots, p_6$; the probability that $i$ beats $j$ is
 $p_i/(p_i+p_j)$.  It is conventional to normalise so that the total
 strength is unity, and to identify a competitor with his strength.
@@ -241,7 +238,6 @@ $\mathcal{L}=\mathcal{L}(a)=\frac{a(1-a)}{1+a}$.
 
 \begin{equation}\label{aba_mle}
 \frac{d\mathcal{L}}{da}=\frac{(1+a)(1-2a)-a(1-a)}{(1+a)^2}=
-\frac{1-2a+a-2a^2 -a + a^2}{(1+a)^2}=
 \frac{1-2a-a^2}{(1+a)^2}
 \end{equation}
 
@@ -255,7 +251,7 @@ maxp(ordervec2supp3(c("a","b","a")))
 @
 
 above, we see close agreement with the theoretical value of
-$(\sqrt{2}-1,1-\sqrt{2})\simeq (0.414,0.586)$.  Observe that the
+$(\sqrt{2}-1,2-\sqrt{2})\simeq (0.414,0.586)$.  Observe that the
 maximum likelihood estimate for $a$ is strictly less than 0.5, even
 though the finishing order is symmetric.  Using
 $\mathcal{L}(a)=\frac{a(1-a)}{1+a}$, we can show that
