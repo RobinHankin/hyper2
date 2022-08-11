@@ -449,8 +449,8 @@ javelin, 2020 Olympics:
 javelin_table
 @
 
-This Chopra threw 87.03m on his first throw, 87.58m on his second, and
-so on.  No-throws, ignored here, are indicated with a \code{X}.  We
+Thus Chopra threw 87.03m on his first throw, 87.58m on his second, and
+so on.  No-throws, ignored here, are indicated with an \code{X}.  We
 may convert this to a named vector with elements being the throw
 distances, and names being the competitors, using
 \code{attemptstable2supp3()}:
@@ -498,27 +498,71 @@ there is no strong evidence in the datast to reject the hypothesis of
 equal competitive strength ($p=0.26$), or that Vadlejch has a strength
 higher than the null value of $\frac{1}{8}$ ($p=0.1$). 
 
+A particularly attractive feature of this analysis is that the
+Bradley-Terry strengths have direct operational significance: If two
+competitors, say Vadlejch and Vesely, were to throw a javelin, then we
+would estimate the probability that competitors, say Vadlejch would
+throw further than Vesely at $\displaystyle p_{\mbox{\tiny
+Vad}}/\left(p_{\mbox{\tiny Vad}} + p_{\mbox{\tiny Ves}}\right)\simeq
+0.74$.  Indeed, from a training or selection perspective we might
+follow \cite{hankin2017} and observe that log-contrasts
+~\citep{ohagan2004} $\log\left(p_{\mbox{\tiny Vad}}/ p_{\mbox{\tiny
+Ves}}\right)$ appear to have approximately Gaussian likelihood
+functions for observations of the type considered here.  Profile
+log-likelihood curves for log-contrasts are easily produced by the
+package, Figure~\ref{profliklogcont}.
+
+<<havealook,echo=FALSE,cache=TRUE>>=
+f <- function(s){
+  jj <- specificp.test(javelin,"Vesely",s,n=2)
+  p <- jj$null_estimate
+ return(c(log(p[6]/p[7]),jj$null_support))
+}
+Ves <- seq(from=0.0199,to=0.33,len=16)
+M <- sapply(Ves,f)
+M[2,] <- M[2,]-max(M[2,])
+rownames(M) <- c("logcontrast","support")
+@
+
+
+\begin{figure}[htbp]
+\begin{center}
+<<plottheloglikcont,echo=FALSE>>=
+colnames(M) <-  as.character(Ves)
+plot(t(M),type="b")
+abline(h=c(0,-2))
+abline(v=0,lty=2)
+abline(v=log(0.32062833/0.11402735)) # these from mp
+@
+\caption{Profile \label{profliklogcont} likelihood for log-contrast
+$\log\left(p_{\mbox{\tiny Vad}}/ p_{\mbox{\tiny Ves}}\right)$.  Null
+of $p_{\mbox{\tiny Vad}}=p_{\mbox{\tiny Ves}}$ indicated with a dotted
+line, and two-units-of-support limit indicated with horizontal lines;
+thus the null is not rejected}
+\end{center}
+\end{figure}
 
 \section{Formula 1 motor racing: the constructors' championship}
 
 In Formula 1 motor racing, the constructors' championship takes place
 between {\em manufacturers} of racing cars (compare the drivers'
-championship).  Here, we consider the constructor to be the object of
-inference.  Each constructor typically fields two cars, each of which
-separately accumulates ranking-based points at each venue.  Here we
-use generalized Plackett-Luce to assess the contructors' performance.
-The following table, included in the \code{hyper2} package as a
-dataset, shows rankings for the first 9 venues of the 2021 season:
+championship, which is between drivers).  Here, we consider the
+constructor to be the object of inference.  Each constructor typically
+fields two cars, each of which separately accumulates ranking-based
+points at each venue.  Here we use generalized Plackett-Luce to assess
+the contructors' performance.  The following table, included in the
+\code{hyper2} package as a dataset, shows rankings for the first 9
+venues of the 2021 season:
 
 <<showconstructortable>>=
 constructor_2021_table[,1:9]
 @
 
 Above, we see that Mercedes (``\code{Merc}'') came first and third at
-Bahrain (\code{BHR}, and at Emilia Romagna (\code{EMI} came second and
-retired (full details of the notation and conventions is given in the
-package at \code{constructor.Rd}).  The identity of the driver is
-viewed as inadmissible information and indeed may change during a
+Bahrain (\code{BHR}); and came second and retired at Emilia Romagna
+(\code{EMI}); full details of the notation and conventions are given
+in the package at \code{constructor.Rd}.  The identity of the driver
+is viewed as inadmissible information and indeed may change during a
 season.  Alternatively, we may regard the driver and the constructor
 as a joint entity, with the constructor's ability to attract and
 retain a skilled driver being part of the object of inference.  The
