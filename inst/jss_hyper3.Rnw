@@ -57,13 +57,12 @@ source("loadlibrary.R",echo=FALSE)  # to avoid stupid messages
 opts_chunk$set(cache=TRUE, autodep=TRUE)
 @
 
-\section{introduction}
-
+\section{Introduction}
 
 The \code{hyper2} package~\citep{hankin2009,hankin2017} furnishes
 computational support for generalized
 Plackett-Luce~\citep{plackett1975} likelihood functions.  Our
-preferred interpretation is a race (as in track and field atheletics):
+preferred interpretation is a race (as in track and field athletics):
 Given six competitors $1-6$, we ascribe to them nonnegative strengths
 $p_1,\ldots, p_6$; the probability that $i$ beats $j$ is
 $p_i/(p_i+p_j)$.  It is conventional to normalise so that the total
@@ -78,8 +77,12 @@ Plackett-Luce likelihood function would be
   \frac{p_4}{            p_4}.
 \end{equation}
 
-The \code{hyper2} package generalizes this likelihood function to
-functions of ${\mathbf p}=(p_1,\ldots,p_n)$ with
+
+\citet{mollica2014} call this a forward ranking process on the grounds
+that the best (preferred; fastest; chosen) entities are identified in
+the same sequence as their rank.  The \code{hyper2} package
+generalizes this likelihood function to functions of ${\mathbf
+  p}=(p_1,\ldots,p_n)$ with
 
 \begin{equation}\label{hyper2likelihood}
 \mathcal{L}\left(\mathbf{p}\right)=
@@ -89,17 +92,20 @@ functions of ${\mathbf p}=(p_1,\ldots,p_n)$ with
 \noindent where~$\mathcal{O}$ is a set of observations and~$s$ a
 subset of~$\left[n\right]=\left\{1,2,\ldots,n\right\}$; numbers~$n_s$
 are integers which may be positive or negative.  It becomes possible
-to analyse a wider range of observations such as incomplete order
-statistics or teams; and the introduction of reified entities allows
-one to consider draws~\citep{hankin2009}, noncompetitive tactics such
-as collusion~\citep{hankin2020}, and the phenomenon of team cohesion
+to analyse a wider range of likelihood functions than standard
+Plackett-Luce~\citep{turner2020}.  For example, results involving
+incomplete order statistics or teams are tractable. Further, the
+introduction of reified entities allows one to consider
+draws~\citep{hankin2009}, noncompetitive tactics such as
+collusion~\citep{hankin2020}, and the phenomenon of team cohesion
 wherein the team becomes stronger than the sum of its parts.
 
-However, consider a race in which there are six runners 1-6 but we
-happen to know that three of the runners (1,2,3) are clones of
-strength $p_a$, two of the runners (4,5) have strength $p_b$, and the
-final runner (6) is of strength $p_c$.  We normalise so
-$p_a+p_b+p_c=1$.  The runners race and the finishing order is:
+Here I present a different generalization.  Consider a race in which
+there are six runners 1-6 but we happen to know that three of the
+runners (1,2,3) are clones of strength $p_a$, two of the runners (4,5)
+have strength $p_b$, and the final runner (6) is of strength $p_c$.
+We normalise so $p_a+p_b+p_c=1$.  The runners race and the finishing
+order is:
 
 $$a\succ c\succ b\succ a\succ a \succ b$$
 
