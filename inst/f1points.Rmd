@@ -492,7 +492,7 @@ dp2019z[] <- seq_along(dp2019z)
 ```
 
 
-	```{r,label=likevspointszipf,cache=TRUE,echo=FALSE,fig.cap="As for figure \ref{orderingbypointsandlikelihood} \\label{orderingbypointsandlikelihood_zipf} but points ranking calculated by Zipf's law. REF DOES NOT WORK HERE  Note the generally poorer agreement between the two ranking systems ALSO R PLOTTING SUCKS HERE AND I WILL HAVE TO CHANGE THE PDF BY HAND WITH INKSCAPE TO MAKE IT LOOK GOOD"}
+```{r,label=likevspointszipf,cache=TRUE,echo=FALSE,fig.cap="As for figure \ref{orderingbypointsandlikelihood} \\label{orderingbypointsandlikelihood_zipf} but points ranking calculated by Zipf's law. REF DOES NOT WORK HERE  Note the generally poorer agreement between the two ranking systems ALSO R PLOTTING SUCKS HERE AND I WILL HAVE TO CHANGE THE PDF BY HAND WITH INKSCAPE TO MAKE IT LOOK GOOD"}
 par(mfrow=c(2,2))
 par(mar = c(3,3,3,3))
 
