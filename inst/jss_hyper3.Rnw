@@ -544,8 +544,8 @@ thus the null is not rejected}
 
 In Formula 1 motor racing, the constructors' championship takes place
 between {\em manufacturers} of racing cars (compare the drivers'
-championship, which is between drivers).  Here, we consider the
-constructor to be the object of inference.  Each constructor typically
+championship, which is between drivers).  In this analysis, the
+constructor is the object of inference.  Each constructor typically
 fields two cars, each of which separately accumulates ranking-based
 points at each venue.  Here we use generalized Plackett-Luce to assess
 the contructors' performance.  The following table, included in the
