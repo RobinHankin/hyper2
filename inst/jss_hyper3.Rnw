@@ -378,11 +378,13 @@ maxp(ordervec2supp3(c("a","b"),nonfinishers=c("a","b")))
 
 The ideas presented above can easily be extended to arbitrarily large
 numbers of competitors, although the analytical expressions tend to be
-intractable and numerical methods must be used.  Given an order
-statistic of the type considered above, the Mann-Whitney-Wilcoxon
-test~\citep{mann1947,wilcoxon1945} assesses a null of identity of
-underlying distributions.  Consider the chorioamnion dataset at
-\code{wilcox.test.Rd}:
+intractable and numerical methods must be used.  All results and
+datasets presented here are maintained under version control and
+available at \url{https:github.com/RobinHankin/hyper2}.  Given an
+order statistic of the type considered above, the
+Mann-Whitney-Wilcoxon test~\citep{mann1947,wilcoxon1945} assesses a
+null of identity of underlying distributions.  Consider the
+chorioamnion dataset at \code{wilcox.test.Rd}:
 
 <<define_xy_wilcox>>=
 x <- c(0.80, 0.83, 1.89, 1.04, 1.45, 1.38, 1.91, 1.64, 0.73, 1.46)
