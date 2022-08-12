@@ -499,16 +499,16 @@ higher than the null value of $\frac{1}{8}$ ($p=0.1$).
 A particularly attractive feature of this analysis is that the
 Bradley-Terry strengths have direct operational significance: If two
 competitors, say Vadlejch and Vesely, were to throw a javelin, then we
-would estimate the probability that competitors, say Vadlejch would
-throw further than Vesely at $\displaystyle p_{\mbox{\tiny
-Vad}}/\left(p_{\mbox{\tiny Vad}} + p_{\mbox{\tiny Ves}}\right)\simeq
-0.74$.  Indeed, from a training or selection perspective we might
-follow \cite{hankin2017} and observe that log-contrasts
-~\citep{ohagan2004} $\log\left(p_{\mbox{\tiny Vad}}/ p_{\mbox{\tiny
-Ves}}\right)$ appear to have approximately Gaussian likelihood
-functions for observations of the type considered here.  Profile
-log-likelihood curves for log-contrasts are easily produced by the
-package, Figure~\ref{profliklogcont}.
+would estimate the probability that Vadlejch would throw further than
+Vesely at $\displaystyle p_{\mbox{\tiny Vad}}/\left(p_{\mbox{\tiny
+Vad}} + p_{\mbox{\tiny Ves}}\right)\simeq 0.74$.  Indeed, from a
+training or selection perspective we might follow \cite{hankin2017}
+and observe that log-contrasts~\citep{ohagan2004}
+$\log\left(p_{\mbox{\tiny Vad}}/ p_{\mbox{\tiny Ves}}\right)$ appear
+to have approximately Gaussian likelihood functions for observations
+of the type considered here.  Profile log-likelihood curves for
+log-contrasts are easily produced by the package,
+Figure~\ref{profliklogcont}.
 
 <<havealook,echo=FALSE,cache=TRUE>>=
 f <- function(s){
