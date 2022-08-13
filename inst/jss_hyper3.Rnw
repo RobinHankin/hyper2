@@ -360,11 +360,12 @@ observations $a\succ a\succ b$, $a\succ b\succ a$, $b\succ a\succ a$}
 
 \subsection{Nonfinishers}
 
-If we allow non-finishers [that is, a subset of competitors who are
-beaten by all the ranked competitors], there is another nontrivial
-order statistic, viz $a\succ b\succ\left\lbrace a,b\right\rbrace$
-[thus one of the two $a$'s won, one of the $b$'s came second, and one
-of each of $a$ and $b$ failed to finish].
+If we allow non-finishers---that is, a subset of competitors who are
+beaten by all the ranked competitors: \cite{turner2020} call this a
+{\em top $n$ ranking}), there is another nontrivial order statistic,
+viz $a\succ b\succ\left\lbrace a,b\right\rbrace$ [thus one of the two
+  $a$'s won, one of the $b$'s came second, and one of each of $a$ and
+  $b$ failed to finish].
 
 \begin{equation}
 \mathcal{L}(a)=
@@ -631,12 +632,17 @@ constructors' championship and a reasonable null.  Specifically, the
 hypothesis that the strength of the Mercedes team remained unchanged
 between 2020 and 2021 was tested and rejected.
 
+Draws are not considered in the present work but in principle may be
+accommodated, either using likelihoods comprising sums of
+Plackett-Luce probabilities~\citep{hankin2017}; or the introduction of
+a reified draw entity~\citep{hankin2020}.
+
 Further work might include a systematic comparison between
 \code{hyper3} approach and the Mann-Whitney-Wilcoxon test, including
-the characterisation of the power function of both tests.  Further,
-the package could easily be extended to allow non-integer
-multiplicities, which might prove useful in the context of reified
-Bradley Terry techniques~\citep{hankin2020}.
+the characterization of the power function of both tests.  The package
+could easily be extended to allow non-integer multiplicities, which
+might prove useful in the context of reified Bradley Terry
+techniques~\citep{hankin2020}.
 
 \bibliography{chess}
 \end{document}
