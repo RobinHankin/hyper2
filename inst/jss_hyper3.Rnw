@@ -320,22 +320,19 @@ abline(v=sqrt(2)-1)
 
 \subsection{All results for AAB}
 
-
-\begin{itemize}
-\item $A\succ A\succ B\longrightarrow\frac{a^2}{1+a}$
-\item $A\succ B\succ A\longrightarrow\frac{1-2a-a^2}{(1+a)^2}$
-\item $B\succ A\succ A\longrightarrow\frac{1-a}{1+a}$
-\end{itemize}
-
-Likelihood functions for these order statistics are given in
-Figure~\ref{ABAetc_likelihood}.  It can be shown that the Fisher
-information for such observations is
+If we have two clones of $a$ and a singleton $b$, then there are three
+possible rank statistics: (i), $a\succ a\succ b$ with probability
+$\frac{a^2}{1+a}$; (ii), $a\succ b\succ a$, with
+$\frac{1-2a-a^2}{(1+a)^2}$, (iii), $b\succ a\succ a$ at
+$\frac{1-a}{1+a}$.  Likelihood functions for these order statistics
+are given in Figure~\ref{ABAetc_likelihood}.  It can be shown that the
+Fisher information for such observations is
 
 \begin{equation}
 \mathcal{I}(a)=\frac{1+16a+18a^2-4a^3-15a^4-7a^5-a^6}{a(1-a)(1+a)^3}
 \end{equation}
 
-which has a minimum at about $0.575$.
+which has a minimum of about $13.9$ at at about $a=0.575$.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -362,11 +359,11 @@ observations $a\succ a\succ b$, $a\succ b\succ a$, $b\succ a\succ a$}
 \subsection{Nonfinishers}
 
 If we allow non-finishers---that is, a subset of competitors who are
-beaten by all the ranked competitors: \cite{turner2020} call this a
+beaten by all the ranked competitors (\cite{turner2020} call this a
 {\em top $n$ ranking}), there is another nontrivial order statistic,
 viz $a\succ b\succ\left\lbrace a,b\right\rbrace$ [thus one of the two
   $a$'s won, one of the $b$'s came second, and one of each of $a$ and
-  $b$ failed to finish].
+  $b$ failed to finish].  Now
 
 \begin{equation}
 \mathcal{L}(a)=
