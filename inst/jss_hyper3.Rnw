@@ -128,12 +128,13 @@ Existing \code{hyper2} formalism as described by \citet{hankin2017}
 cannot represent this likelihood function, because
 Equation~\ref{hyper2likelihood} uses sets as the indexing elements,
 and in this case we need multisets\footnote{Note that the version of
-\code{hyper2} presented by \citet{hankin2017} used integer-valued sets
-together with a print method that used a complicated mapping system
-from integers to competitor names.  Current methodology [following
-commit \code{51a8b46}] is to use sets of character strings which
-represent the competitors directly; this allows for easier combination
-of observations including different competitors.}.  The declarations
+\code{hyper2} presented by \citet{hankin2017} and reviewed
+by~\cite{turner2020} used integer-valued sets together with a print
+method that used a complicated mapping system from integers to
+competitor names.  Current methodology [following commit
+  \code{51a8b46}] is to use sets of character strings which represent
+the competitors directly; this allows for easier combination of
+observations including different competitors.}.  The declarations
 
 \begin{verbatim}
 typedef map<string, long double> weightedplayervector;
@@ -639,7 +640,7 @@ a reified draw entity~\citep{hankin2020}.
 
 Further work might include a systematic comparison between
 \code{hyper3} approach and the Mann-Whitney-Wilcoxon test, including
-the characterization of the power function of both tests.  The package
+the characterisation of the power function of both tests.  The package
 could easily be extended to allow non-integer multiplicities, which
 might prove useful in the context of reified Bradley Terry
 techniques~\citep{hankin2020}.
