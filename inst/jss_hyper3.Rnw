@@ -493,7 +493,7 @@ dotchart(mj,pch=16)
 
 Above, we see that Vadlejch has the highest estimated Bradley-Terry
 strength, but further analysis with \code{equalp.test()} reveals that
-there is no strong evidence in the datast to reject the hypothesis of
+there is no strong evidence in the dataset to reject the hypothesis of
 equal competitive strength ($p=0.26$), or that Vadlejch has a strength
 higher than the null value of $\frac{1}{8}$ ($p=0.1$). 
 
@@ -552,7 +552,7 @@ racing cars (compare the drivers' championship, which is between
 drivers).  In this analysis, the constructor is the object of
 inference.  Each constructor typically fields two cars, each of which
 separately accumulates ranking-based points at each venue.  Here we
-use generalized Plackett-Luce to assess the contructors' performance.
+use generalized Plackett-Luce to assess the constructors' performance.
 The following table, included in the \code{hyper2} package as a
 dataset, shows rankings for the first 9 venues of the 2021 season:
 
