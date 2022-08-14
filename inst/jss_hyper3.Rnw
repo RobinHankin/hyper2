@@ -317,9 +317,7 @@ abline(v=sqrt(2)-1)
 \end{center}
 \end{figure}
 
-
-\subsection{All results for AAB}
-
+\subsubsection{Fisher information}
 If we have two clones of $a$ and a singleton $b$, then there are three
 possible rank statistics: (i), $a\succ a\succ b$ with probability
 $\frac{a^2}{1+a}$; (ii), $a\succ b\succ a$, with
@@ -353,8 +351,6 @@ abline(h=exp(-2),lty=2)
 observations $a\succ a\succ b$, $a\succ b\succ a$, $b\succ a\succ a$}
 \end{center}
 \end{figure}
-
-
 
 \subsection{Nonfinishers}
 
