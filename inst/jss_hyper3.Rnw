@@ -173,13 +173,13 @@ type of object.  Package idiom for creating such objects uses named
 vectors:
 
 <<>>=
-H <- hyper3()
-H[c(a=1)] <- 1
-H[c(a=3,b=2,c=1)] <- -1
-H
+LL <- hyper3()
+LL[c(a=1)] <- 1
+LL[c(a=3,b=2,c=1)] <- -1
+LL
 @
 
-Above, we see object \code{H} is a log-likelihood function of the
+Above, we see object \code{LL} is a log-likelihood function of the
 players' strengths, which may be evaluated at specified points in
 probability space.  If, for example, we wish to assess $H_1\colon
 p_a=0.9,p_b=0.05,p_c=0.05$ and $H_2\colon p_a=0.01,p_b=0.01,p_c=0.98$,
@@ -187,8 +187,8 @@ we can evaluate these hypotheses using generic function
 \code{loglik()}:
 
 <<>>=
-loglik(c(a=0.01,b=0.01,c=0.98),H)
-loglik(c(a=0.9,b=0.05,c=0.05),H)
+loglik(c(a=0.01,b=0.01,c=0.98),LL)
+loglik(c(a=0.9,b=0.05,c=0.05),LL)
 @
 
 Thus we prefer $H_1$ over $H_2$ with about 3.5 units of support,
@@ -208,18 +208,17 @@ Equation~\ref{PL_like}:
 (H <- ordervec2supp3(c("a","c","b","a","a","b")))
 @
 
-
 We may find a maximum likelihood estimate for the players' strengths:
-
 
 <<maxexamp,cache=TRUE>>=
 (mH <- maxp(H))
 @
 
-We may use a selection of statistical tests on the order statistic,
-modified from~\citep{hankin2017} to work with \code{hyper3} objects.
-For example, we may assess the hypothesis that all three players are
-of equal strength [viz $H_0\colon p_a=p_b=p_c=\frac{1}{3}$]:
+The package provides a number of statistical tests on likelihood
+functions, modified from~\citep{hankin2017} to work with \code{hyper3}
+objects.  For example, we may assess the hypothesis that all three
+players are of equal strength [viz $H_0\colon
+p_a=p_b=p_c=\frac{1}{3}$]:
 
 <<testequality,cache=TRUE>>=
 equalp.test(H)
@@ -232,8 +231,8 @@ with $H_0$.
 
 
 Here I consider some order statistics with nontrivial maximum
-likelihood Bradley-Terry strength.  The simplest nontrivial case would
-be three competitors with strengths $a,a,b$ and finishing order
+likelihood Bradley-Terry strengths.  The simplest nontrivial case
+would be three competitors with strengths $a,a,b$ and finishing order
 $a\succ b\succ a$.  The likelihood function would be
 
 \begin{equation}\label{aba}
@@ -248,7 +247,7 @@ $\mathcal{L}=\mathcal{L}(a)=\frac{a(1-a)}{1+a}$.
 \frac{1-2a-a^2}{(1+a)^2}
 \end{equation}
 
-This will be zero at $\sqrt{2}\pm 1$; we also note that
+This will be zero at $\sqrt{2}-1$; we also note that
 $d^2\mathcal{L}/da^2=-4(1+a)^{-3}$, manifestly strictly negative for
 $0\leq a\leq 1$: the root is a maximum.
 
@@ -257,7 +256,7 @@ $0\leq a\leq 1$: the root is a maximum.
 maxp(ordervec2supp3(c("a","b","a")))
 @
 
-above, we see close agreement with the theoretical value of
+Above, we see close agreement with the theoretical value of
 $(\sqrt{2}-1,2-\sqrt{2})\simeq (0.414,0.586)$.  Observe that the
 maximum likelihood estimate for $a$ is strictly less than 0.5, even
 though the finishing order is symmetric.  Using
@@ -296,7 +295,7 @@ pchisq(-2*S_delta,df=1,lower.tail=FALSE)
 The $p$-value is about 0.81, exceeding 0.05; thus we have no strong
 evidence to reject the null of $a=\frac{1}{2}$.  The observation is
 informative, in the sense that we can find a credible interval for
-$a$.  With an $n$-unit of support criterion the analytical solution to
+$a$.  With an $n$-units of support criterion the analytical solution to
 $\mathcal{S}(p)=-n$ is given by defining $X=\log(3-2\sqrt{2})-n$ and
 solving $p(1-p)/(1+p)=X$, or
 $p_\pm=\left(1-X\pm\sqrt{1+4X+X^2}\right)/2$, the two roots being the
@@ -385,16 +384,17 @@ available at \url{https:github.com/RobinHankin/hyper2}.  Given an
 order statistic of the type considered above, the
 Mann-Whitney-Wilcoxon test~\citep{mann1947,wilcoxon1945} assesses a
 null of identity of underlying distributions.  Consider the
-chorioamnion dataset at \code{wilcox.test.Rd}:
+chorioamnion dataset~\citep{hollander2013}, used in
+\code{wilcox.test.Rd}:
 
 <<define_xy_wilcox>>=
 x <- c(0.80, 0.83, 1.89, 1.04, 1.45, 1.38, 1.91, 1.64, 0.73, 1.46)
 y <- c(1.15, 0.88, 0.90, 0.74, 1.21)
 @
 
-Here we see permeability constants of the human chorioamnion at term
-(\code{x}) and between 12 to 26 weeks gestational age (\code{y}).  The
-order statistic is straightforward to calculate:
+Here we see a measure of permeability of the human placenta at term
+(\code{x}) and between 3 and 6 months' gestational age (\code{y}).
+The order statistic is straightforward to calculate:
 
 <<hyper3osdef,cache=TRUE>>=
 names(x) <- rep("x",length(x))
@@ -504,12 +504,14 @@ would estimate the probability that Vadlejch would throw further than
 Vesely at $\displaystyle p_{\mbox{\tiny Vad}}/\left(p_{\mbox{\tiny
 Vad}} + p_{\mbox{\tiny Ves}}\right)\simeq 0.74$.  Indeed, from a
 training or selection perspective we might follow \cite{hankin2017}
-and observe that log-contrasts~\citep{ohagan2004}
-$\log\left(p_{\mbox{\tiny Vad}}/ p_{\mbox{\tiny Ves}}\right)$ appear
-to have approximately Gaussian likelihood functions for observations
-of the type considered here.  Profile log-likelihood curves for
-log-contrasts are easily produced by the package,
-Figure~\ref{profliklogcont}.
+and observe that log-contrasts~\citep{ohagan2004} appear to have
+approximately Gaussian likelihood functions for observations of the
+type considered here.  Profile log-likelihood curves for log-contrasts
+are easily produced by the package, Figure~\ref{profliklogcont}.  We
+see that the credible range for~$\log\left(p_{\mbox{\tiny Vad}}/
+p_{\mbox{\tiny Ves}}\right)$ includes zero and we have no strong
+evidence for these athletes having different (Bradley-Terry)
+strengths.
 
 <<havealook,echo=FALSE,cache=TRUE>>=
 f <- function(s){
@@ -543,15 +545,16 @@ thus the null is not rejected}
 
 \section{Formula 1 motor racing: the constructors' championship}
 
-In Formula 1 motor racing, the constructors' championship takes place
-between {\em manufacturers} of racing cars (compare the drivers'
-championship, which is between drivers).  In this analysis, the
-constructor is the object of inference.  Each constructor typically
-fields two cars, each of which separately accumulates ranking-based
-points at each venue.  Here we use generalized Plackett-Luce to assess
-the contructors' performance.  The following table, included in the
-\code{hyper2} package as a dataset, shows rankings for the first 9
-venues of the 2021 season:
+Formula 1 motor racing is an important and prestigious motor sport
+\citep{codling2017,jenkins2010}.  In Formula 1 Grand Prix, the
+constructors' championship takes place between {\em manufacturers} of
+racing cars (compare the drivers' championship, which is between
+drivers).  In this analysis, the constructor is the object of
+inference.  Each constructor typically fields two cars, each of which
+separately accumulates ranking-based points at each venue.  Here we
+use generalized Plackett-Luce to assess the contructors' performance.
+The following table, included in the \code{hyper2} package as a
+dataset, shows rankings for the first 9 venues of the 2021 season:
 
 <<showconstructortable>>=
 constructor_2021_table[,1:9]
@@ -620,11 +623,11 @@ competitors were presented, and extending to larger numbers furnishes
 a generalization of the Mann-Whitney-Wilcoxon test that offers a
 specific alternative (Bradley-Terry strength) with a clear operational
 definition.  Further generalizations allow the analysis of more than
-two groups, here applied to Olympic Javelin throw distances.
+two groups, here applied to Olympic javelin throw distances.
 Generalized Plackett-Luce likelihood functions were used to assess the
-constructors' championship and a reasonable null.  Specifically, the
-hypothesis that the strength of the Mercedes team remained unchanged
-between 2020 and 2021 was tested and rejected.
+Grand Prix constructors' championship and a reasonable null.
+Specifically, the hypothesis that the strength of the Mercedes team
+remained unchanged between 2020 and 2021 was tested and rejected.
 
 Draws are not considered in the present work but in principle may be
 accommodated, either using likelihoods comprising sums of
