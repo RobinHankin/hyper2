@@ -1,0 +1,113 @@
+---
+title: "fisher_information_plackett_luce_three_runners"
+output: html_document
+date: "2022-08-14"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem
+
+We consider three runners, $a,b,c$ and a Plackett-Luce likelihood
+function for the six possible orders.  We normalize so $a+b+c=1$ and
+take $c=1-a-b$.
+
+## $a\succ b\succ c$
+
+prob = $\frac{ab}{1-a}$
+
+$S=\log a+\log b-\log(1-a)$
+
+$\partial S/\partial a = a^{-1} + (1-a)^{-1}$
+
+$\partial S/\partial b=b^{-1}$
+
+$\partial^2 S/\partial a^2=-a^{-2} +(1-a)^{-2}$
+
+$\partial^2 S/\partial b^2 = -b^{-2}$
+
+$\partial^2 S/\partial a\partial b=0$ 
+
+## $a\succ c\succ b$
+
+prob = $\frac{a(1-a-b)}{1-a}$
+
+$S=\log a-\log(1-a) +\log(1-a-b)$
+
+$\partial S/\partial a = a^{-1} + (1-a)^{-1} + (1-a-b)^{-1}$
+
+$\partial S/\partial b = (1-a-b)^{-1}$
+
+$\partial ^2S/\partial a^2 = -a^{-2}+(1-a)^{-2} + (1-a-b)^{-2}$
+
+$\partial^2S/\partial a\partial b = (1-a-b)^{-2}$
+
+## $b\succ a\succ c$
+
+prob = $\frac{ba}{1-b}$
+
+$S=\log a +\log b-\log(1-b)$
+
+$\partial S/\partial a = a^{-1}$
+
+$\partial S/\partial b = b^{-1} +(1-b)^{-1}$
+
+$\partial^2S/\partial a^2 = -a^{-2}$
+
+$\partial^2S/\partial b^2=-b^{-2} +(1-b)^{-2}$
+
+$\partial^2S/\partial a\partial b=0$
+
+## $b\succ c\succ a$
+
+prob = $\frac{a(1-a-b)}{1-b}$
+
+$S=\log a + \log(1-a-b) - \log(1-b)$
+
+$\partial S/\partial a=a^{-1} -(1-a-b)^{-1}$
+
+$\partial S/\partial b=-(1-a-b)^{-1} - (1-b)^{-1}$
+
+$\partial^2S\partial a^2=-a^{-2} -(1-a-b)^{-2}$
+
+$\partial^2S/\partial b^2 =-(1-a-b)^{-2} -(1-b)^{-2}$
+
+$\partial^2S/\partial a\partial b=-(1-a-b)^{-2}$
+
+## $c\succ a\succ b$
+
+prob=$\frac{a(1-a-b)}{a+b}$
+
+$S=\log a + \log(1-a-b) -\log(a+b)$
+
+$\partial S/\partial a=a^{-1} -(1-a-b)^{-1} -(a+b)^{-1}$
+
+$\partial S/\partial  b=-(1-a-b)^{-1}-(a+b)^{-1}$
+
+$\partial^2S/\partial a^2=-a^{-2} -(1-a-b)^{-2} +(a+b)^{-2}$
+
+$\partial^2S/\partial b^2=-(1-a-b)^{-2} +(a+b)^{-2}$
+
+$\partial^2S/\partial a\partial b=-(1-a-b)^{-2}+(a+b)^{-2}$
+
+## $c\succ b\succ a$
+
+prob=$\frac{b(1-a-b)}{1-b}$
+
+$S=\log b+\log(1-a-b) -\log(1-b)$
+
+$\partial S/\partial a=-(1-a-b)^{-1}$
+
+$\partial S/\partial b=b^{-1}+(1-b)^{-1} -(1-a-b)^{-1}$
+
+$\partial^2S/\partial a^2=-(1-a-b)^{-2}$
+
+$\partial^2S/\partial b^2=-b^{-2} +(1-b)^{-2}-(1-a-b)^{-2}$
+
+$\partial^2S/\partial a\partial b=-(1-a-b)^{-2}$
+
+
+
+
