@@ -24,11 +24,11 @@ $\partial S/\partial a = a^{-1} + (1-a)^{-1}$
 
 $\partial S/\partial b=b^{-1}$
 
-$\partial^2 S/\partial a^2=-a^{-2} +(1-a)^{-2}$
+$\partial^2 S/\partial a^2=-a^{-2} +(1-a)^{-2}\longrightarrow -pS_{aa}=\frac{(1-2a)b}{a(1-a)^3}$
 
-$\partial^2 S/\partial b^2 = -b^{-2}$
+$\partial^2 S/\partial b^2 = -b^{-2}\longrightarrow -pS_{bb} = \frac{a}{(1-a)b}$
 
-$\partial^2 S/\partial a\partial b=0$ 
+$\partial^2 S/\partial a\partial b=0\longrightarrow -pS_{ab}= 0$ 
 
 ## $a\succ c\succ b$
 
@@ -40,9 +40,11 @@ $\partial S/\partial a = a^{-1} + (1-a)^{-1} + (1-a-b)^{-1}$
 
 $\partial S/\partial b = (1-a-b)^{-1}$
 
-$\partial ^2S/\partial a^2 = -a^{-2}+(1-a)^{-2} + (1-a-b)^{-2}$
+$\partial^2S/\partial a^2 = -a^{-2}+(1-a)^{-2} + (1-a-b)^{-2}\longrightarrow -pS_{aa} =\frac{(1-2a)(1-a-b)}{a(1-a)^3} -\frac{a}{1-a}=\frac{(1-2a)(1-a-b) - a^2(1-a)^2}{a(1-a)^3}$
 
-$\partial^2S/\partial a\partial b = (1-a-b)^{-2}$
+$\partial^2S/\partial b^2=-(1-a-b)^{-2}\longrightarrow -pS_{bb}=\frac{a}{(1-a)(1-a-b)}$
+
+$\partial^2S/\partial a\partial b = (1-a-b)^{-2}\longrightarrow -pS_{ab}=\frac{-a}{(1-a)(1-a-b)}$
 
 ## $b\succ a\succ c$
 
@@ -54,11 +56,11 @@ $\partial S/\partial a = a^{-1}$
 
 $\partial S/\partial b = b^{-1} +(1-b)^{-1}$
 
-$\partial^2S/\partial a^2 = -a^{-2}$
+$\partial^2S/\partial a^2 = -a^{-2}\longrightarrow -pS_{aa}=\frac{-b}{a(1-b)}$
 
-$\partial^2S/\partial b^2=-b^{-2} +(1-b)^{-2}$
+$\partial^2S/\partial b^2=-b^{-2} +(1-b)^{-2}\longrightarrow -pS_{bb}=\frac{ab(-1+2b)}{b^2(1-b)^3}$
 
-$\partial^2S/\partial a\partial b=0$
+$\partial^2S/\partial a\partial b=0\longrightarrow -pS_{ab}=0$
 
 ## $b\succ c\succ a$
 
@@ -70,7 +72,9 @@ $\partial S/\partial a=a^{-1} -(1-a-b)^{-1}$
 
 $\partial S/\partial b=-(1-a-b)^{-1} - (1-b)^{-1}$
 
-$\partial^2S\partial a^2=-a^{-2} -(1-a-b)^{-2}$
+$\partial^2S\partial a^2=-a^{-2} -(1-a-b)^{-2}\longrightarrow -pS_{aa}=
+\frac{a^4 + 4 a^3 b + 6 a^2 b^2 - 4 a^2 b + 4 a b^3 - 6 a b^2 + 2 a b + b^4 - 2 b^3 + b^2
+}{a^2 (a + b - 1)^2 (a + b)^2}$
 
 $\partial^2S/\partial b^2 =-(1-a-b)^{-2} -(1-b)^{-2}$
 
@@ -110,4 +114,11 @@ $\partial^2S/\partial a\partial b=-(1-a-b)^{-2}$
 
 
 
+# Top left term, $aa$
 
+we have
+
+$$
+\frac{ab}{1-a}\cdot\left(-a^{-2} - (1-a)^{-2}\right) +
+\frac{a(1-a-b)}{1-a}\cdot\left(-a^{-2} + (1-a)^{-2} + (1-a-b)^{-2}\right)
+$$
