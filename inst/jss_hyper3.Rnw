@@ -109,7 +109,7 @@ order is:
 
 $$a\succ c\succ b\succ a\succ a \succ b$$
 
-Thus the winner was $a$, second place for $b$, third for $a$, and so
+Thus the winner was $a$, second place for $c$, third for $b$, and so
 on.  Alternatively we might say that $a$ came first, fourth, and
 fifth; $b$ came third and sixth, and $c$ came second.  The
 Plackett-Luce likelihood function for $p_a,p_b,p_c$ would be
@@ -166,11 +166,9 @@ L[d] = -1;
 Above, object \code{L} is an object of class \code{hyper3}; it may be
 evaluated at points in probability space [that is, a vector
 \code{[a,b,c]} of nonnegative values with unit sum] using standard
-\proglang{R} idiom wrapping \proglang{C++} back end.
-
-The package includes an \proglang{S4} class \code{hyper3} for this
-type of object.  Package idiom for creating such objects uses named
-vectors:
+\proglang{R} idiom wrapping \proglang{C++} back end.  The package
+includes an \proglang{S3} class \code{hyper3} for this type of object.
+Package idiom for creating such objects uses named vectors:
 
 <<>>=
 LL <- hyper3()
@@ -208,7 +206,8 @@ Equation~\ref{PL_like}:
 (H <- ordervec2supp3(c("a","c","b","a","a","b")))
 @
 
-We may find a maximum likelihood estimate for the players' strengths:
+We may find a maximum likelihood estimate for the players' strengths,
+using generic function \code{maxp()}:
 
 <<maxexamp,cache=TRUE>>=
 (mH <- maxp(H))
