@@ -98,7 +98,8 @@ incomplete order statistics or teams are tractable. Further, the
 introduction of reified entities allows one to consider
 draws~\citep{hankin2009}, noncompetitive tactics such as
 collusion~\citep{hankin2020}, and the phenomenon of team cohesion
-wherein the team becomes stronger than the sum of its parts.
+wherein the team becomes stronger than the sum of its
+parts~\citep{hankin2010}.
 
 Here I present a different generalization.  Consider a race in which
 there are six runners 1-6 but we happen to know that three of the
@@ -228,25 +229,25 @@ with $H_0$.
 
 \section{Some simple cases}
 
-
 Here I consider some order statistics with nontrivial maximum
 likelihood Bradley-Terry strengths.  The simplest nontrivial case
 would be three competitors with strengths $a,a,b$ and finishing order
-$a\succ b\succ a$.  The likelihood function would be
+$a\succ b\succ a$.  The Plackett-Luce likelihood function would be
 
 \begin{equation}\label{aba}
 \frac{a}{2a+b}\cdot\frac{b}{a+b}
 \end{equation}
 
-In this case we know that $a+b=1$ so this is equal to
-$\mathcal{L}=\mathcal{L}(a)=\frac{a(1-a)}{1+a}$.
+and in this case we know that $a+b=1$ so this is equal to
+$\mathcal{L}=\mathcal{L}(a)=\frac{a(1-a)}{1+a}$.  The score would be
+given by
 
 \begin{equation}\label{aba_mle}
 \frac{d\mathcal{L}}{da}=\frac{(1+a)(1-2a)-a(1-a)}{(1+a)^2}=
 \frac{1-2a-a^2}{(1+a)^2}
 \end{equation}
 
-This will be zero at $\sqrt{2}-1$; we also note that
+and this will be zero at $\sqrt{2}-1$; we also note that
 $d^2\mathcal{L}/da^2=-4(1+a)^{-3}$, manifestly strictly negative for
 $0\leq a\leq 1$: the root is a maximum.
 
@@ -328,7 +329,12 @@ Fisher information for such observations is
 \mathcal{I}(a)=\frac{1+16a+18a^2-4a^3-15a^4-7a^5-a^6}{a(1-a)(1+a)^3}
 \end{equation}
 
-which has a minimum of about $13.9$ at at about $a=0.575$.
+which has a minimum of about $13.9$ at at about $a=0.575$.  This is
+intermediate between the two-runner case where the Fisher information
+exceeds 4 (minimum at $p_a=\frac{1}{2}$), and the case of three
+distinct runners, where the Fisher information exceeds
+$\frac{1323}{16}\simeq 82.7$ (minimum at $p_a=p_b=p_c=\frac{1}{3}$); a
+brief discussion is given at \code{inst/fisher\_inf\_PL3.Rmd}.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -382,8 +388,8 @@ datasets presented here are maintained under version control and
 available at \url{https:github.com/RobinHankin/hyper2}.  Given an
 order statistic of the type considered above, the
 Mann-Whitney-Wilcoxon test~\citep{mann1947,wilcoxon1945} assesses a
-null of identity of underlying distributions.  Consider the
-chorioamnion dataset~\citep{hollander2013}, used in
+null of identity of underlying distributions~\citep{ahmad1996}.
+Consider the chorioamnion dataset~\citep{hollander2013}, used in
 \code{wilcox.test.Rd}:
 
 <<define_xy_wilcox>>=
@@ -631,7 +637,7 @@ remained unchanged between 2020 and 2021 was tested and rejected.
 Draws are not considered in the present work but in principle may be
 accommodated, either using likelihoods comprising sums of
 Plackett-Luce probabilities~\citep{hankin2017}; or the introduction of
-a reified draw entity~\citep{hankin2020}.
+a reified draw entity~\citep{hankin2010}.
 
 Further work might include a systematic comparison between
 \code{hyper3} approach and the Mann-Whitney-Wilcoxon test, including
