@@ -331,10 +331,10 @@ Fisher information for such observations is
 
 which has a minimum of about $13.9$ at at about $a=0.575$.  This is
 intermediate between the two-runner case where the Fisher information
-exceeds 4 (minimum at $p_a=\frac{1}{2}$), and the case of three
-distinct runners, where the Fisher information exceeds
-$\frac{1323}{16}\simeq 82.7$ (minimum at $p_a=p_b=p_c=\frac{1}{3}$); a
-brief discussion is given at \code{inst/fisher\_inf\_PL3.Rmd}.
+has a minimum of 4 at $p_a=p_b=\frac{1}{2}$, and the case of three
+distinct runners $a,b,c$, where the Fisher information has a minimum
+of $\frac{1323}{16}\simeq 82.7$ at $p_a=p_b=p_c=\frac{1}{3}$; a brief
+discussion is given at \code{inst/fisher\_inf\_PL3.Rmd}.
 
 \begin{figure}[htbp]
   \begin{center}
