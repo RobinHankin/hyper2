@@ -113,12 +113,62 @@ $\partial^2S/\partial b^2=-b^{-2} +(1-b)^{-2}-(1-a-b)^{-2}$
 $\partial^2S/\partial a\partial b=-(1-a-b)^{-2}$
 
 
+## Fisher information matrix
 
-# Top left term, $aa$
+We seek $M$, the two-by-two matrix with entries $\sum_{\sigma\in\left\lbrace
+a\succ b\succ c,\ldots, c\succ b\succ a\right\rbrace}\operatorname{Prob}(\sigma)\frac{\partial^2\log\operatorname{Prob}(\sigma)}{\partial x\partial y}$, where $x,y\in\left\lbrace a,b\right\rbrace$.  Then the Fisher information is $\det(M)$.  The whole thing is a bit of a nightmare algebraically but we can use sage to help.
 
-we have
+```
+var('a b')
+p1 = a*b/(1-a)
+p2 = a*(1-a-b)/(1-a)
+p3 = a*b/(1-b)
+p4 = b*(1-a-b)/(1-b)
+p5 = a*(1-a-b)/(a+b)
+p6 = b*(1-a-b)/(a+b)
 
-$$
-\frac{ab}{1-a}\cdot\left(-a^{-2} - (1-a)^{-2}\right) +
-\frac{a(1-a-b)}{1-a}\cdot\left(-a^{-2} + (1-a)^{-2} + (1-a-b)^{-2}\right)
-$$
+pretty_print_default(True)
+Faa = (
+    -p1*diff(log(p1),a,a).full_simplify()
+    -p2*diff(log(p2),a,a).full_simplify()
+    -p3*diff(log(p3),a,a).full_simplify()
+    -p4*diff(log(p4),a,a).full_simplify()
+    -p5*diff(log(p5),a,a).full_simplify()
+    -p6*diff(log(p6),a,a).full_simplify()
+)
+
+Fab = (
+    -p1*diff(log(p1),a,b).full_simplify()
+    -p2*diff(log(p2),a,b).full_simplify()
+    -p3*diff(log(p3),a,b).full_simplify()
+    -p4*diff(log(p4),a,b).full_simplify()
+    -p5*diff(log(p5),a,b).full_simplify()
+    -p6*diff(log(p6),a,b).full_simplify()
+)
+
+Fba = (
+    -p1*diff(log(p1),b,a).full_simplify()
+    -p2*diff(log(p2),b,a).full_simplify()
+    -p3*diff(log(p3),b,a).full_simplify()
+    -p4*diff(log(p4),b,a).full_simplify()
+    -p5*diff(log(p5),b,a).full_simplify()
+    -p6*diff(log(p6),b,a).full_simplify()
+)
+
+Fbb = (
+    -p1*diff(log(p1),b,b).full_simplify()
+    -p2*diff(log(p2),b,b).full_simplify()
+    -p3*diff(log(p3),b,b).full_simplify()
+    -p4*diff(log(p4),b,b).full_simplify()
+    -p5*diff(log(p5),b,b).full_simplify()
+    -p6*diff(log(p6),b,b).full_simplify()
+)
+
+M = matrix([[Faa,Fab],[Fba,Fbb]])
+
+M.det().subs(a=1/3,b=1/3)
+```
+
+gives `1323/16`.
+
+
