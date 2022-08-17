@@ -173,3 +173,71 @@ Minimize[{Faa*Fbb-Fab*Fba,a>0,b>0,a+b<1},{a,b}]
 gives `1323/16`.
 
 
+
+# The loser
+
+With $a,b,c, a+b+c=1$ or $c=1-a-b$ we have the probabilities of:
+
+## C losing
+
+either $a\succ b\succ c$ or $b\succ a\succ c$, mutually exclusive, probabilities add:
+
+$$\frac{a}{a+b+c}\cdot\frac{b}{b+c}+\frac{b}{a+b+c}\cdot\frac{a}{a+c}= ab\left(\frac{1}{1-a}+\frac{1}{1-b}\right)$$
+
+## B losing
+
+either $a\succ c\succ b$ or $c\succ a\succ c$:
+
+$$\frac{a}{a+b+c}\cdot\frac{c}{b+c}+\frac{c}{a+b+c}\cdot\frac{a}{a+b}= ac\left(\frac{1}{1-a}+\frac{1}{1-c}\right)
+=a(1-a-b)\left(\frac{1}{1-a}+\frac{1}{a+b}\right)
+$$
+
+## A losing
+
+either $b\succ c\succ a$ or $c\succ b\succ a$:
+
+$$\frac{b}{a+b+c}\cdot\frac{c}{a+c}+\frac{c}{a+b+c}\cdot\frac{b}{a+b}= b(1-a-b)\left(\frac{1}{1-b}+\frac{1}{a+b}\right)
+$$
+
+
+In mathematica:
+
+```
+c = 1-a-b
+pc =  a*b*(1/(1-a) + 1/(1-b))
+pb =  a*c*(1/(1-a) + 1/(1-c))
+pa =  b*c*(1/(1-b) + 1/(1-c))
+
+
+
+Faa = (
+    -pa*D[Log[pa],a,a]
+    -pb*D[Log[pb],a,a]
+    -pc*D[Log[pc],a,a]
+)
+
+Fab = (
+    -pa*D[Log[pa],a,b]
+    -pb*D[Log[pb],a,b]
+    -pc*D[Log[pc],a,b]
+)
+
+Fba = (
+    -pa*D[Log[pa],b,a]
+    -pb*D[Log[pb],b,a]
+    -pc*D[Log[pc],b,a]
+)
+
+Fbb = (
+    -pa*D[Log[pa],b,b]
+    -pb*D[Log[pb],b,b]
+    -pc*D[Log[pc],b,b]
+)
+
+
+
+Minimize[{Faa*Fbb-Fab*Fba,a>0,b>0,a+b<1},{a,b}]
+```
+
+
+
