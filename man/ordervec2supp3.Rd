@@ -34,6 +34,7 @@ args2ordervec(...)
   \item{nonfinishers}{Character vector (a set) showing players that did
     not finish}
   \item{a}{An ordertable}
+  \item{helped}{vector of entities being helped}
   \item{e,help,lambda}{Parameters controlling non-independence with
     \code{e} a named integer vector specifying equivalence classes of
     the competitors: names correspond to the competitors, values to

@@ -1,6 +1,10 @@
 \name{constructor}
 \alias{constructor}
 \alias{constructors}
+\alias{constructor_2020}
+\alias{constructor_2020_maxp}
+\alias{constructor_table_2020}
+\alias{constructor_2020_table}
 \alias{constructor_2021}
 \alias{constructor_2021_maxp}
 \alias{constructor_table_2021}
@@ -15,7 +19,8 @@ data(constructor)
 \details{
 
 The Constructors championship runs parallel to the Formula 1 drivers'
-championship.  Each constructor fields two drivers.
+championship.  Each constructor fields two drivers.  We have data from
+2020 and 2021, following applies to both years.
 
 Object \code{constructor_table_2021} is a dataframe, taken from
 Wikipedia, showing 
