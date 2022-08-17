@@ -193,3 +193,4 @@ CITATION.cff
 ^inst/draws.txt
 ^inst/hunter.Rmd
 ^inst/setpartitions_hyper2.Rmd$
+^inst/timesData.csv$
