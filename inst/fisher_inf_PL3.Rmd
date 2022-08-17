@@ -239,5 +239,6 @@ Fbb = (
 Minimize[{Faa*Fbb-Fab*Fba,a>0,b>0,a+b<1},{a,b}]
 ```
 
+This gives $\frac{16875}{265}\simeq 65.918$.
 
 
