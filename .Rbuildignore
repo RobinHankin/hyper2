@@ -194,3 +194,16 @@ CITATION.cff
 ^inst/hunter.Rmd
 ^inst/setpartitions_hyper2.Rmd$
 ^inst/timesData.csv$
+^inst/jss_hyper3.Rnw$
+^inst/carcinoma.txt$
+^inst/constructor_2019.txt$
+^inst/constructor_2020.txt$
+^inst/constructor_2021.txt$
+^inst/constructor_names.txt$
+^inst/euro_ranks.txt$
+^inst/five_nations.txt$
+^inst/global_liveability_ranking.txt$
+^inst/hepatitis.txt$
+^inst/javelin.txt$
+^inst/surfing_jsa_rebuttal.tex$
+^inst/surfing_jsa_rebuttal_referee2.tex$
