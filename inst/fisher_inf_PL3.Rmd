@@ -210,25 +210,25 @@ pa =  b*c*(1/(1-b) + 1/(1-c))
 
 
 
-Faa = (
+Flaa = (
     -pa*D[Log[pa],a,a]
     -pb*D[Log[pb],a,a]
     -pc*D[Log[pc],a,a]
 )
 
-Fab = (
+Flab = (
     -pa*D[Log[pa],a,b]
     -pb*D[Log[pb],a,b]
     -pc*D[Log[pc],a,b]
 )
 
-Fba = (
+Flba = (
     -pa*D[Log[pa],b,a]
     -pb*D[Log[pb],b,a]
     -pc*D[Log[pc],b,a]
 )
 
-Fbb = (
+Flbb = (
     -pa*D[Log[pa],b,b]
     -pb*D[Log[pb],b,b]
     -pc*D[Log[pc],b,b]
