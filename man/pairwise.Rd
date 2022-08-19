@@ -76,10 +76,9 @@ number 1, pages 384--406
 \note{
 
 An extended discussion of \code{pairwise()} is given in
-\code{inst/zermelo.Rmd} and also \code{inst/karate.Rmd}.  Function
-\code{home_away()} is described and used in
+\code{inst/zermelo.Rmd} and also \code{inst/karate.Rmd}.  Functions
+\code{home_away()} and \code{home_away3()} are described and used in
 \code{inst/home_advantage.Rmd}.
-
 
 }
 \seealso{\code{\link{maxp}}}
@@ -106,11 +105,11 @@ NA,12+4i,11+2i,16+2i,11+7i,NA),4,4)
 teams <- LETTERS[1:4]
 dimnames(M2) <- list("@home" = teams,"@away"=teams)
 home_away(M2)
-home_away3(M2,lambda=1.2)
-
+# home_away3(M2,lambda=1.2)  # works but takes too long (~3s)
+home_away3(M2[1:3,1:3],lambda=1.2) 
 
 M <- kka_array[,,1] + 1i*kka_array[,,3] # ignore draws
 home_away(M)
-home_away3(M,lambda=1.3)
+# home_away3(M,lambda=1.3)  # works but takes too long (~3s)
 
 }
