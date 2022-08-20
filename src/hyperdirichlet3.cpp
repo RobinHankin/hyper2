@@ -5,7 +5,7 @@
 weightedplayervector makeweightedplayervector3(const CharacterVector players, const NumericVector weights){
     assert(players.size() == weights.size());
     weightedplayervector out;
-    for(size_t i=0 ; i<players.size() ; i++){
+    for(size_t i=0 ; i < (size_t) players.size() ; i++){
         if(weights[i] != 0){
             out[(string) players[i]] += weights[i];
         }
@@ -33,7 +33,7 @@ hyper3 prepareL3(const List &L, const List &W, const NumericVector &d){
 playerstrengths preparepmap3(const NumericVector &probs, const CharacterVector &pnames){// hamilton=0.7,vettel=0.2,button=0.1
     playerstrengths out;
 
-    for(size_t i=0; i<probs.length() ; i++){
+    for(size_t i=0; i < (size_t) probs.length() ; i++){
         out[(string) pnames[i]] = probs[i];
     }
     return(out);
@@ -163,7 +163,7 @@ List accessor3(
     const int n=Lwanted.size();
     weightedplayervector b;
 
-    for(size_t i=0; i<n ; i++){
+    for(size_t i=0; i < (size_t) n ; i++){
             const SEXP jj = Lwanted[i];
             const SEXP kk = Wwanted[i];
             const Rcpp::CharacterVector players(jj);
