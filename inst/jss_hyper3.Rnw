@@ -176,7 +176,7 @@ objects uses named vectors:
 <<>>=
 LL <- hyper3()
 LL[c(a=1)] <- 1
-LL[c(a=3,b=2,c=1)] <- -1
+LL[c(a=3, b=2, c=1)] <- -1
 LL
 @
 
@@ -188,8 +188,8 @@ we can evaluate these hypotheses using generic function
 \code{loglik()}:
 
 <<>>=
-loglik(c(a=0.01,b=0.01,c=0.98),LL)
-loglik(c(a=0.9,b=0.05,c=0.05),LL)
+loglik(c(a=0.01, b=0.01, c=0.98),LL)
+loglik(c(a=0.90, b=0.05, c=0.05),LL)
 @
 
 Thus we prefer $H_1$ over $H_2$ with about 3.5 units of support,
@@ -205,7 +205,7 @@ example, can be used to generate a loglikelihood function for
 Equation~\ref{PL_like}:
 
 <<>>=
-(H <- ordervec2supp3(c("a","c","b","a","a","b")))
+(H <- ordervec2supp3(c("a", "c", "b", "a", "a", "b")))
 @
 
 We may find a maximum likelihood estimate for the players' strengths,
@@ -254,7 +254,7 @@ $0\leq a\leq 1$: the root is a maximum.
 
 
 <<maxpaba,cache=TRUE>>=
-maxp(ordervec2supp3(c("a","b","a")))
+maxp(ordervec2supp3(c("a", "b", "a")))
 @
 
 Above, we see close agreement with the theoretical value of
@@ -343,17 +343,17 @@ at \code{inst/fisher\_inf\_PL3.Rmd}.
 \begin{figure}[htbp]
   \begin{center}
 <<figabbabb,echo=FALSE>>=
-f_aab <- function(a){a^2/(1+a)}
-f_aba <- function(a){a*(1-a)/(1+a)^2}
-f_baa <- function(a){(1-a)/(1+a)}
+f_aab <- function(a){a^2 / (1 + a)}
+f_aba <- function(a){a * (1 - a) / (1 + a)^2}
+f_baa <- function(a){(1 - a) / (1 + a)}
 
-p <- function(f,...){points(a,f(a)/max(f(a)),...)}
-plot(0:1,0:1,xlab="p(a)",ylab="Likelihood",type="n")
-p(f_aab,type="l",col="black")
-p(f_aba,type="l",col="red")
-p(f_baa,type="l",col="blue")
-legend(x=0.85,y=0.7,col=c("black","red","blue"),lty=1,pch=NA,legend=c("AAB","ABA","BAA"))
-abline(h=exp(-2),lty=2)
+p <- function(f, ...){points(a, f(a) / max(f(a)), ...)}
+plot(0:1, 0:1, xlab="p(a)", ylab="Likelihood", type="n")
+p(f_aab, type="l", col="black")
+p(f_aba, type="l", col="red")
+p(f_baa, type="l", col="blue")
+legend(x=0.85, y=0.7, col=c("black", "red", "blue"), lty=1, pch=NA, legend=c("AAB", "ABA", "BAA"))
+abline(h=exp(-2), lty=2)
 @
 \caption{Likelihood \label{ABAetc_likelihood} functions for
 observations $a\succ a\succ b$, $a\succ b\succ a$, $b\succ a\succ a$}
@@ -380,7 +380,7 @@ complete order statistic).  The evaluate would be $2-\sqrt{2}\simeq
 0.586$:
 
 <<cache=TRUE>>=
-maxp(ordervec2supp3(c("a","b"),nonfinishers=c("a","b")))
+maxp(ordervec2supp3(c("a", "b"), nonfinishers=c("a", "b")))
 @
 
 The Fisher information for such observations has a minimum of
@@ -411,9 +411,9 @@ Here we see a measure of permeability of the human placenta at term
 The order statistic is straightforward to calculate:
 
 <<hyper3osdef,cache=TRUE>>=
-names(x) <- rep("x",length(x))
-names(y) <- rep("y",length(y))
-(os <- names(sort(c(x,y))))
+names(x) <- rep("x", length(x))
+names(y) <- rep("y", length(y))
+(os <- names(sort(c(x, y))))
 @
 
 Then object \code{os} is converted to a \code{hyper3} object, again
@@ -438,12 +438,12 @@ dataset, given in Figure~\ref{wilcox_likelihood}.
 \begin{figure}[htbp]
   \begin{center}
 <<plotwilcoxlike,echo=FALSE>>=
-a <- seq(from=0.02,to=0.8,len=40)
-L <- sapply(a,function(p){loglik(p,Hxy)})
-plot(a,L-max(L),type='b')
-abline(h=c(0,-2))
+a <- seq(from=0.02, to=0.8, len=40)
+L <- sapply(a, function(p){loglik(p, Hxy)})
+plot(a, L - max(L),type='b')
+abline(h=c(0, -2))
 abline(v=c(0.24))
-abline(v=c(0.5),lty=2)
+abline(v=c(0.5), lty=2)
 @
 \caption{A\label{wilcox_likelihood} support for the Bradley-Terry
 strength $p_a$ of permeability at term.  The evaluate of 0.24 is
@@ -469,7 +469,7 @@ distances, and names being the competitors, using
 \code{attemptstable2supp3()}:
 
 <<label=converttosupp3,cache=TRUE>>=
-javelin_vector <- attemptstable2supp3(javelin_table,decreasing=TRUE,give.supp=FALSE)
+javelin_vector <- attemptstable2supp3(javelin_table, decreasing=TRUE, give.supp=FALSE)
 javelin_vector
 @
 
@@ -488,7 +488,6 @@ Above, object \code{javelin} is a \code{hyper3} likelihood function,
 so one has access to the standard likelihood-based methods, such as
 finding and displaying the maximum likelihood estimate:
 
-
 <<setdigits,echo=FALSE>>=
 options(digits=3)
 @
@@ -498,7 +497,7 @@ options(digits=3)
   \begin{center}
 <<testthejav,cache=TRUE>>=
 (mj <- maxp(javelin))
-dotchart(mj,pch=16)
+dotchart(mj, pch=16)
 @
 \caption{Maximum likelihood estimate for javelin throwers' Bradley-Terry strengths}
 \end{center}
@@ -529,14 +528,14 @@ strengths.
 
 <<havealook,echo=FALSE,cache=TRUE>>=
 f <- function(s){
-  jj <- specificp.test(javelin,"Vesely",s,n=2)
+  jj <- specificp.test(javelin, "Vesely", s, n=2)
   p <- jj$null_estimate
- return(c(log(p[6]/p[7]),jj$null_support))
+ return(c(log(p[6] / p[7]), jj$null_support))
 }
-Ves <- seq(from=0.0199,to=0.33,len=16)
-M <- sapply(Ves,f)
-M[2,] <- M[2,]-max(M[2,])
-rownames(M) <- c("logcontrast","support")
+Ves <- seq(from=0.0199, to=0.33, len=16)
+M <- sapply(Ves, f)
+M[2,] <- M[2,] - max(M[2,])
+rownames(M) <- c("logcontrast", "support")
 @
 
 
@@ -544,9 +543,9 @@ rownames(M) <- c("logcontrast","support")
 \begin{center}
 <<plottheloglikcont,echo=FALSE>>=
 colnames(M) <-  as.character(Ves)
-plot(t(M),type="b")
-abline(h=c(0,-2))
-abline(v=0,lty=2)
+plot(t(M), type="b")
+abline(h=c(0, -2))
+abline(v=0, lty=2)
 abline(v=log(0.32062833/0.11402735)) # these from mp
 @
 \caption{Profile \label{profliklogcont} likelihood for log-contrast
@@ -590,8 +589,8 @@ Plackett-Luce strengths of the constructors:
 <<maxpconstructor2021, cache=TRUE>>=
 const2020 <- ordertable2supp3(constructor_2020_table)
 const2021 <- ordertable2supp3(constructor_2021_table)
-maxp(const2020,n=1)
-maxp(const2021,n=1)
+maxp(const2020, n=1)
+maxp(const2021, n=1)
 @
 
 Above, we see the strength of Mercedes falling from about 0.38 in 2020
@@ -604,7 +603,7 @@ this statistically would be to define a combined likelihood function
 for both years, keeping track of the year:
 
 <<definecombinedlikelihoodfunction,cache=TRUE>>=
-H <- psubs(constructor_2020,"Merc","Merc2020") + psubs(constructor_2021,"Merc","Merc2021")
+H <- psubs(constructor_2020, "Merc", "Merc2020") + psubs(constructor_2021, "Merc", "Merc2021")
 @
 
 Above, we use generic function \code{psubs()} to change the name of
@@ -616,7 +615,7 @@ of \code{Merc2020} and of \code{Merc2021} are identical.  Package
 idiom would be to use generic function \code{samep.test()}:
 
 <<usesamep,cache=TRUE>>=
-samep.test(H,c("Merc2020","Merc2021"))
+samep.test(H, c("Merc2020", "Merc2021"))
 @
 
 Above, we see strong evidence for a real decrease in the strength of
