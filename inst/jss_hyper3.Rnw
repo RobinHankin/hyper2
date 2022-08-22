@@ -168,8 +168,10 @@ Above, object \code{L} is an object of class \code{hyper3}; it may be
 evaluated at points in probability space [that is, a vector
 \code{[a,b,c]} of nonnegative values with unit sum] using standard
 \proglang{R} idiom wrapping \proglang{C++} back end.  The package
-includes an \proglang{S3} class \code{hyper3} for this type of object.
-Package idiom for creating such objects uses named vectors:
+includes an \proglang{S3} class \code{hyper3} for this type of object;
+extraction and replacement methods use \pkg{disordR}
+discipline~\citep{hankin2022}.  Package idiom for creating such
+objects uses named vectors:
 
 <<>>=
 LL <- hyper3()
@@ -196,7 +198,6 @@ criterion~\citep{edwards1972}, and we conclude that our observation
 [in this case, that one of the three clones of player $a$ beat the $b$
 twins and the singleton $c$] furnishes strong support against $H_2$ in
 favour of $H_1$.
-
 
 The package includes many helper functions to work with order
 statistics of this type.  Function \code{ordervec2supp3()}, for
@@ -330,13 +331,14 @@ Fisher information for such observations is
 \end{equation}
 
 which has a minimum of about $13.9$ at at about $a=0.575$.  We can
-compare this with the Fisher information ${\mathcal I}$ for the case
-of three distinct runners $a,b,c$, evaluated at its minimum of
-$p_a=p_b=p_c=\frac{1}{3}$.  If we observe the complete order
-statistic, ${\mathcal I}=\frac{1323}{16}\simeq 82.7$; if we observe
-just the winner, ${\mathcal I}=27$, and if we observe just the loser
-we have ${\mathcal I}=\frac{16875}{256}\simeq 65.9$.  A brief
-discussion is given at \code{inst/fisher\_inf\_PL3.Rmd}.
+compare this with the Fisher information matrix ${\mathcal I}$, for
+the case of three distinct runners $a,b,c$, evaluated at its minimum
+of $p_a=p_b=p_c=\frac{1}{3}$.  If we observe the complete order
+statistic, $\left|{\mathcal I}\right| =\frac{1323}{16}\simeq 82.7$; if
+we observe just the winner, $\left|{\mathcal I}\right|=27$, and if we
+observe just the loser we have $\left|{\mathcal
+I}\right|=\frac{16875}{256}\simeq 65.9$.  A brief discussion is given
+at \code{inst/fisher\_inf\_PL3.Rmd}.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -380,6 +382,11 @@ complete order statistic).  The evaluate would be $2-\sqrt{2}\simeq
 <<cache=TRUE>>=
 maxp(ordervec2supp3(c("a","b"),nonfinishers=c("a","b")))
 @
+
+The Fisher information for such observations has a minimum of
+$\frac{68}{9}\simeq 7.56$ at $a=\frac{1}{2}$.  An inference problem
+for a dataset including nonfinishers will be given below in
+section~\ref{f1}.
 
 \section{Mann-Whitney test}
 
@@ -550,7 +557,7 @@ thus the null is not rejected}
 \end{center}
 \end{figure}
 
-\section{Formula 1 motor racing: the constructors' championship}
+\section{Formula 1 motor racing: the constructors' championship}\label{f1}
 
 Formula 1 motor racing is an important and prestigious motor sport
 \citep{codling2017,jenkins2010}.  In Formula 1 Grand Prix, the
@@ -623,7 +630,7 @@ groups; the preferred interpretation is a running race in which the
 competitors are split into equivalence classes of clones.
 Implementing this in \proglang{R} is accomplished via a \proglang{C++}
 back-end making use of the \proglang{STL} ``map" class which offers
-efficiency advantages, especially for large objects.
+efficiency advantages, especially for large objects. 
 
 New likelihood functions for simple cases with three or four
 competitors were presented, and extending to larger numbers furnishes
