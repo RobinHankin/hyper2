@@ -242,3 +242,48 @@ Minimize[{Faa*Fbb-Fab*Fba,a>0,b>0,a+b<1},{a,b}]
 This gives $\frac{16875}{265}\simeq 65.918$.
 
 
+#  Two pairs of twins, two finishers and two nonfinishers
+
+There are four possible outcomes:
+
+$a\succ b\succ\left\lbrace a,b\right\rbrace$
+
+$b\succ a\succ\left\lbrace a,b\right\rbrace$
+
+$a\succ a\succ\left\lbrace b,b\right\rbrace$
+
+$b\succ b\succ\left\lbrace a,a\right\rbrace$.
+
+Call
+these `S1`, `S2`, `S3` and `S4` respectively.  Mathematica code:
+
+```
+S1 = a*(1-a)/(2-a)*2
+S2 = a*(1-a)/(1+a)*2
+S3 = a^2/(2-a)
+S4 = (1-a)^2/(1+a)
+
+
+FI = 
+-(
+S1*D[Log[S1],a,a]+
+S2*D[Log[S2],a,a]+
+S3*D[Log[S3],a,a]+
+S4*D[Log[S4],a,a]
+)//FullSimplify
+
+
+Minimize[{FI,a>0,a<1},{a}]
+```
+
+We get 68/9 at $a=1/2$.  In more detail we have
+
+```{r}
+FI <- function(a){ (12 + (1-a)* a* ((1-a)*a-10)) / ((2-a)^2*(1-a)*a*(1+a)^2)}
+p <- seq(from=0.1,to=0.90,len=40)
+plot(p,FI(p))
+```
+
+
+
+
