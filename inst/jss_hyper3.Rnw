@@ -17,7 +17,7 @@
   \code{hyper2} in which multiple entities are constrained to have
   identical Bradley-Terry strengths.  A new \proglang{S3} class
   \code{hyper3}, along with associated methods, is motivated and
-  introduced.  Four datasets are analysed, each analysis furnishing
+  introduced.  Three datasets are analysed, each analysis furnishing
   new insight, and each highlighting different capabilities of the
   package.
 }
