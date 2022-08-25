@@ -90,3 +90,27 @@ H3 <- f(1.1,1.888)
 H3
 summary(H3)
 ```
+
+```{r,testH3,cache=TRUE}
+equalp.test(H3,n=1)
+```
+
+
+```{r,comparelikelihoods,cache=TRUE}
+maxp(f(1.1,2.1),n=1,give=TRUE)
+maxp(f(1.1,2.3),n=1,give=TRUE)
+```
+
+```{r,defineprofilelike,cache=TRUE}
+profl <- function(v){
+    lambda <- v[1]
+    D <- v[2]
+    H <- f(lambda,v)
+    return(loglik(maxp(H,n=1),H))
+}
+```
+
+```{r,calcproflike,cache=TRUE}
+profl(c(1.1,2.1))
+profl(c(1.2,2.1))
+```
