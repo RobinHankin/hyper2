@@ -1,0 +1,92 @@
+---
+title: "Chess collusion with hyper3 objects"
+author: "Robin KS Hankin"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(1)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+We analyse results from Curacao 1962 using `hyper3` formalism using
+the weighted Draw monster appraoch outlined in `kka.Rmd`:
+
+$$
+\left(\frac{\lambda p_1, D(p_1+p_2),p_2}{\lambda p_1+D(p_1+p_2)+p_2}\right)^{(a,b,c)}
+\left(\frac{p_1, D(p_1+p_2),\lambda p_2}{p_1+D(p_1+p_2)+\lambda p_2}\right)^{(d,e,f)}
+$$
+
+\newcommand{\wld}[3]{\mathord{+}#1\,\mathord{=}#2\,\mathord{-}#3}
+
+Above, $p_1$ plays $p_2$ a total of $a+b+c+d+e+f$ times; we have
+$a+b+c$ matches with $p_1$ playing white and $p_2$ black, with $a$
+wins, $b$ draws and $c$ losses [write $\wld{a}{b}{c}$], and $d+e+f$
+matches with $p_1$ playing black and $p_2$ playing white with
+$\wld{d}{e}{f}$.
+
+
+```{r,label=loadjavelinandconvert}
+cur_matches <- read.table("stockholm1962_matches.txt",header=FALSE)
+head(cur_matches)
+nrow(cur_matches)
+```
+
+Above, we see on the first line that Aaron (white) lost to Barcza
+(black).  We will set up `hyper2` and `hyper3` objects corresponding
+to likelihood functions for these observations.
+
+```{r,label=nat}
+jj <- read.table("stockholm1962.txt",header=FALSE)[,1:2]
+(players <- jj$V1)
+(nationalities <- jj$V2)
+```
+
+
+```{r,label=H2H3}
+H2 <- hyper2()
+H3 <- hyper3()
+f <- function(lambda,D){
+  for(i in seq_len(nrow(cur_matches))){
+    white_player <- cur_matches[i,1]
+    black_player <- cur_matches[i,2]
+    result <- cur_matches[i,3]
+    if(result == "1-0"){ # white player wins
+       num <- lambda 
+       names(num) <- white_player
+    } else if(result == "0-1"){  # black player wins
+       num <- 1
+       names(num) <- black_player
+    } else if (result == "1/2-1/2"){ # draw, duh
+      num <- c(D,D)
+      names(num) <- c(white_player,black_player)
+    } else {
+      stop("this cannot happen")
+    }
+
+    H3[num] %<>% inc()       
+    den <- c(lambda+D,1+D)
+    names(den) <- c(white_player,black_player)
+    H3[den] %<>% dec()
+  }
+  return(H3)
+}
+```
+
+      
+Now use it
+
+```{r,try11and1888,cache=TRUE}
+H3 <- f(1.1,1.888)
+```
+
+```{r,showH3}
+H3
+summary(H3)
+```
