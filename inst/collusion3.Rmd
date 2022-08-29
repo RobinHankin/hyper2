@@ -32,6 +32,20 @@ matches with $p_1$ playing black and $p_2$ playing white with
 $\wld{d}{e}{f}$.
 
 
+# Short story
+
+With this model, whatever the value of $D$ and $\lambda$, there is a
+pathology which BT cannot deal with.  Still not quite 100% sure but it
+seems that the maximum likelihood estimate of the players' strengths
+is zero except for Fisher and Petrosian; and indeed we see Fisher at
+57% and Petrosian at 42% [with $\lambda = 1.1, D=1.888$].  This on the
+grounds that these players never lost playing black (there are some
+$2\times 3$ tables at the end).  This might be considered a defect of
+the probability model.
+
+# Longer story
+
+
 ```{r,label=loadjavelinandconvert}
 cur_matches <- read.table("stockholm1962_matches.txt",header=FALSE)
 head(cur_matches)
@@ -50,9 +64,8 @@ jj <- read.table("stockholm1962.txt",header=FALSE)[,1:2]
 
 
 ```{r,label=H2H3}
-H2 <- hyper2()
-H3 <- hyper3()
 f <- function(lambda,D){
+  H3 <- hyper3()
   for(i in seq_len(nrow(cur_matches))){
     white_player <- cur_matches[i,1]
     black_player <- cur_matches[i,2]
@@ -101,7 +114,9 @@ maxp(f(1.1,2.1),n=1,give=TRUE)
 maxp(f(1.1,2.3),n=1,give=TRUE)
 ```
 
-```{r,defineprofilelike,cache=TRUE}
+A break here.
+
+```{r,label=defineprofilelike,cache=FALSE}
 profl <- function(v){
     lambda <- v[1]
     D <- v[2]
@@ -110,7 +125,87 @@ profl <- function(v){
 }
 ```
 
+Now apply `profl()`:
+
+
 ```{r,calcproflike,cache=TRUE}
 profl(c(1.1,2.1))
-profl(c(1.2,2.1))
+#profl(c(1.2,2.1))
 ```
+
+```{r,calcmanyproflike,cache=TRUE} 
+np <- 4
+lambda <- seq(from=0.1,to=1.5,len=np)
+D <- seq(from=0.1,to=0.4,len=np)
+jj <- as.matrix(expand.grid(lambda,D))
+LL <- apply(jj,1,profl)
+LL
+```
+
+```{r,plotll}
+LL <- LL - max(LL)
+m <- matrix(LL,np,np)
+m
+filled.contour(lambda,D,m,xlab="lambda",ylab="D",nlevels=40)
+```
+
+```{r,plotagain}
+res <- cur_matches$V3
+res
+table(res)
+white_wins <- cur_matches[res=="1-0"    ,]
+black_wins <- cur_matches[res=="0-1"    ,]
+draws      <- cur_matches[res=="1/2-1/2",]
+(players <- unique(sort(c(cur_matches[,1],cur_matches[,2]))))
+jj <- rep(0,length(players))
+names(jj) <- players
+jj
+plays_white_wins <- jj
+plays_white_lose <- jj
+plays_white_draw <- jj
+plays_black_wins <- jj
+plays_black_lose <- jj
+plays_black_draw <- jj
+for(i in seq_len(nrow(cur_matches))){
+  white_player <- cur_matches[i,1]
+  black_player <- cur_matches[i,2]
+  result       <- cur_matches[i,3]  
+
+  if(result == "1-0"){
+      plays_white_wins[white_player] %<>% inc
+      plays_black_lose[black_player] %<>% inc
+  } else if(result == "0-1"){
+      plays_white_lose[white_player] %<>% inc
+      plays_black_wins[black_player] %<>% inc
+  } else if(result == "1/2-1/2"){
+      plays_white_draw[white_player] %<>% inc
+      plays_black_draw[black_player] %<>% inc
+  }
+}
+
+plays_white_wins
+plays_white_lose
+plays_black_wins
+plays_black_lose
+```
+
+Now we need some way to describe each player's wins/losses playing
+white and black:
+
+```{r}
+f <- function(player){
+out <- matrix(c(
+  plays_white_wins[player], plays_white_lose[player], plays_white_draw[player],
+  plays_black_wins[player], plays_black_lose[player], plays_black_draw[player]
+  ),byrow=TRUE,2,3)
+  dimnames(out) <- list(colour=c("white","black"),match=c("win","lose","draw"))
+  return(out)
+}
+f("Fischer")
+f("Korchnoi")
+f("Petrosian")
+M <- f("Aaron")*0
+for(p in players){ M <- M + f(p) }
+M
+```
+
