@@ -62,7 +62,7 @@ resampling_multiple <- function(m,f2017,pointslist){
   ## "random_table" is a random table; now calculate lstar and pstar for
   ## likelihood ranks and points ranks respectively:
   
-  l_star <- maxp(ordertable2supp(ranktable_to_ordertable(random_table)))
+  l_star <- sort(maxp(ordertable2supp(ranktable_to_ordertable(random_table))),decreasing=TRUE)
   l_star[] <- seq_along(l_star)
   ## l_star is the likelihood order statistic.
   
