@@ -57,24 +57,24 @@ m <- maxp(ordertable2supp(as.ordertable(f2017)))
 
 
 resampling_multiple <- function(m,f2017,pointslist){
-    random_table <- rrank(n=ncol(f2017), p=m)
-    rownames(random_table) <- colnames(f2017)
-    ## "random_table" is a random table; now calculate lstar and pstar for
-    ## likelihood ranks and points ranks respectively:
-
-    l_star <- maxp(ordertable2supp(ranktable_to_ordertable(random_table)))
-    l_star[] <- seq_along(l_star)
-    ## l_star is the likelihood order statistic.
-
-	goodnesses <- seq_along(pointslist)
-	for(i in seq_along(pointslist)){
-		p_star <- ordertable2points(as.ordertable(ranktable_to_ordertable(random_table)),pointslist[[i]])
-		p_star <- sort(p_star,decreasing=TRUE)
-		p_star[] <- seq_along(p_star)
-		goodness <- sum(cumprod(names(p_star)==names(l_star)))
-		goodnesses[i] <- goodness
-		}
-	return(goodnesses)
+  random_table <- rrank(n=ncol(f2017), p=m)
+  rownames(random_table) <- colnames(f2017)
+  ## "random_table" is a random table; now calculate lstar and pstar for
+  ## likelihood ranks and points ranks respectively:
+  
+  l_star <- maxp(ordertable2supp(ranktable_to_ordertable(random_table)))
+  l_star[] <- seq_along(l_star)
+  ## l_star is the likelihood order statistic.
+  
+  goodnesses <- seq_along(pointslist)
+  for(i in seq_along(pointslist)){
+    p_star <- ordertable2points(as.ordertable(ranktable_to_ordertable(random_table)),pointslist[[i]])
+    p_star <- sort(p_star,decreasing=TRUE)
+    p_star[] <- seq_along(p_star)
+    goodness <- sum(cumprod(names(p_star)==names(l_star)))
+    goodnesses[i] <- goodness
+  }
+  return(goodnesses)
 }
 
 
