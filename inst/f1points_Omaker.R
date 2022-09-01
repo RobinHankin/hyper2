@@ -43,7 +43,7 @@ ignore <- "
 
 
 
-howmany <- 1000  # howmany=1000 takes about 15 minutes to run
+howmany <- 1000  # howmany=1000 takes about eight hours to run
 top <- 11
 points_inaugural <- c(8,6,4,3,2)
 
