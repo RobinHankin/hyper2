@@ -7,11 +7,16 @@
 \title{Chess playing dataset}
 \description{
 A tally of wins and losses for games between three chess players:
-Topalov, Anand, Karpov
+Topalov, Anand, Karpov.
 }
 \usage{data(chess)}
 \details{
 
+  (there are three chess datasets in the package, documented at
+  \code{interzonal.Rd} [the 1963 World championship], \code{kka.Rd}
+  [Karpov-Kasparov-Anand dataset], and \code{chess.Rd}
+  [rock-paper-scissors using Topalov-Anand-Karpov])
+  
   This is a very simple dataset that can be used for illustration of
   \code{hyper2} idiom.
   

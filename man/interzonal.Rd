@@ -18,6 +18,11 @@ in Stockholm, 1962.
 }
 \details{
 
+  (there are three chess datasets in the package, documented at
+  \code{interzonal.Rd} [the 1963 World championship], \code{kka.Rd}
+  [Karpov-Kasparov-Anand dataset], and \code{chess.Rd}
+  [rock-paper-scissors using Topalov-Anand-Karpov])
+
 The 1963 World Chess Championship was notable for allegations of Soviet
 collusion.  Specifically, Fischer publicly alleged that certain Soviet
 players had agreed in advance to draw all their games.  The championship
