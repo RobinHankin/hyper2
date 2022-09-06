@@ -60,9 +60,9 @@ icons == saffy(icons_table)  # should be TRUE
 ```
 
 At this point, the `icons` object as created above is mathematically
-identical to `icons` object in the `hyperdirichlet` package (and
+identical to `the icons` object in the `hyperdirichlet` package (and
 indeed the `hyper2` package), but the terms might appear in a
-different order.
+different order due to `disordR` discipline.
 
 ## Analysis of the icons dataset
 
