@@ -10,20 +10,20 @@ vignette: |
 
 
 This short document analyses the climate change dataset originally
-presented in the hyperdirichlet R package^[RKS Hankin 2010.  "A
+presented in the `hyperdirichlet` R package^[RKS Hankin 2010.  "A
 generalization of the Dirichlet distribution", *Journal of Statistical
-Software*, 33:11] but using the hyper2 package instead.  Lay
-perception of climate change is a complex and interesting process^[SC
-Moser and L Dilling 2007.  "Creating a climate for change:
-communicating climate change and facilitating social change".
-Cambridge University Press] and here we assess the engagement of
+Software*, 33:11] but using the improved `hyper2` package instead.
+Lay perception of climate change is a complex and interesting
+process^[S. J. O'Neill 2008 "An iconic approach to communicating
+climate change".  PhD thesis, School of Environmental Sciences,
+University of East Anglia, UK] and here we assess the engagement of
 non-experts by the use of "icons" (this word is standard in this
 context.  An icon is a "representative symbol") that illustrate
 different impacts of climate change.
 
-Here we analyse results of one experiment^[S. O'Neill 2007. "An Iconic
-Approach to Representing Climate Change", School of Environmental
-Science, University of East Anglia], in which subjects were presented
+Here we analyse results of one experiment^[S. J. O'Neill and M. Hulme
+2009. "An Iconic Approach to Representing Climate Change", _Global
+Environmental Change_ 19:402-410], in which subjects were presented
 with a set of icons of climate change and asked to identify which of
 them they find most concerning.  Six icons were used: PB [polar bears,
 which face extinction through loss of ice floe hunting grounds], NB
@@ -45,14 +45,14 @@ M <- icons_table # saves typing
 M
 ```
 
-(M is called `icons_matrix` in the package).  Each row of `M`
+(M is called `icons_table` in the package).  Each row of `M`
 corresponds to a particular cue given to respondents.  The first row,
 for example, means that a total of $5+3+4+3=15$ people were shown
-icons NB, L, TCH, WAIS [column names of the the non-NA entries]; 5
+icons NB, L, THC, WAIS [column names of the the non-NA entries]; 5
 people chose NB as most concerning, 3 chose L, and so on.  The dataset
-is more fully described in the hyperdirichlet package.  
-The builtin `icons` likelihood function in the `hyper2` package may be
-created by using the `saffy()` function:
+is more fully described in the package.  The builtin `icons`
+likelihood function in the `hyper2` package may be created by using
+the `saffy()` function:
 
 ```{r}
 icons
@@ -60,9 +60,9 @@ icons == saffy(icons_table)  # should be TRUE
 ```
 
 At this point, the `icons` object as created above is mathematically
-identical to `icons` object in the hyperdirichlet package (and indeed
-the `hyper2` package), but the terms might appear in a different
-order.
+identical to `icons` object in the `hyperdirichlet` package (and
+indeed the `hyper2` package), but the terms might appear in a
+different order.
 
 ## Analysis of the icons dataset
 
@@ -79,11 +79,12 @@ We also need the log-likelihood at an unconstrained maximum:
 
 ```{r}
 L1 <- loglik(indep(mic),icons)
+options(digits=9)
 L1
 ```
 
 Agreeing to 4 decimal places with the value given in the
-hyperdirichlet package.
+`hyperdirichlet` package.
 
 The next step is to assess a number of hypotheses concerning the
 relative sizes of $p_1$ through $p_6$.
@@ -186,7 +187,7 @@ specificp.test(icons,1)
 
 which tests a null of $p_1\leqslant\frac{1}{6}$; see how the evaluate
 under the null is on the boundary and we have $\hat{p_1}=\frac{1}{6}$.
-Compare the support of 2.607 with 2.608181 from the hyperdirichlet
+Compare the support of 2.607 with 2.608181 from the `hyperdirichlet`
 package.  This exceeds Edwards's two-units-of-support criterion; the
 $p$-value is obtained by applying Wilks's theorem on the asymptotic
 distribution of 2\log\Lambda.
@@ -276,7 +277,7 @@ highest MLE after $p_1$.  The extra likelihood is given by
 L1-ml
 ```
 
-(the hyperdirichlet package gives 0.0853 here, a suprisingly small
+(the `hyperdirichlet` package gives 0.0853 here, a suprisingly small
 discrepancy given the difficulties of optimizing over a nonconvex
 region).  We conclude that there is no evidence for
 $p_1\geqslant\max\left(p_2,\ldots,p_6\right)$.
@@ -299,7 +300,7 @@ o2(c(-2,-1,-1,-1,-1),-1)   # p1 <= p6
 )
 ```
 
-In the above, the evaluate is the first five columns ($p-6$ being the
+In the above, the evaluate is the first five columns ($p_6$ being the
 fillup) and the final column is the log-likelihood at the evaluate.
 See how the constraint is active in each line: `M[1,] == M[1:5,2:6]`.
 Also note that the largest log-likelihood is the second row: if we
@@ -332,7 +333,7 @@ then the extra support is
 L1-jj
 ```
 
-(compare 7.711396 in hyperdirichlet, not sure why the discrepancy is
+(compare 7.711396 in `hyperdirichlet`, not sure why the discrepancy is
 so large).
 
 ## Final example
@@ -379,13 +380,14 @@ So the extra support is
 ```{r}
 L1-max(jj)
 ```
-(compare hyperdirichlet which gives 3.16, not sure why the difference).
-We should look at the maximum value:
+
+(compare `hyperdirichlet` which gives 3.16, not sure why the
+difference although if pressed I would point to `hyper2` using
+multiple walkers in its optimization [defaulting to $n=10$] ).  We
+should look at the maximum value:
 
 ```{r}
-   o(c( 0, 0, 0,-1, 1), 0,give=TRUE,start=start)
+o(c( 0, 0, 0,-1, 1), 0,give=TRUE,start=start)
 ```
 
-So the evaluate is at the boundary, for $p_4=p_5$.  I have no
-explanation for the discrepancy between this and that in the
-hyperdirichlet package.
+So the evaluate is at the boundary, for $p_4=p_5$. 

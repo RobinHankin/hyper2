@@ -22,6 +22,11 @@
 
 \details{
 
+  (there are three chess datasets in the package, documented at
+  \code{interzonal.Rd} [the 1963 World championship], \code{kka.Rd}
+  [Karpov-Kasparov-Anand dataset], and \code{chess.Rd}
+  [rock-paper-scissors using Topalov-Anand-Karpov])
+
   The strengths of chess players may be assessed using the generalized
   Bradley-Terry model.  The \code{karpov_kasparov_anand} \code{hyper2}
   likelihood function allows one to estimate the players' strengths,
