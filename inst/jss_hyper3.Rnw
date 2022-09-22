@@ -80,9 +80,35 @@ Plackett-Luce likelihood function would be
 
 \citet{mollica2014} call this a forward ranking process on the grounds
 that the best (preferred; fastest; chosen) entities are identified in
-the same sequence as their rank.  The \code{hyper2} package
+the same sequence as their rank.  
+
+Computational support for Bradley-Terry likelihood functions is
+available in a range of languages.  \cite{hunter2004}, for example,
+presents results in \proglang{matlab} [although he works with a
+nonlinear extension to account for ties]; \cite{allison1994} present
+related work for ranking statistics in \proglang{SAS} and
+\cite{maystre2022} has released a \proglang{python} package for
+Luce-type choice datasets.
+
+However, the majority of software is written in the \proglang{R}
+computer language~\citep{rcore2022}, which includes extensive
+functionality for working with such likelihood functions:
+\cite{turner2020} discuss several implementations from a computational
+perspective.  The \pkg{BradleyTerry} package \citep{firth2005}
+considers pairwise comparisons using \proglang{glm} but cannot deal
+with ties or player-specific predictors; the \pkg{BradleyTerry2}
+package \citep{turner2012} implements a flexible user interface and
+wider range of models to be fitted to pairwise comparison datasets,
+specifically simple random effects.  The \pkg{PlackettLuce} package
+\citep{turner2020} generalizes this to likelihood functions of the
+form of Equation~\ref{PL_like} and applies the Poisson transformation
+of~\cite{baker1994} to express the problem as a log-linear model.  The
+\pkg{hyper2} package, in contrast, gives a consistent language
+interface to create and manipulate likelihood functions over the
+simplex ${S}_n=\left\lbrace\left(p_1,\ldots,p_n\right)\left|p_i\geq
+0,\sum p_i=1\right.\right\rbrace$.  A further extension in the package
 generalizes this likelihood function to functions of ${\mathbf
-  p}=(p_1,\ldots,p_n)$ with
+p}=(p_1,\ldots,p_n)$ with
 
 \begin{equation}\label{hyper2likelihood}
 \mathcal{L}\left(\mathbf{p}\right)=
