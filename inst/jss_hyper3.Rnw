@@ -193,9 +193,12 @@ L[d] = -1;
 Above, object \code{L} is an object of class \code{hyper3}; it may be
 evaluated at points in probability space [that is, a vector
 \code{[a,b,c]} of nonnegative values with unit sum] using standard
-\proglang{R} idiom wrapping \proglang{C++} back end.  The package
-includes an \proglang{S3} class \code{hyper3} for this type of object;
-extraction and replacement methods use \pkg{disordR}
+\proglang{R} idiom wrapping \proglang{C++} back end.
+
+\subsection{Package implementation}
+
+The package includes an \proglang{S3} class \code{hyper3} for this
+type of object; extraction and replacement methods use \pkg{disordR}
 discipline~\citep{hankin2022}.  Package idiom for creating such
 objects uses named vectors:
 
@@ -208,7 +211,7 @@ LL
 
 Above, we see object \code{LL} is a log-likelihood function of the
 players' strengths, which may be evaluated at specified points in
-probability space.  If, for example, we wish to assess $H_1\colon
+probability space.  A typical use-case would be to assess $H_1\colon
 p_a=0.9,p_b=0.05,p_c=0.05$ and $H_2\colon p_a=0.01,p_b=0.01,p_c=0.98$,
 we can evaluate these hypotheses using generic function
 \code{loglik()}:
@@ -235,7 +238,8 @@ Equation~\ref{PL_like}:
 @
 
 We may find a maximum likelihood estimate for the players' strengths,
-using generic function \code{maxp()}:
+using generic function \code{maxp()}, dispatching to a specialist
+\code{hyper3} method:
 
 <<maxexamp,cache=TRUE>>=
 (mH <- maxp(H))
@@ -253,6 +257,19 @@ equalp.test(H)
 
 showing, perhaps unsurprisingly, that this small dataset is consistent
 with $H_0$. 
+
+\code{Package helper functions}
+
+Arithmetic operations are implemented for \code{hyper3} objects in
+much the same way as for \code{hyper2} objects: independent
+observations may be combined using the overloaded \code{+} operator;
+an example is given below.
+
+The original motivation for \code{hyper3} was the analysis of Formula
+1 motor racing, and the package accordingly includes wrappers for
+\code{ordervec2supp()} such as \code{ordertable2supp3()} and
+\code{attemptstable2supp3()} which facilitate the analysis of commonly
+encountered result formats; an example is given below.
 
 \section{Some simple cases}
 
