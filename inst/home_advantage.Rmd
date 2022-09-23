@@ -204,7 +204,8 @@ principle, test which one is a better model.
 
 # hyper3 idiom
 
-We may apply `hyper3` idiom to the dataset. First a formal test:
+We may apply `hyper3` idiom to the dataset, using the likelihood
+function of Davidson and Beaver (1977).  First a formal test:
 
 ```{r,label=optimizebaseball,cache=TRUE}
 baseball_table
@@ -237,6 +238,11 @@ plot(lam,L,type="b")
 abline(h=c(0,-2))
 ```
 
+###  References
+
+* R. R. Davidson and R. J. Beaver 1977. "On extending the
+  Bradley-Terry model to incorporate within-pair order effects"
+  _Biometrics_, 33:693--702
 
 
 ### Package dataset {-}
