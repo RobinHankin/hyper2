@@ -70,6 +70,10 @@ number 1, pages 384--406
 \item S. Borozki and others 2016.  \dQuote{An application of incomplete pairwise
   comparison matrices for ranking top tennis
   players}. \code{arXiv:1611.00538v1} \code{10.1016/j.ejor.2015.06.069}
+
+\item R. R. Davidson and R. J. Beaver 1977. \dQuote{On extending the
+  Bradley-Terry model to incorporate within-pair order effects}.
+  \emph{Biometrics}, 33:693--702
 }
 }
 \author{Robin K. S. Hankin}
@@ -78,7 +82,7 @@ number 1, pages 384--406
 An extended discussion of \code{pairwise()} is given in
 \code{inst/zermelo.Rmd} and also \code{inst/karate.Rmd}.  Functions
 \code{home_away()} and \code{home_away3()} are described and used in
-\code{inst/home_advantage.Rmd}.
+\code{inst/home_advantage.Rmd}; see Davidson and Beaver 1977.
 
 }
 \seealso{\code{\link{maxp}}}
