@@ -206,6 +206,7 @@ CITATION.cff
 ^inst/hepatitis.txt$
 ^inst/javelin.txt$
 ^inst/surfing_jsa_rebuttal.tex$
-^inst/surfing_jsa_rebuttal_referee2.tex$
+^inst/surfing_jsa_rebuttal.tex$
+^inst/surfing_jsa_rebuttal_minorcomments.tex$
 ^inst/directlogplotofstrengths_postinkscape.svg$
 ^inst/jss_4382.txt$
