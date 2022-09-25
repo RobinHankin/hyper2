@@ -184,16 +184,17 @@ to assess the supposed Brazilian preference for particular wave types.
 \section{The dataset and likelihood function}
 
 Table~\ref{rawresults} shows the first few and last few entries in the
-dataset we use, drawn from 2019 WSL.  The first line shows that, at one of the heats in
-WCT01 (Coolangatta, QLD), Colapinto came first, Bailey second, and
-Wright came third: we write
+dataset we use, drawn from 2019 WSL.  The first line shows that, at
+one of the heats in WCT01 (Coolangatta, QLD), Colapinto came first,
+Bailey second, and Wright came third: we write
 $\mbox{Colapinto}\succ\mbox{Bailey}\succ\mbox{Wright}$.  The last line
 shows that, at WCT11 (Banzai Pipeline), Ferreira came first and Medina
 second: $\mbox{Ferreira}\succ\mbox{Medina}$.  We can convert this
 dataset into a Plackett-Luce likelihood function but first have to
-remove the wildcards and also player Vries whose maximum likelihood
-strength is zero.  For the first line we would have Plackett-Luce
-likelihood function as
+remove the wildcards whose strength is typically very low.  We also
+remove De Vries who, while not a wildcard, competed only twice in 2019
+and came last each time, thus having zero maximum likelihood strength.
+For the first line we would have Plackett-Luce likelihood function as
 
 \begin{equation}
 \frac{p_\mathrm{Colapinto}}{p_\mathrm{Colapinto} + p_\mathrm{Bailey} + p_\mathrm{Wright}}\cdot
