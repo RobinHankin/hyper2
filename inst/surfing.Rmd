@@ -440,6 +440,20 @@ abline(fit)
 dev.off()
 ```
 
+```{r, directplotofstengths}
+pdf(file="directplotofstrengths.pdf")
+par(xpd=NA)
+plot(jjO,jjL,pch=16,log='y',xlab='points',ylab='maximum likelihood strength',cex=1.5)
+fit <- lm(log10(jjL)~(jjO))
+for(i in seq_along(jjO)){
+text(jjO[i],jjL[i],names(jjL)[i],col='gray',pos=4,cex=0.8)
+}
+par(xpd=FALSE)
+abline(fit)
+dev.off()
+```
+
+
 Now compare the finishing order based on points vs the finishing order
 on likelhood:
 
