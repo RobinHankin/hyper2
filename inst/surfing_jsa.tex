@@ -4,6 +4,7 @@
 \usepackage{graphicx}
 \usepackage{natbib}
 \usepackage{diagbox}
+\usepackage{multirow}
 \usepackage[pdftex]{hyperref}
 
   \author{Driver, Timothy C.${}^{1}$ \and
@@ -478,16 +479,17 @@ infringements between compatriots.
 \clearpage
 \newpage
 
-
+% use   \begin{tabular}{@{}c@{}}\small{WCT} \\ 01\end{tabular} for WCT\\01
 \begin{table}[h]
 \begin{tabular}{llllllllllllll}
-competitor  & nationality&WCT01  &WCT02  &WCT03  & \ldots  &WCT10&WCT11&points\\ \hline
- Ferreira   &   BRA      &   1   &   5   &   17  & \ldots  &   1   &   1   &   59740\\
- Medina     &   BRA      &   5   &   5   &   17  & \ldots  &   9   &   2   &   56475\\
- Smith 	    &   ZAF      &   3   &   3   &   17  & \ldots  &   2   &   17  &   49985\\
- Toledo     &   BRA      &   9   &   2   &   5   & \ldots  &   5   &   17  &   49145\\
- Andino     &   USA      &   2   &   17  &   5   & \dots   &   5   &   9   &   46655\\
- $\vdots$   &            &   &   &       &       & $\vdots$&       &       &
+competitor  & nationality & \multirow{ 5}{*}{1} &  &  & WCT & & &points\\
+            &             &  01   & 02& 03& \ldots& 10 & 11 & \\ \hline
+ Ferreira   &   BRA       &   1   &   5   &   17  & \ldots  &   1   &   1   &   59740\\
+ Medina     &   BRA       &   5   &   5   &   17  & \ldots  &   9   &   2   &   56475\\
+ Smith 	    &   ZAF       &   3   &   3   &   17  & \ldots  &   2   &   17  &   49985\\
+ Toledo     &   BRA       &   9   &   2   &   5   & \ldots  &   5   &   17  &   49145\\
+ Andino     &   USA       &   2   &   17  &   5   & \dots   &   5   &   9   &   46655\\
+ $\vdots$   &             &   &   &       &       & $\vdots$&       &       &
 \end{tabular}
 \caption{Conventional league table for the top five competitors in WSL
   2019 tour. \label{resultstable} Thus at WCT01 (Coolangatta, QLD) we see
