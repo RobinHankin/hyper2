@@ -469,9 +469,9 @@ rL
 sort(names(rO))
 sort(names(rO))
 sort(names(rO))==sort(names(rO))
-ordertransplot(rO,rL,xlab="offical rank",ylab="likelihood rank",main="WCT 2019")
+ordertransplot(rO,rL,xlab="offical rank",ylab="likelihood rank",main="")
 pdf(file="ordertransplotplot.pdf")
-ordertransplot(rO,rL,xlab="offical rank",ylab="likelihood rank",main="WCT 2019")
+ordertransplot(rO,rL,xlab="offical rank",ylab="likelihood rank",main="")
 dev.off()
 ```
 
