@@ -185,7 +185,7 @@ to assess the supposed Brazilian preference for particular wave types.
 \section{The dataset and likelihood function}
 
 Table~\ref{rawresults} shows the first few and last few entries in the
-dataset we use, drawn from 2019 WSL.  The first line shows that, at
+dataset we use, drawn from 2019 WCT.  The first line shows that, at
 one of the heats in WCT01 (Coolangatta, QLD), Colapinto came first,
 Bailey second, and Wright came third: we write
 $\mbox{Colapinto}\succ\mbox{Bailey}\succ\mbox{Wright}$.  The last line
@@ -195,7 +195,7 @@ dataset into a Plackett-Luce likelihood function but first have to
 remove the wildcards whose strength is typically very low.  We also
 remove De Vries who, while not a wildcard, competed only twice in 2019
 and came last each time, thus having zero maximum likelihood strength.
-For the first line we would have Plackett-Luce likelihood function as
+For the first line we would have a Plackett-Luce likelihood function of
 
 \begin{equation}
 \frac{p_\mathrm{Colapinto}}{p_\mathrm{Colapinto} + p_\mathrm{Bailey} + p_\mathrm{Wright}}\cdot
@@ -299,19 +299,19 @@ and Ferreira, have different strengths.  To test the null of equal
 strength, we maximize the likelihood subject to the null, and compare
 with the global maximum likelihood~\citep{hankin2010}; package idiom
 is to use {\tt equalp.test()} which reports its findings in a
-standardised format.  This gives us a support difference of about
+standardised format.  This gives a support difference of about
 0.05, well short of Edwards's 2 units of support criterion.
-Alternatively, we could observe that the
-$-2\log\left(\frac{\Lambda}{\Lambda_0}\right)\simeq 0.1$ is not in the
+Alternatively, we could observe that~$\mathcal{S}=
+-2\log\left(\frac{\Lambda}{\Lambda_0}\right)\simeq 0.1$ is not in the
 tail region of its asymptotic $\chi^2_1$ distribution.  We may thus
-assert that there is no strong evidence for Ferreira's actually having
+assert that there is no strong evidence for Ferreira actually having
 a competitive advantage over Medina.  We may similarly wonder whether
 Medina is equal in strength to Wilson; here we reject the null with
 support difference of about 2.33, corresponding to a $p$-value of
 $0.031$.
 
-Medina's performance was startlingly good at Freshwater Pro ({\tt
-  wct08}).  Indeed, Medina came first at only two venues (the other
+Medina's performance was startlingly good at Freshwater Pro (WCT08).
+Indeed, Medina came first at only two venues (the other
 was at Jeffries Bay, South Africa) and it is natural to enquire
 whether there is statistical evidence to support the assertion that he
 performed better under the more controlled conditions of the Lemoore
@@ -448,7 +448,7 @@ statistics we considered.
 
 \section{Conclusions and further work}
 
-We analysed results from the 2019 WSL using reified
+We analysed results from the 2019 WCT using reified
 Bradley-Terry likelihoods to assess a number of hypotheses of interest
 to the surfing community.  Reified Bradley-Terry allows the use of
 formal statistical methods in ways that analysing points scored does
@@ -461,10 +461,10 @@ hypothesis that Medina and Wilson are equal in strength.
 We discuss and assess the ``Brazilian storm'' phenomenon using reified
 Bradley-Terry techniques, and show that there is no strong evidence to
 support the supposed Brazilian preference for point and beach break
-beaches.  We also suggest that surfing's being included in the 2020
+wave types.  We also suggest that surfing's being included in the 2020
 Summer Olympics might result in modified strategies to bolster
 intranational ranking at the expense of WCT performance; we quantify
-the strength of such a phenomenon as the strength of a reified
+this phenomenon by introducing a reified
 Bradley-Terry entity: a ``compatriot monster'' with an estimated
 strength of about $0.017$.
 
@@ -494,7 +494,7 @@ competitor  & nationality & \multirow{ 5}{*}{1} &  &  & WCT & & &points\\
  Andino     &   USA       &   2   &   17  &   5   & \dots   &   5   &   9   &   46655\\
  $\vdots$   &             &   &   &       &       & $\vdots$&       &       &
 \end{tabular}
-\caption{Conventional league table for the top five competitors in WSL
+\caption{Conventional league table for the top five competitors in the WCT
   2019 tour. \label{resultstable} Thus at WCT01 (Coolangatta, QLD) we see
   Ferreira coming first, Andino second and Smith third}
 \end{table}
