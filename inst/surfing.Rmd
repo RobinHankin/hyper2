@@ -579,7 +579,7 @@ l_wide <- profsupp(surfing2,"Brazilian_beachtype",p_wide,relative=FALSE)
 plot(c(0,p_wide),c(l0,l_wide)-max(l),type='b',xlab="Brazilian beachtype wide",ylab="support")
 abline(h= -2,lty=2)
 pdf(file="plotwidep.pdf")
-plot(c(0,p_wide),c(l0,l_wide)-max(l),type='b',xlab="Bradley-Terry strength of the Brazilian beachtype reified entity",ylab="support")
+plot(c(0,p_wide),c(l0,l_wide)-max(l),type='b',xlab="Bradley-Terry strength of the Brazilian beachtype reified entity",ylab="Support")
 abline(h= -2,lty=2)
 dev.off()
 ```
