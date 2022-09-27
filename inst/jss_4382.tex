@@ -49,7 +49,6 @@ further information provided using summary / print etc., or directly
 have already an object returned which contains more information on the
 fit including also the log-likelihood attained, the model fitted, etc.
 
-\textcolor{blue}{Response:}
 
 As an example, methods(class = "PLADMM") in the PlackettLuce package
 lists: anova, deviance, fitted, itempar, logLik, predict, print,
@@ -58,6 +57,27 @@ regression case but the others might be useful for hyper3 as
 well. Similarly for btmodel() in the psychotools package and the eba
 package while BradleyTerry2, BTLLasso, PLMIX, and prefmod provide
 fewer methods.
+
+\textcolor{blue}{Response: Function {\tt maxp()} can return many
+  additional objects in addition to the evaluate; standard idiom is to
+  pass argument {\tt give = TRUE}.  In particular, a list with
+  elements
+  \begin{itemize}
+  \item {\tt \$hessian} the Hessian matrix: passing argument {\tt give
+    = TRUE, hessian = TRUE} returns the Hessian matrix.  However, this
+    is restricted to {\tt hyper2} objects and I would add that {\tt
+      hyper3} objects are much, much, harder to differentiate than
+    {\tt hyper2} objects (let alone second derivatives).
+    \item {\tt \$likes} likelihoods
+    \item {\tt \$par} the evaluate
+  \end{itemize}
+  The package includes summary methods and print method for summary
+  objects.\\ Some of the suggestions are good for regression-type
+  analysis, but do not really carry over to the current
+  likelihood-based approach.  The {\tt hyper2} package is predicated
+  on straightforward idiom to create and manipulate likelihood
+  functions; statistical tests are (to me) just one application of
+  likelihood functions.}
 
 The NAMESPACE contains
 
