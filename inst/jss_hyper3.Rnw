@@ -512,7 +512,9 @@ distances, and names being the competitors, using
 \code{attemptstable2supp3()}:
 
 <<label=converttosupp3, cache=TRUE>>=
-javelin_vector <- attemptstable2supp3(javelin_table, decreasing=TRUE, give.supp=FALSE)
+javelin_vector <- attemptstable2supp3(javelin_table,
+       decreasing=TRUE, give.supp=FALSE)
+options(width=60)
 javelin_vector
 @
 
@@ -632,6 +634,7 @@ Plackett-Luce strengths of the constructors:
 <<maxpconstructor2021, cache=TRUE>>=
 const2020 <- ordertable2supp3(constructor_2020_table)
 const2021 <- ordertable2supp3(constructor_2021_table)
+options(digits=4)
 maxp(const2020, n=1)
 maxp(const2021, n=1)
 @
@@ -661,6 +664,7 @@ of \code{Merc2020} and of \code{Merc2021} are identical.  Package
 idiom would be to use generic function \code{samep.test()}:
 
 <<usesamep,cache=TRUE>>=
+options(digits=4)
 samep.test(H, c("Merc2020", "Merc2021"))
 @
 
