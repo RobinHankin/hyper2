@@ -704,6 +704,6 @@ could easily be extended to allow non-integer multiplicities, which
 might prove useful in the context of reified Bradley Terry
 techniques~\citep{hankin2020}.
 
-\bibliography{chess}
+\bibliography{jss_hyper3}
 \end{document}
 
