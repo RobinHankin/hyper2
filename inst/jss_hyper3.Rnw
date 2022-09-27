@@ -204,8 +204,8 @@ objects uses named vectors:
 
 <<>>=
 LL <- hyper3()
-LL[c(a=1)] <- 1
-LL[c(a=3, b=2, c=1)] <- -1
+LL[c(a = 1)] <- 1
+LL[c(a = 3, b = 2, c = 1)] <- -1
 LL
 @
 
@@ -322,7 +322,7 @@ Bradley-Terry strengths:
 
 <<>>=
 a <- 1/2 # null
-(S_delta <- log( a*(1-a)/(1+a))- log(3-2*sqrt(2)))
+(S_delta <- log(a * (1 - a)/(1 + a)) - log(3 - 2 * sqrt(2)))
 @
 
 Thus the additional support gained in moving from $a=\frac{1}{2}$ to
@@ -333,7 +333,7 @@ quite close to the null of $0.5$].  Nevertheless we can follow
 \cite{edwards1972} and apply Wilks's theorem for a $p$-value:
 
 <<>>=
-pchisq(-2*S_delta,df=1,lower.tail=FALSE)
+pchisq(-2 * S_delta, df=1, lower.tail=FALSE)
 @
 
 The $p$-value is about 0.81, exceeding 0.05; thus we have no strong
@@ -349,12 +349,12 @@ Figure~\ref{ABA_likelihood}.
 \begin{figure}[htbp]
   \begin{center}
 <<figaba>>=
-a <- seq(from=0,by=0.005,to=1)
-S <- function(a){log(a*(1-a)/((1+a)*(3-2*sqrt(2))))}
-plot(a,S(a),type='b')
-abline(h=c(0,-2))
-abline(v=c(0.02438102,0.9524271),col='red')
-abline(v=sqrt(2)-1)
+a <- seq(from=0, by=0.005, to=1)
+S <- function(a){log(a * (1 - a) / ((1 + a) * (3 - 2 * sqrt(2))))}
+plot(a, S(a), type='b')
+abline(h=c(0, -2))
+abline(v=c(0.02438102, 0.9524271), col='red')
+abline(v=sqrt(2) - 1)
 @
 \caption{A\label{ABA_likelihood} support function for $p_a$ with observation $a\succ b\succ a$}
 \end{center}
@@ -511,7 +511,7 @@ may convert this to a named vector with elements being the throw
 distances, and names being the competitors, using
 \code{attemptstable2supp3()}:
 
-<<label=converttosupp3,cache=TRUE>>=
+<<label=converttosupp3, cache=TRUE>>=
 javelin_vector <- attemptstable2supp3(javelin_table, decreasing=TRUE, give.supp=FALSE)
 javelin_vector
 @
@@ -538,7 +538,7 @@ options(digits=3)
  
 \begin{figure}[htbp]
   \begin{center}
-<<testthejav,cache=TRUE>>=
+<<testthejav, cache=TRUE>>=
 (mj <- maxp(javelin))
 dotchart(mj, pch=16)
 @
@@ -589,7 +589,7 @@ colnames(M) <-  as.character(Ves)
 plot(t(M), type="b")
 abline(h=c(0, -2))
 abline(v=0, lty=2)
-abline(v=log(0.32062833/0.11402735)) # these from mp
+abline(v=log(0.32062833 / 0.11402735)) # these from mp
 @
 \caption{Profile \label{profliklogcont} likelihood for log-contrast
 $\log\left(p_{\mbox{\tiny Vad}}/ p_{\mbox{\tiny Ves}}\right)$.  Null
@@ -613,7 +613,7 @@ The following table, included in the \code{hyper2} package as a
 dataset, shows rankings for the first 9 venues of the 2021 season:
 
 <<showconstructortable>>=
-constructor_2021_table[,1:9]
+constructor_2021_table[, 1:9]
 @
 
 Above, we see that Mercedes (``\code{Merc}'') came first and third at
@@ -646,7 +646,10 @@ this statistically would be to define a combined likelihood function
 for both years, keeping track of the year:
 
 <<definecombinedlikelihoodfunction,cache=TRUE>>=
-H <- psubs(constructor_2020, "Merc", "Merc2020") + psubs(constructor_2021, "Merc", "Merc2021")
+H <- (
+      psubs(constructor_2020, "Merc", "Merc2020") +
+      psubs(constructor_2021, "Merc", "Merc2021")
+     )
 @
 
 Above, we use generic function \code{psubs()} to change the name of
