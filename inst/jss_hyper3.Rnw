@@ -53,7 +53,7 @@
 \begin{document}
 
 <<setup, cache=FALSE,echo=FALSE>>=
-source("loadlibrary.R", echo=FALSE)  # to avoid stupid messages 
+source("loadlibrary.R",echo=FALSE)  # to avoid stupid messages 
 opts_chunk$set(cache=TRUE, autodep=TRUE)
 @
 
@@ -150,9 +150,10 @@ Plackett-Luce likelihood function for $p_a,p_b,p_c$ would be
 \frac{p_b}{      p_b    },\qquad p_a+p_b+p_c=1
 \end{equation}
 
+\subsection{Computational methodology for generalized Plackett-Luce likelihood functions}
 
 Existing \code{hyper2} formalism as described by \citet{hankin2017}
-cannot represent this likelihood function, because
+cannot represent Equation~\ref{plackettluce}, because
 Equation~\ref{hyper2likelihood} uses sets as the indexing elements,
 and in this case we need multisets\footnote{Note that the version of
 \code{hyper2} presented by \citet{hankin2017} and reviewed
@@ -204,8 +205,8 @@ objects uses named vectors:
 
 <<>>=
 LL <- hyper3()
-LL[c(a=1)] <- 1
-LL[c(a=3, b=2, c=1)] <- -1
+LL[c(a = 1)] <- 1
+LL[c(a = 3, b = 2, c = 1)] <- -1
 LL
 @
 
@@ -429,7 +430,7 @@ maxp(ordervec2supp3(c("a", "b"), nonfinishers=c("a", "b")))
 The Fisher information for such observations has a minimum of
 $\frac{68}{9}\simeq 7.56$ at $a=\frac{1}{2}$.  An inference problem
 for a dataset including nonfinishers will be given below in
-Section~\ref{f1}.
+section~\ref{f1}.
 
 \section{Mann-Whitney test}
 
@@ -498,7 +499,7 @@ exclude $H_0\colon p_a=0.5$ (dotted line), is also shown}
 \section{Multiple competitors: javelin}
 
 The ideas presented above may be extended to more than two types of
-competitors.  Consider the following Table, drawn from the men's
+competitors.  Consider the following table, drawn from the men's
 javelin, 2020 Olympics:
 
 <<javelintable>>=
@@ -521,7 +522,7 @@ javelin_vector
 Above we see that Chopra threw the longest and second-longest throws
 of 87.58m and 87.03 respectively; Vadlejch threw the third-longest
 throw of 86.67m, and so on (\code{NA} entries correspond to
-no-throws.)  The attempts Table may be converted to a \code{hyper3}
+no-throws.)  The attempts table may be converted to a \code{hyper3}
 object, again using function \code{attemptstable2supp3()} but this
 time passing \code{give.supp=TRUE}:
 
@@ -611,7 +612,7 @@ drivers).  In this analysis, the constructor is the object of
 inference.  Each constructor typically fields two cars, each of which
 separately accumulates ranking-based points at each venue.  Here we
 use generalized Plackett-Luce to assess the constructors' performance.
-The following Table, included in the \code{hyper2} package as a
+The following table, included in the \code{hyper2} package as a
 dataset, shows rankings for the first 9 venues of the 2021 season:
 
 <<showconstructortable>>=
