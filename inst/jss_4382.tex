@@ -61,8 +61,8 @@ fewer methods.
 
 \textcolor{blue}{Response: Function {\tt maxp()} can return many
   additional objects in addition to the evaluate; standard idiom is to
-  pass argument {\tt give = TRUE}.  In particular, a list with
-  elements
+  pass argument {\tt give = TRUE}.  In particular, a it returns a list with
+  elements including
   \begin{itemize}
   \item {\tt \$hessian} the Hessian matrix: passing argument {\tt give
     = TRUE, hessian = TRUE} returns the Hessian matrix.  However, this
@@ -97,15 +97,15 @@ the output of
 
 \textcolor{blue}{Response: the pattern has been removed as suggested,
   all functions exported are exported explicitly.  However, it is not
-  clear who ``the user" is.  Apart from myself, it seems that most
-  users of the package are my graduate students who are mostly working
-  on applying hyper2 constructions to their own pet datasets; this
-  group of users needs to see similar work that they can modify for
-  their own projects.  The package was reviewed by Turner in 2020 but
-  it is not clear whether she was a user in the sense of the
-  comment. In any event, the output of {\tt help(package = "hyper2")}
-  is now restricted only to functions that might be of interest to
-  users.  }
+  clear who ``the user" is.  The package is still under active
+  development.  Apart from myself, it seems that most users of the
+  package are my graduate students who are mostly working on applying
+  hyper2 constructions to their own pet datasets; this group of users
+  needs to see similar work that they can modify for their own
+  projects.  The package was reviewed by Turner in 2020 but it is not
+  clear whether she was a user in the sense of the comment. In any
+  event, the output of {\tt help(package = "hyper2")} is now
+  restricted only to functions that might be of interest to users.  }
 
 Manuscript style comments:
 
@@ -140,7 +140,7 @@ References:
 
 
 
-o Please make sure that all software packages are \cite{}'d properly.
+o Please make sure that all software packages are cited properly.
 
 o All references should be in title style.
 
@@ -156,7 +156,7 @@ code/examples within the manuscript are included in a standalone
 replication script.
 
 
-\textcolor{blue}{We believe that this referee's insightful and
+\textcolor{blue}{Summary: this referee's insightful and
   constructive comments have led to a much improved submission.}
 
 \end{document}
