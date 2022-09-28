@@ -331,13 +331,13 @@ the evaluate of $a=\sqrt{2}-1$ is 0.029, rather small [as might be
 expected given that we have only one rather uninformative observation,
 and also given that the maximum likelihood estimate ($\simeq 0.41$) is
 quite close to the null of $0.5$].  Nevertheless we can follow
-\cite{edwards1972} and apply Wilks's theorem for a $p$-value:
+\cite{edwards1972} and apply Wilks's theorem for a $p$~value:
 
 <<>>=
 pchisq(-2 * S_delta, df = 1, lower.tail = FALSE)
 @
 
-The $p$-value is about 0.81, exceeding 0.05; thus we have no strong
+The $p$~value is about 0.81, exceeding 0.05; thus we have no strong
 evidence to reject the null of $a=\frac{1}{2}$.  The observation is
 informative, in the sense that we can find a credible interval for
 $a$.  With an $n$-units of support criterion the analytical solution to
@@ -472,7 +472,7 @@ equalp.test(Hxy)
 
 Above, we use generic function \code{equalp.test()} to test the null
 that the permeability of the two groups both have Bradley-Terry
-strength of $0.5$.  We see a p-value of about 0.09; compare 0.25 from
+strength of $0.5$.  We see a $p$~value of about 0.09; compare 0.25 from
 \code{wilcox.test()}.  However, observe that the \code{hyper3}
 likelihood approach gives more information than Wilcoxon's analysis:
 Firstly, we see that the maximum likelihood estimate for the
