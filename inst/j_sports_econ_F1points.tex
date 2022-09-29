@@ -46,24 +46,37 @@ Auckland University of Technology
 \newpage
 \section*{An objective assessment of point scoring systems in Formula 1 motor racing}
 \section*{Abstract}
+%The points scoring system of Formula 1 motor racing is a long-standing
+%contention among fans and competitors, with changes being
+%controversial.  The inaugural points system was $(8,6,4,3,2)$, that
+%is, 8 points to the winner, 6 to second place, and so on and in 2020
+%the points system was changed to $(25,18,15,12,10,8,6,4,2,1)$.  The
+%overall ranking of the competitors is determined by summing points
+%awarded over a season, but this system suffers from two defects:
+%firstly, the points are intrinsically arbitrary in the sense that the
+%points system does not affect the competitors' behaviour but can
+%change the overall ranking.  Secondly, it is difficult to assess
+%statistical nulls using accumulated points.  Here, I use Plackett-Luce
+%likelihood to identify a ranking for the competitors, this method
+%including no arbitrary points system and being amenable to statistical
+%testing of nulls.  I go on to assess a number of reasonable points
+%systems objectively, by comparing likelihood-based rankings with
+%points-based rankings.  In one well-defined statistical sense a Borda
+%points system is preferred, and in another a ``winner takes all''
+%system is best.
+
 The points scoring system of Formula 1 motor racing is a long-standing
-contention among fans and competitors, with changes being
-controversial.  The inaugural points system was $(8,6,4,3,2)$, that
-is, 8 points to the winner, 6 to second place, and so on and in 2020
-the points system was changed to $(25,18,15,12,10,8,6,4,2,1)$.  The
-overall ranking of the competitors is determined by summing points
-awarded over a season, but this system suffers from two defects:
-firstly, the points are intrinsically arbitrary in the sense that the
-points system does not affect the competitors' behaviour but can
-change the overall ranking.  Secondly, it is difficult to assess
+contention among fans and competitors.  The inaugural points system
+was $(8,6,4,3,2)$, that is, 8 points to the winner, 6 to second place,
+and so on; in 2020 the points system was changed to
+$(25,18,15,12,10,8,6,4,2,1)$.  However, it is difficult to assess
 statistical nulls using accumulated points.  Here, I use Plackett-Luce
 likelihood to identify a ranking for the competitors, this method
-including no arbitrary points system and being amenable to statistical
-testing of nulls.  I go on to assess a number of reasonable points
-systems objectively, by comparing likelihood-based rankings with
-points-based rankings.  In one well-defined statistical sense a Borda
-points system is preferred, and in another a ``winner takes all''
-system is best.
+being amenable to statistical testing.  I go on to assess a
+number of reasonable points systems objectively: in one well-defined
+statistical sense a Borda points system is optimal.
+
+
 \newpage
 
 \section{\centering Introduction}\label{introduction}
@@ -360,7 +373,7 @@ table to the first 11 drivers can increase the rank of a driver if
 non-first-11 drivers are placed.
 
 We thus see a comparison between two ordering systems.  Taking 2017 as
-an example, drivers Hamilton and Vettel are respectively first and
+an example, drivers Hamilton and Vettel are respectively first and
 second according to both ranking ranking procedures; but \raik\ and
 Bottas are third and fourth, and fourth and third, according to points
 and likelihood respectively. We define the \emph{degree of agreement}
