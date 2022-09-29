@@ -4,12 +4,12 @@
 %%
 %% The standard LaTeX document class "article" is recommended.
 %% Use options letterpaper and 12pt.
-\documentclass[letterpaper,12pt]{article}
+\documentclass[a4,12pt]{article}
 
 %% This is the recommended preamble for your document.
 
 %% Load De Gruyter specific settings
-\usepackage{dgjournal}
+
 \usepackage{amsmath}
 
 %% The mathptmx package is recommended for Times compatible math symbols.
@@ -24,16 +24,27 @@
 %% Use natbib with these recommended options
 \usepackage[authoryear,comma,longnamesfirst,sectionbib]{natbib}
 
+\usepackage{setspace}\doublespacing
+
+
 %% Start your document body here
 \begin{document}
 
-%% Do NOT include any fronmatter information; including the title, author names,
-%% institutes, acknowledgments and title footnotes (author information, funding
-%% sources, etc.). Start the document with the first section or paragraph of
-%% the article.
+\begin{titlepage}
+  \begin{center}{\Large
+      An objective assessment of point scoring systems in Formula 1 motor racing}\\
+    Robin K. S. Hankin\\
+{\tt hankin.robin@gmail.com}\\
+Auckland University of Technology
+\end{center}
+
+
+\end{titlepage}
 
 \newcommand{\raik}{R\"{a}ikk\"{o}nen}
 
+\newpage
+\section*{An objective assessment of point scoring systems in Formula 1 motor racing}
 \section*{Abstract}
 The points scoring system of Formula 1 motor racing is a long-standing
 contention among fans and competitors, with changes being
@@ -53,8 +64,9 @@ systems objectively, by comparing likelihood-based rankings with
 points-based rankings.  In one well-defined statistical sense a Borda
 points system is preferred, and in another a ``winner takes all''
 system is best.
+\newpage
 
-\section{Introduction}\label{introduction}
+\section{\centering Introduction}\label{introduction}
 Formula 1 motor racing is an important and prestigious motor sport
 \citep{codling2017,jenkins2010}.  Season ranking is based on a points
 allocation system wherein competitors are awarded points based on race
@@ -130,7 +142,7 @@ would be
 \end{equation}
 
 and this would be a forward ranking Plackett-Luce model in the
-terminology of \cite{johnson2020}. A slight generalization allows the
+terminology of \cite{mollica2014}. A slight generalization allows the
 incorporation of non-finishers (DNF etc). If, say, competitors 4 and 5
 did not finish, we would have
 
@@ -179,7 +191,7 @@ race ranking).  Similarly, we treat the driver and the team as a
 single entity about which we wish to make inferences.
 
 
-\section{Formula 1 dataset}\label{formula-1-dataset}
+\section{\centering Formula 1 dataset}\label{formula-1-dataset}
 
 \begin{table}
 \centering
@@ -197,14 +209,14 @@ Hartley   &  0&  0&  0&  0&  0&  0&$\ldots$&Ret& 15\\
 Button    &  0&  0&  0&  0&  0&Ret&$\ldots$&  0&  0\\
 Resta     &  0&  0&  0&  0&  0&  0&$\ldots$&  0&  0\\ \hline
 \end{tabular}
-\caption{2017 Season results\label{results2017} table.  Each row is a
-  driver and each column (after the first) a venue. We see that
-  Hamilton, the first row, came second in Australia, first in China,
-  second in Bahrain, fourth in Russia, and so on (Hartley, Button, and
-  Resta placed last).  In the first column, we see the result from
-  Australia (AUS) in which Hamilton came second, Vettel first, Bottas
-  third, and so on.  Here, ``Ret'' means retired and a zero entry
-  means ``did not finish''}
+\caption{\doublespacing 2017 Season results\label{results2017} table.
+  Each row is a driver and each column (after the first) a venue. We
+  see that Hamilton, the first row, came second in Australia, first in
+  China, second in Bahrain, fourth in Russia, and so on (Hartley,
+  Button, and Resta placed last).  In the first column, we see the
+  result from Australia (AUS) in which Hamilton came second, Vettel
+  first, Bottas third, and so on.  Here, ``Ret'' means retired and a
+  zero entry means ``did not finish''}
 \end{table}
 
 Taking 2017 as an example, Table~\ref{results2017} shows the drivers'
@@ -241,9 +253,9 @@ likelihood expression for the 2017 season is of the general form
 
 \begin{figure}
 {\centering \includegraphics{printapiechart-1}}
-\caption[Maximum likelihood estimates \label{piechartstrength} of the
+\caption[\doublespacing Maximum likelihood estimates \label{piechartstrength} of the
   strengths of the top-ranked 11 drivers in Formula 1 motor racing,
-  seasons 2016-2019]{Maximum likelihood
+  seasons 2016-2019]{\doublespacing Maximum likelihood
   estimates \label{piechartstrength} of the strengths of the
   top-ranked 11 drivers in Formula 1 motor racing, seasons
   2016-2019}\label{fig:printapiechart}
@@ -327,13 +339,14 @@ under \citeauthor{zipf1949}.  Compare the likelihood ranking:
 
 \begin{figure}
 {\centering \includegraphics{likevspoints-1}}
-\caption{Ordering of the \label{orderingbypointsandlikelihood}
-  top-ranked 11 drivers in Formula 1 seasons 2016-2019.  Horizontal
-  axis gives official (points-based) order, and the vertical axis
-  gives the likelihood order.  Thus, taking 2017 as an example, the
-  points-based ordering would be Hamilton first, then Vettel, then
-  \raik; while the likelihood ordering is (reading
-  vertically) Hamilton, Vettel, Bottas }\label{fig:likevspoints}
+\caption{\doublespacing Ordering of
+  the \label{orderingbypointsandlikelihood} top-ranked 11 drivers in
+  Formula 1 seasons 2016-2019.  Horizontal axis gives official
+  (points-based) order, and the vertical axis gives the likelihood
+  order.  Thus, taking 2017 as an example, the points-based ordering
+  would be Hamilton first, then Vettel, then \raik; while the
+  likelihood ordering is (reading vertically) Hamilton, Vettel, Bottas
+}\label{fig:likevspoints}
 \end{figure}
 
 \noindent So for 2017 at least, we see that the current points system
@@ -370,9 +383,9 @@ that might be used:
 
 \begin{figure}
 {\centering \includegraphics{likevspointszipf-1}}
-\caption[As for
+\caption[\doublespacing As for
   Figure~\ref{orderingbypointsandlikelihood} \label{orderingbypointsandlikelihood_zipf}
-  but points ranking calculated by Zipf's law]{As for
+  but points ranking calculated by Zipf's law]{\doublespacing As for
   Figure~\ref{orderingbypointsandlikelihood} \label{orderingbypointsandlikelihood_zipf}
   but points ranking calculated by Zipf's law. Note the generally
   poorer agreement between the two ranking
@@ -409,8 +422,8 @@ WTA      &     0   & 1    & 2    & 2   \\
 exp2     &     0   & 1    & 2    & 2   \\
  \hline
 \end{tabular}
-\caption{Degree of agreement for seasons 2016-9 with different
-  \label{doapoints} points systems}
+\caption{\doublespacing Degree of agreement for seasons 2016-9 with
+  different \label{doapoints} points systems}
 \end{table}
 
 
@@ -435,28 +448,29 @@ of the points system used.
 
 \begin{figure}
 {\centering \includegraphics{alottaplotsmeancorrect-1}}
-\caption[Simulated Formula 1 races, seasons 2016-2019]{Simulated
-  Formula 1 races, seasons 2016-2019: mean number of agreeing places
-  for each of six points \label{simulated_mean} systems when compared
-  with a Plackett-Luce strength
-  ordering}\label{fig:alottaplotsmeancorrect}
+\caption[\doublespacing Simulated Formula 1 races, seasons
+  2016-2019]{\doublespacing Simulated Formula 1 races, seasons
+  2016-2019: mean number of agreeing places for each of six
+  points \label{simulated_mean} systems when compared with a
+  Plackett-Luce strength ordering}\label{fig:alottaplotsmeancorrect}
 \end{figure}
 
 \begin{figure}
 {\centering \includegraphics{alottaplotswinnercorrect-1} }
-\caption[Simulated Formula 1 races, seasons 2016-2019]{Simulated
-  Formula 1 races, seasons 2016-2019: probability of identifying the
-  Plackett-Luce winner for each of six
-  points \label{simulated_winner_correct}
+\caption[\doublespacing Simulated Formula 1 races, seasons
+  2016-2019]{\doublespacing Simulated Formula 1 races, seasons
+  2016-2019: probability of identifying the Plackett-Luce winner for
+  each of six points \label{simulated_winner_correct}
   systems}\label{fig:alottaplotswinnercorrect}
 \end{figure}
 
 \begin{figure}
 {\centering \includegraphics{alottaplotstotalrankorder-1}}
-\caption[Simulated Formula 1 races, seasons 2016-2019]{Simulated
-  Formula 1 races, seasons 2016-2019: probability of complete
-  agreement between Plackett-Luce ranks and ranks calculated by each
-  of six points \label{simulated_complete_agreement}
+\caption[\doublespacing Simulated Formula 1 races, seasons
+  2016-2019]{\doublespacing Simulated Formula 1 races, seasons
+  2016-2019: probability of complete agreement between Plackett-Luce
+  ranks and ranks calculated by each of six
+  points \label{simulated_complete_agreement}
   systems}\label{fig:alottaplotstotalrankorder}
 \end{figure}
 
@@ -480,7 +494,7 @@ correctly predicting the winner.  However, the probability of predicting
 the complete order statistic is maximized using the winnner takes all
 system \((1,0,0,\ldots)\).
 
-\section{Conclusions}
+\section{\centering Conclusions}
 
 Many competitive situations involve ranking the participants and one
 way of doing this is to assign points for the winner, second place,
@@ -506,7 +520,7 @@ objective Plackett-Luce, depending on the exact definition of
 
 
 %% BibTeX support
-\bibliographystyle{DeGruyter}
+\bibliographystyle{apalike2}
 \bibliography{formula1}
 
 \end{document}
