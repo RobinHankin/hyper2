@@ -35,7 +35,7 @@ won.
 We may use function `volley()` to convert this to a likelihood
 function:
 
-```{r}
+```{r calcmaxpvolley}
 volleyball <- volley(volleyball_table)
 (volleyball_maxp <- maxp(volleyball))
 ```
@@ -44,7 +44,7 @@ The original synthetic dataset was prepared using Zipf's law for the
 players' strengths, so we may test the hypothesis that this is the
 case; $H_0\colon p_i\propto i^{-1}$:
 
-```{r}
+```{r zipflikelihood}
 zipf <- function(n){jj <- 1/(1:n); jj/sum(jj)}
 zipf(9)
 (null_support <- loglik(indep(zipf(9)),volleyball))
@@ -65,6 +65,6 @@ the support criterion is appropriate with 8 degrees of freedom.
 
 Following lines create `volleyball.rda`, residing in the `data/` directory of the package.
 
-```{r,label=savecurlingdataset}
+```{r,label=savevolleyballdataset}
 save(volleyball_table,volleyball_maxp,volleyball,file="volleyball.rda")
 ```
