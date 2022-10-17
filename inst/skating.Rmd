@@ -1,5 +1,5 @@
 ---
-title: "skating"
+title: "Ladies' figure skating in the 2002 Winter Olympics"
 output: bookdown::html_document2
 ---
 
@@ -14,13 +14,12 @@ options("digits" = 5)
 ![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
 </p>
 
-# Ladies' figure skating in the 2002 Winter Olympics
-
-This document analyses strengths of the competitors in the Ladies'
-Figure Skating at the 2002 Winter Olympics.  In the package, dataframe
-`skating_table` is copied from Lock and Lock (see skating.Rd for more
-details).  It also creates file `data/skating.rda` which contains R
-objects `skating`, `skating_table`, and `skating_maxp`.
+This document analyses Bradley-Terry strengths of the competitors in
+the Ladies' Figure Skating at the 2002 Winter Olympics.  In the
+package, dataframe `skating_table` is copied from Lock and Lock (see
+skating.Rd for more details).  It also creates file `data/skating.rda`
+which contains R objects `skating`, `skating_table`, and
+`skating_maxp`.
 
 ```{r,showskating}
 set.seed(0)
@@ -107,7 +106,7 @@ skating_maxp <- maxp(skating)
 m <- skating_maxp # for ease of  typing
 ```
 
-```{r,dpi=72}
+```{r,dotchartm,dpi=72}
 dotchart(m)
 dotchart(log(m))
 ```
@@ -170,13 +169,13 @@ maximization was constrained to obey `Kwan < Cohen`.
 If, instead, we ask whether there is evidence that Suguri should not
 have been a medallist, we find
 
-```{r}
+```{r subtractmaxfrommgv}
 mgv  - max(out[4:6])
 ```
 
 We can be more specific with the likelihoods:
 
-```{r}
+```{r plotrestrictedlikes}
 plot(out,ylab="log likelihood",axes=FALSE)
 axis(2)
 axis(side=1,at=1:6,srt=45,labels=c(
@@ -241,26 +240,27 @@ to Slutskaya and four preferred Slutsakaya to Hughes.
 
 # Just the top seven competitors
 
-```{r}
+```{r justtop7}
 skating_table
 o <- ordertable_to_ranktable(skating_table)
 o
 ```
 
-```{r}
+```{r setclasstomatrix}
 class(o) <- "matrix"
 o
 ```
 
 Select just the top seven:
-```{r}
+```{r selectthetop7}
 o <- o[,1:7]
 o
 ```
 
-and now replace ranks with internal ranks (that is, rank among the top seven):
+and now replace ranks with internal ranks (that is, rank among the top
+seven):
 
-```{r}
+```{r replaceranks}
 o <- t(apply(o,1,rank))
 colnames(o) <- rownames(skating_table)[1:7]
 o
@@ -268,27 +268,27 @@ o
 
 Now coece to a `ranktable`:
 
-```{r}
+```{r coercetoranktble}
 class(o) <- "ranktable"
 o
 ```
 
 Thence to an order table:
 
-```{r}
+```{r thenceto}
 o <- ranktable_to_ordertable(o)
 o
 ```
 
 Now create a likelihood function:
 
-```{r}
+```{r makelikef}
 o <- ordertable2supp(o)
 o
 ```
 and have some fun with it:
 
-```{r}
+```{r plotapieofo}
 (o <- maxp(o))
 pie(o)
 ```
