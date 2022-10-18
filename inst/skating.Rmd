@@ -104,7 +104,13 @@ Now some data visualization.  First the MLE for the strengths:
 skating <- ordertable2supp(skating_table)
 skating_maxp <- maxp(skating)
 m <- skating_maxp # for ease of  typing
+m
 ```
+
+```{r equalskatingptest}
+equalp.test(skating)
+```
+
 
 ```{r,dotchartm,dpi=72}
 dotchart(m)
@@ -124,56 +130,82 @@ equivalent: optimize over the union of outcomes where either Cohen or
 Suguri (who placed fourth and fifth respectively) had higher strength
 than any of the medallists.
 
+```{r}
+f <- function(smaller,bigger){
+  jj <- rep(0,22)
+  names(jj) <- pnames(skating)[-23]  #  no fillup
+  jj[smaller] <- -1
+  jj[bigger ] <- +1
+  return(jj)
+}	
+
+problem_constraints <-  NULL
+problem_constraints %<>% rbind(f("hughes"   ,"cohen" ))
+problem_constraints %<>% rbind(f("slutskaya","cohen" ))
+problem_constraints %<>% rbind(f("kwan"     ,"cohen" ))
+problem_constraints %<>% rbind(f("hughes"   ,"suguri"))
+problem_constraints %<>% rbind(f("slutskaya","suguri"))
+problem_constraints %<>% rbind(f("kwan"     ,"suguri"))
+
+rownames(problem_constraints) <-
+c("hug < coh", "slu < coh", "kwa < coh", "hug < sug", "slu < sug", "kwa < sug" )
+colnames(problem_constraints) %<>% substr(1,3)
+problem_constraints
+
+small <- 0.01
+big <- 0.1
+start_vector <- rep(small,22)
+names(start_vector) <- pnames(skating)[-23]  #  no fillup
+start_vector["cohen"] <- big
+start_vector["suguri"] <- big
+```		
+
+
 ```{r,longthing,cache=TRUE}
-jj <-
-    matrix(c(
-        -1, 0, 0,   1,0,  # Hughes   < Cohen
-         0,-1, 0,   1,0,  # Slutskya < Cohen
-         0, 0,-1,   1,0,  # Kwan     < Cohen
-        
-        -1, 0, 0,   0,1,  # Hughes   < Suguri
-         0,-1, 0,   0,1,  # Slutskya < Suguri
-         0, 0,-1,   0,1), # Kwan     < Suguri
-        byrow=TRUE,ncol=5)
-
-problem_constraints <-  # fill with zeros for other competitors
-    cbind(jj,matrix(0,nrow(jj),size(skating)-ncol(jj)-1))
-
-small <- 1e-4  # need a sensible start value satisfying the constraints
-start <- c(rep(2*small,3),rep(3*small,2),rep(small,17))
 
 out <- rep(0,nrow(problem_constraints))
 fullout <- list()
 
+mle_skaters <- NULL
+
 for(i in seq_len(nrow(problem_constraints))){
-  jj <- maxp(skating, startp=start, give=TRUE,fcm=problem_constraints[i,], fcv=0,n=1,SMALL=1e-5)
+  jj <- maxp(skating, startp=start_vector, give=TRUE,fcm=problem_constraints[i,], fcv=0,n=10,SMALL=1e-5)
    fullout[[i]] <- jj
    out[i] <- jj$value
+   mle_skaters <- cbind(mle_skaters,jj$par)
+
 }
 out
+out-max(out)
+colnames(mle_skaters) <- rownames(problem_constraints)
+mle_skaters
 ```
 
 Now compare these values with the unconstrained maximum likelihoods:
 
 ```{r,unconstrainedlikes, cache=TRUE}
 mgv <- maxp(skating, give=TRUE, n=10)$value
+mgv
 mgv  - out
 mgv  - max(out)
 ```
 
-that is, a little over 1 unit of support, falling short of the two
-units suggested by Edwards.  Observe that the maximum likelihood among
-the six alternative hypotheses is that of number 3, in which the
-maximization was constrained to obey `Kwan < Cohen`.
-
-If, instead, we ask whether there is evidence that Suguri should not
-have been a medallist, we find
+that is, a little over 7 units of support, clearly exceeding the two
+units suggested by Edwards.  We have strong evidence to suggest that
+the medallists were indeed the strongest three competitors.  Observe
+that the maximum likelihood among the six alternative hypotheses is
+that of number 3, in which the maximization was constrained to obey
+`Kwan < Cohen`.  If we _have_ to change the medallists, then
+exchanging the order of Kwan and Cohen incurs the lowest likelihood
+penalty.  If, instead, we ask whether there is evidence that Suguri
+[who was much weaker than Cohen] should not have been a medallist, we
+find
 
 ```{r subtractmaxfrommgv}
 mgv  - max(out[4:6])
 ```
 
-We can be more specific with the likelihoods:
+Much stronger.
 
 ```{r plotrestrictedlikes}
 plot(out,ylab="log likelihood",axes=FALSE)
