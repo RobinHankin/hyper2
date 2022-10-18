@@ -16,7 +16,7 @@ library("hyper2")
 
 
 We analyse results from Curacao 1962 using `hyper3` formalism using
-the weighted Draw monster appraoch outlined in `kka.Rmd`:
+the weighted Draw monster approach outlined in `kka.Rmd`:
 
 $$
 \left(\frac{\lambda p_1, D(p_1+p_2),p_2}{\lambda p_1+D(p_1+p_2)+p_2}\right)^{(a,b,c)}
@@ -34,20 +34,22 @@ $\wld{d}{e}{f}$.
 
 # Short story
 
-With this model, whatever the value of $D$ and $\lambda$, there is a
-pathology which BT cannot deal with.  Still not quite 100% sure but it
-seems that the maximum likelihood estimate of the players' strengths
-is zero except for Fisher and Petrosian; and indeed we see Fisher at
-57% and Petrosian at 42% [with $\lambda = 1.1, D=1.888$].  This on the
-grounds that these players never lost playing black (there are some
-$2\times 3$ tables at the end).  This might be considered a defect of
-the probability model.
+With this model [discussed in a broader context at `kka.Rmd`],
+whatever the value of $D$ and $\lambda$, there is a pathology which BT
+cannot deal with.  Still not quite 100% sure but it seems that the
+maximum likelihood estimate of the players' strengths is zero except
+for Fisher and Petrosian; and indeed we see Fisher at 57% and
+Petrosian at 42% [with $\lambda = 1.1, D=1.888$].  This on the grounds
+that these players never lost playing black (there are some $2\times
+3$ tables at the end).  This might be considered a defect of the
+probability model.
 
 # Longer story
 
 
 ```{r,label=loadjavelinandconvert}
 cur_matches <- read.table("stockholm1962_matches.txt",header=FALSE)
+colnames(cur_matches) <- c("white","black","result")
 head(cur_matches)
 nrow(cur_matches)
 ```
@@ -110,8 +112,12 @@ equalp.test(H3,n=1)
 
 
 ```{r,comparelikelihoods,cache=TRUE}
-maxp(f(1.1,2.1),n=1,give=TRUE)
-maxp(f(1.1,2.3),n=1,give=TRUE)
+m1121 <- maxp(f(1.1,2.1),n=1,give=TRUE)
+m1123 <- maxp(f(1.1,2.3),n=1,give=TRUE)
+```
+
+```{r,showmaxpwithlam}
+pie(m1121$par)
 ```
 
 A break here.
