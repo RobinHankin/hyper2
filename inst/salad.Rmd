@@ -1,0 +1,90 @@
+---
+title: "salad"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+library("prefmod")
+library("PlackettLuce")
+options("digits" = 5)
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+This short document shows how to apply `hyper2` idiom to the `salad`
+dataset of the `prefmod` package.  From `salad.Rd`:   
+
+```
+The dataset contains the rankings of four salad dressings concerning
+tartness by 32 judges, with values ranging from 1 (most tart) to 4
+(least tart).
+```
+
+```{r showsalad}
+head(salad)
+nrow(salad)
+```
+
+From row 3, for exampl,e we see that salad `A` was ranked as second
+most tart, `B` the most tart, `C` the third most tart, and `D` the
+least tart of the four.  We may process this using two methods,
+explicit and slick.  First, explicit:
+
+```{r useexplicitmethod,cache=TRUE}
+H1 <- hyper2()
+for(i in seq_len(nrow(salad))){
+   H1 <-  H1 + ordervec2supp(as.matrix(salad)[i,])
+}
+H1
+```
+
+And second, slick:
+
+```{r useslickmethod,cache=TRUE}
+(H2 <- ordertable2supp(t(salad)))
+```
+
+Just to check:
+
+```{r checkequalityofsalads}
+H1 == H2
+```
+
+
+```{r equalsaladtart, cache=TRUE}
+equalp.test(H1)
+```
+
+The null estimate agrees to six places of decimals with that
+presented by Turner:
+
+```{r usepladmm, cache=TRUE}
+standardPL_PlackettLuce <- PlackettLuce(salad, npseudo = 0)
+(p1 <- itempar(standardPL_PlackettLuce))
+(p2 <- maxp(H1))
+p1-p2
+```
+
+
+
+# References
+
+Turner HL, van Etten J, Firth D, Kosmidis I (2020).  "Modelling
+Rankings in R: The PlackettLuce Package."  _Computational Statistics_,
+35, 1027–1057. doi:10.1007/s00180-020-00959-3,
+\url{https://doi.org/10.1007/s00180-020-00959-3}
+
+Yildiz, Ilkay, Jennifer Dy, Deniz Erdogmus, Jayashree Kalpathy-Cramer,
+Susan Ostmo, J. Peter Campbell, Michael F. Chiang, and Stratis
+Ioannidis. 2020. "Fast and Accurate Ranking Regression."  In
+Proceedings of the Twenty Third International Conference on Artificial
+Intelligence and Statistics, edited by Silvia Chiappa and Roberto
+Calandra, 108:77–88. Proceedings of Machine Learning
+Research. \url{http://proceedings.mlr.press/v108/yildiz20a.html}

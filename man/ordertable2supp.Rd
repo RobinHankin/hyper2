@@ -3,6 +3,7 @@
 \alias{ordervec2supp}
 \alias{ordervec2supp}
 \alias{order_obs}
+\alias{salad}
 \title{Translate order tables to support functions}
 \description{\loadmathjax
 
@@ -83,7 +84,12 @@ e)^-1 * d * (d + e)^-1)
 }
 
 Function \code{order_obs()} was used in the integer-indexed paradigm but
-is obsolete in the name paradigm.
+is obsolete in the name paradigm.  A short vignette applying
+\code{ordervec2supp()} and \code{ordertable2supp()} to the \code{salad}
+dataset of the \pkg{prefmod} package [and further analysed in the
+\pkg{PlackettLuce} package] is presented at \code{inst/salad.Rmd}.
+
+
 }
 
 \value{Returns a \code{hyper2} object}
