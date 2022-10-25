@@ -102,12 +102,21 @@ Now some data visualization.  First the MLE for the strengths:
 
 ```{r,maxshow, cache = TRUE}
 skating <- ordertable2supp(skating_table)
-skating_maxp <- maxp(skating)
+options("use_alabama" = TRUE)
+skating_maxp <- maxp(skating,startp=
+c(5.0493913251e-06, 0.0053037393083, 0.090240695999, 
+0.00036893464900, 1.1397045995e-05, 8.3424027249e-05, 
+9.8129903007e-06, 0.00026960143514, 0.29831585124, 
+0.001376333090, 2.9434081237e-06, 0.26550514587, 
+0.00051946513092, 1.7e-06, 0.00080745068338, 
+0.00029358481485, 0.00048852120227, 0.0053075302458, 
+0.0025877438737, 0.30889220253, 1.2869403350e-05, 
+0.0184563624305147))    # values from previous repeated runs of maxp()
 m <- skating_maxp # for ease of  typing
 m
 ```
 
-```{r equalskatingptest}
+```{r equalpskatingtest,cache=TRUE}
 equalp.test(skating)
 ```
 
@@ -222,6 +231,14 @@ points on the x-axis correspond to the six rows of
 letters.  Thus the first three points are maximum likelihoods for
 `Hughes < Cohen`, `Slutskya < Cohen`, and `Kwan < Cohen` respectively.
 
+We may test the hypothesis that Slutskaya == Kwan == Hughes:
+
+
+```{r,testtop3,cache=TRUE}
+samep.test(skating,c("slutskaya","kwan","hughes"))
+```
+
+
 ## Ranking methodologies.
 
 maximum likelihood estimated strengths furnish an ordering for the
@@ -320,7 +337,7 @@ o
 ```
 and have some fun with it:
 
-```{r plotapieofo}
+```{r plotapieofo,cache=TRUE}
 (o <- maxp(o))
 pie(o)
 ```
