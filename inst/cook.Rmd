@@ -21,7 +21,6 @@ package.
 
 ```{r loadlib}
 library(hyper2)
-
 ```
 
 Now add some data:
@@ -269,8 +268,82 @@ abline(v=1,col='red')
 text(0,-0.2,"lambda=1",col="red",pos=4)
 ```
 
+```{r,label=plotsupplog}
+plot(log(lam),L-max(L),type="l",lwd=2)
+abline(h=c(0,-2),col='gray')
+abline(v=1,col='red')
+text(0,-0.2,"lambda=1",col="red",pos=4)
+```
+
+
+
 We see that we can reject $H_0\colon\lambda=1$ but for this dataset
 there does not appear to be a clear upper bound on $\lambda$.
 
+We can calculate the maximum likelihood estimate as follows:
+
+```{r,label=maxlikelambda,cache=TRUE}
+o <- optimize(supplam,c(40,70),maximum=TRUE)
+o
+```
+
+To calculate a formal likelihood ratio we need to calculate the
+support for $\lambda=1$ and compare it with the support for
+$\lambda=\hat{\lambda}$
 
 
+```{r,supmax,cache=TRUE}
+supplam(o$maximum)
+supplam(1)
+```
+
+and we get a $p$-value for $H_0\colon\lambda=1$ using Wilks,
+specifically that
+$2\log\left(\frac{\mathcal{L}_{\lambda=\hat{\lambda}}}{\mathcal{L}_{\lambda=1}}\right)\sim\chi^2_1$
+
+```{r pvalueforlambdaequalsone,cache=TRUE}
+pchisq(2*(supplam(o$maximum)-supplam(1)),lower.tail=FALSE,df=1)
+```
+
+Actually we should be able to analyse $\lim_{\lambda\longrightarrow\infty}H_\lambda$:
+
+```{r,lambigcalc,cache=TRUE}
+lambig <- 10^(0:6)
+LL <- sapply(lambig,supplam)
+```
+
+```{r,plotlambdiff,echo=F}
+plot(log(lambig),LL-max(LL),pch=16)
+for(i in seq(from=0,to=8,by=2)){abline(i,-1,col='gray',lwd=0.5)}
+abline(v=log(o$maximum))
+```
+
+Looking at the two parts of the likelihood function that includes
+lambda, and thinking about $\lim_{\lambda\longrightarrow\infty}$ we
+see that the first product is approximately constant and the second is
+$\propto\lambda^{-1}$.  This analysis is a little bit naive because as
+$\lambda$ grows very large, we might expect $\hat{p_3}$ to grow too.  But:
+
+```{r,maxplam1110,cache=TRUE}
+M <- rbind(
+maxp(H3(10^0    ),n=1,give=TRUE)$par,
+maxp(H3(10^1    ),n=1,give=TRUE)$par,
+maxp(H3(10^2    ),n=1,give=TRUE)$par,
+maxp(H3(10^3    ),n=1,give=TRUE)$par,
+maxp(H3(10^4    ),n=1,give=TRUE)$par,
+maxp(H3(10^5    ),n=1,give=TRUE)$par,
+maxp(H3(10^6    ),n=1,give=TRUE)$par
+)
+M
+```
+
+```{r}
+matplot(M,type='b')
+```
+
+
+Above we see that the evaluate hardly changes when $\lambda > 10^4$,
+and indeed from the figure we see that the slope of the support graph
+is about $-1$ for large values of $\lambda$ [the points follow a line
+parallel to one of the slanted gray lines, which have a slope of
+exactly $-1$; note that the aspect ratio of the graph is not unity]
