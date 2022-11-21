@@ -11,14 +11,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Ternary plots for hyper2 samples
 
-Here I show how to use the excellent `Ternary` package to generate triangular plots for `hyper2` likelihood functions with size 3.  First load the `Ternary` and `hyper2` packages:
+Here I show how to use the excellent `Ternary` package to generate
+triangular plots for `hyper2` likelihood functions with size 3.  First
+load the `Ternary` and `hyper2` packages:
 
 ```{r loadlibraries}
 library("hyper2")
 library("Ternary")
 ```
 
-Now generate a synthetic dataset.  Here we will sample from the posterior of a uniform prior with a likelihood function specified by the `chess` object (this takes quite a long time):
+## The `chess` dataset
+
+Now generate a synthetic dataset.  Here we will sample from the
+posterior of a uniform prior with a likelihood function specified by
+the `chess` object (this takes quite a long time):
 
 ```{r generatedata, cache=TRUE}
 set.seed(0)
@@ -33,11 +39,44 @@ TernaryPoints(xx,cex=0.5)
 TernaryPoints(chess_maxp,pch=16,col="red")
 ```
 
-Above we see black circles being samples from the posterior and the red point is the maximum likelihood estimate for the three players' strengths.
+Above we see black circles being samples from the posterior and the
+red point is the maximum likelihood estimate for the three players'
+strengths.
 
 We can adapt this technique to higher-dimensional `hyper2` objects.
 
 
+## The `icons` dataset
+
+Consider the `icons` likelihood function:
+
+```{r showicons}
+icons
+```
+
+
+We can sample from this object and plot it in different ways:
+
+
+```{r samplefromicons,cache=TRUE}
+n <- 10000
+x <- rp(n,icons)
+x[sample(n,5),]
+```
+
+
+```{r, iconsmatplot}
+matplot(x,type="l",lty=1)
+legend("topright",col=1:6,lty=1,legend=pnames(icons))
+```
+
+
+```{r, selectjustbigones}
+wanted <- c(1,3) # NB,PB
+xx <- cbind(x[,wanted],fillup=rowSums(x[,-wanted]))
+TernaryPlot(atip="NB",btip="PB",ctip="other")
+TernaryPoints(xx,cex=0.5)
+```
 
 
 

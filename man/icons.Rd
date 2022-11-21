@@ -22,6 +22,10 @@
 
   Object \code{icons} is the corresponding likelihood function, which
   can be created with \code{saffy(icons_matrix)}.
+
+  The object is used in \code{inst/ternaryplot_hyper2.Rmd} which shows a
+  ternary plot of random samples.
+  
 }
 \usage{data(icons)}
 \details{
