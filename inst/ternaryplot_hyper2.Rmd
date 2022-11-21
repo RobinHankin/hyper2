@@ -1,0 +1,43 @@
+---
+title: "ternary_hyper2"
+author: "Robin Hankin"
+date: "2022-11-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Ternary plots for hyper2 samples
+
+Here I show how to use the excellent `Ternary` package to generate triangular plots for `hyper2` likelihood functions with size 3.  First load the `Ternary` and `hyper2` packages:
+
+```{r loadlibraries}
+library("hyper2")
+library("Ternary")
+```
+
+Now generate a synthetic dataset.  Here we will sample from the posterior of a uniform prior with a likelihood function specified by the `chess` object (this takes quite a long time):
+
+```{r generatedata, cache=TRUE}
+set.seed(0)
+xx <- rp(1000,chess)
+```
+
+Using the `TernaryPlot()` and `TernaryPoints()` functions is straightforward:
+```{r plotdata}
+jj <- pnames(chess)
+TernaryPlot(atip=jj[1],btip=jj[2],ctip=jj[3])
+TernaryPoints(xx,cex=0.5)
+TernaryPoints(chess_maxp,pch=16,col="red")
+```
+
+Above we see black circles being samples from the posterior and the red point is the maximum likelihood estimate for the three players' strengths.
+
+We can adapt this technique to higher-dimensional `hyper2` objects.
+
+
+
+
+
