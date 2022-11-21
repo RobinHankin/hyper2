@@ -1,5 +1,3 @@
-
-
 `hyper2` <-  function(L=list(), d=0, pnames){
   if(length(d)==1){d <- rep(d,length(L))}
   if(missing(pnames)){pnames <- sort(unique(c(L,recursive=TRUE)))}
@@ -407,7 +405,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     best_so_far <- -Inf # best (i.e. highest) likelihood found to date
     likes <- rep(NA,n)
     if(is.null(startp)){ startp <- indep(equalp(H)) }
-
+    if(length(startp) == size(H)){startp <- indep(startp)}
     for(i in seq_len(n)){
         if(i>1){startp <- startp+runif(size(H)-1,max=SMALL/size(H))}
         jj <- ms(H, startp=startp, give=TRUE, fcm=fcm, fcv=fcv, SMALL=SMALL, ...)
@@ -432,6 +430,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     if(inherits(H,"suplist")){return(maxplist(Hlist=H,startp=startp,give=give,fcm=fcm,fcv=fcv,...))}
     if(inherits(H,"lsl"    )){return(maxp_lsl(Hlist=H,startp=startp,give=give,fcm=fcm,fcv=fcv,...))}
     
+    if(length(startp) == size(H)){startp <- indep(startp)}
+
     n <- size(H)
     if(is.null(startp)){
         startp <- rep(1/n,n-1)
@@ -500,6 +500,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     if(is.null(startp)){
         startp <- rep(1/n,n-1)
     }
+
+    if(length(startp) == size(H)){startp <- indep(startp)}
 
     objective <- function(p){ -loglik(p,H) }
     gradfun   <- function(p){ -(gradient(H,p))} #NB minus signs
