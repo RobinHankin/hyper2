@@ -2,7 +2,7 @@
 
   ## competitors abcdef, with two groups of mutual friends: (abd) with
   ## mutual helpfulness 1.1, and (cf) with mutual helpfulness 1.3;
-  ## competitors e and g are in groups of 1.
+  ## competitors "e" and "g" are in groups of 1.
 
   ## use-case:
   ## cheering3(v=letters[1:7],e=c(a=1,b=1,c=2,d=1,f=2),help=c(1.88,1.66))
