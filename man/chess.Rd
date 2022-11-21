@@ -44,6 +44,11 @@ discussion and technical documentation and creates file \code{chess.rda}
 which resides in the \code{data/} directory.
 
 
+File \code{inst/ternaryplot_hyper2.Rmd} gives an example showing the
+\code{chess} likelihood function that uses
+\code{Ternary::ternaryPlot()}.
+
+
 }
 \references{
   \itemize{

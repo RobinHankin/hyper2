@@ -1,3 +1,8 @@
+# hyper2 3.0-1
+
+* better behaviour for rp()
+* improved documentation
+
 # hyper2 3.0-0
 
 * implementation of hyper3 functionality
