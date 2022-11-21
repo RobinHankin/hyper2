@@ -15,9 +15,9 @@
   Tests different nulls against a free alternative
 }
 \usage{
-equalp.test(H, ...)
+equalp.test(H, startp=NULL, ...)
 knownp.test(H, p, ...)
-samep.test(H, i, give=FALSE, ...)
+samep.test(H, i, give=FALSE, startp=NULL, ...)
 specificp.test(H, i, specificp=1/size(H),
          alternative = c("two.sided","less","greater"),  ...)
 specificp.ne.test(H, i, specificp=1/size(H), ...)
@@ -31,6 +31,7 @@ specificp.lt.test(H, i, specificp=1/size(H), ...)
     tested}
   \item{...}{Further arguments passed by \code{equalp.test()} to
     \code{maxp()} and ignored by \code{print.hyper2test()}}
+  \item{startp}{Starting value for optimization}
   \item{i}{A character vector of names}
   \item{specificp}{Strength, real number between 0 and 1}
   \item{alternative}{a character string specifying the alternative

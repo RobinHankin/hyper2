@@ -27,7 +27,9 @@ equalp(H)
   \item{H}{A \code{hyper2} or \code{hyper3} object}
   \item{Hlist}{A list with elements all \code{hyper2} objects}
   \item{HLSL}{An \code{lsl} object}
-  \item{startp}{A vector of probabilities}
+  \item{startp}{A vector of probabilities specifying the start-point for
+    optimization; if a full unit-sum vector, then the fill-up value will
+    be removed by \code{indep()} (except for \code{maxp_lsl()})}
   \item{give}{Boolean, with default \code{FALSE} meaning to return just
     the evaluate (including fillup), and \code{TRUE} meaning to return
     the entire formal output of the optimization routine}
