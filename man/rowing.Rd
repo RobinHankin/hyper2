@@ -5,6 +5,7 @@
 \alias{sculls2016}
 \alias{allrowers}
 \alias{rowing_minimal}
+\alias{rowing_table}
 \alias{rowing_maxp}
 \alias{rowing_minimal_maxp}
 \docType{data}
@@ -21,7 +22,8 @@ function for the 2016 men's sculls.
 
 Object \code{rowing} is created by the code in \code{inst/rowing.Rmd}.
 This reads file \code{inst/rowing.txt}, each line of which is a heat
-showing the finishing order.
+showing the finishing order.  Object \code{rowing_table} is the
+corresponding R list.
 
 File \code{inst/rowing_minimal.txt} has the same data but with dominated
 players (that is, any group of players none of whom have beaten any

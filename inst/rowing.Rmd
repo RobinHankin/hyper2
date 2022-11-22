@@ -36,9 +36,9 @@ readLines("rowing.txt")[1:3]
 We can process this file using standard R functions.
 
 ```{r}
-o <- sapply(readLines("rowing.txt"),strsplit," ")
-names(o) <- NULL  # names are pointless here
-o[1:3]
+rowing_table <- sapply(readLines("rowing.txt"),strsplit," ")
+names(rowing_table) <- NULL  # names are pointless here
+rowing_table[1:3]
 ```				 
 
 The first line shows that `fournier` came first, `cabrera` second, and
@@ -46,7 +46,7 @@ so on.  We can convert this dataset into a Plackett-Luce likelihood
 function as follows:
 
 ```{r definerowing, cache=TRUE}
-rowing <- Reduce("+",sapply(o,race))
+rowing <- Reduce("+",sapply(rowing_table,race))
 summary(rowing)
 ```
 
@@ -127,5 +127,5 @@ Following lines create `rowing.rda`, residing in the `data/` directory
 of the package.
 
 ```{r,label=saverowingingdataset}
-save(rowing,rowing_minimal,rowing_maxp,rowing_minimal_maxp,file="rowing.rda")
+save(rowing,rowing_minimal,rowing_maxp,rowing_minimal_maxp,rowing_table,file="rowing.rda")
 ```
