@@ -6,6 +6,7 @@
 \alias{allrowers}
 \alias{rowing_minimal}
 \alias{rowing_table}
+\alias{rowing_minimal_table}
 \alias{rowing_maxp}
 \alias{rowing_minimal_maxp}
 \docType{data}

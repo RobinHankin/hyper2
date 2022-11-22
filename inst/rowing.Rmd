@@ -94,9 +94,9 @@ show("rowing_minimal.txt")
 strength would be 1).  We may then analyse this:
 
 ```{r rowingminimaldef}
-o <- sapply(readLines("rowing_minimal.txt"),strsplit," ")
-names(o) <- NULL  
-rowing_minimal  <- Reduce("+",sapply(o,race))
+rowing_minimal_table <- sapply(readLines("rowing_minimal.txt"),strsplit," ")
+names(rowing_minimal_table) <- NULL  
+rowing_minimal  <- Reduce("+",sapply(rowing_minimal_table,race))
 summary(rowing_minimal)
 ```				 
 
@@ -115,17 +115,11 @@ dotchart(rowing_minimal_maxp)
 dotchart(log10(rowing_minimal_maxp))
 ```
 
-
-
-
-
-
-
 ### Package dataset {-}
 
 Following lines create `rowing.rda`, residing in the `data/` directory
 of the package.
 
 ```{r,label=saverowingingdataset}
-save(rowing,rowing_minimal,rowing_maxp,rowing_minimal_maxp,rowing_table,file="rowing.rda")
+save(rowing,rowing_minimal,rowing_maxp,rowing_minimal_maxp,rowing_table,rowing_minimal_table,file="rowing.rda")
 ```
