@@ -40,7 +40,7 @@ ignore <- "
  R CMD BATCH f2019.R &
  R CMD BATCH f2020.R &
  R CMD BATCH f2021.R &
- R CMD BATCH f2022.R 
+ R CMD BATCH f2022.R &
 "
 
 # creates all the different .rda files needed by f1points.Rmd.
