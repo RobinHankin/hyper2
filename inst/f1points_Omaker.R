@@ -21,7 +21,6 @@ ignore <- "
  cat f1points_Omaker.R | sed -e 's/2017/2012/g' > f2012.R
  cat f1points_Omaker.R | sed -e 's/2017/2013/g' > f2013.R
  cat f1points_Omaker.R | sed -e 's/2017/2014/g' > f2014.R
- cat f1points_Omaker.R | sed -e 's/2017/2014/g' > f2015.R
  cat f1points_Omaker.R | sed -e 's/2017/2015/g' > f2015.R
  cat f1points_Omaker.R | sed -e 's/2017/2016/g' > f2016.R
  cat f1points_Omaker.R | sed -e 's/2017/2017/g' > f2017.R
