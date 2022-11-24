@@ -42,12 +42,32 @@ Hamilton placed second in Austria.
 Object \code{F1_table_2017} is simply the first 20 columns of
 \code{read.table(inst/formula1_2017.txt)} and object
 \code{F1_points_2017} is column 21.  The likelihood function
-\code{formula1} is \code{ordertable2supp(F1_table_2017)}.
+\code{formula1} is \code{ordertable2supp(F1_table_2017)}.  The datasets
+in the package are derived from text files in the \code{inst/} directory
+(e.g. \code{formula1_2017.txt}) by script file
+\code{inst/f1points_Omaker.R}.  Executing this script creates files like
+\code{formula1_results_2017.rda}.
+
+The text files can be converted directly into \code{ranktable} objects
+and support functions as follows:
+
+\preformatted{
+a <- read.table("formula1_2022.txt",header=TRUE)
+a <- a[,seq_len(ncol(a)-1)]  # strips out the points column
+wikitable_to_ranktable(a)
+ordertable2supp(a)
+}
 
 Function \code{formula1_points_system()} gives various possible points
 systems for the winner, second, third, etc, placing drivers.  
 
-The constructors' championship is discussed at \code{constructor.Rd}
+The constructors' championship is discussed at \code{constructor.Rd}.
+
+There is a large amount of documentation in the \code{inst/} directory
+in the form of Rmd files.
+
+
+
 
 }
 \references{
