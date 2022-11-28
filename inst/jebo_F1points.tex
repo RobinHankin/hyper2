@@ -1,0 +1,504 @@
+
+\documentclass{elsarticle}
+
+\usepackage{lineno,hyperref}
+\usepackage{amsmath}
+\usepackage{mathptmx}
+\usepackage{graphics}
+\usepackage{setspace}\doublespacing
+\modulolinenumbers[5]
+
+
+\journal{Journal of Economic Behavior and Organization}
+
+\bibliographystyle{model2-names.bst}\biboptions{authoryear}
+
+%% Start your document body here
+\begin{document}
+
+\begin{frontmatter}
+  \title{An objective assessment of point scoring systems in Formula 1 motor racing}
+  \author{Robin K. S. Hankin\fnref{myfootnote}}
+\address{AUT University, 55 Wellesley Street, Auckland 1010, New Zealand}
+
+\begin{abstract}
+The points scoring system of Formula 1 motor racing is a long-standing
+contention among fans and competitors.  The inaugural points system
+was $(8,6,4,3,2)$, that is, 8 points to the winner, 6 to second place,
+and so on; in 2020 the points system was changed to
+$(25,18,15,12,10,8,6,4,2,1)$.  However, it is difficult to assess
+statistical nulls using accumulated points.  Here, I use Plackett-Luce
+likelihood to identify a ranking for the competitors from the
+perspective of tournament theory, this method being amenable to
+statistical testing.  I go on to assess a number of reasonable points
+systems objectively: in one well-defined statistical sense a Borda
+points system is optimal.
+\end{abstract}
+\begin{keyword}
+Reified Bradley-Terry\sep Likelihood\sep Formula 1 motor racing\sep Points systems
+\end{keyword}
+
+
+\end{frontmatter}
+\linenumbers
+
+\newcommand{\raik}{R\"{a}ikk\"{o}nen}
+
+\section{Introduction}\label{introduction}
+Formula 1 motor racing is an important and prestigious motor sport
+\citep{codling2017,jenkins2010}.  Season ranking is based on a points
+allocation system wherein competitors are awarded points based on race
+finishing order; points accumulate additively.  The overall
+competition winner is the competitor who accumulates the most points
+after the final race.  The intent of the points system is to
+incentivize competitors, stimulate innovation, and to create an
+exciting sporting spectacle: as such, its study is a practical
+application of tournament theory~\citep{lazear1981}.
+
+However, in the case of Formula 1 motor racing, the points system is
+the subject of much controversy, having changed often since the
+competition's inauguration in 1950 when the points allocation was
+$(8,6,4,3,2)$---eight points to the winner, six for second place, and
+so on.  This system credits only the first five finishers.  As of
+2020, the current points system of $(25,18,15,12,10,8,6,4,2,1)$
+credits the first 10 (we ignore the bonus point awarded for fastest
+lap and assume a strictly monotonic decrease).  Arguably these two
+systems could introduce different rational behaviour under zero-sum
+assumptions: if, in a race, a driver knows he will place seventh under
+a low-risk strategy but may place sixth by dint of driving more
+aggressively, the low-risk strategy might be rational under the first
+points system (which does not reward the extra ranking), but not under
+the second, which does.
+
+Still, drivers have strong incentives to maximize their ranking
+irrespective of any points that may be awarded: sponsors and teams
+note details of drivers' performance and a great deal of personal
+pride may be at stake~\citep{gayrees2019}.  It is therefore reasonable
+to assume that each driver strives to maximise his rank and this will
+be done here.  If this is so, then changing the points system might
+change the competitors' rankings~\citep{wood2020} but not their
+behaviour: surely a defect of using points to rank the competitors.
+
+Given that racing is a zero-sum game---and that points are
+monotonically decreasing---each player will try to get as high a rank
+as possible regardless of the actual points system used.  However,
+there are other consistent interpretations. \cite{bakhrankova2011},
+for example, considers the possibility of inter-driver collusion, a
+phenomenon not pursued here; and \cite{mastromarco2009} suggest that
+the frequency of rule changes is driven by factors such as driver
+safety and revenue optimization.
+
+Points systems similar to that of Formula 1 are common in other racing
+sports; all have the common feature of translating ranks into points
+which combine additively to generate an overall ranking.  Further, we
+see points systems used in the wider context of competitive situations
+such as the Eurovision Song Contest and many other such group
+tournaments.
+
+\subsection{Bradley-Terry and generalizations for rank
+statistics}\label{bradley-terry-and-generalizations-for-rank-statistics}
+
+The Bradley-Terry model \citep{bradley1952} assigns non-negative
+strengths $p_1,\ldots, p_n$ to each of $n$ competitors in such a way
+that the probability of $i$ beating $j\neq i$ in pairwise competition
+is $\frac{p_i}{p_i+p_j}$; it is conventional to normalize so that
+$\sum p_i=1$.  Further, we use a generalization due to
+\citet{luce1959}, in which the probability of competitor~$i$ winning
+in a field of $\left\lbrace 1,\ldots, n\right\rbrace$ is
+$\frac{p_i}{p_1+\cdots +p_n}$.  Noting that there is information in the
+whole of the finishing order, and not just the first across the line,
+we can follow \cite{plackett1975} and consider the runner-up to be the
+winner among the remaining competitors, and so on down the finishing
+order. Without loss of generality, if the order of finishing were
+$1,2,3,4,5$, then a suitable
+\citeauthor{plackett1975}-\citeauthor{luce1959} likelihood function
+would be
+
+\begin{equation}\label{competitors_1_to_5_likelihood}
+\frac{p_1}{p_1+p_2+p_3+p_4+p_5}\cdot
+\frac{p_2}{p_2+p_3+p_4+p_5}\cdot
+\frac{p_3}{p_3+p_4+p_5}\cdot
+\frac{p_4}{p_4+p_5}\cdot
+\frac{p_5}{p_5}
+\end{equation}
+
+and this would be a forward ranking Plackett-Luce model in the
+terminology of \cite{mollica2014}. A slight generalization allows the
+incorporation of non-finishers (DNF etc). If, say, competitors 4 and 5
+did not finish, we would have
+
+\begin{equation}\label{competitors_1_to_3_only_finished}
+\frac{p_1}{p_1+p_2+p_3+p_4+p_5}\cdot
+\frac{p_2}{p_2+p_3+p_4+p_5}\cdot
+\frac{p_3}{p_3+p_4+p_5}
+\end{equation}
+
+(observe how this likelihood function, while informative about
+$p_4+p_5$, is uninformative about $p_4\left|p_4+p_5\right.$). We now
+use a technique due to \cite{hankin2010,hankin2020} and introduce
+fictional (reified) entities whose nonzero Bradley-Terry strength
+helps certain competitors or sets of competitors under certain
+conditions. The canonical example would be the home-ground advantage
+in association football.  If players (teams) $1,2$ with strengths
+$p_1,p_2$ compete, and if our observation were $a$ home wins and $b$
+away wins for team $1$, and $c$ home wins and $d$ away wins for
+team~$2$, then a suitable likelihood function would be
+
+\[
+\left(\frac{p_1+p_H}{p_1+p_2+p_H}\right)^a
+\left(\frac{p_1}{p_1+p_2+p_H}\right)^b
+\left(\frac{p_2+p_H}{p_1+p_2+p_H}\right)^c
+\left(\frac{p_2+p_H}{p_1+p_2+p_H}\right)^d,
+\]
+
+\noindent where $p_H$ is a quantification of the beneficial home
+ground effect.  Similar techniques have been used to account for the
+first-move advantage in chess, and effective coordination between
+members of doubles tennis teams; we may use a similar device to
+account for (e.g.) wet conditions in Formula 1.  Here I analyse
+seasons 2016-2019 using the \texttt{hyper2} package \citep{hankin2017}
+which implements the Plackett-Luce likelihood function with additional
+reified entities~\cite{hankin2020}.
+
+One component of Formula 1 motor racing is the starting grid.  Placing
+on the starting grid is determined by time trials usually driven the
+day before the race itself.  Pole position is awarded to the driver
+with the fastest qualifying time, and this confers a considerable
+advantage to the sitter.  In this analysis we do not consider pole
+position specifically, but attempt to make inferences about the time
+trials and the race itself in combination (alternatively, we treat
+grid placing and P-L strengths to be conditionally independent, given
+race ranking).  Similarly, we treat the driver and the team as a
+single entity about which we wish to make inferences.
+
+
+\section{Formula 1 dataset}\label{formula-1-dataset}
+
+\begin{table}
+\centering
+%\begin{tabular}{ |c|c|c|c|c|c|  ccc |c| c|c|}
+\begin{tabular}{ lccccc  ccc c cc}
+ \hline
+          &AUS&CHN&BHR&RUS&ESP&MON&$\ldots$&BRA&ABU\\ \hline
+Hamilton  &  2&  1&  2&  4&  1&  7&$\ldots$&  4&  2\\
+Vettel    &  1&  2&  1&  2&  2&  1&$\ldots$&  1&  3\\
+Bottas    &  3&  6&  3&  1&Ret&  4&$\ldots$&  2&  1\\
+\raik &  4&  5&  4&  3&Ret&  2&$\ldots$&  3&  4\\
+Ricciardo &Ret&  4&  5&Ret&  3&  3&$\ldots$&  6&Ret\\
+$\ldots$&$\ldots$&$\ldots$&$\ldots$&$\ldots$&$\ldots$&$\ldots$&$\ldots$&$\ldots$&$\ldots$\\
+Hartley   &  0&  0&  0&  0&  0&  0&$\ldots$&Ret& 15\\
+Button    &  0&  0&  0&  0&  0&Ret&$\ldots$&  0&  0\\
+Resta     &  0&  0&  0&  0&  0&  0&$\ldots$&  0&  0\\ \hline
+\end{tabular}
+\caption{\doublespacing 2017 Season results\label{results2017} table.
+  Each row is a driver and each column (after the first) a venue. We
+  see that Hamilton, the first row, came second in Australia, first in
+  China, second in Bahrain, fourth in Russia, and so on (Hartley,
+  Button, and Resta placed last).  In the first column, we see the
+  result from Australia (AUS) in which Hamilton came second, Vettel
+  first, Bottas third, and so on.  Here, ``Ret'' means retired and a
+  zero entry means ``did not finish''}
+\end{table}
+
+Taking 2017 as an example, Table~\ref{results2017} shows the drivers'
+ranks.  It is straightforward to translate this table into a
+Plackett-Luce likelihood function using the \texttt{hyper2} package;
+for simplicity we will consider only the 11 top-ranked drivers (in the
+Plackett-Luce likelihood function, the performance of lower-ranked
+players can be weakly informative about higher-ranked players'
+strengths.  For example, we see that Vettel retired twice---in
+Singapore and Japan---so any player who placed in those venues will
+effectively ``steal'' strength from Vettel, and generally ``give'' it
+to Hamilton or Bottas).  Although it has many terms, the overall
+likelihood expression for the 2017 season is of the general form
+
+\newcommand{\pham}{p_\mathrm{Ham}}
+\newcommand{\pvet}{p_\mathrm{Vet}}
+\newcommand{\pbot}{p_\mathrm{Bot}}
+\newcommand{\prai}{p_\mathrm{Rai}}
+\newcommand{\pric}{p_\mathrm{Ric}}
+\newcommand{\pver}{p_\mathrm{Ver}}
+\newcommand{\pper}{p_\mathrm{Per}}
+\newcommand{\poco}{p_\mathrm{Oco}}
+\newcommand{\psai}{p_\mathrm{Sai}}
+\newcommand{\phul}{p_\mathrm{H\"{u}l}}
+\newcommand{\pmas}{p_\mathrm{Mas}}
+
+\begin{equation}
+\frac{p_\mathrm{Ham}^{20}\,p_\mathrm{Mas}^{16}\,p_\mathrm{Bot}^{19}\ldots
+}{\parbox{4in}{$(p_\mathrm{Per}+p_\mathrm{Oco})(p_\mathrm{Ver}+p_\mathrm{Per}+p_\mathrm{Sai}+p_\mathrm{Hul}+p_\mathrm{Mas})\\
+    \rule{10mm}{0mm}(p_\mathrm{Ric}+p_\mathrm{Per}+p_\mathrm{Mas})(p_\mathrm{Sai}+p_\mathrm{Mas})\\ \rule{20mm}{0mm}
+    (p_\mathrm{Ver}+ p_\mathrm{Per}+ p_\mathrm{Oco}+ p_\mathrm{Sai}+ p_\mathrm{Hul})\ldots
+     $}}.
+ \end{equation}
+
+\begin{figure}
+{\centering \includegraphics{printapiechart-1}}
+\caption[\doublespacing Maximum likelihood estimates \label{piechartstrength} of the
+  strengths of the top-ranked 11 drivers in Formula 1 motor racing,
+  seasons 2016-2019]{\doublespacing Maximum likelihood
+  estimates \label{piechartstrength} of the strengths of the
+  top-ranked 11 drivers in Formula 1 motor racing, seasons
+  2016-2019}\label{fig:printapiechart}
+\end{figure}
+
+Finding the maximum likelihood estimate for the players' strengths is
+straightforward numerically. The \texttt{hyper2} package includes a
+suite of numerical optimization routines, and because they have access
+to derivatives, convergence is rapid.  A graphical diagram of the
+strengths is given in Figure~\ref{piechartstrength}.  We see that in
+2016 the driver with the largest estimated strength was Rosberg at
+about 30\%, and in years 2017-2019 was Hamilton at about 29\%, 37\%,
+and 42\% respectively. As an illustration of the value of likelihood
+methods (as opposed to points-based methods), a likelihood ratio test
+[\texttt{samep.test()}, supplied with the \texttt{hyper2} package]
+rejects the null that Hamilton and Vettel have the same strength in
+2018 $(H_0\colon p_\mathrm{Ham}= p_\mathrm{Vet}$) with a likelihood
+ratio of $e^{2.76}\simeq 15.8$, corresponding by Wilks's theorem to an
+asymptotic \(p\)-value of about \(0.02\). We may also use the reified
+entity concept to test the null hypothesis that Hamilton's strength
+was unchanged from 2016, where Rosberg had the highest estimated
+strength, to 2017-2019, where Hamilton did; we fail to reject this
+null.
+
+\subsection{Likelihood scoring vs points
+scoring}\label{likelihood-scoring-vs-points-scoring}
+
+Applying the current points system, for example, to the 2017 results
+table we would rank the drivers as follows:
+
+\begin{multline}\nonumber
+\mbox{Hamilton}\succ
+\mbox{Vettel}\succ
+\mbox{Bottas}\succ
+\mbox{\raik}\succ
+\mbox{Ricciardo}\succ\\
+\mbox{Verstappen}\succ
+\mbox{Perez}\succ
+\mbox{Ocon}\succ
+\mbox{Sainz}\succ
+\mbox{H\"{u}lkenberg}\succ
+\mbox{Massa}
+\end{multline}
+
+\noindent (this happens to be identical to the ranking after the extra
+point was awarded for fastest lap).  However, if we were to follow
+\citet{zipf1949} and adopt a points system of $(1,1/2,1/3,\ldots)$ we
+would have
+
+\begin{multline}\nonumber
+\mbox{Hamilton}\succ
+\mbox{Vettel}\succ
+\mbox{Bottas}\succ
+\mbox{Ricciardo}\succ
+\mbox{Verstappen}\succ\\
+\mbox{\raik}\succ
+\mbox{Perez}\succ
+\mbox{Ocon}\succ
+\mbox{Massa}\succ
+\mbox{Sainz}\succ
+\mbox{H\"{u}lkenberg}.
+\end{multline}
+
+\noindent Thus, these two systems agree on the first three places but
+fourth is awarded to \raik\ under the current F1 system and Ricciardo
+under \citeauthor{zipf1949}.  Compare the likelihood ranking:
+
+\begin{multline}\nonumber
+\mbox{Hamilton}\succ
+\mbox{Vettel}\succ
+\mbox{Bottas}\succ
+\mbox{\raik}\succ
+\mbox{Ocon}\succ
+\mbox{Ricciardo}\succ\\
+\mbox{Verstappen}\succ
+\mbox{Perez}\succ
+\mbox{Massa}\succ
+\mbox{Sainz}\succ
+\mbox{H\"{u}lkenberg}.
+\end{multline}
+
+\begin{figure}
+{\centering \includegraphics{likevspoints-1}}
+\caption{\doublespacing Ordering of
+  the \label{orderingbypointsandlikelihood} top-ranked 11 drivers in
+  Formula 1 seasons 2016-2019.  Horizontal axis gives official
+  (points-based) order, and the vertical axis gives the likelihood
+  order.  Thus, taking 2017 as an example, the points-based ordering
+  would be Hamilton first, then Vettel, then \raik; while the
+  likelihood ordering is (reading vertically) Hamilton, Vettel, Bottas
+}\label{fig:likevspoints}
+\end{figure}
+
+\noindent So for 2017 at least, we see that the current points system
+agrees with likelihood ranking for the top four places, while Zipf's
+law agrees to three.  We can plot one ranking against the other, shown
+in Figure~\ref{orderingbypointsandlikelihood}.  Note that the
+historically correct points awarded to the drivers differs from that
+calculated here.  That is for two reasons: firstly, ``fastest lap''
+points are not included here, and also the truncation of the order
+table to the first 11 drivers can increase the rank of a driver if
+non-first-11 drivers are placed.
+
+We thus see a comparison between two ordering systems.  Taking 2017 as
+an example, drivers Hamilton and Vettel are respectively first and
+second according to both ranking ranking procedures; but \raik\ and
+Bottas are third and fourth, and fourth and third, according to points
+and likelihood respectively. We define the \emph{degree of agreement}
+between the two ranking systems as the maximal value of \(r\) such
+that places \(1,2,\ldots, r\) all match.  Thus, from
+Figure~\ref{orderingbypointsandlikelihood}, the degree of agreement
+between likelihood ranking and points ranking for the years 2016-2019
+would be 11,1,2,2 respectively.
+
+However, the points system used is essentially arbitrary.  We could
+use, for example, Zipf's law to rank the drivers: award one point to
+the winner, half a point to second place, one third of a point to
+third, and so on; see Figure~\ref{orderingbypointsandlikelihood_zipf}
+in which we see generally poorer agreement between points-based ranks
+and likelihood-based ranks, with a degree of agreement of 0,1,2,2 for
+the years 2016-2019 respectively.  This might be an indication that
+using a Zipf law points allocation is objectively worse than the
+current points system.  There are a number of plausible points systems
+that might be used:
+
+\begin{figure}
+{\centering \includegraphics{likevspointszipf-1}}
+\caption[\doublespacing As for
+  Figure~\ref{orderingbypointsandlikelihood} \label{orderingbypointsandlikelihood_zipf}
+  but points ranking calculated by Zipf's law]{\doublespacing As for
+  Figure~\ref{orderingbypointsandlikelihood} \label{orderingbypointsandlikelihood_zipf}
+  but points ranking calculated by Zipf's law. Note the generally
+  poorer agreement between the two ranking
+  systems}\label{fig:likevspointszipf}
+\end{figure}
+
+\begin{itemize}
+\item The current Formula 1 system $(25,18,15,12,10,8,6,4,2,1)$
+\item The inaugural Formula 1 system $(8,6,4,3,2)$
+\item Zipf's law $(1,\frac{1}{2},\frac{1}{3},\frac{1}{4},\ldots)$
+\item Borda $(n,n-1,n-2,\ldots,3,2,1,0)$
+\item Halving system:  $(1,\frac{1}{2},\frac{1}{4},\frac{1}{8},\ldots)$
+\item A ``winner takes all'' system $(1,0,\ldots)$
+\end{itemize}
+
+We note that some of these may be generalized.  We might consider a
+more general Borda-like points system $(r,r-1,r-2,\ldots,3,2,1,0)$ for
+fixed integer $0<r<n$ \citep{emerson2007}; the halving system can be
+generalized to a geometric distribution; and the winner takes all
+system can be replaced by giving equal points to the top \(r\)
+competitors $(\underbrace{1,1,\ldots ,1}_{r},0,0,\ldots)$, for some
+integer~$r<n$.
+
+\begin{table}
+\centering
+\begin{tabular}{ |c|c|c|c|c|}
+ \hline
+         &    2016 & 2017 & 2018 & 2019\\ \hline
+current  &    11   & 1    & 2    & 2   \\
+inaugural&     8   & 1    & 2    & 2   \\
+Zipf     &     0   & 1    & 2    & 2   \\
+Borda    &    11   & 4    & 6    & 2   \\
+WTA      &     0   & 1    & 2    & 2   \\
+exp2     &     0   & 1    & 2    & 2   \\
+ \hline
+\end{tabular}
+\caption{\doublespacing Degree of agreement for seasons 2016-9 with
+  different \label{doapoints} points systems}
+\end{table}
+
+
+It is straightforward to calculate the degree of agreement for the
+observed rank table for years 2016-2019, shown in
+Table~\ref{doapoints}.  It is clear that there is no points system
+that is the best for all four years.  However, observing that both the
+likelihood ranking and the points ranking are random variables in this
+paradigm suggests a method whereby we can objectively assess a given
+points system.  Using sampling techniques we can repeatedly generate
+an order table \emph{in silico}, using estimated driver strengths from
+the observed tables.  For each of, say, 1000 such synthetic tables,
+calculate drivers' maximum likelihood \citeauthor{plackett1975}
+strengths, and also their points awarded according to any given points
+system.  We then compare rankings generated by the
+\citeauthor{plackett1975} strengths and the points awarded and note
+the degree of agreement between the two, as measured by the number of
+rankings correctly predicted.  This furnishes an objective assessment
+of the points system used.
+
+\subsection{Numerical results}\label{numerical-results}
+
+\begin{figure}
+{\centering \includegraphics{alottaplotsmeancorrect-1}}
+\caption[\doublespacing Simulated Formula 1 races, seasons
+  2016-2019]{\doublespacing Simulated Formula 1 races, seasons
+  2016-2019: mean number of agreeing places for each of six
+  points \label{simulated_mean} systems when compared with a
+  Plackett-Luce strength ordering}\label{fig:alottaplotsmeancorrect}
+\end{figure}
+
+\begin{figure}
+{\centering \includegraphics{alottaplotswinnercorrect-1} }
+\caption[\doublespacing Simulated Formula 1 races, seasons
+  2016-2019]{\doublespacing Simulated Formula 1 races, seasons
+  2016-2019: probability of identifying the Plackett-Luce winner for
+  each of six points \label{simulated_winner_correct}
+  systems}\label{fig:alottaplotswinnercorrect}
+\end{figure}
+
+\begin{figure}
+{\centering \includegraphics{alottaplotstotalrankorder-1}}
+\caption[\doublespacing Simulated Formula 1 races, seasons
+  2016-2019]{\doublespacing Simulated Formula 1 races, seasons
+  2016-2019: probability of complete agreement between Plackett-Luce
+  ranks and ranks calculated by each of six
+  points \label{simulated_complete_agreement}
+  systems}\label{fig:alottaplotstotalrankorder}
+\end{figure}
+
+We now assess the six points systems using the methodology outlined
+above, using 1000 \emph{in silico} trials.  For each of the six points
+systems, each of the 1000 trials results in a single non-negative
+integer: the degree of agreement between the Plackett-Luce ranking and
+the rankings according to the points system considered.  There are
+three measures that might be used to assess the distribution of degree
+of agreement: (1), the mean degree of agreement \(\overline{d}\); (2),
+the probability of correctly predicting the winner,
+$\operatorname{Prob}(d\geq 1)$; and (3), the probability of correctly
+predicting the complete order statistic $\operatorname{Prob}(D=n)$.
+These summaries are shown for each of the six points systems in
+Figures~\ref{simulated_mean}, \ref{simulated_winner_correct}
+and~\ref{simulated_complete_agreement} respectively.
+
+We see that the Borda points system $(n,n-1,n-2,\ldots,3,2,1)$ gives
+the highest mean number of places, and also the highest probability of
+correctly predicting the winner.  However, the probability of predicting
+the complete order statistic is maximized using the winnner takes all
+system \((1,0,0,\ldots)\).
+
+\section{Conclusions}
+
+Many competitive situations involve ranking the participants and one
+way of doing this is to assign points for the winner, second place,
+third place, etc.  The overall ranking for a sequence of observations
+is decided on the basis of accumulated points.  Because changing the
+points system can change participants' overall ranking but does not
+affect their behaviour, accumulated points should not be used to make
+inferences about participants' skills.  Maximum likelihood estimation
+of Plackett-Luce strengths furnishes a ranking system that does not
+suffer from the arbitrariness of a points system.  Further, this
+allows one to conduct statistical tests on a range of interesting
+nulls in the context of an established suite of software.
+
+The points system used in Formula 1 motor racing is a source of lively
+debate from many perspectives, with changes being controversial.  By
+treating total points scored as a random variable, it is possible to
+compare different point allocation schemes against objective
+Plackett-Luce ranks.  Of the six points systems considered here, a
+Borda system or a winner-takes-all-system appear to be closest to
+objective Plackett-Luce, depending on the exact definition of
+``closest''.
+
+%% BibTeX support
+\bibliography{formula1}
+
+\end{document}
