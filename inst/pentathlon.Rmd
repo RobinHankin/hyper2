@@ -71,6 +71,6 @@ equalp.test(pentathlon)
 
 Following lines create `pentathlon.rda`, residing in the `data/` directory of the package.
 
-```{r,label=savecurlingdataset}
+```{r,label=savepentathlondataset}
 save(pentathlon_table,pentathlon,pentathlon_maxp,file="pentathlon.rda")
 ```
