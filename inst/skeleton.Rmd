@@ -1,0 +1,221 @@
+---
+title: "skeleton"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+library("igraph")
+options("digits" = 5)
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+The [skeleton](https://en.wikipedia.org/wiki/Skeleton_(sport)) is a
+winter sliding sport.  This short document discusses a dataset taken
+from the [2018 Winter
+Olympics](https://en.wikipedia.org/wiki/Skeleton_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s)
+and analyses the order statistic for the competitors.
+
+```{r readskeletontable}
+(skeleton_table <- read.table("skeleton2022.txt",header=TRUE))
+```
+
+Thus the top line shows that Grotheer came first in runs 1-3 and sixth
+in run 4.  The first column shows the results for run 1: we see that
+Grotheer came first, Jungk came fifth, and so on.  There is in fact no
+dominated set: Timmings [place 25] beats Enzie [place 19] (in run 4),
+Enzie [19] beats Crumpton [22] (run 1), Crumpton [17] beats Wyatt [18]
+(2), Wyatt [16] beats Maier [15] (1), Maier [11] beats Bagnis [12]
+(4), Bagnis [10] beasts Seunggi [11] (1), Seunggi [9] beats T. Dukurs
+[10] (3 and 4), Dukurs [7] beats Tretyakov [8] (2), Tretyakov [2]
+beats Wengang [3] (1), and Wengang beats everybody (4).
+
+We can *try* to automate the above cycle as follows.  The first step
+is to convert `skeleton_table` to a numeric matrix, which proves to be
+a very awkward process
+
+NB: `data.matrix()` fucks things up:
+
+```{r,label=datamatrixfucksthingsup}
+head(data.matrix(skeleton_table))
+```
+
+Above, we see that Grotheer apparently came 17th in run 4, clearly
+some weird infelicity.  OK, moving swiftly on, can we coerce our
+dataframe to a numeric matrix?  Yes, we can, but it's klunky:
+
+
+```{r,showextremerank}
+st <- matrix(as.numeric(c(as.matrix(skeleton_table))),ncol=4)
+rownames(st) <- rownames(skeleton_table)
+colnames(st) <- colnames(skeleton_table)
+st
+st[is.na(st)] <- 999
+```
+
+Taking Maier as an example (a mid-range competitor) we want to
+identify competitors who beat Maier at least once, and competitors who
+Maier beats at least once (these groups are not necessarily distinct)
+
+```{r}
+bm1 <- st[,1] < st["Maier",1]  # beats Maier in run 1
+bm2 <- st[,2] < st["Maier",2]  # beats Maier in run 2
+bm3 <- st[,3] < st["Maier",3]  # beats Maier in run 3
+bm4 <- st[,4] < st["Maier",4]  # beats Maier in run 4
+bm1 | bm2 | bm3 | bm4
+st[bm1 | bm2 | bm3 | bm4,]
+```
+
+Above we see all competitors who beat `Maier` at least once.  Who is
+the worst of these, as measured by his worst performance?  This would
+be `Weston`, who ranked 14 in run 1, compared to `Maier` who ranked
+15.  Idiomatically:
+
+```{r}
+jj <- st[bm1 | bm2 | bm3 | bm4,]
+which(jj==max(jj),arr.ind=TRUE)
+rownames(jj)[which(jj==max(jj),arr.ind=TRUE)[1]]
+```
+
+We can automate this process as follows:
+
+```{r}
+wf <- function(p){
+ beats <- function(run){st[,run] < st[p,run]}
+ jj <- st[apply(sapply(seq_len(ncol(st)),beats),1,any),]
+ rownames(jj)[which(jj==max(jj),arr.ind=TRUE)[1]]
+}
+wf("Maier")
+```
+
+To check:
+
+```{r}
+wf("Zheng")
+```
+
+Above we see that `Dukurs_M` beats `Zheng` in run 7, but `Dukurs_M`
+ranked only 13 in run 4.
+
+```{r}
+loop <- c("Grotheer")
+for(i in 1:20){loop <- c(loop,wf(loop[length(loop)]))}
+loop
+```
+
+Above we see an endless repetition of `Blaser` -> `Timmings` -> `Blaser`.
+
+
+```{r}
+loop <- c("Jungk")
+for(i in 1:20){loop <- c(loop,wf(loop[length(loop)]))}
+loop
+```
+
+```{r}
+loop <- c("Wengang")
+for(i in 1:20){loop <- c(loop,wf(loop[length(loop)]))}
+loop
+```
+
+```{r}
+forw <- function(start){
+  loop <- start
+  while(all(table(loop)==1)){ loop <- c(loop,wf(loop[length(loop)])) }
+  return(loop)
+}
+forw("Wengang")
+```
+
+
+We can do the process in reverse:
+
+```{r}
+fw <- function(p){
+ beatenby <- function(run){st[,run] > st[p,run]}
+ jj <- st[apply(sapply(seq_len(ncol(st)),beatenby),1,any),]
+ rownames(jj)[which(jj==min(jj),arr.ind=TRUE)[1]]
+}
+fw("Maier")
+```
+
+Above, we see that `Dukurs_M` is the best (ranking 3 in run 2) of
+competitors who lose to `Maier` [11 vs 13 in run 4].
+
+```{r}
+back <- function(start){
+  loop <- start
+  while(all(table(loop)==1)){ loop <- c(loop,fw(loop[length(loop)])) }
+  return(loop)
+}
+back("Wengang")
+```
+
+
+```{r}
+gd <- graph(c(1,2, 2,3, 1,2, 2,4, 1,4, 5,5, 3,6))
+plot(gd)
+path <- function(a){c(t(cbind(a[-length(a)],a[-1])))}
+
+gpath <- NULL
+jjf <- sapply(rownames(st),forw)
+jjb <- sapply(rownames(st),back)
+for(i in seq_along(jjf)){gpath <- c(gpath,path(jjf[[i]]))}
+for(i in seq_along(jjb)){gpath <- c(gpath,rev(path(jjb[[i]])))}
+gpath <- substr(gpath,1,3)
+plot(graph(gpath[1:20]))
+plot(graph(gpath[1:40]))
+plot(graph(gpath[1:80]))
+```
+
+# Rank table analysis {-}
+
+We can present the result table in another way:
+
+```{r showranktable}
+wikitable_to_ranktable(skeleton_table)
+```
+
+Above we see, in the first column, that Grotheer came first ("`c1`")
+in runs 1-3 and Wengang came first in run 4.  From the first column we
+see that in run 1, Grotheer came fist, Tretyakov came second, Wengang
+came third, and so on.
+
+
+```{r,label=processskeleton,cache=TRUE}
+skeleton <- ordertable2supp(skeleton_table)
+skeleton_maxp <- maxp(skeleton)
+skeleton_maxp
+pie(skeleton_maxp)
+```
+
+And we can test the null that the competitors all have the same
+Plackett-Luce strengths:
+
+```{r,label=testskeleton,cache=TRUE}
+equalp.test(skeleton)
+```
+
+We see very strong evidence for different competitor strengths, at
+$p=2\times 10^{-33}$.  How strong is the evidence that Grotheer is
+better than Jungk?
+
+```{r,label=testgrotheerandjungk,cache=TRUE}
+samep.test(skeleton,c("Grotheer","Jungk"))
+```
+
+
+
+### Package dataset {-}
+
+Following lines create `skeleton.rda`, which is not part of the CRAN version of the package.
+
+```{r,label=savecurlingdataset}
+save(skeleton_table,skeleton,skeleton_maxp,file="skeleton.rda")
+```
