@@ -1,0 +1,71 @@
+---
+title: "icons: some experimental results"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+library("ape")
+library("phangorn")
+options("digits" = 5)
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+This file, `icons2.Rmd`, presents some speculative experimental work
+which is under development.  Do not confuse this file with
+`icons.Rmd`, which creates the `icons` objects in the package.
+
+
+```{r,label=showicons}
+icons
+icons_maxp <- sort(icons_maxp,decreasing=TRUE)  # sort in decreasing order
+icons_maxp
+```
+
+Recall `samep.test()`:
+
+
+```{r,showsameptest,cache=TRUE}
+samep.test(icons,c("NB","THC"))
+```
+
+I will calculate all pairwise distances between the icons, as measured
+by the support difference [penultimate line of the output above, named
+`statistic` in the object for consistency with other tests in R]
+
+
+```{r,label=calculateM,cache=TRUE}
+M <- matrix(0,6,6)
+p <- names(icons_maxp)
+rownames(M) <- p
+colnames(M) <- p
+for(i in seq_len(6)){
+  for(j in seq_len(6)){
+    if(i != j){M[i,j] <- samep.test(icons,p[c(i,j)])$statistic}
+  }
+}
+```
+
+
+```{r}
+M
+(M <- round(M*100))
+```
+
+
+Observations: the triangle inequality is broken, consider `NB`-`L`
+(81), `L`-`PB` (38) and `PB`-`NB` (8)
+
+
+```{r}
+plot(phangorn::upgma(as.dist(M)))
+```
+
+
