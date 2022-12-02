@@ -38,18 +38,15 @@ beats Wengang [3] (1), and Wengang beats everybody (4).
 
 We can *try* to automate the above cycle as follows.  The first step
 is to convert `skeleton_table` to a numeric matrix, which proves to be
-a very awkward process
-
-NB: `data.matrix()` fucks things up:
+a very awkward process.  NB: `data.matrix()` buggers things up:
 
 ```{r,label=datamatrixfucksthingsup}
 head(data.matrix(skeleton_table))
 ```
 
 Above, we see that Grotheer apparently came 17th in run 4, clearly
-some weird infelicity.  OK, moving swiftly on, can we coerce our
-dataframe to a numeric matrix?  Yes, we can, but it's klunky:
-
+some weird infelicity.  OK, how to coerce our dataframe to a numeric
+matrix?  Possible but _extremely_  klunky:
 
 ```{r,showextremerank}
 st <- matrix(as.numeric(c(as.matrix(skeleton_table))),ncol=4)
@@ -60,119 +57,74 @@ st[is.na(st)] <- 999
 ```
 
 Taking Maier as an example (a mid-range competitor) we want to
-identify competitors who beat Maier at least once, and competitors who
-Maier beats at least once (these groups are not necessarily distinct)
+identify competitors who Maier beats at least once:
 
 ```{r}
-bm1 <- st[,1] < st["Maier",1]  # beats Maier in run 1
-bm2 <- st[,2] < st["Maier",2]  # beats Maier in run 2
-bm3 <- st[,3] < st["Maier",3]  # beats Maier in run 3
-bm4 <- st[,4] < st["Maier",4]  # beats Maier in run 4
-bm1 | bm2 | bm3 | bm4
+bm1 <- st[,1] > st["Maier",1]  # lost to Maier in run 1
+bm2 <- st[,2] > st["Maier",2]  # lost to Maier in run 2
+bm3 <- st[,3] > st["Maier",3]  # lost to Maier in run 3
+bm4 <- st[,4] > st["Maier",4]  # lsot to Maier in run 4
 st[bm1 | bm2 | bm3 | bm4,]
 ```
 
-Above we see all competitors who beat `Maier` at least once.  Who is
-the worst of these, as measured by his worst performance?  This would
-be `Weston`, who ranked 14 in run 1, compared to `Maier` who ranked
-15.  Idiomatically:
+Above we see a subset of rows of  `skeleton_table` corresponding to
+competitors who lost to Maier.
 
 ```{r}
-jj <- st[bm1 | bm2 | bm3 | bm4,]
-which(jj==max(jj),arr.ind=TRUE)
-rownames(jj)[which(jj==max(jj),arr.ind=TRUE)[1]]
+rownames(st[bm1 | bm2 | bm3 | bm4,])
+jj <- cbind(won="Maier",lost=rownames(st[bm1 | bm2 | bm3 | bm4,]))
+noquote(jj)
+plot(graph(c(t(jj))))
 ```
 
-We can automate this process as follows:
+Above we see a directed graph, the arrow means "beats", so for example
+Maier beats Timmings (2 o'clock).  We can functionify the calculation
+and define `beats()`:
 
 ```{r}
-wf <- function(p){
- beats <- function(run){st[,run] < st[p,run]}
- jj <- st[apply(sapply(seq_len(ncol(st)),beats),1,any),]
- rownames(jj)[which(jj==max(jj),arr.ind=TRUE)[1]]
+beats <- function(p){   # returns everyone whom competitor 'p' beats
+  bm1 <- st[,1] > st[p,1]  
+  bm2 <- st[,2] > st[p,2]  
+  bm3 <- st[,3] > st[p,3] 
+  bm4 <- st[,4] > st[p,4] 
+  jj <- cbind(p,rownames(st[bm1 | bm2 | bm3 | bm4,]))
+  return(c(t(jj)))
 }
-wf("Maier")
+bb <- c()
+for(i in rownames(st)){bb <- c(bb,beats(i))}
+graph(bb)
+plot(graph(bb))
 ```
 
-To check:
-
-```{r}
-wf("Zheng")
-```
-
-Above we see that `Dukurs_M` beats `Zheng` in run 7, but `Dukurs_M`
-ranked only 13 in run 4.
-
-```{r}
-loop <- c("Grotheer")
-for(i in 1:20){loop <- c(loop,wf(loop[length(loop)]))}
-loop
-```
-
-Above we see an endless repetition of `Blaser` -> `Timmings` -> `Blaser`.
+Above we see a directed graph.  The aim was to detect dominated sets,
+that is, a subset of competitors who are always beaten by everyone
+outside the group.  But although there is no such group in
+`skeleton_table`, this fact is not immmediately obvious from the
+graph.  We can however consider just the top and bottom few
+competitors and see if that makes a difference.
 
 
 ```{r}
-loop <- c("Jungk")
-for(i in 1:20){loop <- c(loop,wf(loop[length(loop)]))}
-loop
+(st2 <- st[-(4:19),])  # exclude a bunch of mid-range competitors
 ```
+
+Above, it is pretty clear that there is a dominated set of everyone
+except the top 3.
 
 ```{r}
-loop <- c("Wengang")
-for(i in 1:20){loop <- c(loop,wf(loop[length(loop)]))}
-loop
-```
-
-```{r}
-forw <- function(start){
-  loop <- start
-  while(all(table(loop)==1)){ loop <- c(loop,wf(loop[length(loop)])) }
-  return(loop)
-}
-forw("Wengang")
+bb <- c()
+for(i in rownames(st2)){bb <- c(bb,beats(i))}
+graph(bb)
+plot(graph(bb),layout = layout.fruchterman.reingold)
 ```
 
 
-We can do the process in reverse:
-
-```{r}
-fw <- function(p){
- beatenby <- function(run){st[,run] > st[p,run]}
- jj <- st[apply(sapply(seq_len(ncol(st)),beatenby),1,any),]
- rownames(jj)[which(jj==min(jj),arr.ind=TRUE)[1]]
-}
-fw("Maier")
-```
-
-Above, we see that `Dukurs_M` is the best (ranking 3 in run 2) of
-competitors who lose to `Maier` [11 vs 13 in run 4].
-
-```{r}
-back <- function(start){
-  loop <- start
-  while(all(table(loop)==1)){ loop <- c(loop,fw(loop[length(loop)])) }
-  return(loop)
-}
-back("Wengang")
-```
-
-
-```{r}
-gd <- graph(c(1,2, 2,3, 1,2, 2,4, 1,4, 5,5, 3,6))
-plot(gd)
-path <- function(a){c(t(cbind(a[-length(a)],a[-1])))}
-
-gpath <- NULL
-jjf <- sapply(rownames(st),forw)
-jjb <- sapply(rownames(st),back)
-for(i in seq_along(jjf)){gpath <- c(gpath,path(jjf[[i]]))}
-for(i in seq_along(jjb)){gpath <- c(gpath,rev(path(jjb[[i]])))}
-gpath <- substr(gpath,1,3)
-plot(graph(gpath[1:20]))
-plot(graph(gpath[1:40]))
-plot(graph(gpath[1:80]))
-```
+Above we see that the existence of the dominated set is not obvious
+without close scrutiny.  Observing that Grotheer, Jungk, and Wengang
+dominate the other competitors, we can see that these three have
+arrows pointing to each other within the group, but noone outside the
+group has an arrow pointing to any member of the set.  But this is not
+obvious from inspection.
 
 # Rank table analysis {-}
 
@@ -193,6 +145,8 @@ skeleton <- ordertable2supp(skeleton_table)
 skeleton_maxp <- maxp(skeleton)
 skeleton_maxp
 pie(skeleton_maxp)
+dotchart(skeleton_maxp)
+dotchart(log(skeleton_maxp))
 ```
 
 And we can test the null that the competitors all have the same
@@ -209,6 +163,33 @@ better than Jungk?
 ```{r,label=testgrotheerandjungk,cache=TRUE}
 samep.test(skeleton,c("Grotheer","Jungk"))
 ```
+
+Not very strong.
+
+
+```{r,label=dgdtert,cache=TRUE}
+samep.test(skeleton,c("Grotheer","Jungk"))$p.value
+```
+
+```{r,label=dgdtkkkert,cache=TRUE}
+p <- rownames(st)
+pvals <- seq_along(p)
+for(i in seq(from=2,to=length(p))){ pvals[i] <- samep.test(skeleton,c(p[1],p[i]))$p.value }
+names(pvals) <- p
+pvals
+```
+
+
+
+(NB the above chunk takes about an hour to run, even with `n=1`).
+
+
+```{r}
+plot(pvals,log='y',pch=16)
+for(i in seq_along(pvals)){text(i,pvals[i],names(pvals)[i],pos=4,col='gray')}
+```
+
+
 
 
 
