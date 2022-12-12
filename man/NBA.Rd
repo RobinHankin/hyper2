@@ -27,7 +27,7 @@ effect of possession.
 
 Object \code{NBA_maxp} is not the result of running \code{maxp(NBA)}; it
 was obtained by repeatedly running \code{maxp_simplex()} on a
-fault-tolerant system [it triggers a known R bug, bugzilla id 17703,
+fault-tolerant system [it triggers a known \R bug, bugzilla id 17703,
 giving a \dQuote{\code{wmmin not finite}} error].  It is not clear to me
 that likelihood function \code{NBA} has a well-defined global maximum.
 

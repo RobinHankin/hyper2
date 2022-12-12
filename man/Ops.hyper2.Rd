@@ -38,7 +38,7 @@ hyper2_sum_numeric(H,r)
 \details{
 
   If two independent datasets have \code{hyper2} objects \code{H1} and
-  \code{H2}, then the R idiom for combining these would be \code{H1+H2};
+  \code{H2}, then package idiom for combining these would be \code{H1+H2};
   the additive notation \dQuote{\code{+}} corresponds to addition of the
   support (or multiplication of the likelihood).  So \code{hyper2}
   objects are better thought of as support functions than likelihood

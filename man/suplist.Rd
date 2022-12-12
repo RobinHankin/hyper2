@@ -92,7 +92,7 @@ as.suplist(L)
   
   However, \code{S1+S2} is typically a large and unwieldy object, and
   can be very slow to evaluate.  These functions are here because they
-  provide slick R idiom.
+  provide slick package idiom.
 
   The experimental \code{lsl} mechanism furnishes an alternative
   methodology which is more computationally efficient at the expense of

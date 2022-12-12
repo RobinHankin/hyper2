@@ -42,7 +42,7 @@ equalp(H)
   \item{SMALL}{Numerical minimum for probabilities}
   \item{maxtry}{Integer specifying maximum number of times to try
     \code{constrOptim()} with slightly differing start points, to avoid
-    a known R bug which reports \code{wmmin is not finite}, bugzilla
+    a known \R bug which reports \code{wmmin is not finite}, bugzilla
     id 17703}
   \item{...}{Further arguments which \code{maxp()} passes to
     \code{constrOptim()}}
