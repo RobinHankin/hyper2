@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
 </p>
 
-
+(takes about five minutes without cache).
 Suppose there are five people in a family.  Each day for five days,
 one person cooks a meal.  After the fifth day, each person considers
 the four meals cooked by other family members, and puts them in order
@@ -39,7 +39,7 @@ method.  First we will consider the support function for the first row only:
 
 ### First row of the dataset
 
-```{r}
+```{r lookatfirstrow}
 (day1 <- cooking_table[1,])
 H_row1 <- rank_likelihood(day1[day1>0])
 ```
@@ -48,7 +48,7 @@ In the above, we calculate the Plackett-Luce likelihood function;
 observe that it is uninformative about competitor number 1, which I
 show in two ways.  Firstly:
 
-```{r}
+```{r uninformativeaboutcomp1}
 p <- c(0.3,0.2,0.1,0.3)
 # Now create p2 which is the same but competitor 1 is stronger:
 p2 <- p
@@ -61,13 +61,11 @@ loglik(indep(p),H_row1)
 loglik(indep(p2),H_row1)
 ```
 
-
-
 ## Complete dataset
 
 It is easy to iterate over the rows of the dataset:
 
-```{r}
+```{r iterateoverrows,cache=TRUE}
 H <- hyper2()
 
 for(i in seq_len(nrow(cooking_table))){  # iterate over rows
@@ -77,11 +75,23 @@ jj <- cooking_table[i,]
 H
 ```
 
+
+*NOTE*: converting `cooking_table` to an order table is _not_ correct,
+for the zero is interpreted as "did not finish", but the correct
+interpretation is "did not take part": the difference is that DNF
+implies lower trength, but the likelihood function is uninformative
+about DNTP players.  Even so, we may use `ordertable2supp()`:
+
+```{r showtrahnsposeisanordertable,cache=TRUE}
+tc <- t(cooking_table)
+tc[,1:20]
+```
+
 (compare file `curling.Rmd` in which we iterate over columns not rows).
 Standard techniques may be used:
 
 
-```{r}
+```{r equalptest,cache=TRUE}
 equalp.test(H)
 mH <- maxp(H)
 mH
@@ -95,7 +105,7 @@ pie(mH)
 It seems that the boys tend to prefer the boys' cooking and the girls
 prefer the girls' cooking.  But simple things first:
 
-```{r}
+```{r trysimplethings}
 a <- cooking_table # saves typing
 a <- a[a[,4]>0,]  # just lines where zac does not vote
 jj <- table(robin_votes=a[,1]==0,zac_last=a[,4]==4)
@@ -107,14 +117,14 @@ for Zac, and everyone else combined cast a total of `r sum(jj[1,])`
 votes for Zac.  Everyone else voted Zac last a total of `r jj[1,2]`
 times and higher than last `r jj[1,1]` times:
 
-```{r}
+```{r tryfishertest}
 fisher.test(jj,alternative="less")
 ```
 
 So it looks like Robin is less likely to vote Zac last than everyone
 else.  Does he do likewise for me?
 
-```{r}
+```{r tryfishertestzac}
 a <- cooking_table # saves typing
 a <- a[a[,1]>0,]  # just lines where robin does not vote
 jj <- table(zac_votes=a[,4]==0,robin_last=a[,1]==4)
@@ -131,7 +141,7 @@ this hypothesis, we posit two reified entities, `girl` and `boy`.
 Entity `girl` helps a girl when another girl is voting for her, and
 entity `boy` helps a boy when another boy is voting for him.
 
-```{r,cache=TRUE}
+```{r girlsvotinggirls,cache=TRUE}
 cooking_table <-
 	as.matrix(read.table("cooking_weekly.txt", header=TRUE))
 cooking_table <- cooking_table[rowSums(cooking_table==0)==1,]
@@ -158,7 +168,7 @@ for(i in seq_len(nrow(cooking_table))){  # iterate over rows
 mP <- maxp(P)
 ```
 
-```{r}
+```{r plotapie}
 mP
 pie(mP)
 ```
@@ -166,7 +176,6 @@ pie(mP)
 
 Now test whether the girls preferentially vote:
 
-```{r,cache=TRUE}
+```{r girlspref, cache=TRUE}
 specificp.gt.test(P,"girl",0)
 ```
-
