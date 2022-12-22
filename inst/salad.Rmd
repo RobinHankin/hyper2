@@ -45,10 +45,24 @@ for(i in seq_len(nrow(salad))){
 H1
 ```
 
-And second, slick:
+And second, a slick method.  We take the transpose of `salad` (things
+are clearer if we name the rows):
+
+```{r}
+rownames(salad) <-
+   paste("j",formatC(seq_len(nrow(salad)),width=2,format="d",flag="0"),sep="")
+ts <- t(salad)
+ts
+```
+
+Above, we see that object `ts` is an order table.  It is just like the
+formula 1 result table `F1_table_2016`, except that venues are judges
+and drivers are the salads [which are "competing" for the "who has the
+most tart dressing" prize].  Converting this to a support function is
+accomplished with `ordertable2supp()`:
 
 ```{r useslickmethod,cache=TRUE}
-(H2 <- ordertable2supp(t(salad)))
+(H2 <- ordertable2supp(ts))
 ```
 
 Just to check:
