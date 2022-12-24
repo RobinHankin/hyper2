@@ -2,7 +2,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{graphicx}
-\usepackage{natbib}
+\usepackage[comma]{natbib}
 \usepackage{diagbox}
 \usepackage{multirow}
 \usepackage[pdftex]{hyperref}
@@ -263,7 +263,7 @@ of maximum likelihood estimates using the bespoke {\tt maxp()}
 function, which uses standard optimization techniques.  Derivatives
 are available which ensures rapid convergence to the evaluate.
 
-Figure~\ref{dotchartmax} shows the maximum likelihood estimate for the
+Fig.~\ref{dotchartmax} shows the maximum likelihood estimate for the
 23 competitors' strengths, which appears to show a wide range from
 Florence at about $0.175$ down to Morais at about $0.01$.  The {\tt
   hyper2} software~\citep{hankin2017_nomarkup} may be used to formally assess
@@ -279,16 +279,16 @@ result actually reflects genuine differences in abilities, rather than
 the result of random chance.  Alternatively, we may view the dataset
 as being sufficiently informative to reveal actual differences in
 surfing ability.  Observe that the competitors' points (that is, the
-final column of table~\ref{resultstable}) cannot be used for this type
+final column of Table~\ref{resultstable}) cannot be used for this type
 of probabilistic analysis: the points awarded are arbitrary and
 changing the points system would change the points scored but not
 affect the competitors' behaviour.
 
 However, points awarded may be compared with likelihood estimates, and
 one would expect high points totals to be associated with high
-likelihoods.  Figure~\ref{compare_likelihood_points} shows a loose
+likelihoods.  Fig.~\ref{compare_likelihood_points} shows a loose
 correlation ($R^2=0.71$; $p=4\times 10^{-7}$) and
-Figure~\ref{compare_likelihood_points_rankings} shows how the rankings
+Fig.~\ref{compare_likelihood_points_rankings} shows how the rankings
 differ when calculated by the points and likelihood systems.  Note the
 anomalous position of Florence, who did not compete in five venues due
 to injury: this strongly affecting his points total but not his
@@ -374,7 +374,7 @@ types than one would expect by chance.  We may go further using the
 method of support: not only is the maximum likelihood estimate for
 Brazilian wavetype very small (about 0.002), but in addition we may
 reject the proposal that the strength of this entity exceeds about
-0.015 (Figure~\ref{brazilian_wavetype_support}): at this value of the
+0.015 (Fig.~\ref{brazilian_wavetype_support}): at this value of the
 strength or greater, we may gain two or more units of support by
 moving to the evaluate~\citep{edwards1992}.
 
@@ -433,7 +433,7 @@ possible orderings when two compatriots and an odd man out are in the
 water at the same time in Table~\ref{likelihoodcompatriot} (if we have
 either three different nationalities or three identical nationalities,
 we revert to the standard Plackett-Luce likelihood).  Note that all
-six likelihood functions in table~\ref{likelihoodcompatriot} are
+six likelihood functions in Table~\ref{likelihoodcompatriot} are
 informative about $p_1,p_2,q$ in addition to being informative about
 the object of inference, $p_C$.
 
@@ -530,9 +530,10 @@ WCT11 Ferreira Medina
 \newpage
 
 \begin{table}[h]
-\begin{tabular}{l|l}
+\begin{tabular}{ll}
 order  & ${\mathcal L}(p_1,p_2,q,p_C)$\\ \hline
-$p_1\succ p_2\succ q $ & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{p_2^{\vphantom{h}}}{p_2+q+p_C}$\\
+$p_1\succ p_2\succ q $ \hphantom{www}
+                       & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{p_2^{\vphantom{h}}}{p_2+q+p_C}$\\
 $p_2\succ p_1\succ q $ & $ \frac{p_2}{p_1+p_2+q+p_C}\cdot\frac{p_1^{\vphantom{h}}}{p_1+q+p_C}$\\
 $p_1\succ q\succ p_2 $ & $ \frac{p_1}{p_1+p_2+q+p_C}\cdot\frac{q+p_C^{\vphantom{h}}}{p_2+q+p_C}$\\
 $p_2\succ q\succ p_1 $ & $ \frac{p_2}{p_1+p_2+q+p_C}\cdot\frac{q+p_C^{\vphantom{h}}}{p_1+q+p_C}$\\
@@ -553,7 +554,7 @@ $q\succ p_2\succ p_1 $ & $ \frac{q+p_C}{p_1+p_2+q+p_C}\cdot\frac{p_2^{\vphantom{
 \newpage
 
 \begin{table}[h]
-\begin{tabular}{l|l|l}
+\begin{tabular}{lll}
 wave type  & $\operatorname{Prob}(p_1\succ p_2)$ & $\operatorname{Prob}(p_2\succ p_1^{\vphantom{h}})$\\ \hline
 beach & $\frac{p_1+B}{p_1+p_2^{\vphantom{h}}+B}$ & $\frac{p_2^{\vphantom{h}}}{p_1+p_2^{\vphantom{h}}+B}$\\
 point & $\frac{p_1+B}{p_1+p_2^{\vphantom{h}}+B}$ & $\frac{p_2^{\vphantom{h}}}{p_1+p_2^{\vphantom{h}}+B}$\\
@@ -568,7 +569,7 @@ reef  & $\frac{p_1\vphantom{B}}{p_1+p_2}$ & $\frac{p_2^{\vphantom{h}}}{p_1^{\vph
 \newpage
 
 \begin{table}[h]
-  \begin{tabular}{l|l|l|l}\\
+  \begin{tabular}{llll}\\
     \backslashbox{order}{value}          & B & F & S\\ \hline
     $\mbox{B}\succ\mbox{F}\succ\mbox{S}$ & 1 & 0 & 0\\
     $\mbox{B}\succ\mbox{S}\succ\mbox{F}$ & 1 & 0 & 1\\
