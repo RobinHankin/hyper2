@@ -1,5 +1,5 @@
 ---
-title: "plackett_luce_monster"
+title: "A generalization of Plackett-Luce likelihoods to incorporate non-independence of competitors"
 output: html_document
 date: '2022-05-16'
 ---
@@ -15,17 +15,10 @@ library("pdftools")
 ![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
 </p>
 
-%
-    
-We will calculate a Plackett-Luce likelihood function for four runners
-$\left\lbrace 1,2,3,4\right\rbrace$ but with a reified Bradley-Terry
-monster that corresponds to having subsets of mutual friends who
-support one another.  For example, we might have runners 1 and 2 being
-friends, and runners 3 and 4 being friends: we would represent this as
-$\left\lbrace\left\lbrace 1,2\right\rbrace,\left\lbrace
-3,4\right\rbrace\right\rbrace$.
 
-There seem to be a few distinct statistical models for nonindependence:
+Here I modify standard Plackett-Luce likelihood functions to include
+an element of non-independence among the competitors.  There seem to
+be a few distinct statistical models for nonindependence:
 
 * Runner $i$ might wish to support $j$.  If runner $i$ finishes, once
   his rank is established he might be able to help $j$ in some way.
@@ -69,6 +62,14 @@ There seem to be a few distinct statistical models for nonindependence:
   to do so, then runners $i$ and $j$ will finish consecutively with
   $i$ ahead of $j$.
 
+
+We will calculate a Plackett-Luce likelihood function for four runners
+$\left\lbrace 1,2,3,4\right\rbrace$ but with a reified Bradley-Terry
+monster that corresponds to having subsets of mutual friends who
+support one another.  For example, we might have runners 1 and 2 being
+friends, and runners 3 and 4 being friends: we would represent this as
+$\left\lbrace\left\lbrace 1,2\right\rbrace,\left\lbrace
+3,4\right\rbrace\right\rbrace$.
 
 The runner metaphor is not the only one.  We can apply the resulting
 likelihood functions to other cases including the red bus-blue bus
