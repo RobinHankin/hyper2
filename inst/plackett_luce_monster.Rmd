@@ -65,6 +65,90 @@ be a few distinct statistical models for nonindependence:
   $i$ ahead of $j$.
 
 
+# Start simple
+
+The simplest nontrivial case is three runners, $\left\lbrace
+1,2,3\right\rbrace$ where runner 1 helps runner 2 [and that is the
+only non PL interaction].  Note that this is _not_ a symmetric
+interaction: 1 helps 2, but 2 does not help 1.  The model is that 1
+helps 2 if and only if 1 has finished and 2 has not.
+
+123: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{\lambda p_2}{\lambda p_2+p_3}$
+
+132: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_2+p_3}$
+
+213: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_3}$
+
+231: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_3}$
+
+312: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_2}$
+
+321: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_2}{p_1+p_2}$
+
+
+(Above, the probabilities clearly sum to 1).  Now the same but with
+four runners $\left\lbrace 1,2,3\right\rbrace$, again with runner 1
+helping runner 2.  Thus, in a situation where $p_1$ has finished and
+$p_2$ is still running, we have $p_2\longrightarrow\lambda p_2$
+[although the $\lambda$ cancels if 2 is the only competitor still
+running, that is, if *all* the remaining competitors are helped]
+
+
+1234: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_3+p_4}\cdot\frac{p_3}{p_3+p_4}$
+
+1243: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_3+p_4}\cdot\frac{p_4}{p_3+p_4}$
+
+1324: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_3}{\lambda p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_4}$
+
+1342: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_3}{\lambda p_2+p_3+p_4}\cdot\frac{p_4}{\lambda p_2+p_4}$
+
+1324: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_3}{\lambda p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_4}$
+
+1423: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_4}{p_1+\lambda p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_3}$
+
+1432: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_4}{p_1+\lambda p_2+p_3+p_4}\cdot\frac{p_3}{\lambda p_2+p_3}$
+
+2xxx: P-L [no help given by 2 to 1]
+
+3124: $\frac{p_3}{p_1+p_2+p_3+p_4}\cdot\frac{p_1}{p_1+p_2+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_4}$
+
+3142: $\frac{p_3}{p_1+p_2+p_3+p_4}\cdot\frac{p_1}{p_1+p_2+p_4}\cdot\frac{p_4}{\lambda p_2+p_4}$
+
+32xx: P-L
+
+3412: P-L [1 helps 2 but when 1 crosses the finishing line, only 2 is
+still running; there are no non-helped competitors]
+
+4123: $\frac{p_4}{p_1+p_2+p_3+p_4}\cdot\frac{p_1}{p_1+p_2+p_3}\cdot\frac{\lambda p_2}{\lambda p_2+p_3}$
+
+4132: $\frac{p_4}{p_1+p_2+p_3+p_4}\cdot\frac{p_1}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_2+p_3}$
+
+42xx: P-L
+
+43xx: P-L
+
+# Next simplest: 1 and 2 mutually support each other:
+
+
+
+123: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{\lambda 2}{\lambda p_2+p_3}$
+
+132: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_2+p_3}$
+
+213: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{\lambda p_1}{p_1+p_3}$
+
+231: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_1+p_3}$
+
+312: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_2}$
+
+321: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_2}{p_1+p_2}$
+
+
+
+
+# Four runners
+
+
 We will calculate a Plackett-Luce likelihood function for four runners
 $\left\lbrace 1,2,3,4\right\rbrace$ but with a reified Bradley-Terry
 monster that corresponds to having subsets of mutual friends who
@@ -97,6 +181,7 @@ $\left\lbrace\left\lbrace 1,2\right\rbrace,\left\lbrace
 
 Now four runners with classes $\left\lbrace\left\lbrace
 1,2\right\rbrace,\left\lbrace 3,4\right\rbrace\right\rbrace$.
+
 
  1234: $\frac{1}{1+2+3+4}\cdot\frac{2+M}{2+3+4+M}\cdot\frac{3}{3+4}$
 
@@ -142,7 +227,9 @@ Now 123 tethered, 45 tethered:
 
 
 
-Might be better to consider ${5\choose 2\,3}$ arrangements of $aaabb\ldots bbaaa$.
+Might be better to consider ${5\choose 2\,3}$ arrangements of
+$aaabb\ldots bbaaa$.  FOLLOWING IS NOT RIGHT: THE PROBABILITY MODEL IS
+NOT PRECISELY DEFINED.
 
 aaabb: $\frac{a}{a+a+a+b+b}\cdot\frac{a+M}{a+a+b+b+M}\cdot\frac{a+M}{a+b+b+M}\cdot\frac{b}{b+b+M}$
 
