@@ -166,17 +166,20 @@ bbaaa: $\frac{b}{a+a+a+b+b}\cdot\frac{b+M}{a+a+a+b+M}\cdot\frac{a}{a+a+a}\cdot\f
 
 ```{r,label=definefunctionf}
 f <- function (a,b,M){
-return(factorial(3)*factorial(2)*(
-(a)/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(a+M)/(a+b+b+M)*(b)/(b+b+M)+
-(a)/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(b)/(a+b+b+M)*(a)/(a+b+M)+
-(a)/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(b)/(a+b+b+M)*(b+M)/(b+a+M)+
-(a)/(a+a+a+b+b)*(b)  /(a+a+b+b+M)*(a)/(a+a+b+M)*(a+M)/(a+b+M)+
-(a)/(a+a+a+b+b)*(b)  /(a+a+b+b+M)*(a)/(a+a+b+M)*(b)/(b+a+M)+
-(a)/(a+a+a+b+b)*(b)  /(a+a+b+b+M)*(b+M)/(b+a+a+M)*(a)/(a+a+M)+
-(b)/(a+a+a+b+b)*(a)  /(a+a+a+b+M)*(a+M)/(a+a+b+M)*(a+M)/(a+b+M)+
-(b)/(a+a+a+b+b)*(a)  /(a+a+a+b+M)*(a+M)/(a+a+b+M)*(b)/(a+b+M)+
-(b)/(a+a+a+b+b)*(a)  /(a+a+a+b+M)*(b)/(b+a+a)*(a)/(a+a)+
-(b)/(a+a+a+b+b)*(b+M)/(a+a+a+b+M)*(a)/(a+a+a)*(a)/(a+a)))
+return(
+  factorial(3)*factorial(2)*(
+   a/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(a+M)/(a+b+b+M)*(b  )/(b+b+M) +
+   a/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(b  )/(a+b+b+M)*(a  )/(a+b+M) +
+   a/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(b  )/(a+b+b+M)*(b+M)/(b+a+M) +
+   a/(a+a+a+b+b)*(b  )/(a+a+b+b+M)*(a  )/(a+a+b+M)*(a+M)/(a+b+M) +
+   a/(a+a+a+b+b)*(b  )/(a+a+b+b+M)*(a  )/(a+a+b+M)*(b  )/(b+a+M) +
+   a/(a+a+a+b+b)*(b  )/(a+a+b+b+M)*(b+M)/(b+a+a+M)*(a  )/(a+a+M) +
+   b/(a+a+a+b+b)*(a  )/(a+a+a+b+M)*(a+M)/(a+a+b+M)*(a+M)/(a+b+M) +
+   b/(a+a+a+b+b)*(a  )/(a+a+a+b+M)*(a+M)/(a+a+b+M)*(b  )/(a+b+M) +
+   b/(a+a+a+b+b)*(a  )/(a+a+a+b+M)*(b  )/(b+a+a  )*(a  )/(a+a  ) +
+   b/(a+a+a+b+b)*(b+M)/(a+a+a+b+M)*(a  )/(a+a+a  )*(a  )/(a+a  )
+   ) 
+   )
 }
 ```
 
