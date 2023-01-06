@@ -65,13 +65,14 @@ be a few distinct statistical models for nonindependence:
   $i$ ahead of $j$.
 
 
-# Start simple
+# Start simple: three runners
 
 The simplest nontrivial case is three runners, $\left\lbrace
-1,2,3\right\rbrace$ where runner 1 helps runner 2 [and that is the
-only non PL interaction].  Note that this is _not_ a symmetric
-interaction: 1 helps 2, but 2 does not help 1.  The model is that 1
-helps 2 if and only if 1 has finished and 2 has not.
+1,2,3\right\rbrace$ where runner 1 helps runner 2 with multiplier
+$\lambda$ [and that is the only non PL interaction].  Note that this
+is _not_ a symmetric interaction: 1 helps 2, but 2 does not help 1.
+The model is that 1 helps 2 if and only if 1 has finished and 2 has
+not.
 
 123: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{\lambda p_2}{\lambda p_2+p_3}$
 
@@ -79,20 +80,74 @@ helps 2 if and only if 1 has finished and 2 has not.
 
 213: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_3}$
 
-231: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_3}$
+231: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_3}{p_1+p_3}$
 
 312: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_2}$
 
 321: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_2}{p_1+p_2}$
 
 
-(Above, the probabilities clearly sum to 1).  Now the same but with
-four runners $\left\lbrace 1,2,3\right\rbrace$, again with runner 1
-helping runner 2.  Thus, in a situation where $p_1$ has finished and
-$p_2$ is still running, we have $p_2\longrightarrow\lambda p_2$
-[although the $\lambda$ cancels if 2 is the only competitor still
-running, that is, if *all* the remaining competitors are helped]
+(Above, the probabilities clearly sum to 1).  Next simplest: 1 and 2
+mutually support each other with $\lambda$:
 
+123: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{\lambda p_2}{\lambda p_2+p_3}$
+
+132: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_2+p_3}$
+
+213: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{\lambda p_1}{p_1+p_3}$
+
+231: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_1+p_3}$
+
+312: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_2}$
+
+321: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_2}{p_1+p_2}$
+
+Now we retain the mutual support between 1 and 2 but allow an
+asymmetry: 1 helps 2 with $\lambda$ as before, but now in addition, 2
+helps 1 with $\mu$:
+
+123: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{\lambda p_2}{\lambda p_2+p_3}$
+
+132: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_2+p_3}$
+
+213: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{\mu p_1}{\mu p_1+p_3}$
+
+231: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_3}{\mu p_1+p_3}$
+
+312: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_2}$
+
+321: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_2}{p_1+p_2}$
+
+
+Now how about 1 must beat 2.  He does not care whether he comes first
+or second, only that he must beat 2.  Player 1 has sufficient energy
+to win if he wants, but is subject to some sort of resource constraint
+(money, perhaps) and wishes to expend only enough money to beat 2.  So
+conventional P-L likelihoods are modified for 1, but only if 2 is
+_still running_.
+
+123: $\frac{\lambda p_1}{\lambda p_1+p_2+p_3}\cdot\frac{p_2}{p_2+p_3}$
+
+132: $\frac{\lambda p_1}{\lambda p_1+p_2+p_3}\cdot\frac{p_3}{p_2+p_3}$
+
+213: $\frac{p_2}{\lambda p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_3}$
+
+231: $\frac{p_2}{\lambda p_1+p_2+p_3}\cdot\frac{p_3}{p_1+p_3}$
+
+312: $\frac{p_3}{\lambda p_1+p_2+p_3}\cdot\frac{\lambda p_1}{\lambda p_1+p_2}$
+
+321: $\frac{p_3}{\lambda p_1+p_2+p_3}\cdot\frac{p_2}{\lambda p_1+p_2}$
+
+
+## Four runners
+
+
+Now we have four runners $\left\lbrace 1,2,3,4\right\rbrace$, again
+with the only interaction being runner 1 helping runner 2.  Thus, in a
+situation where $p_1$ has finished and $p_2$ is still running, we have
+$p_2\longrightarrow\lambda p_2$ [although the $\lambda$ cancels if 2
+is the only competitor still running, that is, if *all* the remaining
+competitors are helped]
 
 1234: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_3+p_4}\cdot\frac{p_3}{p_3+p_4}$
 
@@ -127,26 +182,46 @@ still running; there are no non-helped competitors]
 
 43xx: P-L
 
-# Next simplest: 1 and 2 mutually support each other:
 
+Now 1 and 2 mutually support one another by $\lambda$.  Here I will
+put the last term in, to show explicitly that the $\lambda$ term
+remains in the expressions for numerator and denominator.
 
+1234: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda
+p_2+p_3+p_4}\cdot\frac{p_3}{p_3+p_4}\cdot\frac{p_4}{p_4}$
 
-123: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{\lambda 2}{\lambda p_2+p_3}$
+1243: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda
+p_2+p_3+p_4}\cdot\frac{p_4}{p_3+p_4}\cdot\frac{p_3}{p_3}$
 
-132: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_2+p_3}$
+1324: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_3}{\lambda
+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda
+p_2+p_4}\cdot\frac{p_4}{p_4}$
 
-213: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{\lambda p_1}{p_1+p_3}$
+1342: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_3}{\lambda
+p_2+p_3+p_4}\cdot\frac{p_4}{\lambda p_2+p_4}\cdot\frac{\lambda
+p_2}{\lambda p_2}$
 
-231: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_1+p_3}$
+1423: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_4}{\lambda
+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda
+p_2+p_3}\cdot\frac{p_3}{p_3}$
 
-312: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_2}$
+1432: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_4}{\lambda
+p_2+p_3+p_4}\cdot\frac{p_3}{\lambda p_2+p_3}\cdot\frac{\lambda
+p_2}{\lambda p_2}$
 
-321: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_2}{p_1+p_2}$
+2134: $\frac{p_2}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_1}{\lambda
+p_1+p_3+p_4}\cdot\frac{p_3}{p_3+p_4}\cdot\frac{p_4}{p_4}$
 
+2143: $\frac{p_2}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_1}{\lambda
+p_1+p_3+p_4}\cdot\frac{p_4}{p_3+p_4}\cdot\frac{p_3}{p_3}$
 
+2314: $\frac{p_2}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_3}{\lambda
+p_1+p_3+p_4}\cdot\frac{\lambda p_1}{\lambda
+p_1+p_4}\cdot\frac{p_4}{p_4}$
 
-
-# Four runners
+2341: $\frac{p_2}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_3}{\lambda
+p_1+p_3+p_4}\cdot\frac{p_4}{\lambda p_1+p_4}\cdot\frac{\lambda
+p_1}{\lambda p_1}$
 
 
 We will calculate a Plackett-Luce likelihood function for four runners
