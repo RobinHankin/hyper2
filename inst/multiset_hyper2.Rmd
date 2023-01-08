@@ -1,5 +1,6 @@
 ---
-title: "multiset_hyper2"
+title: "The `cheering3()` probability model for order statistics: a
+verification with the `multiset()` function of the `partitions` package"
 output: html_document
 date: "2022-07-28"
 ---
@@ -23,7 +24,7 @@ parameters of the distribution.
 
 
 ```{r defineM}
-M <- apply(multiset(c(1,1,2,2,3)),2,function(x){letters[x]})
+M <- apply(partitions::multiset(c(1,1,2,2,3)),2,function(x){letters[x]})
 colnames(M) <- rep("",ncol(M))   # tidier and more compact appearance
 M <- noquote(M)
 M
@@ -34,7 +35,12 @@ competitors comprising two twins denoted `a`, two twins denoted `b`,
 and a singleton `c`.  This document discusses the issue of whether the
 twins are identical twins and hence indistinguishable.  Matrix `M` has
 ${5\choose2\,2\,1}=30$ columns, one per possible result.  We will
-calculate the likelihood of each column and calculate their sum:
+calculate the likelihood of each column and sum them to get the
+probability of observing any one of the 30 order statistics [the
+observations are mutually exclusive, so
+$\operatorname{Prob}\left(x_1\cup\cdots\cup x_n\right) =
+\operatorname{Prob}\left(x_1\right)+\cdots
++\operatorname{Prob}\left(x_n\right)$]:
 
 ```{r definetfun}
 tfun <- function(help,strength,M){
@@ -69,23 +75,23 @@ To explain the factor of $1/4$ discussed above we need some new
 notation.  We have five competitors who I will call $\mathbf{do}$,
 $\mathbf{re}$, $\mathbf{me}$, $\mathbf{fa}$, and $\mathbf{sol}$.  Now
 $p_X$ means "the Bradley Terry strength of $X$''.  The setup here is
-that $\mathbf{do}$ and $\mathbf{re}$ are twins, and that are twins
-(and $\mathbf{sol}$ is a singleton).  We have that the Bradley-Terry
-stregth of $\mathbf{do}$ and $\mathbf{re}$ is `a`, the strength of
-$\mathbf{me}$ and $\mathbf{fa}$ is `b`, and the strength of
-$\mathbf{sol}$ is `c`.
+that $\mathbf{do}$ and $\mathbf{re}$ are twins, and that $\mathbf{me}$
+and $\mathbf{fa}$ are twins (and $\mathbf{sol}$ is a singleton).  We
+have that the Bradley-Terry strength of $\mathbf{do}$ and
+$\mathbf{re}$ is `a`, the strength of $\mathbf{me}$ and $\mathbf{fa}$
+is `b`, and the strength of $\mathbf{sol}$ is `c`.
 
-Consider, for example, the first column of `M` which is `a c b b a`.
-In theory, this means the competitor who came first had strength `a`,
-the competitor who came second had strength `c`.  So the order
-statistic is one of
+Consider, for example, the column of `M` reading `a c b b a`.  In
+theory, this means the competitor who came first had strength `a`, the
+competitor who came second had strength `c`.  So the order statistic
+is one of the $2!2!1!=4$ following orders:
 
 $$\mathbf{do}\succ\mathbf{sol}\succ\mathbf{me}\succ\mathbf{fa}\succ\mathbf{re}$$
 $$\mathbf{do}\succ\mathbf{sol}\succ\mathbf{fa}\succ\mathbf{me}\succ\mathbf{re}$$
 $$\mathbf{re}\succ\mathbf{sol}\succ\mathbf{me}\succ\mathbf{fa}\succ\mathbf{do}$$
 $$\mathbf{re}\succ\mathbf{sol}\succ\mathbf{fa}\succ\mathbf{me}\succ\mathbf{do}$$
 
-heAbove we see that $\mathbf{do}$ and $\mathbf{re}$ come first and last
+Above we see that $\mathbf{do}$ and $\mathbf{re}$ come first and last
 (or last and first), and $\mathbf{me}$ and $\mathbf{fa}$ come third
 and fourth (or fourth and third), while $\mathbf{sol}$ comes second.
 All four possibilities have the same probability and all four are
@@ -113,7 +119,7 @@ multiplicative constant.
 ## A more exacting numerical test
 
 ```{r,exactingtest,cache=TRUE}
-rs <- fillup(rp(100,dirichlet(c(a=1,b=1,c=1)))) # random strengths
+rs <- rp(100,dirichlet(c(a=1,b=1,c=1))) # random strengths
 colnames(rs) <- letters[1:3]
 head(rs)
 f <- function(s){

@@ -1,5 +1,5 @@
 ---
-title: "plackett_luce_monster"
+title: "A generalization of Plackett-Luce likelihoods to incorporate non-independence of competitors"
 output: html_document
 date: '2022-05-16'
 ---
@@ -15,29 +15,24 @@ library("pdftools")
 ![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
 </p>
 
-%
-    
-We will calculate a Plackett-Luce likelihood function for four runners
-$\left\lbrace 1,2,3,4\right\rbrace$ but with a reified Bradley-Terry
-monster that corresponds to having subsets of mutual friends who
-support one another.  For example, we might have runners 1 and 2 being
-friends, and runners 3 and 4 being friends: we would represent this as
-$\left\lbrace\left\lbrace 1,2\right\rbrace,\left\lbrace
-3,4\right\rbrace\right\rbrace$.
 
-There seem to be a few distinct statistical models for nonindependence:
+Here I modify standard Plackett-Luce likelihood functions to include
+an element of non-independence among the competitors.  There seem to
+be a few distinct statistical models for nonindependence:
 
 * Runner $i$ might wish to support $j$.  If runner $i$ finishes, once
   his rank is established he might be able to help $j$ in some way.
-  He might cheer his still-running friend.  In general, we can
-  consider $n$ ordered pairs $(i_r,j_r)$, $1\leq r\leq n$, with runner
-  $i_1$ helping runner $j_1$, runner $i_2$ helping $j_2$, and so on.
-  One simple case would be equivalence classes of
-  $[n]=\{1,2,\ldots,n\}$ with each equivalence class comprising
-  mutually supporting runners.  In this model, with a pair of mutually
-  supporting runners only the higher-placed competitor can affect the
-  other.  Each equivalence class might have a different supportive
-  proclivity.
+  He might cheer his still-running friend, spurring him to run faster
+  and augmenting his competitive strength.
+
+* In general, we can consider $n$ ordered pairs $(i_r,j_r)$, $1\leq
+  r\leq n$, with runner $i_1$ helping runner $j_1$, runner $i_2$
+  helping $j_2$, and so on.  One simple case would be equivalence
+  classes of $[n]=\{1,2,\ldots,n\}$ with each equivalence class
+  comprising mutually supporting runners.  In this model, with a pair
+  of mutually supporting runners only the higher-placed competitor can
+  affect the other.  Each equivalence class might have a different
+  supportive proclivity.
   
 * Runner $i$ might hate runner $j$.  If $i$ finishes, he might expend
   his spare energy hindering $j$ (by throwing stones or booing, for
@@ -70,6 +65,173 @@ There seem to be a few distinct statistical models for nonindependence:
   $i$ ahead of $j$.
 
 
+# Start simple: three runners
+
+The simplest nontrivial case is three runners, $\left\lbrace
+1,2,3\right\rbrace$ where runner 1 helps runner 2 with multiplier
+$\lambda$ [and that is the only non PL interaction].  Note that this
+is _not_ a symmetric interaction: 1 helps 2, but 2 does not help 1.
+The model is that 1 helps 2 if and only if 1 has finished and 2 has
+not.
+
+123: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{\lambda p_2}{\lambda p_2+p_3}$
+
+132: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_2+p_3}$
+
+213: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_3}$
+
+231: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_3}{p_1+p_3}$
+
+312: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_2}$
+
+321: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_2}{p_1+p_2}$
+
+
+(Above, the probabilities clearly sum to 1).  Next simplest: 1 and 2
+mutually support each other with $\lambda$:
+
+123: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{\lambda p_2}{\lambda p_2+p_3}$
+
+132: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_2+p_3}$
+
+213: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{\lambda p_1}{p_1+p_3}$
+
+231: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_1+p_3}$
+
+312: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_2}$
+
+321: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_2}{p_1+p_2}$
+
+Now we retain the mutual support between 1 and 2 but allow an
+asymmetry: 1 helps 2 with $\lambda$ as before, but now in addition, 2
+helps 1 with $\mu$:
+
+123: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{\lambda p_2}{\lambda p_2+p_3}$
+
+132: $\frac{p_1}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_2+p_3}$
+
+213: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{\mu p_1}{\mu p_1+p_3}$
+
+231: $\frac{p_2}{p_1+p_2+p_3}\cdot\frac{p_3}{\mu p_1+p_3}$
+
+312: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_2}$
+
+321: $\frac{p_3}{p_1+p_2+p_3}\cdot\frac{p_2}{p_1+p_2}$
+
+
+Now how about 1 must beat 2.  He does not care whether he comes first
+or second, only that he must beat 2.  Player 1 has sufficient energy
+to win if he wants, but is subject to some sort of resource constraint
+(money, perhaps) and wishes to expend only enough money to beat 2.  So
+conventional P-L likelihoods are modified for 1, but only if 2 is
+_still running_.
+
+123: $\frac{\lambda p_1}{\lambda p_1+p_2+p_3}\cdot\frac{p_2}{p_2+p_3}$
+
+132: $\frac{\lambda p_1}{\lambda p_1+p_2+p_3}\cdot\frac{p_3}{p_2+p_3}$
+
+213: $\frac{p_2}{\lambda p_1+p_2+p_3}\cdot\frac{p_1}{p_1+p_3}$
+
+231: $\frac{p_2}{\lambda p_1+p_2+p_3}\cdot\frac{p_3}{p_1+p_3}$
+
+312: $\frac{p_3}{\lambda p_1+p_2+p_3}\cdot\frac{\lambda p_1}{\lambda p_1+p_2}$
+
+321: $\frac{p_3}{\lambda p_1+p_2+p_3}\cdot\frac{p_2}{\lambda p_1+p_2}$
+
+
+## Four runners
+
+
+Now we have four runners $\left\lbrace 1,2,3,4\right\rbrace$, again
+with the only interaction being runner 1 helping runner 2.  Thus, in a
+situation where $p_1$ has finished and $p_2$ is still running, we have
+$p_2\longrightarrow\lambda p_2$ [although the $\lambda$ cancels if 2
+is the only competitor still running, that is, if *all* the remaining
+competitors are helped]
+
+1234: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_3+p_4}\cdot\frac{p_3}{p_3+p_4}$
+
+1243: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_3+p_4}\cdot\frac{p_4}{p_3+p_4}$
+
+1324: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_3}{\lambda p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_4}$
+
+1342: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_3}{\lambda p_2+p_3+p_4}\cdot\frac{p_4}{\lambda p_2+p_4}$
+
+1324: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_3}{\lambda p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_4}$
+
+1423: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_4}{p_1+\lambda p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_3}$
+
+1432: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_4}{p_1+\lambda p_2+p_3+p_4}\cdot\frac{p_3}{\lambda p_2+p_3}$
+
+2xxx: P-L [no help given by 2 to 1]
+
+3124: $\frac{p_3}{p_1+p_2+p_3+p_4}\cdot\frac{p_1}{p_1+p_2+p_4}\cdot\frac{\lambda p_2}{\lambda p_2+p_4}$
+
+3142: $\frac{p_3}{p_1+p_2+p_3+p_4}\cdot\frac{p_1}{p_1+p_2+p_4}\cdot\frac{p_4}{\lambda p_2+p_4}$
+
+32xx: P-L
+
+3412: P-L [1 helps 2 but when 1 crosses the finishing line, only 2 is
+still running; there are no non-helped competitors]
+
+4123: $\frac{p_4}{p_1+p_2+p_3+p_4}\cdot\frac{p_1}{p_1+p_2+p_3}\cdot\frac{\lambda p_2}{\lambda p_2+p_3}$
+
+4132: $\frac{p_4}{p_1+p_2+p_3+p_4}\cdot\frac{p_1}{p_1+p_2+p_3}\cdot\frac{p_3}{\lambda p_2+p_3}$
+
+42xx: P-L
+
+43xx: P-L
+
+
+Now 1 and 2 mutually support one another by $\lambda$.  Here I will
+put the last term in, to show explicitly that the $\lambda$ term
+remains in the expressions for numerator and denominator.
+
+1234: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda
+p_2+p_3+p_4}\cdot\frac{p_3}{p_3+p_4}\cdot\frac{p_4}{p_4}$
+
+1243: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda
+p_2+p_3+p_4}\cdot\frac{p_4}{p_3+p_4}\cdot\frac{p_3}{p_3}$
+
+1324: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_3}{\lambda
+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda
+p_2+p_4}\cdot\frac{p_4}{p_4}$
+
+1342: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_3}{\lambda
+p_2+p_3+p_4}\cdot\frac{p_4}{\lambda p_2+p_4}\cdot\frac{\lambda
+p_2}{\lambda p_2}$
+
+1423: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_4}{\lambda
+p_2+p_3+p_4}\cdot\frac{\lambda p_2}{\lambda
+p_2+p_3}\cdot\frac{p_3}{p_3}$
+
+1432: $\frac{p_1}{p_1+p_2+p_3+p_4}\cdot\frac{p_4}{\lambda
+p_2+p_3+p_4}\cdot\frac{p_3}{\lambda p_2+p_3}\cdot\frac{\lambda
+p_2}{\lambda p_2}$
+
+2134: $\frac{p_2}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_1}{\lambda
+p_1+p_3+p_4}\cdot\frac{p_3}{p_3+p_4}\cdot\frac{p_4}{p_4}$
+
+2143: $\frac{p_2}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_1}{\lambda
+p_1+p_3+p_4}\cdot\frac{p_4}{p_3+p_4}\cdot\frac{p_3}{p_3}$
+
+2314: $\frac{p_2}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_3}{\lambda
+p_1+p_3+p_4}\cdot\frac{\lambda p_1}{\lambda
+p_1+p_4}\cdot\frac{p_4}{p_4}$
+
+2341: $\frac{p_2}{p_1+p_2+p_3+p_4}\cdot\frac{\lambda p_3}{\lambda
+p_1+p_3+p_4}\cdot\frac{p_4}{\lambda p_1+p_4}\cdot\frac{\lambda
+p_1}{\lambda p_1}$
+
+
+We will calculate a Plackett-Luce likelihood function for four runners
+$\left\lbrace 1,2,3,4\right\rbrace$ but with a reified Bradley-Terry
+monster that corresponds to having subsets of mutual friends who
+support one another.  For example, we might have runners 1 and 2 being
+friends, and runners 3 and 4 being friends: we would represent this as
+$\left\lbrace\left\lbrace 1,2\right\rbrace,\left\lbrace
+3,4\right\rbrace\right\rbrace$.
+
 The runner metaphor is not the only one.  We can apply the resulting
 likelihood functions to other cases including the red bus-blue bus
 problem (see `inst/red_bus_blue_bus.Rmd` for more discussion).
@@ -94,6 +256,7 @@ $\left\lbrace\left\lbrace 1,2\right\rbrace,\left\lbrace
 
 Now four runners with classes $\left\lbrace\left\lbrace
 1,2\right\rbrace,\left\lbrace 3,4\right\rbrace\right\rbrace$.
+
 
  1234: $\frac{1}{1+2+3+4}\cdot\frac{2+M}{2+3+4+M}\cdot\frac{3}{3+4}$
 
@@ -139,7 +302,9 @@ Now 123 tethered, 45 tethered:
 
 
 
-Might be better to consider ${5\choose 2\,3}$ arrangements of $aaabb\ldots bbaaa$.
+Might be better to consider ${5\choose 2\,3}$ arrangements of
+$aaabb\ldots bbaaa$.  FOLLOWING IS NOT RIGHT: THE PROBABILITY MODEL IS
+NOT PRECISELY DEFINED.
 
 aaabb: $\frac{a}{a+a+a+b+b}\cdot\frac{a+M}{a+a+b+b+M}\cdot\frac{a+M}{a+b+b+M}\cdot\frac{b}{b+b+M}$
 
@@ -165,17 +330,20 @@ bbaaa: $\frac{b}{a+a+a+b+b}\cdot\frac{b+M}{a+a+a+b+M}\cdot\frac{a}{a+a+a}\cdot\f
 
 ```{r,label=definefunctionf}
 f <- function (a,b,M){
-return(factorial(3)*factorial(2)*(
-(a)/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(a+M)/(a+b+b+M)*(b)/(b+b+M)+
-(a)/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(b)/(a+b+b+M)*(a)/(a+b+M)+
-(a)/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(b)/(a+b+b+M)*(b+M)/(b+a+M)+
-(a)/(a+a+a+b+b)*(b)  /(a+a+b+b+M)*(a)/(a+a+b+M)*(a+M)/(a+b+M)+
-(a)/(a+a+a+b+b)*(b)  /(a+a+b+b+M)*(a)/(a+a+b+M)*(b)/(b+a+M)+
-(a)/(a+a+a+b+b)*(b)  /(a+a+b+b+M)*(b+M)/(b+a+a+M)*(a)/(a+a+M)+
-(b)/(a+a+a+b+b)*(a)  /(a+a+a+b+M)*(a+M)/(a+a+b+M)*(a+M)/(a+b+M)+
-(b)/(a+a+a+b+b)*(a)  /(a+a+a+b+M)*(a+M)/(a+a+b+M)*(b)/(a+b+M)+
-(b)/(a+a+a+b+b)*(a)  /(a+a+a+b+M)*(b)/(b+a+a)*(a)/(a+a)+
-(b)/(a+a+a+b+b)*(b+M)/(a+a+a+b+M)*(a)/(a+a+a)*(a)/(a+a)))
+return(
+  factorial(3)*factorial(2)*(
+   a/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(a+M)/(a+b+b+M)*(b  )/(b+b+M) +
+   a/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(b  )/(a+b+b+M)*(a  )/(a+b+M) +
+   a/(a+a+a+b+b)*(a+M)/(a+a+b+b+M)*(b  )/(a+b+b+M)*(b+M)/(b+a+M) +
+   a/(a+a+a+b+b)*(b  )/(a+a+b+b+M)*(a  )/(a+a+b+M)*(a+M)/(a+b+M) +
+   a/(a+a+a+b+b)*(b  )/(a+a+b+b+M)*(a  )/(a+a+b+M)*(b  )/(b+a+M) +
+   a/(a+a+a+b+b)*(b  )/(a+a+b+b+M)*(b+M)/(b+a+a+M)*(a  )/(a+a+M) +
+   b/(a+a+a+b+b)*(a  )/(a+a+a+b+M)*(a+M)/(a+a+b+M)*(a+M)/(a+b+M) +
+   b/(a+a+a+b+b)*(a  )/(a+a+a+b+M)*(a+M)/(a+a+b+M)*(b  )/(a+b+M) +
+   b/(a+a+a+b+b)*(a  )/(a+a+a+b+M)*(b  )/(b+a+a  )*(a  )/(a+a  ) +
+   b/(a+a+a+b+b)*(b+M)/(a+a+a+b+M)*(a  )/(a+a+a  )*(a  )/(a+a  )
+   ) 
+   )
 }
 ```
 

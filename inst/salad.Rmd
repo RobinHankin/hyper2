@@ -32,7 +32,7 @@ head(salad)
 nrow(salad)
 ```
 
-From row 3, for exampl,e we see that salad `A` was ranked as second
+From row 3, for example, we see that salad `A` was ranked as second
 most tart, `B` the most tart, `C` the third most tart, and `D` the
 least tart of the four.  We may process this using two methods,
 explicit and slick.  First, explicit:
@@ -45,10 +45,24 @@ for(i in seq_len(nrow(salad))){
 H1
 ```
 
-And second, slick:
+And second, a slick method.  We take the transpose of `salad` (things
+are clearer if we name the rows):
+
+```{r}
+rownames(salad) <-
+   paste("j",formatC(seq_len(nrow(salad)),width=2,format="d",flag="0"),sep="")
+ts <- t(salad)
+ts
+```
+
+Above, we see that object `ts` is an order table.  It is just like the
+formula 1 result table `F1_table_2016`, except that venues are judges
+and drivers are the salads [which are "competing" for the "who has the
+most tart dressing" prize].  Converting this to a support function is
+accomplished with `ordertable2supp()`:
 
 ```{r useslickmethod,cache=TRUE}
-(H2 <- ordertable2supp(t(salad)))
+(H2 <- ordertable2supp(ts))
 ```
 
 Just to check:
@@ -71,6 +85,28 @@ standardPL_PlackettLuce <- PlackettLuce(salad, npseudo = 0)
 (p2 <- maxp(H1))
 p1-p2
 ```
+
+
+We may use `hyper2` to test some hypotheses.  Firstly, $H_0\colon
+p_B=\frac{1}{4}$, which we test with `specificp.test()`:
+
+```{r specificptestB,cache=TRUE}
+specificp.test(H2,"B",1/4)
+```
+
+Above we see a $p$-value of about $10^{-7}$, clearly significant.
+However, we may also test the hypothesis that $p_B$ is less than the
+second strongest, $p_C$:
+
+
+```{r sameptestBC,cache=TRUE}
+samep.test(H2,c("B","C"))
+```
+
+We see a $p$-value of about $7\times 10^{-4}$, much higher than the
+value from `specificp.test()` of $H_0\colon p_B=\frac{1}{4}$.  This is
+because `samep.test()` allows one to change the value of $p_C$ and we
+would expect a less significant result.
 
 
 
