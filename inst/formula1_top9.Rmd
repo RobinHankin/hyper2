@@ -151,7 +151,7 @@ for(i in seq_len(ncol(f2017))){
 	   stop("neither wet nor dry?")
 	}
 	print(o)
-	L2017 %<>% order_obs(o)
+	L2017  <- L2017 + ordervec2supp(o) # NB zero  -> "Did not finish"
 }  # for(i) loop closes
 L2017
 ```
