@@ -211,4 +211,5 @@ CITATION.cff
 ^inst/surfing_jsa_rebuttal_referee2.tex$
 ^inst/directlogplotofstrengths_postinkscape.svg$
 ^inst/jss_4382.tex$
-^inst/surfing_zipper
+^inst/surfing_zipper$
+^inst/Makefile$
