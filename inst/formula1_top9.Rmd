@@ -1,5 +1,5 @@
 ---
-title: "formula1: top 9 drivers"
+title: "Formula 1 motor racing: top 9 drivers"
 output: html_document
 ---
 
@@ -11,8 +11,6 @@ library("magrittr")
 options("digits" = 5)
 options(width = 120)
 ```
-
-## Formula 1: top 9
 
 (this document is largely the same as `formula1.Rmd` but considers
 only the top 9 drivers).
