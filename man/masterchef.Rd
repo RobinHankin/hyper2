@@ -5,9 +5,7 @@
 \alias{masterchef_maxp}
 \alias{masterchef_constrained_maxp}
 \docType{data}
-\title{
-Masterchef series 6
-}
+\title{Masterchef series 6}
 \description{
 Data from Australian Masterchef Series 6
 }

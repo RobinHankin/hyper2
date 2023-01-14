@@ -1,9 +1,7 @@
 \name{mult_grid}
 \alias{mult_grid}
 \alias{pair_grid}
-\title{
-Kronecker matrix functionality
-}
+\title{Kronecker matrix product functionality}
 \description{
 Peculiar version of \code{expand.grid()} for matrices
 }

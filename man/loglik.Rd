@@ -3,9 +3,7 @@
 \alias{loglik_single}
 \alias{like_single_list}
 \alias{like_series}
-\title{
-Log likelihood functions
-}
+\title{Log likelihood functions}
 \description{\loadmathjax
   Returns a log-likelihood for a given \code{hyper2} or \code{hyper3}
   object at a specific point in probability space

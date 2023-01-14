@@ -7,9 +7,7 @@
 \alias{give_warning_on_nonzero_power_sum}
 \alias{nonzero_power_sum}
 \alias{power_sum}
-\title{
-Print methods
-}
+\title{Print methods}
 \description{
 Print methods for \code{hyper2} and \code{hyper3} objects
 }
