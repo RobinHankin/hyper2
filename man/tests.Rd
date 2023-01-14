@@ -114,6 +114,11 @@ high-dimensional datasets.  If \code{any(i==n)}, this constrains the
 fillup value; this makes no difference mathematically but the function
 idiom is involved.
 
+In functions \code{specificp.??.test(H,i,...)}, if \code{i} is not
+present in \code{H}, an error is returned although technically the
+result should be \dQuote{not enough evidence to reject}, as \code{H} is
+uninformative about \code{i}.
+
 }
 
 \examples{

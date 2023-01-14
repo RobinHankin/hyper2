@@ -94,7 +94,11 @@
     rsp <- round(specificp,getOption("digits"))  # for printing purposes
     if(is.character(i)){
       null_hypothesis <- paste("sum p_i=1, ",i, " = ", rsp, sep="")
-      i <- which(pnames(H)==i)
+      if(any(i %in% pnames(H))){
+          i <- which(pnames(H)==i)
+      } else {
+          stop(gettextf("entity %s not in pnames(H)", dQuote("i")))
+      }
     } else {
       null_hypothesis <- paste("sum p_i=1, p_",i, " = ", rsp, sep="")
     }
@@ -180,7 +184,11 @@
     rsp <- round(specificp,getOption("digits"))  # for printing purposes
     if(is.character(i)){
       null_hypothesis <- paste("sum p_i=1, ", i, " <= ", rsp, sep="")
-      i <- which(pnames(H)==i)
+      if(any(i %in% pnames(H))){
+          i <- which(pnames(H)==i)
+      } else {
+          stop(gettextf("entity %s not in pnames(H)", dQuote("i")))
+      }
     } else {
       null_hypothesis <- paste("sum p_i=1, p_",i, " = ", rsp, sep="")
     }
@@ -266,7 +274,11 @@
     rsp <- round(specificp,getOption("digits"))  # for printing purposes
     if(is.character(i)){
       null_hypothesis <- paste("sum p_i=1, ",i, " >= ", rsp, sep="")
-      i <- which(pnames(H)==i)
+      if(any(i %in% pnames(H))){
+          i <- which(pnames(H)==i)
+      } else {
+          stop(gettextf("entity %s not in pnames(H)", dQuote("i")))
+      }
     } else {
       null_hypothesis <- paste("sum p_i=1, p_",i, " = ", rsp, sep="")
     }
