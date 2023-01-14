@@ -215,11 +215,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   rclass <- !unary && inherits(e2,"hyper2")
   
   if(unary){
-    stop("Unary operator '", .Generic, "' is not implemented for hyper2 objects")
+    stop("unary operator '", .Generic, "' is not implemented for hyper2 objects")
     }
 
   if (!is.element(.Generic, c("+", "-", "==", "!=", "*", "^" ))){
-    stop("Binary operator '", .Generic, "' is not implemented for hyper2 objects")
+    stop("binary operator '", .Generic, "' is not implemented for hyper2 objects")
   }
   
   if(lclass && rclass){  
