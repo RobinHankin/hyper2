@@ -358,7 +358,7 @@
         jj <- paste(paste("p_",i," = ",sep=""),collapse="")
         null_hypothesis <- substr(jj,1,nchar(jj)-3)
     }
-    SMALL <- 1e-7
+    SMALL <- 1e-6
 
     m_alternative <- maxp(H, startp=startp, ..., give=TRUE)  # free optimization
     alternative_support <- m_alternative$value

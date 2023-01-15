@@ -95,22 +95,25 @@ NBA_maxp_precomputed  <- c(
                                         # intensive but far higher likelihood
                                         # than the result of maxp(NBA):
     
-    Barnes     = 0.150357987445096,   Curry       = 1.65443013016506e-06,
-    Durant     = 0.00856905879575095, Green       = 0.0253069705861388,
-    Iguodala   = 0.00916478949994613, Irving      = 0.0290988580288644, 
-    James      = 1.0000039853319e-06, Jefferson   = 0.00446265583190174, 
-    Korver     = 0.00959220615914446, Livingston  = 0.0775529739242179, 
-    Love       = 0.00253529174567821, McCaw       = 0.0189848298815197,
-    Pachiuila  = 0.0365345555046955,
-    possession = 0.431812626360354,
-    Shumpert   = 0.0556862911754396,   Smith      = 0.00064258717253104,
-    Thompson   = 6.86257295623038e-05, Thompson.1 = 0.00824420466131726,
-    West       = 0.0761409792438058,   Williams   = 0.0552418538199202)
+
+Barnes    = 0.165210241492775,    Curry      = 1.11314508611164e-06,
+Durant    = 0.00538619616133955,  Green      = 0.0110738194130432,
+Iguodala  = 1.0005765074368e-06,  Irving     = 0.0198810257932021,
+James     = 1.00000582238398e-06, Jefferson  = 0.00990927936847305,
+Korver    = 0.00843806151505123,  Livingston = 0.075108213128189,
+Love      = 0.00175976502052894,  McCaw      = 0.0119305671842558,
+Pachiuila = 0.0496281731046277,   possession = 0.479366441714251,
+Shumpert  = 0.0666196978946451,   Smith      = 1.0008827880116e-06,
+Thompson  = 0.00159564073991825,  Thompson.1 = 0.00135198197477646,
+West      = 0.0927348818403838,   Williams   = 1.89904433611776e-06)
+
+
+
 NBA_maxp <- maxp(NBA)
 NBA_maxp %<>% ordertrans(c(colnames(NBA_table)[-(1:4)],"possession"))
 
 
-Dotchart(NBA_maxp,col=c(rep("black",9),rep("red",10),rep("blue",1)),pch=16)
+dotchart(NBA_maxp,col=c(rep("black",9),rep("red",10),rep("blue",1)),pch=16)
 ```
 
 # Statistical analysis
