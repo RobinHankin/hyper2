@@ -6,6 +6,7 @@
 \alias{assign_lowlevel3}
 \alias{hyper3_bw}
 \alias{hyper3_nv}
+\alias{hyper3_m}
 \alias{is.hyper3}
 \alias{is_ok_weightedplayers}
 \alias{is_valid_hyper3}
@@ -56,11 +57,26 @@ H
 (p2=1)^2 * (p2=1.3)^4)
 }
 
+
+\code{hyper3} objects are considerably more general than this and we
+allow terms such as \mjeqn{\left(w_1p_1+\ldots
+w_rp_r\right)^{\alpha}}{omitted}; the general form would be
+
+\mjdeqn{
+  \mathcal{L}\left(p_1,\ldots,p_n\right)=
+  \prod_{j=1}^N\left(\sum_{i=1}^n
+  w_{ij}p_i\right)^{\alpha_i}
+  }{omitted: see PDF}
+
+  where we understand that \mjeqn{p_n=1-\sum_{i=1}^{n-1}p_i}{omitted};
+  many of the \mjeqn{w_{ij}}{omitted} are zero.
+  
 }
 \usage{
 hyper3(B = list(), W = list(), powers = 0, pnames)
 hyper3_bw(B = list(), W = list(), powers = 0, pnames)
 hyper3_nv(L=list(),powers=0,pnames)
+hyper3_m(M,p,stripzeros=TRUE)
 }
 \arguments{
   \item{B}{A list of brackets}
@@ -68,6 +84,10 @@ hyper3_nv(L=list(),powers=0,pnames)
   \item{L}{A list of named vectors}
   \item{powers}{Numeric vector of powers}
   \item{pnames}{Character vector of player names}
+  \item{M}{Matrix of weights, column names being player names}
+  \item{p}{Vector of powers, length equal to \code{ncol(M)}}
+  \item{stripzeros}{Boolean with default \code{TRUE} meaning to silently
+    remove all-zero rows of \code{M}}
 }
 \details{
 
@@ -116,12 +136,20 @@ a \dQuote{\code{3}} to function names, eg \code{gradient()} goes to
 
 \examples{
 
+
 hyper3(B=list("a",c("a","b"),"b"),W=list(1.2,c(1.2,1),1),powers=c(3,4,-7))
 hyper3(list(c(a=1.2),c(b=1),c(a=1.2,b=1)),powers=c(3,4,-7))
+## Above two objects should be identical.
+
+## Third method, send a matrix:
+M <- matrix(rpois(15,3),5,3)
+colnames(M) <- letters[1:3]
+hyper3(M,p)
 
 
-## Above two objects should be identical
 
+## Standard way to generate a hyper3 object is to create an empty object
+## and populate it using the replacement methods:
 
 a <- hyper3()  # default creation method [empty object]
 

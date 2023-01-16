@@ -1,8 +1,10 @@
 `hyper3` <- function(B=list(), W=list(), powers=0,pnames){
-    if(all(unlist(lapply(B,is_ok_weightedplayers)))){
-        return(hyper3_nv(B,powers,pnames))
+    if(is.matrix(B)){
+      return(hyper3_m(B,W))
+    } else if(all(unlist(lapply(B,is_ok_weightedplayers)))){
+      return(hyper3_nv(B,powers,pnames))
     } else {
-        return(hyper3_bw(B,W,powers,pnames))
+      return(hyper3_bw(B,W,powers,pnames))
     }
 }
 
@@ -26,6 +28,20 @@
     hyper3_bw(lapply(L,names),lapply(L,as.vector),powers,pnames)
 }
 
+`hyper3_m` <- function(M,p,stripzeros=TRUE){
+  if(stripzeros){
+    wanted <- apply(M,1,function(x){any(x!=0)})
+    M <- M[wanted,]
+    p <- p[wanted]
+  }
+
+  hyper3(
+      B = rep(list(colnames(M)),nrow(M)),
+      W = unclass(as.data.frame(t(M))),
+      powers=p[wanted],
+      pnames = colnames(M)
+  )
+}
 
 `is_ok_weightedplayers` <- function(x){ # x=c(a=33,b=4,c=65)
     if(is.null(names(x))){
