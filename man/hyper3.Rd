@@ -57,10 +57,9 @@ H
 (p2=1)^2 * (p2=1.3)^4)
 }
 
-
-\code{hyper3} objects are considerably more general than this and we
-allow terms such as \mjeqn{\left(w_1p_1+\ldots
-w_rp_r\right)^{\alpha}}{omitted}; the general form would be
+The general form of terms of a \code{hyper3} object would be
+\mjeqn{\left(w_1p_1+\ldots w_rp_r\right)^{\alpha}}{omitted}; the
+complete object would be
 
 \mjdeqn{
   \mathcal{L}\left(p_1,\ldots,p_n\right)=
@@ -68,9 +67,11 @@ w_rp_r\right)^{\alpha}}{omitted}; the general form would be
   w_{ij}p_i\right)^{\alpha_i}
   }{omitted: see PDF}
 
-  where we understand that \mjeqn{p_n=1-\sum_{i=1}^{n-1}p_i}{omitted};
-  many of the \mjeqn{w_{ij}}{omitted} are zero.
-  
+where we understand that \mjeqn{p_n=1-\sum_{i=1}^{n-1}p_i}{omitted};
+many of the weights might be zero.  We see that the weights
+\mjeqn{w_{ij}}{w_ij} may be arranged as a matrix and this form is taken
+by function \code{hyper3_m()}.
+
 }
 \usage{
 hyper3(B = list(), W = list(), powers = 0, pnames)
