@@ -247,7 +247,7 @@ abline(h=c(0,-2))
 
 ### Package dataset {-}
 
-Following lines create `home_advantage.rda`, residing in the `data/`
+Following lines create `baseball.rda`, residing in the `data/`
 directory of the package.
 
 ```{r,label=savesolingdataset}
