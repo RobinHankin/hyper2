@@ -1,0 +1,167 @@
+---
+title: "Monster or Lambda?  A likelihood analysis"
+author: "Robin KS Hankin"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(1)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+```
+
+(takes about an hour to process without cache)
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+
+Here I consider pairwise comparisons with a home-ground advantage and
+wish to compare two likelihood functions.  First, the monster parametrization:
+
+$$
+\mathcal{L_M}\left(p_1,p_2,M\right)=
+\left(
+\frac{p_1+M;p_2}{p_1+p_2+M}
+\right)^{a;b}\cdot
+\left(
+\frac{p_1;p_2+M}{p_1+p_2+M}
+\right)^{c;d}
+$$
+
+[here the first expression is for $p_1$ at home and $p_2$ away; the
+second is $p_1$ away and $p_2$ at home; $a$ is number of home wins for
+$p_1$, $b$ number of away wins for $p_2$, $c$ number of away wins for
+$p_1$ and $d$ number of home wins for $p_2$].   Secondly the monster
+parameterization:
+
+
+$$
+\mathcal{L_\lambda}\left(p_1,p_2,\lambda\right)=
+\left(
+\frac{\lambda p_1;p_2}{\lambda p_1+p_2}
+\right)^{a;b}\cdot
+\left(
+\frac{p_1;\lambda p_2}{p_1+\lambda p_2}
+\right)^{c;d}
+$$
+
+
+A suitable generalized function would be
+
+$$
+\mathcal{L}\left(p_1,p_2,\lambda,M\right)=
+\left(
+\frac{\lambda p_1+M;p_2}{\lambda p_1+p_2+M}
+\right)^{a;b}\cdot
+\left(
+\frac{p_1;\lambda p_2+M}{p_1+\lambda p_2+M}
+\right)^{c;d}
+$$
+
+
+
+
+First we need to define a slight generalization of `home_away3()`:
+
+```{r}
+`ha3` <- function(home_games_won,away_games_won,lambda){
+
+    if(is.complex(home_games_won)){
+        if(missing(lambda)){lambda <- away_games_won}
+        away_games_won <- Im(home_games_won)
+        home_games_won <- Re(home_games_won) 
+    }
+
+    teams <- rownames(home_games_won)
+    stopifnot(identical(teams,colnames(home_games_won)))
+    stopifnot(identical(teams,rownames(away_games_won)))
+    stopifnot(identical(teams,colnames(away_games_won)))
+
+    H <- hyper3(pnames=c(teams,"M","lambda"))
+
+    for(i in seq_len(nrow(home_games_won))){
+        for(j in seq_len(ncol(home_games_won))){
+            if(i != j){  # diagonal means a team plays itself, meaningless.
+                ## First deal with home_games:
+                game_winner <- teams[i]
+                game_loser  <- teams[j]
+                no_of_matches <- home_games_won[i,j] # won with home strength helping
+
+                jj <- c(lambda,1)
+                names(jj) <- c(game_winner,"M")
+                H[jj] %<>% inc(no_of_matches)  # won with home strength helping
+
+                jj <- c(lambda,1,1)
+                names(jj) <- c(game_winner,game_loser,"M")
+                H[jj] %<>% dec(no_of_matches)
+
+
+                ## now away games:
+                no_of_matches <- away_games_won[i,j] # won without the benefit of home strength
+                jj <- 1
+                names(jj) <- game_winner
+                H[jj] %<>% inc(no_of_matches)  # won without home ground helping...
+
+                jj <- c(1,lambda,1)
+                names(jj) <- c(game_winner,game_loser,"M")
+                H[jj] %<>% dec(no_of_matches)  # home strength nevertheless on denominator
+                                
+            } # if(i != j) closes
+        } # j loop closes
+    } # i loop closes
+    return(H)
+}
+```
+
+
+(maybe one day I will include this in the `hyper2` package).  Copying
+from `home_advantage.Rmd`:
+
+
+```{r label=definehomeawaymatrix}
+D  <- matrix(c(
+    NA, 16, 12, 11, 19, NA, 19, 16,
+    17, 12, NA, 11, 11, 12, 12, NA),
+    nrow=4,ncol=4,byrow=TRUE) + 1i* matrix(c(
+    NA, 05, 02, 02, 02, NA, 10, 02,
+    00, 04, NA, 07, 02, 06, 04, NA),
+    nrow=4,ncol=4,byrow=TRUE)
+
+teams <- LETTERS[1:4]
+dimnames(D) <- list("@home" = teams,"@away"=teams)
+D
+```
+
+
+```{r,tryha3,cache=TRUE}
+H <- ha3(D,lambda=1.88)
+s <- specificp.gt.test(H,"M",0,n=1)  # NB lambda = 1.88
+s
+```
+
+
+```{r}
+s$null_support
+```
+
+
+Above but in one line:
+
+```{r,label=trytwovalues,cache=TRUE}
+ll <- function(lambda){specificp.gt.test(ha3(D,lambda=lambda),"M",0,n=1)$null_support}
+ll(1.22)
+ll(1.88)
+```
+
+
+```{r,label=calclam,cache=TRUE}
+lam <- seq(from=2.5,to=6,len=15)
+supp <- sapply(lam,ll)
+```
+
+```{r}
+plot(lam,supp-max(supp),type='b')
+```
