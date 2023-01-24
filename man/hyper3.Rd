@@ -145,7 +145,7 @@ hyper3(list(c(a=1.2),c(b=1),c(a=1.2,b=1)),powers=c(3,4,-7))
 ## Third method, send a matrix:
 M <- matrix(rpois(15,3),5,3)
 colnames(M) <- letters[1:3]
-hyper3(M,p)
+hyper3(M,1:6)   # second argument interpreted as powers
 
 
 
