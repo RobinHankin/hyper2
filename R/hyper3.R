@@ -523,31 +523,28 @@ stop("not yet written")
 
     for(i in seq_len(nrow(home_games_won))){
         for(j in seq_len(ncol(home_games_won))){
-            if(i != j){  # diagonal means a team plays itself, meaningless.
-                ## First deal with home_games:
-                game_winner <- teams[i]
-                game_loser  <- teams[j]
-                no_of_matches <- home_games_won[i,j] # won with home strength helping
+            if(i != j){  
+                home_team <- teams[i]
+                away_team <- teams[j]
 
+		home_wins <- home_games_won[i,j]
+		away_wins <- away_games_won[i,j] 
+                no_of_matches <- home_wins + away_wins 
+
+                ## home wins:
                 jj <- lambda
-                names(jj) <- game_winner
-                H[jj] %<>% inc(no_of_matches)  # won with home strength helping
-
-                jj <- c(lambda,1)
-                names(jj) <- c(game_winner,game_loser)
-                H[jj] %<>% dec(no_of_matches)
-
-
-                ## now away games:
-                no_of_matches <- away_games_won[i,j] # won without the benefit of home strength
+                names(jj) <- home_team
+                H[jj] %<>% inc(home_wins)
+                
+                ## away wins:
                 jj <- 1
-                names(jj) <- game_winner
-                H[jj] %<>% inc(no_of_matches)  # won without home ground helping...
+                names(jj) <- away_team
+                H[jj] %<>% inc(away_wins)
 
-                jj <- c(1,lambda)
-                names(jj) <- c(game_winner,game_loser)
-                H[jj] %<>% dec(no_of_matches)  # home strength nevertheless on denominator
-                                
+                ## denominator
+                jj <- c(lambda,1)
+                names(jj) <- c(home_team,away_team)
+                H[jj] %<>% dec(no_of_matches)
             } # if(i != j) closes
         } # j loop closes
     } # i loop closes

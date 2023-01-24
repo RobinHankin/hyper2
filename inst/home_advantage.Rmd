@@ -24,8 +24,24 @@ options(warn = defaultW)
 (takes about fifteen minutes to run without cache)
 
 Here I analyse a small synthetic dataset for home ground advantage,
-then go on to discuss a dataset presented by Agresti.  First generate
-the dataset by hand:
+then go on to discuss a dataset presented by Agresti.  But first, the
+smallest nontrivial example is a 2x2 case:
+
+```{r,label=smallestexample}
+M <- matrix(c(
+    NA, 1+5i, 3+11i, NA),
+    nrow=2,ncol=2,byrow=TRUE)
+
+teams <- LETTERS[seq_len(2)]
+dimnames(M) <- list("@home" = teams,"@away"=teams)
+dimnames(M) <- list("@home" = teams,"@away"=teams)
+M
+home_away(M)
+```
+
+Above we see (from `M[1,2]`) that A played at home $1+5=6$ times,
+winning 1 and losing 5; and B played at home $3+11=14$ times, winning
+3 and losing 11.   A slightly more complicated example:
 
 ```{r,label=genthedata}
 home_games_won <- matrix(c(
@@ -37,9 +53,9 @@ home_games_won <- matrix(c(
 
 away_games_won <- matrix(c(
     NA, 05, 02, 02,
-    02, NA, 10, 02,
-    00, 04, NA, 07,
-    02, 06, 04, NA),
+     9, NA, 10, 02,
+     3, 04, NA, 07,
+     8, 06, 04, NA),
     nrow=4,ncol=4,byrow=TRUE)
 
 teams <- LETTERS[1:4]
@@ -64,16 +80,14 @@ represent the same dataset:
 home_games_won + 1i*away_games_won
 ```
 
-
-
-
 We will create a hyper2 object with the teams and home ground advantage term:
 
 ```{r,label=makehyper2,cache=TRUE}
 H <- home_away(home_games_won,away_games_won)
 H
-options("use_alabama" = TRUE) # to avoid the stupid wmmin bug
+options("use_alabama" = FALSE) # to avoid the stupid wmmin bug
 specificp.gt.test(H,"home",0)
+options("use_alabama" = TRUE) # to avoid the stupid wmmin bug
 ```
 
 We see strong evidence to support the contention that home advantage
@@ -86,14 +100,14 @@ samep.test(H,teams)
 
 Above, we see no evidence for a difference in team strengths.  Visually:
 
-```{r,label=showvisH}
-dotchart(maxp(H))
+```{r,label=showvisH,cache=TRUE}
+(mt <- maxp(H))
 ```
 
 A profile likelihood diagram:
 
 ```{r,label=showprofilelikelihood, cache=TRUE}
-home_strength <- seq(from=0.2,to=0.6,length=20)
+home_strength <- seq(from=0.15,to=0.45,length=13)
 plot(home_strength,profsupp(H,"home",home_strength),type="b",pch=16,
      xlab="home strength",ylab="support",main="profile likelihood for home advantage")
 abline(h=c(0,-2))
@@ -191,7 +205,7 @@ baseball <- baseball + pairwise(M2)
 We may assess the difference that the new information makes:
 
 ```{r,label=baseballtransplot,cache=TRUE}
-ordertransplot(baseball_maxp[1:7],maxp(baseball)[1:7],xlab="old",ylab="new",plotlims=c(0.1,0.16))
+ordertransplot(baseball_maxp[1:7],maxp(baseball)[1:7],xlab="old",ylab="new",plotlims=c(0.01,0.16))
 ```
 
 Above, we see very little difference in the two evaluates, except for

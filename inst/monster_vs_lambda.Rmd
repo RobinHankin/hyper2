@@ -66,8 +66,8 @@ $$
 
 First we need to define a slight generalization of `home_away3()`:
 
-```{r}
-`ha3` <- function(home_games_won,away_games_won,lambda){
+```{r defineha3}
+`ha3` <- function(home_games_won,away_games_won,lambda){  # based on home_away3()
 
     if(is.complex(home_games_won)){
         if(missing(lambda)){lambda <- away_games_won}
@@ -80,35 +80,32 @@ First we need to define a slight generalization of `home_away3()`:
     stopifnot(identical(teams,rownames(away_games_won)))
     stopifnot(identical(teams,colnames(away_games_won)))
 
-    H <- hyper3(pnames=c(teams,"M","lambda"))
+    H <- hyper3(pnames=c(teams,"lambda","M"))
 
     for(i in seq_len(nrow(home_games_won))){
         for(j in seq_len(ncol(home_games_won))){
-            if(i != j){  # diagonal means a team plays itself, meaningless.
-                ## First deal with home_games:
-                game_winner <- teams[i]
-                game_loser  <- teams[j]
-                no_of_matches <- home_games_won[i,j] # won with home strength helping
+            if(i != j){  
+                home_team <- teams[i]
+                away_team <- teams[j]
 
+		home_wins <- home_games_won[i,j]
+		away_wins <- away_games_won[i,j] 
+                no_of_matches <- home_wins + away_wins 
+
+                ## home wins:
                 jj <- c(lambda,1)
-                names(jj) <- c(game_winner,"M")
-                H[jj] %<>% inc(no_of_matches)  # won with home strength helping
-
-                jj <- c(lambda,1,1)
-                names(jj) <- c(game_winner,game_loser,"M")
-                H[jj] %<>% dec(no_of_matches)
-
-
-                ## now away games:
-                no_of_matches <- away_games_won[i,j] # won without the benefit of home strength
+                names(jj) <- c(home_team,"M")
+                H[jj] %<>% inc(home_wins)
+                
+                ## away wins:
                 jj <- 1
-                names(jj) <- game_winner
-                H[jj] %<>% inc(no_of_matches)  # won without home ground helping...
+                names(jj) <- away_team
+                H[jj] %<>% inc(away_wins)
 
-                jj <- c(1,lambda,1)
-                names(jj) <- c(game_winner,game_loser,"M")
-                H[jj] %<>% dec(no_of_matches)  # home strength nevertheless on denominator
-                                
+                ## denominator
+                jj <- c(lambda,1,1)
+                names(jj) <- c(home_team,away_team,"M")
+                H[jj] %<>% dec(no_of_matches)
             } # if(i != j) closes
         } # j loop closes
     } # i loop closes
@@ -116,52 +113,165 @@ First we need to define a slight generalization of `home_away3()`:
 }
 ```
 
+We will try on a simple case:
 
-(maybe one day I will include this in the `hyper2` package).  Copying
-from `home_advantage.Rmd`:
+```{r,label=try2x2}
+M <- matrix(c(
+    NA, 1+5i, 3+11i, NA),
+    nrow=2,ncol=2,byrow=TRUE)
+
+teams <- LETTERS[seq_len(2)]
+dimnames(M) <- list("@home" = teams,"@away"=teams)
+dimnames(M) <- list("@home" = teams,"@away"=teams)
+M
+home_away(M)
+ha3(M,lambda=1.88)
+```
+
+
+(maybe one day I will include this function in the `hyper2` package).
+Copying from `home_advantage.Rmd`:
 
 
 ```{r label=definehomeawaymatrix}
-D  <- matrix(c(
-    NA, 16, 12, 11, 19, NA, 19, 16,
-    17, 12, NA, 11, 11, 12, 12, NA),
-    nrow=4,ncol=4,byrow=TRUE) + 1i* matrix(c(
-    NA, 05, 02, 02, 02, NA, 10, 02,
-    00, 04, NA, 07, 02, 06, 04, NA),
+home_games_won <- matrix(c(
+    NA, 16, 12, 11,
+    19, NA, 19, 16,
+    17, 12, NA, 11,
+    11, 12, 12, NA),
+    nrow=4,ncol=4,byrow=TRUE)
+
+away_games_won <- matrix(c(
+    NA, 05, 02, 02,
+     9, NA, 10, 02,
+     3, 04, NA, 07,
+     8, 06, 04, NA),
     nrow=4,ncol=4,byrow=TRUE)
 
 teams <- LETTERS[1:4]
-dimnames(D) <- list("@home" = teams,"@away"=teams)
+dimnames(home_games_won) <- list("@home" = teams,"@away"=teams)
+dimnames(away_games_won) <- list("@home" = teams,"@away"=teams)
+
+D <- home_games_won + 1i*away_games_won
 D
 ```
 
+Above we see, from row 1 column 2 [`36+10i`], that A played at home
+against B a total of $36+10=46$ times, winning $36$ and losing $10$;
+From row 2 column 1 [`11+10i`] we see that B played at home against A
+a total of 21 times, winning 11 and losing 10.  We can use the Monster
+likelihood function and test $H_0\colon M=0$:
+
 
 ```{r,tryha3,cache=TRUE}
-H <- ha3(D,lambda=1.88)
-s <- specificp.gt.test(H,"M",0,n=1)  # NB lambda = 1.88
+H <- ha3(D,lambda=1.01)
+print(H)
+s <- specificp.gt.test(H,"M",0,n=10)  # NB lambda = 1.88
 s
 ```
+
+We see strong evidence that $M>0$.
 
 
 ```{r}
 s$null_support
 ```
 
+We want to plot a profile log-likelihood function, that is, a
+likelihood function corresponding to the evaluate constrained to
+having a particular value of $M$:
 
-Above but in one line:
+```{r,label=marginallambdaprofilelike,cache=TRUE}
+f <- function(lambda){
+ write(date(),file="marginallambdaprofilelike",append=TRUE)  # so we can check its progress
+ return(maxp(ha3(D,lambda=lambda),give=TRUE)$value)
+}
 
-```{r,label=trytwovalues,cache=TRUE}
-ll <- function(lambda){specificp.gt.test(ha3(D,lambda=lambda),"M",0,n=1)$null_support}
-ll(1.22)
-ll(1.88)
+lam <- seq(from=1.2,to=4.6,len=15)
+supp_M_eq_0 <- sapply(lam,f)
+```
+
+```{r,plotprofilelikem0}
+plot(lam,supp_M_eq_0,type="b",xlab="lambda")
 ```
 
 
-```{r,label=calclam,cache=TRUE}
-lam <- seq(from=2.5,to=6,len=15)
-supp <- sapply(lam,ll)
+Now enforce the constraint $\lambda=1$ [and allow $M$ to vary],
+thereby reducing the likelihood function from a `hyper3` to a `hyper2`
+object:
+
+```{r,tryiconprofsupp,cache=TRUE}
+(H <- home_away(D))  # observe that the monster is 'home'
+home <- seq(from=0.15,to=0.4,len=15)
+supp_lambda_eq_0 <- profsupp(H,"home",home,relative=FALSE)
+plot(home,supp_lambda_eq_0 - max(supp_lambda_eq_0),type='b')
+abline(h=c(0,-2))
 ```
 
-```{r}
-plot(lam,supp-max(supp),type='b')
+```{r,showmaxplam1,cache=TRUE}
+maxp(H)
+```
+
+
+```{r,label=plotordinarysupport}
+plot(lam,supp_M_eq_0-max(supp_M_eq_0),type='b',main='Profile likelihood with M=0')
+grid()
+plot(home,supp_lambda_eq_0 - max(supp_lambda_eq_0),type='b')
+```
+
+
+```{r,label=plotbothsupports}
+both <- c(supp_lambda_eq_0,NA,supp_M_eq_0)
+plot(both-max(both,na.rm=TRUE),type='b',col=c(rep("black",length(supp_lambda_eq_0)),"green",rep("red",length(supp_M_eq_0))))
+abline(h=c(0,-2))
+```
+
+
+Support difference:
+
+```{r,label=supportdifference}
+max(supp_M_eq_0)-max(supp_lambda_eq_0)
+```
+
+exceeding Edwards's two-units-of-support criterion by a comfortable
+margin.  Note that both have equal numbers of degrees of freedom.
+
+
+# Create a new dataset by direct simulation
+
+
+```{r,syntheticdataP}
+set.seed(0)
+P <- matrix(0,4,4)
+teams <- LETTERS[1:4]
+dimnames(P) <- list("@home" = teams,"@away"=teams)
+P
+n <- 2000 # number of matches between a pair 
+M <- 0.0005  # home monster
+strengths <- 1/(1:4) # Zipf
+strengths <- strengths/sum(strengths)
+names(strengths) <- teams
+strengths
+for(home_team in 1:4){
+  for(away_team in 1:4){
+    if(home_team != away_team){
+      prob_home_win <- (strengths[home_team] + M)/(strengths[home_team] + strengths[away_team] + M)
+      home_wins <- rbinom(1,n,prob_home_win)
+      home_losses <- n - home_wins
+      P[home_team,away_team] <- home_wins + 1i*home_losses
+    }
+  } 
+}
+diag(P) <- NA
+P
+HP <- home_away(P)
+```
+
+```{r,label=showlike}
+HP
+```
+
+```{r,label=maxpmonsteqq,cache=TRUE}
+mH <- maxp(HP,n=3,give=T)
+mH
 ```
