@@ -12,12 +12,14 @@
   
 }
 \usage{
-fillup(x,total=1)
+fillup(x,H=NULL,total=1)
 indep(x)
 }
 \arguments{
   \item{x}{Numeric vector}
-  \item{total}{Total value for probability}
+  \item{H}{Object with \code{pnames()} attribute, typically of class
+    \code{hyper2} or \code{hyper3}, used for names if supplied}
+    \item{total}{Total value for probability}
 }
 \details{
   Usually you want the total to be one, to enforce the unit sum
@@ -32,5 +34,8 @@ indep(x)
 fillup(c(1/2,1/3))
 
 indep(c(1/2,1/3,1/6))
+
+fillup(indep(icons_maxp))  
+fillup(indep(icons_maxp),icons)
 
 }

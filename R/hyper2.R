@@ -384,12 +384,15 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     if(give){return(jj)} else {return(all((jj>0) == alt))}
 }
 
-`fillup` <- function(x,total=1){
+`fillup` <- function(x,H=NULL,total=1){
   if(is.matrix(x)){
-    return(cbind(x,total-rowSums(x)))
+    out <- cbind(x,total-rowSums(x))
+    if(!is.null(H)){colnames(out) <- pnames(H)}
   } else {  # assumed to be a vector
-    return(c(x,total-sum(x)))
+    out <- c(x,total-sum(x))
+    if(!is.null(H)){names(out) <- pnames(H)}
   }
+  return(out)
 }
 
 `indep` <- function(x){
@@ -418,11 +421,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     }  # i loop closes
     if(justlikes){ return(likes) }
     if(give){
-        return(c(out,likes=list(likes)))
+        return(c(out,likes=list(likes),evaluate=list(fillup(out$par,H))))
     } else {
-        out <- fillup(out$par)
-        if(!identical(pnames(H),NA)){names(out) <- pnames(H)}
-        return(out)
+      return(fillup(out$par,H))
     }
 }  # maxp() closes
 
