@@ -36,10 +36,14 @@ Perkins. \emph{Information Retrieval}, 4(2), 133-151. July 2001.
 
 \examples{
 
-data(jester)
 # maxp(jester)  # takes too long
 
-loglik(indep(jester_maxp),jester)
+# Note that the possibly poor identification of the evaluate
+#  nevertheless allows us to reject the null of equality:
+
+(LAM <- -2*(loglik(equalp(jester),jester)-loglik(jester_maxp,jester)))
+pval <- pchisq(LAM,df=size(jester),lower.tail=FALSE)
+
 
 }
 \keyword{datasets}
