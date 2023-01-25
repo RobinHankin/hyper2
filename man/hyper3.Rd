@@ -95,15 +95,17 @@ hyper3_m(M,p,stripzeros=TRUE)
   \itemize{
 
     \item Function \code{hyper3()} is the user-friendly creation method,
-    which dispatches to helper functions \code{hyper3_bw()} and
-    \code{hyper3_nv()} depending on its arguments.
+    which dispatches to a helper function depending on its arguments.
 
     \item Function \code{hyper3_bw()} takes a list of brackets
     (character vectors) and a list of weights (numeric vectors)  and
     returns a \code{hyper3} object.
 
-    \item Function \code{hyper2_nv()} takes a list of named vectors and
+    \item Function \code{hyper3_nv()} takes a list of named vectors and
     returns a \code{hyper3} object.
+
+    \item Function \code{hyper3_m()} takes a matrix with rows being the
+    brackets (entries are weights) and a numeric vector of powers.
 
     \item Function \code{evaluate3()} is a low-level helper function
     that evaluates a log-likelihood at a point in probability space.
@@ -112,7 +114,7 @@ hyper3_m(M,p,stripzeros=TRUE)
 
     \item Function \code{maxp3()} is a placeholder (it is not yet
     written).  But the intention is that it will maximize the
-    log-likelihood of a \code{hype3} object over the Bradley Terry
+    log-likelihood of a \code{hyper3} object over the Bradley Terry
     strengths \emph{and} any weights given.  This might not be possible
     as envisaged right now; I present some thoughts in
     \code{inst/kka.Rmd}.
