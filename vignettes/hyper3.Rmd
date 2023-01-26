@@ -13,6 +13,10 @@ vignette: |
 library("hyper2",quietly=TRUE)
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
 
 Objects of class \code{hyper3} are a generalization of \code{hyper2}
 objects that allow the brackets to contain weighted probabilities.

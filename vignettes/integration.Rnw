@@ -6,6 +6,7 @@
 \usepackage{wasysym}
 \usepackage{amssymb}
 \usepackage{yfonts}
+\usepackage{wrapfig}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -89,6 +90,12 @@ ignore <- require(magrittr,quietly=TRUE)
 
 \section{Introduction}
 
+\setlength{\intextsep}{0pt}
+\begin{wrapfigure}{r}{0.2\textwidth}
+\begin{center}
+\includegraphics[width=1in]{\Sexpr{system.file("help/figures/hyper2.png",package="hyper2")}}
+\end{center}
+\end{wrapfigure}
 The \pkg{hyper2} package~\citep{hankin2017} presented a new
 formulation of the hyperdirichlet distribution~\citep{hankin2010}
 which offered speed advantages over the original \pkg{hyperdirichlet}

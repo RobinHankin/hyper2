@@ -8,6 +8,15 @@ vignette: |
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
+```{r setup, include=FALSE}
+library("hyper2",quietly=TRUE)
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
 
 This short document analyses the climate change dataset originally
 presented in the `hyperdirichlet` R package^[RKS Hankin 2010.  "A
