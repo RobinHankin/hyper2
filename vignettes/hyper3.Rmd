@@ -1,5 +1,5 @@
 ---
-title: "The Weighted dirichlet distribution"
+title: "The weighted hyperdirichlet distribution"
 author: "Robin K. S. Hankin"
 date: "`r Sys.Date()`"
 vignette: |
@@ -16,11 +16,11 @@ library("hyper2",quietly=TRUE)
 
 Objects of class \code{hyper3} are a generalization of \code{hyper2}
 objects that allow the brackets to contain weighted probabilities.
-Likelihood functions are defined on non-negative $p_1,\ldots p_n$
+Likelihood functions are defined on non-negative $p_1,\ldots, p_n$
 subject to the unit-sum constraint $\sum p_i=1$.  Given known weights
 $w^i_j$ with $1\leq i\leq j$ we have
 
-$$\mathcal{L}\left(p_1,\ldots p_n\right)=\prod_j\left(\sum_{i=1}^n w^i_jp_i\right)^{n_j}.$$
+$$\mathcal{L}\left(p_1,\ldots, p_n\right)=\prod_j\left(\sum_{i=1}^n w^i_jp_i\right)^{n_j}.$$
 
 As a motivating example, suppose two teams (players) with
 Bradley-Terry strengths $p_1,p_2$ play football where we quantify the
@@ -50,6 +50,22 @@ H[c(p2=1.3)]      %<>% inc(D)
 H[c(p1=1,p2=1.3)] %<>% dec(C+D)
 H
 ```
+
+Bespoke function `home_away3()` achieves the same result with a more
+convenient input:
+
+```{r,label=usehomeaway3}
+M <- matrix(c(NA, 6+2i ,1+7i, NA),2,2,byrow=TRUE)
+teams <- c("p1","p2")
+dimnames(M) <- list("@home" = teams,"@away"=teams)
+dimnames(M) <- list("@home" = teams,"@away"=teams)
+print(M)
+home_away3(M,lambda=1.3)
+```
+
+
+Above, obect `M` has real parts being home wins and imaginary parts
+being away wins.
 
 We may estimate $p_1$ and $p_2$ using maximum likelihood, `maxp()` in
 package idiom:
@@ -137,7 +153,16 @@ b["R"] %<>% inc ; b[c(                "R","M")] %<>% dec
 a==b
 ```
 
+However, bespoke function `ordervec2supp3()` performs all this in one
+step:
+
+```{r, label=showbespoke}
+ordervec2supp3(c("RB","M","F","F","RB","M"))
+```
+
+
 And then
+
 
 ```{r, label=maxpa,cache=TRUE}
 ma <- maxp(a)
