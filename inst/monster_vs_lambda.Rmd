@@ -62,9 +62,123 @@ $$
 $$
 
 
+## Start simple: two teams
+
+```{r,echo=FALSE}
+jj <- matrix(c(NA, 1+2i ,4+5i, NA),2,2,byrow=TRUE)
+teams <- LETTERS[1:2]
+dimnames(jj) <- list("@home" = teams,"@away"=teams)
+dimnames(jj) <- list("@home" = teams,"@away"=teams)
+print(jj)
+```
+
+Above we see that A played at home 3 times, winning 1 and losing 2
+[row 1 column 2 is $1+2i$]; B played at home 9 times, winning 4 and
+losing 5 [row 2 column 1 is $4+5i$].  In its most general form, the
+$2\times 2$ result matrix would be
+
+$$
+\begin{bmatrix}
+-&\alpha+\beta i \\
+\gamma + \delta i&-\\
+\end{bmatrix}
+$$
+
+and the log-likelihood function would be, algebraically,
+
+$$
+\mathcal{S}=\log\mathcal{L}=
+\log\left(\frac{A^\delta\cdot(A + M)^\alpha\cdot B^\beta
+(B + M)^\gamma
+}{
+(A + B + M)^{\alpha+\beta+\gamma+\delta}
+}\right)
+=
+\delta\log A + \alpha\log(1-B) + \beta\log B + \gamma\log(1-A)
+$$
+
+where $M$ is the strength of the home monster `home` and $A+B+M=1$, so
+we understand that $M=1-A-B$.
+
+$$
+\frac{\partial\mathcal{S}}{\partial A}=\frac{\delta}{A}-\frac{\gamma}{1-A}\qquad
+\frac{\partial\mathcal{S}}{\partial B}=\frac{\beta }{B}-\frac{\alpha}{1-A}
+$$
+
+At a maximum, therefore,
+
+$$
+\hat{A}=\frac{\delta}{\delta + \gamma}\qquad
+\hat{B}=\frac{\beta }{\alpha  + \beta}
+$$
+
+Just to check, we evaluate the Hessian matrix and find
+
+$$H=-
+\left(\begin{array}{cc} 
+\frac{\partial^2\mathcal{S}}{\partial A\partial A} & 
+\frac{\partial^2\mathcal{S}}{\partial A\partial B} \\
+\frac{\partial^2\mathcal{S}}{\partial B\partial A} & 
+\frac{\partial^2\mathcal{S}}{\partial b\partial B} 
+\end{array}\right)
+=
+\left(\begin{array}{cc}
+\delta A^{-2} + \gamma(1-A)^{-2}&0\\
+0&\beta B^{-2} + \alpha(1-B)^{-2}
+\end{array}\right)
+$$
+
+which is clearly strictly positive-definite if $0<A,B<1$ and
+$\alpha+\beta>0$, $\gamma+\delta>0$.
+
+We will calculate numerical estimates using the
+monster-parameterization for a simple case:
+
+```{r,label=try2x2}
+M <- matrix(c(
+    NA, 5+1i, 9+2i, NA),
+    nrow=2,ncol=2,byrow=TRUE)
+teams <- LETTERS[seq_len(2)]
+dimnames(M) <- list("@home" = teams,"@away"=teams)
+dimnames(M) <- list("@home" = teams,"@away"=teams)
+M
+(Hsimp <- home_away(M))
+maxp(Hsimp)
+```
+
+Compare the theoretical value of
+
+```{r}
+theoretical <- c(A=2/(2+9),B=1/(1+5))
+fillup(theoretical,Hsimp)
+```
+
+showing good agreement.  We note that the model predicts a probability
+of $\hat{A}/(\hat{A}+\hat{B})=\frac{12}{23}\simeq 0.52$ for $A$
+winning in a match between $A$ and $B$ where the home team advantage
+is not operating (on neutral ground, for example).
+
+Now the $\lambda$ parameterization.  The likelihood function for the
+same dataset is
 
 
-First we need to define a slight generalization of `home_away3()`:
+$$
+\mathcal{S}=\log\mathcal{L}=
+\log\left(
+\frac{(\lambda A)^\alpha B^\beta}{(\lambda A+B)^{\alpha+\beta}}
+\cdot
+\frac{A^\gamma (\lambda B)^\delta}{(A+\lambda B)^{\gamma+\delta}}
+\right)$$
+
+This is equal to $(\alpha+\delta)\log\lambda +(\alpha+\gamma)\log
+A+(\beta+\delta)\log B -(\alpha+\beta)\log(\lambda A+B)
+-(\gamma+\delta)\log(A+\lambda B)$ and even after simplifying [we may
+assume $A+B=1$] the result does not appear to have a simple analytical
+solution; we must proceed numerically.  To do so,
+
+
+we need to define a
+slight generalization of `home_away3()`:
 
 ```{r defineha3}
 `ha3` <- function(home_games_won,away_games_won,lambda){  # based on home_away3()
@@ -113,24 +227,12 @@ First we need to define a slight generalization of `home_away3()`:
 }
 ```
 
-We will try on a simple case:
-
-```{r,label=try2x2}
-M <- matrix(c(
-    NA, 1+5i, 3+11i, NA),
-    nrow=2,ncol=2,byrow=TRUE)
-
-teams <- LETTERS[seq_len(2)]
-dimnames(M) <- list("@home" = teams,"@away"=teams)
-dimnames(M) <- list("@home" = teams,"@away"=teams)
-M
-home_away(M)
-ha3(M,lambda=1.88)
-```
+(maybe one day I will include function `ha3()` in the `hyper2`
+package). 
 
 
-(maybe one day I will include this function in the `hyper2` package).
-Copying from `home_advantage.Rmd`:
+Now a more complicated example, a
+modified version of the 4x4 matrix on `home_advantage.Rmd`:
 
 
 ```{r label=definehomeawaymatrix}
@@ -256,10 +358,9 @@ set.seed(0)
 P <- matrix(0,4,4)
 teams <- LETTERS[1:4]
 dimnames(P) <- list("@home" = teams,"@away"=teams)
-P
-n <- 400 # number of matches between a pair 
+n <- 90 # number of matches between a pair 
 M <- 0.15  # home monster
-strengths <- 1/(1:4) # Zipf
+strengths <- (4:1)/10
 strengths <- strengths/sum(strengths)
 names(strengths) <- teams
 strengths
@@ -282,29 +383,43 @@ HP <- home_away(P)
 HP
 ```
 
-```{r,label=maxpmonsteq1,cache=TRUE}
+```{r,label=maxpmonstereq,cache=TRUE}
 mH <- maxp(HP,n=3,give=T)
 mH
 ```
 
 
-```{r proflikesyntha,cache=TRUE}
+```{r proflikesynthcc,cache=TRUE}
 home <- seq(from=0.12,to=0.16,len=15)
-supp_lambda_eq_0 <- profsupp(HP,"home",home,relative=FALSE)
+supp_lambda_eq_1 <- profsupp(HP,"home",home,relative=FALSE)
 ```
 
-```{r plotsynthprof}
-plot(home,supp_lambda_eq_0,type='b')
-plot(home,supp_lambda_eq_0 - max(supp_lambda_eq_0),type='b')
+```{r label=matchershower}
+jjH <- ha3(P,lambda=1) # should match HP above
+jjH
+as.hyper3(HP) - jjH
+```
+
+
+```{r plotsynthprofa}
+plot(home,supp_lambda_eq_1,type='b')
+plot(home,supp_lambda_eq_1 - max(supp_lambda_eq_1),type='b')
 abline(h=c(0,-2))
+```
+
+```{r showresult,cache=TRUE}
+specificp.gt.test(ha3(P,lambda=1.4),"M",0)
+specificp.gt.test(ha3(P,lambda=1.4),"M",1e-4)
+```
 
 
-```{r marginalsynthcalct,cache=TRUE}
+```{r marginalsynthcale,cache=TRUE}
 f <- function(lambda){
- return(maxp(ha3(P,lambda=lambda),n=1,give=TRUE)$value)
+   o <- ha3(P,lambda=lambda)
+   return(specificp.gt.test(o,"M",0)$null_support)
 }
 
-lam <- seq(from=0.5,to=1.3,len=7)
+lam <- seq(from=1.9,to=2.4,len=5)
 supp_M_eq_0 <- sapply(lam,f)
 ```
 
@@ -316,7 +431,7 @@ abline(h=c(0,-2))
 
 
 ```{r plotbothtogether}
-jj <- c(supp_M_eq_0,NA,supp_lambda_eq_0)
+jj <- c(supp_M_eq_0,NA,supp_lambda_eq_1)
 plot(jj-max(jj,na.rm=TRUE),type="b")
 abline(h=c(0,-2))
 ```
