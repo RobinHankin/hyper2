@@ -1,5 +1,5 @@
 ---
-title: "Quantifying the home ground advantage"
+title: "Quantifying the home ground advantage with `hyper2` objects"
 author: "Robin K. S. Hankin"
 date: "`r Sys.Date()`"
 vignette: >

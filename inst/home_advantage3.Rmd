@@ -1,0 +1,148 @@
+---
+title: "Quantifying the home advantage with `hyper3` objects"
+author: "Robin K. S. Hankin"
+date: "`r Sys.Date()`"
+vignette: |
+  %\VignetteIndexEntry{hyper3}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+
+Objects of class \code{hyper3} are a generalization of \code{hyper2}
+objects that allow the brackets to contain weighted probabilities.
+Likelihood functions are defined on non-negative $p_1,\ldots, p_n$
+subject to the unit-sum constraint $\sum p_i=1$.  Given known weights
+$w^i_j$ with $1\leq i\leq j$ we have
+
+$$\mathcal{L}\left(p_1,\ldots, p_n\right)=\prod_j\left(\sum_{i=1}^n w^i_jp_i\right)^{n_j}.$$
+
+As a motivating example, suppose two teams (players) with
+Bradley-Terry strengths $p_1,p_2$ play football where we quantify the
+home-ground advantage with a term $\lambda$.  If $p_1$ plays at home
+$a+b$ times with $a$ wins and $b$ losses, and plays away [so $p_2$ is
+at home] $c+d$ times with $c$ wins and $d$ losses, then a sensible
+likelihood function might be
+
+$$\mathcal{L}(p_1,p_2,\lambda;A,B,C,D)=
+\left(\frac{\lambda p_1}{\lambda p_1 + p_2}\right)^{A}
+\left(\frac{p_2        }{\lambda p_1 + p_2}\right)^{B}
+\left(\frac{p_1        }{p_1 + \lambda p_2}\right)^{C}
+\left(\frac{\lambda p_2}{p_1 + \lambda p_2}\right)^{D}.
+$$
+
+where we understand that $p_1+p_2=1$, $p_1,p_2,\lambda\geqslant 0$.
+Elementary techniques allow us to identify a maximum and we find
+
+$$
+\hat{p_1}=\frac{\sqrt{AC}}{\sqrt{AC}+\sqrt{BD}}\qquad
+\hat{p_2}=\frac{\sqrt{BD}}{\sqrt{AC}+\sqrt{BD}}\qquad
+\hat{\lambda}=\sqrt{\frac{AD}{BC}}
+$$
+
+```{r label=defineABCD}
+A <- 9
+B <- 2
+C <- 3
+D <- 5
+```
+
+$$
+\hat{p_1}=\frac{\sqrt{27}}{\sqrt{27} + \sqrt{10}}\simeq 0.62\qquad
+\hat{p_2}=\frac{\sqrt{15}}{\sqrt{27} + \sqrt{10}}\simeq 0.38\qquad
+\hat{\lambda}=\sqrt{\frac{AD}{BC}}\simeq 2.73$$
+
+Keeping $A=x,B=x,C=x,D=xxxxxx$ and $\lambda=2.73$ [assumed for the moment
+to be known, estimation techniques are discussed later], appropriate
+package idiom might be to use bespoke function `home_away3()`:
+
+```{r,label=usehomeaway3a}
+library("hyper2",quietly=TRUE)
+M <- matrix(c(NA, A+B*1i ,D+C*1i, NA),2,2,byrow=TRUE)
+teams <- c("p1","p2")
+dimnames(M) <- list("@home" = teams,"@away"=teams)
+dimnames(M) <- list("@home" = teams,"@away"=teams)
+print(M)
+(H <- home_away3(M,lambda=2.73))
+```
+
+Above, obect `M` has real parts being home wins and imaginary parts
+being away wins.
+
+We may estimate $p_1$ and $p_2$ using maximum likelihood, `maxp()` in
+package idiom:
+
+```{r,label=findtheevaluate3,cache=TRUE}
+H
+maxp(H)
+```
+
+Further, we can test whether the players are in fact of equal strength:
+
+```{r,label=testequalitynow,cache=TRUE}
+equalp.test(H)
+```
+
+Showing convincingly that we may reject the null that $p_1=p_2$ and
+assert that the players do in fact differ in strength, at least with
+this value of $\lambda$.  Observe that a naive analysis would have
+$p_1$ winning $w=A+C=`r A+C`$ games and losing $l=B+D=`r B+D`$ games,
+from which we would obtain $\hat{p_1}=`r A+C`/`r A+B+C+D`$; a
+likelihood ratio for $H_0\colon p_1=0.5$ would be
+
+$$\frac
+{
+  {{w+l}\choose {w\, l}}\left(\frac{w}{w+l}\right)^w\left(\frac{l}{w+l}\right)^l
+}{
+  {{w+l}\choose {w\, l}}\left(\frac{1}{2}\right)^w\left(\frac{1}{2}\right)^l
+}=\frac{2^{w+l}w^wl^l}{(w+l)^{w+l}}\simeq 1.94,
+$$
+
+not significant.
+
+
+Now, how to estimate $\lambda$?
+
+```{r,label=estimatelambda,cache=TRUE}
+f <- function(lambda){maxp(home_away3(M,lambda=lambda),give=TRUE)$value}
+f(2)
+f(2.1)
+lam <- seq(from=1,to=10,len=17)
+Supp <- sapply(lam,f)
+```
+
+
+```{r,label=plotsup}
+plot(log(lam),Supp-max(Supp),type="b")
+```
+
+We can proceed in two ways.  The flaw in this analysis is that it is
+conditional on the estimated value of $\lambda$ [which is not too bad,
+IMO].  Secondly
+
+
+
+```{r,label=loopysuppcalc,cache=TRUE}
+probs <- seq(from=0.1,to=0.8,len=17)
+jj <- as.matrix(expand.grid(lam,probs))
+S <- rep(NA,nrow(jj))
+for(i in seq_len(nrow(jj))){
+    lambda <- jj[i,1]
+    p1 <- jj[i,2]
+    p <- c(p1,1-p1)
+    names(p) <- c("p1","p2")
+   S[i] <- loglik(p=p,H=home_away3(M,lambda=lambda),log=TRUE)
+}
+S <- matrix(S,length(lam),length(probs))
+```
+
+
+```{r}
+contour(lam,probs,S,levels=seq(from=-20,to=-10,by=0.5),xlab="lambda",ylab="p1")
+abline(h=0.5)
+```
