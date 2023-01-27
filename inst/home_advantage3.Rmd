@@ -121,11 +121,25 @@ Supp <- sapply(lam,f)
 plot(log(lam),Supp-max(Supp),type="b")
 ```
 
-We can proceed in two ways.  The flaw in this analysis is that it is
-conditional on the estimated value of $\lambda$ [which is not too bad,
-IMO].  Secondly
+Or even
+
+```{r,label=optimlam,cache=TRUE}
+op <- optimize(f,interval=c(2,3),maximum=TRUE)
+op
+```
 
 
+We can proceed in two ways.  Firstly we can use $\hat{\lambda}$ directly:
+
+```{r,ept,cache=TRUE}
+equalp.test(home_away3(M,lambda=op$maximum))
+```
+			
+The flaw in this analysis is that it is conditional on the estimated
+value of $\lambda$ [which is not too bad, IMO].  Secondly we can
+perform a fully 2D analysis, which allows for the fact that the
+evaluate might have a different value of $\lambda$ from the
+$\hat{\lambda}$:
 
 ```{r,label=loopysuppcalc,cache=TRUE}
 probs <- seq(from=0.1,to=0.8,len=17)
