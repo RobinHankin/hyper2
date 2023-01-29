@@ -1,0 +1,83 @@
+Here I give two mathematica transcripts finding the maximum likelihood
+estimate for the simple case of two teams playing with the home-team
+advantage.  The first one shows the multiplicative parametrization and
+the second shows the additive parametrization.  I have tinkered with
+linebreaks.
+
+
+
+In[90]:= L = Log[lambda*p1]*A +Log[p2]*B- Log[lambda*p1+p2]*(A+B) + Log[p1]*C+Log[lambda*p2]*D - Log[p1 + lambda*p2]*(C+D)
+
+Out[90]= C Log[p1] + A Log[lambda p1] + B Log[p2] + D Log[lambda p2] - (A + B) Log[lambda p1 + p2] - (C + D) Log[p1 + lambda p2]
+
+In[91]:= LL = L /. {p2 -> 1-p1}
+
+Out[91]= B Log[1 - p1] + D Log[lambda (1 - p1)] + C Log[p1] + A Log[lambda p1] - (C + D) Log[lambda (1 - p1) + p1] - (A + B) Log[1 - p1 + lambda p1]
+
+In[92]:= Solve[{D[LL,p1]==0,D[LL,lambda]==0},{p1,lambda}] // FullSimplify
+
+                          1                     Sqrt[A] Sqrt[D]
+Out[92]= {{p1 -> -------------------, lambda -> ---------------},
+                     Sqrt[B] Sqrt[D]            Sqrt[B] Sqrt[C]
+                 1 + ---------------
+                     Sqrt[A] Sqrt[C]
+
+                     1                       Sqrt[A] Sqrt[D]
+>    {p1 -> -------------------, lambda -> -(---------------)}}
+                Sqrt[B] Sqrt[D]              Sqrt[B] Sqrt[C]
+            1 - ---------------
+                Sqrt[A] Sqrt[C]
+
+In[93]:=
+
+
+
+
+
+
+
+rhankin@rhrpi4:~ $ wolfram
+Mathematica 12.2.0 Kernel for Linux ARM (32-bit)
+Copyright 1988-2021 Wolfram Research, Inc.
+
+In[1]:= L = Log[M+p1]*A +Log[p2]*B- Log[M+p1+p2]*(A+B+C+D) + Log[p1]*C+Log[M+p2]*D
+
+Out[1]= C Log[p1] + A Log[M + p1] + B Log[p2] + D Log[M + p2] - (A + B + C + D) Log[M + p1 + p2]
+
+In[2]:= L
+
+Out[2]= C Log[p1] + A Log[M + p1] + B Log[p2] + D Log[M + p2] - (A + B + C + D) Log[M + p1 + p2]
+
+In[3]:= LL = L /. {p2 -> 1-p1-M}
+
+Out[3]= D Log[1 - p1] + B Log[1 - M - p1] + C Log[p1] + A Log[M + p1]
+
+In[4]:= dM = D[LL,M]//FullSimplify
+             B          A
+Out[4]= ----------- + ------
+        -1 + M + p1   M + p1
+
+In[5]:= dp = D[LL,p1]//FullSimplify
+
+           D      C         B          A
+Out[5]= ------- + -- + ----------- + ------
+        -1 + p1   p1   -1 + M + p1   M + p1
+
+In[6]:= Solve[{dp==0,dM==0},{p1,M}]
+
+                  C          -(B C) + A D
+Out[6]= {{p1 -> -----, M -> ---------------}}
+                C + D       (A + B) (C + D)
+
+In[7]:= p2 = 1-p1-M /.{%}
+
+                C      -(B C) + A D
+Out[7]= {{1 - ----- - ---------------}}
+              C + D   (A + B) (C + D)
+
+In[8]:= %//FullSimplify
+
+            B
+Out[8]= {{-----}}
+          A + B
+
