@@ -30,54 +30,102 @@ at home] $c+d$ times with $c$ wins and $d$ losses, then a sensible
 likelihood function might be
 
 $$\mathcal{L}(p_1,p_2,\lambda;A,B,C,D)=
-\left(\frac{\lambda p_1}{\lambda p_1 + p_2}\right)^{A}
-\left(\frac{p_2        }{\lambda p_1 + p_2}\right)^{B}
-\left(\frac{p_1        }{p_1 + \lambda p_2}\right)^{C}
-\left(\frac{\lambda p_2}{p_1 + \lambda p_2}\right)^{D}.
+\underbrace{
+\overbrace{\left(\frac{\lambda p_1}{\lambda p_1 + p_2}\right)^{A}}^{\mbox{$A$ home wins for $p_1$}}\quad
+\overbrace{\left(\frac{p_2        }{\lambda p_1 + p_2}\right)^{B}}^{\mbox{$B$ away wins for $p_2$}}
+}_\mbox{$p_1$ plays at home to $p_2$ $A+B$ times}\quad
+\underbrace{
+\overbrace{\left(\frac{\lambda p_2}{p_1 + \lambda p_2}\right)^{C}}^{\mbox{$C$ home wins for $p_2$}}\quad
+\overbrace{\left(\frac{        p_1}{p_1 + \lambda p_2}\right)^{D}}^{\mbox{$D$ away wins for $p_1$}}
+}_\mbox{$p_2$ plays at home to $p_1$ $C+D$ times}
 $$
 
 where we understand that $p_1+p_2=1$, $p_1,p_2,\lambda\geqslant 0$.
 Elementary techniques allow us to identify a maximum and we find
 
 $$
-\hat{p_1}=\frac{\sqrt{AC}}{\sqrt{AC}+\sqrt{BD}}\qquad
-\hat{p_2}=\frac{\sqrt{BD}}{\sqrt{AC}+\sqrt{BD}}\qquad
-\hat{\lambda}=\sqrt{\frac{AD}{BC}}
+\hat{p_1}=\frac{\sqrt{AD}}{\sqrt{AD}+\sqrt{BC}}\qquad
+\hat{p_2}=\frac{\sqrt{AD}}{\sqrt{AD}+\sqrt{BC}}\qquad
+\hat{\lambda}=\sqrt{\frac{AC}{BD}}
 $$
+
+Note that the evaluate is unchanged if $A,B,C,D$ are all multiplied by
+a positive constant.
+
+## Aside: `hyper2` analysis of the same scoreline
+
+Now the likelihood function would be
+
+$$\mathcal{L}(p_1,p_2,\lambda;A,B,C,D)=
+\underbrace{
+\overbrace{\left(\frac{p_1+M}{p_1 + p_2+M}\right)^{A}}^{\mbox{$A$ home wins for $p_1$}}\quad
+\overbrace{\left(\frac{p_2  }{p_1 + p_2+M}\right)^{B}}^{\mbox{$B$ away wins for $p_2$}}
+}_\mbox{$p_1$ plays at home to $p_2$ $A+B$ times}\quad
+\underbrace{
+\overbrace{\left(\frac{p_2+M}{p_1 + p_2+M}\right)^{C}}^{\mbox{$C$ home wins for $p_2$}}\quad
+\overbrace{\left(\frac{p_1  }{p_1 + p_2+M}\right)^{D}}^{\mbox{$D$ away wins for $p_1$}}
+}_\mbox{$p_2$ plays at home to $p_1$ $C+D$ times}
+$$
+
+The maximum would be
+
+$$
+\hat{p_1}=\frac{C}{C+D}\qquad
+\hat{p_2}=\frac{A}{A+B}\qquad
+M=\frac{AD-BC}{(A+B)(B+C)}
+$$
+
+although it is not clear to me what the _constrained_ optimal point
+[that is, requiring $M\geq 0$] is.
+
+## Numerical analysis
 
 ```{r label=defineABCD}
 A <- 9
-B <- 2
-C <- 3
-D <- 5
+B <- 5
+C <- 7
+D <- 3
+
+(p1hat <- sqrt(A*D)/(sqrt(A*D) + sqrt(B*C)))
+(p2hat <- sqrt(B*C)/(sqrt(A*D) + sqrt(B*C)))
+
+(lam_hat <- sqrt((A*C)/(B*D)))
 ```
 
 $$
-\hat{p_1}=\frac{\sqrt{27}}{\sqrt{27} + \sqrt{10}}\simeq 0.62\qquad
-\hat{p_2}=\frac{\sqrt{15}}{\sqrt{27} + \sqrt{10}}\simeq 0.38\qquad
-\hat{\lambda}=\sqrt{\frac{AD}{BC}}\simeq 2.73$$
+\hat{p_1}=\frac{\sqrt{21}}{\sqrt{21} + \sqrt{35}}\simeq 0.47\qquad
+\hat{p_2}=\frac{\sqrt{63}}{\sqrt{21} + \sqrt{35}}\simeq 0.53\qquad
+\hat{\lambda}=\sqrt{\frac{AD}{BC}}=2.05.
+$$
 
-Keeping $A=x,B=x,C=x,D=xxxxxx$ and $\lambda=2.73$ [assumed for the moment
-to be known, estimation techniques are discussed later], appropriate
-package idiom might be to use bespoke function `home_away3()`:
+
+Keeping $A=9,B=5, C=7,D=3$, and $\lambda=2.05$ [assumed for the moment
+to be known, estimation techniques are discussed later], we can
+represent this information in a standard format:
 
 ```{r,label=usehomeaway3a}
 library("hyper2",quietly=TRUE)
-M <- matrix(c(NA, A+B*1i ,D+C*1i, NA),2,2,byrow=TRUE)
+M <- matrix(c(NA, A+B*1i ,C+D*1i, NA),2,2,byrow=TRUE)
 teams <- c("p1","p2")
 dimnames(M) <- list("@home" = teams,"@away"=teams)
 dimnames(M) <- list("@home" = teams,"@away"=teams)
 print(M)
-(H <- home_away3(M,lambda=2.73))
 ```
 
-Above, obect `M` has real parts being home wins and imaginary parts
-being away wins.
+Above, object `M` has real parts being home wins and imaginary parts
+being away wins.  Appropriate package idiom to specify a likelihood
+function might be to use bespoke function `home_away3()`:
 
-We may estimate $p_1$ and $p_2$ using maximum likelihood, `maxp()` in
-package idiom:
+```{r,label=ha3calc,cache=TRUE}
+(H <- home_away3(M,lambda=2.05))
+```
 
-```{r,label=findtheevaluate3,cache=TRUE}
+Keeping $A=9,B=5, C=7,D=3$, and $\lambda=2.05$ [assumed for the moment
+to be known, estimation techniques are discussed later], we may
+estimate $p_1$ and $p_2$ using maximum likelihood, `maxp()` in package
+idiom:
+
+```{r,label=findtheevaluateh3,cache=TRUE}
 H
 maxp(H)
 ```
@@ -108,7 +156,7 @@ not significant.
 
 Now, how to estimate $\lambda$?
 
-```{r,label=estimatelambda,cache=TRUE}
+```{r,label=estimatelambda3,cache=TRUE}
 f <- function(lambda){maxp(home_away3(M,lambda=lambda),give=TRUE)$value}
 f(2)
 f(2.1)
@@ -123,7 +171,7 @@ plot(log(lam),Supp-max(Supp),type="b")
 
 Or even
 
-```{r,label=optimlam,cache=TRUE}
+```{r,label=optimlambda,cache=TRUE}
 op <- optimize(f,interval=c(2,3),maximum=TRUE)
 op
 ```
@@ -131,7 +179,7 @@ op
 
 We can proceed in two ways.  Firstly we can use $\hat{\lambda}$ directly:
 
-```{r,ept,cache=TRUE}
+```{r,ept3,cache=TRUE}
 equalp.test(home_away3(M,lambda=op$maximum))
 ```
 			
