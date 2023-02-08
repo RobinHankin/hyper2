@@ -45,7 +45,7 @@ Elementary techniques allow us to identify a maximum and we find
 
 $$
 \hat{p_1}=\frac{\sqrt{AD}}{\sqrt{AD}+\sqrt{BC}}\qquad
-\hat{p_2}=\frac{\sqrt{AD}}{\sqrt{AD}+\sqrt{BC}}\qquad
+\hat{p_2}=\frac{\sqrt{BC}}{\sqrt{AD}+\sqrt{BC}}\qquad
 \hat{\lambda}=\sqrt{\frac{AC}{BD}}
 $$
 
@@ -71,8 +71,8 @@ The maximum would be
 
 $$
 \hat{p_1}=\frac{C}{C+D}\qquad
-\hat{p_2}=\frac{A}{A+B}\qquad
-M=\frac{AD-BC}{(A+B)(B+C)}
+\hat{p_2}=\frac{B}{A+B}\qquad
+M=\frac{AC-BD}{(A+B)(C+D)}
 $$
 
 although it is not clear to me what the _constrained_ optimal point
@@ -95,7 +95,7 @@ D <- 3
 $$
 \hat{p_1}=\frac{\sqrt{21}}{\sqrt{21} + \sqrt{35}}\simeq 0.47\qquad
 \hat{p_2}=\frac{\sqrt{63}}{\sqrt{21} + \sqrt{35}}\simeq 0.53\qquad
-\hat{\lambda}=\sqrt{\frac{AD}{BC}}=2.05.
+\hat{\lambda}=\sqrt{\frac{AC}{BD}}=2.05.
 $$
 
 
@@ -208,3 +208,100 @@ S <- matrix(S,length(lam),length(probs))
 contour(lam,probs,S,levels=seq(from=-20,to=-10,by=0.5),xlab="lambda",ylab="p1")
 abline(h=0.5)
 ```
+
+
+
+# Appendix
+
+
+Here is a transcript of a mathematica session which establishes the
+estimates above.  First the `hyper2` likelihood:
+
+```
+rhankin@rhrpi4:~ $ wolfram
+Mathematica 12.2.0 Kernel for Linux ARM (32-bit)
+Copyright 1988-2021 Wolfram Research, Inc.
+
+
+In[1]:= L = Log[M+p1]*A +Log[p2]*B- Log[M+p1+p2]*(A+B+C+D) + Log[p2+M]*C + Log[p1]*D 
+
+Out[1]= D Log[p1] + A Log[M + p1] + B Log[p2] + C Log[M + p2] - (A + B + C + D) Log[M + p1 + p2] 
+
+In[2]:= LL = L /. {p2 -> 1-p1-M} 
+
+Out[2]= C Log[1 - p1] + B Log[1 - M - p1] + D Log[p1] + A Log[M + p1] 
+
+In[3]:= dp = D[LL,p1]//FullSimplify 
+
+            C      D         B          A
+Out[3]=  ------- + -- + ----------- + ------
+         -1 + p1   p1   -1 + M + p1   M + p1
+
+In[4]:= dM = D[LL,M]//FullSimplify 
+
+              B          A
+Out[4]= ----------- + ------
+         -1 + M + p1   M + p1
+
+In[5]:= Solve[{dp==0,dM==0},{p1,M}] 
+
+                   D            A C - B D
+Out[5]=  {{p1 -> -----, M -> ---------------}}
+                 C + D       (A + B) (C + D)
+
+
+In[6]:= p2 = 1-p1-M /. {%} //FullSimplify 
+
+             B
+Out[6]=  {{-----}}
+           A + B
+
+```
+
+Now the `hyper3` likelihood:
+
+```
+rhankin@rhrpi4:~ $ wolfram
+Mathematica 12.2.0 Kernel for Linux ARM (32-bit)
+Copyright 1988-2021 Wolfram Research, Inc.
+
+In[1]:= L = A*Log[lambda*p1] + B*Log[p2] -(A+B)*Log[lambda*p1 + p2] + C*Log[lambda*p2] + D*Log[p1] -(C+D)*Log[p1 + lambda*p2] 
+
+Out[1]= D Log[p1] + A Log[lambda p1] + B Log[p2] + C Log[lambda p2] - (A + B) Log[lambda p1 + p2] - (C + D) Log[p1 + lambda p2]
+
+In[2]:= LL = L /. {p2 -> 1-p1} 
+
+Out[2]= B Log[1 - p1] + C Log[lambda (1 - p1)] + D Log[p1] + A Log[lambda p1] - (C + D) Log[lambda (1 - p1) + p1] - 
+ 
+>    (A + B) Log[1 - p1 + lambda p1]
+
+In[3]:= dp1 = D[LL,p1] //FullSimplify 
+
+         B + C    A + D   (A + B) (-1 + lambda)    (C + D) (-1 + lambda)
+Out[3]= ------- + ----- - --------------------- + -----------------------
+        -1 + p1    p1     1 + (-1 + lambda) p1    lambda + p1 - lambda p1
+
+
+In[4]:= dlam = D[LL,lambda]//FullSimplify                                                                                                     
+
+          A        C           (A + B) p1           (C + D) (-1 + p1)
+Out[4]= ------ + ------ - -------------------- + -----------------------
+        lambda   lambda   1 + (-1 + lambda) p1   lambda + p1 - lambda p1
+
+
+In[5]:= Solve[{dp1==0,dlam==0},{p1,lambda}]//FullSimplify 
+
+[snip]
+
+
+In[6]:= %[[1]] 
+
+                        1                     Sqrt[A] Sqrt[C]
+Out[6]= {p1 -> -------------------, lambda -> ---------------}
+                   Sqrt[B] Sqrt[C]            Sqrt[B] Sqrt[D]
+               1 + ---------------
+                   Sqrt[A] Sqrt[D]
+
+
+```
+
