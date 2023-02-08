@@ -158,8 +158,12 @@ for(i in zacslist){
 
 then plot it:
 
-```{r, plotit}
+```{r, calcmax,cache=TRUE}
 counterstrike_maxp <- maxp(counterstrike)
+```
+
+
+```{r, dotchartmaxp}
 dotchart(counterstrike_maxp,pch=16,main='observed data')
 ```
 
@@ -170,7 +174,7 @@ showing that Skadoodle has the highest estimated strength.
 it is possible to analyse synthetic data generated randomly by
 function `rdeath()`:
 
-```{r, randomdata}
+```{r, label=randomdata,cache=TRUE}
 
 `rdeath` <- function(team1,team2){
   out <- NULL
