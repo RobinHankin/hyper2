@@ -70,9 +70,9 @@ $$
 The maximum would be
 
 $$
-\hat{p_1}=\frac{C}{C+D}\qquad
+\hat{p_1}=\frac{D}{C+D}\qquad
 \hat{p_2}=\frac{B}{A+B}\qquad
-M=\frac{AC-BD}{(A+B)(C+D)}
+\hat{M}=\frac{AC-BD}{(A+B)(C+D)}
 $$
 
 although it is not clear to me what the _constrained_ optimal point
@@ -96,6 +96,14 @@ $$
 \hat{p_1}=\frac{\sqrt{21}}{\sqrt{21} + \sqrt{35}}\simeq 0.47\qquad
 \hat{p_2}=\frac{\sqrt{63}}{\sqrt{21} + \sqrt{35}}\simeq 0.53\qquad
 \hat{\lambda}=\sqrt{\frac{AC}{BD}}=2.05.
+$$
+
+Moving to the monster formulation we have 
+
+$$
+\hat{p_1}=\frac{3}{7+3} = 0.3\qquad
+\hat{p_2}=\frac{5}{5+9}\simeq  0.36\qquad
+\hat{M}=\frac{63-21}{14\cdot 10} = 0.3
 $$
 
 
@@ -208,6 +216,27 @@ S <- matrix(S,length(lam),length(probs))
 contour(lam,probs,S,levels=seq(from=-20,to=-10,by=0.5),xlab="lambda",ylab="p1")
 abline(h=0.5)
 ```
+
+#  Ternary representation
+
+```{r,label=useternary}
+library(Ternary)
+
+par(mar = rep(0.2, 4))
+TernaryPlot(alab = "p1", blab = "p2", clab = "M")
+
+FunctionToContour <- function(p1,p2,M) {
+pmax(-20,log(M+p1)*A + log(p2)*B - log(M+p1+p2)*(A+B+C+D) + log(p2+M)*C + log(p1)*D )
+}
+
+# Compute and plot colour tiles
+values <- TernaryPointValues(FunctionToContour, resolution = 24L)
+ColourTernary(values)
+
+# Add contour lines
+TernaryContour(FunctionToContour, resolution = 36L)
+```
+
 
 
 
