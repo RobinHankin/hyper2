@@ -225,9 +225,10 @@ S3method(Ops,lsl)
 S3method("print",summary.hyper2)
 S3method("summary",hyper2)
 
-
-
 S3method(print,hyper3)
+S3method("print",summary.hyper3)
+S3method("summary",hyper3)
+
 S3method("powers<-",hyper3)
 S3method(Ops,hyper3)
 S3method("[", hyper3)
