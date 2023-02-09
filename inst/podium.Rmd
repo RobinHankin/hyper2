@@ -1,0 +1,118 @@
+---
+title: "Analysis of pudding following Davidson 1970"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+options("digits" = 5)
+```
+
+<p style="text-align: right;">
+![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
+</p>
+
+This short document defines the `podium()` function which tests the
+hypothesis that a Formula 1 driver's being on the podium at one venue
+affects his performance on the next.
+
+```{r,label=definepodiumfun}
+podium <- function (x, lambda,print=FALSE){
+     noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC", "DNQ", "EX", "Sick")
+     venues <- colnames(x)
+     jj <- apply(x, 2, function(y) {
+         if (any(y %in% noscore)) {
+             y[y %in% noscore] <- 0
+         }
+         return(y)
+     })
+     fmat <- matrix(as.numeric(jj), byrow = TRUE, ncol = nrow(x))
+     colnames(fmat) <- rownames(x)
+     rownames(fmat) <- venues
+
+     o <- fmat[1, , drop = TRUE]
+     o[o > 0] <- rank(o[o > 0])
+     out <- as.hyper3(ordervec2supp(o))
+     for (i in seq(from=2,to=nrow(fmat))){
+       if(print){cat(paste(i,"/",nrow(fmat),"\n"))}
+       yesterday <- fmat[i-1, , drop = TRUE]
+       podium_yesterday <- names(which((yesterday <= 3) & (yesterday>0)))
+       print(podium_yesterday)
+
+       d <- fmat[i, , drop = TRUE] # today
+       print(d)
+       ## Following lines lifted from ordervec2supp()
+       nd <- names(d)
+       while (any(d > 0)) {
+         eligible <- which(d >= 0)
+         winner <- nd[d == 1]  # that is, the winner of those still racing
+         if(winner %in% podium_yesterday){
+           jj <- lambda
+         } else {
+           jj <- 1
+         }
+         names(jj) <- winner
+         out[jj] %<>% inc    # numerator
+
+         ## Now denominator
+         jj <- rep(1,length(eligible))
+         jj[nd[eligible] %in% podium_yesterday] <- lambda
+         names(jj) <- names(eligible)
+         out[jj] %<>% dec  # denominator
+         
+         d[d == 1] <- -1
+         d[d > 0] %<>% dec
+       } # ordervec2supp() lookalike closes
+     }  # i loop closes
+     return(out)
+}
+```
+
+
+Now a dataset:
+
+```{r,load2007}
+a <- read.table("formula1_2007.txt",header=TRUE)
+a <- a[,seq_len(ncol(a)-1)]
+a
+```
+
+Define a subset of it:
+
+```{r, definesubset}
+b <- a[1:6,1:5]
+b[,1] <- 1:6
+b[,2] <- c(1,3,4,2,5,6)
+b[,3] <- c(5,1,2,3,4,6)
+
+b[,5] <- 1:6
+b
+```
+
+```{r,usepodium,cache=TRUE}
+Ha <- podium(b,1.4)
+Hb <- podium(b,1.5)
+ma <- maxp(Ha,give=TRUE,n=1)
+mb <- maxp(Hb,give=TRUE,n=1)
+```
+
+```{r}
+Ha
+Hb
+ma
+mb
+```
+
+
+```{r,usefun,cache=TRUE}
+fun <- function(lambda){maxp(podium(b,lambda),give=TRUE)$value}
+lam <- seq(from=0.5,to=2,len=6)
+like <- lapply(lam,fun)
+```
+
+
+```{r, plotlik}
+plot(lam,like,type='b')
+```
