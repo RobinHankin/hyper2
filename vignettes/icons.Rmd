@@ -1,5 +1,5 @@
 ---
-title: "Public perception of climate change: the `icons` dataset in the `hyper2`  package
+title: "Public perception of climate change: the `icons` dataset in the `hyper2` package"
 author: "Robin K. S. Hankin"
 date: "`r Sys.Date()`"
 vignette: |
