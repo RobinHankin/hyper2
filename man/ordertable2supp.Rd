@@ -71,6 +71,24 @@ e)^-1 * c * (d + e)^-1 * e)
   omitted
 }
 
+Zero entries mean \dQuote{did not finish}:
+
+\preformatted{
+> ordervec2supp(c(b=1,a=0,c=2))  # b: 1st, a: DNF, c: second
+log((a + b + c)^-1 * (a + c)^-1 * b * c)
+  }
+
+\mjdeqn{
+\frac{b}{a+b+c}\cdot
+\frac{c}{a+c}
+}{
+  omitted
+}
+
+
+
+
+
 Note carefully the difference between \code{ordervec2supp()} and
 \code{rankvec_likelihood()}, which takes a character vector:
 
