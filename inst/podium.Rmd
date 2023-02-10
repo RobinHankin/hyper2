@@ -1,5 +1,5 @@
 ---
-title: "Analysis of pudding following Davidson 1970"
+title: "Does being on the podium affect Formula 1 drivers' performance in the next race?"
 output: bookdown::html_document2
 ---
 
@@ -19,7 +19,7 @@ hypothesis that a Formula 1 driver's being on the podium at one venue
 affects his performance on the next.
 
 ```{r,label=definepodiumfun}
-podium <- function (x, lambda,print=FALSE){
+podium <- function (lambda,x,print=FALSE){
      noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC", "DNQ", "EX", "Sick")
      venues <- colnames(x)
      jj <- apply(x, 2, function(y) {
@@ -38,11 +38,10 @@ podium <- function (x, lambda,print=FALSE){
      for (i in seq(from=2,to=nrow(fmat))){
        if(print){cat(paste(i,"/",nrow(fmat),"\n"))}
        yesterday <- fmat[i-1, , drop = TRUE]
+       yesterday[yesterday > 0] <- rank(yesterday[yesterday > 0])  # 'incomplete' functionality of ordertable2supp()
        podium_yesterday <- names(which((yesterday <= 3) & (yesterday>0)))
-       print(podium_yesterday)
-
        d <- fmat[i, , drop = TRUE] # today
-       print(d)
+       d[d > 0] <- rank(d[d > 0])  # This is the 'incomplete' functionality of ordertable2supp()
        ## Following lines lifted from ordervec2supp()
        nd <- names(d)
        while (any(d > 0)) {
@@ -71,29 +70,24 @@ podium <- function (x, lambda,print=FALSE){
 ```
 
 
-Now a dataset:
-
-```{r,load2007}
-a <- read.table("formula1_2007.txt",header=TRUE)
-a <- a[,seq_len(ncol(a)-1)]
-a
-```
 
 Define a subset of it:
 
 ```{r, definesubset}
+a <- read.table("formula1_2007.txt",header=TRUE)
+a <- a[,seq_len(ncol(a)-1)]
 b <- a[1:6,1:5]
 b[,1] <- 1:6
-b[,2] <- c(1,3,4,2,5,6)
-b[,3] <- c(5,1,2,3,4,6)
+b[,2] <- c(4,5,6,1,2,3)
+b[,3] <- c(5,6,4,2,3,1)
 
-b[,5] <- 1:6
+b[,5] <- c(1,2,4,3,8,6)  # tests the 'incomplete' functionality of podium()
 b
 ```
 
-```{r,usepodium,cache=TRUE}
-Ha <- podium(b,1.4)
-Hb <- podium(b,1.5)
+```{r,usepodiu,cache=TRUE}
+Ha <- podium(1.4,b)
+Hb <- podium(1.5,b)
 ma <- maxp(Ha,give=TRUE,n=1)
 mb <- maxp(Hb,give=TRUE,n=1)
 ```
@@ -106,13 +100,52 @@ mb
 ```
 
 
-```{r,usefun,cache=TRUE}
-fun <- function(lambda){maxp(podium(b,lambda),give=TRUE)$value}
+```{r,usefuns,cache=TRUE}
+fun <- function(lambda){maxp(podium(lambda,b),give=TRUE)$value}
 lam <- seq(from=0.5,to=2,len=6)
 like <- lapply(lam,fun)
 ```
 
 
 ```{r, plotlik}
-plot(lam,like,type='b')
+like <- unlist(like)
+plot(lam,like-max(like),type='b')
+like
 ```
+
+Now a real dataset, Formula 1 2007 season:
+
+```{r,load2007}
+
+a <- read.table("formula1_2007.txt",header=TRUE)
+a <- a[1:10,seq_len(ncol(a)-1)]  # rows Raikkonen (1) through Coulthard (10)
+options(width=90)
+a
+```
+
+```{r,definepodlike}
+podlike <- function(lambda){maxp(podium(lambda=lambda,a),n=1,give=TRUE)$value}
+```
+
+
+```{r,usepodlike10,cache=TRUE}
+podlike(1.8)
+podlike(1.9)
+```
+
+```{r,podlikevec7,cache=TRUE}
+date()
+lam <- seq(from=0.2,to=1.2,len=7)
+like <- lapply(lam,podlike)
+date()
+```
+
+
+```{r,plotpodlike}
+like <- unlist(like)
+plot(lam,like-max(like),type="b")
+abline(h=c(0,-2))
+abline(v=1)
+```
+
+

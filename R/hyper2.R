@@ -996,6 +996,39 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(out)
 }
 
+
+`complete` <- function(a,noscore=NULL,check=FALSE){
+  if(is.null(noscore)){
+    noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC", "DNQ", "EX", "Sick")
+  }
+  
+  out <- apply(a,2,
+               function(v){
+                 v[v %in% noscore] <- "0"
+                 v <- as.numeric(v)
+                 if(all(sort(v[v>0]) == seq_along(v))){
+                   v[v>0] <- rank(v[v>0])
+                   return(v)
+                 } else {
+                   stop("some ranks missing")
+                 }
+               } )
+  rownames(out) <- rownames(a)
+  return(out)
+}
+
+`ordertable2supp_new` <- function(x, noscore=NULL, check=FALSE){
+    x <- complete(x,noscore=noscore,check=check)
+    out <- hyper2()
+    
+    ## Now cycle through the rows; each row is a venue [voter]
+    for(i in seq_len(ncol(x))){
+        o <- x[,i,drop=TRUE]
+        out %<>% `+`(ordervec2supp(o))
+    } # i loop closes
+    return(out)
+}
+
 `ordertable2supp` <- function(x, noscore, incomplete=TRUE){
     if(missing(noscore)){
         noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC", "DNQ", "EX", "Sick")
