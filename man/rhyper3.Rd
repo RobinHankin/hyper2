@@ -14,13 +14,16 @@ rwinner3(pn,ps)
 rpair3(n=5,s=3,lambda=1.3)
 rrace3(pn=c(a=2,b=4,c=2,d=1),ps=c(a=0.3, b=0.1,c=0.2,d=0.4))
 rracehyper3(n=4,size=9,ps=NULL,races=3)
+rhyper3(n=5,s=3,type='race',...)
 }
 \arguments{
   \item{pn}{A named integer vector showing numbers of each player}
   \item{ps}{A named vector showing strengths of each player}
-  \item{n,size,races,s}{Arguments specifying the complexity of the random
-    \code{hyper3} object returned}
+  \item{n,size,races,s,type}{Arguments specifying the complexity 
+    of the random \code{hyper3} object returned}
   \item{lambda}{Parameter}
+\item{...}{Further arguments passed to \code{rracehyper3()} or
+  \code{rpair3()}}
 }
 \details{
 
