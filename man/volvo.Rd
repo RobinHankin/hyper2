@@ -36,4 +36,9 @@ Retrieved 22:21, February 28, 2020.
 \examples{
 pie(volvo_maxp)
 # equalp.test(volvo)   # takes ~10 seconds to run
+
+# convert table to a support function:
+rank_likelihood(wikitable_to_ranktable(volvo_table))
+
+
 }

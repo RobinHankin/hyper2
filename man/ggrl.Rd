@@ -115,6 +115,9 @@ colnames(r1) <- letters[1:7]
 # Likelihood function for r1:
 W <- rank_likelihood(r1)
 
+# convert a rank table to a support function:
+rank_likelihood(wikitable_to_ranktable(volvo_table))
+
 H <- hyper2()
 for(i in 1:20){
   H <- H + race(sample(letters[1:5],sample(3,1),replace=FALSE))
