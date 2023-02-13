@@ -1,6 +1,7 @@
 \name{rrank}
 \alias{rrank}
 \alias{rrank_single}
+\alias{rorder_single}
 \alias{print.ranktable}
 \title{Random ranks}
 \description{\loadmathjax
@@ -11,6 +12,7 @@ strength vector
 rrank(n = 1, p, pnames=NULL, fill = FALSE, rnames=NULL)
 \method{print}{ranktable}(x, ...)
 rrank_single(p)
+rorder_single(p)
 }
 \arguments{
   \item{n}{Number of observations}
@@ -100,16 +102,35 @@ Note that function \code{rrank()} returns an object of class
 Function \code{rrank_single()} is a low-level helper function:
 
 \preformatted{
-> rrank_single(c(0.05,0.05,0.9))
-[1] 3 2 1
+> p <- c(0.02,0.02,0.9,0.02,0.02,0.02)  # competitor 3 the strongest
+> rank_single(p)
+[1] 3 2 4 6 4 1
+}
+
+Above, we see from \code{p} that competitor 3 is the strongest, coming
+first with 90\% probability.  And indeed the resulting rank statistic
+given by \code{rorder_single()} shows competitor 3 coming first, 2
+coming second, and so on.  Compare \code{rrank_single()}:
+
+\preformatted{
+> rorder_single(p)
+[1] 6 3 1 4 5 2
 > 
 }
 
-Above, we see competitor 3 coming first with 90\% probability.
+Above we see see from \code{rrank_single(p)} that competitor 1 came
+sixth, competitor 2 came third, and competitor 3 came first (as you
+might expect, as competitor 3 is the strongest).  Note that the R idiom
+for \code{rorder_single()} is the same as that used in the
+\code{permutations} package for inverting a permutation: \code{o[o] <-
+seq_along(o)}.
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ordertrans}},\code{\link{rank_likelihood}},\code{\link{skating}}}
+\note{Similar functionality is given by \code{rrace()}, documented at
+  \code{rhyper3.Rd}.
+}
+\seealso{\code{\link{ordertrans}},\code{\link{rank_likelihood}},\code{\link{skating}},\code{\link{rhyper3}}}
 \examples{
 
 rrank_single(zipf(9))

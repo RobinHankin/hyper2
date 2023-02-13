@@ -687,6 +687,12 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     return(r)
 }
 
+rorder_single <- function(p){
+    o <- rrank_single(p)
+    o[o] <- seq_along(o)
+    return(o)
+}
+
 `rrank` <- function(n=1, p, pnames=NULL, fill=FALSE, rnames=NULL){
     if(fill){ p <- fillup(p) }
     if(is.null(pnames)){pnames <- names(p)}
