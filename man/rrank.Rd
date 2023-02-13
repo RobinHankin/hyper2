@@ -1,5 +1,6 @@
 \name{rrank}
 \alias{rrank}
+\alias{rrank_single}
 \alias{print.ranktable}
 \title{Random ranks}
 \description{\loadmathjax
@@ -9,6 +10,7 @@ strength vector
 \usage{
 rrank(n = 1, p, pnames=NULL, fill = FALSE, rnames=NULL)
 \method{print}{ranktable}(x, ...)
+rrank_single(p)
 }
 \arguments{
   \item{n}{Number of observations}
@@ -25,11 +27,11 @@ rrank(n = 1, p, pnames=NULL, fill = FALSE, rnames=NULL)
 
 \value{
 
-If \code{n=1}, return a vector; if \code{n>1} return a matrix with
-\code{n} rows, each corresponding to a ranking.  The canonical example
-is a race in which the probability of competitor \eqn{i} coming first is
-\eqn{p_i/\sum p_j}{p_i/sum p}, where the summation is over the
-competitors who have not already finished.
+If \code{n=1}, \code{rrank()} returns a vector; if \code{n>1} it returns
+a matrix with \code{n} rows, each corresponding to a ranking.  The
+canonical example is a race in which the probability of competitor
+\eqn{i} coming first is \eqn{p_i/\sum p_j}{p_i/sum p}, where the
+summation is over the competitors who have not already finished.
 
 If, say, the first row of \code{rrank()} is \code{c(2,5,1,3,4)}, then
 competitor 2 came first, competitor 5 came second, competitor 1 came
@@ -95,10 +97,23 @@ Note that function \code{rrank()} returns an object of class
 \dQuote{\code{rrank}}, which has its own print method that returns
 \code{NA}, intentionally.  This can be confusing.
 
+Function \code{rrank_single()} is a low-level helper function:
+
+\preformatted{
+> rrank_single(c(0.05,0.05,0.9))
+[1] 3 2 1
+> 
+}
+
+Above, we see competitor 3 coming first with 90\% probability.
+
 }
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{ordertrans}},\code{\link{rank_likelihood}},\code{\link{skating}}}
 \examples{
+
+rrank_single(zipf(9))
+
 ptrue <- (4:1)/10
 names(ptrue) <- letters[1:4]
 rrank(10,p=ptrue)

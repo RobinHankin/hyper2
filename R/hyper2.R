@@ -674,7 +674,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 #     return(H)
 # }
 
-`.rrank_single` <- function(p){
+`rrank_single` <- function(p){
     ell <- length(p)
     r <- integer(ell)
     i <- 1   # 'i' means placing.
@@ -690,7 +690,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `rrank` <- function(n=1, p, pnames=NULL, fill=FALSE, rnames=NULL){
     if(fill){ p <- fillup(p) }
     if(is.null(pnames)){pnames <- names(p)}
-    out <- t(replicate(n, .rrank_single(p)))
+    out <- t(replicate(n, rrank_single(p)))
     colnames(out) <- pnames
     rownames(out) <- rnames
     class(out) <- "ranktable"
