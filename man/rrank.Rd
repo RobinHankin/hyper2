@@ -96,8 +96,8 @@ needs rank data, not order data.  Vignette
 \dQuote{\code{skating_analysis}} gives another discussion.
 
 Note that function \code{rrank()} returns an object of class
-\dQuote{\code{rrank}}, which has its own print method that returns
-\code{NA}, intentionally.  This can be confusing.
+\dQuote{\code{rrank}}, which has its own print method.  This can be
+confusing.  Further details are given at \code{ranktable.Rd}.
 
 Function \code{rrank_single()} is a low-level helper function:
 
