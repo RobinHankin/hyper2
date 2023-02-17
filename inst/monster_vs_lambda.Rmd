@@ -65,7 +65,7 @@ $$
 ## Start simple: two teams
 
 ```{r,echo=FALSE}
-jj <- matrix(c(NA, 1+2i ,4+5i, NA),2,2,byrow=TRUE)
+jj <- matrix(c(NA, 6+2i ,6+5i, NA),2,2,byrow=TRUE)
 teams <- LETTERS[1:2]
 dimnames(jj) <- list("@home" = teams,"@away"=teams)
 dimnames(jj) <- list("@home" = teams,"@away"=teams)
@@ -348,6 +348,36 @@ max(supp_M_eq_0)-max(supp_lambda_eq_0)
 
 exceeding Edwards's two-units-of-support criterion by a comfortable
 margin.  Note that both have equal numbers of degrees of freedom.
+
+
+# Likelihood as a function of $M,\lambda$
+
+```{r,label=deflikef2}
+likef <- function(M,lambda,...){specificp.test(ha3(D,lambda=lambda),"M",M,...)$null_support}
+like2 <- function(theta,...){likef(M=theta[1],lambda=theta[2],n=1,...)}
+```
+
+
+Use it:
+
+```{r,label=ttrydefflikefvc,cache=TRUE}
+Mval <- seq(from=0.0,to=0.3,len=5)
+lval <- seq(from=0.1,to=5,len=5)
+jj <- as.matrix(expand.grid(M=Mval,lam=lval))
+L <- apply(jj,1,like2)
+```
+
+```{r}
+L <- matrix(L,length(Mval),length(lval))
+L <- L-max(L)
+L
+L <- pmax(L,-10)
+L
+Mval
+lval
+contour(Mval,lval,L,xlab='M',ylab='lambda')
+filled.contour(Mval,lval,L,xlab='M',ylab='lambda')
+```
 
 
 # Create a new dataset by direct simulation
