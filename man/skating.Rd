@@ -2,16 +2,17 @@
 \alias{skating}
 \alias{skating_table}
 \alias{skating_maxp}
+\alias{skeleton}
 \docType{data}
 \title{Figure skating at the 2002 Winter Olympics}
 \description{
   A likelihood function for the competitors at the Ladies' Free Skate
   at the 2002 Winter Olympics
 }
-\usage{data(skating)}
+\usage{skating}
 \details{
 
-  There are three datasets loaded by \code{data("skating")}:
+  Three objects 
   \code{skating}, a log-likelihood function for the competitors'
   strengths, \code{skating_table}, an order table for each of the 9
   judges, and \code{skating_maxp}, the result of \code{maxp(skating)},
@@ -40,6 +41,11 @@
     \item Robin Lock and Kari Frazer Lock, Winter
     2003. \dQuote{Judging Figure Skating Judges}.  \emph{STATS 36}, ASA
   }
+}
+
+\note{There is an (\code{Rbuildignore}-d) discussion of a
+  \code{skeleton} dataset in the \code{inst/} directory of the repo,
+  it's easy to confuse this with \code{skating}.
 }
 \author{Robin K. S. Hankin}
 \examples{
