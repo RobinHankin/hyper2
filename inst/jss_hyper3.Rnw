@@ -349,7 +349,7 @@ Figure~\ref{ABA_likelihood}.
 
 \begin{figure}[htbp]
   \begin{center}
-<<figaba>>=
+<<figaba, fig=TRUE>>=
 a <- seq(from = 0, by = 0.005, to = 1)
 S <- function(a){log(a * (1 - a) / ((1 + a) * (3 - 2 * sqrt(2))))}
 plot(a, S(a), type = 'b')
@@ -386,7 +386,7 @@ at \code{inst/fisher\_inf\_PL3.Rmd}.
 
 \begin{figure}[htbp]
   \begin{center}
-<<figabbabb,echo=FALSE>>=
+<<figabbabb,echo=FALSE,fig=TRUE>>=
 f_aab <- function(a){a^2 / (1 + a)}
 f_aba <- function(a){a * (1 - a) / (1 + a)^2}
 f_baa <- function(a){(1 - a) / (1 + a)}
@@ -482,7 +482,7 @@ dataset, given in Figure~\ref{wilcox_likelihood}.
 
 \begin{figure}[htbp]
   \begin{center}
-<<plotwilcoxlike,echo=FALSE>>=
+<<plotwilcoxlike,echo=FALSE,fig=TRUE>>=
 a <- seq(from = 0.02, to = 0.8, len = 40)
 L <- sapply(a, function(p){loglik(p, Hxy)})
 plot(a, L - max(L), type = 'b')
@@ -542,7 +542,7 @@ options(digits = 3)
  
 \begin{figure}[htbp]
   \begin{center}
-<<testthejav, cache=TRUE>>=
+<<testthejav, cache=TRUE, fig=TRUE>>=
 (mj <- maxp(javelin))
 dotchart(mj, pch = 16)
 @
@@ -587,7 +587,7 @@ rownames(M) <- c("logcontrast", "support")
 
 \begin{figure}[htbp]
 \begin{center}
-<<plottheloglikcont,echo=FALSE>>=
+<<plottheloglikcont,echo=FALSE,fig=TRUE>>=
 colnames(M) <-  as.character(Ves)
 plot(t(M), type = "b")
 abline(h = c(0, -2))
