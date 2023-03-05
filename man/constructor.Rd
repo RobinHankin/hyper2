@@ -19,17 +19,24 @@ data(constructor)
 \details{
 
 The Constructors championship runs parallel to the Formula 1 drivers'
-championship.  Each constructor fields two drivers.  We have data from
-2020 and 2021, following applies to both years.
+championship.  The package currently includes data from 2020 and 2021; the 
+following text applies to both years.  I will add more years eventually.
 
-Object \code{constructor_table_2021} is a dataframe, taken from
-Wikipedia, showing 
+Object \code{constructor_2021_table} is a dataframe, taken from
+Wikipedia, with rows corresponding to performance of a constructor.
+Each constructor fields two cars in each race; the identity of the driver
+is not important in this context (and indeed may change as the season
+progresses).  The first column is the name of the constructor, the next 22
+columns show the ranks of the constructors' cars, and the final one is the
+points awarded.  At each venue, the constructor's best performance is listed
+first.  The constructors' names change quite frequently (e.g. \dQuote{Red Bull
+Racing-TAG Heuer} raced 2016,2017, and 2018; \dQuote{Red Bull Racing-Honda}
+raced 2019, 2020, and 2021.  I am not sure whether to treat these as separate
+entities or not; file \code{inst/constructor_names.txt} gives a dataframe of
+team names and years they competed (not currently part of the package).
 
 Object \code{constructor_2021_maxp} gives the maximum likelihood
-estimate for the constructors' strengths.  The first column is the name
-of the constructor, the next 22 show the ranks of the constructors, and
-the final one is the points awarded.
-
+estimate for the constructors' strengths. 
 The corresponding \code{hyper3} likelihood function
 \code{constructor_2021} is produced by \code{ordertable2supp3()}.
 
