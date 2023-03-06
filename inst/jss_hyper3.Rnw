@@ -259,7 +259,7 @@ equalp.test(H)
 showing, perhaps unsurprisingly, that this small dataset is consistent
 with $H_0$. 
 
-\code{Package helper functions}
+\subsection{Package helper functions}
 
 Arithmetic operations are implemented for \code{hyper3} objects in
 much the same way as for \code{hyper2} objects: independent
