@@ -33,9 +33,11 @@ library("hyper2")
 
 # Further information
 
-For more detail, see the package vignette
+For more detail, see the package vignette; type
 
-`vignette("freealg")`
+`vignette("hyper2")`
+
+at the R command line.
 
 # Citation
 
