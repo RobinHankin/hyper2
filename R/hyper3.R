@@ -100,7 +100,7 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
         names(jj) <- b[[i]]
         out[[i]] <- jj
     }
-    return(out)
+    return(disord(out,h=hashcal(H3)))
 }
 
 `print.hyper3` <- function(x,...){

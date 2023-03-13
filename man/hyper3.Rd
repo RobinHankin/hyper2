@@ -123,6 +123,10 @@ hyper3_m(M,p,stripzeros=TRUE)
     into a named vector suitable for use as argument \code{e} of
     function \code{cheering3()}.  It is used in
     \code{inst/global_liveability_ranking.Rmd}.
+
+    \item Function \code{as.namedvectorlist()} takes a \code{hyper3}
+    object and returns a disoRdered list of named vectors corresponding
+    to the brackets and their weights.
 }
 
 }
