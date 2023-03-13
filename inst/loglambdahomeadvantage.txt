@@ -1,4 +1,4 @@
-Here I give two mathematica transcripts finding the maximum likelihood
+Here, I give two mathematica transcripts finding the maximum likelihood
 estimate for the simple case of two teams playing with the home-team
 advantage.  The first one shows the multiplicative parametrization and
 the second shows the additive parametrization.  I have tinkered with
