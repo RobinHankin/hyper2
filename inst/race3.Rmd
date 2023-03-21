@@ -9,7 +9,6 @@ output: html_document
 set.seed(1)
 knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
-library("disordR")
 ```
 
 (takes about an hour to process without cache)
