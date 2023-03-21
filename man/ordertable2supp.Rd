@@ -114,7 +114,7 @@ dataset of the \pkg{prefmod} package [and further analysed in the
 
 \value{Returns a \code{hyper2} object}
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ordertable}}}
+\seealso{\code{\link{ordertable}},\code{\link{ordertable2supp3}}}
 \examples{
 ordertable2supp(soling_table)
 
