@@ -45,7 +45,7 @@ to produce a likelihood function.
 Function \code{ranktable_to_printable_object()} is a helper function
 that coerces a \code{ranktable} object to a matrix that prints nicely.
 
-The print method is discussed in vignette
+The print method is discussed in
 \code{inst/ordertable_to_ranktable.Rmd}.
 
 }
