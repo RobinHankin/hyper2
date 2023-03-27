@@ -364,7 +364,7 @@ Use it:
 Mval <- seq(from=0.0,to=0.65,len=15)
 lval <- seq(from=0.2,to=5,by = 0.4) # we need lambda=1 (this is the null)
 jj <- as.matrix(expand.grid(M=Mval,lam=lval))
-options(use_alabama = FALSE)
+options(use_alabama = FALSE) # setting to TRUE gives a "initial value not feasible" error, go figure
 L <- apply(jj,1,like2)
 ```
 
