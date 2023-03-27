@@ -38,7 +38,7 @@
         )
     class(rval) <- "hyper2test"
     return(rval)
-}
+}   # equalp.test() closes
 
 `knownp.test` <- function(H,p,...){
 
@@ -75,7 +75,7 @@
         )
     class(rval) <- "hyper2test"
     return(rval)
-}
+}   # knownp.test() closes
 
 
 
@@ -88,7 +88,7 @@
                   "greater"   = specificp.gt.test(H=H, i=i, specificp, ...)
                   )
            )
-}
+}   # specificp.test() closes
 
 `specificp.ne.test` <- function(H, i, specificp=1/size(H), ...){
     rsp <- round(specificp,getOption("digits"))  # for printing purposes
@@ -169,7 +169,7 @@
         )
     class(rval) <- "hyper2test"
     return(rval)
-}
+}   # specificp.ne.test() closes
 
 `specificp.gt.test` <- function(H, i, specificp=1/size(H), delta=1e-5, ...){  # alternative = "greater"
     ## NB here we treat specificp as a *lower* bound for the
@@ -258,7 +258,7 @@
         )
     class(rval) <- "hyper2test"
     return(rval)
-}
+}   # specificp.gt.test() closes
 
 `specificp.lt.test` <- function(H, i, specificp=1/size(H), ...){  # alternative = "less"
     ## NB here we treat specificp as an *upper* bound for the
@@ -340,7 +340,7 @@
         )
     class(rval) <- "hyper2test"
     return(rval)
-}
+}   # specificp.lt.test() closes
 
 `samep.test` <- function(H, i, give=FALSE, startp=NULL, ...){
     n <- size(H)
@@ -449,7 +449,7 @@
         )
     class(rval) <- "hyper2test"
     return(rval)
-}
+}   # samep.test() closes
 
 `print.hyper2test` <- function(x,...){
     cat("\n")
@@ -474,4 +474,4 @@
     cat("p-value: ", x$p.value, " ",x$sidedness, "\n", sep = "")
     cat("\n")
     return(invisible(x))
-}
+}   # print.hyper2test() closes
