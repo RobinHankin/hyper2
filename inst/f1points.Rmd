@@ -262,19 +262,19 @@ library("qcc")
 
 
 ```{r,label=printaparetochart2016,echo=FALSE, print=FALSE,fig.cap="Maximum likelihood estimates \\label{paretochartstrength2016} of the strengths of the top-ranked 11 drivers in Formula 1 motor racing,  2016"}
-pareto.chart(mH2016[c(1,6,11,2,7,3,8,4,9,5,10)],main="2016")
+pareto.chart(mH2016[c(1,6,11,2,7,3,8,4,9,5,10)],main="2016",ylab="strength")
 ```
 
 ```{r,label=printaparetochart2017,echo=FALSE, print=FALSE,fig.cap="Maximum likelihood estimates \\label{paretochartstrength2017} of the strengths of the top-ranked 11 drivers in Formula 1 motor racing, 2017"}
-pareto.chart(mH2017[c(1,6,11,2,7,3,8,4,9,5,10)],main="2017")
+pareto.chart(mH2017[c(1,6,11,2,7,3,8,4,9,5,10)],main="2017",ylab="strength")
 ```
 
 ```{r,label=printaparetochart2018,echo=FALSE, print=FALSE,fig.cap="Maximum likelihood estimates \\label{paretochartstrength2018} of the strengths of the top-ranked 11 drivers in Formula 1 motor racing, 2018"}
-pareto.chart(mH2018[c(1,6,11,2,7,3,8,4,9,5,10)],main="2018")
+pareto.chart(mH2018[c(1,6,11,2,7,3,8,4,9,5,10)],main="2018",ylab="strength")
 ```
 
 ```{r,label=printaparetochart2019,echo=FALSE, print=FALSE,fig.cap="Maximum likelihood estimates \\label{paretochartstrength2019} of the strengths of the top-ranked 11 drivers in Formula 1 motor racing, 2019"}
-pareto.chart(mH2019[c(1,6,11,2,7,3,8,4,9,5,10)],main="2019")
+pareto.chart(mH2019[c(1,6,11,2,7,3,8,4,9,5,10)],main="2019",ylab="strength")
 ```
 
 
