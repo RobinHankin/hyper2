@@ -488,6 +488,54 @@ par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
 abline(0,1)
 ```
 
+
+
+```{r label=points_order_vs_likelihood_order_2016,cache=TRUE}
+par(pty="s")
+oy <- ordertrans(m2016,names(dp2016))
+plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
+    xlab="points order",ylab="likelihood order",main='2016 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray',cex=0.6) }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+```
+
+```{r label=points_order_vs_likelihood_order_2017,cache=TRUE}
+par(pty="s")
+oy <- ordertrans(m2017,names(dp2017))
+plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
+    xlab="points order",ylab="likelihood order",main='2017 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray',cex=0.6) }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+```
+
+```{r label=points_order_vs_likelihood_order_2018,cache=TRUE}
+par(pty="s")
+oy <- ordertrans(m2018,names(dp2018))
+plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
+    xlab="points order",ylab="likelihood order",main='2018 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray',cex=0.6) }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+```
+
+```{r label=points_order_vs_likelihood_order_2019,cache=TRUE}
+par(pty="s")
+oy <- ordertrans(m2019,names(dp2019))
+plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
+    xlab="points order",ylab="likelihood order",main='2019 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray',cex=0.6) }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+```
+
+
+
 We can plot one ranking against the other\footnote{The historically
 correct points awarded to the drivers differs from that calculated
 here.  That is for two reasons: firstly, ``fastest lap'' points are
