@@ -413,7 +413,7 @@ dp2017[] <- seq_along(dp2017)
 m2017 <- maxp(H2017)
 m2017 <- sort(m2017,decreasing=TRUE)
 m2017[] <- seq_along(m2017)
-
+```
 
 ```{r, label=calcpoints_real_2018, echo=FALSE, cache=TRUE}
 dp2018 <- ordertable2points(as.ordertable(F1_table_2018[seq_len(top),]),p)
@@ -632,6 +632,56 @@ abline(0,1)
 ```
 
 
+
+```{r label=zipf_order_vs_likelihood_order_2016,cache=TRUE}
+par(pty='s')        # square plot
+ox <- dp2016z
+oy <- ordertrans(m2016,names(dp2016z))
+plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
+    xlab="points order (Zipf)",ylab="likelihood order",main='2016 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray',cex=0.6) }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+```
+
+```{r label=zipf_order_vs_likelihood_order_2017,cache=TRUE}
+par(pty='s')        # square plot
+ox <- dp2017z
+oy <- ordertrans(m2017,names(dp2017z))
+plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
+    xlab="points order (Zipf)",ylab="likelihood order",main='2017 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray', cex=0.6) }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+```
+
+```{r label=zipf_order_vs_likelihood_order_2018,cache=TRUE}
+par(pty='s')        # square plot
+ox <- dp2018z
+oy <- ordertrans(m2018,names(dp2018z))
+plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
+    xlab="points order (Zipf)",ylab="likelihood order",main='2018 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray', cex=0.6) }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+```
+
+```{r label=zipf_order_vs_likelihood_order_2019,cache=TRUE}
+par(pty='s')        # square plot
+ox <- dp2019z
+oy <- ordertrans(m2019,names(dp2019z))
+plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
+    xlab="points order (Zipf)",ylab="likelihood order",main='2019 season')
+par(xpd=TRUE)       # allow drivers' names to appear outside plotting region
+for(i in seq_along(ox)){text(ox[i],oy[i],names(ox)[i],pos=4,col='gray',cex=0.6) }
+par(xpd=FALSE)      # stop diagonal line from protruding beyond plotting region
+abline(0,1)
+```
+
+
 \begin{itemize}
 \item The current Formula 1 system $(25,18,15,12,10,8,6,4,2,1)$
 \item The inaugural Formula 1 system $(8,6,4,3,2)$
@@ -719,15 +769,19 @@ furnishes an objective assessment of the points system used.
 
 ```{r,label=definemultiplemontecarlo, echo=FALSE}
 load("formula1_results_2016.rda") # this created by running f1points_Omaker.R; file contains R variables OO and pointslist
+rownames(OO)[3] <- "wta"
 OO2016 <- OO
 
 load("formula1_results_2017.rda") # this created by running f1points_Omaker.R; file contains R variables OO and pointslist
+rownames(OO)[3] <- "wta"
 OO2017 <- OO
 
 load("formula1_results_2018.rda") # this created by running f1points_Omaker.R; file contains R variables OO and pointslist
+rownames(OO)[3] <- "wta"
 OO2018 <- OO
 
 load("formula1_results_2019.rda") # this created by running f1points_Omaker.R; file contains R variables OO and pointslist
+rownames(OO)[3] <- "wta"
 OO2019 <- OO
 ```
 
@@ -750,6 +804,7 @@ s2019 <- summarytablemaker(OO2019)
 ```{r,label=alottaplotsmeancorrect,echo=FALSE,fig=TRUE,fig.cap="Simulated Formula 1 races, seasons 2016-2019: mean number of agreeing places for each of six points \\label{simulated_mean} systems when compared with a Placket-Luce strength ordering"}
 jj <- cbind(s2016[,1],s2017[,1],s2018[,1],s2019[,1])  # mean
 
+
 #typecol <- c(rep("red",2),rep("orange",10),rep("yellow",11),rep("green",1),rep("blue",7),rep("purple",7))
 #matplot(jj,type="n",xlab='points system',ylab='mean correct places')
 #points(s2016[,1],col=typecol,pch=1)
@@ -759,7 +814,9 @@ jj <- cbind(s2016[,1],s2017[,1],s2018[,1],s2019[,1])  # mean
 #legend("topright",lty=0,pch=1:4,legend=c("2016","2017","2018","2019"))
 
 matplot(jj[wanted,],type="n",xlab='points system',ylab='mean correct places',axes=FALSE)
-axis(1,at=1:6,labels=names(formula1_points_systems(top)[wanted]))
+jjlabels <- names(formula1_points_systems(top)[wanted])
+jjlabels[5] <- "wta"
+axis(1,at=1:6,labels=jjlabels)
 axis(2,at=1:4)
 points(s2016[wanted,1],pch=1,type='b',col='red')
 points(s2017[wanted,1],pch=2,type='b',col='orange')
@@ -784,7 +841,7 @@ jj <- cbind(s2016[,2],s2017[,2],s2018[,2],s2019[,2])  # prob of winner
 #legend("topright",lty=0,pch=1:4,legend=c("2016","2017","2018","2019"))
 
 matplot(jj[wanted,],type="n",xlab='points system',ylab='probability of winner correct',axes=FALSE)
-axis(1,at=1:6,labels=names(formula1_points_systems(top)[wanted]))
+axis(1,at=1:6,labels=jjlabels)
 axis(2)
 points(s2016[wanted,2],pch=1,type='b',col='red')
 points(s2017[wanted,2],pch=2,type='b',col='orange')
@@ -808,7 +865,7 @@ jj <- cbind(s2016[,3],s2017[,3],s2018[,3],s2019[,3])  # total rank order correct
 #legend("topright",lty=0,pch=1:4,legend=c("2016","2017","2018","2019"))
 
 matplot(jj[wanted,],type="n",xlab='points system',ylab='probability of total rank order correct',axes=FALSE)
-axis(1,at=1:6,labels=names(formula1_points_systems(top)[wanted]))
+axis(1,at=1:6,labels=jjlabels)
 axis(2)
 points(s2016[wanted,3],pch=1,type='b',col='red')
 points(s2017[wanted,3],pch=2,type='b',col='orange')
