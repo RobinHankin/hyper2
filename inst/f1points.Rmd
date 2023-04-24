@@ -433,9 +433,9 @@ m2019 <- sort(m2019,decreasing=TRUE)
 m2019[] <- seq_along(m2019)
 ```
 
+```{r,label=likevspoints,cache=TRUE,echo=FALSE,fig.cap="Ordering of the \\label{orderingbypointsandlikelihood} top-ranked 11 drivers in Formula 1 seasons 2016-2019.  Horizontal axis gives official (points-based) order, and the vertical axis gives the likelihood horder.  Thus, taking 2017 as an example, the points-based ordering would be Hamilton first, then Vettel, then R\"{a}ikk\"{o}nen; YES I KNOW IT IS WRONG: RMARKDOWN IS DEFECTIVE while the likelihood ordering is (reading vertically) Hamilton, Vettel, Bottas ALSO R PLOTTING SUCKS HERE AND I WILL HAVE TO CHANGE THE PDF BY HAND WITH INKSCAPE TO MAKE IT LOOK GOOD"}
 
 
-```{r,label=likevspoints,cache=TRUE,echo=FALSE,fig.cap="Ordering of the \\label{orderingbypointsandlikelihood} top-ranked 11 drivers in Formula 1 seasons 2016-2019.  Horizontal axis gives official (points-based) order, and the vertical axis gives the likelihood horder.    Thus, taking 2017 as an example,  the points-based ordering would be Hamilton first, then Vettel, then R\"{a}ikk\"{o}nen; YES I KNOW IT IS WRONG: RMARKDOWN IS DEFECTIVE while the likelihood ordering is (reading vertically) Hamilton, Vettel, Bottas ALSO R PLOTTING SUCKS HERE AND I WILL HAVE TO CHANGE THE PDF BY HAND WITH INKSCAPE TO MAKE IT LOOK GOOD"}
 par(mfrow=c(2,2))
 par(mar = c(3,3,3,3))
 
@@ -489,9 +489,9 @@ abline(0,1)
 ```
 
 
-
 ```{r label=points_order_vs_likelihood_order_2016,cache=TRUE}
 par(pty="s")
+ox <- dp2016
 oy <- ordertrans(m2016,names(dp2016))
 plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
     xlab="points order",ylab="likelihood order",main='2016 season')
@@ -503,6 +503,7 @@ abline(0,1)
 
 ```{r label=points_order_vs_likelihood_order_2017,cache=TRUE}
 par(pty="s")
+ox <- dp2017
 oy <- ordertrans(m2017,names(dp2017))
 plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
     xlab="points order",ylab="likelihood order",main='2017 season')
@@ -514,6 +515,7 @@ abline(0,1)
 
 ```{r label=points_order_vs_likelihood_order_2018,cache=TRUE}
 par(pty="s")
+ox <- dp2018
 oy <- ordertrans(m2018,names(dp2018))
 plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
     xlab="points order",ylab="likelihood order",main='2018 season')
@@ -525,6 +527,7 @@ abline(0,1)
 
 ```{r label=points_order_vs_likelihood_order_2019,cache=TRUE}
 par(pty="s")
+ox <- dp2019
 oy <- ordertrans(m2019,names(dp2019))
 plot(ox,oy,asp=1,pty='s',xlim=c(0,11.2),ylim=c(0,11.2),pch=16,
     xlab="points order",ylab="likelihood order",main='2019 season')
