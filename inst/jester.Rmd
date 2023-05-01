@@ -101,12 +101,34 @@ Goldberg, Theresa Roeder, Dhruv Gupta, and Chris Perkins. _Information
 Retrieval_, 4(2), 133-151. July 2001.
 
 
+## Create a table like formula 1 results table
+
+```{r makejestertable}
+jester_table <- a
+for(i in seq_len(nrow(jester_table))){
+  x <- jester_table[i,]
+  x[!is.na(x)] <- rank(-x[!is.na(x)],ties.method="first")
+  jester_table[i,] <- x
+}
+jester_table <- t(jester_table)
+colnames(jester_table) <-paste("resp",seq_len(ncol(jester_table)),sep="_")
+jester_table[1:6,1:10]
+```
+
+Above we see that respondent 1 ranked joke 8 as the funniest and joke 7 as the 15th funniest.
+Comparing with `formula1_2022.txt`, for example, we see that respondents correspond to venues and jokes correspond to drivers.  We have to be a little bit careful because `NA` means "not rated", not "did not finish" as in the Formula 1 datasets.
+
+```{r meanjokes}
+plot(rowMeans(jester_table,na.rm=TRUE))
+abline(v=17)
+```
+
 ### Package dataset
 
 Following lines create `jester.rda`, residing in the `data/` directory of the package.
 
 ```{r,label=savejesterdataset}
-save(jester,jester_maxp,file="jester.rda")
+save(jester,jester_table,jester_maxp,file="jester.rda")
 ```
 
 
