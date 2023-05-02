@@ -115,8 +115,6 @@ equalp(H)
   In manpages elsewhere, \code{n=2} is used for speed reasons.  Use the
   default \code{n=10} or greater in production work.
 
-  This functionality is peculiarly susceptible to off-by-one errors.
-
   Function \code{maxp()} takes \code{hyper2} or \code{hyper3} objects
   but it does not currently work with \code{lsl} objects; use
   \code{maxp_lsl()}.
