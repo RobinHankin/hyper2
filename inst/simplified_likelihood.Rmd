@@ -1,0 +1,60 @@
+---
+title: "simplified_likelihood"
+author: "Robin Hankin"
+date: "2023-05-02"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Consider a race between $n+2$ competitors of strength $p_1$, $p_2$, and $n$ clones, all of strength $p=1-p_1-p_2$.  Our observation is that $p_1$ places $n_1$, and $p_2$ places $n_2>n_1$.  The order statistic is thus
+
+$$
+\underbrace{p\succ\cdots\succ p}_{\mbox{$n_1-1$ terms}}\succ p_1\succ\underbrace{p\succ\cdots\succ p}_{n_2-n_1-1}\succ p_2\succ\underbrace{p\succ\cdots\succ p}_{n-n_2+2}
+$$
+
+The Plackett-Luce likelihood function would be as follows
+
+$$
+\begin{eqnarray}
+&{}&
+\underbrace{
+\frac{p}{p_1+p_2+np}\cdot
+\frac{p}{p_1+p_2+(n-1)p}
+\cdots
+\frac{p}{p_1+p_2+(n-n_1+2)p}
+}_{n_1-1}\cdot\\&{}&
+\frac{p_1}{p_1+p_2+(n-n_1+1)p}\cdot\\&{}&
+\underbrace{
+\frac{p}{p_2+(n-n_1+1)p}\cdot
+\frac{p}{p_2+(n-n_1)p}\cdots
+\frac{p}{p_2+(n-n_2+3)p}
+}_{n_2-n_1-1}\cdot\\&{}&
+\frac{p_2}{p_2+(n-n_2+2)p}\cdot\\&{}&
+\underbrace{
+\frac{p}{(n-n_2+2)p}\cdot\frac{p}{(n-n_2)p}
+\cdots\frac{p}{2p}\cdot\frac{p}{p}
+}_{n-n_2+2}
+\end{eqnarray}
+$$
+
+Observing that the fifth line may be neglected, R idiom for this would be as follows
+
+```{r}
+library("hyper2")
+simplike <- function(n1,n2,n){
+  H <- hyper3()
+  H[c(p =1)] <- n2-2
+  H[c(p1=1)] <- 1
+  H[c(p2=1)] <- 1
+  for(i in (n-n1+1):n)     { H[c(p1=1,p2=1,p=i)]  %<>% dec }
+  for(i in (n-n2+2):(n-n1+1)){ H[c(p2=1,   p=i)]  %<>% dec }
+  return(H)
+} 
+simplike(2,6,11)
+simplike(1,6,11)
+simplike(1,2,11)
+```
+
