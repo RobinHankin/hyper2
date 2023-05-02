@@ -44,17 +44,58 @@ Observing that the fifth line may be neglected, R idiom for this would be as fol
 
 ```{r}
 library("hyper2")
-simplike <- function(n1,n2,n){
+simplike_lowlevel <- function(n1,n2,n,p1="p1",p2="p2",other="other"){
+  stopifnot(n1<n2)
   H <- hyper3()
-  H[c(p =1)] <- n2-2
-  H[c(p1=1)] <- 1
-  H[c(p2=1)] <- 1
-  for(i in (n-n1+1):n)     { H[c(p1=1,p2=1,p=i)]  %<>% dec }
-  for(i in (n-n2+2):(n-n1+1)){ H[c(p2=1,   p=i)]  %<>% dec }
+  H[setNames(1,other)] <- n2-2
+  H[setNames(1,p1)] <- 1
+  H[setNames(1,p2)] <- 1
+  for(i in (n-n1+1):n){H[setNames(c(1,1,i),c(p1,p2,other))]  %<>% dec }
+  for(i in (n-n2+2):(n-n1+1)){H[setNames(c(1,i),c(p2,other))] %<>% dec }
   return(H)
-} 
-simplike(2,6,11)
-simplike(1,6,11)
-simplike(1,2,11)
+}
+
+twodrivers <- function(...,n){ # twodrivers(ham=3, bottas=5,n=20)
+  L <- list(...)
+  stopifnot(length(L)==2)
+  if(L[[1]] > L[[2]]){ # wrong way round
+    tmp <- L[[2]]
+    L[[2]] <- L[[1]]
+    L[[1]] <- tmp
+    names(L) <- rev(names(L))
+  }
+  simplike_lowlevel(as.numeric(L[[1]]),as.numeric(L[[2]]),n,names(L)[1],names(L)[2])
+}
+
+twodrivers(o=2,XX=6,n=11)
+```
+
+Now 
+
+```{r readtable}
+a <- read.table("formula1_2019.txt")[1:2,1:21]
+a
+f <- function(i){
+  jj <- as.list(a[,i])
+  names(jj) <- rownames(a)
+  return(jj)
+}
+
+H <- hyper3()
+for(i in seq_len(ncol(a))){
+  jj <- f(i)
+  if(all(!is.na(as.numeric(unlist(jj))))){
+    H <- H + do.call(twodrivers,c(jj,n=20))
+  }
+}
+H
+```
+
+```{r maxh,cache=TRUE}
+maxp(H)
+```
+
+```{r equaltest,cache=TRUE}
+samep.test(H,c("Hamilton","Bottas"))
 ```
 
