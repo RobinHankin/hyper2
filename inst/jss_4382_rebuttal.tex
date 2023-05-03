@@ -1,0 +1,164 @@
+\documentclass[12pt]{article}
+\usepackage{xcolor}
+\begin{document}
+
+\section*{JSS4832: Generalized Plackett-Luce Likelihoods by Robin
+K. S. Hankin}
+
+
+Below, the reviewer's comments are in black, and the replies to the
+issues are in \textcolor{blue}{blue}.  I have indicated changes to
+the manuscript where appropriate.
+
+Short story: I have accommodated all the comments with rewording and
+clarification.
+
+\subsection*{Reviewer's comments, 15 April 2023}
+
+
+
+Dear Robin K.S. Hankin,
+
+We have reached a decision regarding your submission to Journal of
+Statistical Software, #4832 “Generalized Plackett-Luce Likelihoods”.
+
+Unfortunately we have to tell you that we decided to reject in its current state.
+
+However, we encourage you to resubmit the article after detailed
+revision. Please check the journal management system for any
+additional feedback:
+https://www.jstatsoft.org/index.php/jss/authorDashboard/submission/4832. We
+expect you to provide a point-by-point response to this feedback in
+your revision.
+
+Your sincerely,
+
+The editorial team
+
+The manuscript describes functionality of the hyper2 package for
+Fitting and testing variants of the Placket-Luce ranking model.
+
+1.1 Recommendation
+
+The manuscript may be publishable in the journal after revisions have been
+made.
+
+1.2 General comments
+
+G1 The introduction should provide an overview of the contents of the manuscript.
+\textcolor{blue}{Response here}\\
+
+
+In addition, the section headlines could be made more informative. Currently, they are:
+2. "Some simple cases"
+3. "Mann-Whitney test"
+4. "Multiple competitors: javelin"
+5. "Formula 1 motor racing: the constructors' championship"
+
+
+
+Maybe the headlines could provide more of a summary of what the section
+contains.
+\textcolor{blue}{Response here}\\ \\
+
+
+
+G2 There should be a comparison with other software. Although the author
+states in the introduction that with hyper2 "It becomes possible to analyse
+a wider range of likelihood functions than standard Plackett-Luce", it is
+not clear to me which of the features described later on are unique to the
+hyper2 package and which can also be obtained from other packages (like,
+e.g., PlackettLuce).
+\textcolor{blue}{Response here}\\ \\
+
+
+G3 The manuscript should comment on the timing of the functions. For the
+simple example on P. 4, the maxp(H) call takes more than 8 seconds on
+my computer. This makes me wonder how timings would be for realistic
+examples.
+\textcolor{blue}{Response here}\\ \\
+
+
+
+1.3 Specific comments\\
+S1 I'm not claiming any expertise in English language, but occasionally, I found
+the manuscript difficult to understand. For example, in the abstract it
+says: "The package . . . furnishes idiom" Couldn't that simply be: "The
+package . . . provides functionality"? On P. 13, it says "Here we use generalized
+Plackett-Luce to assess the constructors' performance". Isn't there
+a "model" missing? (Plackett-Luce is just a name and cannot be used).
+\textcolor{blue}{Response here}\\ \\
+
+
+S2 Figure 2: For readability, maybe use xlab = expression(p[a]) and maybe
+instead of a legend, write AAB, ABA, BAA next to the line in the color
+of that line.
+\textcolor{blue}{Response here}\\ \\
+
+
+S3 P. 7: "https:github.com/RobinHankin/hyper2" should be
+"https://github.com/RobinHankin/hyper2".
+\textcolor{blue}{Response here}\\ \\
+
+
+S4 P. 7: "Wolf" should be "Wolfe".
+\textcolor{blue}{Response here}\\ \\
+
+
+S5 P. 15, maxp(const2020, n=1): What does n do?
+\textcolor{blue}{Response here}\\ \\
+
+
+
+S6 P. 16, "we see strong evidence for a real decrease in the strength": I'd tone
+that down. The model is almost certainly wrong, so it does not measure
+the "real decrease." Also, power is unknown, so it is difficult to say what
+"evidence" there is against H0. (See, e.g., Gelman, Regression an other
+stories, Chapter 4: Time to unlearn what you thought you knew about
+statistics. https://statmodeling.stat.columbia.edu/2022/01/27/regression-
+and-other-stories-free-pdf/)
+\textcolor{blue}{Response here}\\ \\
+
+
+
+S7 The references are lacking their DOIs.
+\textcolor{blue}{Response here}\\ \\
+
+2 Review of software
+
+The package includes many functions with a similar name. E.g., ordervec2supp,
+ordervec2supp3, ordervec2supp3a, ordertable2supp, ordertable2supp3. Maybe
+there could be some overview of which to use for what purpose.
+
+\textcolor{blue}{Response here}\\ \\
+
+Section editor comments:
+
+The author proposes an extension of the alreadty existing hyper2 package.
+This new S3 class allows for some extended likelihood specifications.
+
+\textcolor{blue}{Response here}\\ \\
+
+
+Even though this is just a code snippet and the hyper2 package was already
+published elsewhere, the author should provide some introductory elaborations
+on the Plackett-Luce model. Along these lines it would also be helpful to give
+a quick overview of the hyper2 package, and mention other related packages. As it
+is now it is difficult for a reader who's not super familiar with PL-models and
+hyper2, respectively, to follow the paper. Anyway, I find the runners example
+as motivating example very illustrative, and actually like the examples throughout
+the paper.
+
+\textcolor{blue}{Response here}\\ \\
+
+Some more aesthetic effort should be made in the code file (e.g., providing
+comments). The code looks like a simple purl() extraction.
+
+\textcolor{blue}{Response here}\\ \\
+
+
+\textcolor{blue}{Summary: this referee's insightful and
+  constructive comments have led to a much improved submission.}
+
+\end{document}
+
