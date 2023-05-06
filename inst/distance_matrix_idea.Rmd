@@ -18,9 +18,9 @@ options("digits" = 5)
 </p>
 
 
-This file, `icons2.Rmd`, presents some speculative experimental work
-which is under development.  Do not confuse this file with
-`icons.Rmd`, which creates the `icons` objects in the package.
+This file presents some speculative experimental work which is under
+development.  Do not confuse this file with `icons.Rmd`, which creates
+the `icons` objects in the package.
 
 
 ```{r,label=showicons}
