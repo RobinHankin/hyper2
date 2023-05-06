@@ -73,8 +73,8 @@ consistent with that of the voters.  The permutation test technique
 used in `cook.Rmd` is not appropriate here as there are $14!/4!\simeq
 3.6\times 10^9$ permutations to consider; we will use a randomised
 sampling method.  Below, we use a resampling technique: 4000
-randomised jury observation are created, and the likelihood [under the
-Plackett-Luce likelihood function for the order statistics of the
+randomised jury observations are created, and the likelihood [under
+the Plackett-Luce likelihood function for the order statistics of the
 nationals' voters] is calculated.  The $p$-value is then the
 probability of observing the actual observation or an observation more
 unlikely under this likelihood function; it is operationally identical
