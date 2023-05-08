@@ -10,19 +10,19 @@
 %% an abstract and keywords
 \Abstract{
 
-  The \code{hyper2} package furnishes extensive idiom to work with
+  The \code{hyper2} package provides functionality to work with
   extensions of the Bradley-Terry probability model such as
-  Plackett-Luce likelihood functions, team strengths, and reified
-  entities (monsters).  Here, I present a generalization of
-  \code{hyper2} in which multiple entities are constrained to have
-  identical Bradley-Terry strengths.  A new \proglang{S3} class
-  \code{hyper3}, along with associated methods, is motivated and
-  introduced.  Three datasets are analysed, each analysis furnishing
-  new insight, and each highlighting different capabilities of the
-  package.
-}
-\Keywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
-\Plainkeywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
+  Plackett-Luce likelihood including team strengths and reified
+  entities (monsters).  The package allows one to use relatively
+  natural R idiom to manipulate such likelihood functions.  Here, I
+  present a generalization of \code{hyper2} in which multiple entities
+  are constrained to have identical Bradley-Terry strengths.  A new
+  \proglang{S3} class \code{hyper3}, along with associated methods, is
+  motivated and introduced.  Three datasets are analysed, each
+  analysis furnishing new insight, and each highlighting different
+  capabilities of the package.  } \Keywords{Plackett-Luce,
+  Bradley-Terry, Mann-Whitney} \Plainkeywords{Plackett-Luce,
+  Bradley-Terry, Mann-Whitney}
 
 %% publication information
 %% NOTE: Typically, this can be left commented and will be filled out by the technical editor
@@ -117,15 +117,22 @@ p}=(p_1,\ldots,p_n)$ with
 
 \noindent where~$\mathcal{O}$ is a set of observations and~$s$ a
 subset of~$\left[n\right]=\left\{1,2,\ldots,n\right\}$; numbers~$n_s$
-are integers which may be positive or negative.  It becomes possible
-to analyse a wider range of likelihood functions than standard
-Plackett-Luce~\citep{turner2020}.  For example, results involving
-incomplete order statistics or teams are tractable. Further, the
-introduction of reified entities allows one to consider
-draws~\citep{hankin2009}, noncompetitive tactics such as
+are integers which may be positive or negative.  The \pkg{hyper2}
+package has the ability to evaluate such likelihood functions at any
+point in $S_n$, thereby admitting a wide range of non-standard nulls
+such as order statistics on the $p_i$~\cite{hankin2020}.  It becomes
+possible to analyse a wider range of likelihood functions than
+standard Plackett-Luce~\citep{turner2020}.  For example, results
+involving incomplete order statistics or teams are tractable.
+Further, the introduction of reified entities (monsters) allows one to
+consider draws~\citep{hankin2009}, noncompetitive tactics such as
 collusion~\citep{hankin2020}, and the phenomenon of team cohesion
 wherein the team becomes stronger than the sum of its
-parts~\citep{hankin2010}.
+parts~\citep{hankin2010}.  Recent versions of the package include
+experimental functionality (\code{cheering()}) to investigate the
+relaxing of the assumption of conditional independence of the
+forward-ranking process.
+
 
 Here I present a different generalization.  Consider a race in which
 there are six runners 1-6 but we happen to know that three of the
@@ -149,6 +156,13 @@ Plackett-Luce likelihood function for $p_a,p_b,p_c$ would be
 \frac{p_a}{ p_a+ p_b    }\cdot
 \frac{p_b}{      p_b    },\qquad p_a+p_b+p_c=1
 \end{equation}
+
+Here I consider such generalized Plackett-Luce likelihood functions,
+and give an exact analysis of several simple cases.  I then show how
+this class of likelihood functions may be applied to a range of
+inference problems involving order statistics.  Illustrative examples,
+drawn Formula 1 motor racing, and track-and-field athletics, are
+given.
 
 \subsection{Computational methodology for generalized Plackett-Luce likelihood functions}
 
@@ -246,6 +260,11 @@ using generic function \code{maxp()}, dispatching to a specialist
 (mH <- maxp(H))
 @
 
+(function \code{maxp()} uses standard optimization techniques to
+locate the evaluate; it has access to first derivatives of the
+log-likelihood and as such has rapid convergence, if its objective
+function is reasonably smooth").
+
 The package provides a number of statistical tests on likelihood
 functions, modified from~\citep{hankin2017} to work with \code{hyper3}
 objects.  For example, we may assess the hypothesis that all three
@@ -272,7 +291,8 @@ The original motivation for \code{hyper3} was the analysis of Formula
 \code{attemptstable2supp3()} which facilitate the analysis of commonly
 encountered result formats; an example is given below.
 
-\section{Some simple cases}
+\section{Exact analytical solution for some simple generalized
+Plackett-Luce likelihood functions}
 
 Here I consider some order statistics with nontrivial maximum
 likelihood Bradley-Terry strengths.  The simplest nontrivial case
@@ -390,14 +410,17 @@ at \code{inst/fisher\_inf\_PL3.Rmd}.
 f_aab <- function(a){a^2 / (1 + a)}
 f_aba <- function(a){a * (1 - a) / (1 + a)^2}
 f_baa <- function(a){(1 - a) / (1 + a)}
-
-p <- function(f, ...){points(a, f(a) / max(f(a)), ...)}
-plot(0:1, 0:1, xlab = "p(a)", ylab = "Likelihood", type = "n")
+p <- function(f, ...){
+  a <- seq(from = 0, by = 0.005, to = 1)
+  points(a, f(a) / max(f(a)), ...)
+  }
+plot(0:1, 0:1, xlab = expression(p[a]), ylab = "Likelihood", type = "n")
 p(f_aab, type = "l", col = "black")
 p(f_aba, type = "l", col = "red")
 p(f_baa, type = "l", col = "blue")
-legend(x=0.85, y=0.7, col = c("black", "red", "blue"), lty=1, pch=NA,
-       legend=c("AAB", "ABA", "BAA"))
+text(0.8,0.8,"AAB")
+text(0.8,0.5,"ABA",col="red")
+text(0.8,0.15,"BAA",col="blue")
 abline(h = exp(-2), lty = 2)
 @
 \caption{Likelihood \label{ABAetc_likelihood} functions for
@@ -433,7 +456,8 @@ $\frac{68}{9}\simeq 7.56$ at $a=\frac{1}{2}$.  An inference problem
 for a dataset including nonfinishers will be given below in
 Section~\ref{f1}.
 
-\section{Mann-Whitney test}
+\section{An alternative to the Mann-Whitney test using generalized
+Plackett-Luce likelihood}
 
 The ideas presented above can easily be extended to arbitrarily large
 numbers of competitors, although the analytical expressions tend to be
@@ -482,7 +506,7 @@ dataset, given in Figure~\ref{wilcox_likelihood}.
 
 \begin{figure}[htbp]
   \begin{center}
-<<plotwilcoxlike,echo=FALSE,fig=TRUE>>=
+<<plotwilcoxlike,echo=FALSE,fig=TRUE,cache=TRUE>>=
 a <- seq(from = 0.02, to = 0.8, len = 40)
 L <- sapply(a, function(p){loglik(p, Hxy)})
 plot(a, L - max(L), type = 'b')
@@ -497,7 +521,8 @@ exclude $H_0\colon p_a=0.5$ (dotted line), is also shown.}
 \end{center}
 \end{figure}
 
-\section{Multiple competitors: Javelin}
+\subsection{A generalization of the Mann-Whitney test using
+generalized Plackett-Luce likelihood}
 
 The ideas presented above may be extended to more than two types of
 competitors.  Consider the following table, drawn from the men's
@@ -587,7 +612,7 @@ rownames(M) <- c("logcontrast", "support")
 
 \begin{figure}[htbp]
 \begin{center}
-<<plottheloglikcont,echo=FALSE,fig=TRUE>>=
+<<plottheloglikcont,echo=FALSE,fig=TRUE,cache=TRUE>>=
 colnames(M) <-  as.character(Ves)
 plot(t(M), type = "b")
 abline(h = c(0, -2))
@@ -611,9 +636,10 @@ racing cars (compare the drivers' championship, which is between
 drivers).  In this analysis, the constructor is the object of
 inference.  Each constructor typically fields two cars, each of which
 separately accumulates ranking-based points at each venue.  Here we
-use generalized Plackett-Luce to assess the constructors' performance.
-The following table, included in the \code{hyper2} package as a
-dataset, shows rankings for the first 9 venues of the 2021 season:
+use generalized a Plackett-Luce model to assess the constructors'
+performance.  The following table, included in the \code{hyper2}
+package as a dataset, shows rankings for the first 9 venues of the
+2021 season:
 
 <<showconstructortable>>=
 constructor_2021_table[, 1:9]

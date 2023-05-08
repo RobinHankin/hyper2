@@ -16,11 +16,11 @@ clarification.
 \subsection*{Reviewer's comments, 15 April 2023}
 
 
-
 Dear Robin K.S. Hankin,
 
 We have reached a decision regarding your submission to Journal of
-Statistical Software, #4832 “Generalized Plackett-Luce Likelihoods”.
+Statistical Software, \verb+#4832+, ``Generalized Plackett-Luce
+Likelihoods".
 
 Unfortunately we have to tell you that we decided to reject in its current state.
 
@@ -45,49 +45,122 @@ made.
 
 1.2 General comments
 
-G1 The introduction should provide an overview of the contents of the manuscript.
-\textcolor{blue}{Response here}\\
+G1 The introduction should provide an overview of the contents of the
+manuscript. \\  \textcolor{blue}{New sentence added to manuscript:\\ \\
+Here I consider such generalized Plackett-Luce likelihood functions,
+and give an exact analysis of several simple cases.  I then show how
+this class of likelihood functions may be applied to a range of
+inference problems involving order statistics.  Illustrative examples,
+drawn Formula 1 motor racing, and track-and-field athletics, are
+given.}\\ \\
+
+In addition, the section headlines could be made more
+informative. Currently, they are:
+
+2. ``Some simple cases"
+3. ``Mann-Whitney test"
+4. ``Multiple competitors: javelin"
+5. ``Formula 1 motor racing: the constructors' championship"
 
 
-In addition, the section headlines could be made more informative. Currently, they are:
-2. "Some simple cases"
-3. "Mann-Whitney test"
-4. "Multiple competitors: javelin"
-5. "Formula 1 motor racing: the constructors' championship"
 
+Maybe the headlines could provide more of a summary of what the
+section contains.  \textcolor{blue}{The headings are indeed somewhat
+  uninformative and are now more in line with the remainder of the
+  manuscript.  I have changed what was section 4 to a {\em sub}section
+  with heading ``A generalization of the Mann-Whitney test using
+  generalized Plackett-Luce likelihood'' which I think is in keeping
+  with this comment.  The headings are now
+  \begin{itemize}
+  \item Exact analytical solution for some simple generalized
+    Plackett-Luce likelihood functions
+  \item An alternative to the Mann-Whitney test using generalized
+    Plackett-Luce likelihood
+  \item A generalization of the Mann-Whitney test using
+    generalized Plackett-Luce likelihood (now a subsection)
+  \item Formula 1 motor racing: the constructors' championship
+\end{itemize}}
+\rule{0mm}{10mm}
 
+G2 There should be a comparison with other software.  Although the
+author states in the introduction that with hyper2 ``It becomes
+possible to analyse a wider range of likelihood functions than
+standard Plackett-Luce", it is not clear to me which of the features
+described later on are unique to the \verb+hyper2+ package and which
+can also be obtained from other packages (like, e.g., PlackettLuce).
 
-Maybe the headlines could provide more of a summary of what the section
-contains.
-\textcolor{blue}{Response here}\\ \\
-
-
-
-G2 There should be a comparison with other software. Although the author
-states in the introduction that with hyper2 "It becomes possible to analyse
-a wider range of likelihood functions than standard Plackett-Luce", it is
-not clear to me which of the features described later on are unique to the
-hyper2 package and which can also be obtained from other packages (like,
-e.g., PlackettLuce).
-\textcolor{blue}{Response here}\\ \\
-
+\textcolor{blue}{Although the hyper2 package has functionality not
+  present in other implementations, the current manuscript focuses on
+  the new generalization represented in the package by the hyper3
+  class (that is, generalized Plackett-Luce likelihoods for order
+  statistics with clones of identical Bradle-Terry strength).  Turner
+  et. al. (2020), which I have cited, does a good job of setting out
+  the functionality of hyper2 not present in other packages.  I think
+  that an extended discussion of hyper2 unique functionality would be
+  a distraction from the focus of the manuscript.  But I agree that a
+  short statement documenting the unique aspects of the hyper2 package
+  would be useful to JSS readers, and I have added a short paragraph
+  to this effect.  Actually (in the spirit of full disclosure), I have
+  added quite a lot of machinery to the package since Turner's 2020
+  review and this gives me a welcome opportunity to mention some of
+  it.}
 
 G3 The manuscript should comment on the timing of the functions. For the
 simple example on P. 4, the maxp(H) call takes more than 8 seconds on
 my computer. This makes me wonder how timings would be for realistic
 examples.
-\textcolor{blue}{Response here}\\ \\
+
+\textcolor{blue}{Any optimization technique becomes slow when used
+  over a high-dimensional space and {\tt maxp()} is no exception.  The
+  examples chosen were well within its capabilities.  In addition, the
+  default implementation of {\tt maxp()} in the package uses a *very*
+  conservative set of assumptions, for example the default is to use
+  $n=10$ slightly differing start points and perform (by default)
+  $n-10$ independent optimizations, to check for
+  convergence.  I have come to realise that this is absurdly
+  over-engineered for the examples considered in the manuscript.  If
+  one is sure that the convergence is guaranteed (as it is in the
+  examples considered here), $n=1$ is perfectly adequate.  For
+  example, using the case given on P4:
+  {\tt\\ \\
+> (system.time(mH <- maxp(H,n=1)))\\
+   user  system elapsed \\
+  0.355   0.003   0.357 \\
+> maxp(H,n=1)\\
+         a          b          c \\
+0.21324090 0.08724824 0.69951086 \\
+  }\\ \\
+  The latest package version on github includes a discussion of this
+  issue and I have added a brief discussion (``function {\tt maxp()}
+  uses standard optimization techniques to locate the evaluate; it has
+  access to first derivatives of the log-likelihood and as such has
+  rapid convergence, if its objective function is reasonably
+  smooth").}\\ \\
 
 
+1.3 Specific comments\\ S1 I'm not claiming any expertise in English
+language, but occasionally, I found the manuscript difficult to
+understand. For example, in the abstract it says: "The package
+. . . furnishes idiom" Couldn't that simply be: "The package
+. . . provides functionality"?
 
-1.3 Specific comments\\
-S1 I'm not claiming any expertise in English language, but occasionally, I found
-the manuscript difficult to understand. For example, in the abstract it
-says: "The package . . . furnishes idiom" Couldn't that simply be: "The
-package . . . provides functionality"? On P. 13, it says "Here we use generalized
-Plackett-Luce to assess the constructors' performance". Isn't there
-a "model" missing? (Plackett-Luce is just a name and cannot be used).
-\textcolor{blue}{Response here}\\ \\
+\textcolor{blue}{The original motivation for the package occurred when
+  I had a large complicated set of Bradley-Terry observations which I
+  wanted to translate into a likelihood function.  The R code became
+  extremely long and unweildy, and was almost impossible to check.  It
+  also became very slow to run.  What I wanted was a nice way to enter
+  this kind of observations, in such a way as to maintain both
+  computational efficiency [hence the use of the {\tt STL} map class]
+  {\bf and} human readability.  I think that the phrase ``furnishes
+  idiom" expresses this reasonably clearly.  But on reflection it does
+  sound a bit odd and I have rephrased the abstract accordingly.}\\ \\
+
+
+On P. 13, it says "Here we use generalized Plackett-Luce to assess the
+constructors' performance". Isn't there a "model" missing?
+(Plackett-Luce is just a name and cannot be used).
+\textcolor{blue}{The original text was too terse and I have
+  reworded.}\\ \\
 
 
 S2 Figure 2: For readability, maybe use xlab = expression(p[a]) and maybe
