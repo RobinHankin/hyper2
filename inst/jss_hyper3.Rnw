@@ -424,7 +424,8 @@ text(0.8,0.15,"BAA",col="blue")
 abline(h = exp(-2), lty = 2)
 @
 \caption{Likelihood \label{ABAetc_likelihood} functions for
-observations $a\succ a\succ b$, $a\succ b\succ a$, $b\succ a\succ a$.}
+observations $a\succ a\succ b$, $a\succ b\succ a$, $b\succ a\succ a$.  Horizontal dotted
+line represents two units of support}
 \end{center}
 \end{figure}
 
@@ -463,7 +464,7 @@ The ideas presented above can easily be extended to arbitrarily large
 numbers of competitors, although the analytical expressions tend to be
 intractable and numerical methods must be used.  All results and
 datasets presented here are maintained under version control and
-available at \url{https:github.com/RobinHankin/hyper2}.  Given an
+available at \url{https://github.com/RobinHankin/hyper2}.  Given an
 order statistic of the type considered above, the
 Mann-Whitney-Wilcoxon test~\citep{mann1947,wilcoxon1945} assesses a
 null of identity of underlying distributions~\citep{ahmad1996}.
