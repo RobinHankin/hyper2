@@ -8,10 +8,8 @@ The hyper 2 package
 <!-- badges: start -->
 
 [![Total
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/freealg)](https://CRAN.R-project.org/package=freealg)
-[![Build
-Status](https://travis-ci.org/RobinHankin/freealg.svg?branch=master)](https://travis-ci.org/RobinHankin/freealg)
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/freealg)](https://cran.r-project.org/package=freealg)
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/hyper2)](https://CRAN.R-project.org/package=hyper2)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/hyper2)](https://cran.r-project.org/package=hyper2)
 <!-- badges: end -->
 
 # Overview
