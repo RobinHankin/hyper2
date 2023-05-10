@@ -91,7 +91,7 @@ related work for ranking statistics in \proglang{SAS} and
 Luce-type choice datasets.
 
 However, the majority of software is written in the \proglang{R}
-computer language~\citep{rcore2022}, which includes extensive
+computer language~\citep{rcore2023}, which includes extensive
 functionality for working with such likelihood functions:
 \cite{turner2020} discuss several implementations from a computational
 perspective.  The \pkg{BradleyTerry} package \citep{firth2005}

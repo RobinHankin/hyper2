@@ -218,13 +218,14 @@ and-other-stories-free-pdf/)\\
   but the Student $t$-test is not useless as a result.  The issue is
   whether non-normality materially affects the properties of the test.
   Often this is not the case and the Gaussian approximation is
-  adequate: the $t$-test is sufficiently robust to be useful in a wide
-  range of situations.  True? No. Useful?  Consistent? Reliable?
-  Trustworthy?  Easy to use?  Familiar?  Well-understood? Standard?
-  Effective?  Powerful?  Yes.  The Student $t$-test has value, and so
-  does Plackett-Luce.  My position is that the framework set out in
-  the manuscript is plausible and intuitive.  I make no claim for
-  absolute correctness.\\ \\ But in answer to your question, the small
+  adequate: the $t$-test is sufficiently robust to non-normality to be
+  useful in a wide range of situations.  Is the $t$-test True?  No.
+  Is it Useful?  Yes.  Consistent?  Yes.  Reliable?  Yes.  Easy to
+  use?  Yes.  Familiar?  Yes.  Well-understood?  Yes.  Powerful?  Yes.
+  The Student $t$-test has value, and so does Plackett-Luce.  My
+  position is that the framework set out in the manuscript is
+  plausible and intuitive.  I make no claim for absolute
+  correctness.\\ \\ But in answer to your question, the small
   $p$-value and large likelihood ratio statistic certainly {\em is}
   evidence for a real decrease.  The hypothesis of no real strength
   change has low likelihood compared with the alternative of a drop in
@@ -238,41 +239,59 @@ and-other-stories-free-pdf/)\\
   $e^{4.722}\simeq 112.4$, surely worthy of the epithet
   ``strong''.}\\ \\
 
-S7 The references are lacking their DOIs.
-\textcolor{blue}{Response here}\\ \\
+S7 The references are lacking their DOIs.\\ \textcolor{blue}{Done
+  (except for two books---for which I have followed APA6---and R
+  itself, for which I used the result of {\tt citation()})} \\ \\
 
-2 Review of software
+2 Review of software\\
 
-The package includes many functions with a similar name. E.g., ordervec2supp,
-ordervec2supp3, ordervec2supp3a, ordertable2supp, ordertable2supp3. Maybe
-there could be some overview of which to use for what purpose.
+The package includes many functions with a similar name. E.g., {\tt
+  ordervec2supp()}, {\tt ordervec2supp3()}, {\tt ordervec2supp3a()},
+{\tt ordertable2supp()} , {\tt ordertable2supp3()}. Maybe there could
+be some overview of which to use for what
+purpose.\\ \textcolor{blue}{An overview is given in {\tt
+    ordervec2supp()} and {\tt ordervec2supp3()}, which are
+  cross-referenced to each other.  Order tables are documented at {\tt
+    ordertable.Rd}; order vectors at {\tt ordervec2supp.Rd}.  The
+  functions mentioned by the referee all follow a consistent
+  nomenclature: as it says in {\tt hyper3.Rd}, ``Functionality for
+  {\tt hyper3} objects is generally indicated by adding a 3 to
+  function names, eg {\tt gradient()} goes to {\tt gradient3()}''.}
 
-\textcolor{blue}{Response here}\\ \\
 
 Section editor comments:
 
 The author proposes an extension of the alreadty existing hyper2 package.
 This new S3 class allows for some extended likelihood specifications.
 
-\textcolor{blue}{Response here}\\ \\
+\textcolor{blue}{I would agree with this.}\\ \\
 
 
-Even though this is just a code snippet and the hyper2 package was already
-published elsewhere, the author should provide some introductory elaborations
-on the Plackett-Luce model. Along these lines it would also be helpful to give
-a quick overview of the hyper2 package, and mention other related packages. As it
-is now it is difficult for a reader who's not super familiar with PL-models and
-hyper2, respectively, to follow the paper. Anyway, I find the runners example
-as motivating example very illustrative, and actually like the examples throughout
-the paper.
+Even though this is just a code snippet and the hyper2 package was
+already published elsewhere, the author should provide some
+introductory elaborations on the Plackett-Luce model. Along these
+lines it would also be helpful to give a quick overview of the hyper2
+package, and mention other related packages. As it is now it is
+difficult for a reader who's not super familiar with PL-models and
+hyper2, respectively, to follow the paper. Anyway, I find the runners
+example as motivating example very illustrative, and actually like the
+examples throughout the paper.\\ \textcolor{blue}{Thank you!  I too
+  have enjoyed the runner paradigm.  But I am aware that the new
+  likelihood function is novel and likely to be challenging for those
+  not familiar with {\tt hyper2}.  I have added some discussion of
+  {\tt hyper2} and its design principles.\\ \\I would not agree with
+  the characterization as a code snippet.  The {\tt C++} code base for
+  {\tt hyper3} functionality (318 lines) is similar to that for {\tt
+    hyper2} (396 lines).  But admittedly {\tt hyper3} functionality
+  does leverage many of the S3 methods used in {\tt hyper2}.}\\ \\
 
-\textcolor{blue}{Response here}\\ \\
-
-Some more aesthetic effort should be made in the code file (e.g., providing
-comments). The code looks like a simple purl() extraction.
-
-\textcolor{blue}{Response here}\\ \\
-
+Some more aesthetic effort should be made in the code file (e.g.,
+providing comments). The code looks like a simple purl()
+extraction.\\ \textcolor{blue}{The JSS style file forbids comments
+  within the code but encourages authors to comment in the normal
+  LaTeX text.  Each code chunk is now either preceded by a description
+  of its content, or followed with ``Above, we see\ldots'' or
+  equivalent.}
 
 \textcolor{blue}{Summary: this referee's insightful and
   constructive comments have led to a much improved submission.}
