@@ -10,8 +10,8 @@ Below, the reviewer's comments are in black, and the replies to the
 issues are in \textcolor{blue}{blue}.  I have indicated changes to
 the manuscript where appropriate.
 
-Short story: I have accommodated all the comments with rewording and
-clarification.
+\textcolor{blue}{Short story: I have accommodated all the comments with
+rewording and clarification.}
 
 \subsection*{Reviewer's comments, 15 April 2023}
 
@@ -51,7 +51,7 @@ Here I consider such generalized Plackett-Luce likelihood functions,
 and give an exact analysis of several simple cases.  I then show how
 this class of likelihood functions may be applied to a range of
 inference problems involving order statistics.  Illustrative examples,
-drawn Formula 1 motor racing, and track-and-field athletics, are
+drawn from Formula 1 motor racing, and track-and-field athletics, are
 given.}\\ \\
 
 In addition, the section headlines could be made more
@@ -65,7 +65,7 @@ informative. Currently, they are:
 
 
 Maybe the headlines could provide more of a summary of what the
-section contains.  \textcolor{blue}{The headings are indeed somewhat
+section contains. \\ \\ \textcolor{blue}{The headings are indeed somewhat
   uninformative and are now more in line with the remainder of the
   manuscript.  I have changed what was section 4 to a {\em sub}section
   with heading ``A generalization of the Mann-Whitney test using
@@ -93,7 +93,7 @@ can also be obtained from other packages (like, e.g., PlackettLuce).
   present in other implementations, the current manuscript focuses on
   the new generalization represented in the package by the hyper3
   class (that is, generalized Plackett-Luce likelihoods for order
-  statistics with clones of identical Bradle-Terry strength).  Turner
+  statistics with clones of identical Bradley-Terry strength).  Turner
   et. al. (2020), which I have cited, does a good job of setting out
   the functionality of hyper2 not present in other packages.  I think
   that an extended discussion of hyper2 unique functionality would be
@@ -110,18 +110,18 @@ simple example on P. 4, the maxp(H) call takes more than 8 seconds on
 my computer. This makes me wonder how timings would be for realistic
 examples.
 
-\textcolor{blue}{Any optimization technique becomes slow when used
-  over a high-dimensional space and {\tt maxp()} is no exception.  The
+\textcolor{blue}{All optimization techniques become slow when used
+  over high-dimensional spaces and {\tt maxp()} is no exception.  The
   examples chosen were well within its capabilities.  In addition, the
   default implementation of {\tt maxp()} in the package uses a *very*
   conservative set of assumptions, for example the default is to use
   $n=10$ slightly differing start points and perform (by default)
-  $n-10$ independent optimizations, to check for
-  convergence.  I have come to realise that this is absurdly
-  over-engineered for the examples considered in the manuscript.  If
-  one is sure that the convergence is guaranteed (as it is in the
-  examples considered here), $n=1$ is perfectly adequate.  For
-  example, using the case given on P4:
+  $n-10$ independent optimizations, to check for convergence.  My
+  thinking has matured over the last few months, and I have come to
+  realise that this is absurdly over-engineered for the examples
+  considered in the manuscript.  If one is sure that the convergence
+  is guaranteed (as it is in the examples considered here), $n=1$ is
+  perfectly adequate.  For example, using the case given on P4:
   {\tt\\ \\
 > (system.time(mH <- maxp(H,n=1)))\\
    user  system elapsed \\
@@ -140,9 +140,9 @@ examples.
 
 1.3 Specific comments\\ S1 I'm not claiming any expertise in English
 language, but occasionally, I found the manuscript difficult to
-understand. For example, in the abstract it says: "The package
-. . . furnishes idiom" Couldn't that simply be: "The package
-. . . provides functionality"?
+understand. For example, in the abstract it says: ``The package
+. . . furnishes idiom'' Couldn't that simply be: ``The package
+. . . provides functionality''?
 
 \textcolor{blue}{The original motivation for the package occurred when
   I had a large complicated set of Bradley-Terry observations which I
@@ -203,8 +203,8 @@ and-other-stories-free-pdf/)\\
   public repositories [github and CRAN], open to scrutiny.  There is
   very little ``wiggle room'' in my approach: the data is unambiguous,
   and the model (Plackett-Luce) is clear and objective.\\ \\ I would
-  observe that ROS uses the frequentist paradigm uncritically, a
-  position adopted by a decreasing minority of researchers.  For
+  observe that ROS uses the frequentist paradigm, a
+  position adopted by a decreasing proportion of researchers.  For
   example, the notion of ``bias'' is discussed; but many workers
   (myself included) regard the bias of an estimator as unimportant: a
   biased estimator with a small mean square error is not without
@@ -212,33 +212,34 @@ and-other-stories-free-pdf/)\\
   either the Bayesian or likelihood paradigms as used in the current
   manuscript.\\ \\I am not sure what relevance ``power'' has here:
   this is the probability of {\em correctly} failing to reject the
-  null when it is false (and here, I did not fail to reject my null:
-  perhaps we should include an ensemble of Earths and visit a random
-  one on which ``I'' failed to reject the null).\\ \\ The comment
-  ``the model is almost certainly wrong'' is, I would argue,
-  misleading.  All models are wrong.  But some are useful.  My view is
-  that the truth of a statistical model [for some theological
-    definition of truth] is a poor criterion: no random variable is
-  truly Gaussian, for example; but the Student $t$-test is not useless
-  as a result.  The issue is whether non-normality materially affects
-  the properties of the test.  Often this is not the case and the
-  Gaussian approximation is adequate: the $t$-test is sufficiently
-  robust to non-normality to be useful in a wide range of situations.
-  Is the $t$-test True?  No.  Is it Useful?  Yes.  Consistent?  Yes.
-  Reliable?  Yes.  Easy to use?  Yes.  Familiar?  Yes.
-  Well-understood?  Yes.  Powerful?  Yes.  The Student $t$-test has
-  value, and so does Plackett-Luce.  My position is that the framework
-  set out in the manuscript is plausible and intuitive.  I make no
-  claim for absolute correctness.\\ \\ But in answer to your question,
-  the small $p$-value and large likelihood ratio statistic certainly
-  {\em is} evidence for a real decrease.  The hypothesis of no real
-  strength change has low likelihood compared with the alternative of
-  a drop in Bradley-Terry strength.  Either Plackett-Luce is seriously
-  wrong, or PL is at least approximately correct, and some
-  low-probability event has occurred which is misleading us.
-  Alternatively, as I suggest, Mercedes really is suffering from some
-  genuine race-affecting issue [porpoising? Lewis Hamilton getting
-    older?  unaccustomed F1 budget caps?].  The {\em strength} of this
+  null when it is false.  In this case the null was not rejected, a
+  type II error was not committed.  It is not clear whether a
+  preferred alternative hypothesis exists (and further, there seems to
+  be no natural ensemble to consider).\\ \\ The comment ``the model is
+  almost certainly wrong'' is, I would argue, misleading.  All models
+  are wrong.  But some are useful.  My view is that the truth of a
+  statistical model [for some theological definition of truth] is a
+  poor criterion: no random variable is truly Gaussian, for example;
+  but the Student $t$-test is not useless as a result.  The issue is
+  whether non-normality materially affects the properties of the test.
+  Often this is not the case and the Gaussian approximation is
+  adequate: the $t$-test is sufficiently robust to non-normality to be
+  useful in a wide range of situations.  Is the $t$-test True?  No.
+  Is it Useful?  Yes.  Consistent?  Yes.  Reliable?  Yes.  Easy to
+  use?  Yes.  Familiar?  Yes.  Well-understood?  Yes.  Powerful?  Yes.
+  The Student $t$-test has value, and so does Plackett-Luce.  My
+  position is that the framework set out in the manuscript is
+  plausible and intuitive.  I make no claim for absolute
+  correctness.\\ \\ But in answer to your question, the small
+  $p$-value and large likelihood ratio statistic certainly {\em is}
+  evidence for a real decrease.  The hypothesis of no real strength
+  change has low likelihood compared with the alternative of a drop in
+  Bradley-Terry strength.  Either Plackett-Luce is seriously wrong, or
+  PL is at least approximately correct, and some low-probability event
+  has occurred which is misleading us.  Alternatively, as I suggest,
+  Mercedes really is suffering disproportionately from some genuine
+  race-affecting issue [porpoising? Lewis Hamilton getting older?
+    unaccustomed F1 budget caps?].  The {\em strength} of this
   evidence is quantified by the small $p$-value (here less than 0.002)
   or alternatively a likelihood ratio of $e^{4.722}\simeq 112.4$,
   surely worthy of the epithet ``strong''.}\\ \\
@@ -260,7 +261,9 @@ purpose.\\ \textcolor{blue}{An overview is given in {\tt
   functions mentioned by the referee all follow a consistent
   nomenclature: as it says in {\tt hyper3.Rd}, ``Functionality for
   {\tt hyper3} objects is generally indicated by adding a 3 to
-  function names, eg {\tt gradient()} goes to {\tt gradient3()}''.}
+  function names, eg {\tt gradient()} goes to {\tt gradient3()}''.  I
+  have added a brief pointer in the manuscript to these package
+  files.}
 
 
 Section editor comments:
@@ -297,8 +300,8 @@ extraction.\\ \textcolor{blue}{The JSS style file forbids comments
   of its content, or followed with ``Above, we see\ldots'' or
   equivalent.}
 
-\textcolor{blue}{Summary: this referee's insightful and
-  constructive comments have led to a much improved submission.}
+\textcolor{blue}{Summary: the insightful and constructive comments of
+  the review have led to a much improved submission.}
 
 \end{document}
 

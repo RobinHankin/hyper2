@@ -61,7 +61,7 @@ opts_chunk$set(cache=TRUE, autodep=TRUE)
 
 The \code{hyper2} package~\citep{hankin2009,hankin2017} furnishes
 computational support for generalized
-Plackett-Luce~\citep{plackett1975} likelihood functions.  Our
+Plackett-Luce~\citep{plackett1975} likelihood functions.  The
 preferred interpretation is a race (as in track and field athletics):
 Given six competitors $1-6$, we ascribe to them nonnegative strengths
 $p_1,\ldots, p_6$; the probability that $i$ beats $j$ is
@@ -116,16 +116,16 @@ p}=(p_1,\ldots,p_n)$ with
 \end{equation}
 
 \noindent where~$\mathcal{O}$ is a set of observations and~$s$ a
-subset of~$\left[n\right]=\left\{1,2,\ldots,n\right\}$; numbers~$n_s$
-are integers which may be positive or negative.  The \pkg{hyper2}
-package has the ability to evaluate such likelihood functions at any
-point in $S_n$, thereby admitting a wide range of non-standard nulls
-such as order statistics on the $p_i$~\cite{hankin2020}.  It becomes
-possible to analyse a wider range of likelihood functions than
-standard Plackett-Luce~\citep{turner2020}.  For example, results
-involving incomplete order statistics or teams are tractable.
-Further, the introduction of reified entities (monsters) allows one to
-consider draws~\citep{hankin2009}, noncompetitive tactics such as
+subset of~$\left\{1,2,\ldots,n\right\}$; numbers~$n_s$ are integers
+which may be positive or negative.  The \pkg{hyper2} package has the
+ability to evaluate such likelihood functions at any point in $S_n$,
+thereby admitting a wide range of non-standard nulls such as order
+statistics on the $p_i$~\citep{hankin2017}.  It becomes possible to
+analyse a wider range of likelihood functions than standard
+Plackett-Luce~\citep{turner2020}.  For example, results involving
+incomplete order statistics or teams are tractable.  Further, the
+introduction of reified entities (monsters) allows one to consider
+draws~\citep{hankin2009}, noncompetitive tactics such as
 collusion~\citep{hankin2020}, and the phenomenon of team cohesion
 wherein the team becomes stronger than the sum of its
 parts~\citep{hankin2010}.  Recent versions of the package include
@@ -154,14 +154,14 @@ Plackett-Luce likelihood function for $p_a,p_b,p_c$ would be
 \frac{p_b}{2p_a+2p_b    }\cdot
 \frac{p_a}{2p_a+ p_b    }\cdot
 \frac{p_a}{ p_a+ p_b    }\cdot
-\frac{p_b}{      p_b    },\qquad p_a+p_b+p_c=1
+\frac{p_b}{      p_b    },\qquad p_a+p_b+p_c=1.
 \end{equation}
 
 Here I consider such generalized Plackett-Luce likelihood functions,
 and give an exact analysis of several simple cases.  I then show how
 this class of likelihood functions may be applied to a range of
 inference problems involving order statistics.  Illustrative examples,
-drawn Formula 1 motor racing, and track-and-field athletics, are
+drawn from Formula 1 motor racing, and track-and-field athletics, are
 given.
 
 \subsection{Computational methodology for generalized Plackett-Luce likelihood functions}
@@ -184,14 +184,14 @@ typedef map<weightedplayervector, long double> hyper3;
 \end{verbatim}
 
 show how the \proglang{map} class of the Standard Template Library is
-used: \proglang{weightedplayervector} objects map strings to long
-doubles (specifically, mapping player names to their multiplicities),
-and objects of class \proglang{hyper3} are maps from a
-\proglang{weightedplayervector} object to long doubles.  One advantage
-of this is efficiency: Search, removal, and insertion operations have
-logarithmic complexity.  As an example, the following \proglang{C++}
-pseudo code would create a log-likelihood function for the first term
-in Equation~\ref{plackettluce}:
+used with \proglang{weightedplayervector} objects mapping strings to
+long doubles (specifically, mapping player names to their
+multiplicities), and objects of class \proglang{hyper3} are maps from
+a \proglang{weightedplayervector} object to long doubles.  One
+advantage of this is efficiency: Search, removal, and insertion
+operations have logarithmic complexity.  As an example, the following
+\proglang{C++} pseudo code would create a log-likelihood function for
+the first term in Equation~\ref{plackettluce}:
 
 \begin{verbatim}
 weightedplayervector n,d;
@@ -228,7 +228,7 @@ Above, we see object \code{LL} is a log-likelihood function of the
 players' strengths, which may be evaluated at specified points in
 probability space.  A typical use-case would be to assess $H_1\colon
 p_a=0.9,p_b=0.05,p_c=0.05$ and $H_2\colon p_a=0.01,p_b=0.01,p_c=0.98$,
-we can evaluate these hypotheses using generic function
+and we may evaluate these hypotheses using generic function
 \code{loglik()}:
 
 <<>>=
@@ -245,16 +245,17 @@ favour of $H_1$.
 
 The package includes many helper functions to work with order
 statistics of this type.  Function \code{ordervec2supp3()}, for
-example, can be used to generate a loglikelihood function for
+example, can be used to generate a log-likelihood function for
 Equation~\ref{PL_like}:
 
 <<>>=
 (H <- ordervec2supp3(c("a", "c", "b", "a", "a", "b")))
 @
 
-We may find a maximum likelihood estimate for the players' strengths,
-using generic function \code{maxp()}, dispatching to a specialist
-\code{hyper3} method:
+(the package gives extensive documentation at
+\code{ordervec2supp.Rd}).  We may find a maximum likelihood estimate
+for the players' strengths, using generic function \code{maxp()},
+dispatching to a specialist \code{hyper3} method:
 
 <<maxexamp,cache=TRUE>>=
 (mH <- maxp(H))
@@ -263,10 +264,10 @@ using generic function \code{maxp()}, dispatching to a specialist
 (function \code{maxp()} uses standard optimization techniques to
 locate the evaluate; it has access to first derivatives of the
 log-likelihood and as such has rapid convergence, if its objective
-function is reasonably smooth").
+function is reasonably smooth).
 
 The package provides a number of statistical tests on likelihood
-functions, modified from~\citep{hankin2017} to work with \code{hyper3}
+functions, modified from~\citet{hankin2017} to work with \code{hyper3}
 objects.  For example, we may assess the hypothesis that all three
 players are of equal strength [viz $H_0\colon
 p_a=p_b=p_c=\frac{1}{3}$]:
@@ -289,7 +290,8 @@ The original motivation for \code{hyper3} was the analysis of Formula
 1 motor racing, and the package accordingly includes wrappers for
 \code{ordervec2supp()} such as \code{ordertable2supp3()} and
 \code{attemptstable2supp3()} which facilitate the analysis of commonly
-encountered result formats; an example is given below.
+encountered result formats.  Package documentation for order tables is
+given at \code{ordertable.Rd} and an example is given below.
 
 \section{Exact analytical solution for some simple generalized
 Plackett-Luce likelihood functions}
@@ -372,7 +374,7 @@ Figure~\ref{ABA_likelihood}.
 <<figaba, fig=TRUE>>=
 a <- seq(from = 0, by = 0.005, to = 1)
 S <- function(a){log(a * (1 - a) / ((1 + a) * (3 - 2 * sqrt(2))))}
-plot(a, S(a), type = 'b')
+plot(a, S(a), type = 'b',xlab=expression(p[a]),ylab="support")
 abline(h = c(0, -2))
 abline(v = c(0.02438102, 0.9524271), col = 'red')
 abline(v = sqrt(2) - 1)
@@ -510,7 +512,7 @@ dataset, given in Figure~\ref{wilcox_likelihood}.
 <<plotwilcoxlike,echo=FALSE,fig=TRUE,cache=TRUE>>=
 a <- seq(from = 0.02, to = 0.8, len = 40)
 L <- sapply(a, function(p){loglik(p, Hxy)})
-plot(a, L - max(L), type = 'b')
+plot(a, L - max(L), type = 'b',xlab=expression(p[a]),ylab="likelihood")
 abline(h = c(0, -2))
 abline(v = c(0.24))
 abline(v=c(0.5), lty=2)
@@ -559,7 +561,14 @@ javelin <- ordervec2supp3(v = names(javelin_vector)[!is.na(javelin_vector)])
 
 Above, object \code{javelin} is a \code{hyper3} likelihood function,
 so one has access to the standard likelihood-based methods, such as
-finding and displaying the maximum likelihood estimate:
+finding and displaying the maximum likelihood estimate, shown in
+Figure~\ref{javelinbradleyterry}.  From this, we see that Vadlejch has
+the highest estimated Bradley-Terry strength, but further analysis
+with \code{equalp.test()} reveals that there is no strong evidence in
+the dataset to reject the hypothesis of equal competitive strength
+($p=0.26$), or that Vadlejch has a strength higher than the null value
+of $\frac{1}{8}$ ($p=0.1$).
+
 
 <<setdigits,echo=FALSE>>=
 options(digits = 3)
@@ -570,17 +579,12 @@ options(digits = 3)
   \begin{center}
 <<testthejav, cache=TRUE, fig=TRUE>>=
 (mj <- maxp(javelin))
-dotchart(mj, pch = 16)
+dotchart(mj, pch = 16,xlab="Estimated Bradley-Terry strength")
 @
-\caption{Maximum likelihood estimate for javelin throwers' Bradley-Terry strengths.}
+\caption{Maximum \label{javelinbradleyterry} likelihood estimate for javelin throwers' Bradley-Terry strengths.}
 \end{center}
 \end{figure}
 
-Above, we see that Vadlejch has the highest estimated Bradley-Terry
-strength, but further analysis with \code{equalp.test()} reveals that
-there is no strong evidence in the dataset to reject the hypothesis of
-equal competitive strength ($p=0.26$), or that Vadlejch has a strength
-higher than the null value of $\frac{1}{8}$ ($p=0.1$). 
 
 A particularly attractive feature of this analysis is that the
 Bradley-Terry strengths have direct operational significance: If two
@@ -637,7 +641,7 @@ racing cars (compare the drivers' championship, which is between
 drivers).  In this analysis, the constructor is the object of
 inference.  Each constructor typically fields two cars, each of which
 separately accumulates ranking-based points at each venue.  Here we
-use generalized a Plackett-Luce model to assess the constructors'
+use a generalized Plackett-Luce model to assess the constructors'
 performance.  The following table, included in the \code{hyper2}
 package as a dataset, shows rankings for the first 9 venues of the
 2021 season:
@@ -672,9 +676,9 @@ to less than 0.20 in 2021 and it is natural to wonder whether this can
 be ascribed to random variation.  Observe that testing such a
 hypothesis is complicated by the fact that constructors field multiple
 cars, and also that constructors come and go, with two 2020 teams
-dropping out between years and two joining.  Package idiom to test
-this statistically would be to define a combined likelihood function
-for both years, keeping track of the year:
+dropping out between years and two joining.  We may test this
+statistically by defining a combined likelihood function for both
+years, keeping track of the year:
 
 <<definecombinedlikelihoodfunction,cache=TRUE>>=
 H <- (
