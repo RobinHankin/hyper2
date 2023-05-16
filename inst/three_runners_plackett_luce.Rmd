@@ -1,5 +1,5 @@
 ---
-title: "fisher_information_plackett_luce_three_runners"
+title: "Three runners: Plackett-Luce likelihoods"
 output: html_document
 date: "2022-08-14"
 ---
@@ -8,7 +8,15 @@ date: "2022-08-14"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Problem
+
+## Introduction
+
+Here we consider different observations deriving from order statistics
+among three competitors.  It is not particularly well structured, it
+is just a place to keep a record of thoughts.  I consider the most
+general case first and then go on to consider more special cases.
+
+## General three runner order statistic.
 
 We consider three runners, $a,b,c$ and a Plackett-Luce likelihood
 function for the six possible orders.  We normalize so $a+b+c=1$ and
@@ -113,10 +121,46 @@ $\partial^2S/\partial b^2=-b^{-2} +(1-b)^{-2}-(1-a-b)^{-2}$
 $\partial^2S/\partial a\partial b=-(1-a-b)^{-2}$
 
 
-## Fisher information matrix
+We want to consider the maximum likelihood estimator.  Take the six
+possible observations in turn:
 
-We seek $M$, the two-by-two matrix with entries
-$\sum_{\sigma\in\left\lbrace a\succ b\succ c,\ldots, c\succ b\succ
+
+$o=a\succ b\succ c\longrightarrow P(o)=\frac{ab}{1-a};\hat{a}=1,\hat{b}=0$
+
+$o=a\succ c\succ b\longrightarrow P(o)=\frac{a(1-a-b)}{1-a};\hat{a}=1,\hat{b}=0$.
+
+$o=b\succ a\succ c\longrightarrow P(o)=\frac{ab}{1-b};\hat{a}=0,\hat{b}=1$.
+
+$o=b\succ c\succ a\longrightarrow P(o)=\frac{b(1-a-b)}{1-b};\hat{a}=0,\hat{b}=1$.
+
+$o=c\succ a\succ b\longrightarrow P(o)=\frac{a(1-a-b)}{1-b};\hat{a}=0,\hat{b}=0$.
+
+$o=c\succ b\succ a\longrightarrow P(o)=\frac{a(1-a-b)}{1-b};\hat{a}=0,\hat{b}=0$.
+
+So we see that
+$\mathbb{E}(\hat{a})=\frac{ab}{1-a}+\frac{a(1-a-b)}{1-a}=a$ and
+$\mathbb{E}(\hat{b})=\frac{ab}{1-b}+\frac{b(1-a-b)}{1-b}=b$, so the
+maximum likelihood estimator is unbiased [NB $\mathbb{E}(\hat{c})=c$].
+
+For mean squared error we seek $\mathbb{E}\left|
+(a,b)-(\hat{a},\hat{b})\right|^2=\mathbb{E}\left[(a-\hat{a})^2 +
+(b-\hat{b})^2\right]= \mathbb{E}\hat{a}^2
++\mathbb{E}\hat{b}^2-a^2-b^2=a(1-a)+b(1-b)$ [because
+$\mathbb{E}\hat{a}^2=a$ and $\mathbb{E}\hat{b}^2=b$].
+
+Alternatively, we might _define_ the mean squared error to be
+$\mathbb{E}\left| (a,b,c)-(\hat{a},\hat{b},\hat{c})\right|^2$ and get
+$a(1-a)+b(1-b)+c(1-c)$ or $2a(1-a)+2b(1-b)-2ab$.
+
+
+
+
+
+
+
+For the Fisher information matrix, we seek $M$, the two-by-two matrix
+with entries $\sum_{\sigma\in\left\lbrace a\succ b\succ c,\ldots,
+c\succ b\succ
 a\right\rbrace}\operatorname{Prob}(\sigma)\frac{\partial^2\log\operatorname{Prob}(\sigma)}{\partial
 x\partial y}$, where $x,y\in\left\lbrace a,b\right\rbrace$.  Then the
 Fisher information is $\det(M)$.  The whole thing is a bit of a
@@ -176,7 +220,9 @@ gives `1323/16`.
 
 # The loser
 
-With $a,b,c, a+b+c=1$ or $c=1-a-b$ we have the probabilities of:
+Now consider the same situation but our observation is purely the
+loser in a race.  With $a,b,c, a+b+c=1$ or $c=1-a-b$ we have the
+probabilities of:
 
 ## C losing
 
