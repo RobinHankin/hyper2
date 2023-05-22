@@ -115,6 +115,10 @@ equalp(H)
   In manpages elsewhere, \code{n=2} is used for speed reasons.  Use the
   default \code{n=10} or greater in production work.
 
+  The (bordered) Hessian is given by function \code{hessian()},
+  documented at \code{gradient.Rd}; use this to assess the
+  \dQuote{sharpness} of the maximum.
+
   Function \code{maxp()} takes \code{hyper2} or \code{hyper3} objects
   but it does not currently work with \code{lsl} objects; use
   \code{maxp_lsl()}.
