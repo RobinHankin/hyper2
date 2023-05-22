@@ -6,10 +6,15 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+{ # this line vandalises this file: nonfinishers are ignored and should not be!
 knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
 ```
 
-Consider a race between $n+2$ competitors of strength $p_1$, $p_2$, and $n$ clones, all of strength $p=1-p_1-p_2$.  Our observation is that $p_1$ places $n_1$, and $p_2$ places $n_2>n_1$.  The order statistic is thus
+Consider a race between $n+2$ competitors of strength $p_1$, $p_2$,
+and $n$ clones, all of strength $p=1-p_1-p_2$.  Our observation is
+that $p_1$ places $n_1$, and $p_2$ places $n_2>n_1$.  The order
+statistic is thus
 
 $$
 \underbrace{p\succ\cdots\succ p}_{\mbox{$n_1-1$ terms}}\succ p_1\succ\underbrace{p\succ\cdots\succ p}_{n_2-n_1-1}\succ p_2\succ\underbrace{p\succ\cdots\succ p}_{n-n_2+2}
@@ -40,52 +45,43 @@ $$
 \end{eqnarray}
 $$
 
-Observing that the fifth line may be neglected, R idiom for this would be as follows
+
 
 ```{r}
-library("hyper2")
-simplike_lowlevel <- function(n1,n2,n,p1="p1",p2="p2",other="other"){
-  stopifnot(n1<n2)
-  H <- hyper3()
-  H[setNames(1,other)] <- n2-2
-  H[setNames(1,p1)] <- 1
-  H[setNames(1,p2)] <- 1
-  for(i in (n-n1+1):n){H[setNames(c(1,1,i),c(p1,p2,other))]  %<>% dec }
-  for(i in (n-n2+2):(n-n1+1)){H[setNames(c(1,i),c(p2,other))] %<>% dec }
-  return(H)
+named_drivers <- function(n,...){ # twodrivers(20, ham=3, bottas=5)  # NB repeats allowed!
+   a <- list(...)
+   stopifnot(all(table(as.vector(unlist(a)))==1)) # stops two players having the same result
+   s <- rep("other",n)
+   for(i in seq_along(a)){
+     s[a[[i]]] <- names(a)[i]   # ham=3 -> s[3] <- "ham"
+   }
+   return(ordervec2supp3(s))  
 }
-
-twodrivers <- function(...,n){ # twodrivers(ham=3, bottas=5,n=20)
-  L <- list(...)
-  stopifnot(length(L)==2)
-  if(L[[1]] > L[[2]]){ # wrong way round
-    tmp <- L[[2]]
-    L[[2]] <- L[[1]]
-    L[[1]] <- tmp
-    names(L) <- rev(names(L))
-  }
-  simplike_lowlevel(as.numeric(L[[1]]),as.numeric(L[[2]]),n,names(L)[1],names(L)[2])
-}
-
-twodrivers(o=2,XX=6,n=11)
 ```
 
-Now 
+
+```{r}
+(H <- named_drivers(20,ham=3,bott=5))
+```
+      
+Thus `H` is a likelihood function on the assumption that the other
+drivers are all clones of identical strength.  Maximizing this:
+
 
 ```{r readtable}
 a <- read.table("formula1_2019.txt")[1:2,1:21]
 a
 f <- function(i){
   jj <- as.list(a[,i])
+  suppressWarnings(jj <- as.numeric(jj))
   names(jj) <- rownames(a)
-  return(jj)
+  jj[!is.na(jj)]   # NA entries ignored - THESE SHOULD BE NONFINISHERS
 }
 
 H <- hyper3()
 for(i in seq_len(ncol(a))){
   jj <- f(i)
   if(all(!is.na(as.numeric(unlist(jj))))){
-    H <- H + do.call(twodrivers,c(jj,n=20))
   }
 }
 H
@@ -94,8 +90,24 @@ H
 ```{r maxh,cache=TRUE}
 maxp(H)
 ```
+Thus we narrowly fail to reject the null at $\alpha = 0.05$.  Now
+compare with the actual 2019 season:
 
-```{r equaltest,cache=TRUE}
-samep.test(H,c("Hamilton","Bottas"))
+```{r actual2019,cache=TRUE}
+F1_2019 <- ordertable2supp(read.table("formula1_2019.txt",header=TRUE)[,1:21])
+samep.test(F1_2019,c("Hamilton","Bottas"))
 ```
 
+We see a much smaller p-value when using the complete dataset.  It is
+not clear whether we would expect a larger or a smaller p-value here,
+but it is not surprising to see a difference.  On the simplified case,
+the estimated strength of `other` is about 0.016 (under the
+alternative); but in the full case, most of the other drivers have
+strength considerably more thn this.  I do not have a good way of
+thinking about this at this time.  One other feature is that the
+simplified likelihood results in different MLEs:
+
+* simplified: $\widehat{p_\mbox{Ham}} = 0.49$, $\widehat{p_\mbox{Bot}}=0.31$
+* full: $\widehat{p_\mbox{Ham}} = 0.38$, $\widehat{p_\mbox{Bot}}=0.13$
+
+Consider the log-contrasts, $\log(p_1/p_2)$ giving
