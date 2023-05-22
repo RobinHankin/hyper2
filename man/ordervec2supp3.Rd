@@ -11,7 +11,7 @@
 \alias{cheering}
 \alias{cheering3}
 \title{Various functionality for races and hyper3 likelihood functions}
-\description{
+\description{\loadmathjax
 Various functions for calculating the likelihood function for order
 statistics in the context of hyper3 likelihood functions.  Compare
 \code{ggol()} for \code{hyper2} objects.  Used in the
