@@ -1,6 +1,7 @@
 \name{curling}
 \alias{curling_table}
 \alias{curling}
+\alias{Curling}
 \alias{curling1}
 \alias{curling2}
 \alias{curling_maxp}
