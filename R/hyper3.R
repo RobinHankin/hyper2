@@ -606,3 +606,14 @@ stop("not yet written")
   names(out) <- c(L,recursive=TRUE)
   return(out)
 }
+
+`sum.hyper3` <- function(x, ..., na.rm=FALSE){
+  if(nargs()==1){
+    return(x)
+  } else if (nargs()==2){
+    return(hyper3_add(x, ...))
+  } else {
+    return(hyper3_add(x, Recall(...)))
+  }
+}
+

@@ -233,6 +233,7 @@ S3method("summary",hyper3)
 
 S3method("powers<-",hyper3)
 S3method(Ops,hyper3)
+S3method("sum",hyper3)
 S3method("[", hyper3)
 S3method("[<-", hyper3)
 S3method("weights", hyper3)
