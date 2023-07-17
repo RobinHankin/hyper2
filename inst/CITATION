@@ -1,22 +1,15 @@
 citHeader("To cite in publications use:")
 
-citEntry(entry = "Article",
-	 title = {
-             paste("Partial rank data with the hyper2 package: likelihood functions for generalized {B}radley-{T}erry models")},
-         author = c(person(c("Robin", "K.", "S."), "Hankin")),
-	 journal = "The R Journal",
-         year = "2017",
-	 month = "December",
-	 volume = "9",
-	 issue = "2",
-         doi = "https://doi.org/10.32614/rj-2017-061",
-	 textVersion = {
-             paste("R. K. S. Hankin",
-                   "2017.",
-                   "Partial rank data with the hyper2 package: likelihood functions for generalized Bradley-Terry models",
-	     	   "The R Journal",
-		   "9(2)"
-		   )
-         })
-
-
+bibentry(
+  bibtype  = "Article",
+  title    = "{Partial rank data with the hyper2 package: likelihood functions for generalized {B}radley-{T}erry models}",
+  author   = person("Robin K. S. Hankin"),
+  journal  = "The R Journal",
+  year     = "2017",
+  volume   = "9",
+  number   = "2",
+  textVersion =
+  paste("Hankin, R. K. S. (2017).",
+  "Partial rank data with the hyper2 package: likelihood functions for generalized Bradley-Terry models",
+     "The R Journal, volume 9, number 2")
+)
