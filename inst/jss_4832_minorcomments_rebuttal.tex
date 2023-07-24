@@ -1,0 +1,117 @@
+\documentclass[12pt]{article}
+\usepackage{xcolor}
+\begin{document}
+
+\section*{JSS4832: Generalized Plackett-Luce Likelihoods by Robin
+K. S. Hankin}
+
+
+Below, the reviewer's comments are in black, and the replies to the
+issues are in \textcolor{blue}{blue}.  I have indicated changes to
+the manuscript where appropriate.
+
+\textcolor{blue}{Short story: I have accommodated all the comments with
+rewording and clarification.}
+
+From the editorial team:
+
+I had a closer look at the revision of 4832 and, as far as I'm
+concerned, the paper can be accepted as it is. However, I wanted to
+draw your attention to the author's rebuttal file, p.7. It seems that
+he doesn't agree that this paper should be published as code snippet,
+as opposed to a regular paper. I'm not sure whether this was
+previously communicated to the author by the editorial team. Anyway, I
+think it would be good if the editorial team could clarify this issue
+directly with the author.
+
+\textcolor{blue}{Happy to classify as a code snippet if the editors
+  wish, although I stand by my previous comments.  Happy either way.}
+
+
+Also, I think he misunderstood my concerns about the supplemental R
+code file (see bottom of p.7 in the rebuttal file). What I'm asking
+for is to make the R code look nicer with proper comments, as opposed
+to just pull it from the Rnw file. In addition, the code starts with
+
+
+\begin{verbatim}
+source("loadlibrary.R",echo=FALSE) # to avoid stupid messages
+opts_chunk$set(cache=TRUE, autodep=TRUE)
+\end{verbatim}
+
+This is not reproducible. Also, the author doesn't even load the hyper2 package.
+
+\textcolor{blue}{Fixed, code fully reproducible}
+
+So, while I think the paper is in good shape, the code file is not. But this can be easily be fixed.
+
+Manuscript style comments:
+
+\begin{itemize}
+  \item Please use "R>" as the command prompt, rather than ">".
+\end{itemize}
+    
+\textcolor{blue}{fixed}
+
+\begin{itemize}
+\item The code presented in the manuscript should not contain comments
+within the verbatim code. Instead the comments should be made in the
+normal LaTeX text.
+\end{itemize}
+
+\textcolor{blue}{fixed}
+
+
+\begin{itemize}
+  \item For the code layout in R publications, we typically distinguish
+input/output using Sinput/Soutput (or equivalently
+CodeInput/CodeOutput). Unless there are special reasons to format it
+differently, the input should use the text width (up to 76 or 77
+characters) and be indented by two spaces, e.g.,
+
+\begin{verbatim}
+\begin{Sinput}
+R> example_model <- lm(response ~ variable1 + variable2 + variable3,
+
+weights = w, data = mydata)
+\end{Sinput}
+\end{verbatim}
+\end{itemize}
+
+\textcolor{blue}{fixed}
+
+
+ As a reminder, please make sure that: \proglang, \pkg and \code have
+ been used for highlighting throughout the paper (including titles and
+ references), except where explicitly escaped.
+
+\textcolor{blue}{fixed}
+
+
+References:
+
+\begin{itemize}
+      \item MATLAB (not: Matlab, matlab)
+guages. Hunter (2004), for example, presents results in matlab [although he works with a
+\end{itemize}
+\textcolor{blue}{fixed}
+
+\begin{itemize}
+\item As a reminder,
+- Please make sure that all software packages are \cite{}'d properly.
+
+- All references should be in title style.
+
+- See FAQ for specific reference instructions.
+Code:
+\end{itemize}
+
+\begin{itemize}
+\item As a reminder, please make sure that the files needed to replicate
+all code/examples within the manuscript are included in a standalone
+replication script.
+\end{itemize}
+\textcolor{blue}{fixed}
+
+\end{document}
+
