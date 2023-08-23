@@ -349,7 +349,8 @@ H3seven <- function(lambda){
      jj <- 1  # diagonal players do not have lambda-advantage
      names(jj) <- tt[i]
      H3[jj] %<>% inc(hw[i,i])
-     
+     H3[setNames(1,tt[i])] %<>% inc(hw[i,i])
+
      jj <- lambda
      names(jj) <- tt[i+1]
      H3[jj] %<>% inc(hw[i,i+1])
