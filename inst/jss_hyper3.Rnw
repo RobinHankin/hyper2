@@ -55,6 +55,7 @@
 <<setup, cache=FALSE,echo=FALSE>>=
 source("loadlibrary.R",echo=FALSE)  # to avoid stupid messages 
 opts_chunk$set(cache=TRUE, autodep=TRUE)
+options(prompt = "R> ")
 @
 
 \section{Introduction}
@@ -84,7 +85,7 @@ the same sequence as their rank.
 
 Computational support for Bradley-Terry likelihood functions is
 available in a range of languages.  \cite{hunter2004}, for example,
-presents results in \proglang{matlab} [although he works with a
+presents results in \proglang{MATLAB} [although he works with a
 nonlinear extension to account for ties]; \cite{allison1994} present
 related work for ranking statistics in \proglang{SAS} and
 \cite{maystre2022} has released a \proglang{python} package for
@@ -195,8 +196,8 @@ the first term in Equation~\ref{plackettluce}:
 
 \begin{verbatim}
 weightedplayervector n,d;
-n["a"] = 1; // n for numerator
-d["a"] = 3; // d for denominator
+n["a"] = 1; 
+d["a"] = 3; 
 d["b"] = 2;
 d["c"] = 1;
 
@@ -205,10 +206,11 @@ L[n] = 1;
 L[d] = -1;
 \end{verbatim}
 
-Above, object \code{L} is an object of class \code{hyper3}; it may be
-evaluated at points in probability space [that is, a vector
-\code{[a,b,c]} of nonnegative values with unit sum] using standard
-\proglang{R} idiom wrapping \proglang{C++} back end.
+Above, we understand \code{n} and \code{d} to represent numerator and
+denominator respectively.  Object \code{L} is an object of class
+\code{hyper3}; it may be evaluated at points in probability space
+[that is, a vector \code{[a,b,c]} of nonnegative values with unit sum]
+using standard \proglang{R} idiom wrapping \proglang{C++} back end.
 
 \subsection{Package implementation}
 
