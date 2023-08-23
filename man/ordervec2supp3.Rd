@@ -32,7 +32,7 @@ args2ordervec(...)
     is the first-placed competitor, element \code{v[2]} the second, and
     so on}
   \item{nonfinishers}{Character vector (a set) showing players that did
-    not finish}
+    not finish.  See details section and examples}
   \item{a}{An ordertable}
   \item{helped}{vector of entities being helped}
   \item{e,help,lambda}{Parameters controlling non-independence with
@@ -53,14 +53,33 @@ args2ordervec(...)
   See examples, and also the javelin vignette.
 
   Function \code{ordervec2supp3()} takes character vector showing the
-  order of finishing [i.e. a rank statistic], and returns a
-  generalized Plackett-Luce support function in the form of a
-  \code{hyper3} object.  It can take the output of
-  \code{args2ordervec()} or \code{rrace3()}.  See the examples section
-  below.
+  order of finishing [i.e. a rank statistic], and returns a generalized
+  Plackett-Luce support function in the form of a \code{hyper3} object.
+  It can take the output of \code{args2ordervec()} or \code{rrace3()}.
+  For example:
 
-  Experimental function \code{ordervec2supp3a()} is a generalized
-  version of \code{ordervec2supp3()} that allows for cheering effects.
+  \code{ordervec2supp3(c("a","b"),nonfinishers=c("a","b"))}
+
+  corresponds to a race between two twins of strength \code{a} and two
+  twins of strength \code{b}, with only one of each pair finishing;
+  \code{a} comes first and \code{b} comes second; symbolically
+  \mjdeqn{a\succ b\succ\left\lbrace a,b\right\rbrace\longrightarrow
+    \mathcal{L}(a,b\left|a+b=1\right.)=\frac{a}{2a+2b}\cdot\frac{b}{a+2b}}{omitted}
+
+  Further,
+
+  \code{ordervec2supp3(c("a","b"),c("a","b","c"))}
+
+  corresponds to adding a singleton competitor of strength \code{c} who
+  did not finish:
+
+  \mjdeqn{a\succ b\succ\left\lbrace a,b,c\right\rbrace\longrightarrow
+    \mathcal{L}(a,b,c\left|a+b+c=1\right.)=\frac{a}{2a+2b+c}\cdot\frac{b}{a+2b+c}}{omitted}
+
+  (observe that this likelihood function is informative about
+  \mjseqn{c}).  See the examples section below.  Experimental function
+  \code{ordervec2supp3a()} is a generalized version of
+  \code{ordervec2supp3()} that allows for cheering effects.
 
   Functions \code{num3()} and \code{den3()} are low-level helper
   functions that calculate the numerator and denominator for
@@ -94,8 +113,10 @@ args2ordervec(...)
 
 
 ordervec2supp3(c("a","a","b","c","a","b","c"))
-
 ordervec2supp3(rrace3())
+ordervec2supp3(c("a","b"),nonfinishers=c("a","b"))  # a > b >> {a,b}
+
+
 
 (o <- args2ordervec(a=c(1,6,9), b=c(2,3,4), c=c(1.1,11.1)))
 H <- ordervec2supp3(o)
