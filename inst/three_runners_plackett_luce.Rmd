@@ -14,7 +14,10 @@ knitr::opts_chunk$set(echo = TRUE)
 Here we consider different observations deriving from order statistics
 among three competitors.  It is not particularly well structured, it
 is just a place to keep a record of thoughts.  I consider the most
-general case first and then go on to consider more special cases.
+general case first and then go on to consider more special cases.  In
+the interests of simplicity I will often identify a runner with his
+strength, so that $a$ represents a particular competitor, and also his
+Plackett-Luce strength.
 
 ## General three runner order statistic.
 
@@ -124,7 +127,6 @@ $\partial^2S/\partial a\partial b=-(1-a-b)^{-2}$
 We want to consider the maximum likelihood estimator.  Take the six
 possible observations in turn:
 
-
 $o=a\succ b\succ c\longrightarrow P(o)=\frac{ab}{1-a};\hat{a}=1,\hat{b}=0$
 
 $o=a\succ c\succ b\longrightarrow P(o)=\frac{a(1-a-b)}{1-a};\hat{a}=1,\hat{b}=0$.
@@ -151,12 +153,6 @@ $\mathbb{E}\hat{a}^2=a$ and $\mathbb{E}\hat{b}^2=b$].
 Alternatively, we might _define_ the mean squared error to be
 $\mathbb{E}\left| (a,b,c)-(\hat{a},\hat{b},\hat{c})\right|^2$ and get
 $a(1-a)+b(1-b)+c(1-c)$ or $2a(1-a)+2b(1-b)-2ab$.
-
-
-
-
-
-
 
 For the Fisher information matrix, we seek $M$, the two-by-two matrix
 with entries $\sum_{\sigma\in\left\lbrace a\succ b\succ c,\ldots,
@@ -218,35 +214,69 @@ gives `1323/16`.
 
 
 
-# The loser
+## The loser
 
 Now consider the same situation but our observation is purely the
 loser in a race.  With $a,b,c, a+b+c=1$ or $c=1-a-b$ we have the
 probabilities of:
 
-## C losing
+A loses: either $b\succ c\succ a$ or $c\succ b\succ a$:
 
-either $a\succ b\succ c$ or $b\succ a\succ c$, mutually exclusive, probabilities add:
+$$\frac{b}{a+b+c}\cdot\frac{c}{a+c}+\frac{c}{a+b+c}\cdot\frac{b}{a+b}= bc\left(\frac{1}{1-b}+\frac{1}{1-c}\right)
+$$
+
+
+B loses: either $a\succ c\succ b$ or $c\succ a\succ c$:
+
+$$\frac{a}{a+b+c}\cdot\frac{c}{b+c}+\frac{c}{a+b+c}\cdot\frac{a}{a+b}= ac\left(\frac{1}{1-a}+\frac{1}{1-c}\right)
+=ac\left(\frac{1}{1-a}+\frac{1}{1-c}\right)
+$$
+
+C loses:  either $a\succ b\succ c$ or $b\succ a\succ c$, mutually exclusive, probabilities add:
 
 $$\frac{a}{a+b+c}\cdot\frac{b}{b+c}+\frac{b}{a+b+c}\cdot\frac{a}{a+c}= ab\left(\frac{1}{1-a}+\frac{1}{1-b}\right)$$
 
-## B losing
 
-either $a\succ c\succ b$ or $c\succ a\succ c$:
 
-$$\frac{a}{a+b+c}\cdot\frac{c}{b+c}+\frac{c}{a+b+c}\cdot\frac{a}{a+b}= ac\left(\frac{1}{1-a}+\frac{1}{1-c}\right)
-=a(1-a-b)\left(\frac{1}{1-a}+\frac{1}{a+b}\right)
+
+
+Interestingly, there is no well-defined maximum likelihood estimator
+from this data.  The likelihood functions for the three observations
+do not have a well-defined maximum.  If we try to find a symmetric
+estimator, specifically one in which
+
+* A loses $\longrightarrow\hat{a}=0,\hat{b}=\alpha,\hat{c}=\alpha$
+* B loses $\longrightarrow\hat{a}=\alpha,\hat{b}=0,\hat{c}=\alpha$
+* C loses $\longrightarrow\hat{a}=\alpha,\hat{b}=\alpha,\hat{c}=0$
+
+then there is no unbiased estimator: there is no value of $\alpha$ for
+which $\mathbb{E}\left(\hat{a},\hat{b},\hat{c}\right)=(a,b,c)$.  I
+think that's quite interesting.  How about minimizing the MSE?
+Defined as $\mathbb{E}\left| (a,b)-(\hat{a},\hat{b})\right|^2$, we are
+minimizing
+
+$$
+P(A \mbox{ loses})\cdot((a-0)^2 +(b-\alpha)^2) + 
+P(B \mbox{ loses})\cdot((a-\alpha)^2 +(b-0)^2) + 
+P(C \mbox{ loses})\cdot((a-\alpha)^2 +(b-\alpha)^2)
 $$
 
-## A losing
-
-either $b\succ c\succ a$ or $c\succ b\succ a$:
-
-$$\frac{b}{a+b+c}\cdot\frac{c}{a+c}+\frac{c}{a+b+c}\cdot\frac{b}{a+b}= b(1-a-b)\left(\frac{1}{1-b}+\frac{1}{a+b}\right)
+$$
+= b(1-a-b)\left(\frac{1}{1-b}+\frac{1}{a+b}\right)\cdot(a^2+(b-\alpha)^2)+
+  a(1-a-b)\left(\frac{1}{1-a}+\frac{1}{a+b}\right)\cdot((a-\alpha)^2+b^2) +
+  ab      \left(\frac{1}{1-a}+\frac{1}{1-b}\right)\cdot((a-\alpha)^2+(b-\alpha)^2
 $$
 
+Or, using the other definition [where $c=1-a-b$]
 
-In mathematica:
+$$
+P(A \mbox{ loses})\cdot((a-0)^2 +(b-\alpha)^2 + (c-\alpha)^2)) + 
+P(B \mbox{ loses})\cdot((a-\alpha)^2 +(b-0)^2 + (c-\alpha)^2)) + 
+P(C \mbox{ loses})\cdot((a-\alpha)^2 +(b-\alpha)^2 + c^2)
+$$
+
+but neither of these has a minimum independent of $a,b,c$.  For the
+Fisher information, from mathematica:
 
 ```
 c = 1-a-b
