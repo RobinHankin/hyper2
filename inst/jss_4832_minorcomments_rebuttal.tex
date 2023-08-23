@@ -10,8 +10,8 @@ Below, the reviewer's comments are in black, and the replies to the
 issues are in \textcolor{blue}{blue}.  I have indicated changes to
 the manuscript where appropriate.
 
-\textcolor{blue}{Short story: I have accommodated all the comments with
-rewording and clarification.}
+\textcolor{blue}{Short story: I have accommodated all the comments and
+  in particular have refactored the replication script as requested.}
 
 From the editorial team:
 
@@ -48,7 +48,7 @@ So, while I think the paper is in good shape, the code file is not. But this can
 Manuscript style comments:
 
 \begin{itemize}
-  \item Please use "R>" as the command prompt, rather than ">".
+  \item Please use \verb+"R>"+ as the command prompt, rather than \verb+">"+.
 \end{itemize}
     
 \textcolor{blue}{fixed}
@@ -80,11 +80,12 @@ weights = w, data = mydata)
 
 \textcolor{blue}{fixed}
 
-
- As a reminder, please make sure that: \proglang, \pkg and \code have
- been used for highlighting throughout the paper (including titles and
- references), except where explicitly escaped.
-
+\begin{itemize}
+  \item
+ As a reminder, please make sure that: \verb+\proglang+, \verb+\pkg+
+ and \verb+\code+ have been used for highlighting throughout the paper
+ (including titles and references), except where explicitly escaped.
+\end{itemize}
 \textcolor{blue}{fixed}
 
 
@@ -94,17 +95,19 @@ References:
       \item MATLAB (not: Matlab, matlab)
 guages. Hunter (2004), for example, presents results in matlab [although he works with a
 \end{itemize}
+
 \textcolor{blue}{fixed}
 
 \begin{itemize}
 \item As a reminder,
-- Please make sure that all software packages are \cite{}'d properly.
+- Please make sure that all software packages are \verb+\cite{}+'d properly.
 
 - All references should be in title style.
 
 - See FAQ for specific reference instructions.
-Code:
 \end{itemize}
+
+\textcolor{blue}{fixed}
 
 \begin{itemize}
 \item As a reminder, please make sure that the files needed to replicate
