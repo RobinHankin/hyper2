@@ -197,6 +197,7 @@ CITATION.cff
 ^inst/setpartitions_hyper2.Rmd$
 ^inst/timesData.csv$
 ^inst/jss_hyper3.Rnw$
+^inst/jss_4832_minorcomments_rebuttal.tex$
 ^inst/carcinoma.txt$
 ^inst/constructor_2019.txt$
 ^inst/constructor_2020.txt$
