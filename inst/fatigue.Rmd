@@ -231,7 +231,7 @@ now play with it:
 
 ```{r,calchfmax,cache=TRUE}
 Hf_maxp <- maxp(Hf)
-````
+```
 
 ```{r}
 summary(Hf)
