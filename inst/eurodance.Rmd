@@ -39,7 +39,7 @@ pref
 
 Now we treat each column as an order statistic:
 
-```{r,cache=TRUE}
+```{r,label=eachcolisorder,cache=TRUE}
 eurodance <- hyper2()
 for(i in seq_len(ncol(pref))){
 	x <- pref[,i]
@@ -52,7 +52,7 @@ pie(eurodance_maxp)
 
 Note the dominance of Poland.  We verify consistency:
 
-```{r,cache=TRUE}
+```{r,label=verifyconsistency,cache=TRUE}
 consistency(eurodance)
 ```
 
@@ -60,7 +60,7 @@ consistency(eurodance)
 
 Now we consider the jury's vote:
 
-```{r}
+```{r,label=considerjury}
 (jj <- o[,2])
 jj <- sort(jj,decreasing=TRUE)
 jj[jj>0] <- seq_len(sum(jj>0))
@@ -80,7 +80,7 @@ probability of observing the actual observation or an observation more
 unlikely under this likelihood function; it is operationally identical
 to a simulated Fisher's exact test.
 
-```{r,cache=TRUE}
+```{r,label=simfish,cache=TRUE}
 n <- 4000
 LL <- rep(0,n)
 for(i in seq_len(n)){
@@ -90,13 +90,13 @@ for(i in seq_len(n)){
 }
 ```
 
-```{r}
+```{r,label=comparelogliks}
 plot(sort(LL),log="y")
 p <- loglik(indep(eurodance_maxp),ordervec2supp(jury),log=FALSE)
 abline(h=p)
 ```
 
-```{r}
+```{r,label=sumll}
 sum(LL[LL<p])/sum(LL)
 ```
 
