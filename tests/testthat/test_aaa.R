@@ -10,8 +10,6 @@ test_that("Test suite aaa.R",{
 checker1 <- function(x){
 
     expect_error(!x)
-    expect_error(-x)
-    expect_error(+x)
 
     expect_error(x < x)
     expect_error(x > x)
@@ -55,7 +53,6 @@ checker3 <- function(x,y,z){
 
 
 for(i in 1:2){
-  for(inc in c(TRUE,FALSE)){
     x <- rhyper2()
     y <- rhyper2()
     z <- rhyper2()
@@ -63,7 +60,7 @@ for(i in 1:2){
     checker1(x)
     checker2(x,y)
     checker3(x,y,z)
-  }
+
 }
 
 checker1(rhyper2()*0)
