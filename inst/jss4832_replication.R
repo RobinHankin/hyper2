@@ -132,12 +132,14 @@ pchisq(-2 * S_delta, df = 1, lower.tail = FALSE)
 ## plot a support function for the observation a>b>a over the
 ## one-simplex {a,b|a+b=1} [figure 1]
 
+pdf(file="jss_hyper3-figaba.pdf")
 a <- seq(from = 0, by = 0.005, to = 1)                             # specify horizontal axis
 S <- function(a){log(a * (1 - a) / ((1 + a) * (3 - 2 * sqrt(2))))} # likelihood function for a>b>a
 plot(a, S(a), type = 'b',xlab=expression(p[a]),ylab="support")     # plot
 abline(h = c(0, -2))                                               # annotations [two units-of-support]
 abline(v = c(0.02438102, 0.9524271), col = 'red')                  # annotations [credible interval]
 abline(v = sqrt(2) - 1)                                            # annotations [evaluate]
+dev.off()
 
 ###################################################
 ### code chunk number 11: figabbabb
@@ -146,6 +148,8 @@ abline(v = sqrt(2) - 1)                                            # annotations
 ##  plot harmonised likelihood functions for the three possible order
 ##  statistics [viz a>a>b, a>b>a, b>a>a]
 
+
+pdf(file="jss_hyper3-figabbabb.pdf")
 f_aab <- function(a){a^2 / (1 + a)}            # L(a>a>b)
 f_aba <- function(a){a * (1 - a) / (1 + a)^2}  # L(a>b>a)
 f_baa <- function(a){(1 - a) / (1 + a)}        # L(b>a>a)
@@ -161,6 +165,7 @@ text(0.8,0.8,"AAB")                        # annotation
 text(0.8,0.5,"ABA",col="red")              # annotation
 text(0.8,0.15,"BAA",col="blue")            # annotation
 abline(h = exp(-2), lty = 2)               # two units-of-support criterion
+dev.off()
 
 
 
@@ -219,13 +224,15 @@ equalp.test(Hxy)             # ... and test the null that p_x=p_y
 
 ## show the likelihood function for the Plackett-Luce strength of "a"
 
+
+pdf(file="jss_hyper3-plotwilcoxlike.pdf")
 a <- seq(from = 0.02, to = 0.8, len = 40)   # horizontal axis
 L <- sapply(a, function(p){loglik(p, Hxy)}) # vectorized idiom for loglikelihood function
 plot(a, L - max(L), type = 'b',xlab=expression(p[a]),ylab="likelihood") # plot normalized loglikelihood
 abline(h = c(0, -2))    # two-units-of-support criterion
 abline(v = c(0.24))     # evaluate
 abline(v=c(0.5), lty=2) # null
-
+dev.off()
 
 
 ###################################################
@@ -289,9 +296,10 @@ options(digits = 3)
 ## Now maximize the likelihood over the 7-simplex corresponding to the
 ## javelin throwers' Plackett-Luce strengths:
 
+pdf(file="jss_hyper3-testthejav.pdf")
 (mj <- maxp(javelin))                                           # use optimization to find evaluate
 dotchart(mj, pch = 16,xlab="Estimated Bradley-Terry strength")  # visual plot of evaluate
-
+dev.off()
 
 
 ###################################################
@@ -326,13 +334,13 @@ rownames(M) <- c("logcontrast", "support")  # cosmetic
 
 ## Plot  the log-contrast dataset calculated in the previous chunk
 
-
+pdf(file="jss_hyper3-plottheloglikcont.pdf")
 colnames(M) <-  as.character(Ves)
 plot(t(M), type = "b")   # plot the figure
 abline(h = c(0, -2))     # two-units-of support criterion
 abline(v = 0, lty = 2)   # null 
 abline(v = log(0.32062833 / 0.11402735)) # evaluate
-
+dev.off()
 
 
 ###################################################
