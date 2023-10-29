@@ -30,7 +30,7 @@ specify the players:
   names(players) <-   # accused of collusion or not
     c("coll", "coll", "coll", "USA", "USSR", "USA", "USSR", "TCH")
 collusive_players <-     c("Petrosian", "Keres", "Geller")
- ```
+```
 
 ```{r}
 d <- as.matrix(cbind(as.character(a$V1),as.character(a$V2)))
