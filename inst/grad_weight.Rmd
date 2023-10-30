@@ -99,7 +99,7 @@ above we see very close agreement.
 
 # Slightly more complicated example
 
-```{r}
+```{r slightlymorecomplicated}
 H <- hyper3()
 f <- function(w){
   H <- hyper3()
@@ -136,7 +136,7 @@ $$
 $$
 
 
-```{r}
+```{r chessexample}
 
 w <- 1.2
 D <- 0.3
@@ -186,7 +186,7 @@ $$
 
 Differentiate with respect to `w`:
 
-```{r}
+```{r diffwrtw}
 diff <- 0
 dw <- 1e-4
 probs <- c(p1=0.15 , p2=0.45, p3=0.4)
@@ -203,14 +203,14 @@ c(LHS,RHS,LHS-RHS)
 We may even be a little clever  and use a central difference:
 
 
-```{r}
+```{r cleverusecentral}
 RHS2 <- (loglik(probs,f2(w=w+dw/2,D=D)) - loglik(probs,f2(w=w-dw/2,D=D)))/dw  # differential via numerics
 c(LHS,RHS2,LHS-RHS2)
 ```
 
 If we wish to differentiate with respect to `D` we need to change the `wanted` list:
 
-```{r}
+```{r diffwrtD}
 o <- c("p1","p2")
 n <- NULL
 wantedD <- list(n,o,n,o,n,n,o,n,n)

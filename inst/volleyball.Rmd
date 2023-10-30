@@ -35,7 +35,7 @@ won.
 We may use function `volley()` to convert this to a likelihood
 function:
 
-```{r calcmaxpvolley}
+```{r calcmaxpvolley,cache=TRUE}
 volleyball <- volley(volleyball_table)
 (volleyball_maxp <- maxp(volleyball))
 ```

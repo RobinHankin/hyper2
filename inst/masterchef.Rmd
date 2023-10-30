@@ -14,12 +14,12 @@ options("digits" = 5)
 This document creates objects `masterchef`, `masterched_maxp`, and
 `materchef_constrained_maxp`.
 
-```{r}
+```{r dfm}
 do_from_scratch <- FALSE
 ```
 
 
-```{r}
+```{r createobjects,cache=TRUE}
 
 Hall <-
     hyper2(pnames=c("Amy", "Ben", "Brendan", "Brent", "Byron",

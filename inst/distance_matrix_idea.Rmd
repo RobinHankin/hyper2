@@ -54,7 +54,7 @@ for(i in seq_len(6)){
 ```
 
 
-```{r}
+```{r roundm}
 M
 (M <- round(M*100))
 ```
@@ -64,7 +64,7 @@ Observations: the triangle inequality is broken, consider `NB`-`L`
 (81), `L`-`PB` (38) and `PB`-`NB` (8)
 
 
-```{r}
+```{r plotphangorn}
 plot(phangorn::upgma(as.dist(M)))
 ```
 

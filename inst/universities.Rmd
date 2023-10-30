@@ -73,7 +73,7 @@ increased its strength since 2016 and we can test whether this
 increase is significant:
 
 
-```{r,label=preandpost}
+```{r,label=preandpost,cache=TRUE}
 
 H1 <- hyper2(pnames=c("AUT_pre",universities_table[c(1:2,4:8),1]))
 for(i in 2012:2016){
@@ -93,7 +93,7 @@ maxp(H2)
 ```
 
 
-```{r}
+```{r maxph1h2,cache=TRUE}
 H <- H1 + H2
 maxp(H)
 ```
@@ -101,7 +101,7 @@ maxp(H)
 So from the above we see that the estimated post-2016 strength of AUT
 is larger than the pre-2016 strength.  Is this change significant?
 
-```{r}
+```{r sameptesthon2,cache=TRUE}
 samep.test(H,c("AUT_pre","AUT_post"))
 ```
 

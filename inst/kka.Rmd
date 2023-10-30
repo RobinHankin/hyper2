@@ -459,7 +459,7 @@ M <- as.matrix(expand.grid(lambda=lambda,D=D))
 l <- matrix(apply(M,1,f),n,n)
 ```
 
-```{r}
+```{r contourplotter}
 l <- l-max(l)
 contour(lambda,D,l,nlevels=30,xlab="lambda",ylab="D")
 abline(v=lambda,col='gray',lwd=0.2)

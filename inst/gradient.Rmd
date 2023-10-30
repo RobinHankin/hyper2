@@ -16,7 +16,7 @@ objects.
 
 The chess dataset is as follows:
 
-```{r}
+```{r showchess}
 chess
 ```
 
@@ -25,7 +25,7 @@ which calculates the partial derivatives using straightforward algebra
 (specifically elementary calculus, $\partial(x+y)^n/\partial
 x=n(x+y)^{n-1}$), and `chess_gradient_theoretical()`, which uses `C` code:
 
-```{r}
+```{r chessgrad}
 chess_gradient_theoretical <- function(x){
     Topalov <- x[1]
     Anand   <- x[2]
@@ -48,7 +48,7 @@ So in the above we have two ways of calculating the gardient: one
 theoretical and one numerical.  Do they agree?
 
 
-```{r}
+```{r pchessagree}
 p_chess <- 
 	c(
 		Topalov = 0.5,
@@ -66,14 +66,14 @@ Yes, they agree
 The `icons` dataset is:
 
 
-```{r}
+```{r showicons}
 icons
 ```
 
 We can do the same thing but the algebra is more involved:
 
 
-```{r}
+```{r samethingalgebra}
 icons_gradient_theoretical <- function(x){
     NB <- x[1]
     L <- x[2]
@@ -147,11 +147,11 @@ icons_gradient_numerical  <- function(x){gradientn(icons,x)}
 
 Then 
 
-```{r}
+```{r isicons}
 p_icons <- c(NB=0.3, L=0.1, PB=0.2, THC=0.15, OA=0.15, WAIS=0.1)
 ```
 
-```{r}
+```{r comparegradientwithwithout}
 icons_gradient_theoretical(p_icons)
 icons_gradient_theoretical(p_icons) - icons_gradient_numerical(p_icons)
 ```
@@ -163,7 +163,7 @@ also agreeing.
 
 Taking the chess dataset we have
 
-```{r}
+```{r lookatchess}
 rbind(indep(p_chess), gradient(chess,indep(p_chess)))
 rbind(p_chess,gradientn(chess,p_chess))
 ```
@@ -172,14 +172,14 @@ Indeed, because the powers of `chess` sum to zero, we can test the
 fact that the derivative in the direction parallel to `p_chess` is
 zero:
 
-```{r}
+```{r isderivzero}
 sum(powers(chess))
 sum(p_chess*gradientn(chess,p_chess))
 ```
 
 which is correct to numerical precision.  Further, 
 
-```{r}
+```{r seesumpower}
 sum(powers(icons))
 sum(p_icons*gradientn(icons,p_icons))
 ```
@@ -190,7 +190,7 @@ sum(p_icons*gradientn(icons,p_icons))
 Consider the `icons` likelihood function; we wonder whether the
 loglikelihood function has a well-defined maximum.
 
-```{r}
+```{r ishessian}
 (M <- hessian(icons))
 is_ok_hessian(M)
 ```
@@ -198,7 +198,7 @@ is_ok_hessian(M)
 This would suggest that the maximum is defined; we may ask how sharp
 it is:
 
-```{r}
+```{r isnothessian}
 is_ok_hessian(M,give=TRUE)
 ```
 
@@ -208,14 +208,14 @@ numerically correct.  First the unconstrained problem, working with
 the first five elements.  The first step is to look at the likelihood,
 the gradient, and the Hessian, all evaluated at a certain point:
 
-```{r}
+```{r evaluatehessian}
 (p <- indep(equalp(icons))) # NB not the evaluate
 (G <- gradient(icons,p))
 (M <- hessian(icons,p,border=FALSE))
 eigen(M,TRUE,TRUE)$values
 ```
 
-```{r}
+```{r smallpert}
 dp <- rnorm(5)*1e-4        # small perturbation
 dL <- loglik(p+dp,icons) - loglik(p,icons)  # delta loglikelihood (exact)
 
@@ -238,7 +238,7 @@ O}(f'''(x)\delta x^3)$ but maybe the third order derivatives are
 larger than one might expect.  We can perform a similar analysis but
 using bordered Hessians:
 
-```{r}
+```{r useborderedhess}
 
 dpc <- fillup(dp,0)   # constrained delta p
 

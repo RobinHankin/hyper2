@@ -53,11 +53,11 @@ In the summary above (in the summary of bracket lengths), we see how
 the likelihood function comprises only singletons [which appear on the
 numerator] and pairs [on the denominator].
 
-```{r}
+```{r  calcmaxp,cache=TRUE}
 karate_maxp <- maxp(karate)
 ```
 
-```{r}
+```{r showdot}
 dotchart(log10(karate_maxp))
 ```
 
@@ -67,7 +67,7 @@ dotchart(log10(karate_maxp))
 
 We will define a matrix of win-loss statistics:
 
-```{r}
+```{r defmatwinloss}
 pk <- pnames(karate)
 M <- matrix(0,length(pk),length(pk))
 rownames(M) <- pk
@@ -79,14 +79,14 @@ for(i in seq_len(nrow(o))){
 }
 ```
 
-```{r,cache=TRUE}
+```{r,label=pairwisem,cache=TRUE}
 pM <- pairwise(M)
 pM == karate  # consistency check; should be TRUE
 ```
 
 Now use Zermelo's iteration method and compare with `hyper2`'s `maxp()`:
 
-```{r}
+```{r usezerm}
 karate_zermelo <- zermelo(M)
 loglik(karate_zermelo,karate)
 loglik(karate_maxp,karate)
@@ -95,7 +95,7 @@ loglik(karate_maxp,karate)
 Above we see that Zermelo gives a much more likely point in parameter
 space than `maxp()`.
 
-```{r}
+```{r plotzerm}
 par(pty='s')
 plot(log10(karate_zermelo),log10(karate_maxp),asp=1,xlim=c(-4,0),ylim=c(-4,0))
 abline(0,1)

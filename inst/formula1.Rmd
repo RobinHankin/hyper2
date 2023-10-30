@@ -89,7 +89,7 @@ zipf(9)
 
 Then there are two natural ways to proceed:
 
-```{r,cache=TRUE}
+```{r twonatural,cache=TRUE}
 mf <- maxp(formula1)
 l0 <- loglik(indep(mf),formula1)
 l1 <- loglik(indep(zipf(size(formula1))),formula1)
@@ -102,7 +102,7 @@ and it might be better to rank the players according to their
 likelihood rating.
 
 
-```{r}
+```{r ranklike}
 mf
 mf[rank(-mf)] <- zipf(size(formula1))
 mf
@@ -296,7 +296,7 @@ maxp(H)
 
 Now we can test the hypothesis that Hamilton's wet strength `S` is zero:
 
-```{r,testwetstrengthzero}
+```{r,testwetstrengthzero,cache=TRUE}
 pnames(H)
 H9 <- keep_flawed(H,c("S",pnames(H)[1:8]))
 specificp.gt.test(H9,"S",0)

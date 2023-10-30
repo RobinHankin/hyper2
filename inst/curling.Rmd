@@ -56,7 +56,7 @@ because that that team did not compete.  This means that function
 `ordertable2supp()` is not appropriate and we need to use a different
 method:
 
-```{r,makehyper2curling}
+```{r,makehyper2curling,cache=TRUE}
 curling2 <- hyper2()
 
 for(i in seq_len(ncol(curling_table))){

@@ -59,7 +59,7 @@ st[is.na(st)] <- 999
 Taking Maier as an example (a mid-range competitor) we want to
 identify competitors who Maier beats at least once:
 
-```{r}
+```{r identifycompetitors}
 bm1 <- st[,1] > st["Maier",1]  # lost to Maier in run 1
 bm2 <- st[,2] > st["Maier",2]  # lost to Maier in run 2
 bm3 <- st[,3] > st["Maier",3]  # lost to Maier in run 3
@@ -70,7 +70,7 @@ st[bm1 | bm2 | bm3 | bm4,]
 Above we see a subset of rows of  `skeleton_table` corresponding to
 competitors who lost to Maier.
 
-```{r}
+```{r losttomaier}
 rownames(st[bm1 | bm2 | bm3 | bm4,])
 jj <- cbind(won="Maier",lost=rownames(st[bm1 | bm2 | bm3 | bm4,]))
 noquote(jj)
@@ -81,7 +81,7 @@ Above we see a directed graph, the arrow means "beats", so for example
 Maier beats Timmings (2 o'clock).  We can functionify the calculation
 and define `beats()`:
 
-```{r}
+```{r definebeats}
 beats <- function(p){   # returns everyone whom competitor 'p' beats
   bm1 <- st[,1] > st[p,1]  
   bm2 <- st[,2] > st[p,2]  
@@ -104,14 +104,14 @@ graph.  We can however consider just the top and bottom few
 competitors and see if that makes a difference.
 
 
-```{r}
+```{r excludemidrange}
 (st2 <- st[-(4:19),])  # exclude a bunch of mid-range competitors
 ```
 
 Above, it is pretty clear that there is a dominated set of everyone
 except the top 3.
 
-```{r}
+```{r justtop3}
 bb <- c()
 for(i in rownames(st2)){bb <- c(bb,beats(i))}
 graph(bb)
@@ -179,24 +179,19 @@ names(pvals) <- p
 pvals
 ```
 
-
-
 (NB the above chunk takes about an hour to run, even with `n=1`).
 
 
-```{r}
+```{r showpvals}
 plot(pvals,log='y',pch=16)
 for(i in seq_along(pvals)){text(i,pvals[i],names(pvals)[i],pos=4,col='gray')}
 ```
-
-
-
 
 
 ### Package dataset {-}
 
 Following lines create `skeleton.rda`, which is not part of the CRAN version of the package.
 
-```{r,label=savecurlingdataset}
+```{r,label=saveskeletondataset}
 save(skeleton_table,skeleton,skeleton_maxp,file="skeleton.rda")
 ```
