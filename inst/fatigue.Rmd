@@ -21,7 +21,7 @@ library("hyper2")
 Analysis of  the 1973 interzonal competition
 
 
-```{r cars}
+```{r readdata}
 jj <- read.table("interzonal1973_petropolis.txt",header=TRUE,skip=2)
 a <- data.frame(day=jj$day + 31*(jj$month=="August"),white=jj$white,black=jj$black,result=jj$result,round=jj$round,moves=jj$moves)
 
@@ -86,14 +86,14 @@ summary(H)
 ```
 
 
-```{r}
+```{r maketabs}
 tab <- cbind(tab,played=rowSums(tab))
 tab <- cbind(tab,points=tab[,1] + tab[,3]/2)
 tab
 ```
 
 
-```{r}
+```{r dostudentttest}
 table(a$result)
 hist(a$moves)
 plot(moves~as.factor(result),data=a)
@@ -103,7 +103,7 @@ moves_won_games   <- a$moves[a$result != "1/2-1/2"]
 t.test(moves_drawn_games,moves_won_games)
 ```
 
-```{r}
+```{r makeo}
 head(a,10)
 o <- matrix(0,max(a[,5]),length(players))
 dimnames(o) <- list(round=paste("r",seq_len(nrow(o)),sep=""),player=players)
@@ -119,7 +119,7 @@ o
 Now focus on pairs of successive rounds: 1,2; 4,5; 7,8; 10,11; 13,14; 16,17
 
 
-```{r}
+```{r justsuccessive}
 unlist(a[2,])
 `fatigued` <- function(i){
   x <- unlist(a[i,])
@@ -233,7 +233,7 @@ now play with it:
 Hf_maxp <- maxp(Hf)
 ```
 
-```{r}
+```{r showsum}
 summary(Hf)
 pnames(Hf)
 Hf_maxp
@@ -241,7 +241,7 @@ pie(Hf_maxp)
 ```
 
 
-```{r}
+```{r maketable}
 jj <- rep(0,nrow(a))
 M <- data.frame(
 white_player=rep(NA,nrow(a)),
