@@ -1,6 +1,8 @@
 ---
-title: "skeleton"
+title: "skeleton racing with the hyper2 package"
+author: "R. K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -12,10 +14,11 @@ library("igraph")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
+To cite the `hyper2` package in publications, please use @hankin2017a.
 The [skeleton](https://en.wikipedia.org/wiki/Skeleton_(sport)) is a
 winter sliding sport.  This short document discusses a dataset taken
 from the [2018 Winter
@@ -195,3 +198,5 @@ Following lines create `skeleton.rda`, which is not part of the CRAN version of 
 ```{r,label=saveskeletondataset}
 save(skeleton_table,skeleton,skeleton_maxp,file="skeleton.rda")
 ```
+
+### References {-}

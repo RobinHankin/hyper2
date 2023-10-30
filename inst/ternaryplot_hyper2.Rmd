@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications please use @hankin2017.
+To cite the `hyper2` package in publications please use @hankin2017a.
 Here I show how to use the excellent `Ternary` package [@smith2017] to
 generate triangular plots for `hyper2` likelihood functions with size
 3.  First load the `Ternary` and `hyper2` packages:

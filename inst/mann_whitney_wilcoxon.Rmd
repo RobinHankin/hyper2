@@ -1,8 +1,8 @@
 ---
-title: "Mann-Whitney-Wilcoxon test with `hyper3` objects"
-author: "Robin KS Hankin"
-date: "10/04/2022"
-output: html_document
+title: "Generalizing the Mann-Whitney-Wilcoxon test with `hyper3` objects"
+author: "Robin K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -11,12 +11,14 @@ knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
-We do some work with Mann-Whitney test, using the chorioamnion dataset at `wilcox.test.Rd`:
+To cite the `hyper2` package in publications, please use @hankin2017a.
+Here I discuss the `hyper2` generalization of the
+Mann-Whitney-Wilcoxon test, applying it to the chorioamnion dataset at
+`wilcox.test.Rd`:
 
 ```{r,label=defineAB}
 x <- c(0.80, 0.83, 1.89, 1.04, 1.45, 1.38, 1.91, 1.64, 0.73, 1.46)
@@ -93,3 +95,5 @@ abline(0,1)
 
 table(wilcox=a[,1]<0.05,hyper3=a[,2]<0.05)
 ```
+
+# References

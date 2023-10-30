@@ -1,6 +1,8 @@
 ---
 title: "Tennis doubles and ghosts"
+author: "R. K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -11,14 +13,14 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
-This short document defines and analyses a small dataset originally
-considered by Hankin (2010).  There, results from tennis games among
-four players was considered:
+To cite the `hyper2` package in publications, please use @hankin2017a.
+This short document discusses a small dataset first presented by
+@hankin2010.  There, results from tennis games among four players was
+considered:
 
 ```
        {p1,p2} vs {p3,p4}   9-2  
@@ -163,8 +165,8 @@ well-defined maximum.
 ### Analysis with `hyper3` {-}
 
 The likelihood for the 9-2 scoreline between $\left\lbrace
-p1,p2\right\rbrace$ and $\left\lbrace p3,p4\right\rbrace$ would have a
-likelihood function of
+p_1,p_2\right\rbrace$ and $\left\lbrace p_3,p_4\right\rbrace$ would
+have a likelihood function of
 
 $$
 \frac{
@@ -209,14 +211,6 @@ tennis_ghost_maxp
 ```
 
 
-### References {-}
-
-* RKS Hankin 2010. "A generalization of the Dirichlet distribution". 
- _Journal of Statistical Software_ 33(11)
-* RKS Hankin 2017. "Partial rank data with the hyper2 package:
-  likelihood functions for generalized Bradley-Terry models".  _The R
-  Journal_ 9(2)
-
 
 ### Package dataset {-}
 
@@ -225,3 +219,8 @@ Following lines create `tennis.rda`, residing in the `data/` directory of the pa
 ```{r,label=saveghosttennisdataset}
 save(tennis,tennis_maxp,tennis_ghost, tennis_ghost_maxp,file="tennis.rda")
 ```
+
+
+### References {-}
+
+

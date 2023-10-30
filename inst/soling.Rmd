@@ -1,6 +1,8 @@
 ---
 title: "soling"
+author: "R. K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -11,12 +13,13 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-The Soling is a type of boat raced in the 2000 Summer Olympics.  Here
-I analyse race data taken from
+To cite the `hyper2` package in publications, please use @hankin2017a.
+Soling is a type of boat raced in the 2000 Summer Olympics.  Here I
+analyse race data taken from
 [wikipedia](https://en.wikipedia.org/w/index.php?title=Sailing_at_the_2000_Summer_Olympics_\%E2\%80\%93_Soling&oldid=945362535)
 using a Plackett-Luce extension of the Bradley-Terry model.
 
@@ -93,7 +96,7 @@ Figure \@ref(fig:showdiff) shows a modest change.  We might ask
 whether the additional observations are consistent with the original
 Placket-Luce likelihood:
 
-```{r}
+```{r solingdiff}
 (soling_diff <- soling_after - soling)
 ```
 
@@ -118,3 +121,4 @@ save(soling,soling_after, soling_maxp,soling_after_maxp,soling_table,
   file="soling.rda")
 ```
 
+### References {-}

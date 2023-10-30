@@ -1,6 +1,8 @@
 ---
 title: "Ladies' figure skating in the 2002 Winter Olympics"
+author: "R. K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -10,10 +12,12 @@ library("hyper2")
 library("magrittr")
 options("digits" = 5)
 ```
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
 
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017a.
 This document analyses Bradley-Terry strengths of the competitors in
 the Ladies' Figure Skating at the 2002 Winter Olympics.  In the
 package, dataframe `skating_table` is copied from Lock and Lock (see
@@ -350,3 +354,5 @@ directory of the package.
 ```{r,label=saveskatingdataset}
 save(skating_table,skating,skating_maxp,file="skating.rda")
 ```
+
+### References {-}

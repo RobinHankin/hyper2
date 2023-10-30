@@ -1,6 +1,8 @@
 ---
 title: "volleyball dataset"
+author: "R. K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -10,13 +12,15 @@ library("hyper2")
 library("magrittr")
 options("digits" = 5)
 ```
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
 
-This short document discusses a dataset first presented by Hankin
-(2010), although here only the first 52 observations are used.  A
-volleyball \dfn{set} is a Bernoulli trial between two disjoint subsets
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017a.
+This short document discusses a dataset first presented by @hankin2010,
+although here only the first 52 observations are used.  A
+volleyball _set_ is a Bernoulli trial between two disjoint subsets
 of the players.  The two subsets are denoted (after the game) as the
 _winners_ and the _losers_: these are denoted by `1` and `0`
 respectively.
@@ -30,9 +34,7 @@ head(volleyball_table)
 Each row of `volleyball_table` is a set.  Thus the first line shows a
 game between a team comprising `p1`, `p4`, and `p8` against a team
 comprising `p5` and `p6`.  Player `p9` did not play; team `p1 p4 p8`
-won.  
-
-We may use function `volley()` to convert this to a likelihood
+won.  We may use function `volley()` to convert this to a likelihood
 function:
 
 ```{r calcmaxpvolley,cache=TRUE}
@@ -68,3 +70,6 @@ Following lines create `volleyball.rda`, residing in the `data/` directory of th
 ```{r,label=savevolleyballdataset}
 save(volleyball_table,volleyball_maxp,volleyball,file="volleyball.rda")
 ```
+
+
+## References {-}

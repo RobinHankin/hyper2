@@ -1,7 +1,9 @@
 ---
 title: "Race results from the twelfth edition of the
   round-the-world Volvo Ocean Race"
+author: "Robin K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -12,11 +14,11 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
+To cite the `hyper2` package in publications, please use @hankin2017a.
 This short document creates the `volvo` suite of R objects and
 presents some preliminary analysis.  It refers to the 12th edition of
 the Volvo Ocean Race, 2014-2015 in which seven racing teams competed
@@ -51,6 +53,15 @@ equalp.test(volvo)
 ```
 
 
+### Package dataset {-}
+
+Following lines create `volvo.rda`, residing in the `data/` directory of the package.
+
+```{r,label=savecurlingdataset}
+save(volvo_table,volvo_maxp,volvo,file="volvo.rda")
+```
+
+
 ## References {-}
 
 Wikipedia contributors, 2019.  "2014-2015 Volvo Ocean Race".
@@ -59,10 +70,3 @@ In _Wikipedia, the free encyclopedia_.  Retrieved 22:21, February
 (https://en.wikipedia.org/w/index.php?title=2014\%E2\%80\%932015_Volvo_Ocean_Race&oldid=914916131)
 
 
-### Package dataset {-}
-
-Following lines create `volvo.rda`, residing in the `data/` directory of the package.
-
-```{r,label=savecurlingdataset}
-save(volvo_table,volvo_maxp,volvo,file="volvo.rda")
-```

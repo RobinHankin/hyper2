@@ -1,7 +1,6 @@
 ---
 title: "The weighted hyperdirichlet distribution: the `hyper3` class"
 author: "Robin K. S. Hankin"
-date: "`r Sys.Date()`"
 vignette: |
   %\VignetteIndexEntry{hyper3}
   %\VignetteEncoding{UTF-8}

@@ -1,6 +1,8 @@
 ---
 title: "Some thoughts on Zermelo's iteration process in the context of the hyper2 package"
+author: "Robin K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -11,11 +13,11 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
+To cite the `hyper2` package in publications, please use @hankin2017a.
 This short document sets out a use-case for functions `zermelo()` and
 `pairwise()`.  First I create `n=10` competitors with Zipf strengths:
 
@@ -99,3 +101,5 @@ head(o)
 l <- apply(o,1,loglik,H)
 plot(log(abs(l-max(l))))
 ```
+
+# References
