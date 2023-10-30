@@ -15,9 +15,10 @@ abbreviated <- TRUE  # change to FALSE for full names
 ![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
 </p>
 
-The file `eurodance2008.txt`, used below, is copied from
-"Eurovision Dance Contest 2008", Wikipedia, accessed March 31, 2021.
-First we specify the matrix as appearing in the Wikipedia page:
+(takes about 20 minutes to process without cache).  The file
+`eurodance2008.txt`, used below, is copied from "Eurovision Dance
+Contest 2008", Wikipedia, accessed March 31, 2021.  First we specify
+the matrix as appearing in the Wikipedia page:
 
 ```{r, specifymatrix}
 eurodance_table <- as.matrix(read.table("eurodance2008.txt"))
