@@ -188,7 +188,7 @@ maxp(H)
 ```
 Now we can test the hypothesis that Hamilton's wet strength `S` is zero:
 
-```{r,testwetstrengthzero}
+```{r,testwetstrengthzero,cache=TRUE}
 pnames(H)
 specificp.gt.test(H,"S",0)
 ```

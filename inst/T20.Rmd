@@ -105,7 +105,7 @@ the teams' strengths.  The first step is to calculate a likelihood
 function for the strengths:
 
 
-```{r indstrength}
+```{r indstrength,cache=TRUE}
 attach(lapply(T20_table[, ], as.vector))  # vector access to team1, etc
 T20 <- hyper2()
 for(i in seq_along(team1)){
@@ -125,7 +125,7 @@ dotchart(T20_maxp)
 
 So we can test the null that all the teams have the same strength:
 
-```{r nullallteams}
+```{r nullallteams,cache=TRUE}
 a1 <- maxp(T20,give=TRUE)$value        # likelihood at the evaluate
 a2 <- loglik(indep(equalp(T20)),T20)  # likelihood at p1=p2=...=p14
 a1-a2
@@ -156,7 +156,7 @@ long time to run which is why it is not included in this vignette).
 
 We can now attempt to see if the toss makes a difference:
 
-```{r tossdiff}
+```{r tossdiff,cache=TRUE}
 T20_toss  <- hyper2(pnames=c('toss',levels(T20_table$team1)))
 for(i in seq_along(team1)){
       players <- c(team1[i],team2[i])

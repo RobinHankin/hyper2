@@ -19,7 +19,7 @@ options("digits" = 5)
 This short document sets out a use-case for functions `zermelo()` and
 `pairwise()`.  First I create `n=10` competitors with Zipf strengths:
 
-```{r}
+```{r maketencompetitors}
 n <- 10
 p <- zipf(n)
 names(p) <- letters[seq_len(n)]
@@ -29,7 +29,7 @@ p
 Now I create `M`, a matrix holding pairwise comparisons between the
 competitors:
 
-```{r}
+```{r makeMwithpairwise}
 M <- matrix(0,n,n)
 rownames(M) <- names(p)
 colnames(M) <- names(p)
@@ -54,31 +54,31 @@ expect $80\cdot\frac{2}{3}=53.3$ victories.  We can estimate the
 strengths of the competitors using either Zermelo's iteration scheme
 or function `maxp()`.  First Zermelo:
 
-```{r}
+```{r usezerm}
 (pZ <- zermelo(M))
 ```
 
 And now hyper2:
 
-```{r,cache=TRUE}
+```{r,label=usehyper2,cache=TRUE}
 (H <- pairwise(M))
 (pH <- maxp(H))
 ```
 
 We can compare the two using scattergraphs and likelihood:
 
-```{r}
+```{r comparewithscattergraph}
 par(pty='s')
 plot(pZ,pH,asp=1,log='xy')
 abline(0,1)
 ```
 
-```{r}
+```{r nowplotlog}
 plot(log(pZ),log(abs(pH-pZ)/pZ))
 abline(h=0)
 ```
 
-```{r}
+```{r calcloglik}
 loglik(pZ,H)-loglik(pH,H)
 ```
 
@@ -86,14 +86,14 @@ Above we see that the two methods agree closely in both point and
 likelihood.  Also, both evaluates are reasonably close to the true Zipf
 strengths:
 
-```{r}
+```{r arebothclose}
 par(pty='s')
 plot(zipf(n),log(abs(zipf(n)-pZ)/zipf(n)),pch=16,col='black',log='x')
 ```
 
 Now we can have a bit of fun with Zermelo:
 
-```{r}
+```{r funwithzermelo}
 o <- zermelo(M,give=TRUE)
 head(o)
 l <- apply(o,1,loglik,H)

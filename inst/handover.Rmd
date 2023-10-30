@@ -64,7 +64,7 @@ $\theta_{ij}\geq 0,\sum_{i,j \in\left\lbrace
 means "no", so $\theta_{01}$ is the probability of reviewer 1
 responding "no" and reviewer 2 responding "yes".
 
-```{r}
+```{r setuphandover,cache=TRUE}
 handover <- hyper2()
 handover["t11"] %<>% inc(handover_table[1,1])
 handover["t10"] %<>% inc(handover_table[1,2])
@@ -83,14 +83,14 @@ handover_maxp
 
 We may simply test the hypothesis that $\theta_{01} = \theta_{10}$:
 
-```{r}
+```{r testtheta01,cache=TRUE}
 samep.test(handover,c("t01","t10"))
 ```
 
 Alternatively we might use the Bayesian paradigm and calculate the
 probability of $\theta_{01} > \theta_{10}$:
 
-```{r}
+```{r probofhandover}
 probability(handover,disallowed=function(p){p[2]<p[3]},tol=0.05)
 ```
 

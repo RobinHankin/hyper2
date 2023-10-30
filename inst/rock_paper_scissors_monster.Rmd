@@ -172,7 +172,7 @@ H
 added to his strength).  We can call this the TAKM model, and find the
 evaluate:
 
-```{r}
+```{r,calcmaxp,cache=TRUE}
 maxp(H)
 ```
 

@@ -34,7 +34,7 @@ hypotheses correspond to a restriction on allowable parameter space.
 The first step is to define a suitable likelihood function for our
 observation:
 
-```{r,label=useggrl}
+```{r,label=useggrl,cache=TRUE}
 n <- 6 # number of competitors
 H <- hyper2(pnames=letters[1:6])
 L <- ggrl(H,letters[2:n],letters[1]) 

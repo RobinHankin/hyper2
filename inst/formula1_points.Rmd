@@ -29,7 +29,7 @@ f2017
 
 Now process it to give the ranks:
 
-```{r}
+```{r processtogetranks}
 f <- function(x){
 	noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")
 	x <- as.character(x)
@@ -56,7 +56,7 @@ includes six different classes of no-score such as "Ret" for retired,
 
 Now calculate points:
 
-```{r}
+```{r calcthepoints}
 points <- c(25,18,15,12,10,8,6,4,2,1,0,0,0,0,0,0,0,0,0,0)
 stopifnot(all(diff(points)<=0))
 points <- points/points[1]
@@ -90,7 +90,7 @@ pie(mL2017)
 Now use random sampling:
 
 
-```{r}
+```{r userandomsamp}
 random_table <- rrank(n=ncol(f2017), p=mL2017)
 rownames(random_table) <- colnames(f2017)
 random_table
@@ -98,11 +98,11 @@ random_table
 
 then see how close it is to reality:
 
-```{r}
+```{r howclosetoreality,cache=TRUE}
 maxp(rank_likelihood(random_table)) # should be close to mL2017
 ```
 
-```{r}
+```{r checkagain}
 a <- random_table
 class(a) <- "matrix"
 a[] <- points[a]
@@ -115,7 +115,7 @@ rando
 
 Thus we see that 
 
-```{r}
+```{r thuswesee}
 jj <- sort(p,decreasing=TRUE)
 jj
 names(jj)

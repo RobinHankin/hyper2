@@ -78,7 +78,7 @@ H
 And then maximizing it is carried out using the `maxp()` function:
 	
 
-```{r}
+```{r,label=maxwithevalp,cache=TRUE}
 evaluate1 <- maxp(H)
 (maxlike1 <- loglik(indep(evaluate1),H))
 dotchart(evaluate1,pch=16)
@@ -91,7 +91,7 @@ as a result of the difficulty of honouring the constraints.  However,
 if we give the system a hand by starting at a point closer to the
 evaluate we can do slightly better:
 
-```{r}
+```{r bettereval,cache=TRUE}
 f <- function(p,n){c(p,rep((1-p)/n,n-1))}
 sss <- f(0.99,9)  # sensible start point, close (?) to the evaluate
 evaluate2 <- maxp(H,startp=sss)
@@ -100,7 +100,7 @@ maxlike2 <- loglik(indep(evaluate2),H)
 
 Graphically:
 
-```{r}
+```{r showmaxlike}
 dotchart(evaluate2,pch=16)
 par(pty='s')
 plot(evaluate1,evaluate2,asp=1,log='xy')
@@ -111,7 +111,7 @@ So it is almost identical to the coldstart above in the sense that the
 two evaluates are very close.  We can compare the hotstart to the
 coldstart in terms of support:
 
-```{r}
+```{r diffbetweenlikelihoods}
 maxlike2-maxlike1
 ```
 
@@ -125,7 +125,7 @@ $2,3,\ldots 10$, contrary to observation.
 Possibly, a better way is to mimic the more appropriate of the two
 limiting processes above:
 
-```{r}
+```{r mimiclimit}
 vsssp <- function(x,n){
   jj <- 1/x^seq_len(n)
   indep(jj/sum(jj))
@@ -134,7 +134,7 @@ vsssp <- function(x,n){
 
 Then
 
-```{r}
+```{r evaluatetwice,cache=TRUE}
 evaluate3 <- maxp(H,vsssp(2,10))
 maxlike3 <- loglik(indep(evaluate3),H)
 dotchart(evaluate3,pch=16)
@@ -143,7 +143,7 @@ dotchart(evaluate3,pch=16)
 Observe that the likelihood at this point is only very slightly better
 than the `equalp()` start point:
 
-```{r}
+```{r veryslightlybetter}
 maxlike3-maxlike2
 ```
 

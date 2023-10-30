@@ -52,7 +52,7 @@ ordertable_to_ranktable(pentathlon_table)
 ```
 
 
-```{r}
+```{r showpiechart,cache=TRUE}
 pentathlon <- ordertable2supp(pentathlon_table)
 pentathlon_maxp <- maxp(pentathlon)
 pentathlon_maxp
@@ -62,7 +62,7 @@ pie(pentathlon_maxp)
 And we can test the null that the competitors all have the same
 Plackett-Luce strengths:
 
-```{r}
+```{r testequal,cache=TRUE}
 equalp.test(pentathlon)
 ```
 

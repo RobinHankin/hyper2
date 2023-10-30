@@ -158,7 +158,7 @@ Highly signficant.
 Now create a hyper2 object with appropriate reified monsters:
 
 
-```{r hyper2reified}
+```{r hyper2reified,cache=TRUE}
 problem <- function(...){stop("must be a white win or a black win or a draw")}
 
 H <- hyper2(pnames=c(players,"white","draw","rest"))

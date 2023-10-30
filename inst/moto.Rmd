@@ -34,7 +34,7 @@ log-likelihood.  In the package, object `moto` is the corresponding
 Plackett-Luce likelihood function; we drop the final column which is
 the points scored by each rider.
 
-```{r,showmotolikelihoodhead}
+```{r,showmotolikelihoodhead,cache=TRUE}
 moto <- ordertable2supp(moto_table[,-ncol(moto_table)])
 head(moto)
 ```

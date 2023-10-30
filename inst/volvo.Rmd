@@ -34,7 +34,7 @@ finish" and `DNS` "did not start".  We can convert the table to a
 support function with `ordertable2supp()`, remembering to specify the
 noscore options:
 
-```{r}
+```{r specifynoscore,cache=TRUE}
 volvo <- ordertable2supp(volvo_table,noscore=c("DNF","DNS"))
 (volvo_maxp <- maxp(volvo))
 ```
@@ -46,7 +46,7 @@ pie(volvo_maxp)
 Figure \@ref(fig:volvomaxp) shows the maximum likelihood strengths
 visually, and we may assess the null of equal strengths:
 
-```{r,equalvolvostrengths}
+```{r,label=equalvolvostrengths,cache=TRUE}
 equalp.test(volvo)
 ```
 
