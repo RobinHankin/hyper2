@@ -13,7 +13,7 @@ This work extends that of `curacao1962_threeplayers.R` by including
 a rest monster.
 
 
-```{r}
+```{r, label=loadlibrary}
 library("hyper2")
 
 a <- read.table("curacao1962_candidates.txt",header=FALSE)
@@ -23,7 +23,7 @@ head(a)
 
 specify the players:
 
-```{r}
+```{r,label=specplay}
   players <- 
     c("Petrosian", "Keres", "Geller", "Fischer", "Korchnoi",
       "Benko", "Tal", "Filip")
@@ -78,7 +78,7 @@ for(i in seq_len(28)){  # 'i' loops through rounds
 So we have three matrices `cumulative_games`,
 `cumulative_collusive_games` and `cumulative_noncollusive_games`:
 
-```{r}
+```{r cumandcons}
 cumulative_games
 cumulative_collusive_games
 cumulative_noncollusive_games
@@ -126,7 +126,7 @@ noncollusive games and Filip had played 26.
 We can see the differences between cumulative noncollusive games
 played between Black and White, summed over the whole tournament:
 
-```{r}
+```{r calcdiff}
 diff <- a$cncmp_white-a$cncmp_black  # difference in each game
 table(diff)
 table(abs(diff))
@@ -136,12 +136,12 @@ cumsum(table(abs(diff)))
 
 We can assess a null of no effect of fatigue:
 
-```{r}
+```{r assessnullnofat}
 table(a[,3],a[,5]-a[,6])
 ```
 
 Then Fisher test:
-```{r}
+```{r thenfish}
 b <- subset(a,a[,5] != a[,6])
 b <- subset(b,abs(b[,5]-b[,6])>1)
 b <- subset(b,b[,3] != "1/2-1/2")
@@ -158,7 +158,7 @@ Highly signficant.
 Now create a hyper2 object with appropriate reified monsters:
 
 
-```{r}
+```{r hyper2reified}
 problem <- function(...){stop("must be a white win or a black win or a draw")}
 
 H <- hyper2(pnames=c(players,"white","draw","rest"))
