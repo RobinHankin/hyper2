@@ -1,29 +1,30 @@
 ---
 title: "Weakly informative observations: identifying the weakest player"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(hyper2)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
 
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-# Partial rank observations: who lost?
-
-(see also `inst/notthewinner.Rmd`).
-Here we consider a situation in which we make only a rather
-uninformative observation: namely, the identity of the _loser_ (which
-is here taken to be me, player `a`).  We have six competitors
-`a,b,c,d,e,f` with nonnegative strengths $p_1,p_2,p_3,p_4,p_5,p_6,
-\sum p_i=1$.  Competitor `a` has strength $p_1$, and loses.  We are
-interested in how informative this observation is with regard to
-various assertions about the strength of `a`.  We have three
-hypotheses:
+To cite the `hyper2` package in publications, please use @hankin2017a;
+see also `inst/notthewinner.Rmd`.  Here we consider a situation in
+which we make only a rather uninformative observation: namely, the
+identity of the _loser_ (which is here taken to be me, player `a`).
+We have six competitors `a,b,c,d,e,f` with nonnegative strengths
+$p_1,p_2,p_3,p_4,p_5,p_6, \sum p_i=1$.  Competitor `a` has strength
+$p_1$, and loses.  We are interested in how informative this
+observation is with regard to various assertions about the strength of
+`a`.  We have three hypotheses:
 
 * $H_1\colon p_1=0$
 * $H_2\colon\exists i\neq 1 \mbox{ with } p_1\geq p_i>0$
@@ -162,3 +163,5 @@ these two approaches.
 Note carefully that the observation considered here is "I came last".
 This is different from the observation that "I did not win" which is
 considered separately in `inst/notthewinner.Rmd`.
+
+### References {-}

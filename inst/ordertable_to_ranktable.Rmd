@@ -1,7 +1,10 @@
 ---
 title: "The print method for class ranktable"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 set.seed(0)
@@ -11,15 +14,11 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
-
-# Introduction
-
-
+To cite the `hyper2` package in publications, please use @hankin2017a.
 Rank tables can be confusing.  The package includes a range of
 functionality for dealing with them, including a bespoke print method.
 Here, I discuss two cases: firstly, a tiny toy example, and secondly
@@ -28,7 +27,7 @@ the volvo ocean racing dataset.
 
 # Toy dataset
 
-```{r}
+```{r makeatoy}
 OT <- cbind(1:5,c(1,5,2:4))
 rownames(OT) <- letters[seq_len(nrow(OT))]
 colnames(OT) <- c("J1","J2")
@@ -46,7 +45,7 @@ third by each judge, this is not directly given; but by looking for
 third.  To answer this and similar questions directly, we can coerce
 order table `OT` to a rank table `RT`:
 
-```{r}
+```{r useordertorank}
 RT <- ordertable_to_ranktable(OT)
 RT
 ```
@@ -62,7 +61,7 @@ placed `e` and `b` fifth respectively.
 Note that it is possible to view object `RT` directly by removing
 class `ranktable`:
 
-```{r}
+```{r viewdirect}
 class(RT)
 class(RT) <- "matrix"  # removes "ranktable" from class list
 RT
@@ -85,7 +84,7 @@ why the print method is there.
 
 (See `volvo.Rd` for more details).
 
-```{r}
+```{r showvolvotable}
 volvo_table
 ```
 
@@ -94,7 +93,7 @@ Brunel third, and so on.  From the first row we see that AbuDhabi came
 first in leg 1, third in leg 2, second in leg 3, and so on.  Suppose
 we wish to know who came first in each leg:
 
-```{r}
+```{r nowusewikitorank}
 x <- wikitable_to_ranktable(volvo_table)
 x
 ```
@@ -105,7 +104,7 @@ The second column shows who came second in each leg.  Now suppose we
 are interested in only the first, second and third-placed teams:
 
 
-```{r}
+```{r just3}
 x[,1:3]
 ```
 
@@ -115,7 +114,7 @@ not yet written; maybe one day I will get round to implementing
 idea).  Note that simply restoring the `ranktable` class can be
 misleading:
 
-```{r}
+```{r nowmakerank3}
 xx <- x[,1:3]
 xx
 class(xx) <- "ranktable"
@@ -129,6 +128,9 @@ column names.  Observe that extraction after passing to
 `ranktable_to_printable_object()` works nicely:
 
 
-```{r}
+```{r showprintableobject}
 ranktable_to_printable_object(x)[,1:3]
 ```
+
+
+## References {-}

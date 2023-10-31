@@ -1,29 +1,31 @@
 ---
 title: "The Jester joke recommender system"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
-(this file creates objects `jester` and `maxjest`, which are datasets
+To cite the `hyper2` package in publications, please use @hankin2017a.
+This file creates objects `jester` and `maxjest`, which are datasets
 available in the `hyper2` package, and documented at `jester.Rd`.
-This file takes quite a long time to run).
-
-Goldberg et al present a dataset in which respondents rated a number
-of jokes.  Here, I analyse a small portion of this dataset using the
-`hyper2` package.  This document is intended to illustrate an
-extremely challenging application of the `hyper2` package and (without
-cache) takes a long time to process.  Goldberg's dataset has 24938
-lines, one per respondent, and 101 columns, one per joke (the first
-column shows the number of jokes rated by each respondent); here I use
-150 lines and 99 jokes (the 100th joke was not funny).
+This file takes quite a long time to run.  Goldberg et al present a
+dataset in which respondents rated a number of jokes.  Here, I analyse
+a small portion of this dataset using the `hyper2` package.  This
+document is intended to illustrate an extremely challenging
+application of the `hyper2` package and (without cache) takes a long
+time to process.  Goldberg's dataset has 24938 lines, one per
+respondent, and 101 columns, one per joke (the first column shows the
+number of jokes rated by each respondent); here I use 150 lines and 99
+jokes (the 100th joke was not funny).
 
 ```{r,label=kickoff}
 library("hyper2",quietly=TRUE)
@@ -123,7 +125,7 @@ plot(rowMeans(jester_table,na.rm=TRUE))
 abline(v=17)
 ```
 
-### Package dataset
+### Package dataset {-}
 
 Following lines create `jester.rda`, residing in the `data/` directory of the package.
 
@@ -132,6 +134,4 @@ save(jester,jester_table,jester_maxp,file="jester.rda")
 ```
 
 
-
-
-
+ ### References

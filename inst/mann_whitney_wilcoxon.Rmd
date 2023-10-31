@@ -1,6 +1,6 @@
 ---
 title: "Generalizing the Mann-Whitney-Wilcoxon test with `hyper3` objects"
-author: "Robin K. S. Hankin"
+author: "R. K. S. Hankin"
 output: bookdown::html_document2
 bibliography: jss_hyper3.bib
 ---

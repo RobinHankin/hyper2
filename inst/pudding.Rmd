@@ -1,7 +1,10 @@
 ---
 title: "Analysis of pudding following Davidson 1970"
+author: "R. K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 set.seed(0)
@@ -19,10 +22,11 @@ noquote(jj)
 }
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
+To cite the `hyper2` package in publications, please use @hankin2017a.
 This short document creates the `pudding` suite of R objects and
 presents some preliminary analysis.  It is not particularly
 well-structured or terse and is essentially a sequence of notes.  It
@@ -494,15 +498,16 @@ So this time the difference in support is larger, due to the puddings
 having different strengths.
 
 
-# References
-
-* R. D. Davidson 1970. "On extending the Bradley-Terry model to accommodate ties in paired comparison experiments".  _Journal of the American Statistical Association_, Volume 65, Number 329, pp317--328
-
-
-### Package dataset
+### Package dataset {-}
 
 Following lines create `pudding.rda`, residing in the `data/` directory of the package.
 
 ```{r,label=savecurlingdataset}
 save(pudding_table,pudding,pudding_maxp,curling2_maxp,file="pudding.rda")
 ```
+
+### References {-}
+
+* R. D. Davidson 1970. "On extending the Bradley-Terry model to accommodate ties in paired comparison experiments".  _Journal of the American Statistical Association_, Volume 65, Number 329, pp317--328
+
+

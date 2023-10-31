@@ -1,6 +1,9 @@
 ---
-title: "curling"
-output: html_document
+title: "curling with hyper2 objects"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
+
 ---
 
 ```{r setup, include=FALSE}
@@ -11,11 +14,11 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
+To cite the `hyper2` package in publications, please use @hankin2017a.
 [Curling](https://en.wikipedia.org/wiki/Curling) is a sport with
 stones and brooms.  Following dataset taken from
 [wikipedia](https://en.wikipedia.org/w/index.php?title=Curling_at_the_Winter_Olympics&oldid=998891075),
@@ -87,17 +90,18 @@ grid()
 The two likelihood systems have very different evaluates.
 
 
-### References
-
-Curling at the Winter Olympics, https://en.wikipedia.org/w/index.php?title=Curling_at_the_Winter_Olympics&oldid=998891075 (last visited Jan. 21, 2021).
-
-
-
-
-### Package dataset
+### Package dataset {-}
 
 Following lines create `curling.rda`, residing in the `data/` directory of the package.
 
 ```{r,label=savecurlingdataset}
 save(curling_table,curling1,curling2,curling1_maxp,curling2_maxp,file="curling.rda")
 ```
+
+### References {-}
+
+Curling at the Winter Olympics, https://en.wikipedia.org/w/index.php?title=Curling_at_the_Winter_Olympics&oldid=998891075 (last visited Jan. 21, 2021).
+
+
+
+

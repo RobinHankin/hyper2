@@ -1,7 +1,8 @@
 ---
 title: "Chess collusion with hyper3 objects"
-author: "Robin KS Hankin"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -10,13 +11,14 @@ knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
 
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-We analyse results from Curacao 1962 using `hyper3` formalism using
-the weighted Draw monster approach outlined in `kka.Rmd`:
+To cite the `hyper2` package in publications, please use @hankin2017a.
+Here I analyse results from Curacao 1962 using `hyper3` formalism
+using the weighted Draw monster approach outlined in `kka.Rmd`:
 
 $$
 \left(\frac{\lambda p_1, D(p_1+p_2),p_2}{\lambda p_1+D(p_1+p_2)+p_2}\right)^{(a,b,c)}

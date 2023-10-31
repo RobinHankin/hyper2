@@ -1,17 +1,20 @@
 ---
 title: "Domestic cooking and likelihood"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
+
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
+To cite the `hyper2` package in publications, please use @hankin2017a.
 Suppose there are five people in a family.  Each day for five days,
 one person cooks a meal.  After the fifth day, each person considers
 the four meals cooked by other family members, and puts them in order
@@ -347,3 +350,6 @@ and indeed from the figure we see that the slope of the support graph
 is about $-1$ for large values of $\lambda$ [the points follow a line
 parallel to one of the slanted gray lines, which have a slope of
 exactly $-1$; note that the aspect ratio of the graph is not unity]
+
+
+### References {-}

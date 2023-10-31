@@ -1,6 +1,8 @@
 ---
-title: "icons"
-output: html_document
+title: "Analysing icons for climate change and with `hyper3` objects"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -11,15 +13,14 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
-
+To cite the `hyper2` package in publications, please use @hankin2017a.
 This minimal document reads file `icons.txt` and creates R objects
 `icons`, `icons_matrix`, and `icons_maxp`.  The dataset is discussed
-extensively in West and Hankin 2008, and Hankin 2010.
+extensively in @west2008 and @hankin2010.
 
 
 ```{r readiconstable}
@@ -45,10 +46,12 @@ This file exists for consistency; an extended discussion (and
 statistical tests) are presented in the vignette `icons`.
 
 
-### Package dataset
+### Package dataset {-}
 
 Following lines create `icons.rda`, residing in the `data/` directory of the package.
 
 ```{r,label=saveiconsdataset}
 save(icons_table,icons,icons_maxp,file="icons.rda")
 ```
+
+## References {-}

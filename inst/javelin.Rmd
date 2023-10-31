@@ -1,8 +1,8 @@
 ---
 title: "Javelins with hyper3 objects"
-author: "Robin KS Hankin"
-date: "10/04/2022"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -12,12 +12,12 @@ library("hyper2")
 library("disordR")
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
-We analyse results from the men's javelin, 2020 Summer Olympics.
+To cite the `hyper2` package in publications, please use @hankin2017a.
+Here we analyse results from the men's javelin, 2020 Summer Olympics.
 
 ```{r,label=loadjavelinandconvert}
 javelin_table <- read.table("javelin.txt",header=TRUE)
@@ -91,10 +91,6 @@ equalp.test(javelin2)
 ```
 
 
-Reference
-
-`https://en.wikipedia.org/w/index.php?title=Athletics_at_the_2020_Summer_Olympics_%E2%80%93_Men%27s_javelin_throw&oldid=1051014985`
-
 
 
 ### Package dataset {-}
@@ -105,4 +101,10 @@ directory of the package.
 ```{r,label=savejavelindataset}
 save(javelin1,javelin2,javelin_table,javelin_vector,javelin1_maxp,javelin2_maxp,  file="javelin.rda")
 ```
+
+
+
+## References {-}
+
+`https://en.wikipedia.org/w/index.php?title=Athletics_at_the_2020_Summer_Olympics_%E2%80%93_Men%27s_javelin_throw&oldid=1051014985`
 

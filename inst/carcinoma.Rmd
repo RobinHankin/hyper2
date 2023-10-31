@@ -1,7 +1,10 @@
 ---
-title: "Carcinoma"
+title: "Analysing a carcinoma dataset with the hyper2 package"
+author: "R. K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 set.seed(0)
@@ -11,13 +14,14 @@ library("magrittr")
 options("digits" = 5)
 ```
 
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017a
 (takes maybe twenty minutes to run without cache.  The value of
 `carcinoma_maxp` is calculated separately [discussed below], and that
 takes a few days to run).
-
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
 
 This is a short analysis of the carcinoma dataset presented by
 Agresti, table 13.1, p542.  Seven pathologists classified each of 118
@@ -174,18 +178,6 @@ ordertransplot(carcinoma_count,carcinoma_maxp)
 ordertransplot(log(carcinoma_count),log(carcinoma_maxp),plotlims=c(-8,0))
 ```
 
-Agresti, table 13.1, p542.
-
-
-
-Landis, J. R., and G. G. Koch. 1977. An application of hierarchical
-kappa-type statistics in the assessment of majority agreement among
-multiple observers. Biometrics 33: 363-374.
-
-### Package dataset {-}
-
-Following lines create `carcinoma.rda`, residing in the `data/`
-directory of the package.
 
 
 ```{r,label=savecarcinomadataset}
@@ -193,3 +185,18 @@ save(carcinoma_table,carcinoma, carcinoma_count, carcinoma_maxp,file="carcinoma.
 ```
 
 
+### Package dataset {-}
+
+Following lines create `carcinoma.rda`, residing in the `data/`
+directory of the package.
+
+### References {-}
+
+
+Agresti, table 13.1, p542.
+
+
+
+Landis, J. R., and G. G. Koch. 1977. An application of hierarchical
+kappa-type statistics in the assessment of majority agreement among
+multiple observers. Biometrics 33: 363-374.
