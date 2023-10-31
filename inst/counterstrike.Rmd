@@ -1,6 +1,8 @@
 ---
 title: "A statistical analysis of a counterstrike game: Boston 2018"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -10,13 +12,11 @@ library("partitions") ## needed for perms()
 library("magrittr") 
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
-# Abstract
-
+To cite the `hyper2` package in publications, please use @hankin2017a.
 In this short vignette I use the `hyper2` package to analyse an
 influential Counter-Strike match between two professional teams (_FaZe
 Clan_ and _Cloud9_) in the major championships at Boston 2018.  I use
@@ -240,3 +240,7 @@ save(counterstrike,counterstrike_maxp,zacslist,file="counterstrike.rda")
 ```
 
 
+
+
+
+### References {-}

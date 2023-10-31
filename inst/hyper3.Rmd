@@ -1,18 +1,21 @@
 ---
 title: "The weighted hyperdirichlet distribution: the `hyper3` class"
-author: "Robin K. S. Hankin"
-vignette: |
-  %\VignetteIndexEntry{hyper3}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
+```{r setup, include=FALSE}
+set.seed(1)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
+To cite the `hyper2` package in publications, please use @hankin2017a.
 Objects of class \code{hyper3} are a generalization of \code{hyper2}
 objects that allow the brackets to contain weighted probabilities.
 Likelihood functions are defined on non-negative $p_1,\ldots, p_n$
@@ -192,3 +195,4 @@ gradient(a,ma)  # should be small at the evaluate
 ```
 
 
+## References {-}

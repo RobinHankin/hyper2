@@ -1,8 +1,8 @@
 ---
-title: "grad_weight"
-author: "Robin KS Hankin"
-date: "10/04/2022"
-output: html_document
+title: "Differentiation with respect to weights for a `hyper3` object"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -12,13 +12,11 @@ library("disordR")
 ```
 
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
-## Differentiate with respect to weights for a `hyper3` object
-
+To cite the `hyper2` package in publications, please use @hankin2017a.
 We will start with a simple example.  Consider two players $p_1$ and
 $p_2$ who play tennis say, $a+b$ times with $p_1$ winning $a$ times
 and $p_2$ winning $b$ times.  We use the following likelihood function:
@@ -226,3 +224,5 @@ LHS <- diff  # using grad_weight_single()
 RHS <- (loglik(probs,f2(w,D=D+dD)) - loglik(probs,f2(w,D)))/dD  # differential via numerics
 c(LHS,RHS,LHS-RHS)
 ```
+
+### References {-}

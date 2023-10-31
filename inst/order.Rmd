@@ -1,26 +1,28 @@
 ---
 title: "Order statistics and numerical optimization: the case of a single observation"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
-
-## The `hyper2` package
-
-We consider the likelihood function given by a single observation of
-an order statistic.  Here we investigate some numerical problems
-arising from the use of `optim()` and `constrOptim()`.  We will
-consider $n=10$ competitors and without loss of generality, the
-competitors finish in order $1,2,3,\ldots,10$.  The likelihood
-function for this observation is:
+To cite the `hyper2` package in publications, please use @hankin2017a.
+Here I consider the likelihood function given by a single observation
+of an order statistic, which is problematic in the sense that the
+maximum likelihood estimate for the BT strengths of the competitors is
+$(1,0,\ldots,0)$.  Here we investigate some numerical problems arising
+from the use of `optim()` and `constrOptim()`.  We will consider
+$n=10$ competitors and without loss of generality, the competitors
+finish in order $1,2,3,\ldots,10$.  The likelihood function for this
+observation is:
 
 \[
 {\mathcal L}\left(p_1,\ldots,p_{10}\right)=
@@ -170,3 +172,6 @@ maximize $p_9/p_{10}, p_8/p_9,\ldots,p_1/p_2$ simultaneously, all
 subject to the unit sum constraint $\sum p_i=1$.  And of course, if
 the ratio is too high then the unit sum constraint would be violated
 (given that $p_{10}$ is at its minimum value).
+
+
+## References {-}

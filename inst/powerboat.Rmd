@@ -1,6 +1,10 @@
 ---
-title: "powerboat"
-output: html_document
+title: "powerboats with `hyper2`"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
+---
+
 ---
 
 ```{r setup, include=FALSE}
@@ -10,10 +14,12 @@ library("hyper2")
 library("magrittr")
 options("digits" = 5)
 ```
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
 
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017a.
 [powerboat](https://en.wikipedia.org/w/index.php?title=2018_F1_Powerboat_World_Championship&oldid=920386507)
 racing is an important and prestigious sport.  Here I analyse a
 dataset taken from the 2018 F1 Powerboat world championships.
@@ -62,3 +68,5 @@ directory of the package.
 ```{r,label=savepowerboatdataset}
 save(powerboat_table,powerboat,powerboat_maxp,file="powerboat.rda")
 ```
+
+### References {-}

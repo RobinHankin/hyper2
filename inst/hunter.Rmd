@@ -1,7 +1,10 @@
 ---
 title: "Iteration techniques for Plackett-Luce likelihood functions and the `hyper2` package"
+author: "R. K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 set.seed(0)
@@ -11,16 +14,18 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-Here I discuss why implementing equation 30 of Hunter (2004) for
+To cite the `hyper2` package in publications, please use @hankin2017a.
+Here I discuss why implementing equation 30 of [@hunter2004] for
 `hyper2` objects representing Plackett-Luce likelihood functions is
 difficult.  Consider the following rank observations: `724356` [that
 is, 7 came first, then 2, then 4 then 3 then 5 then 6] and `1372`
-[that is, 1 came first, then 3 then 7 then 2].  This would have a
-Plackett-Luce likelihood function of
+[that is, 1 came first, then 3 then 7 then 2].  If these two
+observations are independent, we would have a Plackett-Luce likelihood
+function of
 
 \[
 \left(
@@ -97,7 +102,5 @@ $[356]\longrightarrow[3456]\longrightarrow[23456]\longrightarrow[234567]$
 
 
 
-### Reference {-}
+### References {-}
 
-* D. R. Hunter 2004.  "MM algorithms for generalized Bradley-Terry
-  models".  _The Annals of Statistics_, 32(1):384

@@ -1,7 +1,10 @@
 ---
 title: "Analysis of the 1962 world chess championship, Curacao"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -9,15 +12,14 @@ library("hyper2")
 library("magrittr")
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
-This file creates likelihood functions `H` and `H_coll`, which appear in
-the package as `interzonal` and `collusion` respectively.
-
-
+To cite the `hyper2` package in publications, please use @hankin2017a.
+This file creates likelihood functions `H` and `H_coll`, which appear
+in the package as `interzonal` and `collusion` respectively.  It also
+presents some analysis of the datasets using the `hyper2` package.
 
 ```{r readtabs}
 jj <- read.table("stockholm1962.txt",header=FALSE)
@@ -152,9 +154,6 @@ save(interzonal,collusion,interzonal_maxp,collusion_maxp,
 file="interzonal.rda")
 ```
 
-# References
+# References {-}
 
-C. C. Moul and J. V. C. Nye 2009. "Did the Soviets collude? A
- statistical analysis of championship chess 1940-1978.  Journal of
- Economic Behaviour and Organization 70(2009) 10-21
 

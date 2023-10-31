@@ -1,8 +1,10 @@
 ---
 title: "Monster or Lambda?  A likelihood analysis"
-author: "Robin KS Hankin"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 set.seed(1)
@@ -10,16 +12,14 @@ knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 ```
 
-(takes about an hour to process without cache)
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
-
-
-
-Here I consider pairwise comparisons with a home-ground advantage and
-wish to compare two likelihood functions.  First, the monster parametrization:
+To cite the `hyper2` package in publications, please use @hankin2017a;
+takes about an hour to process without cache.  Here I consider
+pairwise comparisons with a home-ground advantage and wish to compare
+two likelihood functions.  First, the monster parametrization:
 
 $$
 \mathcal{L_M}\left(p_1,p_2,M\right)=
@@ -474,3 +474,5 @@ jj <- c(supp_M_eq_0,NA,supp_lambda_eq_1)
 plot(jj-max(jj,na.rm=TRUE),type="b")
 abline(h=c(0,-2))
 ```
+
+## References {-}

@@ -1,22 +1,26 @@
 ---
 title: "Judging domestic cooking ability: repeated incomplete rank observations"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
+set.seed(1)
 knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-(takes about five minutes without cache).
-Suppose there are five people in a family.  Each day for five days,
-one person cooks a meal.  After the fifth day, each person considers
-the four meals cooked by other family members, and puts them in order
-of preference.  This process is repeated and here I consider how to
-interpret such data.
+To cite the `hyper2` package in publications, please use @hankin2017a;
+takes about five minutes without cache.  Suppose there are five people
+in a family.  Each day for five days, one person cooks a meal.  After
+the fifth day, each person considers the four meals cooked by other
+family members, and puts them in order of preference.  This process is
+repeated and here I consider how to interpret such data.
 
 ```{r loadlib,echo=FALSE}
 library(hyper2,quietly=TRUE)
@@ -36,8 +40,6 @@ no vote).  This is the transpose of an order table such as
 the formula 1 tables in which zeros signify did not finish).  Document
 `curling.Rmd` contains a discussion and here we will use the same
 method.  First we will consider the support function for the first row only:
-
-### First row of the dataset
 
 ```{r lookatfirstrow}
 (day1 <- cooking_table[1,])
@@ -61,7 +63,7 @@ loglik(indep(p),H_row1)
 loglik(indep(p2),H_row1)
 ```
 
-## Complete dataset
+## Complete dataset {-}
 
 It is easy to iterate over the rows of the dataset:
 
@@ -99,7 +101,7 @@ pie(mH)
 ```
 
 
-# Preferential voting
+# Preferential voting {-}
 
 
 It seems that the boys tend to prefer the boys' cooking and the girls
@@ -179,3 +181,5 @@ Now test whether the girls preferentially vote:
 ```{r girlspref, cache=TRUE}
 specificp.gt.test(P,"girl",0)
 ```
+
+## References {-}

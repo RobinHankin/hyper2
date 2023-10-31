@@ -1,7 +1,10 @@
 ---
 title: "An analysis of a single basketball game"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 set.seed(0)
@@ -11,14 +14,17 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-File `NBA.txt` contains a point-by-point analysis of a basketball
-match between the Cleveland Cavaliers and the Golden State Warriors on
-13 June 2017, data taken from
-[here](https://www.espn.com/nba/playbyplay?gameId=400954514).
+To cite the `hyper2` package in publications, please use @hankin2017a.
+Here I consider a single basketball match from the perspective of the
+Bradley-Terry model.  File `NBA.txt` contains a point-by-point
+analysis of a basketball match between the Cleveland Cavaliers and the
+Golden State Warriors on 13 June 2017, data taken from
+[here](https://www.espn.com/nba/playbyplay?gameId=400954514).  Some
+further documentation is given at `inst/NBA.Rd` in the package.
 
 ```{r readNBAtable}
 NBA_table  <- read.csv("NBA.txt",header=TRUE)
@@ -153,7 +159,7 @@ possession <- 0.2155786 # taken from samep.test() above
 ```
 
 
-### Package dataset
+### Package dataset {-}
 
 Following lines create `NBA.rda`, residing in the `data/` directory of the package.
 
@@ -161,3 +167,5 @@ Following lines create `NBA.rda`, residing in the `data/` directory of the packa
 NBA_maxp <- NBA_maxp_precomputed
 save(NBA_table,NBA,NBA_maxp,file="NBA.rda")
 ```
+
+### References {-}

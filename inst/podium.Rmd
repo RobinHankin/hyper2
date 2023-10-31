@@ -1,7 +1,10 @@
 ---
 title: "Does being on the podium affect Formula 1 drivers' performance in the next race?"
+author: "R. K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 set.seed(0)
@@ -10,13 +13,24 @@ library("hyper2")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
+To cite the `hyper2` package in publications, please use @hankin2017a.
 This short document defines the `podium()` function which tests the
 hypothesis that a Formula 1 driver's being on the podium at one venue
-affects his performance on the next.
+affects his performance on the next.  Data from the 2007 season are
+used.  It uses `hyper3` objects from the `hyper2` package.  A detailed
+use-case for the top six drivers (Alonso, Hamilton, Heidfeld, Kubica,
+Massa, and Raikkonen), and only the first five venues (Austria,
+Malaysia, Bahrain, Spain, and Monaco) is given.  
+
+***TLDR***: Statistically significant evidence for the podium effect
+was found, with about 2.7 units of support for the alternative.
+
+Function `podium()`, defined below, takes a race table and a value of
+$\lambda$ and returns a `hyper3` support function.
 
 ```{r,label=definepodiumfun}
 podium <- function (lambda,x,print=FALSE){
@@ -149,3 +163,4 @@ abline(v=1)
 ```
 
 
+### References {-}

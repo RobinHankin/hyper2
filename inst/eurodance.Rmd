@@ -1,7 +1,10 @@
 ---
 title: "Eurovision **Dance** Contest 2008"
+author: "R. K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -11,11 +14,12 @@ options("digits" = 5)
 abbreviated <- TRUE  # change to FALSE for full names
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-(takes about 20 minutes to process without cache).  The file
+To cite the `hyper2` package in publications, please use @hankin2017a;
+takes about 20 minutes to process without cache.  The file
 `eurodance2008.txt`, used below, is copied from "Eurovision Dance
 Contest 2008", Wikipedia, accessed March 31, 2021.  First we specify
 the matrix as appearing in the Wikipedia page:
@@ -113,3 +117,5 @@ Following lines create `eurodance.rda`, residing in the `data/` directory of the
 ```{r,label=saveeurodancedataset}
 save(eurodance_table,eurodance_maxp,eurodance,file="eurodance.rda")
 ```
+
+###R References {-}

@@ -1,7 +1,10 @@
 ---
-title: "Keeping and discarding players"
-output: html_document
+title: "Keeping and discarding players: functions `keep()` and `keep_flawed()`"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 set.seed(0)
@@ -11,13 +14,11 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-## Functions keep() and keep_flawed()
-
-
+To cite the `hyper2` package in publications, please use @hankin2017a.
 Function `keep_flawed()` can be confusing.  Originally, the package
 included a function `keep()` but this used flawed logic, hence the
 name of its replacement.  Here is a tiny example that should clarify
@@ -89,3 +90,4 @@ according to some criterion, and coerce to a likelihood function.
 
 
 
+### References {-}

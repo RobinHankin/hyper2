@@ -1,7 +1,10 @@
 ---
-title: "handover"
+title: "handover issues in medical care"
+author: "R. K. S. Hankin"
 output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 set.seed(0)
@@ -11,12 +14,12 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
-This short document is based on Altham and Hankin 2010, which
+To cite the `hyper2` package in publications, please use @hankin2017a.
+This short document is based on @altham2010, which
 discussed an interesting dataset originally presented by Lin
 et. al. (2009).  It uses more sophisticated idiom furnished by the
 `hyper2` package, which is an improved and efficient upgrade of the
@@ -152,20 +155,6 @@ abline(mean(log_odds),sd(log_odds))
 
 Figures \@ref(fig:histpsi) to  \@ref(fig:logoddsqqplot) show different aspects of the dataset.
 
-### References {-}
-
-* PME Altham and RKS Hankin 2010.  "Using recently developed software on
-a 2x2 table of matched pairs with incompletely classified data".
-_Journal of the Royal Statistical Society_, 59:2):377-379
-* L West and RKS Hankin 2008. "Exact tests for two-way contingency
-tables with structural zeros".  _Journal of Statistical Software_
-28(11)
-* RKS Hankin 2010. "A generalization of the Dirichlet distribution". 
- _Journal of Statistical Software_ 33(11)
-* RKS Hankin 2017. "Partial rank data with the hyper2 package:
-  likelihood functions for generalized Bradley-Terry models".  _The R
-  Journal_ 9(2)
-
 
 ### Package dataset {-}
 
@@ -174,3 +163,7 @@ Following lines create `handover.rda`, residing in the `data/` directory of the 
 ```{r,label=savecurlingdataset}
 save(handover_table,handover_maxp,handover,file="handover.rda")
 ```
+
+
+### References {-}
+

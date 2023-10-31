@@ -1,6 +1,8 @@
 ---
 title: "Quantifying the rock-paper-scissors effect"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -10,21 +12,17 @@ library("magrittr")
 abbreviated <- TRUE  # change to FALSE for full names
 ```
 
-(takes about an hour to run without cache)
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
-
-
-## Abstract
-
-Here I use the `hyper2` package (Hankin 2017) to quantify the strength
-of a circular rock-paper-scissors effect using the `hyper2` package,
-improving on previous results (West and Hankin 2008) which merely
-established its existence.  I use two datasets, a three-player
-scoreline and a synthetic dataset referring to wear on a seven-tooth
-gear wheel.
+To cite the `hyper2` package in publications, please use @hankin2017a;
+takes about an hour to run without cache.  Here I use the `hyper2`
+package to quantify the strength of a circular rock-paper-scissors
+effect using the `hyper2` package, improving on previous results
+[@west2008] which merely established its existence.  I use two
+datasets, a three-player scoreline and a synthetic dataset referring
+to wear on a seven-tooth gear wheel.
 
 ## Rock Paper Scissors
 
@@ -62,8 +60,8 @@ p-value is about 0.39.
 ## RPS in chess
 
 The existence of a rock-paper-scissors relationship between the
-players was discussed in Hankin (2010) and the null of no RPS
-phenomena could be rejected using the Alymer test.  
+players was discussed in @hankin2010 and the null of no RPS phenomena
+could be rejected using the Alymer test.
 
 Here we improve on that work by introducing a monster, `M`, that
 accounts for the rock-paper-scissors nature of the players.  The RPS
@@ -422,25 +420,18 @@ abline(v=c(1,o$maximum))
 ```
 
 
-
-## References
-
-* L. J. West and R. K. S. Hankin 2008.  "Exact tests for two-way
-  contingency tables with structural zeros".  _Journal of Statistical
-  Software_ 2008, volume 28 issue 11.
-* R. K. S. Hankin 2010.  "A generalization of the Dirichlet
-  distribution".  _Journal of Statistical Software_ 2010, volume 33
-  issue 11.
-* R. K. S. Hankin 2017.  "Partial rank data with the `hyper2` package:
-  likelihood functions for generalized Bradley-Terry models".  _The R
-  Journal_, volume 9, number 2.
-
-### Package dataset
+### Package dataset {-}
 
 Following lines create `chess.rda`, residing in the `data/` directory of the package.
 
 ```{r,label=savechessdataset}
 save(chess_table,chess,chess_maxp,file="chess.rda")
 ```
+
+
+## References {-}
+
+
+
 
 

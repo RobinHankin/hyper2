@@ -1,7 +1,10 @@
 ---
-title: "Karpov, Kasparov, Anand"
-output: html_document
+title: "A Bradley-Terry analysis of three grandmasters: Karpov, Kasparov, Anand"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 set.seed(0)
@@ -11,19 +14,18 @@ library("magrittr")
 options("digits" = 5)
 ```
 
-(takes about 45 minutes to process without cache)
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
-
-This file defines dataset `kka` which is the observed scorelines
-between players Karpov, Kasparov, and Anand.  It is used to calculate
+To cite the `hyper2` package in publications, please use @hankin2017a;
+this `Rmd` file takes about 45 minutes to process without cache.  Here
+we define dataset `kka` which is the observed scorelines between
+players Karpov, Kasparov, and Anand.  It is used to calculate
 likelihood functions: `karpov_kasparov_anand`, `kka_3whites` and
 `kka_3draws`.  This Rmd file supercedes files
 `inst/karpov_kasparov_anand.R` and `inst/kka_3draws.R` and
-`inst/kka_array.R`.  Some more detail is given in
-`man/kka.Rd`.
+`inst/kka_array.R`.  Some more detail is given in `man/kka.Rd`.
 
 
 ```{r setupkka}

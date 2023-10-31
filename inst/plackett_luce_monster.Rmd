@@ -1,7 +1,8 @@
 ---
 title: "A generalization of Plackett-Luce likelihoods to incorporate non-independence of competitors"
-output: html_document
-date: '2022-05-16'
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -11,11 +12,11 @@ library("partitions")
 library("pdftools")
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-
+To cite the `hyper2` package in publications, please use @hankin2017a.
 Here I modify standard Plackett-Luce likelihood functions to include
 an element of non-independence among the competitors.  There seem to
 be a few distinct statistical models for nonindependence:
@@ -354,7 +355,7 @@ f(4.4,3.3, 0.0)*12
 ```
 
 
-```{tikz, fig.cap = "Partial probability tree for five competitors $a-e$ with $a$ supporting $b$, hyper3 approach", fig.ext = 'png', echo=FALSE}
+```{tikz, label=tikzpartprobtree1,fig.cap = "Partial probability tree for five competitors $a-e$ with $a$ supporting $b$, hyper3 approach", fig.ext = 'png', echo=FALSE}
 \usetikzlibrary{arrows}
 \usetikzlibrary{patterns}
 \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
@@ -530,7 +531,7 @@ f(4.4,3.3, 0.0)*12
 \end{tikzpicture}
 ```
 
-```{tikz, fig.cap = "Partial probability tree for five competitors $a-e$ with mutually supporting  group $abc$, hyper3 approach.  If any competitor in the set {$a,b,c$} finishes, they lend their strength to the other competitors in the set who are still running", fig.ext = 'png', echo=FALSE}
+```{tikz, label=tikzpic2, fig.cap = "Partial probability tree for five competitors $a-e$ with mutually supporting  group $abc$, hyper3 approach.  If any competitor in the set {$a,b,c$} finishes, they lend their strength to the other competitors in the set who are still running", fig.ext = 'png', echo=FALSE}
 \usetikzlibrary{arrows}
 \usetikzlibrary{patterns}
 \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
@@ -708,7 +709,7 @@ f(4.4,3.3, 0.0)*12
 
 
 
-```{tikz, fig.cap = "Partial probability tree for five competitors $a$-$e$ with mutually supporting subsets $\\left\\lbrace a,b,c\\right\\rbrace$ [with support term $\\lambda$] and $(de)$ [with support term $\\mu$], hyper3 approach", fig.ext = 'png', echo=FALSE}
+```{tikz, label=tikz3,fig.cap = "Partial probability tree for five competitors $a$-$e$ with mutually supporting subsets $\\left\\lbrace a,b,c\\right\\rbrace$ [with support term $\\lambda$] and $(de)$ [with support term $\\mu$], hyper3 approach", fig.ext = 'png', echo=FALSE}
 \usetikzlibrary{arrows}
 \usetikzlibrary{patterns}
 \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
@@ -983,7 +984,7 @@ Here we use a dataset of university rankings, `timesData.csv`, taken
 from
 `https://github.com/arnaudbenard/university-ranking/blob/master/timesData.csv`.
 
-```{r}
+```{r, label=readtableandcalc,cache=TRUE}
 a <- read.table("timesData.csv",sep=",", header=TRUE)
 wanted <- c("California Institute of Technology", "Harvard University", 
 "Massachusetts Institute of Technology", "Princeton University", 
@@ -1088,3 +1089,4 @@ maxp(rugby(1.9),n=1,give=TRUE)
 ```
 
       
+## References {-}

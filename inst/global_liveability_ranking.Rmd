@@ -1,7 +1,10 @@
 ---
 title: "Global liveability ranking"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
+
 
 ```{r setup, include=FALSE}
 set.seed(0)
@@ -11,16 +14,14 @@ library("magrittr")
 options("digits" = 5)
 ```
 
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017a;
+takes about an hour to process without cache.
+
 _This analysis is essentially without value, see the very end for why_
-
-(takes about an hour to process without cache)
-
-
-
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
-
 
 [The global liveability
 ranking](https://en.wikipedia.org/wiki/Global_Liveability_Ranking)
@@ -187,3 +188,5 @@ We see that NZ and Australia are dominated so we should remove them:
 But hang on, if we continue to remove dominated countries we
 eventually remove every country that is not Austria.  So that was a big
 fat waste of time.
+
+## References {-]

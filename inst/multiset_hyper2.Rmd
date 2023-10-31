@@ -1,8 +1,9 @@
 ---
 title: "The `cheering3()` probability model for order statistics: a
 verification with the `multiset()` function of the `partitions` package"
-output: html_document
-date: "2022-07-28"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -11,16 +12,20 @@ library("hyper2")
 library("partitions")
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
+To cite the `hyper2` package in publications, please use @hankin2017a.
 Here we will sum probabilities across a sample space and verify that
 the total is constant.  In theory the sum of the probabilities of all
-members of the sample space is 1, but in practice the likelihood
-calculation includes an indeterminate constant which means that all we
-can say is that the total probability is not a function of the
-parameters of the distribution.
+members of the sample space is 1, but in practice [and certainly in
+`hyper2` idiom], the likelihood calculation includes an indeterminate
+constant which means that all we can say is that the total probability
+is not a function of the parameters of the distribution.
+
+Here I present some relatively informal and unstructured thoughts on
+this issue from a numerical and `hyper2` perspective.
 
 
 ```{r defineM}
@@ -135,5 +140,6 @@ x <- apply(rs,1,f)
 hist(x-mean(x))
 ```
 
-Above we see very tight clustering about the mean value of 0.25
+Above we see very tight clustering about the mean value of 0.25.
 
+### References {-}

@@ -1,23 +1,22 @@
 ---
 title: "The impact of winning the coin toss on the Indian Premier League"
 author: "Tanvi Chandel and Robin K. S. Hankin"
-date: "`r Sys.Date()`"
-vignette: |
-  %\VignetteIndexEntry{T20}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: bookdown::html_document2
+bibliography: jss_hyper3.bib
 ---
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
 
-# The Indian Premier League
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
+To cite the `hyper2` package in publications, please use @hankin2017a.
 This script creates and analyses hyper2 object `T20` which is a
 likelihood function for the strengths of the competitors in the Indian
 Premier League.
-
+Dataframe `T20_table` has one row for each T20 IPL match in the
+period 2008-2017 with the exception of three no-result matches and
+seven tied matches, which were removed.  
 
 ```{r kickoff}
 library("hyper2",quietly=TRUE)
@@ -26,14 +25,9 @@ head(T20_table)
 nrow(T20_table)
 ```		
 
-Dataframe `T20_table` has one row for each T20 IPL match in the
-period 2008-2017 with the exception of three no-result matches and
-seven tied matches, which were removed.  Object `T20` is a
-likelihood function for the strengths of the 13 teams, and
-`T20_toss` is a likelihood function that also includes a toss
-strength term.
-
-some details are given in the package help file
+Object `T20` is a likelihood function for the strengths of the 13
+teams, and `T20_toss` is a likelihood function that also includes a
+toss strength term.  Some details are given in the package help file
 `T20.Rd` (type `?T20` at the R prompt).
 
 ## One-way univariate analysis
@@ -179,7 +173,7 @@ dotchart(T20_maxp_toss)
 Above, note the small estimated strength of the toss.
 
 
-### Package dataset
+### Package dataset {-}
 
 The following lines create `T20.rda`, residing in the `data/`
 directory of the package.
@@ -187,3 +181,5 @@ directory of the package.
 ```{r,label=saveT20dataset}
 save(T20_table,T20,T20_maxp,T20_toss,file="T20.rda")
 ```
+
+### References {-}
