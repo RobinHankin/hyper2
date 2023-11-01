@@ -130,7 +130,7 @@ incorporation of non-finishers (DNF etc).  If, say, competitors 4 and
 
 (observe how this likelihood function, while informative about
 $p_4+p_5$, is uninformative about $p_4\left|p_4+p_5\right.$).  We now
-use a technique due to \cite{hankin2010,hankin2017a} and introduce
+use a technique due to \cite{hankin2010,hankin2017} and introduce
 fictional (reified) entities whose nonzero Bradley-Terry strength
 helps certain competitors or sets of competitors under certain
 conditions.  The canonical example would be the home-ground advantage
@@ -151,7 +151,7 @@ Similar techniques have been used to account for the first-move
 advantage in chess, and effective coordination between members of
 doubles tennis teams; we may use a similar device to account for pole
 position in Formula 1.  Here I analyse seasons 2016-2019 using the
-`hyper2` package \citep{hankin2017a} which implements the Plackett-Luce
+`hyper2` package \citep{hankin2017} which implements the Plackett-Luce
 likelihood function with additional reified entities.
 
 # Formula 1 dataset

@@ -18,7 +18,7 @@ abbreviated <- TRUE  # change to FALSE for full names
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a;
+To cite the `hyper2` package in publications, please use @hankin2017;
 takes about 20 minutes to process without cache.  The file
 `eurodance2008.txt`, used below, is copied from "Eurovision Dance
 Contest 2008", Wikipedia, accessed March 31, 2021.  First we specify

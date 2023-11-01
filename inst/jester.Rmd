@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 This file creates objects `jester` and `maxjest`, which are datasets
 available in the `hyper2` package, and documented at `jester.Rd`.
 This file takes quite a long time to run.  Goldberg et al present a

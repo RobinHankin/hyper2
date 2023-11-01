@@ -19,7 +19,7 @@ abbreviated <- TRUE  # change to FALSE for full names
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 The file `eurovision.txt`, used below, is copied from "Eurovision Song
 Contest 2009," Wikipedia, accessed May 13, 2018.  It refers to
 semi-final 1.  More documentation is given in `eurovision.Rd` [type

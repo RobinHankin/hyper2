@@ -18,7 +18,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 Here I analyse a dataset on NZ university rankings, taken from the
 Times Higher Educational Supplement.  First load the data:
 

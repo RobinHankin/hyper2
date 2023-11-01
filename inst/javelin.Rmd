@@ -16,7 +16,7 @@ library("disordR")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 Here we analyse results from the men's javelin, 2020 Summer Olympics.
 
 ```{r,label=loadjavelinandconvert}

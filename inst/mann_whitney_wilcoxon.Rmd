@@ -15,7 +15,7 @@ library("hyper2")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 Here I discuss the `hyper2` generalization of the
 Mann-Whitney-Wilcoxon test, applying it to the chorioamnion dataset at
 `wilcox.test.Rd`:

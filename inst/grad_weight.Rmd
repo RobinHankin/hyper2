@@ -16,7 +16,7 @@ library("disordR")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 We will start with a simple example.  Consider two players $p_1$ and
 $p_2$ who play tennis say, $a+b$ times with $p_1$ winning $a$ times
 and $p_2$ winning $b$ times.  We use the following likelihood function:

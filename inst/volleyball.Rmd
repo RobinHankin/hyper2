@@ -17,7 +17,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 This short document discusses a dataset first presented by @hankin2010,
 although here only the first 52 observations are used.  A
 volleyball _set_ is a Bernoulli trial between two disjoint subsets

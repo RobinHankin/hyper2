@@ -17,7 +17,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 This minimal document reads file `icons.txt` and creates R objects
 `icons`, `icons_matrix`, and `icons_maxp`.  The dataset is discussed
 extensively in @west2008 and @hankin2010.

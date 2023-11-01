@@ -18,7 +18,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 Rank tables can be confusing.  The package includes a range of
 functionality for dealing with them, including a bespoke print method.
 Here, I discuss two cases: firstly, a tiny toy example, and secondly

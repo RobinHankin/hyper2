@@ -16,7 +16,7 @@ options(warn = defaultW)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a
+To cite the `hyper2` package in publications, please use @hankin2017
 (takes about fifteen minutes to run without cache).  Here I analyse a
 small synthetic dataset for home ground advantage, then go on to
 discuss a dataset presented by Agresti.  But first, the smallest

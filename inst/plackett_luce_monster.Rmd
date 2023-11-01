@@ -16,7 +16,7 @@ library("pdftools")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 Here I modify standard Plackett-Luce likelihood functions to include
 an element of non-independence among the competitors.  There seem to
 be a few distinct statistical models for nonindependence:

@@ -18,7 +18,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 This short document creates the `volvo` suite of R objects and
 presents some preliminary analysis.  It refers to the 12th edition of
 the Volvo Ocean Race, 2014-2015 in which seven racing teams competed

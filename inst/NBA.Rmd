@@ -18,7 +18,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 Here I consider a single basketball match from the perspective of the
 Bradley-Terry model.  File `NBA.txt` contains a point-by-point
 analysis of a basketball match between the Cleveland Cavaliers and the

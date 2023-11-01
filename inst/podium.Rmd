@@ -17,7 +17,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 This short document defines the `podium()` function which tests the
 hypothesis that a Formula 1 driver's being on the podium at one venue
 affects his performance on the next.  Data from the 2007 season are

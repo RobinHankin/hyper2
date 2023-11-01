@@ -16,7 +16,7 @@ library("partitions")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 Here we will sum probabilities across a sample space and verify that
 the total is constant.  In theory the sum of the probabilities of all
 members of the sample space is 1, but in practice [and certainly in

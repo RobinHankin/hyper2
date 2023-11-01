@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017a.
+To cite the `hyper2` package in publications, please use @hankin2017.
 Suppose there are five people in a family.  Each day for five days,
 one person cooks a meal.  After the fifth day, each person considers
 the four meals cooked by other family members, and puts them in order
