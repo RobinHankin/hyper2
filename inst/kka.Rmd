@@ -2,7 +2,7 @@
 title: "A Bradley-Terry analysis of three grandmasters: Karpov, Kasparov, Anand"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: jss_hyper3.bib
+bibliography: hyper2.bib
 ---
 
 

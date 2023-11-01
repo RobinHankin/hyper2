@@ -2,7 +2,7 @@
 title: "A generalization of Plackett-Luce likelihoods to incorporate non-independence of competitors"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: jss_hyper3.bib
+bibliography: hyper2.bib
 ---
 
 ```{r setup, include=FALSE}

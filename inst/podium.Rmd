@@ -2,7 +2,7 @@
 title: "Does being on the podium affect Formula 1 drivers' performance in the next race?"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: jss_hyper3.bib
+bibliography: hyper2.bib
 ---
 
 

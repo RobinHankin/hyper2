@@ -2,7 +2,7 @@
 title: "The impact of winning the coin toss on the Indian Premier League"
 author: "Tanvi Chandel and Robin K. S. Hankin"
 output: bookdown::html_document2
-bibliography: jss_hyper3.bib
+bibliography: hyper2.bib
 ---
 
 

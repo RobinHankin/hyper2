@@ -2,7 +2,7 @@
 title: "university ranking data"
 output: bookdown::html_document2
 author: "R. K. S. Hankin"
-bibliography: jss_hyper3.bib
+bibliography: hyper2.bib
 ---
 
 

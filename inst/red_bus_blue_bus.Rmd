@@ -1,7 +1,7 @@
 ---
 title: "Red bus, blue bus; and the choice between Florida, California, and Florida plus a nickel"
 output: pdf_document
-bibliography: chess.bib
+bibliography: hyper2.bib
 ---
 
 ```{r setup, include=FALSE}

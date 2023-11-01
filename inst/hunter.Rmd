@@ -2,7 +2,7 @@
 title: "Iteration techniques for Plackett-Luce likelihood functions and the `hyper2` package"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: jss_hyper3.bib
+bibliography: hyper2.bib
 ---
 
 
