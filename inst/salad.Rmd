@@ -21,7 +21,7 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 
 To cite the `hyper2` package in publications, please use @hankin2017.
 This short document shows how to apply `hyper2` idiom to the `salad`
-dataset of the `prefmod` package.  From `salad.Rd`:   
+dataset of the `prefmod` package [@hatzinger2012].  From `salad.Rd`:
 
 ```
 The dataset contains the rankings of four salad dressings
@@ -79,7 +79,7 @@ equalp.test(H1)
 ```
 
 The null estimate agrees to six places of decimals with that
-presented by Turner:
+presented by @turner2020_nomarkup:
 
 ```{r usepladmm, cache=TRUE}
 standardPL_PlackettLuce <- PlackettLuce(salad, npseudo = 0)
@@ -110,19 +110,4 @@ value from `specificp.test()` of $H_0\colon p_B=\frac{1}{4}$.  This is
 because `samep.test()` allows one to change the value of $p_C$ and we
 would expect a less significant result.
 
-
-
 # References
-
-Turner HL, van Etten J, Firth D, Kosmidis I (2020).  "Modelling
-Rankings in R: The PlackettLuce Package."  _Computational Statistics_,
-35, 1027–1057. doi:10.1007/s00180-020-00959-3,
-\url{https://doi.org/10.1007/s00180-020-00959-3}
-
-Yildiz, Ilkay, Jennifer Dy, Deniz Erdogmus, Jayashree Kalpathy-Cramer,
-Susan Ostmo, J. Peter Campbell, Michael F. Chiang, and Stratis
-Ioannidis. 2020. "Fast and Accurate Ranking Regression."  In
-Proceedings of the Twenty Third International Conference on Artificial
-Intelligence and Statistics, edited by Silvia Chiappa and Roberto
-Calandra, 108:77–88. Proceedings of Machine Learning
-Research. \url{http://proceedings.mlr.press/v108/yildiz20a.html}
