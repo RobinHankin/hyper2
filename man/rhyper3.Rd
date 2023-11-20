@@ -7,7 +7,10 @@
 \title{Random hyper3 objects}
 \description{
 
-Various random hyper3 objects, in the context of the race metaphor.
+  Various random hyper3 objects, in the context of the race metaphor.
+  They are intended to be quick \dQuote{get you going} examples of
+  simple \code{hyper3} objects.
+  
 }
 \usage{
 rwinner3(pn,ps)
@@ -17,24 +20,28 @@ rracehyper3(n=4,size=9,ps=NULL,races=3)
 rhyper3(n=5,s=3,type='race',...)
 }
 \arguments{
-  \item{pn}{A named integer vector showing numbers of each player}
-  \item{ps}{A named vector showing strengths of each player}
+  \item{pn}{A named integer vector showing numbers of each type of player}
+  \item{ps}{A named vector showing strengths of each type of player}
   \item{n,size,races,s,type}{Arguments specifying the complexity 
-    of the random \code{hyper3} object returned}
+    of the random \code{hyper3} object returned.  See details}
   \item{lambda}{Parameter}
 \item{...}{Further arguments passed to \code{rracehyper3()} or
   \code{rpair3()}}
 }
 \details{
 
-  These functions are intended to work with \code{hyper3} objects, as
-  indicated by the \code{3} in their names.
+  These functions return \code{hyper3} objects, as indicated by the
+  \code{3} in their names.
 
   \itemize{
 
-    \item Function \code{rwinner3()} returns the winner of a race,
-    chosen according to Plackett-Luce probabilities.
-    
+    \item Function \code{rwinner3()} is a low-level helper function that
+    takes a player number argument \code{pn}, and a player strength
+    argument \code{ps}, and returns the (name of) the winner, chosen
+    randomly from a field of runners with appropriate strengths.  It is
+    used repeatedly by \code{rrace3()} to select a winner from the
+    diminishing pool of still-running players.
+
     \item Function \code{rpair3()} returns a \code{hyper3} object
     corresponding to repeated pairwise comparisons including a
     white-player advantage.
@@ -58,17 +65,29 @@ rhyper3(n=5,s=3,type='race',...)
   File \code{inst/javelin.Rmd} and \code{inst/race3.Rmd} show some
   use-cases for these functions.
 
+  Argument \code{n} generally specifies the number of distinct types of
+  players; with default value for \code{pn} if \code{n=2}, if default
+  value of \code{pn} these will be named \code{a} and \code{b}.
+
 }
 \author{Robin K. S. Hankin}
+\note{
+  In function \code{rracehyper3()} [and by extension \code{rhyper3()}],
+  if argument \code{n} exceeds 26 and argument \code{pn} takes its
+  default value of \code{NULL}, then an error will be returned because
+  there are only 26 players, one for each letter \code{a}-\code{z}.
+
+}
 \seealso{\code{\link{rrank}},\code{\link{ordertable2supp}},\code{\link{ordertrans}}}
 \examples{
 
 rrace3() # moderate-sized default
 
-## player numbers (two "a"s, four "b"s, two "c"s and a "d"):
-pn <- c(a=2,b=4,c=2,d=1) 
+## pn is player numbers (two "a"s, four "b"s, two "c"s and a "d"):
+pn <- c(a=2, b=4, c=2, d=1) 
 
-ps <- c(a=0.3, b=0.1,c=0.2,d=0.4)  # player strengths    
+## ps is player strengths; 'd' is the strongest and the 'b' quadruplets the weakest:
+ps <- c(a=0.3, b=0.1, c=0.2, d=0.4)  # player strengths  
 
 rwinner3(pn,ps)              # winner, randomly chosen
 rrace3(pn,ps)                 # A random race
