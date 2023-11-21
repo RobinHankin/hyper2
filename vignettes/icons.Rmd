@@ -2,6 +2,7 @@
 title: "Public perception of climate change: the `icons` dataset in the `hyper2` package"
 author: "Robin K. S. Hankin"
 bibliography: hyper2.bib
+output: html_vignette
 vignette: |
   %\VignetteIndexEntry{icons}
   %\VignetteEncoding{UTF-8}
@@ -339,44 +340,55 @@ so large).
 
 ## Final example
 
-The final example was motivated by the fact that both the distant
+The final example is motivated by the fact that both the distant
 icons $p_5$ and $p_6$ had lower strength than any of the local icons
-$p_1\ldots p_4$.  Thus we would have
+$p_1,\ldots, p_4$.  Thus we would have
 $H_0\colon\max\left\{p_5,p_6\right\}\geqslant\min\left\{p_1,p_2,p_3,p_4\right\}$.
 This means the null optimization is constrained so that *at least one*
 of $\left\{p_5,p_6\right\}$ exceeds *at least one* of
 $\left\{p_1,p_2,p_3,p_4\right\}$.  So we have the union of the various
 possibilities:
 
-\[
+\begin{equation}\label{eq:Habar}H_0=
 \overline{H_A}\colon
 \bigcup_{j\in\left\{5,6\right\}\atop k\in\left\{1,2,3,4\right\}}
 \left\{\left(p_1,p_2,p_3,p_4,p_5,p_6\right)\left|\sum p_i=1,
 p_j\geqslant p_k\right.\right\}
-\]
+\end{equation}
 
-and of course $p_6\geqslant p_2$, say, translates to
-$-p_1-2p_2-p_3-p_4-p_5\geqslant -1$.
+The fillup value $p_6$ behaves differently in this context and
+$p_6\geqslant p_2$, say, translates to $-p_1-2p_2-p_3-p_4-p_5\geqslant
+-1$.
 
 ```{r ofcourse,cache=TRUE}
 small <- 1e-4
 start <- indep(c(small,small,small,small,0.5-2*small,0.5-2*small))
 jj <- c(
-   o(c(-1, 0, 0, 0, 1), 0,start=start),
-   o(c( 0,-1, 0, 0, 1), 0,start=start),
-   o(c( 0, 0,-1, 0, 1), 0,start=start),
-   o(c( 0, 0, 0,-1, 1), 0,start=start),
+   o(c(-1, 0, 0, 0, 1), 0,start=start),  # p1 >= p5
+   o(c( 0,-1, 0, 0, 1), 0,start=start),  # p2 >= p5
+   o(c( 0, 0,-1, 0, 1), 0,start=start),  # p3 >= p5
+   o(c( 0, 0, 0,-1, 1), 0,start=start),  # p4 >= p5
 
-   o(c(-2,-1,-1,-1,-1),-1,start=start),
-   o(c(-1,-2,-1,-1,-1),-1,start=start),
-   o(c(-1,-1,-2,-1,-1),-1,start=start),
-   o(c(-1,-1,-1,-2,-1),-1,start=start)
+   o(c(-2,-1,-1,-1,-1),-1,start=start),  # p1 >= p6
+   o(c(-1,-2,-1,-1,-1),-1,start=start),  # p2 >= p6
+   o(c(-1,-1,-2,-1,-1),-1,start=start),  # p3 >= p6
+   o(c(-1,-1,-1,-2,-1),-1,start=start)   # p4 >= p6
    )
 jj
+```
+
+Above, the elements of vector `jj` are the maximum likelihoods for
+each of the separate components of the parameter space allowed under
+$H_0$.  Note that these components are not disjoint.  So the maximum
+likelhood for the whole of allowable parameters under $H_0$ would be
+the maximum of these maxima:
+
+```{r maxjj}
 max(jj)
 ```
 
-So the extra support is
+This corresponds to the fourth component of $H_0$, viz $p_4=p_5$.  The
+extra support is thus
 
 ```{r extraofcourse}
 L1-max(jj)
@@ -391,6 +403,12 @@ should look at the maximum value:
 o(c( 0, 0, 0,-1, 1), 0,give=TRUE,start=start)
 ```
 
-So the evaluate is at the boundary, for $p_4=p_5$.
+So the evaluate is at the boundary, for $p_4=p_5$; `THC` and `OA` have
+the same Bradley-Terry strength.  The small amount of extra support
+given by allowing an unconstrained optimization would suggest that
+there is no strong evidence for the contention investigated, viz "both
+the distant icons $p_5$ and $p_6$ have lower strength than any of the
+local icons $p_1,\ldots, p_4$".
+
 
 ## References
