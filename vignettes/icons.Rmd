@@ -1,7 +1,7 @@
 ---
 title: "Public perception of climate change: the `icons` dataset in the `hyper2` package"
 author: "Robin K. S. Hankin"
-date: "`r Sys.Date()`"
+bibliography: hyper2.bib
 vignette: |
   %\VignetteIndexEntry{icons}
   %\VignetteEncoding{UTF-8}
@@ -14,41 +14,35 @@ set.seed(0)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<p style="text-align: right;">
-![](`r system.file("help/figures/hyper2.png", package = "hyper2")`){width=10%}
-</p>
+```{r label="hexsticker",out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-This short document analyses the climate change dataset originally
-presented in the `hyperdirichlet` R package^[RKS Hankin 2010.  "A
-generalization of the Dirichlet distribution", *Journal of Statistical
-Software*, 33:11] but using the improved `hyper2` package instead.
-Lay perception of climate change is a complex and interesting
-process^[S. J. O'Neill 2008 "An iconic approach to communicating
-climate change".  PhD thesis, School of Environmental Sciences,
-University of East Anglia, UK] and here we assess the engagement of
-non-experts by the use of "icons" (this word is standard in this
-context.  An icon is a "representative symbol") that illustrate
-different impacts of climate change.
+To cite the `hyper2` package in publications, please use @hankin2017.
+This short document analyses the climate change dataset of @oneill2008
+and discussed in the `hyperdirichlet` R package [@hankin2009], but
+using the improved `hyper2` package instead.  Lay perception of
+climate change is a complex and interesting process [@oneill2009] and
+here we assess the engagement of non-experts by the use of "icons"
+(this word is standard in this context.  An icon is a "representative
+symbol") that illustrate different impacts of climate change.
 
-Here we analyse results of one experiment^[S. J. O'Neill and M. Hulme
-2009. "An Iconic Approach to Representing Climate Change", _Global
-Environmental Change_ 19:402-410], in which subjects were presented
-with a set of icons of climate change and asked to identify which of
-them they find most concerning.  Six icons were used: PB [polar bears,
-which face extinction through loss of ice floe hunting grounds], NB
-[the Norfolk Broads, which flood due to intense rainfall events], L
-[London flooding, as a result of sea level rise], THC [the
-thermo-haline circulation, which may slow or stop as a result of
-anthropogenic modification of the water cycle], OA [oceanic
+Here we analyse results of one experiment [@oneill2008], in which
+subjects were presented with a set of icons of climate change and
+asked to identify which of them they found most concerning.  Six icons
+were used: PB [polar bears, which face extinction through loss of ice
+floe hunting grounds], NB [the Norfolk Broads, which flood due to
+intense rainfall events], L [London flooding, as a result of sea level
+rise], THC [the thermo-haline circulation, which may slow or stop as a
+result of anthropogenic modification of the water cycle], OA [oceanic
 acidification as a result of anthropogenic emissions of ${\mathrm
 C}{\mathrm O}_2$], and WAIS [the West Antarctic Ice Sheet, which is
-rapidly calving as a result of climate change].
+rapidly calving as a result of climate change].  Methodological
+constraints dictated that each respondent could be presented with a
+maximum of four icons.  The R idiom below (dataset `icons` in the
+package) shows the experimental results.
 
-Methodological constraints dictated that each respondent could be
-presented with a maximum of four icons.  The R idiom below (dataset
-`icons` in the package) shows the experimental results.
-
-```{r}
+```{r label=loadlib}
 library("hyper2",quietly=TRUE)
 M <- icons_table # saves typing
 M
@@ -63,7 +57,7 @@ is more fully described in the package.  The builtin `icons`
 likelihood function in the `hyper2` package may be created by using
 the `saffy()` function:
 
-```{r}
+```{r showicons}
 icons
 icons == saffy(icons_table)  # should be TRUE
 ```
@@ -78,7 +72,7 @@ different order due to `disordR` discipline.
 The first step is to find the maximum
 likelihood estimate for the `icons` likelihood:
 
-```{r}
+```{r estmaxlike,cache=TRUE}
 options("digits" = 4)
 (mic <- maxp(icons))
 dotchart(mic,pch=16)
@@ -86,7 +80,7 @@ dotchart(mic,pch=16)
 
 We also need the log-likelihood at an unconstrained maximum:
 
-```{r}
+```{r calclog}
 L1 <- loglik(indep(mic),icons)
 options(digits=9)
 L1
@@ -156,18 +150,18 @@ equality, specifically:
 H_E\colon p_1=p_2=\cdots=p_n=\frac{1}{n}.
 \]
 
-("E" for equal).  This was not carried out in Hankin 2010 because I
+("E" for equal).  This was not carried out in @hankin2009, because I
 had not thought of it.  Testing $H_E$ is implemented in the package as
 `test.equalp()`.  Note that because $H_E$ is a point hypothesis we
 would have $n-1$ degrees of freedom (because $H_0$ has $n-1$ df).
 
-```{r}
+```{r doequalp,cache=TRUE}
 equalp.test(icons)
 ```	
 
 ## Hypothesis 1: $p_1 = 1/6$
 
-Following the analysis in Hankin 2010, and restated above, we first
+Following the analysis in @hankin2009, and restated above, we first
 observe that NB [the Norfolk Broads] is the icon with the largest
 estimated probability with $\hat{p_1}\simeq 0.25$ (O'Neill gives a
 number of theoretical reasons to expect $p_1$ to be large).  This
@@ -188,7 +182,7 @@ functions; these work by imposing additional constraints to the
 `maxp()` function via the `fcm` and `fcv` arguments.  Using the
 defaults we have:
 
-```{r}
+```{r dospecificp,cache=TRUE}
 specificp.test(icons,1)
 ```	
 
@@ -245,7 +239,7 @@ p_1\leqslant p_5$.  The fillup constraint would be $p_1\leqslant
 p_6\longrightarrow 2p_1+p_2+\ldots p_5\leqslant 1$.  We then choose
 the largest likelihood from the five.
 
-```{r}
+```{r largestoffive,cache=TRUE}
 o <- function(Ul,Cl,startp,give=FALSE){
     small <- 1e-4  #  ensure start at an interior point
     if(missing(startp)){startp <- small*(1:5)+rep(0.1,5)}			
@@ -266,7 +260,7 @@ p6max <- o(c(-2,-1,-1,-1,-1),-1)  # p1 <= p6 (fillup)
 
 (the final line is different because $p_6$ is the fillup value).
 
-```{r}
+```{r pnmax}
 likes <- c(p2max,p3max,p4max,p5max,p6max)
 likes
 ml <- max(likes) 
@@ -280,7 +274,7 @@ largest likelihood is the easiest constraint to break, in this case
 $p_1\leqslant p_3$: this makes sense because $p_3$ has the second
 highest MLE after $p_1$.  The extra likelihood is given by
 
-```{r}
+```{r extralike}
 L1-ml
 ```
 
@@ -291,7 +285,7 @@ $p_1\geqslant\max\left(p_2,\ldots,p_6\right)$.
 
 It's worth looking at the evaluate too:
 
-```{r}
+```{r evalworth,cache=TRUE}
 o2 <- function(Ul,Cl){
   jj <-o(Ul,Cl,give=TRUE)
   out <- c(jj[[1]],1-sum(jj[[1]]),jj[[2]])
@@ -329,14 +323,14 @@ to an operational constraint of
 $-p_1-p_2-p_3-p_4\geqslant-\frac{2}{3}$ (because
 $p_5+p_6=1-p_1-p_2-p_3-p_4$):
 
-```{r} 
+```{r lowfreq,cache=TRUE} 
 jj <- o(c(-1,-1,-1,-1,0) , -2/3, give=TRUE,start=indep((1:6)/21))$value
 jj
 ```
 
 then the extra support is 
 
-```{r}
+```{r extralowfreq}
 L1-jj
 ```
 
@@ -364,7 +358,7 @@ p_j\geqslant p_k\right.\right\}
 and of course $p_6\geqslant p_2$, say, translates to
 $-p_1-2p_2-p_3-p_4-p_5\geqslant -1$.
 
-```{r}
+```{r ofcourse,cache=TRUE}
 small <- 1e-4
 start <- indep(c(small,small,small,small,0.5-2*small,0.5-2*small))
 jj <- c(
@@ -384,7 +378,7 @@ max(jj)
 
 So the extra support is
 
-```{r}
+```{r extraofcourse}
 L1-max(jj)
 ```
 
@@ -393,8 +387,10 @@ difference although if pressed I would point to `hyper2` using
 multiple walkers in its optimization [defaulting to $n=10$] ).  We
 should look at the maximum value:
 
-```{r}
+```{r lookatmax,cache=TRUE}
 o(c( 0, 0, 0,-1, 1), 0,give=TRUE,start=start)
 ```
 
-So the evaluate is at the boundary, for $p_4=p_5$. 
+So the evaluate is at the boundary, for $p_4=p_5$.
+
+## References
