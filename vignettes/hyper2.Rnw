@@ -222,11 +222,7 @@ defined.  In the case of likelihood functions such as
 Equation~\ref{hyper2likelihood}, this does not affect the value of the
 expressions, as multiplication and addition are associative and
 commutative operations.  The \pkg{hyper2} package follows
-\code{disordR} discipline [@hankin2022_disordR].
-
-
-
-
+\code{disordR} discipline \citep{hankin2022_disordR}.
 
 \section{The package in use}
 
