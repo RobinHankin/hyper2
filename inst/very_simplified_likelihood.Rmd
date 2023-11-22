@@ -53,42 +53,41 @@ Placing after $r$ of the $b$ clones finish:
 
 ```{r tryit}
 small <- 1e-3
+
+f_single_direct <- function(a,r,n,log=FALSE){  # not vectorised in anything
+  b <- (1-a)/n   # 0 <= b <= 1/n
+  if(log){
+      return(log(1-n*b)+r*log(b)-sum(log(1-seq_len(r)*b)))
+     } else {
+      return((1-n*b)*b^r-prod(1-(1:3)*b))
+     }
+}	
+
+f <- function(a,r,n,log=FALSE){
+out <- a*0
+if(log){
+    for(rr in r){  out <- out + f_single(a,rr,n,log=TRUE)}
+  } else {
+    out[] <- 1
+    for(rr in r){  out <- out * f_single(a,rr,n,log=FALSE)}
+  }
+  return(out)
+}
+
 f_gamma <- function(a,r,n,log=FALSE){ # vectorised in 'a', but screws up for b=1/integer
   b <- (1-a)/n   # 0 <= b <= 1/n
   out <- log(a) + lgamma(1-1/b) - lgamma(1+r-1/b)
   if(!log){out <- exp(out)}
   return(out)
 }
-
-f_single_direct <- function(a,r,n,log=FALSE){ # not vectorised in anything
-  stopifnot(length(a)==1)
-  stopifnot(length(r)==1)
-  stopifnot(length(n)==1)
-  b <- (1-a)/n   # 0 <= b <= 1/n
-  if(log){
-      return(log(a)+r*log(b)-sum(log(1-seq_len(r)*b)))
-     } else {
-      return(a * b^r / prod(1-seq_len(r)*b))
-     }
-}	
-
-f <- function(a,r,n,log=FALSE){  # vectorized in a
-out <- a*0
-if(log){
-    for(rr in r){  out <- out + f_single_direct(a,rr,n,log=TRUE)}
-  } else {
-    out[] <- 1
-    for(rr in r){  out <- out * f_single_direct(a,rr,n,log=FALSE)}
-  }
-  return(out)
-}
-
-n <- 10
-a <- seq(from=small,to=1-small,len=100)
-plot(a,f(a,r=3,n=n))
-L <- f(a,r=3,n=n,log=TRUE)
-L <- L-max(L)
-plot(a,L,ylim=c(-5,0))
-f(0.9,3,10)
 ```
 
+
+Now use it:
+            
+            
+```{r}
+ a <- seq(from=0.01,to=0.99,by=0.01)
+ L <- f(a,r=c(3,4,5),10)
+plot(a,L-max(L))
+```   
