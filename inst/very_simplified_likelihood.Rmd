@@ -1,0 +1,94 @@
+---
+title: "Very simplified likelihood"
+author: "Robin Hankin"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+```
+
+```{r hexsticker, out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+
+Consider a race between $n+1$ competitors of strength $a,b,\ldots,b$
+where we require the total strength to be unity: $a+nb=1$.  Suppose
+our bro comes first:
+
+\[\mathcal{L}(a)=a\]
+
+Comes second:
+
+
+\[
+\mathcal{L}(a)=b\cdot\frac{a}{1-b}
+\]
+
+
+
+Third:
+
+\[
+\mathcal{L}(a)=b\cdot\frac{b}{1-b}\cdot\frac{a}{1-2b}
+\]
+
+
+Fourth:
+
+\[
+\mathcal{L}(a)=b\cdot\frac{b}{1-b}\cdot\frac{b}{1-2b}\cdot\frac{a}{1-3b}
+\]
+
+
+Placing after $r$ of the $b$ clones finish:
+
+
+\[
+\mathcal{L}(a)=\frac{b^ra}{(1-b)(1-2b)\cdots(1-rb)}=(1-nb)\frac{(-1)^r\Gamma(1-1/b)}{\Gamma(1+r-1/b)}
+\]
+
+
+```{r tryit}
+small <- 1e-3
+f_gamma <- function(a,r,n,log=FALSE){ # vectorised in 'a', but screws up for b=1/integer
+  b <- (1-a)/n   # 0 <= b <= 1/n
+  out <- log(a) + lgamma(1-1/b) - lgamma(1+r-1/b)
+  if(!log){out <- exp(out)}
+  return(out)
+}
+
+f_single_direct <- function(a,r,n,log=FALSE){ # not vectorised in anything
+  stopifnot(length(a)==1)
+  stopifnot(length(r)==1)
+  stopifnot(length(n)==1)
+  b <- (1-a)/n   # 0 <= b <= 1/n
+  if(log){
+      return(log(a)+r*log(b)-sum(log(1-seq_len(r)*b)))
+     } else {
+      return(a * b^r / prod(1-seq_len(r)*b))
+     }
+}	
+
+f <- function(a,r,n,log=FALSE){  # vectorized in a
+out <- a*0
+if(log){
+    for(rr in r){  out <- out + f_single_direct(a,rr,n,log=TRUE)}
+  } else {
+    out[] <- 1
+    for(rr in r){  out <- out * f_single_direct(a,rr,n,log=FALSE)}
+  }
+  return(out)
+}
+
+n <- 10
+a <- seq(from=small,to=1-small,len=100)
+plot(a,f(a,r=3,n=n))
+L <- f(a,r=3,n=n,log=TRUE)
+L <- L-max(L)
+plot(a,L,ylim=c(-5,0))
+f(0.9,3,10)
+```
+
