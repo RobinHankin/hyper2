@@ -57,19 +57,26 @@ small <- 1e-3
 f_single_direct <- function(a,r,n,log=FALSE){  # not vectorised in anything
   b <- (1-a)/n   # 0 <= b <= 1/n
   if(log){
-      return(log(1-n*b)+r*log(b)-sum(log(1-seq_len(r)*b)))
+      return(log(a) + r*log(b) - sum(log(1-seq_len(r)*b)))
      } else {
-      return((1-n*b)*b^r-prod(1-(1:3)*b))
+      return(a * b^r/prod(1-seq_len(r)*b))
      }
 }	
+
+`f_vectorised_direct` <- function(a,r,n,log=FALSE){  # vectorised in 'a', not in 'r'
+  b <- (1-a)/n   # 0 <= b <= 1/n
+  out <- r*log(b) + log(a) -rowSums(log(1-outer(b,seq_len(r))))
+  if(log){return(out)} else {return(exp(out))}
+}
+
 
 f <- function(a,r,n,log=FALSE){
 out <- a*0
 if(log){
-    for(rr in r){  out <- out + f_single(a,rr,n,log=TRUE)}
+    for(rr in r){  out <- out + f_vectorised_direct(a,rr,n,log=TRUE)}
   } else {
     out[] <- 1
-    for(rr in r){  out <- out * f_single(a,rr,n,log=FALSE)}
+    for(rr in r){  out <- out * f_vectorised_direct(a,rr,n,log=FALSE)}
   }
   return(out)
 }
@@ -87,7 +94,111 @@ Now use it:
             
             
 ```{r}
- a <- seq(from=0.01,to=0.99,by=0.01)
- L <- f(a,r=c(3,4,5),10)
+ a <- seq(from=0.05,to=0.45,by=0.01)
+ L <- f(a,r=c(3,4,3,3,1,3,3,3,1,1,1,5),10,log=T)  # 10+1==11 competitors in total
 plot(a,L-max(L))
+abline(v=a[which.max(L)])
+abline(v=1/11)
+abline(h=c(0,-2))
 ```   
+
+
+Now skating:
+
+
+```{r showhughes}
+skating_table
+hughes <- unlist(skating_table[1,])
+a <- seq(from=0.05,to=0.55,by=0.01)
+L <- f(a,hughes,23,log=TRUE)
+L <- L - max(L)
+plot(a,L,type='b')
+abline(v=1/23)
+```
+
+
+```{r showall}
+a <- seq(from=0.001,to=0.55,by=0.001)
+fun <- function(i){
+  out <- f(a,unlist(skating_table[i,]),23,log=TRUE)
+  return(out-max(out))
+}
+
+plot(NA,xlim=c(0,1),ylim=c(-10,0),type='n')
+abline(v=1/23)
+for(i in seq_len(9)){points(a,fun(i),type='b')}
+
+plot(NA,xlim=c(-5,1),ylim=c(-5,0),type='n',xlab="log-odds")
+abline(v=-log(22))
+for(i in seq_len(23)){points(log(a/(1-a)),fun(i),type='l')}
+```
+
+
+# Formula 1
+
+```{r showformula1}
+x <- read.table("formula1_2022.txt",header=TRUE)
+x <- x[,-ncol(x)]
+x
+```
+
+```{r analyseform1}
+fun <- function(i){
+  suppressWarnings(jj <- as.numeric(unlist(x[i,])))
+  jj[is.na(jj)] <- 23
+  L <- f(a,jj,23,log=TRUE)
+  return(L - max(L))
+}
+
+plot(NA,xlim=c(-5,1),ylim=c(-5,1),type='n',xlab="log-odds")
+abline(v=-log(22))
+for(i in seq_len(20)){points(log(a/(1-a)),fun(i),type='l')}
+
+```
+
+
+# Mathematics Olympiad
+
+```{r}
+x <- as.matrix(read.table("olympiad.txt",header=TRUE))
+x <- x[apply(x,1,max) <= 100,]
+fun <- function(i){
+ jj <- as.numeric(unlist(x[i,]))
+  L <- f(a,jj,100,log=TRUE)
+  return(L - max(L))
+}
+plot(NA,xlim=c(-5,1),ylim=c(-5,1),type='n',xlab="log-odds")
+abline(v=-log(99))
+for(i in seq_len(40)){points(log(a/(1-a)),fun(i),type='l')}
+
+```{r}
+x <- as.matrix(read.table("ol.txt",header=TRUE))[,1:4]
+x <- x[apply(x,1,max) <= 100,]
+fun <- function(i){
+ jj <- as.numeric(unlist(x[i,]))
+  L <- f(a,jj,100,log=TRUE)
+  return(L - max(L))
+}
+plot(NA,xlim=c(-5,1),ylim=c(-5,1),type='n',xlab="log-odds")
+abline(v=-log(99))
+for(i in seq_len(40)){points(log(a/(1-a)),fun(i),type='l')}
+```
+
+
+```{r}
+x <- as.matrix(read.table("ol.txt",header=TRUE))[,1:4]
+x <- x[apply(x,1,max) <= 100,]
+x[] <- sample(c(x))
+x
+rowSums(x)
+fun <- function(i){
+ jj <- as.numeric(unlist(x[i,]))
+  L <- f(a,jj,100,log=TRUE)
+  return(L - max(L))
+}
+plot(NA,xlim=c(-5,1),ylim=c(-5,1),type='n',xlab="log-odds")
+abline(v=-log(99))
+for(i in seq_len(40)){points(log(a/(1-a)),fun(i),type='l')}
+
+
+
