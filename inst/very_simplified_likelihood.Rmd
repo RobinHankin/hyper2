@@ -7,12 +7,12 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
+library("pracma")
 ```
 
 ```{r hexsticker, out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
-
 
 Consider a race between $n+1$ competitors of strength $a,b,\ldots,b$
 where we require the total strength to be unity: $a+nb=1$.  Suppose
@@ -49,6 +49,8 @@ Placing after $r$ of the $b$ clones finish:
 \[
 \mathcal{L}(a)=\frac{b^ra}{(1-b)(1-2b)\cdots(1-rb)}=(1-nb)\frac{(-1)^r\Gamma(1-1/b)}{\Gamma(1+r-1/b)}
 \]
+
+
 
 
 ```{r tryit}
@@ -95,7 +97,7 @@ Now use it:
             
 ```{r}
  a <- seq(from=0.05,to=0.45,by=0.01)
- L <- f(a,r=c(3,4,3,3,1,3,3,3,1,1,1,5),10,log=T)  # 10+1==11 competitors in total
+ L <- f(a,r=5,10,log=T)  # 10+1==11 competitors in total
 plot(a,L-max(L))
 abline(v=a[which.max(L)])
 abline(v=1/11)
@@ -125,14 +127,11 @@ fun <- function(i){
 }
 
 plot(NA,xlim=c(0,1),ylim=c(-10,0),type='n')
-abline(v=1/23)
 for(i in seq_len(9)){points(a,fun(i),type='b')}
 
-plot(NA,xlim=c(-5,1),ylim=c(-5,0),type='n',xlab="log-odds")
-abline(v=-log(22))
-for(i in seq_len(23)){points(log(a/(1-a)),fun(i),type='l')}
+plot(NA,xlim=c(-3,3),ylim=c(-5,0),type='n',xlab="log-odds")
+for(i in seq_len(23)){points(log(22*a/(1-a)),fun(i),type='l')}
 ```
-
 
 # Formula 1
 
@@ -151,8 +150,7 @@ fun <- function(i){
 }
 
 plot(NA,xlim=c(-5,1),ylim=c(-5,1),type='n',xlab="log-odds")
-abline(v=-log(22))
-for(i in seq_len(20)){points(log(a/(1-a)),fun(i),type='l')}
+for(i in seq_len(20)){points(log(22*a/(1-a)),fun(i),type='l')}
 
 ```
 
@@ -160,6 +158,7 @@ for(i in seq_len(20)){points(log(a/(1-a)),fun(i),type='l')}
 # Mathematics Olympiad
 
 ```{r}
+n <- 82 # 83 competitors altogether
 x <- as.matrix(read.table("olympiad.txt",header=TRUE))
 x <- x[apply(x,1,max) <= 100,]
 fun <- function(i){
@@ -167,38 +166,84 @@ fun <- function(i){
   L <- f(a,jj,100,log=TRUE)
   return(L - max(L))
 }
-plot(NA,xlim=c(-5,1),ylim=c(-5,1),type='n',xlab="log-odds")
-abline(v=-log(99))
-for(i in seq_len(40)){points(log(a/(1-a)),fun(i),type='l')}
+
+plot(NA,xlim=c(-5,5),ylim=c(-5,1),type='n',xlab="log-odds")
+for(i in seq_len(40)){points(log(n*a/(1-a)),fun(i),type='l')}
+abline(v=0)
+```
+
+
 
 ```{r}
-x <- as.matrix(read.table("ol.txt",header=TRUE))[,1:4]
+x <- as.matrix(read.table("olympiad.txt",header=TRUE))[,1:4]
 x <- x[apply(x,1,max) <= 100,]
 fun <- function(i){
  jj <- as.numeric(unlist(x[i,]))
   L <- f(a,jj,100,log=TRUE)
   return(L - max(L))
 }
-plot(NA,xlim=c(-5,1),ylim=c(-5,1),type='n',xlab="log-odds")
-abline(v=-log(99))
-for(i in seq_len(40)){points(log(a/(1-a)),fun(i),type='l')}
+plot(NA,xlim=c(-5,5),ylim=c(-5,1),type='n',xlab="log-odds")
+for(i in seq_len(40)){points(log(n*a/(1-a)),fun(i),type='l')}
 ```
 
 
 ```{r}
-x <- as.matrix(read.table("ol.txt",header=TRUE))[,1:4]
+x <- as.matrix(read.table("olympiad.txt",header=TRUE))[,1:4]
 x <- x[apply(x,1,max) <= 100,]
 x[] <- sample(c(x))
-x
+head(x)
 rowSums(x)
 fun <- function(i){
  jj <- as.numeric(unlist(x[i,]))
   L <- f(a,jj,100,log=TRUE)
   return(L - max(L))
 }
-plot(NA,xlim=c(-5,1),ylim=c(-5,1),type='n',xlab="log-odds")
-abline(v=-log(99))
-for(i in seq_len(40)){points(log(a/(1-a)),fun(i),type='l')}
+plot(NA,xlim=c(-5,5),ylim=c(-5,1),type='n',xlab="log-odds")
+for(i in seq_len(40)){points(log(n*a/(1-a)),fun(i),type='l')}
+```
+
+In principle we can find the optimum point with calculus and indeed we
+have
+
+\[
+\frac{d}{db}\mathcal{L} = \frac{\psi(1-1/b)-\psi(r+1-1/b)}{b(b+\psi(1-1/b)-\psi(r+1-1/b))}-n
+\]
+
+but the implementation is difficult because the expression is not
+defined for many sensible values of $b$.  We can use `optimize()`
+though:
+
+
+```{r solvescore}
+  MLE <- function(r,n){
+  small <- 1e-6
+  a <- optimize(function(b){
+       f_single_direct(b,r=r,n=n,log=TRUE)},
+       maximum=TRUE, c(small,1-small))$maximum
+  b <- (1-a)/n
+  print(c(a,b))
+  return(a/(a+b))
+}	
+
+MLE(0,10)
+MLE(1,10)
+MLE(2,10)
+MLE(3,10)
+MLE(4,10)
+MLE(5,10)
+MLE(6,10)
+
+MLE(0,11)
+MLE(1,11)
+MLE(2,11)
+MLE(3,11)
+MLE(4,11)
+MLE(5,11)
+MLE(6,11)
+
+
+```
+
 
 
 
