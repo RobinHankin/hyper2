@@ -233,11 +233,11 @@ optimization [of course, the intrinsic constraints $p_i\geqslant 0,
 \sum p_i\leqslant 1$ have to be respected].  Here, $\overline{H_0}$ is
 regions of $(p_1,\ldots,p_6)$ with $p_1$ being greater than *at least
 one* of $p_2,\ldots,p_6$.  The union of convex sets is not necessarily
-convex (think two-way Venn diagrams).  As far as I can see, the only
+convex (e.g. a two-way Venn diagram).  As far as I can see, the only
 way to do it is to perform a sequence of five constrained
 optimizations: $p_1\leqslant p_2, p_1\leqslant p_3, p_1\leqslant p_4,
 p_1\leqslant p_5$.  The fillup constraint would be $p_1\leqslant
-p_6\longrightarrow 2p_1+p_2+\ldots p_5\leqslant 1$.  We then choose
+p_6\longrightarrow 2p_1+p_2+\cdots +p_5\leqslant 1$.  We then choose
 the largest likelihood from the five.
 
 ```{r largestoffive,cache=TRUE}
