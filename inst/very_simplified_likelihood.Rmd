@@ -128,12 +128,59 @@ plot(a,f(a,3,8,log=FALSE))
 ```{r maxvscheco}
 a <- read.table("formula1_2023.txt",header=TRUE)
 a <- a[,seq_len(ncol(a)-1)]
-max <- as.numeric(as.matrix(a)[1,])
-checo <- as.numeric(as.matrix(a)[2,])
-checo[is.na(checo)] <- 22
-max
-checo
-MLE(max,22)
-MLE(checo,22)
+d1 <- as.numeric(as.matrix(a)["Ocon",])
+d2 <- as.numeric(as.matrix(a)["Gasly",])
+d1[is.na(d1)] <- 22
+d2[is.na(d2)] <- 22
+d1
+d2
+MLE(d1,22)
+MLE(d2,22)
+```
+
+two sample test:
+
+```{r 2samptest}
+both <- c(d1,d2)
+bothmax <- MLE(both,22)$maximum
+
+d1max <- MLE(d1,22)$maximum
+d2max <- MLE(d2,22)$maximum
+f(bothmax,d1,22,log=TRUE)
+f(bothmax,d2,22,log=TRUE)
+f(d1max,d1,22,log=TRUE)
+f(d2max,d2,22,log=TRUE)
+
+Lambda <- (f(d2max,d1,22,log=TRUE)+f(d2max,d2,22,log=TRUE)) -(f(bothmax,d1,22,log=TRUE)+f(bothmax,d2,22,log=TRUE))
+Lambda
+pchisq(-2*Lambda,df=1,lower.tail=FALSE)
+```
+
+
+## Mathematical Olympiad
+
+
+```{r readoly}
+sametest <- function(d1,d2,n){
+  both <- c(d1,d2)
+  bothmax <- MLE(both,n)$maximum
+
+  d1max <- MLE(d1,n)$maximum
+  d2max <- MLE(d2,n)$maximum
+  Lambda <- (f(d2max,d1,n,log=TRUE)+f(d2max,d2,n,log=TRUE)) -(f(bothmax,d1,n,log=TRUE)+f(bothmax,d2,n,log=TRUE))
+  pchisq(-2*Lambda,df=1,lower.tail=FALSE)
+}
+
+a <- as.matrix(read.table("olympiad.txt"))
+nrow(a)
+d1 <- a["AUS",]
+d2 <- a["NZL",]
+d1
+d2
+sametest(d1,d2,100)
+a["USA",]
+a["CHN",]
+sametest(a["USA",],a["CHN",],100)
+sametest(a["USA",],a["CHN",],5)
 ```
 
