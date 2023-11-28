@@ -16,258 +16,124 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 
 Consider a race between a competitor of Bradley-Terry strength $a$ and
 $n$ competitors each of strength $b$; we require $a+b=1$.  An
-observation is indexed by $r$, the number of $b$'s finishing ahead of
-$a$, so $0\leqslant r\leqslant n$.
+observation is indexed by $r$, the number of $b$ clones finishing
+ahead of $a$, so $0\leqslant r\leqslant n$.  The initial field
+strength is $a+nb=n+(n-1)a$.
 
 ### Likelihood functions
 
 
 Suppose our bro comes first (zero $b$'s ahead of him):
 
-\[\mathcal{L}(a)=a\]
+\[\mathcal{L}(a)=\frac{a}{a+nb}=\frac{a}{n+(n-1)a}\]
 
 Comes second, one $b$ ahead of him:
 
-
 \[
-\mathcal{L}(a)=b\cdot\frac{a}{1-b}=b
+\mathcal{L}(a)=\frac{b}{a+nb}\cdot\frac{a}{a+(n-1)b}
 \]
 
 
 Third, two ahead of him:
 
 \[
-\mathcal{L}(a)=\frac{b}{1}\cdot\frac{b}{1-b}\cdot\frac{a}{1-2b}=\frac{b^2}{1-2b}
+\mathcal{L}(a)=
+\frac{b}{a+ n   b}\cdot
+\frac{b}{a+(n-1)b}\cdot
+\frac{a}{a+(n-2)b}
 \]
 
 
 Fourth, three ahead:
 
 \[
-\mathcal{L}(a)=b\cdot\frac{b}{1-b}\cdot\frac{b}{1-2b}\cdot\frac{a}{1-3b}=\frac{b^3}{(1-2b)(1-3b)}
+\mathcal{L}(a)=
+\frac{b}{a+ n   b}\cdot
+\frac{b}{a+(n-1)b}\cdot
+\frac{b}{a+(n-2)b}\cdot
+\frac{a}{a+(n-3)b}
 \]
-
-Fifth, four ahead:
-
-\[
-\mathcal{L}(a)=b\cdot\frac{b}{1-b}\cdot\frac{b}{1-2b}\cdot\frac{b}{1-3b}\cdot\frac{a}{1-4b}=\frac{b^4}{(1-2b)(1-3b)(1-4b)}
-\]
-
 
 Placing after $r$ of the $n$ clones of strength $b$ finish:
 
-
 \[
-\mathcal{L}(b)=\frac{b^ra}{(1-b)(1-2b)\cdots(1-rb)}=\frac{b^r}{(1-2b)\cdots(1-rb)},\qquad r\geqslant 2
+\mathcal{L}(a)=
+\frac{b^ra}{
+(a+nb)(a+(n-1)b)(a+(n-2)b)\cdots(a+(n-r)b)}
+=
+\frac{B-1}{(B+n-1)(B+n-2)\cdots(B+n-r-1)}
 \]
 
-\[
-\mathcal{L}(b)=\frac{b^{r+1}}{(1-2b)\cdots(1-rb)}=\frac{(-1)^{r+1}b\Gamma(2-1/b)}{\Gamma(1+r-1/b)}
-\]
+where $B=1/b$.  In R:
 
 
-
-
-The case $n=2$ was considered by Hankin 2023.
-
-
-
-```{r tryit}
-small <- 1e-3
-
-f_single_direct <- function(a,r,n,log=FALSE){  # not vectorised in anything
-  b <- (1-a)/n   # 0 <= b <= 1/n
+```{r}
+f_single <- function(a,r,n,log=FALSE){  # not vectorised
+  B <- 1/(1-a)
   if(log){
-      return(log(a) + r*log(b) - sum(log(1-seq_len(r)*b)))
-     } else {
-      return(a * b^r/prod(1-seq_len(r)*b))
-     }
+     out <- log(B-1) - sum(log(B + B+(n-r-1):(n-1)))
+   } else {
+     out <- (B-1)/prod(B+(n-r-1):(n-1))
+   }
+   return(out)
 }	
 
-`f_vectorised_direct` <- function(a,r,n,log=FALSE){  # vectorised in 'a', not in 'r'
-  b <- (1-a)/n   # 0 <= b <= 1/n
-  out <- r*log(b) + log(a) -rowSums(log(1-outer(b,seq_len(r))))
-  if(log){return(out)} else {return(exp(out))}
+f_vec_a <- function(a,r,n, log=FALSE){  # vectorised in 'a' but not in 'r'
+ sapply(a,function(a){f_single(a,r=r,n=n,log=log)})
 }
 
+f <- function(a,r,n,log=FALSE){ # vectorized in 'a', treats 'r' as a vector of independent observations
 
-f <- function(a,r,n,log=FALSE){
-out <- a*0
-if(log){
-    for(rr in r){  out <- out + f_vectorised_direct(a,rr,n,log=TRUE)}
+  if(log){
+    out <- 0
+    for(rr in r){out <- out + f_vec_a(a,rr,n,log=TRUE)}
   } else {
-    out[] <- 1
-    for(rr in r){  out <- out * f_vectorised_direct(a,rr,n,log=FALSE)}
+    out <- 1
+    for(rr in r){out <- out * f_vec_a(a,rr,n,log=FALSE)}
   }
   return(out)
 }
 
-f_gamma <- function(a,r,n,log=FALSE){ # vectorised in 'a', but screws up for b=1/integer
-  b <- (1-a)/n   # 0 <= b <= 1/n
-  out <- log(a) + lgamma(1-1/b) - lgamma(1+r-1/b)
-  if(!log){out <- exp(out)}
-  return(out)
+MLE <- function(r,n){
+    d <- 1e-6
+   optimize(f,c(d,1-d),r=r,n=n,log=TRUE,maximum=TRUE)
 }
+MLE(3,9)
 ```
 
 
-Now use it:
-            
-            
-```{r}
- a <- seq(from=0.05,to=0.45,by=0.01)
- L <- f(a,r=5,10,log=T)  # 10+1==11 competitors in total
-plot(a,L-max(L))
-abline(v=a[which.max(L)])
-abline(v=1/11)
-abline(h=c(0,-2))
-```   
-
-
-Now skating:
-
-
-```{r showhughes}
-skating_table
-hughes <- unlist(skating_table[1,])
-a <- seq(from=0.05,to=0.55,by=0.01)
-L <- f(a,hughes,23,log=TRUE)
-L <- L - max(L)
-plot(a,L,type='b')
-abline(v=1/23)
-```
-
-
-```{r showall}
-a <- seq(from=0.001,to=0.55,by=0.001)
-fun <- function(i){
-  out <- f(a,unlist(skating_table[i,]),23,log=TRUE)
-  return(out-max(out))
-}
-
-plot(NA,xlim=c(0,1),ylim=c(-10,0),type='n')
-for(i in seq_len(9)){points(a,fun(i),type='b')}
-
-plot(NA,xlim=c(-3,3),ylim=c(-5,0),type='n',xlab="log-odds")
-for(i in seq_len(23)){points(log(22*a/(1-a)),fun(i),type='l')}
-```
-
-# Formula 1
-
-```{r showformula1}
-x <- read.table("formula1_2022.txt",header=TRUE)
-x <- x[,-ncol(x)]
-x
-```
-
-```{r analyseform1}
-fun <- function(i){
-  suppressWarnings(jj <- as.numeric(unlist(x[i,])))
-  jj[is.na(jj)] <- 23
-  L <- f(a,jj,23,log=TRUE)
-  return(L - max(L))
-}
-
-plot(NA,xlim=c(-5,1),ylim=c(-5,1),type='n',xlab="log-odds")
-for(i in seq_len(20)){points(log(22*a/(1-a)),fun(i),type='l')}
-
-```
-
-
-# Mathematics Olympiad
+Now verification
 
 ```{r}
-n <- 82 # 83 competitors altogether
-x <- as.matrix(read.table("olympiad.txt",header=TRUE))
-x <- x[apply(x,1,max) <= 100,]
-fun <- function(i){
- jj <- as.numeric(unlist(x[i,]))
-  L <- f(a,jj,100,log=TRUE)
-  return(L - max(L))
-}
-
-plot(NA,xlim=c(-5,5),ylim=c(-5,1),type='n',xlab="log-odds")
-for(i in seq_len(40)){points(log(n*a/(1-a)),fun(i),type='l')}
-abline(v=0)
+a <- 0.23423434
+b <- 1-a
+B <- 1/b
+n <- 9
+r <- 3
+c(
+b^3*a/((a+9*b) * (a+8*b) * (a+7*b) * (a+6*b)),
+(B-1)/prod(B+(5:8)),
+f(a,r,n,log=FALSE))
 ```
+
+Now some visuals.  Suppose $r=4,n=8$:
 
 ```{r}
-x <- as.matrix(read.table("olympiad.txt",header=TRUE))[,1:4]
-x <- x[apply(x,1,max) <= 100,]
-fun <- function(i){
- jj <- as.numeric(unlist(x[i,]))
-  L <- f(a,jj,100,log=TRUE)
-  return(L - max(L))
-}
-plot(NA,xlim=c(-5,5),ylim=c(-5,1),type='n',xlab="log-odds")
-for(i in seq_len(40)){points(log(n*a/(1-a)),fun(i),type='l')}
+a <- seq(from=0,to=1,by=0.01)
+plot(a,f(a,3,8,log=FALSE))
 ```
 
+# Formula 1.
 
-```{r}
-x <- as.matrix(read.table("olympiad.txt",header=TRUE))[,1:4]
-x <- x[apply(x,1,max) <= 100,]
-x[] <- sample(c(x))
-head(x)
-rowSums(x)
-fun <- function(i){
- jj <- as.numeric(unlist(x[i,]))
-  L <- f(a,jj,100,log=TRUE)
-  return(L - max(L))
-}
-plot(NA,xlim=c(-5,5),ylim=c(-5,1),type='n',xlab="log-odds")
-for(i in seq_len(40)){points(log(n*a/(1-a)),fun(i),type='l')}
+```{r maxvscheco}
+a <- read.table("formula1_2023.txt",header=TRUE)
+a <- a[,seq_len(ncol(a)-1)]
+max <- as.numeric(as.matrix(a)[1,])
+checo <- as.numeric(as.matrix(a)[2,])
+checo[is.na(checo)] <- 22
+max
+checo
+MLE(max,22)
+MLE(checo,22)
 ```
 
-In principle we can find the optimum point with calculus and indeed we
-have
-
-\[
-\frac{d}{db}\mathcal{L} = \frac{\psi(1-1/b)-\psi(r+1-1/b)}{b(b+\psi(1-1/b)-\psi(r+1-1/b))}-n
-\]
-
-but the implementation is difficult because the expression is not
-defined for many sensible values of $b$.  We can use `optimize()`
-though:
-
-
-```{r solvescore}
-  MLE <- function(r,n){
-  stopifnot(length(r)==1)
-  small <- 1e-6
-  a <- optimize(function(b){
-       f_single_direct(b,r=r,n=n,log=TRUE)},
-       maximum=TRUE, c(small,1-small))$maximum
-  b <- (1-a)/n
-#  print(c(a,b))
-  return(c(a/(a+b),b/(a+b)))
-}
-```
-
-```{r rbindmle}
-o <-
-rbind(
-r0=MLE(0,9),
-r1=MLE(1,9),
-r2=MLE(2,9),
-r3=MLE(3,9),
-r4=MLE(4,9),
-r5=MLE(5,9),
-r6=MLE(6,9),
-r7=MLE(7,9),
-r8=MLE(8,9),
-r9=MLE(9,9))
-o
-matplot(o)
-```
-
-
-
-## Compare New Zealand with Australia
-
-
-```{r nzaus}
-x <- as.matrix(read.table("olympiad.txt",header=TRUE))
-x <- x[c("AUS","NZL"),]
-x
-```
