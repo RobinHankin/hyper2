@@ -20,6 +20,28 @@ observation is indexed by $r$, the number of $b$ clones finishing
 ahead of $a$, so $0\leqslant r\leqslant n$.  The initial field
 strength is $a+nb=n+(n-1)a$.
 
+
+Probability of the focal competitor coming first:
+
+\[
+\frac{a}{a+nb}=\frac{a}{n - a(n-1)a}=\frac{1-b}{1+(n-1)b}
+\]
+
+Coming second:
+\[
+\frac{b}{a+nb}\cdot\frac{a}{a+(n-1)b}
+\]
+
+
+Third:
+
+\[
+\frac{b}{a+nb}\cdot\frac{b}{a+(n-1)b}\cdot\frac{a}{a+(n-2)b}
+\]
+
+
+
+
 ### Likelihood functions
 
 
@@ -54,7 +76,7 @@ Fourth, three ahead:
 \frac{a}{a+(n-3)b}
 \]
 
-Placing after $r$ of the $n$ clones of strength $b$ finish:
+Placing after $r<n$ of the $n$ clones of strength $b$ finish:
 
 \[
 \mathcal{L}(a)=
@@ -64,19 +86,61 @@ Placing after $r$ of the $n$ clones of strength $b$ finish:
 \frac{B-1}{(B+n-1)(B+n-2)\cdots(B+n-r-1)}
 \]
 
-where $B=1/b$.  In R:
+where $B=1/b$.
+
+## Placing last
+
+Placing last is finishing  after $n$ clones finish:
+
+\[
+n=1\longrightarrow\mathcal{L}=b\]
+
+\[
+n=2\longrightarrow\mathcal{L}=\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^2}{1+b}
+\]
+
+\[
+n=3\longrightarrow\mathcal{L}=\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^3}{(1+b)(1+2b)}
+\]
+
+
+\[
+n=4\longrightarrow\mathcal{L}=\frac{b}{a+4b}\cdot\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=
+\frac{b^4}{(1+b)(1+2b)(1+3b)}
+\]
+
+For $n=4$ we have equivalently
+
+\[
+\frac{1}{B(B+1)(B+2)(B+3)}=\frac{(B-1)!}{(B+3)!}=\frac{\Gamma(B)}{\Gamma(B+4)}
+\]
+
+\[
+\frac{B-1}{(B+n-1)(B+n-2)\cdots(B+1)\cdot B\cdot(B-1)}
+\]
+
+(denominator has $n+1$ terms).  In R:
 
 
 ```{r}
 f_single <- function(a,r,n,log=FALSE){  # not vectorised
   B <- 1/(1-a)
   if(log){
-     out <- log(B-1) - sum(log(B + B+(n-r-1):(n-1)))
-   } else {
-     out <- (B-1)/prod(B+(n-r-1):(n-1))
-   }
+     if(r==n){
+       out <- lgamma(B)-lgamma(B+n)
+     } else {
+       out <- log(B-1) - sum(log(B + B+(n-r-1):(n-1)))
+     }
+   } else {  # not-log 
+     if(r==n){
+      out <- gamma(B)/gamma(B+n)
+     } else {
+       out <- (B-1)/prod(B+(n-r-1):(n-1))
+     }
+   }	
    return(out)
-}	
+}x
+
 
 f_vec_a <- function(a,r,n, log=FALSE){  # vectorised in 'a' but not in 'r'
  sapply(a,function(a){f_single(a,r=r,n=n,log=log)})
