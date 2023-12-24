@@ -21,7 +21,7 @@
 
 
 %% just as usual
-\author{Robin K. S. Hankin\\Auckland University of Technology}
+\author{Robin K. S. Hankin\\University of Stirling}
 \title{Partial rank data with the \pkg{hyper2} package: likelihood
   functions for generalized Bradley-Terry models}
 
