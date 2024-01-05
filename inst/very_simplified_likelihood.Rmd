@@ -15,8 +15,9 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 ```
 
 Consider a race between a competitor of Bradley-Terry strength $a$ and
-$n$ competitors each of strength $b$; we require $a+b=1$.  An
-observation is indexed by $r$, the number of $b$ clones finishing
+$n$ competitors each of strength $b$; we require $a+b=1$.  NB we have
+$n+1$ competitors in total, 1 of strength $a$ and $n$ of strength $b$.
+An observation is indexed by $r$, the number of $b$ clones finishing
 ahead of $a$, so $0\leqslant r\leqslant n$.  The initial field
 strength is $a+nb=n+(n-1)a$.
 
@@ -86,11 +87,11 @@ Placing after $r<n$ of the $n$ clones of strength $b$ finish:
 \frac{B-1}{(B+n-1)(B+n-2)\cdots(B+n-r-1)}
 \]
 
-where $B=1/b$.
+where $B=1/b$ [also using the fact that $a+b=1$].
 
 ## Placing last
 
-Placing last is finishing  after $n$ clones finish:
+Placing last is finishing  after $n=r$ clones finish:
 
 \[
 n=1\longrightarrow\mathcal{L}=b\]
@@ -100,24 +101,28 @@ n=2\longrightarrow\mathcal{L}=\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^2}{1+b}
 \]
 
 \[
-n=3\longrightarrow\mathcal{L}=\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^3}{(1+b)(1+2b)}
+n=3\longrightarrow\mathcal{L}=\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^3}{(1+2b)(1+b)}
 \]
 
 
 \[
 n=4\longrightarrow\mathcal{L}=\frac{b}{a+4b}\cdot\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=
-\frac{b^4}{(1+b)(1+2b)(1+3b)}
+\frac{b^4}{(1+3b)(1+2b)(1+b)}
 \]
 
 For $n=4$ we have equivalently
 
 \[
-\frac{1}{B(B+1)(B+2)(B+3)}=\frac{(B-1)!}{(B+3)!}=\frac{\Gamma(B)}{\Gamma(B+4)}
+\frac{1}{(B+3)(B+2)(B+1)B}=\frac{(B-1)!}{(B+3)!}=\frac{\Gamma(B)}{\Gamma(B+4)}
 \]
 
+In general we would have
+
 \[
-\frac{B-1}{(B+n-1)(B+n-2)\cdots(B+1)\cdot B\cdot(B-1)}
+\frac{1}{(B+n)(B+n-1)\cdots(B+1)B}=\frac{(B-1)!}{(B+n)!}=\frac{\Gamma(B)}{\Gamma(B+n+1)}
 \]
+
+
 
 (denominator has $n+1$ terms).  In R:
 
@@ -126,9 +131,9 @@ For $n=4$ we have equivalently
 f_single <- function(a,r,n,log=FALSE){  # not vectorised
   B <- 1/(1-a)
   if(log){
-     if(r==n){
+     if(r==n){  # last place
        out <- lgamma(B)-lgamma(B+n)
-     } else {
+     } else {   # not last
        out <- log(B-1) - sum(log(B + B+(n-r-1):(n-1)))
      }
    } else {  # not-log 
@@ -139,7 +144,7 @@ f_single <- function(a,r,n,log=FALSE){  # not vectorised
      }
    }	
    return(out)
-}x
+}
 
 
 f_vec_a <- function(a,r,n, log=FALSE){  # vectorised in 'a' but not in 'r'
@@ -165,7 +170,6 @@ MLE <- function(r,n){
 MLE(3,9)
 ```
 
-
 Now verification
 
 ```{r}
@@ -180,7 +184,82 @@ b^3*a/((a+9*b) * (a+8*b) * (a+7*b) * (a+6*b)),
 f(a,r,n,log=FALSE))
 ```
 
-Now some visuals.  Suppose $r=4,n=8$:
+## Note on the differences between probability and likelihood
+
+The likelihood calculations above can be confusing becuase likelihood
+is not the same as probability.
+
+Consider, for example, $n=2$ so we have 3 competitors.
+
+probability of focal competitor coming first [i.e. $r=0$]:
+
+\[\frac{a}{a+2b}=\frac{1-b}{1+b}\]
+
+Now what is the probability of coming second, that is, $r=1$?
+
+My first thought was:
+
+\[
+\mbox{prob of coming second}   =
+\frac{b}{a+2b}\cdot\frac{a}{a+b}=\frac{b(1-b)}{1+b}\qquad\mbox{WRONG}
+\]
+
+but this is incorrect: there are two clones of (strength) $b$, and the
+likelihood arguments above do not distinguish between their finishing
+order.  We can name the competitors $a$, $b_1$ and $b_2$ and specify
+that $b_1$ and $b_2$ both have strength $b$.  Then "coming second"
+means that the finishing order was $b_1,a,b_2$ or $b_2,a,b_1$.  Noting
+that these events are disjoint, the probability would be
+
+\[\mbox{prob of coming second}   =
+\operatorname{P}(b_1,a,b_2)      +
+\operatorname{P}(b_2,a,b_1)      =
+\frac{b}{a+2b}\cdot\frac{a}{a+b} +
+\frac{b}{a+2b}\cdot\frac{a}{a+b} = \frac{2(1-b)}{1+b}
+\]
+
+Similarly for the focal competitor coming last we need to sum the
+probabilities of finishing orders $b_1,b_2,a$ and $b_2,b_1,a$:
+
+\[\mbox{prob of coming third}=
+\operatorname{P}(b_1,b_2,a) +
+\operatorname{P}(b_2,b_1,a) =
+\frac{b}{a+2b}\cdot\frac{b}{a+b}+
+\frac{b}{a+2b}\cdot\frac{b}{a+b}=
+\frac{2b^2}{1+b}.
+\]
+
+Above we see a factor of two difference between the probabilities and
+the likelihoods presented previously.  Note that there is no such
+factor for the probability of the focal competitor finishing first:
+
+\[
+\mbox{prob of coming first}      =
+\operatorname{P}(a,b_1,b_2)      +
+\operatorname{P}(a,b_2,b_1)      =
+\frac{b}{a+2b}\cdot\frac{b}{b+b} +
+\frac{b}{a+2b}\cdot\frac{b}{b+b} = \frac{1-b}{1+b}
+\]
+
+
+Now we see that the probabilities sum to
+
+\[
+\frac{1-b}{1+b} + \frac{2b^2}{1+b} + \frac{2(1-b)}{1+b}=1
+\]
+
+
+Now try $r=3$, 4 competitors.   Taking things one step at a time:
+
+\[
+\mbox{prob of coming first}      =
+3!\cdot\frac{a}{a+3b}\cdot\frac{b}{3b}\cdot\frac{b}{2b}\cdot\frac{b}{b}
+\]
+
+## Visuals
+
+
+Now some likelihood visuals.  Suppose $r=4,n=8$:
 
 ```{r}
 a <- seq(from=0,to=1,by=0.01)
