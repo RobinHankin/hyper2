@@ -45,7 +45,7 @@ hyper2_sum_numeric(H,r)
   functions; this is reflected in the print method which explicitly
   wraps the likelihood function in a \dQuote{\code{log()}}.
 
-  Idiom \code{H1-H1} returns {H1 + (-1)*H2}, useful for investigating
+  Idiom \code{H1-H1} returns \code{H1 + (-1)*H2}, useful for investigating
   the difference between likelihood functions arising from two different
   observations, or different probability models.  An example is given in
   \code{inst/soling.Rmd}.

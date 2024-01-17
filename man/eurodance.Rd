@@ -34,7 +34,7 @@ resides in the \code{data/} directory.
   \itemize{
     \item 
   Wikipedia contributors, \dQuote{Eurovision Song Contest
-    2009---{Wikipedia}{,} The Free Encyclopedia}, 2018,
+    2009---Wikipedia, The Free Encyclopedia}, 2018,
     \url{https://en.wikipedia.org/w/index.php?title=Eurovision_Song_Contest_2009&oldid=838723921}  [Online; accessed 13-May-2018].
     \item P. M. E. Altham, personal communication
   }

@@ -73,7 +73,7 @@ in the form of Rmd files.
 \references{
 
   \dQuote{Wikipedia contributors}, \emph{2017 Formula One World
-    Championship---{Wikipedia}{,} The Free Encyclopedia}, 2018.
+    Championship---Wikipedia, The Free Encyclopedia}, 2018.
   \url{https://en.wikipedia.org/w/index.php?title=2017_Formula_One_World_Championship&oldid=839923210}
   [Online; accessed 14-May-2018]
   }

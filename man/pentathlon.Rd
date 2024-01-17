@@ -27,7 +27,7 @@ resides in the \code{data/} directory.
 }
 \references{
 \dQuote{Wikipedia contributors}, \emph{Modern pentathlon at the 2004
-    Summer Olympics - Men's}.  {Wikipedia}{,} The Free Encyclopedia,
+    Summer Olympics - Men's}.  Wikipedia, The Free Encyclopedia,
 \url{https://en.wikipedia.org/w/index.php?title=Modern_pentathlon_at_the_2004_Summer_Olympics_\%E2\%80\%93_Men\%27s&oldid=833081611},
 [Online; accessed 5-March-2020]
 }
