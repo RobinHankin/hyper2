@@ -35,7 +35,7 @@ a single player and its substitute; it is not intended for direct use.
 
 psubs(icons,c("L","NB"),c("London","Norfolk Broads"))
 
-rhyper2() \%>\% psubs(letters,LETTERS)   # ignore i,j,k,...,z
+rhyper2() |> psubs(letters,LETTERS)   # ignore i,j,k,...,z
 
 psubs(icons,tolower(pnames(icons)))
 

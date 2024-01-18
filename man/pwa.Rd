@@ -60,7 +60,7 @@ markdown files in the \file{inst/} directory.
 \seealso{\code{\link{ordervec2supp}}}
 \examples{
 
-summary(formula1 \%>\% pwa("Hamilton","pole"))
+summary(formula1 |> pwa("Hamilton","pole"))
 
 H <- ordervec2supp(c(a = 2, b = 3, c = 1, d = 5, e = 4))
 pwa(H,'a')

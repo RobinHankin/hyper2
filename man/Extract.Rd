@@ -85,8 +85,12 @@ chess[c("Topalov","Anand")] <- chess[c("Topalov","Anand")]-1
 
 
 # Topalov plays *Kasparov* and wins:
-chess["Topalov"] \%<>\% inc
-chess[c("Topalov","Kasparov")] \%<>\% dec
+chess["Topalov"] <- chess["Topalov"] + 1
+chess[c("Topalov","Kasparov")] <- chess[c("Topalov","Kasparov")] -1
+
+# magrittr idiom:
+# chess["Topalov"] \%<>\% inc
+# chess[c("Topalov","Kasparov")] \%<>\% dec  
 
 # overwriting idiom:
 H <- hyper2(list("Topalov","X"),6)

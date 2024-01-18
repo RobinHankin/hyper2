@@ -58,7 +58,7 @@ resides in the \code{data/} directory.
 \examples{
 summary(tennis)
 
-tennis \%>\% psubs(c("Federer","Laver","Graf","Navratilova"))
+tennis |> psubs(c("Federer","Laver","Graf","Navratilova"))
 
 ## Following line commented out because it takes too long:
 # specificp.gt.test(tennis_ghost,"G",0)
