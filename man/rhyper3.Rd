@@ -66,8 +66,7 @@ rhyper3(n=5,s=3,type='race',...)
   use-cases for these functions.
 
   Argument \code{n} generally specifies the number of distinct types of
-  players; with default value for \code{pn} if \code{n=2}, if default
-  value of \code{pn} these will be named \code{a} and \code{b}.
+  players.
 
 }
 \author{Robin K. S. Hankin}
