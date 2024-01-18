@@ -56,17 +56,27 @@ rp_unif(n,H)
   the names of \code{alpha} give the names of
   \eqn{x_1,\ldots,x_k}{x_1,...,x_k} and the last element of \code{beta}
   gives the name of \eqn{x_{k+1}}.
+}
 
+\references{
+  \itemize{
+    \item R. J. Connor and J. E. Mosimann 1969.  \dQuote{Concepts of
+    independence for proportions with a generalization of the Dirichlet
+    distribution}.  \emph{Journal of the American Statistical
+    Association}, 64:194--206
+    \item T.-T. Wong 1998. \dQuote{Generalized Dirichlet distribution in
+    Bayesian Analysis}.  \emph{Applied Mathematics and Computation},
+    97:165--181 }
+}
 
-} \references{ \itemize{ \item R. J. Connor and J. E. Mosimann 1969.
-\dQuote{Concepts of independence for proportions with a generalization
-of the Dirichlet distribution}.  \emph{Journal of the American
-Statistical Association}, 64:194--206 \item T.-T. Wong
-1998. \dQuote{Generalized Dirichlet distribution in Bayesian Analysis}.
-\emph{Applied Mathematics and Computation}, 97:165--181 } }
-\author{Robin K. S. Hankin} \note{ A dirichlet distribution can have a
-term with zero power.  But this poses problems for \code{hyper2} objects
-as zero power brackets are dropped.  }
+\author{Robin K. S. Hankin} 
+
+\note{
+  A dirichlet distribution can have a term with zero power.  But
+  this poses problems for \code{hyper2} objects as zero power brackets
+  are dropped.
+}
+
 \seealso{\code{\link{hyper2}},\code{\link{rp}}} \examples{
 
 x1 <- dirichlet(c(a=1,b=2,c=3))
