@@ -850,9 +850,9 @@ rorder_single <- function(p){
         powers <- alpha-1
     }
 
-    if(is.null(names(powers))){stop("supply a named vector")}
-    
-    hyper2(as.list(names(powers)),d=powers)
+    np <- names(powers)
+    if(is.null(np)){stop("supply a named vector")}
+    hyper2(as.list(np),d=powers) - hyper2(list(np),d=sum(powers))
 }
 
 `GD` <- function(alpha, beta, beta0=0){
@@ -1110,7 +1110,24 @@ rorder_single <- function(p){
   ordertable_to_ranktable(xx)
 }
 
-`is.dirichlet` <- function(H){all(lapply(brackets(H),length)==1)}
+`is.dirichlet` <- function(H){
+    len <- unlist(elements(lapply(brackets(H), length)))
+    pow <- elements(powers(H))
+    bra <- elements(brackets(H))
+    if (sum(len > 1) > 1) {
+        print("brackets must all be of length 1 [the numerators] except one [the denominator]")
+        return(FALSE)
+    }
+    denominator_bracket <- unlist(bra[len > 1])
+    numerator_brackets <- unlist(bra[len == 1])
+    if (all(numerator_brackets %in% denominator_bracket)) {
+        return(TRUE)
+    }
+    else {
+        print("Dirichlet distribution requires denominator to be all competitors")
+        return(FALSE)
+    }
+}
 
 `rdirichlet` <- function(n, H){
     if(is.hyper2(H)){

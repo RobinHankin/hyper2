@@ -1,0 +1,81 @@
+---
+title: "The `dirichlet()` function in the `hyper2` package"
+author: "Robin K. S. Hankin"
+output: html_vignette
+bibliography: hyper2.bib
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{dirichlet}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+library("hyper2")
+options(rmarkdown.html_vignette.check_title = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
+knit_print.function <- function(x, ...){dput(x)}
+registerS3method(
+  "knit_print", "function", knit_print.function,
+  envir = asNamespace("knitr")
+)
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+```{r, label=showdirichlet,comment=""}
+dirichlet
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017.
+We say that non-negative $p_1,\ldots, p_n$ satisfying $\sum p_i=1$
+follow a _Dirichlet distribution_, and write
+$\mathcal{D}(p_1,\ldots,p_n)$, if their density function is
+
+\[
+\frac{\Gamma(\alpha_1+\cdots +\alpha_n)}{\Gamma(\alpha_1)\cdots\Gamma(\alpha_n)}
+\prod_{i=1}^n p_i^{\alpha_i-1}
+\]
+
+for some parameters $\alpha_i>0$.  It is interesting in the current
+context because it is conjugate to the multinomial distribution;
+specifically, given a Dirichlet prior
+$\mathcal{D}(\alpha_1,\ldots,\alpha_n)$ and likelihood function
+$\mathcal{L}(p_1,\ldots,p_n)\propto\prod_{i=1}^n p_i^{\alpha_i}$ then
+the posterior is $\mathcal{D}(\alpha_1+a_1,\ldots,\alpha_n+a_n)$.
+
+In the context of the `hyper2` package, function `dirichlet()`
+presents some peculiarities, discussed here.
+
+## A simple example
+
+Consider a three-way trial between players `a`, `b`, and `c` with
+epoymous Bradley-Terry strengths.  Suppose that, out of $4+5+2=11$
+trials, `a` wins 4, `b` wins 5, and `c` wins 2.  Then an appropriate
+likelihood function would be:
+
+```{r dirichletcompleteFALSE}
+dirichlet(c(a=4,b=5,c=2))
+```
+
+We see that the returned likelihood function is ${\propto}
+p_a^4p_b^5p_c^2$.  However, the print method returns a warning on the
+grounds that the usual `hyper2` requirement for the powers to sum to
+zero is not satisfied; a brief discussion is given at `man/Print.Rd`.
+To obviate the warning, one can use argument `complete=TRUE`:
+
+```{r dirichletcompleteTRUE}
+dirichlet(c(a=4,b=5,c=2),complete=TRUE)
+```
+
+
+
+
+
+
+
+
+
+## References
