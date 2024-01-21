@@ -373,13 +373,13 @@ H[c("t11","t10")] <- 2
 H[c("t01","t00")] <- 9
 H[c("t11","t01")] <- 4
 H[c("t10","t00")] <- 4
+H <- balance(H)
 H
 @ 
 
 (object \code{H} is provided as \code{handover} in the package).  Then
 we may estimate the probability that reviewer 2 is more likely to give
 a `yes' than reviewer 1 as follows:
-
 
 <<>>=
 free <- maxp(H,give=TRUE)

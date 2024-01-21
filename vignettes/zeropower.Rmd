@@ -1,0 +1,134 @@
+---
+title: "The zero-sum-power issue in the `hyper2` package"
+author: "Robin K. S. Hankin"
+output: html_vignette
+bibliography: hyper2.bib
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{zeropower}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+library("hyper2")
+library("magrittr")
+options(rmarkdown.html_vignette.check_title = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
+knit_print.function <- function(x, ...){dput(x)}
+registerS3method(
+  "knit_print", "function", knit_print.function,
+  envir = asNamespace("knitr")
+)
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017.
+
+The powers of a `hyper2` object generally sum to zero.  This is built
+in to the Bradley-Terry type likelihood functions in which
+probabilities are generally ratios of strengths.  Here I discuss this
+observation in the context of `hyper2` package idiom.  Usually, powers
+summing to zero is an indication of a programming bug.  For example,
+consider the following likelihood function, drawn from the `chess`
+dataset:
+
+\[
+\frac{p_1^{30}p_2^{36}p_3^{22}}{
+  \left(p_1+p_2\right)^{35}
+  \left(p_2+p_3\right)^{35}
+  \left(p_1+p_3\right)^{18}
+  }
+\]
+
+
+Appropriate `hyper2` idiom might be
+
+```{r appidiom}
+chess <- hyper2()
+chess["Topalov"] <- 30
+chess["Anand"  ] <- 36
+chess["Karpov" ] <- 22
+chess[c("Topalov","Anand" )] <- 35  # bug!  should  be -35
+chess[c("Anand","Karpov"  )] <- 35  # bug!  should  be -35
+chess[c("Karpov","Topalov")] <- 18  # bug!  should  be -18
+```
+
+However, the above commands include an error [the sign of the
+denominator is incorrect].  The package includes two mechanisms to
+correct such an error.  Firstly, the print method detects such
+unbalanced likelihood functions and gives a warning:
+
+```{r showwarningunbalanced}
+chess
+```
+
+and secondly, function `loglik()` traps nonzero power sums:
+
+```{r,loglikdoesnotwork,error=TRUE}
+loglik(equalp(chess),chess)
+```
+
+The correct idiom would be
+
+```{r correctid}
+chess[c("Topalov","Anand" )] <- -35
+chess[c("Anand","Karpov"  )] <- -35
+chess[c("Karpov","Topalov")] <- -18
+chess
+loglik(equalp(chess),chess)
+```
+
+See how the print method effectively assures the user that its
+argument is indeed balanced.  It is natural to suggest including a
+check in the creation method, `hyper2()` which would prevent the
+creation of a hyper2 object with unbalanced powers.  However, this
+approach is not consistent with the package; consider the following
+situation.  Suppose we wish to incorporate a new observation into
+`chess`, specifically that Anand played Karpov twice, with one win
+each.  We might proceed as follows:
+
+```{r, newinfo}
+chess["Anand" ] %<>% inc
+chess["Karpov"] %<>% inc
+chess[c("Anand,Karpov")]  %<>% dec(2)
+chess
+```
+
+However, after the increments but before the decrements, second,
+`chess` has a nonzero power sum, pending addition of another term.  At
+this point, `chess` is unbalanced; its nonzero power sum is an
+indicator that it is a temporary object.  That's OK as long as we
+remember to add the denominator (as carried out in the next line)
+which would mean dividing by `(Anand+Karpov)^2`, thereby restoring the
+zero power sum.  If we forget to do this, the print method gives us a
+warning, and indeed `loglik()` returns an error, which should prompt
+us to check the coding.
+
+## The print method
+
+The `hyper2` print method is sensitive to option
+`give_warning_on_nonzero_power_sum`.  If `TRUE` (the default), a
+warning is issued if the powers have nonzero sum.  This is usually
+appropriate.  If the option is `FALSE`, the warning is suppressed.
+
+
+## Function `balance()`
+
+Sometimes it is convenient to accommodate the numerator terms all
+together and enforce the zero power sum at the end.  This is
+accomplished by `balance()`:
+
+```{r}
+H <- hyper2()
+H['a'] %<>% inc(5)
+H['b'] %<>% inc(2)
+H['c'] %<>% inc(9)
+H %<>% balance
+H
+```
+
+## References

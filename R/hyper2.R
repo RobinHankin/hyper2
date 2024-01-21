@@ -157,6 +157,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `loglik_single` <- function(p,H,log=TRUE){
+  stopifnot(sum(powers(H))==0)
   stopifnot(all(p>=0))
   if(length(p) == size(H)-1){
     stopifnot(sum(p)<=1)
@@ -1311,3 +1312,7 @@ rorder_single <- function(p){
     return(H)
 }
 
+`balance` <- function(H){
+    H[pnames(H)] <- -sum(powers(H))
+    return(H)
+}

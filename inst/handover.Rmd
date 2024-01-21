@@ -78,6 +78,7 @@ handover[c("t11","t10")] %<>% inc(handover_table[1,3])  # yes-yes plus yes-no  =
 handover[c("t01","t00")] %<>% inc(handover_table[2,3])  #  no-yes plus  no-no  = 9 
 handover[c("t11","t01")] %<>% inc(handover_table[3,1])  # yes-yes plus  no-yes = 4 
 handover[c("t10","t00")] %<>% inc(handover_table[3,2])  # yes-no  plus  no-no  = 4 
+handover <- balance(handover)
 handover
 handover_maxp <- maxp(handover)
 handover_maxp

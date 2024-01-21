@@ -1,3 +1,7 @@
+# hyper2 3.1-0
+
+* consistent handling of non-zero-sum powers 
+
 # hyper2 3.0-1
 
 * better behaviour for rp()
