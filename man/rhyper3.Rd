@@ -66,7 +66,9 @@ rhyper3(n=5,s=3,type='race',...)
   use-cases for these functions.
 
   Argument \code{n} generally specifies the number of distinct types of
-  players.
+  players.  The default value of the arguments corresponds to moderately
+  complicated likelihood functions, so sending an empty argument list
+  [e.g. dQuote{\code{rrace3()}}] gives sensible output.
 
 }
 \author{Robin K. S. Hankin}
@@ -75,15 +77,21 @@ rhyper3(n=5,s=3,type='race',...)
   if argument \code{n} exceeds 26 and argument \code{pn} takes its
   default value of \code{NULL}, then an error will be returned because
   there are only 26 players, one for each letter \code{a}-\code{z}.
-
 }
+
 \seealso{\code{\link{rrank}},\code{\link{ordertable2supp}},\code{\link{ordertrans}}}
 \examples{
 
-rrace3() # moderate-sized default
+rracehyper3()
+rrace3()
+rwinner3()
+rhyper3()
+rpair3()
+
+
 
 ## pn is player numbers (two "a"s, four "b"s, two "c"s and a "d"):
-pn <- c(a=2, b=4, c=2, d=1) 
+pn <- c(a=2, b=4, c=2, d=1) # defaul
 
 ## ps is player strengths; 'd' is the strongest and the 'b' quadruplets the weakest:
 ps <- c(a=0.3, b=0.1, c=0.2, d=0.4)  # player strengths  
