@@ -89,9 +89,9 @@ Above we see a reasonably close agreement between the true values and the estima
 equalp.test(H)
 ```
 
-Above we see strong evidence to reject the hypothesis that
-$p_a=p_b=p_c=\frac{1}{3}$.  We may also test the hypothesis that the
-strength vector is equal to its true value:
+Above we see a $p$-value of $<10^{-6}$, strong evidence to reject the
+hypothesis that $p_a=p_b=p_c=\frac{1}{3}$.  We may also test the
+hypothesis that the strength vector is equal to its true value:
 
 
 ```{r,isittrue,cache=TRUE}
