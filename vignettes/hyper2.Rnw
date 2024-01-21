@@ -266,9 +266,9 @@ chess <- hyper2()
 chess["Topalov"] <- 30
 chess["Anand"  ] <- 36
 chess["Karpov" ] <- 22
-chess[c("Topalov","Anand" )] <- 35
-chess[c("Anand","Karpov"  )] <- 35
-chess[c("Karpov","Topalov")] <- 18
+chess[c("Topalov","Anand" )] <- -35
+chess[c("Anand","Karpov"  )] <- -35
+chess[c("Karpov","Topalov")] <- -18
 chess
 @ 
 
