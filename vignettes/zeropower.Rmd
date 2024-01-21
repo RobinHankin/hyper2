@@ -28,13 +28,13 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 
 To cite the `hyper2` package in publications, please use @hankin2017.
 
-The powers of a `hyper2` object generally sum to zero.  This is built
-in to the Bradley-Terry type likelihood functions in which
-probabilities are generally ratios of strengths.  Here I discuss this
-observation in the context of `hyper2` package idiom.  Usually, powers
-summing to zero is an indication of a programming bug.  For example,
-consider the following likelihood function, drawn from the `chess`
-dataset:
+The powers of a `hyper2` object generally sum to zero.  This is
+implicit in Bradley-Terry type likelihood functions in which
+probabilities are generally ratios of strengths or sums of strengths.
+Here I discuss this observation in the context of `hyper2` package
+idiom.  Usually, powers not summing to zero is an indication of a
+programming bug.  For example, consider the following likelihood
+function, drawn from the `chess` dataset:
 
 \[
 \frac{p_1^{30}p_2^{36}p_3^{22}}{
@@ -59,8 +59,8 @@ chess[c("Karpov","Topalov")] <- 18  # bug!  should  be -18
 
 However, the above commands include an error [the sign of the
 denominator is incorrect].  The package includes two mechanisms to
-correct such an error.  Firstly, the print method detects such
-unbalanced likelihood functions and gives a warning:
+detect this type of error.  Firstly, the print method (by default)
+detects such unbalanced likelihood functions and gives a warning:
 
 ```{r showwarningunbalanced}
 chess
@@ -82,14 +82,17 @@ chess
 loglik(equalp(chess),chess)
 ```
 
-See how the print method effectively assures the user that its
-argument is indeed balanced.  It is natural to suggest including a
-check in the creation method, `hyper2()` which would prevent the
-creation of a hyper2 object with unbalanced powers.  However, this
-approach is not consistent with the package; consider the following
-situation.  Suppose we wish to incorporate a new observation into
-`chess`, specifically that Anand played Karpov twice, with one win
-each.  We might proceed as follows:
+
+See how the print method gives immediate assurance that its argument
+is indeed balanced (and besides, unbalanced likelihood functions
+cannot even be evaluated with `loglik()` and are therefore nilpotent).
+It is natural to suggest including a check in the creation
+method---`hyper2()`---which would prevent the creation of a hyper2
+object with unbalanced powers.  However, this approach is not
+consistent with the package; consider the following situation.
+Suppose we wish to incorporate a new observation into `chess`,
+specifically that Anand played Karpov twice, with one win each.  We
+might proceed as follows:
 
 ```{r, newinfo}
 chess["Anand" ] %<>% inc
@@ -114,7 +117,9 @@ The `hyper2` print method is sensitive to option
 `give_warning_on_nonzero_power_sum`.  If `TRUE` (the default), a
 warning is issued if the powers have nonzero sum.  This is usually
 appropriate.  If the option is `FALSE`, the warning is suppressed.
-
+Note that the intermediate likelihood functions in the `chess` example
+are not printed (or indeed evaluated), so unbalanced likelihood
+functions are permitted, but only ephemerally.
 
 ## Function `balance()`
 
