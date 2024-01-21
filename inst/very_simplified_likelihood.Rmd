@@ -22,33 +22,11 @@ ahead of $a$, so $0\leqslant r\leqslant n$.  The initial field
 strength is $a+nb=n+(n-1)a$.
 
 
-Probability of the focal competitor coming first:
-
-\[
-\frac{a}{a+nb}=\frac{a}{n - a(n-1)a}=\frac{1-b}{1+(n-1)b}
-\]
-
-Coming second:
-\[
-\frac{b}{a+nb}\cdot\frac{a}{a+(n-1)b}
-\]
-
-
-Third:
-
-\[
-\frac{b}{a+nb}\cdot\frac{b}{a+(n-1)b}\cdot\frac{a}{a+(n-2)b}
-\]
-
-
-
-
-### Likelihood functions
-
-
 Suppose our bro comes first (zero $b$'s ahead of him):
 
-\[\mathcal{L}(a)=\frac{a}{a+nb}=\frac{a}{n+(n-1)a}\]
+\[
+\mathcal{L}(a)=\frac{a}{a+nb}=\frac{1-b}{1+(n-1)b}
+\]
 
 Comes second, one $b$ ahead of him:
 
@@ -98,16 +76,18 @@ n=1\longrightarrow\mathcal{L}=b\]
 
 \[
 n=2\longrightarrow\mathcal{L}=\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^2}{1+b}
+=\frac{1}{B(B+1)}
 \]
 
 \[
-n=3\longrightarrow\mathcal{L}=\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^3}{(1+2b)(1+b)}
+n=3\longrightarrow\mathcal{L}=\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^3}{(1+2b)(1+b)}=\frac{1}{B(B+1)(B+2)}
 \]
 
 
 \[
 n=4\longrightarrow\mathcal{L}=\frac{b}{a+4b}\cdot\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=
-\frac{b^4}{(1+3b)(1+2b)(1+b)}
+\frac{b^4}{(1+3b)(1+2b)(1+b)}=
+\frac{1}{B(B+1)(B+2)(B+3)}
 \]
 
 For $n=4$ we have equivalently
@@ -119,7 +99,7 @@ For $n=4$ we have equivalently
 In general we would have
 
 \[
-\frac{1}{(B+n)(B+n-1)\cdots(B+1)B}=\frac{(B-1)!}{(B+n)!}=\frac{\Gamma(B)}{\Gamma(B+n+1)}
+\frac{1}{(B+n-1)(B+n-2)\cdots(B+1)B}=\frac{(B-1)!}{(B+n)!}=\frac{\Gamma(B)}{\Gamma(B+n+1)}
 \]
 
 
@@ -249,12 +229,53 @@ Now we see that the probabilities sum to
 \]
 
 
-Now try $r=3$, 4 competitors.   Taking things one step at a time:
+Now try $r=3$ [i.e. 4 competitors].  Taking things one step at a time:
 
 \[
-\mbox{prob of coming first}      =
-3!\cdot\frac{a}{a+3b}\cdot\frac{b}{3b}\cdot\frac{b}{2b}\cdot\frac{b}{b}
+\mbox{prob of coming first} =
+3!\cdot\frac{a}{a+3b}\cdot\frac{b}{3b}\cdot\frac{b}{2b}\cdot\frac{b}{b}=
+\frac{1-b}{1+2b}
 \]
+
+\[
+\mbox{prob of coming second} =
+3!\cdot\frac{b}{a+3b}\cdot\frac{a}{a+2b}\cdot\frac{b}{2b}\cdot\frac{b}{b}=
+3\cdot\frac{b(1-b)}{(1+2b)(1+b)}
+\]
+
+\[
+\mbox{prob of coming third} =
+3!\cdot\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{a}{a+b}\cdot\frac{b}{b}
+=
+6\cdot\frac{b^2(1-b)}{(1+2b)(1+b)}
+\]
+\[
+\mbox{prob of coming fourth (last)} =
+3!\cdot\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}\cdot\frac{a}{a}
+=
+6\cdot\frac{b^3}{(1+2b)(1+b)}
+\]
+
+The sum would be $[(1+b)(1-b) + 3b(1-b) + 6b^2(1-b) +
+6b^3]/[(1+b)(1+2b)]=1$.
+
+Now consider the general case.  Again, $n$ clones of strength $b$ and
+one of strength $a=1-b$, $n+1$ competitors.
+
+\[
+\mbox{prob of coming first} =
+n!\cdot\frac{b}{a+nb}\cdot\frac{b}{nb}\cdot\frac{b}{(n-1)b}\cdots\frac{b}{b}
+=
+\frac{b}{1+(n-1)b}
+\]
+
+\[
+\mbox{prob of coming second} =
+n!\cdot\frac{b}{a+nb}\cdot\frac{a}{a+(n-1)b}\cdot\frac{b}{(n-1)b}\cdot\frac{b}{(n-2)b}\cdots\frac{b}{2b}\cdot\frac{b}{b}
+=n\cdot X
+\]
+
+
 
 ## Visuals
 
@@ -327,3 +348,8 @@ sametest(a["USA",],a["CHN",],100)
 sametest(a["USA",],a["CHN",],5)
 ```
 
+## Masterchef
+
+Look at the dotchart in the _MasterChef_ part of the `hyper2`
+vignette.  We could use a Very Simplified Likelihood to estimate, say,
+Laura's BT strength assuming that the other competitors are clones.
