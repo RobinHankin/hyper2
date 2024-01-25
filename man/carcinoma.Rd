@@ -20,7 +20,7 @@ Object \code{carcinoma} is a likelihood function (of class \code{lsl})
 on the Bradley-Terry strengths of the seven clinicians.  The
 clinicians diagnosed the presence or absence of carcinoma on a total
 of 118 patients in a blind rating scheme.  The maximum likelihood
-estimator for the clicinicans' Bradley-Terry strengths is given as
+estimator for the clinicicans' Bradley-Terry strengths is given as
 \code{carcinoma_maxp}, which is computationally expensive to find.
 The package also includes \code{carcinoma_count}, which is a different
 estimator for the Clinicians' BT strengths.

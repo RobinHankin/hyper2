@@ -96,7 +96,7 @@ as.suplist(L)
 
   The experimental \code{lsl} mechanism furnishes an alternative
   methodology which is more computationally efficient at the expense of
-  a non-expicit likelihood function.  It is not clear at present (2022)
+  a non-explicit likelihood function.  It is not clear at present (2022)
   which of the two systems is better.
   
 }

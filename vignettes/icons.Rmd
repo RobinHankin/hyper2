@@ -280,7 +280,7 @@ highest MLE after $p_1$.  The extra likelihood is given by
 L1-ml
 ```
 
-(the `hyperdirichlet` package gives 0.0853 here, a suprisingly small
+(the `hyperdirichlet` package gives 0.0853 here, a surprisingly small
 discrepancy given the difficulties of optimizing over a nonconvex
 region).  We conclude that there is no evidence for
 $p_1\geqslant\max\left(p_2,\ldots,p_6\right)$.

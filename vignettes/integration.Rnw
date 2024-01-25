@@ -311,7 +311,7 @@ about 2.608, which would correspond to a $p$-value of about
 pchisq(2*2.608,df=1,lower.tail=FALSE)
 @ 
 
-or just over 2\% under an asympotic distribution; thus this
+or just over 2\% under an asymptotic distribution; thus this
 frequentist technique gives comparable strength of evidence for $H_1$
 to the Bayesian approach.
 
