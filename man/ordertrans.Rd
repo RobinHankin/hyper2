@@ -59,8 +59,8 @@ order statistic is identical:
 }
 
 There is a nice example of \code{ordertrans()} in
-\code{inst/eurovision.Rmd}, and file \code{inst/ordertrans.Rmd} provides
-further discussion and examples.
+\code{inst/eurovision.Rmd}, and package vignette \code{ordertrans}
+provides further discussion and examples.
 
 Function \code{ordertrans()} takes a second argument which allows the
 user to arrange an order vector into the order specified.

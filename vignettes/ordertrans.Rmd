@@ -1,25 +1,42 @@
 ---
-title: "The `ordertrans()` function"
-output: bookdown::html_document2
+title: "The `ordertrans()` function in the `hyper2` package"
+author: "Robin K. S. Hankin"
+output:
+  bookdown::html_document2:
+      base_format: rmarkdown::html_vignette
+bibliography: hyper2.bib
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{ordertrans}
+  %\usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+set.seed(0)
 library("hyper2")
-library("magrittr")
+options(rmarkdown.html_vignette.check_title = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=6, fig.height=6)
+knit_print.function <- function(x, ...){dput(x)}
+registerS3method(
+  "knit_print", "function", knit_print.function,
+  envir = asNamespace("knitr")
+)
 ```
 
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
 
-```{r}
+```{r, label=showordertrans}
 ordertrans
 ```
 
-# Introduction
-
-The `ordertrans()` function can be difficult to understand and this
-short document provides some sensible use-cases.  The manpage provides
-a very simple example, but here we are going to use an even simpler
-example:
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  The `ordertrans()` function can be difficult to
+understand and this short document provides some sensible use-cases.
+The manpage provides a very simple example, but here we are going to
+use an even simpler example:
 
 
 ```{r,label=simpexample}
@@ -164,7 +181,7 @@ we wish to compare the ranks according to likelihood with the ranks
 according to some points system.
 
 ```{r,label=maxlikeskating,cache=TRUE}
-mL <- maxp(skating)  # 'L' for Likelihood
+mL <- skating_maxp  # predefined; use maxp(skating) to calculate ab initio
 mL
 ```
 
@@ -229,3 +246,4 @@ placed Slutskya first, then Hughes second, then Kwan third; while
 (reading vertically) judge 1 placed Hughes first, then Kwan, then
 Slutskya.
 
+# References
