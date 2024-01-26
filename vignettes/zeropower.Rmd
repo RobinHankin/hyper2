@@ -26,7 +26,8 @@ registerS3method(
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.
 
 The powers of a `hyper2` object generally sum to zero.  This is
 implicit in Bradley-Terry type likelihood functions in which

@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 This short document analyses the climate change dataset introduced by
 @oneill2008 and discussed in the `hyperdirichlet` R package
 [@hankin2009], but using the improved `hyper2` package instead.
