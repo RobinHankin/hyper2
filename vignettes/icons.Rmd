@@ -22,8 +22,8 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 This short document analyses the climate change dataset introduced by
 @oneill2008 and discussed in the `hyperdirichlet` R package
-[@hankin2009], but using the improved `hyper2` package instead.
-@oneill2009 observes that lay perception of climate change is a
+[@hankin2010], but using the improved `hyper2` package instead.
+@oneill2009 observe that lay perception of climate change is a
 complex and interesting process, and here we assess the engagement of
 non-experts by the use of "icons" (this word is standard in this
 context.  An icon is a "representative symbol") that illustrate
