@@ -29,15 +29,15 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 dirichlet
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
-We say that non-negative $p_1,\ldots, p_n$ satisfying $\sum p_i=1$
-follow a _Dirichlet distribution_, and write
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  We say that non-negative $p_1,\ldots, p_n$
+satisfying $\sum p_i=1$ follow a _Dirichlet distribution_, and write
 $\mathcal{D}(p_1,\ldots,p_n)$, if their density function is
 
-\[
+\begin{equation}
 \frac{\Gamma(\alpha_1+\cdots +\alpha_n)}{\Gamma(\alpha_1)\cdots\Gamma(\alpha_n)}
 \prod_{i=1}^n p_i^{\alpha_i-1}
-\]
+\end{equation}
 
 for some parameters $\alpha_i>0$.  It is interesting in the current
 context because it is conjugate to the multinomial distribution;
@@ -52,30 +52,79 @@ presents some peculiarities, discussed here.
 ## A simple example
 
 Consider a three-way trial between players `a`, `b`, and `c` with
-epoymous Bradley-Terry strengths.  Suppose that, out of $4+5+2=11$
-trials, `a` wins 4, `b` wins 5, and `c` wins 2.  Then an appropriate
+eponymous Bradley-Terry strengths.  Suppose that, out of $4+5+3=12$
+trials, `a` wins 4, `b` wins 5, and `c` wins 3.  Then an appropriate
 likelihood function would be:
 
 ```{r dirichletcompleteFALSE}
-dirichlet(c(a=4,b=5,c=2))
+dirichlet(c(a=4,b=5,c=3))
 ```
 
-We see that the returned likelihood function is ${\propto}
-p_a^4p_b^5p_c^2$.  However, the print method returns a warning on the
-grounds that the usual `hyper2` requirement for the powers to sum to
-zero is not satisfied; a brief discussion is given at `man/Print.Rd`.
-To obviate the warning, one can use argument `complete=TRUE`:
+Note the `(a+b+c)^-11` term, which is not strictly necessary according
+the Dirichlet density function above which has no such term.  However,
+we see that the returned likelihood function is ${\propto}
+p_{a\vphantom{abc}}^4p_{b\vphantom{abc}}^5p_{c\vphantom{abc}}^3$
+(because $p_a+p_b+p_c=1$).
 
-```{r dirichletcompleteTRUE}
-dirichlet(c(a=4,b=5,c=2),complete=TRUE)
+```{r dirichletabc}
+(L1 <- dirichlet(c(a=4,b=5,c=3)))
 ```
 
+Now suppose we observe three-way trials between `b`, `c`, and `d`:
+
+```{r dirichletbcd}
+(L2 <- dirichlet(c(b=1,c=1,d=8)))
+```
+
+The overall likelihood function would be $L_1+L_2$:
+
+```{r sumofL1andL2,cache=TRUE}
+L1+L2
+maxp(L1+L2)
+```
+
+Observe the dominance of competitor `d`, reasonable on the grounds
+that `d` won 8 of the 10 trials against `b` and `c`; and `a`, `b`, `c`
+are more or less evenly matched [chi square test,
+$p=`r round(chisq.test(c(4,5,3),sim=TRUE)$p.value,2)`$].
+Observe further that we can include four-way observations easily:
+
+```{r fourwayobs}
+(L3 <- dirichlet(c(a=4,b=3,c=2,d=6)))
+L1+L2+L3
+```
+
+Package idiom `L1+L2+L3` operates as expected because `dirichlet()`
+includes the denominator.  Sometimes we see situations in which a
+competitor does not win any trials.  Consider the following:
+
+```{r}
+(L4 <- dirichlet(c(a=5,b=3,c=0,d=3)))
+```
+
+Above, we see that `c` won no trials and is not present in the
+numerator of the expression.  However, `L4` is informative about
+competitor `c`:
+
+```{r label=L4testspec,cache=TRUE}
+maxp(L4)
+```
+
+We see that the maximum likelihood estimate for `c` is zero (to within
+numerical tolerance).  Further, we may reject the hypothesis that
+$p_c=\frac{1}{4}$ [which might be a reasonable consequence of the
+assumption that all four competitors have the same strength]:
 
 
+```{r label=testcquarter,cache=TRUE}
+specificp.test(L4,'c',0.25)
+```
 
+However, observe that we cannot reject the equality hypothesis, that
+is, $p_a=p_b=p_c=p_d=\frac{1}{4}$:
 
-
-
-
+```{r label=testequal,cache=TRUE}
+equalp.test(L4)
+```
 
 ## References
