@@ -38,7 +38,7 @@ came 6th, and so on.
 However, to create a likelihood function we need ranks, not orders.  We
 need to know, for a given event, who came first, who came second, and so
 on (an extended discussion on the difference between rank and order is
-given at \code{rrank.Rd}).  We can convert from an order table to a rank
+given at \link{rrank}).  We can convert from an order table to a rank
 table using \code{ordertable_to_ranktable()} (see also
 \code{ranktable.Rd}):
 
@@ -60,10 +60,10 @@ running  Meliakh       Michalik
 
 Above, we see the same data in a different format (an extended
 discussion on the difference between rank and order is given in
-\code{rrank.Rd}).
+\link{rrank}).
 
 Many of the order tables in the package include entries that correspond
-to some variation on \dQuote{did not finish}.  Consider the \code{volvo}
+to some variation on \dQuote{did not finish}.  Consider the \link{volvo}
 dataset:
 
 \preformatted{

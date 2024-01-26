@@ -79,11 +79,11 @@ usual unconstrained problem, for which the test is the Hessian's being
 negative-definite.
 
 Function \code{hessian_lowlevel()} is a low-level helper function that
-calls the \code{C++} routine.
+calls the \proglang{C++} routine.
 
 Further examples and discussion is given in file
-\code{inst/gradient.Rmd}.  See also the discussion at \code{man/maxp.Rd}
-on the different optimization routines available.
+\code{inst/gradient.Rmd}.  See also the discussion at \link{maxp} on the
+different optimization routines available.
 }
 
 \value{

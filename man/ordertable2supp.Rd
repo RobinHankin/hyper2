@@ -105,9 +105,9 @@ e)^-1 * d * (d + e)^-1)
 
 Function \code{order_obs()} was used in the integer-indexed paradigm but
 is obsolete in the name paradigm.  A short vignette applying
-\code{ordervec2supp()} and \code{ordertable2supp()} to the \code{salad}
-dataset of the \pkg{prefmod} package [and further analysed in the
-\pkg{PlackettLuce} package] is presented at \code{inst/salad.Rmd}.
+\code{ordervec2supp()} and \code{ordertable2supp()} to the \link{salad}
+dataset of the \CRANpkg{prefmod} package [and further analysed in the
+\CRANpkg{PlackettLuce} package] is presented at \code{inst/salad.Rmd}.
 
 
 }

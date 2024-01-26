@@ -29,7 +29,7 @@ discard_flawed(H, unwanted)
 
   \strong{Do not use these functions.  They are here as object lessons
   in poor thinking.  To work with a subset of competitors, see the
-  example at \code{as.ordertable.Rd}.}
+  example at \link{as.ordertable}.}
 
   Functions \code{keep_flawed2()} and \code{discard_flawed2()} take an
   order table and keep or discard specified rows, returning a reduced

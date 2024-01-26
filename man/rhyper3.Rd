@@ -68,7 +68,7 @@ rhyper3(n=5,s=3,type='race',...)
   Argument \code{n} generally specifies the number of distinct types of
   players.  The default value of the arguments corresponds to moderately
   complicated likelihood functions, so sending an empty argument list
-  [e.g. dQuote{\code{rrace3()}}] gives sensible output.
+  [e.g. \dQuote{\code{rrace3()}}] gives sensible output.
 
 }
 \author{Robin K. S. Hankin}

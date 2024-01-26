@@ -127,7 +127,7 @@ equalp(H)
   running \code{maxp()}; thus hyper2 object \code{icons} and
   \code{icons_maxp} are included in the same \code{.rda} file.
   
-  Function \code{maxp()} can trigger a known R bug (bugzilla id 17703)
+  Function \code{maxp()} can trigger a known \R bug (bugzilla id 17703)
   which reports \dQuote{\code{wmmin is not finite}}.  Setting option
   \code{use_alabama} to \code{TRUE} makes the package use a different
   optimization routine.

@@ -122,13 +122,13 @@ Above we see see from \code{rrank_single(p)} that competitor 1 came
 sixth, competitor 2 came third, and competitor 3 came first (as you
 might expect, as competitor 3 is the strongest).  Note that the R idiom
 for \code{rorder_single()} is the same as that used in the
-\code{permutations} package for inverting a permutation: \code{o[o] <-
+\CRANpkg{permutations} package for inverting a permutation: \code{o[o] <-
 seq_along(o)}.
 
 }
 \author{Robin K. S. Hankin}
 \note{Similar functionality is given by \code{rrace()}, documented at
-  \code{rhyper3.Rd}.
+  \link{rhyper3}.
 }
 \seealso{\code{\link{ordertrans}},\code{\link{rank_likelihood}},\code{\link{skating}},\code{\link{rhyper3}}}
 \examples{

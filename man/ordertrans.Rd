@@ -90,7 +90,7 @@ functions.
 
   The argument to \code{ordertrans()} is technically an order vector
   because it answers the question \dQuote{where did the first-named
-  competitor come?} (see the discussion at \code{rrank.Rd}).  But it is
+  competitor come?} (see the discussion at \link{rrank}).  But it is
   not a helpful order vector because you have to go searching through
   the names---which can appear in any order---for the competitor you are
   interested in.  I guess \dQuote{generalised order vector} might be a
