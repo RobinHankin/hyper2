@@ -152,7 +152,7 @@ equality, specifically:
 H_E\colon p_1=p_2=\cdots=p_n=\frac{1}{n}.
 \]
 
-("E" for equal).  This was not carried out in @hankin2009, because I
+("E" for equal).  This was not carried out in @hankin2010, because I
 had not thought of it.  Testing $H_E$ is implemented in the package as
 `test.equalp()`.  Note that because $H_E$ is a point hypothesis we
 would have $n-1$ degrees of freedom (because $H_0$ has $n-1$ df).
@@ -163,7 +163,7 @@ equalp.test(icons)
 
 ## Hypothesis 1: $p_1 = 1/6$
 
-Following the analysis in @hankin2009, and restated above, we first
+Following the analysis in @hankin2010, and restated above, we first
 observe that NB [the Norfolk Broads] is the icon with the largest
 estimated probability with $\hat{p_1}\simeq 0.25$ (O'Neill gives a
 number of theoretical reasons to expect $p_1$ to be large).  This
