@@ -2,7 +2,7 @@
 title: "Judging domestic cooking ability: repeated incomplete rank observations"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib # copy from vignettes/
 ---
 
 ```{r setup, include=FALSE}
@@ -15,7 +15,7 @@ library("hyper2")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017;
+To cite the `hyper2` package in publications, please use @hankin2017_rmd;
 takes about five minutes without cache.  Suppose there are five people
 in a family.  Each day for five days, one person cooks a meal.  After
 the fifth day, each person considers the four meals cooked by other

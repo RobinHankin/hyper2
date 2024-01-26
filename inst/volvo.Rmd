@@ -3,7 +3,7 @@ title: "Race results from the twelfth edition of the
   round-the-world Volvo Ocean Race"
 author: "Robin K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 ---
 
 ```{r setup, include=FALSE}
@@ -18,7 +18,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 This short document creates the `volvo` suite of R objects and
 presents some preliminary analysis.  It refers to the 12th edition of
 the Volvo Ocean Race, 2014-2015 in which seven racing teams competed

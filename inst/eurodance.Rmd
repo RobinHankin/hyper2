@@ -2,7 +2,7 @@
 title: "Eurovision **Dance** Contest 2008"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy from vignettes/
 ---
 
 
@@ -18,7 +18,7 @@ abbreviated <- TRUE  # change to FALSE for full names
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017;
+To cite the `hyper2` package in publications, please use @hankin2017_rmd;
 takes about 20 minutes to process without cache.  The file
 `eurodance2008.txt`, used below, is copied from "Eurovision Dance
 Contest 2008", Wikipedia, accessed March 31, 2021.  First we specify

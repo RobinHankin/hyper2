@@ -2,7 +2,7 @@
 title: "icons: some experimental results"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib # copy from vignettes/
 ---
 
 
@@ -20,7 +20,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 This file presents some _speculative_ experimental work which is under
 development.  Do not confuse this file with `icons.Rmd`, which creates
 the `icons` objects in the package.

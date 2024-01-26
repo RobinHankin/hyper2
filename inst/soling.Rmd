@@ -2,7 +2,7 @@
 title: "soling"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 ---
 
 ```{r setup, include=FALSE}
@@ -14,10 +14,10 @@ options("digits" = 5)
 ```
 
 ```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
-knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+knitr::includme_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 Soling is a type of boat raced in the 2000 Summer Olympics.  Here I
 analyse race data taken from
 [wikipedia](https://en.wikipedia.org/w/index.php?title=Sailing_at_the_2000_Summer_Olympics_\%E2\%80\%93_Soling&oldid=945362535)

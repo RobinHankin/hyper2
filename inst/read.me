@@ -1,5 +1,20 @@
 This directory contains a bunch of interesting or otherwise
-entertaining use-cases of the hyper2 package.  Most of the datasets in
-the data/ directory are created by processing an Rmd or Rnw file,
-which typically reads a text file with read.table() and then creates
-a .rda file with save().
+entertaining use-cases or commentaries on the hyper2 package.  Most of
+the datasets in the data/ directory are created by processing an Rmd
+or Rnw file, which typically reads a text file with read.table() and
+then creates a .rda file with save().
+
+The bibliography file is hyper2.bib, held under version control in the
+vignettes/ directory; copy it to the inst/ directory to process the
+files here.
+
+File hyper2.bib contains entries like
+
+@Article{hankin2017_rmd, [snip]}
+@Article{hankin2017_rnw, [snip]}
+
+which refer to the same article but have different markup [\pkg{...}
+does not work for Rmd documents, and `...` does not work for Rnw
+documents (and there are other differences here and there too].  So
+use "@hankin2017_rmd" in Rmd documents and "\citep{hankin2017_rnw}" in
+Rnw documents.

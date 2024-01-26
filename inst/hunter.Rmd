@@ -2,7 +2,7 @@
 title: "Iteration techniques for Plackett-Luce likelihood functions and the `hyper2` package"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 ---
 
 
@@ -18,7 +18,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 Here I discuss why implementing equation 30 of [@hunter2004] for
 `hyper2` objects representing Plackett-Luce likelihood functions is
 difficult.  Consider the following rank observations: `724356` [that

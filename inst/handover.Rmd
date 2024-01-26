@@ -2,7 +2,7 @@
 title: "handover issues in medical care"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 ---
 
 
@@ -18,7 +18,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 This short document is based on @altham2010, which
 discussed an interesting dataset originally presented by Lin
 et. al. (2009).  It uses more sophisticated idiom furnished by the

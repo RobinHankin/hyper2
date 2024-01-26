@@ -2,7 +2,7 @@
 title: "curling with hyper2 objects"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy from vignettes/
 
 ---
 
@@ -18,7 +18,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 [Curling](https://en.wikipedia.org/wiki/Curling) is a sport with
 stones and brooms.  Following dataset taken from
 [wikipedia](https://en.wikipedia.org/w/index.php?title=Curling_at_the_Winter_Olympics&oldid=998891075),

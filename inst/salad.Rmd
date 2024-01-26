@@ -2,7 +2,7 @@
 title: "salad"
 output: bookdown::html_document2
 author: "R. K. S. Hankin"
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 ---
 
 ```{r setup, include=FALSE}
@@ -19,7 +19,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 This short document shows how to apply `hyper2` idiom to the `salad`
 dataset of the `prefmod` package [@hatzinger2012].  From `salad.Rd`:
 

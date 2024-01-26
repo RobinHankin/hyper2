@@ -2,7 +2,7 @@
 title: "Keeping and discarding players: functions `keep()` and `keep_flawed()`"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 ---
 
 
@@ -18,7 +18,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 Function `keep_flawed()` can be confusing.  Originally, the package
 included a function `keep()` but this used flawed logic, hence the
 name of its replacement.  Here is a tiny example that should clarify

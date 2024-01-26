@@ -2,7 +2,7 @@
 title: "Analysis of the 1962 world chess championship, Curacao"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 ---
 
 
@@ -16,7 +16,7 @@ library("magrittr")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 This file creates likelihood functions `H` and `H_coll`, which appear
 in the package as `interzonal` and `collusion` respectively.  It also
 presents some analysis of the datasets using the `hyper2` package.

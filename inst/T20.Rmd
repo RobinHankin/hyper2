@@ -2,7 +2,7 @@
 title: "The impact of winning the coin toss on the Indian Premier League"
 author: "Tanvi Chandel and Robin K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy hyper2.bib from the vignettes/ directory
 ---
 
 
@@ -10,16 +10,16 @@ bibliography: hyper2.bib
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
-This script creates and analyses hyper2 object `T20` which is a
-likelihood function for the strengths of the competitors in the Indian
-Premier League.
-Dataframe `T20_table` has one row for each T20 IPL match in the
-period 2008-2017 with the exception of three no-result matches and
-seven tied matches, which were removed.  
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  This script creates and analyses hyper2 object `T20`
+which is a likelihood function for the strengths of the competitors in
+the Indian Premier League.  Dataframe `T20_table` has one row for each
+T20 IPL match in the period 2008-2017 with the exception of three
+no-result matches and seven tied matches, which were removed.
 
 ```{r kickoff}
 library("hyper2",quietly=TRUE)
+library("magrittr",quietly=TRUE)
 T20_table <- read.table("T20.txt",header=TRUE)
 head(T20_table)
 nrow(T20_table)

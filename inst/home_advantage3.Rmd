@@ -2,7 +2,7 @@
 title: "Quantifying the home advantage with `hyper3` objects"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: jss_hyper3.bib
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 ---
 
 ```{r setup, include=FALSE}
@@ -15,7 +15,7 @@ library("hyper2")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 Objects of class \code{hyper3} are a generalization of \code{hyper2}
 objects that allow the brackets to contain weighted probabilities.
 Likelihood functions are defined on non-negative $p_1,\ldots, p_n$

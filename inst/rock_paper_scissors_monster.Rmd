@@ -2,7 +2,7 @@
 title: "Quantifying the rock-paper-scissors effect"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 ---
 
 ```{r setup, include=FALSE}
@@ -16,7 +16,7 @@ abbreviated <- TRUE  # change to FALSE for full names
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017;
+To cite the `hyper2` package in publications, please use @hankin2017_rmd;
 takes about an hour to run without cache.  Here I use the `hyper2`
 package to quantify the strength of a circular rock-paper-scissors
 effect using the `hyper2` package, improving on previous results

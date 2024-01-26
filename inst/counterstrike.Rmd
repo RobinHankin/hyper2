@@ -16,7 +16,7 @@ library("magrittr")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 In this short vignette I use the `hyper2` package to analyse an
 influential Counter-Strike match between two professional teams (_FaZe
 Clan_ and _Cloud9_) in the major championships at Boston 2018.  I use

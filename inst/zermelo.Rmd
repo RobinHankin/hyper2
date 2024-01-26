@@ -2,7 +2,7 @@
 title: "Some thoughts on Zermelo's iteration process in the context of the hyper2 package"
 author: "Robin K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy from vignettes/
 ---
 
 ```{r setup, include=FALSE}
@@ -17,7 +17,7 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 This short document sets out a use-case for functions `zermelo()` and
 `pairwise()`.  First I create `n=10` competitors with Zipf strengths:
 

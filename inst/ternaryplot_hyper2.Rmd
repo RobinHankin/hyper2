@@ -2,7 +2,7 @@
 title: "Ternary plots for hyper2 samples"
 author: "Robin Hankin"
 output: html_document
-bibliography: chess.bib
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 ---
 
 ```{r setup, include=FALSE}
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications please use @hankin2017.
+To cite the `hyper2` package in publications please use @hankin2017_rmd.
 Here I show how to use the excellent `Ternary` package [@smith2017] to
 generate triangular plots for `hyper2` likelihood functions with size
 3.  First load the `Ternary` and `hyper2` packages:

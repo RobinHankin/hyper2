@@ -18,10 +18,10 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017
-(takes maybe twenty minutes to run without cache.  The value of
+To cite the `hyper2` package in publications, please use @hankin2017_rmd; 
+takes maybe twenty minutes to run without cache.  The value of
 `carcinoma_maxp` is calculated separately [discussed below], and that
-takes a few days to run).
+takes a few days to run.
 
 This is a short analysis of the carcinoma dataset presented by
 Agresti, table 13.1, p542.  Seven pathologists classified each of 118

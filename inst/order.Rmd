@@ -2,7 +2,7 @@
 title: "Order statistics and numerical optimization: the case of a single observation"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 ---
 
 
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017.
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 Here I consider the likelihood function given by a single observation
 of an order statistic, which is problematic in the sense that the
 maximum likelihood estimate for the BT strengths of the competitors is
