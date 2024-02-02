@@ -28,7 +28,7 @@ Print methods for \code{hyper2} and \code{hyper3} objects
 
 Used mainly for their side-effect of printing the log-likelihood
 function.  In the print method, a natural logarithm is indicated with
-\dQuote{\code{log()}}---not \dQuote{\code{ln()}}---consistent with R
+\dQuote{\code{log()}}---not \dQuote{\code{ln()}}---consistent with \R
 builtin terminology \code{base::log()}.
 
 The \code{hyper2} print method is sensitive to option
