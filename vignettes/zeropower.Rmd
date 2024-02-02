@@ -31,10 +31,10 @@ To cite the `hyper2` package in publications, please use
 
 The powers of a `hyper2` object generally sum to zero.  This is
 implicit in Bradley-Terry type likelihood functions in which
-probabilities are generally ratios of strengths or sums of strengths.
-Here I discuss this observation in the context of `hyper2` package
-idiom.  Usually, powers not summing to zero is an indication of a
-programming bug.  For example, consider the following likelihood
+probabilities are generally ratios of linear combinations of
+strengths.  Here I discuss this observation in the context of `hyper2`
+package idiom.  Usually, powers not summing to zero is an indication
+of a programming bug.  For example, consider the following likelihood
 function, drawn from the `chess` dataset:
 
 \[
@@ -86,14 +86,13 @@ loglik(equalp(chess),chess)
 
 See how the print method gives immediate assurance that its argument
 is indeed balanced (and besides, unbalanced likelihood functions
-cannot even be evaluated with `loglik()` and are therefore nilpotent).
-It is natural to suggest including a check in the creation
-method---`hyper2()`---which would prevent the creation of a hyper2
-object with unbalanced powers.  However, this approach is not
-consistent with the package; consider the following situation.
-Suppose we wish to incorporate a new observation into `chess`,
-specifically that Anand played Karpov twice, with one win each.  We
-might proceed as follows:
+cannot even be evaluated with `loglik()`).  It is natural to suggest
+including a check in the creation method---`hyper2()`---which would
+prevent the creation of a hyper2 object with unbalanced powers.
+However, this approach is not consistent with the package; consider
+the following situation.  Suppose we wish to incorporate a new
+observation into `chess`, specifically that Anand played Karpov twice,
+with one win each.  We might proceed as follows:
 
 ```{r, newinfo}
 chess["Anand" ] %<>% inc
