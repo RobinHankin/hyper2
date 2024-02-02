@@ -1,3 +1,4 @@
+
 ---
 title: "Very simplified likelihood"
 author: "Robin Hankin"
@@ -147,7 +148,9 @@ MLE <- function(r,n){
     d <- 1e-6
    optimize(f,c(d,1-d),r=r,n=n,log=TRUE,maximum=TRUE)
 }
+MLE(0,9)
 MLE(3,9)
+MLE(3,7)
 ```
 
 Now verification
@@ -163,6 +166,40 @@ b^3*a/((a+9*b) * (a+8*b) * (a+7*b) * (a+6*b)),
 (B-1)/prod(B+(5:8)),
 f(a,r,n,log=FALSE))
 ```
+
+
+```{r}
+out <- list()
+for(n in 1:10){
+  out[[n]]  <- rep(NA,n+1)
+  for(r in 0:n){
+    if(r==0){
+      jj <- 1
+    } else if(r==n){n
+      jj <- 0
+    } else {
+      jj <- MLE(r,n)$maximum
+    }  
+    out[[n]][r+1] <- jj
+  }
+} 
+out
+```
+
+```{r}
+plotterp <- function(...){
+plot(NA,xlim=c(1,10),ylim=c(0,1),type="n",xlab="n",ylab=expression(hat(a)))
+for(n in 1:10){
+  for(r in 0:n){   points(n,out[[n]][r+1],pch=16) }
+  for(r in 0:n){   text(n+0.2,out[[n]][r+1],r,cex=0.5,col='gray') }
+}
+}
+plotterp()
+pdf(file="dotprobs.pdf")
+plotterp()
+dev.off()
+```
+
 
 ## Note on the differences between probability and likelihood
 
@@ -282,9 +319,27 @@ n!\cdot\frac{b}{a+nb}\cdot\frac{a}{a+(n-1)b}\cdot\frac{b}{(n-1)b}\cdot\frac{b}{(
 
 Now some likelihood visuals.  Suppose $r=4,n=8$:
 
-```{r}
+```{r,cache=TRUE}
+plotter <- function(...){
 a <- seq(from=0,to=1,by=0.01)
-plot(a,f(a,3,8,log=FALSE))
+n <- 7
+jj <- f(a,3,n,log=FALSE)
+plot(a,jj/max(jj,na.rm=TRUE),type='n')
+grid()
+for(r in seq(from=0,to=n)){
+  y <- f_vec_a(a,r,n,log=FALSE)
+  if(r==0){y[length(y)] <- 1}  
+  y <- y/max(y,na.rm=TRUE)
+  if(r>0){y[length(y)] <- 0}
+  points(a,y,type='l',lwd=4,col=rainbow(n+1)[r+1])
+  segments(x0=r/(n),y0=0.9,y1=1)
+  text(x=r/(n),y=0.8,r)
+}
+}
+plotter()
+pdf(file="ninelikes.pdf")
+plotter()
+dev.off()
 ```
 
 # Formula 1.
