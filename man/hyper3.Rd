@@ -161,8 +161,8 @@ hyper3(M,c(2,3,-1,-5,1))   # second argument interpreted as powers
 a <- hyper3()  # default creation method [empty object]
 
 a[c(p1=1.3)] <- 5
-a[c(p1=1.3)] <- a[c(p1=1.3)] + 3
-a[c(p1=1.3,p2=1)]  <- a[c(p1=1.3,p2=1)] -1
+a[c(p2=1  )] <- 2
+a[c(p1=1.3,p2=1)] <- -7
 a
 
 chess3  # representative simple hyper3 object

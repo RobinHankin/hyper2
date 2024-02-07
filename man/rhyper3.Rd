@@ -8,12 +8,13 @@
 \description{
 
   Various random hyper3 objects, in the context of the race metaphor.
-  They are intended to be quick \dQuote{get you going} examples of
-  simple \code{hyper3} objects.
+  They return \dQuote{get you going} examples of \code{hyper3} objects.
+  The defaults correspond to simple but non-trivial with straightforward
+  interpretations.
   
 }
 \usage{
-rwinner3(pn,ps)
+rwinner3(pn=c(a=2,b=4,c=2,d=1),ps=c(a=0.3, b=0.1,c=0.2,d=0.4))
 rpair3(n=5,s=3,lambda=1.3)
 rrace3(pn=c(a=2,b=4,c=2,d=1),ps=c(a=0.3, b=0.1,c=0.2,d=0.4))
 rracehyper3(n=4,size=9,ps=NULL,races=3)
@@ -25,8 +26,8 @@ rhyper3(n=5,s=3,type='race',...)
   \item{n,size,races,s,type}{Arguments specifying the complexity 
     of the random \code{hyper3} object returned.  See details}
   \item{lambda}{Parameter}
-\item{...}{Further arguments passed to \code{rracehyper3()} or
-  \code{rpair3()}}
+  \item{...}{Further arguments passed to \code{rracehyper3()} or
+    \code{rpair3()}}
 }
 \details{
 
@@ -37,19 +38,16 @@ rhyper3(n=5,s=3,type='race',...)
 
     \item Function \code{rwinner3()} is a low-level helper function that
     takes a player number argument \code{pn}, and a player strength
-    argument \code{ps}, and returns the (name of) the winner, chosen
-    randomly from a field of runners with appropriate strengths.  It is
-    used repeatedly by \code{rrace3()} to select a winner from the
-    diminishing pool of still-running players.
+    argument \code{ps}.  It performs an {\em in silico} race,  and
+    returns the (name of) the winner, chosen randomly from a field of
+    runners with appropriate strengths.  It is used repeatedly by
+    \code{rrace3()} to select a winner from the diminishing pool of
+    still-running players.
 
     \item Function \code{rpair3()} returns a \code{hyper3} object
     corresponding to repeated pairwise comparisons including a
-    white-player advantage.
+    white-player advantage represented by \code{lambda}.
     
-   \item Function \code{rwinner3()} returns a \code{hyper3} support
-   function corresponding to repeated pairwise competition, with a white
-   advantage represented by \code{lambda}.
-
    \item Function \code{rrace3()} returns a rank statistic corresponding
    to finishing order for a Plackett-Luce race.  The output can be
    passed to \code{ordervec2supp3()}.
@@ -62,13 +60,9 @@ rhyper3(n=5,s=3,type='race',...)
    comparisons.
 }
 
-  File \code{inst/javelin.Rmd} and \code{inst/race3.Rmd} show some
-  use-cases for these functions.
-
   Argument \code{n} generally specifies the number of distinct types of
-  players.  The default value of the arguments corresponds to moderately
-  complicated likelihood functions, so sending an empty argument list
-  [e.g. \dQuote{\code{rrace3()}}] gives sensible output.
+  players.  Files \code{inst/mann_whitney_wilcoxon.Rmd} and
+  \code{inst/javelin.Rmd} show some use-cases for these functions.
 
 }
 \author{Robin K. S. Hankin}
@@ -87,18 +81,6 @@ rrace3()
 rwinner3()
 rhyper3()
 rpair3()
-
-
-
-## pn is player numbers (two "a"s, four "b"s, two "c"s and a "d"):
-pn <- c(a=2, b=4, c=2, d=1) # defaul
-
-## ps is player strengths; 'd' is the strongest and the 'b' quadruplets the weakest:
-ps <- c(a=0.3, b=0.1, c=0.2, d=0.4)  # player strengths  
-
-rwinner3(pn,ps)              # winner, randomly chosen
-rrace3(pn,ps)                 # A random race
-ordervec2supp3(rrace3(pn,ps))  # a hyper3 object
-rrace3()                        # a hyper3 object for multiple races
+ordervec2supp3(rrace3())
 
 }
