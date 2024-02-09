@@ -403,8 +403,71 @@ sametest(a["USA",],a["CHN",],100)
 sametest(a["USA",],a["CHN",],5)
 ```
 
-## Masterchef
+## Parkrun
 
-Look at the dotchart in the _MasterChef_ part of the `hyper2`
-vignette.  We could use a Very Simplified Likelihood to estimate, say,
-Laura's BT strength assuming that the other competitors are clones.
+```{r readresults}
+results <- read.table("parkrun_results.txt",header=TRUE)
+results
+```
+
+Above we see three parkrun results.  In parkrun number 148, I placed
+229 out of a field of 318.
+
+
+```{r definelikelihood}
+
+L <- function(a,results){
+   out <- a*0
+   for(i in seq_len(nrow(results))){
+   jj <- f_vec_a(a,r=results$place[i]-1,results$runners[i]-1,log=TRUE)
+   out <- out + jj
+   }
+   out[is.infinite(out)] <- NA
+   return(out-max(out,na.rm=TRUE))
+}
+```
+
+```{r calculatelike,cache=TRUE}
+a <- seq(from=0.15,to=0.5,by=0.01)
+La <- L(a,results)
+```
+
+```{r plotlike}
+plot(a,La)
+abline(h=c(0,-2))
+```
+
+```{r splitresults}
+supp2 <- function(vec,place,runners){
+  a_stirling <- vec[1]
+  a_auckland <- vec[2]
+  out <- 0
+  for(i in 1:3){
+    out <- out + f_vec_a(a_stirling,r=place[i]-1,runners[i]-1,log=TRUE)
+  }
+  for(i in 4:10){
+    out <- out + f_vec_a(a_auckland,r=place[i]-1,runners[i]-1,log=TRUE)
+  }
+  return(out)
+}
+```
+
+
+```{r}
+print(supp2(c(0.1,0.3),results$place,results$runners))
+supp2(c(0.1,0.3),results$place,results$runners)
+x <- seq(from=0.1,to=0.5,by=0.005)
+jj <- as.matrix(expand.grid(x,x))
+L <- apply(jj,1,supp2,results$place,results$runners)
+L <- L - max(L,na.rm=TRUE)
+L <- matrix(L,length(x),length(x))
+par(pty='s')
+contour(x,x,L,asp=1,xlim=range(x),ylim=range(x))
+abline(0,1)
+```
+
+
+
+
+
+
