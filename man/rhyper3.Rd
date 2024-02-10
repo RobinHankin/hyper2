@@ -11,6 +11,15 @@
   They return \dQuote{get you going} examples of \code{hyper3} objects.
   The defaults correspond to simple but non-trivial with straightforward
   interpretations.
+
+  The defaults are
+
+  \preformatted{
+
+ pn: c(a=2,   b=4,   c=2,   d=1  )  # numbers (two "a"s, four "b"s etc)
+ ps: c(a=0.3, b=0.1, c=0.2, d=0.4)  # strengths
+}
+
   
 }
 \usage{

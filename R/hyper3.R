@@ -410,9 +410,7 @@ stop("not yet written")
   return(out)
 }
 
-`rwinner3` <- function(pn,ps){    # returns a randomly generated race winner
-    ## pn = c(a=3,b=1,c=2)        # player numbers (three "a"s, one "b" and two "c"s) NB can include zeros
-    ## ps = c(a=0.1, b=0.7, c=0.2)  # player strengths
+`rwinner3` <- function(pn=c(a=2,b=4,c=2,d=1),ps=c(a=0.3,b=0.1,c=0.2,d=0.4)){
     stopifnot(all(table(names(pn))<=1))
     stopifnot(all(table(names(ps))<=1))
     stopifnot(identical(names(pn),names(ps)))
