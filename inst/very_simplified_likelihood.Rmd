@@ -132,21 +132,24 @@ f_vec_a <- function(a,r,n, log=FALSE){  # vectorised in 'a' but not in 'r'
  sapply(a,function(a){f_single(a,r=r,n=n,log=log)})
 }
 
-f <- function(a,r,n,log=FALSE){ # vectorized in 'a', treats 'r' as a vector of independent observations
+f_vec_arn <- function(a,r,n,log=FALSE){ ## vectorized in 'a'; treats 'r' and 'n' as
+                                ## vectors of independent observations 
+
+  M <- cbind(r,n)
 
   if(log){
     out <- 0
-    for(rr in r){out <- out + f_vec_a(a,rr,n,log=TRUE)}
+    for(i in seq_len(nrow(M))){out <- out + f_vec_a(a,r=M[i,1],n=M[i,2],log=TRUE)}
   } else {
     out <- 1
-    for(rr in r){out <- out * f_vec_a(a,rr,n,log=FALSE)}
+    for(i in seq_len(nrow(M))){out <- out * f_vec_a(a,r=M[i,1],n=M[i,2],log=FALSE)}
   }
   return(out)
 }
 
 MLE <- function(r,n){
     d <- 1e-6
-   optimize(f,c(d,1-d),r=r,n=n,log=TRUE,maximum=TRUE)
+    optimize(f_vec_arn,c(d,1-d),r=r,n=n,log=TRUE,maximum=TRUE)
 }
 MLE(0,9)
 MLE(3,9)
@@ -164,7 +167,7 @@ r <- 3
 c(
 b^3*a/((a+9*b) * (a+8*b) * (a+7*b) * (a+6*b)),
 (B-1)/prod(B+(5:8)),
-f(a,r,n,log=FALSE))
+f_vec_arn(a,r,n,log=FALSE))
 ```
 
 
@@ -319,7 +322,7 @@ n!\cdot\frac{b}{a+nb}\cdot\frac{a}{a+(n-1)b}\cdot\frac{b}{(n-1)b}\cdot\frac{b}{(
 
 Now some likelihood visuals.  Suppose $r=4,n=8$:
 
-```{r,cache=TRUE}
+```{r,label=likevis,cache=TRUE}
 plotter <- function(...){
 a <- seq(from=0,to=1,by=0.01)
 n <- 7
@@ -347,30 +350,33 @@ dev.off()
 ```{r maxvscheco}
 a <- read.table("formula1_2023.txt",header=TRUE)
 a <- a[,seq_len(ncol(a)-1)]
-d1 <- as.numeric(as.matrix(a)["Ocon",])
-d2 <- as.numeric(as.matrix(a)["Gasly",])
-d1[is.na(d1)] <- 22
-d2[is.na(d2)] <- 22
-d1
-d2
-MLE(d1,22)
-MLE(d2,22)
+d_ocon  <- as.numeric(as.matrix(a)["Ocon",])
+d_gasly <- as.numeric(as.matrix(a)["Gasly",])
+d_ocon [is.na(d_ocon )] <- 22
+d_gasly[is.na(d_gasly)] <- 22
+d_ocon
+d_gasly
+MLE(d_ocon ,22)
+MLE(d_gasly,22)
 ```
 
 two sample test:
 
 ```{r 2samptest}
-both <- c(d1,d2)
+both <- c(d_ocon,d_gasly)
 bothmax <- MLE(both,22)$maximum
 
-d1max <- MLE(d1,22)$maximum
-d2max <- MLE(d2,22)$maximum
-f(bothmax,d1,22,log=TRUE)
-f(bothmax,d2,22,log=TRUE)
-f(d1max,d1,22,log=TRUE)
-f(d2max,d2,22,log=TRUE)
+d_ocon_max  <- MLE(d_ocon ,22)$maximum
+d_gasly_max <- MLE(d_gasly,22)$maximum
+f_vec_arn(bothmax,d_ocon ,22,log=TRUE)
+f_vec_arn(bothmax,d_gasly,22,log=TRUE)
+f_vec_arn(d_ocon_max ,d_ocon ,22,log=TRUE)
+f_vec_arn(d_gasly_max,d_gasly,22,log=TRUE)
 
-Lambda <- (f(d2max,d1,22,log=TRUE)+f(d2max,d2,22,log=TRUE)) -(f(bothmax,d1,22,log=TRUE)+f(bothmax,d2,22,log=TRUE))
+Lambda <- (
+   (f_vec_arn(d_gasly_max  ,d_ocon,22,log=TRUE)+f_vec_arn(d_gasly_max  ,d_gasly,22,log=TRUE)) -
+   (f_vec_arn(bothmax      ,d_ocon,22,log=TRUE)+f_vec_arn(bothmax      ,d_gasly,22,log=TRUE))
+)
 Lambda
 pchisq(-2*Lambda,df=1,lower.tail=FALSE)
 ```
@@ -386,7 +392,10 @@ sametest <- function(d1,d2,n){
 
   d1max <- MLE(d1,n)$maximum
   d2max <- MLE(d2,n)$maximum
-  Lambda <- (f(d2max,d1,n,log=TRUE)+f(d2max,d2,n,log=TRUE)) -(f(bothmax,d1,n,log=TRUE)+f(bothmax,d2,n,log=TRUE))
+  Lambda <- (
+  (f_vec_arn(d2max  ,d1,n,log=TRUE)+f_vec_arn(d2max  ,d2,n,log=TRUE)) -
+  (f_vec_arn(bothmax,d1,n,log=TRUE)+f_vec_arn(bothmax,d2,n,log=TRUE))
+)
   pchisq(-2*Lambda,df=1,lower.tail=FALSE)
 }
 
@@ -423,19 +432,28 @@ L <- function(a,results){
    out <- out + jj
    }
    out[is.infinite(out)] <- NA
-   return(out-max(out,na.rm=TRUE))
+   return(out)
 }
 ```
 
-```{r calculatelike,cache=TRUE}
+```{r calculatelikes,cache=TRUE}
 a <- seq(from=0.15,to=0.5,by=0.01)
 La <- L(a,results)
+La <- La-max(La,na.rm=TRUE)
+La2 <- f_vec_arn(a,r=results$place-1,results$runners-1,log=TRUE)
+La2 <- La2 - max(La2,na.rm=TRUE)
 ```
 
 ```{r plotlike}
 plot(a,La)
+points(a,La2)
 abline(h=c(0,-2))
 ```
+
+```{r optimsinglelike}
+optimize(function(a){L(a,results)},c(0.3,0.4),maximum=TRUE)
+```
+
 
 ```{r splitresults}
 supp2 <- function(vec,place,runners){
@@ -453,21 +471,120 @@ supp2 <- function(vec,place,runners){
 ```
 
 
-```{r}
-print(supp2(c(0.1,0.3),results$place,results$runners))
-supp2(c(0.1,0.3),results$place,results$runners)
-x <- seq(from=0.1,to=0.5,by=0.005)
+```{r,label=calcbothlikes,cache=FALSE}
+x <- seq(from=0.1,to=0.8,by=0.01)
 jj <- as.matrix(expand.grid(x,x))
 L <- apply(jj,1,supp2,results$place,results$runners)
 L <- L - max(L,na.rm=TRUE)
 L <- matrix(L,length(x),length(x))
+```
+
+```{r,label=plotbothlikes}
 par(pty='s')
-contour(x,x,L,asp=1,xlim=range(x),ylim=range(x))
+contour(x,x,L,asp=1,xlim=range(x),ylim=range(x),levels=-(0:5))
 abline(0,1)
 ```
 
 
+```{r, label=onedimopt}
+f <- function(a){supp2(c(a,a),results$place,results$runners)}
+a <- seq(from=0.1,to=0.6,by=0.05)
+alike <- sapply(a,f)
+plot(a,alike,type='b')
+optimize(f,c(0.1,0.6),maximum=TRUE)
+```
+
+```{r, label=twodimopt}
+f2 <- function(v){supp2(v,results$place,results$runners)}
+optim(par=c(0.6,0.3),f2,control=list(fnscale=-1))
+```
+
+```{r,label=showchisquareasymptotic}
+pchisq(2*(7381.496-7380.314),df=1,lower.tail=FALSE)
+```
 
 
 
+## Education
+
+The focal competitor
+
+```{r}
+rank <- c( 9, 7, 2, 3,2 ,8 ,5 ,4 ,9 )
+class_size <- c(12, 17,23, 9,13,14,13,12,15)
+course <- c("rings and modules","group theory","calculus","linear algebra",
+"differential equations","topology","special relativity","fluid mechanics","Lie algebra")
+category=c("pure","pure","applied","applied","applied","pure","applied","applied","pure")
+data.frame(course,category,rank,class_size)
+```
+
+
+```{r}
+a <- seq(from=0.1,by=0.01,to=0.7)
+wp <- category=='pure'
+wa <- category=='applied'
+```
+
+Pure first
+
+```{r}
+Lpure <- f_vec_arn(a,rank[wp]-1,class_size[wp]-1,log=TRUE)
+Lpure <- Lpure - max(Lpure,na.rm=TRUE)
+plot(a,Lpure)
+optimize(function(a){f_vec_arn(a,rank[wp]-1,class_size[wp]-1,log=TRUE)},c(0.3,0.6),maximum=TRUE)
+optimize(function(a){f_vec_arn(a,rank[wa]-1,class_size[wa]-1,log=TRUE)},c(0.3,0.6),maximum=TRUE)
+```
+
+
+```{r}
+supp2_ed <- function(vec,place1,place2,runners1,runners2){
+  out <- 0
+  M1 <- cbind(place1,runners1)
+  M2 <- cbind(place2,runners2)
+  for(i in seq_len(nrow(M1))){
+    out <- out + f_vec_arn(vec[1],r=M1[i,1]-1,n=M1[i,2]-1,log=TRUE)
+  }
+  for(i in seq_len(nrow(M2))){
+    out <- out + f_vec_arn(vec[2],r=M2[i,1]-1,n=M2[i,2]-1,log=TRUE)
+  }
+  return(out)
+}
+```
+
+```{r,cache=TRUE}
+x <- seq(from=0.1,to=0.95,by=0.01)
+jj <- as.matrix(expand.grid(x,x))
+L <- apply(jj,1,supp2_ed,rank[wp]-1,rank[wa]-1,class_size[wp]-1,class_size[wa]-1)
+L <- L - max(L,na.rm=TRUE)
+L <- matrix(L,length(x),length(x))
+```
+
+```{r}
+par(pty='s')
+contour(x,x,L,asp=1,xlim=range(x),ylim=range(x),levels=-(0:5),
+xlab='pure strength',ylab='applied strength')
+abline(0,1)
+```
+
+```{r}
+jj1 <- 
+optim(
+   c(.4,.8),
+   function(vec){
+      supp2_ed(vec,rank[wp]-1,rank[wa]-1,class_size[wp]-1,class_size[wa]-1)},
+   control=list(fnscale = -1)
+)
+jj1
+```
+
+```{r}
+jj2 <-
+optimize(function(v){supp2_ed(c(v,v),rank[wp]-1,rank[wa]-1,class_size[wp]-1,class_size[wa]-1)},
+c(0.1,0.9),maximum=TRUE)
+jj2
+```
+
+```{r}
+pchisq(2*(jj1$value-jj2$objective),lower.tail=FALSE,df=1)
+```
 
