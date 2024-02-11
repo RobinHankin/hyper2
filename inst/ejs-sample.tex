@@ -116,14 +116,14 @@ criterion; the preferred interpretation is a race in which the
 sufficient statistic is the order of competitors crossing the
 finishing line.  The Plackett-Luce likelihood
 function~\cite{luce1959,plackett1975} is a generalization of the
-Bradley-Terry~\cite{bradley1952} in which non-negative strengths are
-assigned to each competitor; without loss of generality, if the
+Bradley-Terry model~\cite{bradley1952} in which non-negative strengths
+are assigned to each competitor; without loss of generality, if the
 finishing order is $1,2,\ldots,n$ and competitor $i$ has strength
 $p_i\geqslant 0$, then the Plackett-Luce likelihood function will be
 proportional to
 
 \begin{equation}\label{plackettluce}
-\prod_{i=1}^n\frac{p_i}{\sum_{j=i}^np_i}
+\prod_{i=1}^n\frac{p_i}{\sum_{j=i}^np_j}
 \end{equation}
 
 \noindent where the strengths are normalised so $\sum p_i=1$.
