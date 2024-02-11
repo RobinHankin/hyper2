@@ -438,21 +438,28 @@ L <- function(a,results){
 
 ```{r calculatelikes,cache=TRUE}
 a <- seq(from=0.15,to=0.5,by=0.01)
-La <- L(a,results)
-La <- La-max(La,na.rm=TRUE)
-La2 <- f_vec_arn(a,r=results$place-1,results$runners-1,log=TRUE)
-La2 <- La2 - max(La2,na.rm=TRUE)
+La <- f_vec_arn(a,r=results$place-1,results$runners-1,log=TRUE)
+La <- La - max(La,na.rm=TRUE)
 ```
 
 ```{r plotlike}
 plot(a,La)
-points(a,La2)
 abline(h=c(0,-2))
 ```
 
 ```{r optimsinglelike}
-optimize(function(a){L(a,results)},c(0.3,0.4),maximum=TRUE)
+optimize(function(a){L(a,results)},c(0.2,0.4),maximum=TRUE)
 ```
+
+```{r calculatelikes1,cache=TRUE}
+a <- seq(from=0.005,to=0.6,by=0.005)
+La <- f_vec_arn(a,r=results$place[1]-1,results$runners[1]-1,log=TRUE)
+La <- La - max(La,na.rm=TRUE)
+plot(a,La,type='b')
+abline(h=c(0,-2))
+```
+
+
 
 
 ```{r splitresults}
@@ -488,9 +495,10 @@ abline(0,1)
 
 ```{r, label=onedimopt}
 f <- function(a){supp2(c(a,a),results$place,results$runners)}
-a <- seq(from=0.1,to=0.6,by=0.05)
+a <- seq(from=0.1,to=0.45,by=0.01)
 alike <- sapply(a,f)
-plot(a,alike,type='b')
+plot(a,alike-max(alike,na.rm=TRUE),type='b')
+abline(h=c(0,-2))
 optimize(f,c(0.1,0.6),maximum=TRUE)
 ```
 
@@ -500,10 +508,9 @@ optim(par=c(0.6,0.3),f2,control=list(fnscale=-1))
 ```
 
 ```{r,label=showchisquareasymptotic}
+7380.314-7381.496
 pchisq(2*(7381.496-7380.314),df=1,lower.tail=FALSE)
 ```
-
-
 
 ## Education
 
