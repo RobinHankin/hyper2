@@ -20,7 +20,7 @@ $n$ competitors each of strength $b$; we require $a+b=1$.  NB we have
 $n+1$ competitors in total, 1 of strength $a$ and $n$ of strength $b$.
 An observation is indexed by $r$, the number of $b$ clones finishing
 ahead of $a$, so $0\leqslant r\leqslant n$.  The initial field
-strength is $a+nb=n+(n-1)a$.
+strength is $a+nb=1+b(n-1)$.
 
 
 Suppose our bro comes first (zero $b$'s ahead of him):
