@@ -134,13 +134,32 @@ f_single <- function(a,r,n,log=FALSE){  # not vectorised
    return(out)
 }
 
+f_single2 <- function(a,r,n,log=FALSE){  # not vectorised
+  B <- 1/(1-a)
+  if(log){
+     if(r==n){  # last place
+       out <- lgamma(B)-lgamma(B+n)
+     } else {   # not last
+       out <- log(B-1) - lfactorial(B+n-1) + lfactorial(B+n-r-2)
+     }
+   } else {  # not-log 
+     if(r==n){
+      out <- gamma(B)/gamma(B+n)
+     } else {
+       out <- (B-1)/prod(B+(n-r-1):(n-1))
+     }
+   }	
+   return(out)
+}
+
 
 f_vec_a <- function(a,r,n, log=FALSE){  # vectorised in 'a' but not in 'r'
  sapply(a,function(a){f_single(a,r=r,n=n,log=log)})
 }
 
-f_vec_arn <- function(a,r,n,log=FALSE){ ## vectorized in 'a'; treats 'r' and 'n' as
-                                ## vectors of independent observations 
+f_vec_arn <- function(a,r,n,log=FALSE){
+  ## vectorized in 'a'; treats 'r' and 'n' as
+  ## vectors of independent observations 
 
   M <- cbind(r,n)
 
@@ -487,7 +506,7 @@ supp2 <- function(vec,place,runners){
 ```
 
 
-```{r,label=calcbothlikes,cache=F}
+```{r,label=calcbothlikes,cache=TRUE}
 x <- seq(from=0.1,to=0.8,by=0.01)
 jj <- as.matrix(expand.grid(x,x))
 L <- apply(jj,1,supp2,results$place,results$runners)
@@ -567,7 +586,7 @@ supp2_ed <- function(vec,place1,place2,runners1,runners2){
 }
 ```
 
-```{r,cache=F}
+```{r,label=fishbish,cache=TRUE}
 x <- seq(from=0.1,to=0.95,by=0.01)
 jj <- as.matrix(expand.grid(x,x))
 L <- apply(jj,1,supp2_ed,rank[wp]-1,rank[wa]-1,class_size[wp]-1,class_size[wa]-1)
@@ -575,14 +594,14 @@ L <- L - max(L,na.rm=TRUE)
 L <- matrix(L,length(x),length(x))
 ```
 
-```{r}
+```{r,label=contourstrength}
 par(pty='s')
 contour(x,x,L,asp=1,xlim=range(x),ylim=range(x),levels=-(0:5),
 xlab='pure strength',ylab='applied strength')
 abline(0,1)
 ```
 
-```{r}
+```{r,label=defsupp2}
 jj1 <- 
 optim(
    c(.4,.8),
@@ -593,14 +612,14 @@ optim(
 jj1
 ```
 
-```{r}
+```{r,label=findmaxlike}
 jj2 <-
 optimize(function(v){supp2_ed(c(v,v),rank[wp]-1,rank[wa]-1,class_size[wp]-1,class_size[wa]-1)},
 c(0.1,0.9),maximum=TRUE)
 jj2
 ```
 
-```{r}
+```{r,label=shochisw}
 pchisq(2*(jj1$value-jj2$objective),lower.tail=FALSE,df=1)
 ```
 
