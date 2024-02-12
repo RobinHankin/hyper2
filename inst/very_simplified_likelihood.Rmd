@@ -68,6 +68,13 @@ Placing after $r<n$ of the $n$ clones of strength $b$ finish:
 
 where $B=1/b$ [also using the fact that $a+b=1$].
 
+This is
+
+\[
+\frac{(B-1)\Gamma(B+n-r-1)}{\Gamma(B+n)}
+\]
+
+
 ## Placing last
 
 Placing last is finishing  after $n=r$ clones finish:
@@ -115,7 +122,7 @@ f_single <- function(a,r,n,log=FALSE){  # not vectorised
      if(r==n){  # last place
        out <- lgamma(B)-lgamma(B+n)
      } else {   # not last
-       out <- log(B-1) - sum(log(B + B+(n-r-1):(n-1)))
+       out <- log(B-1) - sum(log(B + (n-r-1):(n-1)))
      }
    } else {  # not-log 
      if(r==n){
@@ -228,22 +235,24 @@ but this is incorrect: there are two clones of (strength) $b$, and the
 likelihood arguments above do not distinguish between their finishing
 order.  We can name the competitors $a$, $b_1$ and $b_2$ and specify
 that $b_1$ and $b_2$ both have strength $b$.  Then "coming second"
-means that the finishing order was $b_1,a,b_2$ or $b_2,a,b_1$.  Noting
-that these events are disjoint, the probability would be
+means that the finishing order was $b_1\succ a\succ b_2$ or $b_2\succ
+a\succ b_1$.  Noting that these events are disjoint, the probability
+would be
 
 \[\mbox{prob of coming second}   =
-\operatorname{P}(b_1,a,b_2)      +
-\operatorname{P}(b_2,a,b_1)      =
+\operatorname{P}(b_1\succ a\succ b_2)      +
+\operatorname{P}(b_2\succ a\succ b_1)      =
 \frac{b}{a+2b}\cdot\frac{a}{a+b} +
 \frac{b}{a+2b}\cdot\frac{a}{a+b} = \frac{2(1-b)}{1+b}
 \]
 
 Similarly for the focal competitor coming last we need to sum the
-probabilities of finishing orders $b_1,b_2,a$ and $b_2,b_1,a$:
+probabilities of finishing orders $b_1\succ b_2\succ a$ and $b_2\succ
+b_1\succ a$:
 
 \[\mbox{prob of coming third}=
-\operatorname{P}(b_1,b_2,a) +
-\operatorname{P}(b_2,b_1,a) =
+\operatorname{P}(b_1\succ b_2\succ a) +
+\operatorname{P}(b_2\succ b_1\succ a) =
 \frac{b}{a+2b}\cdot\frac{b}{a+b}+
 \frac{b}{a+2b}\cdot\frac{b}{a+b}=
 \frac{2b^2}{1+b}.
@@ -255,8 +264,8 @@ factor for the probability of the focal competitor finishing first:
 
 \[
 \mbox{prob of coming first}      =
-\operatorname{P}(a,b_1,b_2)      +
-\operatorname{P}(a,b_2,b_1)      =
+\operatorname{P}(a\succ b_1\succ b_2)      +
+\operatorname{P}(a\succ b_2\succ b_1)      =
 \frac{b}{a+2b}\cdot\frac{b}{b+b} +
 \frac{b}{a+2b}\cdot\frac{b}{b+b} = \frac{1-b}{1+b}
 \]
@@ -322,11 +331,11 @@ n!\cdot\frac{b}{a+nb}\cdot\frac{a}{a+(n-1)b}\cdot\frac{b}{(n-1)b}\cdot\frac{b}{(
 
 Now some likelihood visuals.  Suppose $r=4,n=8$:
 
-```{r,label=likevis,cache=TRUE}
+```{r,label=likevis,cache=F}
 plotter <- function(...){
 a <- seq(from=0,to=1,by=0.01)
 n <- 7
-jj <- f(a,3,n,log=FALSE)
+jj <- f_vec_arn(a,3,n,log=FALSE)
 plot(a,jj/max(jj,na.rm=TRUE),type='n')
 grid()
 for(r in seq(from=0,to=n)){
@@ -436,7 +445,7 @@ L <- function(a,results){
 }
 ```
 
-```{r calculatelikes,cache=TRUE}
+```{r calculatelikes,cache=F}
 a <- seq(from=0.15,to=0.5,by=0.01)
 La <- f_vec_arn(a,r=results$place-1,results$runners-1,log=TRUE)
 La <- La - max(La,na.rm=TRUE)
@@ -451,7 +460,7 @@ abline(h=c(0,-2))
 optimize(function(a){L(a,results)},c(0.2,0.4),maximum=TRUE)
 ```
 
-```{r calculatelikes1,cache=TRUE}
+```{r calculatelikes1,cache=F}
 a <- seq(from=0.005,to=0.6,by=0.005)
 La <- f_vec_arn(a,r=results$place[1]-1,results$runners[1]-1,log=TRUE)
 La <- La - max(La,na.rm=TRUE)
@@ -478,7 +487,7 @@ supp2 <- function(vec,place,runners){
 ```
 
 
-```{r,label=calcbothlikes,cache=FALSE}
+```{r,label=calcbothlikes,cache=F}
 x <- seq(from=0.1,to=0.8,by=0.01)
 jj <- as.matrix(expand.grid(x,x))
 L <- apply(jj,1,supp2,results$place,results$runners)
@@ -558,7 +567,7 @@ supp2_ed <- function(vec,place1,place2,runners1,runners2){
 }
 ```
 
-```{r,cache=TRUE}
+```{r,cache=F}
 x <- seq(from=0.1,to=0.95,by=0.01)
 jj <- as.matrix(expand.grid(x,x))
 L <- apply(jj,1,supp2_ed,rank[wp]-1,rank[wa]-1,class_size[wp]-1,class_size[wa]-1)
