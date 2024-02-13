@@ -71,8 +71,9 @@ where $B=1/b$ [also using the fact that $a+b=1$].
 This is
 
 \[
-\frac{(B-1)\Gamma(B+n-r-1)}{\Gamma(B+n)}
+\frac{(B-1)(B+n-r-2)!}{(B+n-1)!}
 \]
+
 
 
 ## Placing last
@@ -101,13 +102,14 @@ n=4\longrightarrow\mathcal{L}=\frac{b}{a+4b}\cdot\frac{b}{a+3b}\cdot\frac{b}{a+2
 For $n=4$ we have equivalently
 
 \[
-\frac{1}{(B+3)(B+2)(B+1)B}=\frac{(B-1)!}{(B+3)!}=\frac{\Gamma(B)}{\Gamma(B+4)}
+\frac{1}{(B+3)(B+2)(B+1)B}=\frac{(B-1)!}{(B+3)!}
 \]
 
 In general we would have
 
 \[
-\frac{1}{(B+n-1)(B+n-2)\cdots(B+1)B}=\frac{(B-1)!}{(B+n)!}=\frac{\Gamma(B)}{\Gamma(B+n+1)}
+\frac{1}{(B+n-1)(B+n-2)\cdots(B+1)B}=
+\frac{(B-1)!}{(B+n-1)!}
 \]
 
 
@@ -115,8 +117,8 @@ In general we would have
 (denominator has $n+1$ terms).  In R:
 
 
-```{r}
-f_single <- function(a,r,n,log=FALSE){  # not vectorised
+```{r,label=definefsingle}
+f_single_old <- function(a,r,n,log=FALSE){  # not vectorised
   B <- 1/(1-a)
   if(log){
      if(r==n){  # last place
@@ -134,13 +136,13 @@ f_single <- function(a,r,n,log=FALSE){  # not vectorised
    return(out)
 }
 
-f_single2 <- function(a,r,n,log=FALSE){  # not vectorised
+f_single_old2 <- function(a,r,n,log=FALSE){  # not vectorised
   B <- 1/(1-a)
   if(log){
      if(r==n){  # last place
        out <- lgamma(B)-lgamma(B+n)
      } else {   # not last
-       out <- log(B-1) - lfactorial(B+n-1) + lfactorial(B+n-r-2)
+      out <- log(B-1) - lgamma(B+n) + lgamma(B+n-r-1)
      }
    } else {  # not-log 
      if(r==n){
@@ -148,6 +150,16 @@ f_single2 <- function(a,r,n,log=FALSE){  # not vectorised
      } else {
        out <- (B-1)/prod(B+(n-r-1):(n-1))
      }
+   }	
+   return(out)
+}
+
+f_single <- function(a,r,n,log=FALSE){  # not vectorised
+  B <- 1/(1-a)
+  if(log){
+      out <- log(B-1) - lgamma(B+n) + lgamma(B+n-r-1)
+   } else {  # not-log 
+      out <- (B-1)/prod(B+(n-r-1):(n-1))
    }	
    return(out)
 }
@@ -172,6 +184,10 @@ f_vec_arn <- function(a,r,n,log=FALSE){
   }
   return(out)
 }
+```
+
+
+```{r,label=defmle}
 
 MLE <- function(r,n){
     d <- 1e-6
@@ -184,20 +200,21 @@ MLE(3,7)
 
 Now verification
 
-```{r}
+```{r,label=verifytwo}
 a <- 0.23423434
 b <- 1-a
 B <- 1/b
 n <- 9
 r <- 3
 c(
-b^3*a/((a+9*b) * (a+8*b) * (a+7*b) * (a+6*b)),
-(B-1)/prod(B+(5:8)),
-f_vec_arn(a,r,n,log=FALSE))
+way1 = b^3*a/((a+9*b) * (a+8*b) * (a+7*b) * (a+6*b)),
+way2 = (B-1)/prod(B+(5:8)),
+way3 = f_vec_arn(a,r,n,log=FALSE)
+)
 ```
 
 
-```{r}
+```{r,label=makejj}
 out <- list()
 for(n in 1:10){
   out[[n]]  <- rep(NA,n+1)
@@ -215,7 +232,7 @@ for(n in 1:10){
 out
 ```
 
-```{r}
+```{r,label=plotjj}
 plotterp <- function(...){
 plot(NA,xlim=c(1,10),ylim=c(0,1),type="n",xlab="n",ylab=expression(hat(a)))
 for(n in 1:10){
@@ -465,13 +482,13 @@ L <- function(a,results){
 ```
 
 ```{r calculatelikes,cache=F}
-a <- seq(from=0.15,to=0.5,by=0.01)
+a <- seq(from=0.25,to=0.65,by=0.01)
 La <- f_vec_arn(a,r=results$place-1,results$runners-1,log=TRUE)
 La <- La - max(La,na.rm=TRUE)
 ```
 
 ```{r plotlike}
-plot(a,La)
+plot(a,La,ylab='support')
 abline(h=c(0,-2))
 ```
 
@@ -480,14 +497,12 @@ optimize(function(a){L(a,results)},c(0.2,0.4),maximum=TRUE)
 ```
 
 ```{r calculatelikes1,cache=F}
-a <- seq(from=0.005,to=0.6,by=0.005)
+a <- seq(from=0.005,to=0.75,by=0.01)
 La <- f_vec_arn(a,r=results$place[1]-1,results$runners[1]-1,log=TRUE)
 La <- La - max(La,na.rm=TRUE)
-plot(a,La,type='b')
+plot(a,La,type='b',ylab='fishy')
 abline(h=c(0,-2))
 ```
-
-
 
 
 ```{r splitresults}
@@ -523,9 +538,9 @@ abline(0,1)
 
 ```{r, label=onedimopt}
 f <- function(a){supp2(c(a,a),results$place,results$runners)}
-a <- seq(from=0.1,to=0.45,by=0.01)
+a <- seq(from=0.2,to=0.6,by=0.01)
 alike <- sapply(a,f)
-plot(a,alike-max(alike,na.rm=TRUE),type='b')
+plot(a,alike-max(alike,na.rm=TRUE),type='b',ylab='blong')
 abline(h=c(0,-2))
 optimize(f,c(0.1,0.6),maximum=TRUE)
 ```
@@ -555,7 +570,7 @@ data.frame(course,category,rank,class_size)
 
 
 ```{r}
-a <- seq(from=0.1,by=0.01,to=0.7)
+a <- seq(from=0.2,by=0.01,to=0.8)
 wp <- category=='pure'
 wa <- category=='applied'
 ```
@@ -565,7 +580,7 @@ Pure first
 ```{r}
 Lpure <- f_vec_arn(a,rank[wp]-1,class_size[wp]-1,log=TRUE)
 Lpure <- Lpure - max(Lpure,na.rm=TRUE)
-plot(a,Lpure)
+plot(a,Lpure,ylab='pure strength')
 optimize(function(a){f_vec_arn(a,rank[wp]-1,class_size[wp]-1,log=TRUE)},c(0.3,0.6),maximum=TRUE)
 optimize(function(a){f_vec_arn(a,rank[wa]-1,class_size[wa]-1,log=TRUE)},c(0.3,0.6),maximum=TRUE)
 ```
