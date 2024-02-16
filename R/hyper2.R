@@ -1313,6 +1313,7 @@ rorder_single <- function(p){
 }
 
 `balance` <- function(H){
+    H[pnames(H)] <- 0
     H[pnames(H)] <- -sum(powers(H))
     return(H)
 }
