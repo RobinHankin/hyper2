@@ -404,7 +404,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
 }
 
-`maxp` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, n=10, show=FALSE, justlikes=FALSE, ...){
+`maxp` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, n=1, show=FALSE, justlikes=FALSE, ...){
     if(isTRUE(getOption("use_alabama"))){ms <- maxp_single2} else {ms <- maxp_single}
     best_so_far <- -Inf # best (i.e. highest) likelihood found to date
     likes <- rep(NA,n)
