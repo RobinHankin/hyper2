@@ -46,7 +46,8 @@ function, drawn from the `chess` dataset:
 \]
 
 
-Appropriate `hyper2` idiom might be
+For a time, one package documentation file contained the following
+`hyper2` idiom purporting to create the `chess` likelihood function:
 
 ```{r appidiom}
 chess <- hyper2()
