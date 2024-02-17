@@ -12,7 +12,7 @@
 \description{\loadmathjax
   Find the maximum likelihood estimate for p, also equal probabilities}
 \usage{
-maxp(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, n=10,
+maxp(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, n=1,
    show=FALSE, justlikes=FALSE, ...)
 maxplist(Hlist, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, ...)
 maxp_single(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6,
@@ -112,8 +112,10 @@ equalp(H)
 \author{Robin K. S. Hankin}
 \note{
 
-  In manpages elsewhere, \code{n=2} is used for speed reasons.  Use the
-  default \code{n=10} or greater in production work.
+  In manpages elsewhere, \code{n=2} is sometimes used.  Previous
+  advice was to use \code{n=10} or greater in production work, but I
+  now think this is overly cautious and \code{n=1} is perfectly
+  adequate unless the dimension of the problem is large.
 
   The (bordered) Hessian is given by function \code{hessian()},
   documented at \code{gradient.Rd}; use this to assess the

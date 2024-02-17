@@ -47,7 +47,7 @@ rhyper3(n=5,s=3,type='race',...)
 
     \item Function \code{rwinner3()} is a low-level helper function that
     takes a player number argument \code{pn}, and a player strength
-    argument \code{ps}.  It performs an {\em in silico} race,  and
+    argument \code{ps}.  It performs an \emph{in silico} race,  and
     returns the (name of) the winner, chosen randomly from a field of
     runners with appropriate strengths.  It is used repeatedly by
     \code{rrace3()} to select a winner from the diminishing pool of
