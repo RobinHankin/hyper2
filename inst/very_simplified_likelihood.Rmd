@@ -409,7 +409,7 @@ M <- cbind(a=a,b=1-a)
 for(r in 0:7){
   y <- loglik(M,fhyper3(r,n),log=FALSE)
   y <- y/max(y, na.rm=TRUE)
-points(M[,2],y,type="l",lwd=8)
+points(M[,1],y,type="l",lwd=8)
 }
 ```
 
