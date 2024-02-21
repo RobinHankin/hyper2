@@ -58,7 +58,7 @@ H
 }
 
 The general form of terms of a \code{hyper3} object would be
-\mjeqn{\left(w_1p_1+\ldots w_rp_r\right)^{\alpha}}{omitted}; the
+\mjeqn{\left(w_1p_1+\ldots+w_rp_r\right)^{\alpha}}{omitted}; the
 complete object would be
 
 \mjdeqn{
