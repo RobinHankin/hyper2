@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 library("pracma")
+library("magrittr")
 ```
 
 ```{r hexsticker, out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
@@ -372,6 +373,31 @@ pdf(file="ninelikes.pdf")
 plotter()
 dev.off()
 ```
+
+```{r usehyper3}
+a <- seq(from=0,to=1,by=0.01)
+fhyper3 <- function(r,n){
+  out <- hyper3()
+  out['a'] <- 1
+  out['b'] <- r
+  for(i in (n-r):n){
+    out[c(a=1,b=i)] %<>% dec
+  }
+  return(out)
+}
+
+plot(NA,xlim=c(0,1),ylim=c(0,1),type='n')
+M <- cbind(a=a,b=1-a)
+for(r in 0:7){
+  y <- loglik(M,fhyper3(r,n),log=FALSE)
+  y <- y/max(y, na.rm=TRUE)
+points(M[,2],y,type="l",lwd=8)
+}
+```
+
+
+
+
 
 # Formula 1.
 
