@@ -36,6 +36,7 @@ The \code{hyper2} print method is sensitive to option
 issued if the powers have nonzero sum.  This is usually what you want
 because observations are typically multinomial; a warning indicates
 nonzero sum of powers, which should prompt us to check the coding.
+Vignette \code{zeropower} gives a discussion of this issue.
 
 }
 \author{Robin K. S. Hankin}

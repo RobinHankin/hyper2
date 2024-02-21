@@ -106,7 +106,11 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
 `print.hyper3` <- function(x,...){
     b <- elements(as.namedvectorlist(x))
     p <- elements(powers(x))
-    stopifnot(sum(powers(x))==0)
+    if(!isFALSE(getOption("give_warning_on_nonzero_power_sum"))){
+      if(sum(powers(x)) !=0){
+          warning("powers have nonzero sum")
+      }
+    }
     out <- "log( "
     for(i in seq_along(b)){
         out <- paste(out, "(", pnv(b[[i]]),")^",p[i],sep="")
