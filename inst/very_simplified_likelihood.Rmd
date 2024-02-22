@@ -1,4 +1,3 @@
-
 ---
 title: "Very simplified likelihood"
 author: "Robin Hankin"
@@ -113,48 +112,9 @@ In general we would have
 \frac{(B-1)!}{(B+n-1)!}
 \]
 
-
-
 (denominator has $n+1$ terms).  In R:
 
-
 ```{r,label=definefsingle}
-f_single_old <- function(a,r,n,log=FALSE){  # not vectorised
-  B <- 1/(1-a)
-  if(log){
-     if(r==n){  # last place
-       out <- lgamma(B)-lgamma(B+n)
-     } else {   # not last
-       out <- log(B-1) - sum(log(B + (n-r-1):(n-1)))
-     }
-   } else {  # not-log 
-     if(r==n){
-      out <- gamma(B)/gamma(B+n)
-     } else {
-       out <- (B-1)/prod(B+(n-r-1):(n-1))
-     }
-   }	
-   return(out)
-}
-
-f_single_old2 <- function(a,r,n,log=FALSE){  # not vectorised
-  B <- 1/(1-a)
-  if(log){
-     if(r==n){  # last place
-       out <- lgamma(B)-lgamma(B+n)
-     } else {   # not last
-      out <- log(B-1) - lgamma(B+n) + lgamma(B+n-r-1)
-     }
-   } else {  # not-log 
-     if(r==n){
-      out <- gamma(B)/gamma(B+n)
-     } else {
-       out <- (B-1)/prod(B+(n-r-1):(n-1))
-     }
-   }	
-   return(out)
-}
-
 f_single <- function(a,r,n,log=FALSE){  # not vectorised
   B <- 1/(1-a)
   if(log){
@@ -164,7 +124,6 @@ f_single <- function(a,r,n,log=FALSE){  # not vectorised
    }	
    return(out)
 }
-
 
 f_vec_a <- function(a,r,n, log=FALSE){  # vectorised in 'a' but not in 'r'
  sapply(a,function(a){f_single(a,r=r,n=n,log=log)})
@@ -197,6 +156,16 @@ MLE <- function(r,n){
 MLE(0,9)
 MLE(3,9)
 MLE(3,7)
+
+MLE_analytic <- function(r,n){
+uniroot(
+  f=function(B){psigamma(B-n+r-1)-psigamma(B+n)+1/(1-B)},
+  interval=c(1.0001,1000)
+  )
+}
+
+
+
 ```
 
 Now verification
@@ -586,7 +555,7 @@ pchisq(2*(7381.496-7380.314),df=1,lower.tail=FALSE)
 
 The focal competitor
 
-```{r}
+```{r focaleducation}
 rank <- c( 9, 7, 2, 3,2 ,8 ,5 ,4 ,9 )
 class_size <- c(12, 17,23, 9,13,14,13,12,15)
 course <- c("rings and modules","group theory","calculus","linear algebra",
@@ -596,7 +565,7 @@ data.frame(course,category,rank,class_size)
 ```
 
 
-```{r}
+```{r seppurefromapplied}
 a <- seq(from=0.2,by=0.01,to=0.8)
 wp <- category=='pure'
 wa <- category=='applied'
@@ -604,7 +573,7 @@ wa <- category=='applied'
 
 Pure first
 
-```{r}
+```{r dopurefurst}
 Lpure <- f_vec_arn(a,rank[wp]-1,class_size[wp]-1,log=TRUE)
 Lpure <- Lpure - max(Lpure,na.rm=TRUE)
 plot(a,Lpure,ylab='pure strength')
@@ -613,7 +582,7 @@ optimize(function(a){f_vec_arn(a,rank[wa]-1,class_size[wa]-1,log=TRUE)},c(0.3,0.
 ```
 
 
-```{r}
+```{r definesupp2ed}
 supp2_ed <- function(vec,place1,place2,runners1,runners2){
   out <- 0
   M1 <- cbind(place1,runners1)
