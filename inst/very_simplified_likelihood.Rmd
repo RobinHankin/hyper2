@@ -177,18 +177,28 @@ Now use the derivative to find the maximum likelihood point
 
 ```{r,label=defmle}
 MLE <- function(r,n,give=FALSE){
-    d <- 1e-6
-     jj <- optimize(f_vec_arn,c(d,1-d),r=r,n=n,log=TRUE,maximum=TRUE)
-	 if(!give){jj <- jj$maximum}
-	 return(jj)
+	d <- 1e-6
+	if(r==n){
+		out <- 0
+	} else if(r==0){
+		out <- 1
+	} else {
+		out <- optimize(f_vec_arn,c(d,1-d),r=r,n=n,log=TRUE,maximum=TRUE)
+		if(!give){out <- out$maximum}
+	}
+	return(out)
 }
 
 MLEa <- function(r,n,give=FALSE){
-	jj <- uniroot(
-		f=function(a){fdash(a,r,n)},
-		interval=c(0.01,0.99))
-	if(!give){jj <- jj$root}
-	return(jj)
+	if(r==n){
+		out <- 0
+	} else if(r==0){
+		out <- 1
+	} else {
+		out <- uniroot(f=function(a){fdash(a,r,n)},interval=c(0.01,0.99))
+		if(!give){out <- out$root}
+	}
+	return(out)
 }
 
 rbind(
