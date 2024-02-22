@@ -116,56 +116,86 @@ In general we would have
 
 ```{r,label=definefsingle}
 f_single <- function(a,r,n,log=FALSE){  # not vectorised
-  B <- 1/(1-a)
-  if(log){
-      out <- log(B-1) - lgamma(B+n) + lgamma(B+n-r-1)
-   } else {  # not-log 
-      out <- (B-1)/prod(B+(n-r-1):(n-1))
-   }	
+	B <- 1/(1-a)
+	if(log){
+		out <- log(B-1) - lgamma(B+n) + lgamma(B+n-r-1)
+	} else {  # not-log 
+		out <- (B-1)/prod(B+(n-r-1):(n-1))
+	}	
    return(out)
 }
 
 f_vec_a <- function(a,r,n, log=FALSE){  # vectorised in 'a' but not in 'r'
- sapply(a,function(a){f_single(a,r=r,n=n,log=log)})
+	sapply(a,function(a){f_single(a,r=r,n=n,log=log)})
 }
 
 f_vec_arn <- function(a,r,n,log=FALSE){
-  ## vectorized in 'a'; treats 'r' and 'n' as
-  ## vectors of independent observations 
+	## vectorized in 'a'; treats 'r' and 'n' as
+	## vectors of independent observations 
 
-  M <- cbind(r,n)
+	M <- cbind(r,n)
 
-  if(log){
-    out <- 0
-    for(i in seq_len(nrow(M))){out <- out + f_vec_a(a,r=M[i,1],n=M[i,2],log=TRUE)}
-  } else {
-    out <- 1
-    for(i in seq_len(nrow(M))){out <- out * f_vec_a(a,r=M[i,1],n=M[i,2],log=FALSE)}
-  }
-  return(out)
+	if(log){
+		out <- 0
+		for(i in seq_len(nrow(M))){out <- out + f_vec_a(a,r=M[i,1],n=M[i,2],log=TRUE)}
+	} else {
+		out <- 1
+		for(i in seq_len(nrow(M))){out <- out * f_vec_a(a,r=M[i,1],n=M[i,2],log=FALSE)}
+	}
+	return(out)
 }
 ```
 
+```{r label=defdiff}
+fdash <- function(a,r,n,log=TRUE){
+	B <- 1/(1-a)
+	out <- (1/(B-1) - psigamma(B+n) + psigamma(B+n-r-1))*B^2
+	if(!log){out <- out * f_vec_arn(a,r,n,log=FALSE)}
+	return(out)
+}
+```
+
+Now verify `fdash()`:
+
+```{r label=verifydiff}
+a <- 0.34
+d <- 1e-3
+r <- 4
+n <- 10
+c(
+  numerical  = (f_single(a+d/2,r,n,log=TRUE)-f_single(a-d/2,r,n,log=TRUE))/d,
+  analytical = fdash(a,r,n)
+)
+
+c(
+  numerical  = (f_single(a+d/2,r,n,log=FALSE)-f_single(a-d/2,r,n,log=FALSE))/d,
+  analytical = fdash(a,r,n,log=FALSE)
+)
+```
+
+Now use the derivative to find the maximum likelihood point
 
 ```{r,label=defmle}
-
-MLE <- function(r,n){
+MLE <- function(r,n,give=FALSE){
     d <- 1e-6
-    optimize(f_vec_arn,c(d,1-d),r=r,n=n,log=TRUE,maximum=TRUE)
-}
-MLE(0,9)
-MLE(3,9)
-MLE(3,7)
-
-MLE_analytic <- function(r,n){
-uniroot(
-  f=function(B){psigamma(B-n+r-1)-psigamma(B+n)+1/(1-B)},
-  interval=c(1.0001,1000)
-  )
+     jj <- optimize(f_vec_arn,c(d,1-d),r=r,n=n,log=TRUE,maximum=TRUE)
+	 if(!give){jj <- jj$maximum}
+	 return(jj)
 }
 
+MLEa <- function(r,n,give=FALSE){
+	jj <- uniroot(
+		f=function(a){fdash(a,r,n)},
+		interval=c(0.01,0.99))
+	if(!give){jj <- jj$root}
+	return(jj)
+}
 
-
+rbind(
+c(MLE(1,9),MLEa(1,9)),
+c(MLE(3,9),MLEa(3,9)),
+c(MLE(3,7),MLEa(3,7))
+)
 ```
 
 Now verification
@@ -194,7 +224,7 @@ for(n in 1:10){
     } else if(r==n){n
       jj <- 0
     } else {
-      jj <- MLE(r,n)$maximum
+      jj <- MLE(r,n)
     }  
     out[[n]][r+1] <- jj
   }
@@ -360,7 +390,7 @@ plotter()
 dev.off()
 ```
 
-```{r usehyper3}
+```{r usehyper3,cache=TRUE}
 n <- 7
 a <- seq(from=0,to=1,by=0.01)
 fhyper3 <- function(r,n){
@@ -405,10 +435,10 @@ two sample test:
 
 ```{r 2samptest}
 both <- c(d_ocon,d_gasly)
-bothmax <- MLE(both,22)$maximum
+bothmax <- MLE(both,22)
 
-d_ocon_max  <- MLE(d_ocon ,22)$maximum
-d_gasly_max <- MLE(d_gasly,22)$maximum
+d_ocon_max  <- MLE(d_ocon ,22)
+d_gasly_max <- MLE(d_gasly,22)
 f_vec_arn(bothmax,d_ocon ,22,log=TRUE)
 f_vec_arn(bothmax,d_gasly,22,log=TRUE)
 f_vec_arn(d_ocon_max ,d_ocon ,22,log=TRUE)
@@ -429,10 +459,10 @@ pchisq(-2*Lambda,df=1,lower.tail=FALSE)
 ```{r readoly}
 sametest <- function(d1,d2,n){
   both <- c(d1,d2)
-  bothmax <- MLE(both,n)$maximum
+  bothmax <- MLE(both,n)
 
-  d1max <- MLE(d1,n)$maximum
-  d2max <- MLE(d2,n)$maximum
+  d1max <- MLE(d1,n)
+  d2max <- MLE(d2,n)
   Lambda <- (
   (f_vec_arn(d2max  ,d1,n,log=TRUE)+f_vec_arn(d2max  ,d2,n,log=TRUE)) -
   (f_vec_arn(bothmax,d1,n,log=TRUE)+f_vec_arn(bothmax,d2,n,log=TRUE))
