@@ -87,7 +87,7 @@ If you give Sage this:
 var('B n r')
 pretty_print_default(True)
 X=log(B-1) + (
-+ ((B+n-r-2)*log(B+n-r-2)-(B+n-r-2)+log(B+n-r-2)/2)    
++ ((B+n-r-2)*log(B+n-r-2)-(B+n-r-2)+log(B+n-r-2)/2)
 - ((B+n  -1)*log(B+n  -1)-(B+n  -1)+log(B+n  -1)/2)
 )
 X.taylor(n,Infinity,2)
@@ -102,20 +102,24 @@ It returns this:
 +\log(B-1)+\mathcal{O}(n^{-3})
 \]
 
-
-
-After simplifying and taking an asymptotic expansion we find
+Note that if we use instead $n~\sim n^ne^{-n}\sqrt{2\pi
+n}\left(1+\frac{1}{12n}\right)$, then only terms of
+$\mathcal{O}(n^{-2})$ and above are changed; the first-order terms and
+indeed the zeroth order terms are unaffected.  Anyway, after
+simplifying and taking an asymptotic expansion to order $n^{-1}$, we
+find, to first order,
 
 \[
-\mathcal{S}=\log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n} + \frac{B^2-B(5+r^2)/2}{n^2}
-+ K + \mathcal{O}\left(n^{-3}\right)
+\mathcal{S}=\log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n} 
++ K + \mathcal{O}\left(n^{-2}\right)
 \]
 
-(where $K$ is an arbitrary constant).  If we then neglect terms of
-order $n^{-2}$ and above, viz $\log(B-1)-B\frac{r+1}{n}$, observing
-that $\partial^2\mathcal{S}/\partial B^2=-(B-1)^{-2}<0$, the evaluate
-would be $\hat{a}=\frac{n}{n+r+1}$ [although this seems to be a poor
-approximation to the exact evaluate]
+(where $K$ is an arbitrary constant).  Observing that
+$\partial^2\mathcal{S}/\partial B^2=-(B-1)^{-2}<0$, the evaluate would
+be unique; we have
+$\hat{B}=\frac{n+r+1}{r+1}+\mathcal{O}\left(n^{-1}\right)$, or
+alternatively $\hat{a}=\frac{n}{n+r+1}$.  I present some numerical
+results below.
 
 
 ## Placing last
@@ -154,7 +158,8 @@ In general we would have
 \frac{(B-1)!}{(B+n-1)!}
 \]
 
-(denominator has $n+1$ terms).  In R:
+(denominator has $n+1$ terms).  Observe that this agrees with the
+$r<n$ case above (substituting $r=n$).  We may introduce some R idiom:
 
 ```{r,label=definefsingle}
 f_single <- function(a,r,n,log=FALSE){  # not vectorised
@@ -233,16 +238,18 @@ MLE <- function(r,n,give=FALSE){
 	return(out)
 }
 
-MLEa <- function(r,n,give=FALSE){
-	out <- uniroot(f=function(a){fdash(a,r,n)},interval=c(0.01,0.99))
+MLEa <- function(r,n,give=FALSE,small=1e-4){
+	out <- uniroot(f=function(a){fdash(a,r,n)},interval=c(small,1-small))
 	if(!give){out <- out$root}
 	return(out)
 }
 
+showdiff <- function(x,y){c(way1=x,way2=y,diff=x-y,logratio=log(x/y))}
+
 rbind(
-c(MLE(1,9),MLEa(1,9)),
-c(MLE(3,9),MLEa(3,9)),
-c(MLE(3,7),MLEa(3,7))
+showdiff(MLE(1,9),MLEa(1,9)),
+showdiff(MLE(3,9),MLEa(3,9)),
+showdiff(MLE(3,7),MLEa(3,7))
 )
 ```
 
@@ -250,16 +257,22 @@ c(MLE(3,7),MLEa(3,7))
 
 ```{r usestirling}
 rbind(
-c(MLE(10 , 100),100 / 111),
-c(MLE(100,1000),1000/1101),
-c(MLE(500,5000),5000/5501)
+showdiff(MLE(10, 100), 100 / 111),
+showdiff(MLE(10, 500), 500 / 511),
+showdiff(MLE(10,1000),1000 /1011),
+showdiff(MLE(10,5000),5000 /5011)
+)
+```
+
+```{r usestirlinga}
+rbind(
+showdiff(MLEa(10, 100), 100 / 111),
+showdiff(MLEa(10, 500), 500 / 511),
+showdiff(MLEa(10,1000),1000 /1011),
+showdiff(MLEa(10,5000),5000 /5011)
 )
 
-rbind(
-c(MLEa(10 , 100),100 / 111),
-c(MLEa(100,1000),1000/1101),
-c(MLEa(500,5000),5000/5501)
-)
+
 ```
 
 
@@ -447,8 +460,6 @@ for(r in seq(from=0,to=n)){
   y <- y/max(y,na.rm=TRUE)
   if(r>0){y[length(y)] <- 0}
   points(a,y,type='l',lwd=4,col=rainbow(n+1)[r+1])
-  segments(x0=r/(n),y0=0.9,y1=1)
-  text(x=r/(n),y=0.8,r)
 }
 }
 plotter()
@@ -695,7 +706,7 @@ supp2_ed <- function(vec,place1,place2,runners1,runners2){
 ```
 
 ```{r,label=fishbish,cache=TRUE}
-x <- seq(from=0.1,to=0.95,by=0.01)
+x <- seq(from=0.1,to=0.99,by=0.01)
 jj <- as.matrix(expand.grid(x,x))
 L <- apply(jj,1,supp2_ed,rank[wp]-1,rank[wa]-1,class_size[wp]-1,class_size[wa]-1)
 L <- L - max(L,na.rm=TRUE)
