@@ -71,9 +71,51 @@ where $B=1/b$ [also using the fact that $a+b=1$].
 This is
 
 \[
-\frac{(B-1)(B+n-r-2)!}{(B+n-1)!}
+\mathcal{L}_{r,n}(a)=\frac{(B-1)(B+n-r-2)!}{(B+n-1)!},\qquad B=1/(1-a)
 \]
 
+Then, using Stirling [viz $n!\sim n^ne^{-n}\sqrt{2\pi n}$] we get
+
+\[
+\log(B-1) + ((B+n-r-2)\log(B+n-r-2)-(B+n-r-2)+\frac{\log(B+n-r-2)}{2})
+          - ((B+n  -1)\log(B+n  -1)-(B+n  -1)+\frac{\log(B+n  -1)}{2})
+\]
+
+If you give Sage this:
+
+```
+var('B n r')
+pretty_print_default(True)
+X=log(B-1) + (
++ ((B+n-r-2)*log(B+n-r-2)-(B+n-r-2)+log(B+n-r-2)/2)    
+- ((B+n  -1)*log(B+n  -1)-(B+n  -1)+log(B+n  -1)/2)
+)
+X.taylor(n,Infinity,2)
+```
+
+It returns this:
+
+\[
+-(r+1)\log n
+-\frac{(2B-3)r-r^2+2B-2}{2n}
+-\frac{3(2B-3)r^2-6B^2-6(B^2-3B+2)r+12B-5}{12n^2}
++\log(B-1)+\mathcal{O}(n^{-3})
+\]
+
+
+
+After simplifying and taking an asymptotic expansion we find
+
+\[
+\mathcal{S}=\log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n} + \frac{B^2-B(5+r^2)/2}{n^2}
++ K + \mathcal{O}\left(n^{-3}\right)
+\]
+
+(where $K$ is an arbitrary constant).  If we then neglect terms of
+order $n^{-2}$ and above, viz $\log(B-1)-B\frac{r+1}{n}$, observing
+that $\partial^2\mathcal{S}/\partial B^2=-(B-1)^{-2}<0$, the evaluate
+would be $\hat{a}=\frac{n}{n+r+1}$ [although this seems to be a poor
+approximation to the exact evaluate]
 
 
 ## Placing last
@@ -144,6 +186,14 @@ f_vec_arn <- function(a,r,n,log=FALSE){
 	}
 	return(out)
 }
+
+fapprox <- function(a,r,n,log=FALSE){
+	if(log){
+		return(log(B-1)-B*(r+1)/n)
+	} else {
+		return(B-1 - (r+1)*exp(B)/n)
+	}
+}
 ```
 
 ```{r label=defdiff}
@@ -178,26 +228,14 @@ Now use the derivative to find the maximum likelihood point
 ```{r,label=defmle}
 MLE <- function(r,n,give=FALSE){
 	d <- 1e-6
-	if(r==n){
-		out <- 0
-	} else if(r==0){
-		out <- 1
-	} else {
-		out <- optimize(f_vec_arn,c(d,1-d),r=r,n=n,log=TRUE,maximum=TRUE)
-		if(!give){out <- out$maximum}
-	}
+	out <- optimize(f_vec_arn,c(d,1-d),r=r,n=n,log=TRUE,maximum=TRUE)
+	if(!give){out <- out$maximum}
 	return(out)
 }
 
 MLEa <- function(r,n,give=FALSE){
-	if(r==n){
-		out <- 0
-	} else if(r==0){
-		out <- 1
-	} else {
-		out <- uniroot(f=function(a){fdash(a,r,n)},interval=c(0.01,0.99))
-		if(!give){out <- out$root}
-	}
+	out <- uniroot(f=function(a){fdash(a,r,n)},interval=c(0.01,0.99))
+	if(!give){out <- out$root}
 	return(out)
 }
 
@@ -207,6 +245,25 @@ c(MLE(3,9),MLEa(3,9)),
 c(MLE(3,7),MLEa(3,7))
 )
 ```
+
+
+
+```{r usestirling}
+rbind(
+c(MLE(10 , 100),100 / 111),
+c(MLE(100,1000),1000/1101),
+c(MLE(500,5000),5000/5501)
+)
+
+rbind(
+c(MLEa(10 , 100),100 / 111),
+c(MLEa(100,1000),1000/1101),
+c(MLEa(500,5000),5000/5501)
+)
+```
+
+
+
 
 Now verification
 
