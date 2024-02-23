@@ -460,6 +460,7 @@ for(r in seq(from=0,to=n)){
   y <- y/max(y,na.rm=TRUE)
   if(r>0){y[length(y)] <- 0}
   points(a,y,type='l',lwd=4,col=rainbow(n+1)[r+1])
+  abline(v=0.64)
 }
 }
 plotter()

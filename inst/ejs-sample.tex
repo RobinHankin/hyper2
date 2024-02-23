@@ -144,39 +144,47 @@ n$.  The initial field strength is $a+nb=n+(n-1)a$.  The Plackett-Luce
 likelihood function~\cite{plackett1975,luce1959} for this situation
 would be
 
-\begin{equation}\label{likeforrn}
-  \mathcal{L}_r(a)=\begin{cases}
+\begin{eqnarray}\label{likeforrn1}
+  \mathcal{L}_{r,n}(a) &=& 
 \frac{b}{a+ n   b}\cdot
 \frac{b}{a+(n-1)b}\cdot
 \frac{b}{a+(n-2)b}\cdots
-\frac{a}{a+(n-r)b}\qquad &{r<n}\\
-\frac{b}{a+ n   b}\cdot
-\frac{b}{a+(n-1)b}\cdot
-\frac{b}{a+(n-2)b}\cdots
-\frac{b}{a+b}\qquad &{r=n}
-  \end{cases}
+\frac{a}{a+(n-r)b}\\ \label{likeforrn2}
+&=& \frac{B-1}{(B+n-1)(B+n-2)\cdots(B+n-r-1)}\\ \label{likeforrn3}
+&=& \frac{(B-1)(B+n-r-2)!}{(B+n-1)!}
+\end{eqnarray}
+
+\noindent where $B=1/b$.  Note carefully that these expressions are
+likelihoods, not probabilities, and do not sum to 1.  Asymptotic
+analysis of expression~\ref{likeforrn3} shows that
+
+\begin{equation}
+\log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n} 
++ K + \mathcal{O}\left(n^{-2}\right)
 \end{equation}
 
-Although these expressions do have closed-form analytical forms, it is
-not helpful in numerical work because they tend to be very unstable,
-especially where $kb\simeq n$ for some integer $k$, as limiting forms
-have to be used.  Note carefully that the expressions in
-equation~\ref{likeforrn} are likelihoods, not probabilities, and do
-not sum to 1.
+Using $\mathcal{S}=\log(B-1)-B\frac{r+1}{n}$ as an approximate support
+thus incurs an error of only $\mathcal{O}(n^{-2})$.  Observing that
+$\partial^2\mathcal{S'}/\partial B^2=-(B-1)^{-2}<0$, the evaluate
+would be unique; we have
+$\hat{B}=\frac{n+r+1}{r+1}+\mathcal{O}\left(n^{-1}\right)$, or
+alternatively $\hat{a}=\frac{n}{n+r+1}$.  I present some numerical
+results below.
+
+Previous related work presented the case $n=2$ [in current notation].
+Considering the case $n=7$ gives us $7+1=8$ distinct likelihood
+functions, Figure~\ref{ninelikes}.  We see an unanticipated asymmetry
+between $r$ and $n-r$.  For $r=3$ one might expect that
+$\hat{a}=\frac{1}{2}$ on the grounds that the focal competitor's
+performance was median.  However, $\hat{a}\simeq 0.64$.
 
 \begin{figure}[t]
 \includegraphics[width=4in]{ninelikes}  % produced by very_simplified_likelihood.Rmd
 \caption{Likelihood functions for $r=0(1)8$\label{ninelikes}}
 \end{figure}
 
-Previous related work presented the case $n=2$ [in current notation].
-Considering the case $n=7$ gives us $7+1=8$ distinct likelihood
-functions, Figure~\ref{ninelikes}.  We see an unanticipated asymmetry
-between $r$ and $n-r$, and in particular that
-$\hat{a}\geqslant\frac{r}{n}$, with equality only in the edge-cases
-$r=0$ or $n$.  For $r=3$ one might expect that $\hat{a}=\frac{1}{2}$
-on the grounds that the focal competitor's performance was median.
-However, $\hat{a}\simeq 0.514$.
+
+
 
 \begin{figure}[t]
 \includegraphics[width=4in]{dotprobs}  % produced by very_simplified_likelihood.Rmd
