@@ -602,7 +602,7 @@ optimize(function(a){L(a,results)},c(0.2,0.4),maximum=TRUE)
 ```
 
 ```{r calculatelikes1,cache=F}
-a <- seq(from=0.005,to=0.75,by=0.01)
+a <- seq(from=0.005,to=0.85,by=0.01)
 La <- f_vec_arn(a,r=results$place[1]-1,results$runners[1]-1,log=TRUE)
 La <- La - max(La,na.rm=TRUE)
 plot(a,La,type='b',ylab='fishy')
@@ -659,6 +659,45 @@ optim(par=c(0.6,0.3),f2,control=list(fnscale=-1))
 7380.314-7381.496
 pchisq(2*(7381.496-7380.314),df=1,lower.tail=FALSE)
 ```
+
+Above shows that there is no evidence to suggest that the Stirling
+strength differs from the Auckland strength.  Now let's try a
+logistic-style regression:
+
+```{r logisticsupportparkrun,cache=FALSE}
+results <- read.table("parkrun_results.txt",header=TRUE)
+results
+supp_logistic <- function(vec){
+  alpha <- vec[1]
+  beta <- vec[2]
+  out <- 0
+  for(i in seq_len(nrow(results))){
+     LO <- alpha + beta*i
+     strength <- exp(LO)/(1+exp(LO))
+     out <- out + f_vec_arn(strength,results$place[i]-1,results$runners[i]-1,log=TRUE)
+  }
+  return(out+13400)
+}
+
+c(
+supp_logistic(c(0,0)),
+supp_logistic(c(0,0.01)),
+supp_logistic(c(0,-0.01))
+)
+
+```
+
+
+```{r optimlogist, cache=FALSE}
+optim(par=c(0,0),fn=supp_logistic,control=list(fnscale=-1))
+optim(par=c(0,0),fn=function(v){supp_logistic(vec=c(v[1],0))},control=list(fnscale=-1))
+```
+
+
+
+
+
+
 
 ## Education
 
