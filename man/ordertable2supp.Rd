@@ -29,10 +29,10 @@ ordervec2supp(d)
     interpreted as that competitor coming last (due to, e.g., not
     finishing)}
   \item{incomplete}{Boolean, with \code{FALSE} meaning to insist that
-    each rank \eqn{1,2,...,n} is present [zero meaning did not place]
-    and default \code{TRUE} allowing for gaps.  This is useful if we are
-    considering the first few lines of an ordertable because there might
-    be missing ranks..}
+    each rank \eqn{1,2,...,n} is present [zero entries mean \dQuote{did
+    not place} irregardless].  The default \code{TRUE} allows for gaps.
+    This is useful if we are considering the first few lines of an
+    ordertable because there might be missing ranks.}
   \item{noscore}{Character vector giving the abbreviations
     for a non-finishing status such as \dQuote{did not finish}
     or \dQuote{disqualified}.  A missing argument is interpreted as 
