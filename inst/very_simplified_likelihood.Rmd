@@ -122,7 +122,7 @@ alternatively $\hat{a}=\frac{n}{n+r+1}$.  I present some numerical
 results below.
 
 
-## Placing last
+# Placing last
 
 Placing last is finishing  after $n=r$ clones finish:
 
@@ -327,7 +327,7 @@ dev.off()
 ```
 
 
-## Note on the differences between probability and likelihood
+# Note on the differences between probability and likelihood
 
 The likelihood calculations above can be confusing becuase likelihood
 is not the same as probability.
@@ -495,7 +495,7 @@ points(M[,1],y,type="l",lwd=8)
 
 
 
-# Formula 1.
+# Formula 1: Ocon vs Gasly
 
 ```{r maxvscheco}
 a <- read.table("formula1_2023.txt",header=TRUE)
@@ -531,8 +531,198 @@ Lambda
 pchisq(-2*Lambda,df=1,lower.tail=FALSE)
 ```
 
+# Formula 1: Formula 1 drivers: career arc
 
-## Mathematical Olympiad
+```{r getnumgetfoc}
+readstring <- function(year){read.table(paste("formula1_",year,".txt",sep=""))}
+getfoc <- function(year,comp="Perez"){  # get focal competitor
+  M <- as.matrix(readstring(year))
+  out <- suppressWarnings(as.numeric(M[comp,seq_len(ncol(M)-1)]))
+  out[is.na(out)] <- nrow(M)
+  return(out)
+}
+getnum <- function(year){nrow(readstring(year))} # number of competitors
+
+perez <- lapply(2011:2023,getfoc)
+print(perez)
+y <- unlist(lapply(seq_along(perez),function(i){mean(perez[[i]])}))
+x <- 2011:2023
+plot(x,y)
+summary(lm(y~x))
+```
+
+
+```{r checofirst}
+checo_like <- function(a){
+  out <- a*0
+  for(year in 2011:2023){ out <- out + f_vec_arn(a,getfoc(year)-1,getnum(year)-1,log=TRUE) }
+  return(out)
+}
+
+a <- seq(from=0.45,to=0.62,by=0.01)
+cL <- checo_like(a)
+cL <- cL - max(cL)
+plot(a,cL,type='b')
+abline(h=c(0,-2))
+```
+
+
+```{r definef1log}
+f1_logistic <- function(vec){
+  alpha <- vec[1]
+  beta  <- vec[2]
+  out <- 0
+  for(year in 2011:2023){
+     LO <- alpha + beta*(year-2011)
+     strength <- exp(LO)/(1+exp(LO))
+     out <- out + f_vec_arn(strength,getfoc(year)-1,getnum(year)-1,log=TRUE)
+  }
+  return(out)
+}
+```
+
+
+```{r calculatelogisticcontou,cache=TRUE}
+a <- seq(from=-0.8,to=0.0,by=0.01)
+b <- seq(from=0,to=0.2,by=0.01)
+jj <- as.matrix(expand.grid(a,b))
+L <- apply(jj,1,f1_logistic)
+L <- L-max(L)
+L <- matrix(L,length(a),length(b))
+```
+
+```{r showfilledc}
+L <- pmax(L,-40)
+contour(a,b,L)
+```
+
+```{r uselogf1}
+f1_logistic(c(0,0))
+f1_logistic(c(0,0.0001))
+f1_logistic(c(0.001,0))
+```
+
+```{r optimizelof1,cache=TRUE}
+o <- optim(c(-0.2,0.1),fn=f1_logistic, control=list(fnscale = -1),hessian=TRUE)
+```
+
+```{r showjj}
+o
+o$par
+o$hessian
+eigen(o$hessian)
+best <- o$par
+f1_logistic(best)
+
+
+jj <- best
+jj[1] <- jj[1]*1.01
+f1_logistic(jj) - f1_logistic(best)
+
+jj <- best
+jj[1] <- jj[1]*0.99
+f1_logistic(jj) - f1_logistic(best)
+
+jj <- best
+jj[2] <- jj[2]*1.00001
+f1_logistic(jj) - f1_logistic(best)
+
+jj <- best
+jj[2] <- jj[2]*0.99
+f1_logistic(jj) - f1_logistic(best)
+```
+
+
+```{r testlogf1,cache=TRUE}
+o_free <- optim(c(-0.2,0.1),fn=f1_logistic, control=list(fnscale = -1),hessian=TRUE)
+o_constrained <- optim(c(-0.2,0.1),fn=function(v){
+v[2] <- 0
+return(f1_logistic(v))}, control=list(fnscale = -1),hessian=TRUE)
+```
+
+```{r showpvalue}
+pchisq(2*(o_free$value - o_constrained$value),df=1,lower.tail=FALSE)
+```
+
+
+# in silico formula 
+
+```{r insn}
+table(replicate(100,which(rrace3(pn=c(a=1,b=10),ps=c(a=0.9,b=0.1))=='a')))
+```
+
+```{r insilicoestmation,cache=TRUE}
+n <- 1000
+M <- matrix(0,n,4)
+alpha_true <- 4
+beta_true <- -6
+for(i in seq_len(n)){
+    x <- i/n
+    LO <- alpha_true + beta_true*x
+    p <- exp(LO)/(1+exp(LO))
+    nn <- round(runif(1,10,100))
+    M[i,1] <- x  # regressor
+    M[i,2] <- which(rrace3(pn=c(a=1,b=nn),ps=c(a=p,b=1-p))=='a')
+    M[i,3] <- nn+1
+    M[i,4] <- p
+}
+head(M)
+tail(M)
+```
+
+```{r testran,cache=FALSE}
+runif(10)
+```
+
+
+```{r definelikeinsilico}
+likeinsilico <- function(vec,M){
+  alpha <- vec[1]
+  beta  <- vec[2]
+  S <- 0
+  for(i in seq_len(nrow(M))){
+    x <- M[i,1]
+    LO <- alpha + beta * x
+    p <- exp(LO)/(1+exp(LO))
+    S <- S + f_vec_arn(p,M[i,2]-1,M[i,3]-1,log=TRUE)
+  }
+return(S)
+}
+```
+
+
+```{r testlikeininsilicco,cache=TRUE}
+likeinsilico(c(4,-6),M)
+likeinsilico(c(4,-6.5),M)
+likeinsilico(c(4,-5.5),M)
+```
+
+
+```{r optimize_insilicco,cache=TRUE}
+optim(par=c(4,-6),likeinsilico,control=list(fnscale= -1),M=M)
+```
+
+```{r makeZcontourdataset,cache=TRUE}
+a <- seq(from=3.8,to=4.2,by=0.1)
+b <- seq(from=-6.1,to=-5.6,by=0.1)
+Z <- as.matrix(expand.grid(a,b))
+Z <- apply(Z,1,function(x){likeinsilico(x,M=M)})
+Z <- matrix(Z,length(a),length(b))
+```
+
+```{r doZcontour}
+Z <- Z-max(Z)
+contour(a,b,Z,levels=-c(0:10,15,20,30))
+points(alpha_true,beta_true,pch=16,cex=4)
+grid()
+persp(a,b,Z)
+```
+
+
+
+
+
+# Mathematical Olympiad
 
 
 ```{r readoly}
@@ -562,7 +752,7 @@ sametest(a["USA",],a["CHN",],100)
 sametest(a["USA",],a["CHN",],5)
 ```
 
-## Parkrun
+# Parkrun
 
 ```{r readresults}
 results <- read.table("parkrun_results.txt",header=TRUE)
