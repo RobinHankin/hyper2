@@ -158,7 +158,7 @@ would be
 likelihoods, not probabilities, and do not sum to 1.  Asymptotic
 analysis of expression~\ref{likeforrn3} shows that
 
-\begin{equation}
+\begin{equation}\label{asymptotic}
 \log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n} 
 + K + \mathcal{O}\left(n^{-2}\right)
 \end{equation}
@@ -200,14 +200,50 @@ Formula 1 motor racing is an important and prestigious motor sport
 allocation system wherein competitors are awarded points based on race
 finishing order; points accumulate additively.  The overall
 competition winner is the competitor who accumulates the most points
-after the final race.  However, as argued by Hankin~\cite{hankin2023},
-the drivers' {\em ranks} are statistically sufficient for analysis of
-
+after the final race.  However, as argued by
+Hankin~\cite{hankin2023_formula1points}, the drivers' {\em ranks} are
+statistically sufficient for analysis using Plackett-Luce approaches.
 The methods discussed above may be used to assess Bradley-Terry
-strengths of Formula 1 racing drivers.  Let us consider 2018 season as
-an example and first consider Lewis Hamilton.
+strengths of Formula 1 racing driver Sergio P\'{e}rez (``Checo'') over
+his career from 2011 to 2023.  Checo's Formula 1 performance began
+somewhat inauspiciously in 2011 as second driver for Sauber for whom
+he finished no higher than P7, but his performance rose subsequently,
+culminating in his achievement of a startling 20 podium finishes in
+2022-3.  Noting that Checo raced against 73 distinct competitors [this
+  rendering estimation of the other players' Plackett-Luce strengths
+  effectively impossible], we nevertheless are in a position to
+estimate his career-span Bradley-Terry strength and estimate it as
 
-Lewis Hamilton is a 
+
+
+
+
+
+we consider the following inference
+problem:
+
+\begin{equation}
+  b = b(t) = \frac{e^{\alpha + \beta t}}{1+e^{\alpha + \beta t}},\qquad\alpha,\beta\in\mathbb{R}
+\end{equation}
+
+(that is, a logistic regression of generalizeBradley-Terry strength
+$b$ against time).
+
+
+There seems to be no easy analytical solution to
+this, although Equation~\ref{asymptotic} would give
+\begin{equation}
+  \label{asymptoticcheco}
+  \log\mathcal{L}(B)=m\log(B-1) -B\left(\frac{r_1+1}{n_1}+\ldots+\frac{r_m+1}{n_m}\right)
+\end{equation}
+
+over the whole $m$ seasons, where $r_i$ is Checo's rank in race 
+    
+
+
+
+
+
 
 
 Pierre Gasly and Esteban Ocon have a long-standing rivalry and
