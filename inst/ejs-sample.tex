@@ -77,18 +77,16 @@ University of Stirling\printead[presep={,\ }]{e1}}
 \end{aug}
 
 \begin{abstract}
-
 Here a simplification of the Plackett-Luce likelihood functions for
 order statistics is proposed.  We consider a field of $n+1$ entities
 that are ordered in some way [the preferred example is competitors in
   a running race, ordered by time of crossing the finishing line].
 One entity is of particular interest to us: the ``focal entity'', or
 focal competitor.  We assign Placket-Luce strength of $a$ to the focal
-competitor and $b$ to all others; we require $a+b=1$.  This device
-furnishes a reasonable, intuitive, and computationally tractable
-likelihood function that I apply to a range of applications including
-Formula 1 motor racing and the International Mathematical Olympiad.
-The results are difficult to obtain with other methods.
+competitor and $b$ to all others; we require $a+b=1$.  The associated
+inference problem appears to have a wide range of applications and I
+present some analysis of datasets drawn from Formula 1 motor racing
+and community initiative Parkrun.
 \end{abstract}
 
 \begin{keyword}[class=MSC]
@@ -145,7 +143,7 @@ likelihood function~\cite{plackett1975,luce1959} for this situation
 would be
 
 \begin{eqnarray}\label{likeforrn1}
-  \mathcal{L}_{r,n}(a) &=& 
+  \mathcal{L}_{r,n}(a) &=&
 \frac{b}{a+ n   b}\cdot
 \frac{b}{a+(n-1)b}\cdot
 \frac{b}{a+(n-2)b}\cdots
@@ -159,7 +157,7 @@ likelihoods, not probabilities, and do not sum to 1.  Asymptotic
 analysis of expression~\ref{likeforrn3} shows that
 
 \begin{equation}\label{asymptotic}
-\log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n} 
+\log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n}
 + K + \mathcal{O}\left(n^{-2}\right)
 \end{equation}
 
@@ -168,8 +166,16 @@ thus incurs an error of only $\mathcal{O}(n^{-2})$.  Observing that
 $\partial^2\mathcal{S'}/\partial B^2=-(B-1)^{-2}<0$, the evaluate
 would be unique; we have
 $\hat{B}=\frac{n+r+1}{r+1}+\mathcal{O}\left(n^{-1}\right)$, or
-alternatively $\hat{a}=\frac{n}{n+r+1}$.  I present some numerical
-results below.
+alternatively $\hat{a}=\frac{n}{n+r+1}$.  For repeated observations
+$r_i,n_i$, $1\leqslant i\leqslant m$ we would have
+\begin{equation}
+  \hat{a} = 1-
+  \frac{\frac{r_1+1}{n_1}+\cdots+\frac{r_m+1}{n_m}}{m}
+  = 1-\overline{\left(\frac{r+1}{n}\right)}.
+\end{equation}
+
+(that is, one minus the mean ratio of rank to number of [cloned]
+competitors).  I present some numerical results below.
 
 Previous related work presented the case $n=2$ [in current notation].
 Considering the case $n=7$ gives us $7+1=8$ distinct likelihood
@@ -179,11 +185,9 @@ $\hat{a}=\frac{1}{2}$ on the grounds that the focal competitor's
 performance was median.  However, $\hat{a}\simeq 0.64$.
 
 \begin{figure}[t]
-\includegraphics[width=4in]{ninelikes}  % produced by very_simplified_likelihood.Rmd
+\includegraphics[width=4in]{ninelikes}  % ninelikes.pdf produced by very_simplified_likelihood.Rmd
 \caption{Likelihood functions for $r=0(1)8$\label{ninelikes}}
 \end{figure}
-
-
 
 
 \begin{figure}[t]
@@ -192,8 +196,108 @@ performance was median.  However, $\hat{a}\simeq 0.64$.
   \label{dotprobs}}
 \end{figure}
 
+
 \section{Use-cases}
 
+Here I present three examples that showcase likelihood
+function~\ref{likeforrn3}.  Formula 1 education, parkrun
+
+\subsection{Park run}
+
+``Parkrun'' is a distributed community initiative that organises
+weekly timed 5 km runs/walks in parks worldwide~\cite{hindley2020}.  A
+typical event will have 200 participants.  Table~\ref{parkruntable}
+shows the author has completed a total of 15 parkruns to date, and
+from the first pair of numbers we see that 238 runners attended that
+particular parkrun, of whom the author placed 173.
+
+\begin{table*}[t]
+  \caption{Parkrun results}
+\label{parkruntable}
+\begin{tabular}{ccccccccccc}
+\hline
+rank   &173  & 165 & 172 & 199 & 181 & 229 & 177 & 222 & 206 & 142 \\
+runners&238  & 238 & 196 & 242 & 242 & 318 & 259 & 305 & 297 & 241 \\ \\ \\
+rank   & 118 & 224 & 128 & 115 & 183 &     &     &     &     &\\
+runners& 179 & 338 & 203 & 245 & 254 &     &     &     &     &\\
+\hline
+\end{tabular}
+\end{table*}
+
+
+We may consider the author to have an unknown generalized Bradley
+Terry strength $a$: Figure~\ref{parkrunsupport} shows a support curve
+for $a$ with the evaluate, $\hat{a}\simeq 0.448$ shown.  We also see
+two units of support~\cite{edwards1992} shown as a dotted line
+illustrating a support interval of about 0.315 - 0.567; we may be
+reasonably confident that the author's true strength lies in this
+range.  In particular, note that a reasonable $H_0\colon
+a=\frac{1}{2}$ may not be rejected, the support for $H_0$ being only
+susceptible to very minor improvement [$\simeq 0.351$] by moving to
+the evaluate.
+
+\begin{figure}[t]
+\includegraphics[width=4in]{plotparkrun}  % plotparkrun.pdf made in very_simplified_likelihood.Rmd
+\caption{Author's strength\label{parkrunsupport}}
+\end{figure}
+
+\subsection{Education}
+
+
+
+One issue encountered in educational research is that of
+confidentiality of examination scores, and individual students'
+results are generally regarded as sensitive and private information.
+Nonetheless, it is common for students to possess two pertinent and
+informative observations: the total enrollment in a specific class and
+their individual ranking within that class; table~\ref{educationtable}
+shows an apocryphal dataset.  What could a student infer from such a
+dataset?
+
+\begin{table*}[t]
+  \caption{Educational dataset}
+\label{educationtable}
+\begin{tabular}{llll}
+\hline
+                   course&category   &rank&class size\\ \hline
+      rings and modules  &  pure     & 9  &      12\\
+           group theory  &  pure     & 7  &      17\\
+               calculus  & applied   & 2  &      23\\
+         linear algebra  & applied   & 3  &       9\\
+ differential equations  & applied   & 2  &      13\\
+               topology  &   pure    & 8  &      14\\
+     special relativity  & applied   & 5  &      13\\
+        fluid mechanics  & applied   & 4  &      12\\
+            Lie algebra  &   pure    & 9  &      15\\
+     \hline
+\end{tabular}
+\end{table*}
+
+One natural question would be to wonder whether the student was bettar
+at pure or applied mathematics and, if so, to quantify the difference.
+Figure~\ref{plotpureandapplied} shows contours of support [again
+  normalised so the support of the evaluate is zero] for the dataset,
+as a function of pure strength on the horizontal axis and applied
+strength on the vertical axis.  A null of equal strengths appears as a
+diagonal line.  We see that the maximum likelihood estimate is
+$\hat{p}_\mathrm{pure}=0.567$, $\hat{p}_\mathrm{applied}=0.887$.
+However, a constrained optimization shows that the maximum support
+along the null diagonal is about $-2.43$.  Edwards's two units of
+support criterion is met, and we are justified in concluding that the
+student is indeed more competent at applied than pure mathematics.
+Alternatively, we may observe that $2\mathcal{S}=4.86$ is in the tail
+region of its asymptotic $\chi^2_1$ distribution, corresponding to a
+$p$-value of about $0.028$.
+
+\begin{figure}
+\includegraphics[width=4in]{plotpureandapplied}  % plotpureandapplied.pdf produced by very_simplified_likelihood.Rmd
+\caption{Contours of equal support for pure (horizontal) and applied
+  (vertical) strength; null of equal strengths shown as a diagonal
+  line  \label{plotpureandapplied}}
+\end{figure}
+
+
+\subsection{Formula 1}
 
 Formula 1 motor racing is an important and prestigious motor sport
 \citep{codling2017,jenkins2010}.  Season ranking is based on a points
@@ -203,58 +307,55 @@ competition winner is the competitor who accumulates the most points
 after the final race.  However, as argued by
 Hankin~\cite{hankin2023_formula1points}, the drivers' {\em ranks} are
 statistically sufficient for analysis using Plackett-Luce approaches.
-The methods discussed above may be used to assess Bradley-Terry
-strengths of Formula 1 racing driver Sergio P\'{e}rez (``Checo'') over
-his career from 2011 to 2023.  Checo's Formula 1 performance began
-somewhat inauspiciously in 2011 as second driver for Sauber for whom
-he finished no higher than P7, but his performance rose subsequently,
-culminating in his achievement of a startling 20 podium finishes in
-2022-3.  Noting that Checo raced against 73 distinct competitors [this
-  rendering estimation of the other players' Plackett-Luce strengths
-  effectively impossible], we nevertheless are in a position to
-estimate his career-span Bradley-Terry strength and estimate it as
-
-
-
-
-
-
-we consider the following inference
-problem:
+The methods presented here may be used to assess competitive strengths
+of Formula 1 racing driver Sergio P\'{e}rez (``Checo'') over his
+career from 2011 to 2023.  Checo's Formula 1 performance began
+somewhat inauspiciously as second driver for Sauber for whom he
+finished no higher than P7 in 2011, but his performance rose
+subsequently, culminating in his achievement of a startling 20 podium
+finishes in 2022-3.  Noting that Checo raced against 73 distinct
+competitors (this rendering estimation of the other players'
+Plackett-Luce strengths effectively impossible~\cite{hankin2020}), we
+are nevertheless in a position to consider competitive strength using
+the modified likelihood approach presented here.  We consider the
+following inference problem:
 
 \begin{equation}
-  b = b(t) = \frac{e^{\alpha + \beta t}}{1+e^{\alpha + \beta t}},\qquad\alpha,\beta\in\mathbb{R}
+  a = a(t) = \frac{e^{\alpha + \beta t}}{1+e^{\alpha + \beta t}},\qquad\alpha,\beta\in\mathbb{R}
 \end{equation}
 
-(that is, a logistic regression of generalizeBradley-Terry strength
-$b$ against time).
+(that is, a logistic regression of generalized Bradley-Terry strength
+$a$ against time, with $\alpha$ and $\beta$ being linear
+coefficients).  Contours of equal support are shown in
+Figure~\ref{showchecolike}, again normalized so that
+$\mathcal{S}(\hat{\alpha},\hat{\beta})=0$.  We see the expected
+elliptical contours, and further $H_0\colon\beta=0$ may be rejected in
+favour of $\alpha=-0.27$, $\beta=0.081$, on the grounds that
+$\mathcal{S}(\alpha,0)\leqslant 9.2$.  Alternatively we may observe
+that $2\mathcal{S}=18.4$ would correspond to a $p$-value of about
+$1.7\times 10^{-5}$ on its asymptotic $\chi^2_1$ null distribution.
 
+\begin{figure}[t]
+\includegraphics[width=4in]{showchecolike}  % showchecolike.pdf produced by very_simplified_likelihood.Rmd
+\caption{Likelihood functions for $\alpha,\beta$ for Checo's racing
+  career 2011-2023\label{showchecolike}}
+\end{figure}
 
-There seems to be no easy analytical solution to
-this, although Equation~\ref{asymptotic} would give
-\begin{equation}
-  \label{asymptoticcheco}
-  \log\mathcal{L}(B)=m\log(B-1) -B\left(\frac{r_1+1}{n_1}+\ldots+\frac{r_m+1}{n_m}\right)
-\end{equation}
+\section{Conclusions and further work}
 
-over the whole $m$ seasons, where $r_i$ is Checo's rank in race 
-    
+Here a simplification of the Plackett-Luce likelihood functions for
+order statistics was proposed, some simple properties obtained, and
+inference problems from three disciplines given.  The results seem to
+be difficult to obtain any other way.  The assumptions furnish a
+reasonable, intuitive, and computationally tractable likelihood
+function with wide applicability.  Further work might include the
+analysis of more than one focal competitor.
 
-
-
-
-
-
-
-Pierre Gasly and Esteban Ocon have a long-standing rivalry and
-comparisons between them typically compare disparate metrics such as
-number of podiums, and highest grid position in a season.
-
-\begin{acks}[Acknowledgments]
-The authors would like to thank the anonymous referees, an Associate
-Editor and the Editor for their constructive comments that improved the
-quality of this paper.
-\end{acks}
+% \begin{acks}[Acknowledgments]
+% The authors would like to thank the anonymous referees, an Associate
+% Editor and the Editor for their constructive comments that improved the
+% quality of this paper.
+% \end{acks}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
