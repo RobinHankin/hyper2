@@ -1,7 +1,7 @@
 ---
 title: "Very simplified likelihood"
 author: "Robin Hankin"
-output: html_document
+output: bookdown::html_document2
 ---
 
 ```{r setup, include=FALSE}
@@ -670,11 +670,6 @@ head(M)
 tail(M)
 ```
 
-```{r testran,cache=FALSE}
-runif(10)
-```
-
-
 ```{r definelikeinsilico}
 likeinsilico <- function(vec,M){
   alpha <- vec[1]
@@ -699,12 +694,13 @@ likeinsilico(c(4,-5.5),M)
 
 
 ```{r optimize_insilicco,cache=TRUE}
-optim(par=c(4,-6),likeinsilico,control=list(fnscale= -1),M=M)
+optim_ab <- optim(par=c(4,-6),likeinsilico,control=list(fnscale= -1),M=M)
+optim_ab
 ```
 
 ```{r makeZcontourdataset,cache=TRUE}
-a <- seq(from=3.8,to=4.2,by=0.1)
-b <- seq(from=-6.1,to=-5.6,by=0.1)
+a <- seq(from=3.8,to=4.2,by=0.01)
+b <- seq(from=-6.4,to=-5.6,by=0.01)
 Z <- as.matrix(expand.grid(a,b))
 Z <- apply(Z,1,function(x){likeinsilico(x,M=M)})
 Z <- matrix(Z,length(a),length(b))
@@ -712,8 +708,11 @@ Z <- matrix(Z,length(a),length(b))
 
 ```{r doZcontour}
 Z <- Z-max(Z)
+Z <- pmax(Z,-10)
 contour(a,b,Z,levels=-c(0:10,15,20,30))
 points(alpha_true,beta_true,pch=16,cex=4)
+jj <- optim_ab$par
+points(jj[1],jj[2],pch=4,cex=4,col='red')
 grid()
 persp(a,b,Z)
 ```
@@ -762,9 +761,7 @@ results
 Above we see three parkrun results.  In parkrun number 148, I placed
 229 out of a field of 318.
 
-
-```{r definelikelihood}
-
+```{r definesupportparkrun}
 L <- function(a,results){
    out <- a*0
    for(i in seq_len(nrow(results))){
@@ -782,14 +779,23 @@ La <- f_vec_arn(a,r=results$place-1,results$runners-1,log=TRUE)
 La <- La - max(La,na.rm=TRUE)
 ```
 
-```{r plotlike}
-plot(a,La,ylab='support')
-abline(h=c(0,-2))
-```
 
 ```{r optimsinglelike}
-optimize(function(a){L(a,results)},c(0.2,0.4),maximum=TRUE)
+(optparkrun <- optimize(function(a){L(a,results)},c(0.2,0.8),maximum=TRUE))
+f <- function(a){L(a,results)-2}
 ```
+
+```{r plotparkrunlike, fig.cap="Support curve for author's generalized Bradley-Terry strength.  Evaluate of $\\hat{a}\\simeq 0.448$ has a support of zero"}
+plot(a,La,xlab="generalized Bradley-Terry strength",ylab="support")
+abline(h=c(0,-2))
+abline(v=0.5)
+```
+
+Figure \@ref(fig:plotparkrunlike) shows a support curve for the
+author's generalized Bradley-Terry strength, normalized so that
+$\mathcal{S}(\hat{a})=0$.  We see a credible interval [that is, values
+of $a$ for which $\mathcal{S}(a)\geqslant -2$] of about 
+
 
 ```{r calculatelikes1,cache=F}
 a <- seq(from=0.005,to=0.85,by=0.01)
@@ -798,7 +804,6 @@ La <- La - max(La,na.rm=TRUE)
 plot(a,La,type='b',ylab='fishy')
 abline(h=c(0,-2))
 ```
-
 
 ```{r splitresults}
 supp2 <- function(vec,place,runners){
