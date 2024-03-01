@@ -47,7 +47,11 @@ removed diacritics from names, so we see \dQuote{\code{Raikkonen}},
 surname compete, I have indicated this, e.g. \code{schumacher_R} is Ralf
 Schumacher, \code{schumacher_M} is Michael, and \code{schumacher_Mick}
 is Mick; the underscore device means that quoting should not be needed
-in \R idiom.
+in \R idiom.  I have not been entirely consistent here, with Bruno Senna
+appearing as \dQuote{\code{Senna_B}} and Nelson Piquet Junior appearing
+as \dQuote{\code{PiquetJ}} [on the grounds that in these cases the
+fathers, being more eminent, should be the primary eponym] although this might
+change in the future.
 
 Object \code{F1_table_2017} is simply the first 20 columns of
 \code{read.table(inst/formula1_2017.txt)} and object
