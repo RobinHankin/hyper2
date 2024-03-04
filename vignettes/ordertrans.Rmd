@@ -65,7 +65,7 @@ sort(x)
 But this is suboptimal to find the order vector ["where did a
 particular competitor come?"].  For the order vector, we want to
 rearrange the elements of `x` so that the names are in alphabetical
-order.  That way we can see straighaway where competitor `a` placed
+order.  That way we can see straightaway where competitor `a` placed
 (in this case, third).  This nontrivial task is accomplished by
 function `ordertrans()`:
 
