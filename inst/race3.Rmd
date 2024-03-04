@@ -442,12 +442,11 @@ constructor_2021_table <- constructor_table_2021
 ```
 
 Looking at the first column we see that the constructors are Mercedes
-("`Merc`"), Red Bull Racing Honda ("`RBRH`"), and so on (see file
-`inst/constructor_names.txt` for a list of abbreviations).  Each
-constructor fields two cars in each race.  Looking at the next column,
-we see the order statistic for Bahrain (`BHR`).  We see that Mercedes
-came first and third, Red Bull came second and fifth, Ferrari sixth
-and eighth, and so on.
+RedBull, and so on (file `inst/constructor_names.txt` summarises the
+constructors' lifespans).  Each constructor fields two cars in each
+race.  Looking at the next column, we see the order statistic for
+Bahrain (`BHR`).  We see that Mercedes came first and third, RedBull
+came second and fifth, Ferrari sixth and eighth, and so on.
 
 ```{r,maketheconst,cache=TRUE}
 constructor_2021 <- ordertable2supp3(constructor_table_2021)
@@ -475,17 +474,17 @@ equalp.test(constructor_2021)
 
 and see that there is (very) strong evidence to reject this null.
 Further, we may test the hypothesis that the big four (viz Mercedes,
-Ferrari, Red Bull Racing Honda, and McLaren-Mercedes) are equal:
+Ferrari, RedBull, and McLaren) are equal:
 
 ```{r,label=testsameconstructor,cache=TRUE}
-samep.test(constructor_2021,c("Merc","Ferrari","RBRH","MM")) # ~10 mins
+samep.test(constructor_2021,c("Mercedes","Ferrari","RedBull","McLaren")) # ~10 mins
 ```
 
 and fail to reject that null.  How about the mid-range constructors:
 
 
 ```{r,label=testsameconstructorlowscores,cache=TRUE}
-samep.test(constructor_2021,c("ATH","ARRF","AR","AMM")) # ~ 10 mins
+samep.test(constructor_2021,c("Alpine","AlphaTauri","AstonMartin")) # ~ 10 mins
 ```
 
 
@@ -615,8 +614,8 @@ constructor_2020_maxp
 constructor_2021_maxp
 ```
 
-```{r,label=changenames,cache=TRUE}
-constructor_2020_and_2021 <- psubs(constructor_2020,"Merc","Merc2020") + psubs(constructor_2021,"Merc","Merc2021")
+```{r,label=changenames,cache=FALSE}
+constructor_2020_and_2021 <- psubs(constructor_2020,"Mercedes","Merc2020") + psubs(constructor_2021,"Mercedes","Merc2021")
 ```
 
 
