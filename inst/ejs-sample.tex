@@ -137,10 +137,10 @@ over 100 competitors.
 Consider a race between a competitor of Bradley-Terry strength $a$ and
 $n$ cloned competitors, each of strength $b=1-a$.  An observation is
 indexed by~$r$, the number of strength $b$ clones finishing ahead
-of~$a$, and because we have $n+1$ competitors $0\leqslant r\leqslant
-n$.  The initial field strength is $a+nb=n+(n-1)a$.  The Plackett-Luce
-likelihood function~\cite{plackett1975,luce1959} for this situation
-would be
+of~$a$, and because we have $n+1$ competitors %%%%%%%%%%%%%%%%%%%%%%
+$0\leqslant r\leqslant n$.  The initial field strength is
+$a+nb=n+(n-1)a$.  The Plackett-Luce likelihood
+function~\cite{luce1959,plackett1975} for this situation would be
 
 \begin{eqnarray}\label{likeforrn1}
   \mathcal{L}_{r,n}(a) &=&
@@ -158,7 +158,7 @@ analysis of expression~\ref{likeforrn3} shows that
 
 \begin{equation}\label{asymptotic}
 \log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n}
-+ K + \mathcal{O}\left(n^{-2}\right)
++ K + \mathcal{O}\left(n^{-2}\right).
 \end{equation}
 
 Using $\mathcal{S}=\log(B-1)-B\frac{r+1}{n}$ as an approximate support
@@ -175,14 +175,12 @@ $r_i,n_i$, $1\leqslant i\leqslant m$ we would have
 \end{equation}
 
 (that is, one minus the mean ratio of rank to number of [cloned]
-competitors).  I present some numerical results below.
-
-Previous related work presented the case $n=2$ [in current notation].
-Considering the case $n=7$ gives us $7+1=8$ distinct likelihood
-functions, Figure~\ref{ninelikes}.  We see an unanticipated asymmetry
-between $r$ and $n-r$.  For $r=3$ one might expect that
-$\hat{a}=\frac{1}{2}$ on the grounds that the focal competitor's
-performance was median.  However, $\hat{a}\simeq 0.64$.
+competitors).  Previous related work presented the case $n=2$ [in
+  current notation].  Considering the case $n=7$ gives us $7+1=8$
+distinct likelihood functions, Figure~\ref{ninelikes}.  We see an
+unanticipated asymmetry between $r$ and $n-r$.  For $r=3$ one might
+expect that $\hat{a}=\frac{1}{2}$ on the grounds that the focal
+competitor's performance was median.  However, $\hat{a}\simeq 0.64$.
 
 \begin{figure}[t]
 \includegraphics[width=4in]{ninelikes}  % ninelikes.pdf produced by very_simplified_likelihood.Rmd
@@ -243,16 +241,13 @@ the evaluate.
 
 \subsection{Education}
 
-
-
 One issue encountered in educational research is that of
 confidentiality of examination scores, and individual results are
 generally regarded as sensitive and private information.
-Nevertheless, it is common a student to possess some informative
+Nevertheless, it is common for a student to possess some informative
 observations: the total enrollment in a specific class and their
-individual ranking within that class;  table~\ref{educationtable}
-shows an apocryphal dataset.   What could a student infer from such
-data?
+individual ranking within that class; table~\ref{educationtable} shows
+an apocryphal dataset.  What could a student infer from such data?
 
 \begin{table*}[t]
   \caption{Educational dataset}
@@ -273,12 +268,13 @@ data?
 \end{tabular}
 \end{table*}
 
-One natural question would be to wonder whether the student was better
-at pure or applied mathematics and, if so, to quantify the difference.
+One might wonder whether the student was better at pure or applied
+mathematics and, if so, to quantify the difference.
 Figure~\ref{plotpureandapplied} shows contours of support [again
   normalised so the support of the evaluate is zero] for the dataset,
 as a function of pure strength on the horizontal axis and applied
-strength on the vertical axis.  A null of equal strengths appears as a
+strength on the vertical axis.  A null of equal strengths appears as
+the
 diagonal line.  We see that the maximum likelihood estimate is
 $\hat{p}_\mathrm{pure}=0.567$, $\hat{p}_\mathrm{applied}=0.887$.
 However, a constrained optimization shows that the maximum support
