@@ -281,7 +281,7 @@ Looking at the above, we see that Hughes has five judges who gave her
 "1"s, while Slutskaya has only 4, which is why she was considered to
 be the top.  It seems that Hughes's two "4"s (compared with
 Slutskaya's one) have cost her more likelihood-based strength than her
-extra "1" gave her; note also that the two judges who placed Highes
+extra "1" gave her; note also that the two judges who placed Hughes
 fourth (viz `J2` and `J4`) placed Slutskaya first.  Also:
 
 ```{r,compareslutskayahughes}
