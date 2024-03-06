@@ -440,6 +440,25 @@ n!\cdot\frac{b}{a+nb}\cdot\frac{a}{a+(n-1)b}\cdot\frac{b}{(n-1)b}\cdot\frac{b}{(
 =n\cdot X
 \]
 
+\[
+\mbox{prob of coming third} =
+\frac{b}{a+nb}\cdot
+\frac{b}{a+(n-1)b}\cdot
+\frac{a}{a+(n-2)b}\cdot
+\frac{b}{(n-2)b}\cdots
+\frac{b}{2b}\cdot\frac{b}{b}
+=\frac{n!}{(n-2)!}\cdot X
+\]
+
+Now consider the case where there are $r$ clones coming ahead of the
+focal competitor:
+
+
+\[
+\mbox{prob of having $r$ clones ahead}
+=\frac{n!}{(n-r)!}\cdot X
+\]
+
 
 
 ## Visuals
@@ -766,12 +785,8 @@ results <- read.table("parkrun_results.txt",header=TRUE)
 results
 ```
 
-Above we see three parkrun results.  In parkrun number 148, I placed
+Above we see some parkrun results.  In parkrun number 148, I placed
 229 out of a field of 318.
-
-```{r optimsinglelike,cache=TRUE}
-```
-
 
 ```{r calculate_parksupp,cache=TRUE}
 S_parkrun <- function(a){f_vec_arn(a,r=results$place-1,results$runners-1,log=TRUE)}
