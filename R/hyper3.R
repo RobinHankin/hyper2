@@ -183,7 +183,7 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
       }
   }  # if(unary) closes
 
-  if (!is.element(.Generic, c("+", "-", "==", "!=", "*", "^" ))){
+  if (!is.element(.Generic, c("+", "-", "==", "!=", "*"))){
       stop(gettextf("binary operator %s not defined for hyper3 objects", dQuote(.Generic)))
   }
   
