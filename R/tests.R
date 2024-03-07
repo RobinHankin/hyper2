@@ -414,6 +414,7 @@
         }
     } # if(i==n) closes
 
+    startq <- pmax(startq, SMALL*(1+SMALL))
     
     `objective` <- function(jj){ ## jj == c(v,p[-i])  (NB p[i]==v)
         -loglik(q_to_p(jj),H)
