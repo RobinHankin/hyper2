@@ -1,0 +1,243 @@
+---
+title: "Very simplified likelihood: masterchef"
+author: "Robin Hankin"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("pracma")
+library("magrittr")
+```
+
+```{r hexsticker, out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+This follows on from `vsl_teams.Rmd` and `vsl_partial_ranks.Rmd`.  But
+the application of those ideas to _MasterChef_ is flawed: as the
+competition progresses, Brent and Laura face increasingly skilled
+competitors, for the weakest ones have been eliminated.  And it is not
+clear to what extent that observation interferes with the assumtion of
+constant non-focal competitor strength.
+
+
+```{r,label=define_f_range_setup,include=FALSE}
+f_single_old <- function(a,r,n){  # not vectorised
+	B <- 1/(1-a)
+    (B-1)/prod(B+(n-r-1):(n-1)) * exp( lfactorial(n)-lfactorial(n-r))
+}
+
+f_single <- function(a,r,n){
+	B <- 1/(1-a)
+    exp(log(B-1)-lgamma(B+n)+lgamma(B+n-r-1)+lfactorial(n)-lfactorial(n-r))
+}
+f_vec_a <- function(a,r,n){  # vectorised in 'a' but not in 'r'
+	sapply(a,function(a){f_single(a,r=r,n=n)})
+}
+
+```
+
+```{r label=show_f_range}
+L_range <- function(a,possible,n){ # r1=4 -> came fifth [four b clones ahead]  
+    out <- a*0
+    for(i in (possible)){
+        out <- out + f_vec_a(a,i-1,n-1) }
+    return(out)
+}
+```
+
+
+Two teams of size $m$:
+
+```{r}
+`L_win` <- function(a,m){
+    b <- 1-a
+    ((m-2)*b+1)/((2*m-2)*b+1)}
+
+`L_lose` <- function(a,m){1-L_win(a,m)}
+```
+
+# Laura in  Australian MasterChef series 6
+
+* week 1
+  +  top 3 out of 25 but not the winner: (2:3)/24
+
+* week 2
+  +  not top 3, not bottom 3: (4:20)/23
+  +  team lose (11 v 11)
+  +  not bottom 6: (1:5)/11
+		
+* week 3
+  +  top 3 out of 21: (1:3)/21
+  +  team win (10 v 10)
+		
+* week 4
+  +  not top 3, not bottom 3:  (4:16)/19
+  +  team win (9 v 9)
+  
+* week 5
+  +  not top 3, not bottom 4:  (4:13)/17
+  +  4 teams of 4; Laura came in second team.
+
+* week 6
+  + bottom 3, not eliminated: (13:14)/15
+  + two teams; Laura came in top team
+  
+* week 7
+  + top3: (1:3) /14 
+  + 2 teams of 6, losing team
+
+* week 8
+  + bottom 2, not eliminated, (13/15)
+  + 2 teams of 5, losing team
+
+* week 9
+  + not bottom 5 out of 11 (1:6)/11
+  + two teams of 5 (again); losing team
+  + of the 5 in the losing team, came 4th
+
+* week 10
+  + top 3 out of 9
+  + 4 teams of 2, Laura came in top team
+  
+* week 11
+  + top 3 out of 7
+
+* Finals
+  + bottom 3 out of 6     (4:6)/6
+  + not eliminated out of 3
+  + top 3 out of 5   (1:3)/5
+  + top out of 4  (1)/4
+  + top 2 out of 3 (1:2)/3
+  + not the winner
+
+
+# Brent in  Australian MasterChef series 6
+
+* Week 1
+  + Bottom 9 out of 24 (16:24)/24
+  + elimination out of 9, not in bottom 3 (1:6)/9
+  
+* Week 2
+  + out of 23, not in top 3, not in bottom 3 (4:20)/23
+  + team win; two teams of 11
+  + out of 11, in the bottom 6 (6:11)/11
+  + out of 6, not in bottom 3 (1:3)/6
+  
+* week 3
+  + out of 21, not bottom 3, not top 3 (4:18)/21
+  + bottom 3 out of 18 (16:18)/18
+  + two teams of 10, losing team
+  + out of 10, bottom 6 (5:10)/10
+  + out of 6, in top 3 (1:3)/6
+  
+* week 4
+  + out of 19, in top 3, (1:3)/19
+  + out of 18, in bottom 3 (16:18)/18
+  + out of 3, did not get eliminated (1:2)/3
+  
+* Week 5
+  + out of 17, top 3 (1:3)/17
+  + four teams of 4, in losing team
+  + out of 4, did not get eliminaed (1:3)/4
+  
+* week 6
+  + out of 15, not in bottom 3, not in top 3 (4:12)/15
+  + two teams of 7, in losing team
+  + out of 7, not in bottom 3 (1:4)/7
+  
+* week 7
+  + out of 13, not in top 3 not in bottom 3 (4:10)/13
+  + two teams of 6, losing team
+  + out of 6, bottom 2 (5:6)/6
+  + out of 2, not eliminated (1)/2
+  
+* week 8 
+  + (2:4)/11
+  + 2 teams of 5, winning team
+  
+* week 9
+  + bottom 5, (7:11)/11
+  + out of 5, not bottom 3 (1:2)/5
+  + 2 teams of 5, losing team
+  + out of 5, not bottom 2 (1:3)/5
+  
+* week 10
+  + out of 9, not in top 3 or bottom 4 (4:5)/9
+  + 4 teams of 2, in third or fourth team (?)
+  + out of 4, not eliminted (1:3)/4
+  
+* week 11
+  + out of 7, bottom 4 (4:7)/7
+  + out of 4, not bottom 2 (1:2)/4
+
+
+* Finals
+  + out of 6, top 3 (1:3)/6
+  + out of 5, bottom 2 (4:5)/5
+  + out of 2, not eliminated (1)/2
+  + out of 4, (2:3)/4
+  + out of 3, not eliminated (1:2)/3
+  + out of 3, not eliminatged (1:2)/3
+  + overall winner (1)/3
+  
+
+  
+
+```{r label=defLauraLike}
+L_laura <- function(a){
+    b <- 1-a
+    out <- a*0 + 1
+    out <- out * L_range(a,2:3,24)    # week 1
+    out <- out * L_range(a,4:20,24)   # week 2
+    out <- out * L_lose(a,11)         # week 2
+    out <- out * L_range(a,1:5,11)    # week 2
+    out <- out * L_range(a,1:3,21)    # week 3
+    out <- out * L_win(a,10)          # week 3
+    out <- out * L_range(a,4:16,19)   # week 4
+    out <- out * L_win(a,9)           # week 4
+    out <- out * 4*b*(1+2*b)/
+                 (1+14*b)/(1+10*b)    # week 5
+    out <- out * L_range(a,14:15,16)  # week 6
+    out <- out * L_win(a,7)           # week 6
+    out <- out * L_range(a,1:3,13)    # week 7
+    out <- out * L_lose(a,6)          # week 7
+    out <- out * L_range(a, 10, 11)   # week 8
+    out <- out * L_lose(a,5)          # week 8
+    out <- out * L_range(a,1:6,11)    # week 9
+    out <- out * L_lose(a,5)          # week 9
+    out <- out * L_range(a,4,5)       # week 9
+    out <- out * L_range(a,1:3,9)     # week 10
+    out <- out * 1/(7-6*a)            # week 10
+    out <- out * L_range(a,1:3,7)     #  week 11
+    out <- out * L_range(a,4:6,6)     # finals
+    out <- out * L_range(a,1:2,3)     # finals
+    out <- out * L_range(a,1:3,5)     # finals
+    out <- out * L_range(a,1,4)       # finals
+    out <- out * L_range(a,1:2,3)     # finals
+    out <- out * L_range(a,2,2)       # finals
+    return(out)
+}
+```
+```{r label=optimizeLauras,cache=TRUE}
+evaluate <- optimize(L_laura,c(0.1,0.9),maximum=TRUE)$max
+small <- 1e-4
+second <- (2*log(L_laura(evaluate))-log(L_laura(evaluate-small))-log(L_laura(evaluate+small)))/small^2
+evaluate
+second
+f <- function(x){x*(1-x)}
+(2*log(f(evaluate))-log(f(evaluate-small))-log(f(evaluate+small)))/small^2
+```
+
+```{r label=plotlaurassupport}
+a <- seq(from=0,to=1,by=0.01)
+L <- L_laura(a)
+L <- L/max(L,na.rm=TRUE)
+plot(a,L)
+abline(v=evaluate)
+plot(a,log(L),ylim=c(-5,0))
+abline(h= -2)
+abline(v=evaluate)
+```

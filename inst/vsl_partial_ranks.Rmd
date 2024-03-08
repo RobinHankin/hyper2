@@ -1,0 +1,144 @@
+ ---
+title: "Very simplified likelihood: partial ranks"
+author: "Robin Hankin"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("pracma")
+library("magrittr")
+library("knitr")
+```
+
+```{r hexsticker, out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+This follows on from `very_simplified_likelihood.Rmd`.
+Consider a race between a competitor of Bradley-Terry strength $a$ and
+$n$ competitors each of strength $b$; we require $a+b=1$.  NB we have
+$n+1$ competitors in total, 1 of strength $a$ and $n$ of strength $b$.
+An observation is indexed by $r$, the number of $b$ clones finishing
+ahead of $a$, so $0\leqslant r\leqslant n$.  The initial field
+strength is $a+nb=1+b(n-1)$.
+
+```{r,label=definefsingle}
+f_single <- function(a,r,n){
+	B <- 1/(1-a)
+    exp(log(B-1)-lgamma(B+n)+lgamma(B+n-r-1)+lfactorial(n)-lfactorial(n-r))
+}
+f_vec_a <- function(a,r,n){  # vectorised in 'a' but not in 'r'
+	sapply(a,function(a){f_single(a,r=r,n=n)})
+}
+
+f_range <- function(a,possible,n){ # r1=4 -> came fifth [four b clones ahead]  
+    out <- a*0
+    for(i in (possible)){
+        out <- out + f_vec_a(a,i-1,n-1) }
+    return(out)
+}
+```
+
+verify verify verify
+
+```{r verifyverifyverify}
+f_range(0.2323423,1:10,10)-1
+```
+
+Suppose there are 30 in the class, we know our bro came between 5th
+and 29th:
+
+```{r plot4tto9th}
+a <- seq(from=0,by=0.1,to=1)
+L <- f_range(a,possible=5:29,30)
+plot(a,L,type='b')
+plot(a,log(L),type='b')
+abline(h=-2)
+```
+
+
+What I want to do now is compare students with different grades:
+
+```{r}
+M <- t(matrix(c(
+    "4-9","10-14", "50",
+    "5-10","1-4", "23",
+    "23-40","23-40", "100",
+    "1-3","5-9", "100"),3,4))
+rownames(M) <- c("Algebra","Calculus","Geometry","Topology")
+colnames(M) <- c("Alice range","Bob range", "class size")
+kable(M,caption='asdf')
+```
+
+```{r}
+alice <- t(matrix(c(
+    4,9,50,
+    5,10,23,
+    23,40,100,
+    1,3,100),nrow=3))
+dimnames(alice) <- list(topic=rownames(M),alice_results=c("low","high","class"))
+
+bob <- t(matrix(c(
+    30,34,50,
+    17,19,23,
+    70,90,100,
+    66,88,100),nrow=3))
+dimnames(bob) <- list(topic=rownames(M),bob_results=c("low","high","class"))
+```
+
+```{r showalicebob}
+alice
+bob
+```
+
+```{r definemakelike}
+makelike <- function(a,M){
+    L <- a*0 + 1
+    for(i in seq_len(nrow(M))){
+        L <- L * f_range(a,M[i,1]:M[i,2],M[i,3])
+    }
+    return(L)
+}
+```
+
+```{r plotalicebobsep}
+s <- seq(from=0,to=1,by=0.02)
+La <- makelike(s,alice)
+Lb <- makelike(s,bob)
+plot(s,La/max(La,na.rm=TRUE))
+plot(s,Lb/max(Lb,na.rm=TRUE))
+```
+
+```{r deflikeboth}
+Likeboth <- function(a){makelike(a,alice)*makelike(a,bob)}
+plot(s,Likeboth(s),col='red',pch=16)
+optimize(Likeboth,c(0.4,0.6),maximum=TRUE)
+```
+
+```{r contouralicebob,cache=TRUE}
+s_alice <- seq(from=0.1,to=0.95,by=0.01)
+s_bob   <- seq(from=0.1,to=0.95,by=0.01)
+like_sep <- function(v){log(makelike(v[1],alice)) + log(makelike(v[2],bob))}
+L <- apply(as.matrix(expand.grid(s_alice,s_bob)),1,like_sep)
+L <- L - max(L)
+```
+
+```{r contourbothalicebob}
+par(pty='s')
+contour(s_alice,s_bob,
+        matrix(L,length(s_alice),length(s_bob)),
+        asp=1,levels = -(0:7)
+        )
+abline(0,1)
+
+```
+
+```{r dobothoptims,cache=TRUE}
+H_alt <- optim(c(0.8,0.4),like_sep,control=list(fnscale=-1))
+H_null <- optim(c(0.8,0.4),function(v){
+    v[2] <- v[1]
+    like_sep(v)},control=list(fnscale=-1))
+pchisq(2*(H_alt$value-H_null$value),df=1,lower.tail=FALSE)
+```

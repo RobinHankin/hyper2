@@ -1,0 +1,86 @@
+---
+title: "Very simplified likelihood"
+author: "Robin Hankin"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("pracma")
+library("magrittr")
+```
+
+```{r hexsticker, out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+This follows on from `very_simplified_likelihood.Rmd`.  Consider some
+form of comparison between a competitor of Bradley-Terry strength $a$
+and $n$ competitors each of strength $b$; we require $a+b=1$.  NB we
+have $n+1$ competitors in total, 1 of strength $a$ and $n$ of strength
+$b$.  An observation is indexed by $r$, the number of $b$ clones
+finishing ahead of $a$, so $0\leqslant r\leqslant n$.  The initial
+field strength is $a+nb=1+b(n-1)$.
+
+
+Suppose we split the $n+1$ competitors into two teams.  The team with
+our bro has $r+1$ members and the other one has size $n-r$ members.
+Then, using standard notation
+
+\begin{equation}
+\frac{a+rb;(n-r)b}{a+nb}
+\end{equation}
+
+Let us suppose that the teams are of equal size:  $1+r=n-r=m$, say:
+
+\begin{equation}=
+\frac{a+(m-1)b;mb}{a+(2m-1)b}=\frac{mb (a-b); mb}{2mb+(a-b)}=\frac{(m-2)b+1;mb}{(2m-2)b+1}
+\end{equation}
+
+Let's try $m=15$:
+
+```{r}
+m <- 15
+a <- seq(from=0,to=1,by=0.001)
+b <- 1-a
+L_win <- ((m-2)*b+1)/((2*m-2)*b+1)
+L_lose<- (m*b)      /((2*m-2)*b+1)
+plot(a,L_win ,type='b',ylim=0:1,main="Focal competitor's team wins")
+plot(a,L_lose,type='b',ylim=0:1,main="Focal competitor's team loses")
+S_win <- log(L_win)
+S_win <- S_win-max(S_win)
+S_lose <- log(L_lose)
+S_lose <- S_lose-max(S_lose)
+plot(a,S_win,type='b',main="Win")
+plot(a,S_lose,type='b',main="Lose")
+logodds <- log(a/(1-a))
+plot(logodds,S_win,main="win")
+plot(logodds,S_lose,main="lose")
+```
+
+
+Now in week 4 Laura came in the second team of four (of four members
+each).  I get the teams's strengths are $\beta=4b$ and
+$\alpha=3b+a=1+2b$, so
+
+\begin{eqnarray}
+L &=& \frac{\alpha}{3\alpha+\beta}\cdot\frac{\beta}{2\alpha+\beta}\\
+  &=& \frac{4b}{12b + (1+2b)}\cdot\frac{1+2b}{8b+(1+2b)}\\
+  &=& \frac{4b}{1+14b}\cdot\frac{1+2b}{1+10b}
+\end{eqnarray}
+
+
+```{r plotsecondteam}
+a <- seq(from=0,to=1,by=0.001)
+
+f <- function(a){
+    b <- 1-a    
+    4*b*(1+2*b)/(1+14*b)/(1+10*b)
+}
+L <- f(a)
+L <- L/max(L,na.rm=TRUE)
+plot(a, L,type='b')
+plot(a, log(L),type='b',ylim=c(-5,0))
+abline(h= -2)
+```

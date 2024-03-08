@@ -218,3 +218,6 @@ CITATION.cff
 ^inst/Makefile$
 ^inst/loglambdahomeadvantage.txt$
 ^inst/ijmm_rebuttal.tex$
+^inst/vsl_teams.Rmd$
+^inst/vsl_partial_ranks.Rmd$
+^inst/vsl_masterchef.Rmd$
