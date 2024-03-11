@@ -285,7 +285,9 @@ char2nv <- function(x){
 }
 
 `[<-.hyper3` <- function(x, index, ..., value){  # index must be a named vector or a list of named vectors
-    if(missing(index)){  # A[] <- B
+    if(inherits(value,"weight")){
+        out <- setweight(x,index,value)
+    } else if(missing(index)){  # A[] <- B
         jj <- overwrite_lowlevel3(x,value)
         if(all(pnames(value) %in% pnames(x))){
             out <- hyper3_bw(jj[[1]],jj[[2]],jj[[3]],pnames=pnames(x))
@@ -620,3 +622,24 @@ stop("not yet written")
   }
 }
 
+`as.weight` <- function(x){
+    stopifnot(is.numeric(x))
+    stopifnot(x >= 0)
+    class(x) <- "weight" # this is the only place that class is set to weight
+    return(x)
+}
+
+`setweight` <- function(x,index,value){
+    stopifnot(length(index) == length(value))
+    for(i in seq_along(index)){
+        x <- hyper3_nv(
+            lapply(as.namedvectorlist(x),
+                   function(p){
+                       p[names(p)==index[i]] <- value[i] # The meat
+                       return(p)
+                   }),
+            powers=powers(x),
+            pnames=pnames(x))
+    }
+    return(x)
+}

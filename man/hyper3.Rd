@@ -18,6 +18,8 @@
 \alias{pnames<-.hyper3}
 \alias{weights}
 \alias{weights.hyper3}
+\alias{setweight}
+\alias{as.weight}
 \title{Weighted probability vectors: \code{hyper3} objects
   \Sexpr[stage=build,results=hide]{require(hyper2)}
 }
@@ -127,8 +129,12 @@ hyper3_m(M,p,stripzeros=TRUE)
     \item Function \code{as.namedvectorlist()} takes a \code{hyper3}
     object and returns a disoRdered list of named vectors corresponding
     to the brackets and their weights.
-}
 
+    \item Function \code{setweight()} alters the weight of a particular
+    player.  Idiom \dQuote{\code{H["a"] <- as.weight(3)}} will set the
+    weight of every occurence of player \code{a} to 3.  If \code{H} is a
+    \code{hyper2} object, it will be coerced to \code{hyper3}.
+  }
 }
 \value{
 Generally return or deal with \code{hyper3} objects
@@ -166,6 +172,12 @@ a[c(p1=1.3,p2=1)] <- -7
 a
 
 chess3  # representative simple hyper3 object
+
+H1 <- rankvec_likelihood(letters[sample(6)])
+H2 <- rankvec_likelihood(letters[sample(6)])
+H1["a"] <- as.weight(2.1)  # "a" has some advantage
+H2["b"] <- as.weight(0.8)  # "b" has some disadvantage
+H1+H2
 
 }
 

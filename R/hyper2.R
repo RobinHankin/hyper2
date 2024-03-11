@@ -321,7 +321,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 }
 
 `[<-.hyper2` <- function(x, index, ..., value){
-    if(missing(index)){  # A[] <- B
+    if(inherits(value,"weight")){
+        out <- setweight(as.hyper3(x),index,value)
+    } else if(missing(index)){  # A[] <- B
         jj <- overwrite_lowlevel(x,value)
         if(all(pnames(value) %in% pnames(x))){
             out <- hyper2(jj[[1]],jj[[2]],pnames=pnames(x))
