@@ -1,0 +1,68 @@
+---
+title: "formula1_start_vs_finish.Rmd"
+output: html_document
+date: "2024-03-11"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+```
+
+
+
+Formula 1 grand prix racing, 2023 season.
+
+```{r loadfinish}
+setwd("~/rstudio/hyper2/inst")
+finish <- read.table("formula1_2023.txt",header=TRUE)
+finish <- finish[,seq_len(ncol(finish)-1)]
+finish[,1:5]
+```
+
+
+```{r loadgrid}
+grid <- read.table("formula1_starting_2023.txt",header=TRUE)
+grid[,1:5]
+```
+
+```{r definemakeH3}
+`makeH3` <- function(i,lambda){
+  suppressWarnings(a <- setNames(as.numeric(finish[,1]),rownames(finish)))
+  suppressWarnings(b <- setNames(as.numeric(grid  [,1]),rownames(finish)))
+  wanted <- !is.na(b)
+  a <- a[wanted]
+  b <- b[wanted]
+  a[is.na(a)] <- 0 # did not finish
+  H <- ordervec2supp(a)
+  for(i in seq_along(b)){H[names(b)[i]] <- as.weight(lambda^(i-1))}
+  return(H)
+}
+
+likelam <- function(lambda){
+  H <- hyper3()
+  for(i in seq_len(ncol(finish))){H <- H + makeH3(1,lambda=lambda)}
+  return(H)
+}
+```
+
+
+```{r evaluatelamrange,cache=TRUE}
+
+f <- function(lambda){
+  H <- likelam(lambda)
+  loglik(maxp(H,n=4),H)
+}
+f(0.9)
+f(0.901)
+```
+
+
+```{r evalam,cache=TRUE}
+lam <- seq(from=0.9,to=1.05,len=5)
+like <- sapply(lam,f)
+```
+
+```{r plotlikelam}
+plot(lam,like,type='b')
+```

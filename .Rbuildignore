@@ -221,3 +221,4 @@ CITATION.cff
 ^inst/vsl_teams.Rmd$
 ^inst/vsl_partial_ranks.Rmd$
 ^inst/vsl_masterchef.Rmd$
+^inst/formula1_start_vs_finish.Rmd$
