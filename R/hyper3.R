@@ -408,6 +408,8 @@ stop("not yet written")
     return(out)
 }
 
+`rankvec_likelihood3` <- `ordervec2supp3`
+
 `ordervec2supp3a` <- function(v,nonfinishers=NULL,helped=NULL,lambda=1){
   out <- num3(v,helped=helped,lambda=lambda)  # numerator
     for(i in seq_along(v)){

@@ -85,10 +85,6 @@ log((a + b + c)^-1 * (a + c)^-1 * b * c)
   omitted
 }
 
-
-
-
-
 Note carefully the difference between \code{ordervec2supp()} and
 \code{rankvec_likelihood()}, which takes a character vector:
 
