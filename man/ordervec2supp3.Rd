@@ -10,6 +10,7 @@
 \alias{race_to_hyper3}
 \alias{cheering}
 \alias{cheering3}
+\alias{rankvec_likelihood3}
 \title{Various functionality for races and hyper3 likelihood functions}
 \description{\loadmathjax
 Various functions for calculating the likelihood function for order
@@ -23,6 +24,7 @@ den3(v,helped=NULL,lambda=1)
 char2nv(x)
 ordervec2supp3(v,nonfinishers=NULL)
 ordervec2supp3a(v,nonfinishers=NULL,helped=NULL,lambda=1)
+rankvec_likelihood3(v,nonfinishers=NULL)
 ordertable2supp3(a)
 cheering3(v,e,help,nonfinishers=NULL)
 args2ordervec(...)
@@ -85,7 +87,7 @@ args2ordervec(...)
   functions that calculate the numerator and denominator for
   Plackett-Luce likelihood functions with clones; used in
   \code{ordervec2supp3()} and \code{ordervec2supp3a()}.
-  
+
   Function \code{ordertable2supp3()} takes an order table (the canonical
   example is the constructors' formula 1 grand prix results, see
   \code{constructor.Rd} and returns a generalized Plackett-Luce support
@@ -108,6 +110,11 @@ args2ordervec(...)
 
 }
 \author{Robin K. S. Hankin}
+\note{
+  Function \code{ordervec2supp3()} is mis-named [it takes a \emph{rank}
+  vector, not an \emph{order} vector]; it will be renamed
+  \code{rankvec_likelihood3()}, eventually.
+}  
 \seealso{\code{\link{ordertable2supp}},\code{\link{ordertrans}}}
 \examples{
 
