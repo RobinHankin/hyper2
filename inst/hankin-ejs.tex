@@ -1,4 +1,4 @@
-\documentclass[ejs]{imsart}
+\documentclass[ejs,noshowframe]{imsart}
 
 %% Packages
 \RequirePackage{amsthm,amsmath,amsfonts,amssymb}
@@ -7,7 +7,6 @@
 \RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
 \RequirePackage{graphicx}
 
-\arxiv{2010.00000}
 \startlocaldefs
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -85,20 +84,16 @@ One entity is of particular interest to us: the ``focal entity'', or
 focal competitor.  We assign Placket-Luce strength of $a$ to the focal
 competitor and $b$ to all others; we require $a+b=1$.  The associated
 inference problem appears to have a wide range of applications and I
-present some analysis of datasets drawn from Formula 1 motor racing
+present some analysis of datasets drawn from Formula~1 motor racing
 and community initiative Parkrun.
 \end{abstract}
 
 \begin{keyword}[class=MSC]
 \kwd[Primary ]{6202}
-\kwd{00X00}
-\kwd[; secondary ]{62F30}
+\kwd{Statistical inference under constraints}
+\kwd[ ; secondary: Plackett-Luce likelihood functions; ]{62F30}
 \end{keyword}
 
-\begin{keyword}
-\kwd{First keyword}
-\kwd{second keyword}
-\end{keyword}
 
 \end{frontmatter}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -178,13 +173,13 @@ $r_i,n_i$, $1\leqslant i\leqslant m$ we would have
 competitors).  Previous related work presented the case $n=2$ [in
   current notation].  Considering the case $n=7$ gives us $7+1=8$
 distinct likelihood functions, Figure~\ref{ninelikes}.  We see an
-unanticipated asymmetry between $r$ and $n-r$.  For $r=3$ one might
+unanticipated asymmetry between $r$ and $n-r$.  For $r=4$ one might
 expect that $\hat{a}=\frac{1}{2}$ on the grounds that the focal
-competitor's performance was median.  However, $\hat{a}\simeq 0.64$.
+competitor's performance was median.  However, $\hat{a}\simeq 0.5886$.
 
 \begin{figure}[t]
 \includegraphics[width=4in]{ninelikes}  % ninelikes.pdf produced by very_simplified_likelihood.Rmd
-\caption{Likelihood functions for $r=0(1)8$\label{ninelikes}}
+\caption{Likelihood functions for $r=0(1)8$\label{ninelikes}.  Value of $r$ indicated in colour by its curve; vertical line shows $\hat{a}\simeq 0.5886$ for the case $r=4$}
 \end{figure}
 
 
@@ -365,12 +360,8 @@ analysis of more than one focal competitor.
 %% Euclid with the published article.       %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{supplement}
-\stitle{Title of Supplement A}
-\sdescription{Short description of Supplement A.}
-\end{supplement}
-\begin{supplement}
-\stitle{Title of Supplement B}
-\sdescription{Short description of Supplement B.}
+\stitle{Very simplified likelihood}
+\sdescription{A terse rmarkdown document that  recreates the figures and salient results of the submission}
 \end{supplement}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

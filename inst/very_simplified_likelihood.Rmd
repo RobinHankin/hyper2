@@ -110,7 +110,7 @@ simplifying and taking an asymptotic expansion to order $n^{-1}$, we
 find, to first order,
 
 \[
-\mathcal{S}=\log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n} 
+\mathcal{S}=\log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n}
 + K + \mathcal{O}\left(n^{-2}\right)
 \]
 
@@ -166,9 +166,9 @@ f_single <- function(a,r,n,log=FALSE){  # not vectorised
 	B <- 1/(1-a)
 	if(log){
 		out <- log(B-1) - lgamma(B+n) + lgamma(B+n-r-1)
-	} else {  # not-log 
+	} else {  # not-log
 		out <- (B-1)/prod(B+(n-r-1):(n-1))
-	}	
+	}
    return(out)
 }
 
@@ -178,7 +178,7 @@ f_vec_a <- function(a,r,n, log=FALSE){  # vectorised in 'a' but not in 'r'
 
 f_vec_arn <- function(a,r,n,log=FALSE){
 	## vectorized in 'a'; treats 'r' and 'n' as
-	## vectors of independent observations 
+	## vectors of independent observations
 
 	M <- cbind(r,n)
 
@@ -305,10 +305,10 @@ for(n in 1:10){
       jj <- 0
     } else {
       jj <- MLE(r,n)
-    }  
+    }
     out[[n]][r+1] <- jj
   }
-} 
+}
 out
 ```
 
@@ -469,24 +469,41 @@ Now some likelihood visuals.  Suppose $r=4,n=8$:
 ```{r,label=likevis,cache=F}
 plotter <- function(...){
 a <- seq(from=0,to=1,by=0.01)
-n <- 7
+n <- 8
 jj <- f_vec_arn(a,3,n,log=FALSE)
-plot(a,jj/max(jj,na.rm=TRUE),type='n')
+plot(a,jj/max(jj,na.rm=TRUE),type='n',xlab=expression(a),ylab="likelihood")
 grid()
+rain <- rainbow(n+1)
 for(r in seq(from=0,to=n)){
   y <- f_vec_a(a,r,n,log=FALSE)
-  if(r==0){y[length(y)] <- 1}  
+  if(r==0){y[length(y)] <- 1}
   y <- y/max(y,na.rm=TRUE)
   if(r>0){y[length(y)] <- 0}
-  points(a,y,type='l',lwd=4,col=rainbow(n+1)[r+1])
-  abline(v=0.64)
+  points(a,y,type='l',lwd=4,col=rain[r+1])
 }
+abline(v=MLE(r=4,n=8))
+text(0.07,0.95,"r=8",col=rain[9])
+text(0.20,0.95,"r=7",col=rain[8])
+text(0.26,0.91,"r=6",col=rain[7])
+text(0.29,0.83,"r=5",col=rain[6])
+text(0.33,0.76,"r=4",col=rain[5])
+text(0.35,0.64,"r=3",col=rain[4])
+text(0.39,0.53,"r=2",col=rain[3])
+text(0.45,0.41,"r=1",col=rain[2])
+text(0.63,0.22,"r=0",col=rain[1])
 }
+
 plotter()
 pdf(file="ninelikes.pdf")
 plotter()
 dev.off()
 ```
+
+
+```{r shown4n8mle}
+MLE(r=4,n=8)
+```
+
 
 ```{r usehyper3,cache=TRUE}
 n <- 7
@@ -672,7 +689,7 @@ pchisq(2*(o_free$value - o_constrained$value),df=1,lower.tail=FALSE)
 ```
 
 
-# in silico formula 
+# in silico formula
 
 ```{r insn}
 table(replicate(100,which(rrace3(pn=c(a=1,b=10),ps=c(a=0.9,b=0.1))=='a')))
@@ -993,7 +1010,7 @@ dev.off()
 ```
 
 ```{r,label=defsupp2}
-jj1 <- 
+jj1 <-
 optim(
    c(.4,.8),
    function(vec){
@@ -1013,4 +1030,3 @@ jj2
 ```{r,label=shochisw}
 pchisq(2*(jj1$value-jj2$objective),lower.tail=FALSE,df=1)
 ```
-
