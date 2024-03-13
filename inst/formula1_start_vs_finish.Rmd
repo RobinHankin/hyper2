@@ -26,43 +26,68 @@ grid <- read.table("formula1_starting_2023.txt",header=TRUE)
 grid[,1:5]
 ```
 
+
 ```{r definemakeH3}
-`makeH3` <- function(i,lambda){
-  suppressWarnings(a <- setNames(as.numeric(finish[,1]),rownames(finish)))
-  suppressWarnings(b <- setNames(as.numeric(grid  [,1]),rownames(finish)))
+replacenonzerowithorder <- function(x){
+  nonzero <- x!=0
+  x[nonzero] <- order(x[nonzero])
+  return(x)
+}
+
+order_non_NA_NZ <- function(x){ # leaves NA and 0 entries unchanged; replaces other elements with their order
+  wanted <- !is.na(x)
+  x[wanted] <- replacenonzerowithorder(x[wanted])
+  return(x)
+}
+
+topn <- 15
+finish <- finish[seq_len(topn),]
+options(use_alabama=TRUE)
+
+`makeH3` <- function(i,lambda,topn){
+  suppressWarnings(a <- setNames(as.numeric(finish[,i]),rownames(finish)))
+  suppressWarnings(b <- setNames(as.numeric(grid  [,i]),rownames(finish)))
   wanted <- !is.na(b)
   a <- a[wanted]
   b <- b[wanted]
   a[is.na(a)] <- 0 # did not finish
+  a <- order_non_NA_NZ(a)
+  a <- a[seq_len(topn)]
   H <- ordervec2supp(a)
-  for(i in seq_along(b)){H[names(b)[i]] <- as.weight(lambda^(i-1))}
+  for(j in seq_along(b)){
+    if(!is.na(names(b)[j])){H[names(b)[j]] <- as.weight(lambda^b[j])}
+  }
   return(H)
 }
 
 likelam <- function(lambda){
   H <- hyper3()
-  for(i in seq_len(ncol(finish))){H <- H + makeH3(1,lambda=lambda)}
+  for(i in seq_len(ncol(finish))){H <- H + makeH3(i,lambda=lambda,topn=topn)}
   return(H)
 }
 ```
 
 
-```{r evaluatelamrange,cache=TRUE}
-
+```{r evaluatelambbda,cache=TRUE}
 f <- function(lambda){
   H <- likelam(lambda)
-  loglik(maxp(H,n=4),H)
+  m <- maxp(H,n=1)
+  return(c(loglik(m,H),lambda,m))
 }
-f(0.9)
-f(0.901)
 ```
 
 
 ```{r evalam,cache=TRUE}
-lam <- seq(from=0.9,to=1.05,len=5)
-like <- sapply(lam,f)
+lam <- seq(from=0.85, to=1.05, len=15)
+bigmat <- sapply(lam,f)
+bigmat
 ```
 
-```{r plotlikelam}
-plot(lam,like,type='b')
+```{r plotlikelambda}
+if(FALSE){plot(lam,like-max(like),type='b')
+abline(h=-2)
+abline(v=1)
+}
 ```
+
+
