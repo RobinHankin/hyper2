@@ -1319,3 +1319,14 @@ rorder_single <- function(p){
     H[pnames(H)] <- -sum(powers(H))
     return(H)
 }
+
+`rrace` <- function(strengths){
+    out <- strengths
+    for (i in seq_along(out)) {
+        nextfinisher <- sample(names(strengths),size=1,prob=strengths)
+        out[i] <- nextfinisher
+        strengths <- strengths[names(strengths) != nextfinisher]
+    }
+    names(out) <- NULL
+    return(out)
+}
