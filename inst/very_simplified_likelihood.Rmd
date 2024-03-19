@@ -795,6 +795,56 @@ sametest(a["USA",],a["CHN",],100)
 sametest(a["USA",],a["CHN",],5)
 ```
 
+# Athletics
+
+
+```{r loadolymp}
+O <- read.table("olympic_athletics_mens_100m.txt",header=TRUE)
+head(O)
+```
+
+
+```{r analuyzelmp,cache=TRUE}
+jjf <- function(x){f_vec_arn(x,O$rank,O$n,log=TRUE)}
+system.time(optolym <- optimize(jjf, c(0.45,0.5), maximum=TRUE))
+```
+
+```{r}
+optolym
+jjf(0.5)
+jjf(optolym$maximum)
+(LR <- 2*(jjf(optolym$maximum)-jjf(0.5)))
+pchisq(LR,df=1,lower.tail=FALSE)
+```
+
+```{r makeolymplike}
+a <- seq(from=0.3,to=0.65,len=45)
+L <- f_vec_arn(a,O$rank,O$n,log=TRUE)
+Lmax <- jjf(optolym$maximum)
+Lmax
+L <- L-Lmax
+```
+
+```{r findcredint}
+(a_lower <- uniroot(function(x){jjf(x)+2-Lmax},interval=c(0.3,0.5))$root)
+(a_upper <- uniroot(function(x){jjf(x)+2-Lmax},interval=c(0.5,0.6))$root)
+```
+
+```{r plotolymp}
+plot(a,L,type='l',ylab="log-likelihood",lwd=2)
+abline(h=c(0,-2))
+ahat <- optolym$maximum
+segments(x0=ahat,y0=-1.5,y1=0)
+text(ahat,-0.91,expression(hat(a)==0.573),pos=2)
+abline(v=0.5,lty=3)
+
+segments(x0=a_lower,y0=-1.5,y1=-3.5)
+segments(x0=a_upper,y0=-1.5,y1=-3.5)
+
+text(x=a_lower,y=-3,"0.380",pos=4)
+text(x=a_upper,y=-3,"0.563",pos=2)
+```
+   
 # Parkrun
 
 ```{r readresults}
