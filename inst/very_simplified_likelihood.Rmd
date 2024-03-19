@@ -627,14 +627,15 @@ L <- L-max(L)
 L <- matrix(L,length(a),length(b))
 ```
 
-```{r showfilledc}
+```{r showfilledcwithdot}
 L <- pmax(L,-40)
 showchec <- function(...){
-contour(a,b,L,xlab=expression(alpha),ylab=expression(beta))
+contour(a,b,L,xlab=expression(alpha),ylab=expression(beta),levels=-c(2,5*(1:5)))
+points(-0.27,0.0813,pch=16,cex=2)
 }
 showchec()
 pdf(file="showchecolike.pdf")
-contour(a,b,L)
+showchec(a,b,L)
 dev.off()
 ```
 
@@ -831,6 +832,7 @@ L <- L-Lmax
 ```
 
 ```{r plotolymp}
+plotolymp <- function(...){
 plot(a,L,type='l',ylab="log-likelihood",lwd=2)
 abline(h=c(0,-2))
 ahat <- optolym$maximum
@@ -843,6 +845,11 @@ segments(x0=a_upper,y0=-1.5,y1=-3.5)
 
 text(x=a_lower,y=-3,"0.380",pos=4)
 text(x=a_upper,y=-3,"0.563",pos=2)
+}
+plotolymp()
+pdf(file="plotolymp.pdf")
+plotolymp()
+dev.off()
 ```
    
 # Parkrun

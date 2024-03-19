@@ -81,11 +81,11 @@ order statistics is proposed.  We consider a field of $n+1$ entities
 that are ordered in some way [the preferred example is competitors in
   a running race, ordered by time of crossing the finishing line].
 One entity is of particular interest to us: the ``focal entity'', or
-focal competitor.  We assign Placket-Luce strength of $a$ to the focal
+focal competitor.  We assign Placket-Luce strength $a$ to the focal
 competitor and $b$ to all others; we require $a+b=1$.  The associated
 inference problem appears to have a wide range of applications and I
-present some analysis of datasets drawn from Formula~1 motor racing
-and community initiative Parkrun.
+present some analysis of datasets drawn from the fields of Olympic
+athletics, education, and Formula~1 motor racing.
 \end{abstract}
 
 \begin{keyword}[class=MSC]
@@ -125,9 +125,9 @@ even moderately large: even with as few as 20 competitors following
 Zipf's law~\cite{zipf1949} [a typical assumption for Bradley-Terry
   strengths], Hankin~\cite{hankin2017_rmd} shows that maximum
 likelihood strengths identify the correct ranking with a probability
-of essentially zero.  The situation is worse in cases such as the
-International Mathematical Olympiad, which requires us to consider
-over 100 competitors.
+of essentially zero.  The situation is worse in cases such as formula
+1 motor racing considered below, which requires us to consider
+${\mathcal O}(100)$ competitors.
 
 Consider a race between a competitor of Bradley-Terry strength $a$ and
 $n$ cloned competitors, each of strength $b=1-a$.  An observation is
@@ -161,8 +161,12 @@ thus incurs an error of only $\mathcal{O}(n^{-2})$.  Observing that
 $\partial^2\mathcal{S'}/\partial B^2=-(B-1)^{-2}<0$, the evaluate
 would be unique; we have
 $\hat{B}=\frac{n+r+1}{r+1}+\mathcal{O}\left(n^{-1}\right)$, or
-alternatively $\hat{a}=\frac{n}{n+r+1}$.  For repeated observations
-$r_i,n_i$, $1\leqslant i\leqslant m$ we would have
+alternatively $\hat{a}=\frac{n}{n+r+1}$.  Compare this with the result
+of asking ``what is the probability $p$ that the focal competitor
+beats a randomly chosen opponent?'' to which the binomial maximum
+likelihood estimate is simply $\frac{n-r}{n}$, agreeing to within
+$\mathcal{O}(n^{-2})$.  For repeated observations $r_i,n_i$,
+$1\leqslant i\leqslant m$ we would have
 \begin{equation}
   \hat{a} = 1-
   \frac{\frac{r_1+1}{n_1}+\cdots+\frac{r_m+1}{n_m}}{m}
@@ -170,12 +174,15 @@ $r_i,n_i$, $1\leqslant i\leqslant m$ we would have
 \end{equation}
 
 (that is, one minus the mean ratio of rank to number of [cloned]
-competitors).  Previous related work presented the case $n=2$ [in
-  current notation].  Considering the case $n=7$ gives us $7+1=8$
-distinct likelihood functions, Figure~\ref{ninelikes}.  We see an
-unanticipated asymmetry between $r$ and $n-r$.  For $r=4$ one might
-expect that $\hat{a}=\frac{1}{2}$ on the grounds that the focal
-competitor's performance was median.  However, $\hat{a}\simeq 0.5886$.
+competitors); compare the binomial result of $1-\left.\sum
+r_i\right/\sum n_i$.
+
+Previous related work presented the case $n=2$ [in current notation].
+Considering the case $n=7$ gives us $7+1=8$ distinct likelihood
+functions, Figure~\ref{ninelikes}.  We see an unanticipated asymmetry
+between $r$ and $n-r$.  For $r=4$ one might expect that
+$\hat{a}=\frac{1}{2}$ on the grounds that the focal competitor's
+performance was median.  However, $\hat{a}\simeq 0.5886$.
 
 \begin{figure}[t]
 \includegraphics[width=4in]{ninelikes}  % ninelikes.pdf produced by very_simplified_likelihood.Rmd
@@ -190,59 +197,44 @@ competitor's performance was median.  However, $\hat{a}\simeq 0.5886$.
 \end{figure}
 
 
-\section{Use-cases}
+Below, I present three examples that showcase likelihood
+function~\ref{likeforrn3}, drawn from the fields of athletics,
+education, and Formula~1 motor racing.
 
-Here I present three examples that showcase likelihood
-function~\ref{likeforrn3}.  Formula 1 education, parkrun
+\subsection{Olympic track and field athletics}
 
-\subsection{Park run}
-
-``Parkrun'' is a distributed community initiative that organises
-weekly timed 5 km runs/walks in parks worldwide~\cite{hindley2020}.  A
-typical event will have 200 participants.  Table~\ref{parkruntable}
-shows the author has completed a total of 15 parkruns to date, and
-from the first pair of numbers we see that 238 runners attended that
-particular parkrun, of whom the author placed 173.
-
-\begin{table*}[t]
-  \caption{Parkrun results}
-\label{parkruntable}
-\begin{tabular}{ccccccccccc}
-\hline
-rank   &173  & 165 & 172 & 199 & 181 & 229 & 177 & 222 & 206 & 142 \\
-runners&238  & 238 & 196 & 242 & 242 & 318 & 259 & 305 & 297 & 241 \\ \\ \\
-rank   & 118 & 224 & 128 & 115 & 183 &     &     &     &     &\\
-runners& 179 & 338 & 203 & 245 & 254 &     &     &     &     &\\
-\hline
-\end{tabular}
-\end{table*}
-
-
-We may consider the author to have an unknown generalized Bradley
-Terry strength $a$: Figure~\ref{parkrunsupport} shows a support curve
-for $a$ with the evaluate, $\hat{a}\simeq 0.448$ shown.  We also see
-two units of support~\cite{edwards1992} shown as a dotted line
-illustrating a support interval of about 0.315 - 0.567; we may be
-reasonably confident that the author's true strength lies in this
-range.  In particular, note that a reasonable $H_0\colon
-a=\frac{1}{2}$ may not be rejected, the support for $H_0$ being only
-susceptible to very minor improvement [$\simeq 0.351$] by moving to
-the evaluate.
+One long-standing contention in the athletic world is that of lane
+bias~\cite{munro2022}.  Running in the inner lane is frequently held
+to be a disadvantage; mechanisms include biomechanical issues arising
+from centrifugal acceleration, to competitors' inability to see their
+rivals.  Here attention is restricted to heats, for which lane placing
+is random.  I consider every heat in Olympic running from 2004-2020 (a
+total of 41 heats, each of 8 or 9 competitors); only competitors'
+ranks are used.  Figure~\ref{plotolymp} shows a log-likelihood curve
+for the Bradley-Terry strength of the focal competitor, here the
+runner in the innermost lane.  We see that the evaluate of $0.574$ is
+very close to the neutral value of $0.5$, for which the support is
+only $0.16$, far short of Edwards's two units of support criterion for
+rejection~\cite{edwards1972}.  This dataset contains no evidence to
+support lane bias.
 
 \begin{figure}[t]
-\includegraphics[width=4in]{plotparkrun}  % plotparkrun.pdf made in very_simplified_likelihood.Rmd
-\caption{Author's strength\label{parkrunsupport}}
+\includegraphics[width=4in]{plotolymp} % produced by very_simplified_likelihood.Rmd
+\caption{Log-likelihood curve for the Bradley-Terry strength of the
+  lane-1 runner, olympic qualifying heats 2012-2020 \label{plotolymp}}
 \end{figure}
+
+
 
 \subsection{Education}
 
-One issue encountered in educational research is that of
-confidentiality of examination scores, and individual results are
-generally regarded as sensitive and private information.
-Nevertheless, it is common for a student to possess some informative
-observations: the total enrollment in a specific class and their
-individual ranking within that class; table~\ref{educationtable} shows
-an apocryphal dataset.  What could a student infer from such data?
+In educational research, confidentiality of examination scores is
+often an issue, and individual results are generally regarded as
+sensitive and private information.  Nevertheless, it is common for a
+student to possess some informative observations: the total enrollment
+in a specific class and their individual ranking within that class;
+table~\ref{educationtable} shows an apocryphal dataset.  What could a
+student infer from such data?
 
 \begin{table*}[t]
   \caption{Educational dataset}
@@ -269,16 +261,15 @@ Figure~\ref{plotpureandapplied} shows contours of support [again
   normalised so the support of the evaluate is zero] for the dataset,
 as a function of pure strength on the horizontal axis and applied
 strength on the vertical axis.  A null of equal strengths appears as
-the
-diagonal line.  We see that the maximum likelihood estimate is
+the diagonal line.  We see that the maximum likelihood estimate is
 $\hat{p}_\mathrm{pure}=0.567$, $\hat{p}_\mathrm{applied}=0.887$.
 However, a constrained optimization shows that the maximum support
 along the null diagonal is about $-2.43$.  Edwards's two units of
-support criterion is met, and we are justified in concluding that the
-student is indeed more competent at applied than pure mathematics.
-Alternatively, we may observe that $2\mathcal{S}=4.86$ is in the tail
-region of its asymptotic $\chi^2_1$ distribution, corresponding to a
-$p$-value of about $0.028$.
+support criterion~\cite{edwards1972} is met, and we are justified in
+concluding that the student is indeed more competent at applied than
+pure mathematics.  Alternatively, we may observe that
+$2\mathcal{S}=4.86$ is in the tail region of its asymptotic $\chi^2_1$
+distribution, corresponding to a $p$-value of about $0.028$.
 
 \begin{figure}
 \includegraphics[width=4in]{plotpureandapplied}  % plotpureandapplied.pdf produced by very_simplified_likelihood.Rmd
@@ -328,7 +319,7 @@ $1.7\times 10^{-5}$ on its asymptotic $\chi^2_1$ null distribution.
 
 \begin{figure}[t]
 \includegraphics[width=4in]{showchecolike}  % showchecolike.pdf produced by very_simplified_likelihood.Rmd
-\caption{Likelihood functions for $\alpha,\beta$ for Checo's racing
+\caption{Log-likelihood contours for $\alpha,\beta$ for Checo's racing
   career 2011-2023\label{showchecolike}}
 \end{figure}
 
