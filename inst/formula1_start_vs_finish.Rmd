@@ -27,10 +27,10 @@ grid[,1:5]
 ```
 
 
-```{r definemakeH3}
+```{r definereplacenonzerowithorder}
 replacenonzerowithorder <- function(x){
   nonzero <- x!=0
-  x[nonzero] <- order(x[nonzero])
+  x[nonzero] <- rank(x[nonzero])
   return(x)
 }
 
@@ -44,15 +44,15 @@ topn <- 15
 finish <- finish[seq_len(topn),]
 options(use_alabama=TRUE)
 
-`makeH3` <- function(i,lambda,topn){
+`makeH3` <- function(i,lambda,topn,finish,grid){
   suppressWarnings(a <- setNames(as.numeric(finish[,i]),rownames(finish)))
   suppressWarnings(b <- setNames(as.numeric(grid  [,i]),rownames(finish)))
   wanted <- !is.na(b)
   a <- a[wanted]
   b <- b[wanted]
   a[is.na(a)] <- 0 # did not finish
-  a <- order_non_NA_NZ(a)
   a <- a[seq_len(topn)]
+  a <- order_non_NA_NZ(a)
   H <- ordervec2supp(a)
   for(j in seq_along(b)){
     if(!is.na(names(b)[j])){H[names(b)[j]] <- as.weight(lambda^b[j])}
@@ -60,34 +60,91 @@ options(use_alabama=TRUE)
   return(H)
 }
 
-likelam <- function(lambda){
+likelam <- function(lambda,topn,finish,grid){
   H <- hyper3()
-  for(i in seq_len(ncol(finish))){H <- H + makeH3(i,lambda=lambda,topn=topn)}
+  for(i in seq_len(ncol(finish))){H <- H + makeH3(i,lambda=lambda,topn=topn,finish=finish,grid=grid)}
   return(H)
 }
 ```
 
 
 ```{r evaluatelambbda,cache=TRUE}
-f <- function(lambda){
-  H <- likelam(lambda)
+f <- function(lambda,topn,finish,grid){
+  H <- likelam(lambda,topn,finish,grid)
   m <- maxp(H,n=1)
   return(c(loglik(m,H),lambda,m))
 }
 ```
 
 
-```{r evalam,cache=TRUE}
-lam <- seq(from=0.85, to=1.05, len=15)
-bigmat <- sapply(lam,f)
-bigmat
+```{r evalamlam,cache=TRUE}
+system.time(lam <- seq(from=0.85, to=1.01, len=15))
+system.time(bigmat <- sapply(lam,f,topn=topn,finish=finish,grid=grid))
+```
+
+```{r showbigmat}
+head(bigmat)
+```
+
+```{r max_alpha,cache=TRUE}
+system.time(alpha_MLE <- optimize(function(a){f(a,topn=topn,finish=finish,grid=grid)[1]},c(0.95,0.99),maximum=TRUE))
+alpha_MLE
 ```
 
 ```{r plotlikelambda}
-if(FALSE){plot(lam,like-max(like),type='b')
-abline(h=-2)
+like <- bigmat[1,]
+like <- like - max(like)
+plot(lam,like,type='b')
+abline(h=c(0,-2))
 abline(v=1)
-}
+segments(x0=0.9654,y0=-5,y1=0)
+grid()
+```
+
+
+```{r showmaxalpha}
+if(FALSE){print(alpha_MLE)}
+```
+
+
+```{r conventionalhyper2max,cache=TRUE}
+H2 <- ordertable2supp(finish)
+mH2 <- maxp(H2)
+```
+
+```{r}
+dotchart(mH2,pch=16)
+dotchart(log(mH2),pch=16)
+```
+
+
+# Above was 2023, now do the 2022 season
+
+```{r loadfinish22}
+setwd("~/rstudio/hyper2/inst")
+finish <- read.table("formula1_2022.txt",header=TRUE)
+finish22 <- finish[,seq_len(ncol(finish)-1)]
+finish22[,1:5]
+grid22 <- read.table("formula1_starting_2022.txt",header=TRUE)
+grid22[,1:5]
+```
+
+
+
+```{r mlecalc22, cache=TRUE}
+system.time(
+    alpha_MLE22 <- optimize(function(a){f(a,topn=topn,finish=finish22,grid=grid22)[1]},c(0.95,0.99),maximum=TRUE)
+    )
+alpha_MLE22
+```
+
+```{r evalam22,cache=TRUE}
+lam <- seq(from=0.90, to=1.05, len=15)
+system.time(bigmat <- sapply(lam,f,topn=topn,finish=finish22,grid=grid22))
+```
+
+```{r showbigmat22}
+head(bigmat)
 ```
 
 
