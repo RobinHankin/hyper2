@@ -16,6 +16,8 @@ manuscript.
 
 ## Asymptotic likelihood expression {-}
 
+Following is a `sage`-compatible input:
+
 ```
 var('B n r')
 pretty_print_default(True)
@@ -26,7 +28,7 @@ X=log(B-1) + (
 X.taylor(n,Infinity,2)
 ```
 
-It returns this:
+`sage` returns this:
 
 \[
 -(r+1)\log n
