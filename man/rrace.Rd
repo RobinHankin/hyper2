@@ -30,5 +30,5 @@ rankvec_likelihood(rrace(o))
 D <- t(replicate(10,rrace(o))) # 10 races
 H <- hyper2()
 for(i in seq_len(nrow(D))){H <- H+rankvec_likelihood(D[i,])}
-maxp(D)  # should be close to o
+maxp(H)  # should be close to o
 }
