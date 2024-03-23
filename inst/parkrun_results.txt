@@ -1,4 +1,5 @@
 venue    date       run place runners
+stirling 23/03/2024 159 191 257
 stirling 16/03/2024 158 172 227
 stirling 02/03/2024 156 174 234
 stirling 24/02/2024 155 173 238
