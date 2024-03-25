@@ -208,15 +208,15 @@ bias~\cite{munro2022}.  Running in the inner lane is frequently held
 to be a disadvantage; mechanisms include biomechanical issues arising
 from centrifugal acceleration, to competitors' inability to see their
 rivals.  Here attention is restricted to heats, for which lane placing
-is random.  I consider every heat in Olympic running from 2004-2020 (a
-total of 41 heats, each of 8 or 9 competitors); only competitors'
-ranks are used.  Figure~\ref{plotolymp} shows a log-likelihood curve
-for the Bradley-Terry strength of the focal competitor, here the
-runner in the innermost lane.  We see that the evaluate of $0.574$ is
-very close to the neutral value of $0.5$, for which the support is
-only $0.16$, far short of Edwards's two units of support criterion for
-rejection~\cite{edwards1972}.  This dataset contains no evidence to
-support lane bias.
+is random.  I consider every heat in Men's 100m Olympic running from
+2004-2020 (a total of 41 heats, each of 8 or 9 competitors); only
+competitors' ranks are used.  Figure~\ref{plotolymp} shows a
+log-likelihood curve for the Bradley-Terry strength of the focal
+competitor, here the runner in the innermost lane.  We see that the
+evaluate of $0.574$ is very close to the neutral value of $0.5$, for
+which the support is only $0.16$, far short of Edwards's two units of
+support criterion for rejection~\cite{edwards1972}.  This dataset
+contains no evidence to support lane bias.
 
 \begin{figure}[t]
 \includegraphics[width=4in]{plotolymp} % produced by very_simplified_likelihood.Rmd
@@ -305,7 +305,7 @@ following inference problem:
 \end{equation}
 
 (that is, a logistic regression of generalized Bradley-Terry strength
-$a$ against time, with $\alpha$ and $\beta$ being linear
+$a$ against time $t$, with $\alpha$ and $\beta$ being linear
 coefficients).  Contours of equal support are shown in
 Figure~\ref{showchecolike}, again normalized so that
 $\mathcal{S}(\hat{\alpha},\hat{\beta})=0$.  We see the expected
