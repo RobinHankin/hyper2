@@ -453,7 +453,7 @@ plot(a,L,type='l',ylab="log-likelihood",lwd=2)
 abline(h=c(0,-2))
 ahat <- optolym$maximum
 segments(x0=ahat,y0=-1.5,y1=0)
-text(ahat,-0.91,expression(hat(a)==0.573),pos=2)
+text(ahat,-0.91,expression(hat(a)==0.474),pos=2)
 abline(v=0.5,lty=3)
 
 segments(x0=a_lower,y0=-1.5,y1=-3.5)
