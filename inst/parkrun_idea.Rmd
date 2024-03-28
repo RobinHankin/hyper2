@@ -19,7 +19,7 @@ To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 library("hyper2")
 
 f <- function(n,alpha){
-  jj <- alpha^(1:n)
+  jj <- 1/alpha^(1:n)
   return(jj/sum(jj))
 }
 
@@ -33,7 +33,7 @@ tabulate(replicate(1000,which(rrace(setNames(f(26,alpha),letters))==letters[beta
 ```
 
 ```{r calculateLikemat,cache=FALSE}
-alpha_try <- seq(from=1,to=6,len=10)
+alpha_try <- seq(from=1,to=6,len=20)
 beta_try <- 1:26
 calculate_from_scratch <- FALSE
 if(calculate_from_scratch){
@@ -66,13 +66,11 @@ filled.contour(alpha_try,beta_try,mL(26))
 
 ## Now 10 in-silico races:
 ```{r doinsilico,cache=FALSE}
-alphatrue <- 1.3
-betatrue <- 20   # 13th letter = "m"
+alphatrue <- 2.3
+betatrue <- 4  
 set.seed(1)
 D <- replicate(10,which(rrace(setNames(f(26,alphatrue),letters))==letters[betatrue]))
 sort(D)
-D <- 10:20
-D
 ```
 
 ```{r trylikeinsilico,cache=FALSE}
