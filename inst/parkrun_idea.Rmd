@@ -18,11 +18,9 @@ To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 ```{r deff}
 library("hyper2")
 
-f <- function(n,a){
-  p <- 1:n
-  p <- (p-min(p))/(max(p)-min(p))
-  jj <- exp(a*p)
-  jj/sum(jj)  
+f <- function(n,alpha){
+  jj <- alpha^(1:n)
+  return(jj/sum(jj))
 }
 
 getlike <- function(v){
@@ -34,50 +32,71 @@ tabulate(replicate(10000,which(rrace(setNames(f(26,alpha),letters))==letters[bet
 }
 ```
 
-
 ```{r calculateLikemat,cache=TRUE}
 
-alpha_try <- 0:6
+alpha_try <- seq(from=1,to=6,len=10)
 beta_try <- 1:26
 
 M <- as.matrix(expand.grid(alpha=alpha_try, beta=beta_try))
 system.time(L <- t(apply(M,1,getlike)))
+L_integer <- L  # counts
 L[,1:26] <- L[,1:26]/mean(rowSums(L[,1:26]))
 colnames(L) <- c(letters,'alpha','beta')
 head(L)
-
 ```
 
+```{r makecontL}
+colSums(L)
+mL <- function(i){matrix(L[,i],length(alpha_try),length(beta_try))}
+filled.contour(alpha_try,beta_try,mL(1))
+filled.contour(alpha_try,beta_try,mL(5))
+filled.contour(alpha_try,beta_try,mL(10))
+filled.contour(alpha_try,beta_try,mL(15))
+filled.contour(alpha_try,beta_try,mL(20))
+filled.contour(alpha_try,beta_try,mL(26))
+```
 
-
+```{r}
+plot(table(L_integer[,1:26]))
+```
 
 ## Now 10 in-silico races:
-```{r doinsilico,cache=TRUE}
-alphatrue <- 3
-betatrue <- 4
-set.seed(0)
-D <- replicate(30,which(rrace(setNames(f(26,alphatrue),letters))==letters[betatrue]))
+```{r doinsilico,cache=FALSE}
+alphatrue <- 1.3
+betatrue <- 20   # 13th letter = "m"
+set.seed(1)
+D <- replicate(10,which(rrace(setNames(f(26,alphatrue),letters))==letters[betatrue]))
 sort(D)
+D <- 10:20
+D
 ```
 
-```{r trylike,cache=TRUE}
-likelihood <- apply(L[,D],1,prod)
+```{r trylikeinsilico,cache=FALSE}
+likelihood <- apply(L[,D],1,prod) + 0.00
 likelihood <- matrix(likelihood,length(alpha_try),length(beta_try))
 ```
 
 ```{r showlike}
-matplot(likelihood)
+round(alpha_try,2)
+matplot(alpha_try,likelihood,type='b')
+matplot(beta_try,t(likelihood),type='b')
+matplot(alpha_try,log(likelihood)-log(max(likelihood)),type='b',ylim=c(-20,0))
+matplot(beta_try,log(t(likelihood))-log(max(likelihood)),type='b',ylim=c(-20,0))
 filled.contour(alpha_try,beta_try,(likelihood))
 table(likelihood==0)
 plot(f(26,alphatrue))
 abline(v=betatrue)
+contour(alpha_try,beta_try,likelihood)
+abline(v=alphatrue)
+abline(h=betatrue)
+contour(alpha_try,beta_try,log(likelihood) - log(max(likelihood)),levels=-(0:10))
+abline(v=alphatrue)
+abline(h=betatrue)
 ```
-
-
 
 \subsection{Park run}
 
-``Parkrun'' is a distributed community initiative that organises
+"Parkrun" is a distributed community initiative that organises
 weekly timed 5 km runs/walks in parks worldwide~\cite{hindley2020}.  A
 typical event will have 200 participants.  Table~\ref{parkruntable}
 shows the author has completed a total of 15 parkruns to date, and
@@ -103,7 +122,7 @@ Terry strength $a$: Figure~\ref{parkrunsupport} shows a support curve
 for $a$ with the evaluate, $\hat{a}\simeq 0.448$ shown.  We also see
 two units of support~\cite{edwards1992} shown as a dotted line
 illustrating a support interval of about 0.315 - 0.567; we may be
-reasonably confident that the author's true strength lies in this
+reasonably confident that the author's true BT strength lies in this
 range.  In particular, note that a reasonable $H_0\colon
 a=\frac{1}{2}$ may not be rejected, the support for $H_0$ being only
 susceptible to very minor improvement [$\simeq 0.351$] by moving to
