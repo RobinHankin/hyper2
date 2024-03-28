@@ -411,9 +411,7 @@ o_constrained
 pchisq(2*(o_free$value - o_constrained$value),df=1,lower.tail=FALSE)
 ```
 
-
 # Athletics
-
 
 ```{r loadolymp}
 O <- read.table("olympic_athletics_mens_100m.txt",header=TRUE)
