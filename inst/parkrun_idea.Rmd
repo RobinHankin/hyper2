@@ -1,0 +1,117 @@
+---
+title: "Underdispersion in the context of community athletics"
+output: bookdown::html_document2
+author: "Robin K. S. Hankin"
+bibliography: "hyper2.bib"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
+
+```{r deff}
+library("hyper2")
+
+f <- function(n,a){
+  p <- 1:n
+  p <- (p-min(p))/(max(p)-min(p))
+  jj <- exp(a*p)
+  jj/sum(jj)  
+}
+
+getlike <- function(v){
+  alpha <- v[1]
+  beta <- v[2]
+ c(
+tabulate(replicate(10000,which(rrace(setNames(f(26,alpha),letters))==letters[beta])),nbins=26)
+,alpha,beta)
+}
+```
+
+
+```{r calculateLikemat,cache=TRUE}
+
+alpha_try <- 0:6
+beta_try <- 1:26
+
+M <- as.matrix(expand.grid(alpha=alpha_try, beta=beta_try))
+system.time(L <- t(apply(M,1,getlike)))
+L[,1:26] <- L[,1:26]/mean(rowSums(L[,1:26]))
+colnames(L) <- c(letters,'alpha','beta')
+head(L)
+
+```
+
+
+
+
+## Now 10 in-silico races:
+```{r doinsilico,cache=TRUE}
+alphatrue <- 3
+betatrue <- 4
+set.seed(0)
+D <- replicate(30,which(rrace(setNames(f(26,alphatrue),letters))==letters[betatrue]))
+sort(D)
+```
+
+```{r trylike,cache=TRUE}
+likelihood <- apply(L[,D],1,prod)
+likelihood <- matrix(likelihood,length(alpha_try),length(beta_try))
+```
+
+```{r showlike}
+matplot(likelihood)
+filled.contour(alpha_try,beta_try,(likelihood))
+table(likelihood==0)
+plot(f(26,alphatrue))
+abline(v=betatrue)
+```
+
+
+
+\subsection{Park run}
+
+``Parkrun'' is a distributed community initiative that organises
+weekly timed 5 km runs/walks in parks worldwide~\cite{hindley2020}.  A
+typical event will have 200 participants.  Table~\ref{parkruntable}
+shows the author has completed a total of 15 parkruns to date, and
+from the first pair of numbers we see that 238 runners attended that
+particular parkrun, of whom the author placed 173.
+
+\begin{table*}[t]
+  \caption{Parkrun results}
+\label{parkruntable}
+\begin{tabular}{ccccccccccc}
+\hline
+rank   &173  & 165 & 172 & 199 & 181 & 229 & 177 & 222 & 206 & 142 \\
+runners&238  & 238 & 196 & 242 & 242 & 318 & 259 & 305 & 297 & 241 \\ \\ \\
+rank   & 118 & 224 & 128 & 115 & 183 &     &     &     &     &\\
+runners& 179 & 338 & 203 & 245 & 254 &     &     &     &     &\\
+\hline
+\end{tabular}
+\end{table*}
+
+
+We may consider the author to have an unknown generalized Bradley
+Terry strength $a$: Figure~\ref{parkrunsupport} shows a support curve
+for $a$ with the evaluate, $\hat{a}\simeq 0.448$ shown.  We also see
+two units of support~\cite{edwards1992} shown as a dotted line
+illustrating a support interval of about 0.315 - 0.567; we may be
+reasonably confident that the author's true strength lies in this
+range.  In particular, note that a reasonable $H_0\colon
+a=\frac{1}{2}$ may not be rejected, the support for $H_0$ being only
+susceptible to very minor improvement [$\simeq 0.351$] by moving to
+the evaluate.
+
+```{asis}
+\begin{figure}[t]
+\includegraphics[width=4in]{plotparkrun}  % plotparkrun.pdf made in very_simplified_likelihood.Rmd
+\caption{Author's strength\label{parkrunsupport}}
+\end{figure}
+```

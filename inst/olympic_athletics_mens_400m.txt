@@ -34,4 +34,3 @@ year heat rank n
 2020 H5 1 8
 2020 H6 8 8
 2020 H7 7 8
-
