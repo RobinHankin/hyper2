@@ -27,22 +27,26 @@ getlike <- function(v){
   alpha <- v[1]
   beta <- v[2]
  c(
-tabulate(replicate(10000,which(rrace(setNames(f(26,alpha),letters))==letters[beta])),nbins=26)
+tabulate(replicate(1000,which(rrace(setNames(f(26,alpha),letters))==letters[beta])),nbins=26)
 ,alpha,beta)
 }
 ```
 
-```{r calculateLikemat,cache=TRUE}
-
+```{r calculateLikemat,cache=FALSE}
 alpha_try <- seq(from=1,to=6,len=10)
 beta_try <- 1:26
-
-M <- as.matrix(expand.grid(alpha=alpha_try, beta=beta_try))
-system.time(L <- t(apply(M,1,getlike)))
+calculate_from_scratch <- FALSE
+if(calculate_from_scratch){
+    M <- as.matrix(expand.grid(alpha=alpha_try, beta=beta_try))
+    system.time(L <- t(apply(M,1,getlike)))
+    colnames(L) <- c(letters,'alpha','beta')
+    write.table(L,file="likelihoodmatrix.txt")
+} else {
+    L <- read.table("likelihoodmatrix.txt")
+}
 L_integer <- L  # counts
 L[,1:26] <- L[,1:26]/mean(rowSums(L[,1:26]))
-colnames(L) <- c(letters,'alpha','beta')
-head(L)
+head(L_integer)
 ```
 
 ```{r makecontL}
@@ -57,7 +61,7 @@ filled.contour(alpha_try,beta_try,mL(26))
 ```
 
 ```{r}
-plot(table(L_integer[,1:26]))
+#plot(table(L_integer[,1:26]))
 ```
 
 ## Now 10 in-silico races:
