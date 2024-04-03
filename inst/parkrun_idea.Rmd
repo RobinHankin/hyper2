@@ -15,6 +15,10 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 
 To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 
+@paul1995 state that "underdispersion will be seen very rarely in
+real-life situations".
+
+
 ```{r deff}
 library("hyper2")
 
