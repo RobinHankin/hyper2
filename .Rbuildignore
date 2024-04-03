@@ -222,3 +222,5 @@ CITATION.cff
 ^inst/vsl_partial_ranks.Rmd$
 ^inst/vsl_masterchef.Rmd$
 ^inst/formula1_start_vs_finish.Rmd$
+^inst/olympic_athletics_mens_100m.txt$
+^inst/olympic_athletics_mens_400m.txt$
