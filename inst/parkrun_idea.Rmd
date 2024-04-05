@@ -31,7 +31,7 @@ getlike <- function(v){
   alpha <- v[1]
   beta <- v[2]
  c(
-tabulate(replicate(1000,which(rrace(setNames(f(26,alpha),letters))==letters[beta])),nbins=26)
+tabulate(replicate(10000,which(rrace(setNames(f(26,alpha),letters))==letters[beta])),nbins=26)
 ,alpha,beta)
 }
 ```
@@ -44,13 +44,14 @@ if(calculate_from_scratch){
     M <- as.matrix(expand.grid(alpha=alpha_try, beta=beta_try))
     system.time(L <- t(apply(M,1,getlike)))
     colnames(L) <- c(letters,'alpha','beta')
-    write.table(L,file="likelihoodmatrix.txt")
+    saveRDS(L,file="likelihoodmatrix.Rdata")
 } else {
-    L <- read.table("likelihoodmatrix.txt")
+    L <- readRDS("likelihoodmatrix.Rdata")
 }
 L_integer <- L  # counts
 L[,1:26] <- L[,1:26]/mean(rowSums(L[,1:26]))
 head(L_integer)
+head(L)
 ```
 
 ```{r makecontL}
@@ -71,10 +72,11 @@ filled.contour(alpha_try,beta_try,mL(26))
 ## Now 10 in-silico races:
 ```{r doinsilico,cache=FALSE}
 alphatrue <- 2.3
-betatrue <- 4  
+betatrue <- 11 
 set.seed(1)
-D <- replicate(10,which(rrace(setNames(f(26,alphatrue),letters))==letters[betatrue]))
+D <- replicate(17,which(rrace(setNames(f(26,alphatrue),letters))==letters[betatrue]))
 sort(D)
+plot(table(D))
 ```
 
 ```{r trylikeinsilico,cache=FALSE}
