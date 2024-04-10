@@ -112,11 +112,20 @@ H2 <- ordertable2supp(finish)
 mH2 <- maxp(H2)
 ```
 
-```{r}
+```{r maketwodotcharts}
 dotchart(mH2,pch=16)
 dotchart(log(mH2),pch=16)
 ```
 
+
+```{r showanexampleoff,cache=TRUE}
+o <- likelam(lambda=0.9, topn=15,finish=finish,grid=grid)
+loglik(equalp(o),o)
+
+o <- likelam(lambda=0.95, topn=15,finish=finish,grid=grid)
+loglik(equalp(o),o)
+
+```
 
 # Above was 2023, now do the 2022 season
 
@@ -128,8 +137,6 @@ finish22[,1:5]
 grid22 <- read.table("formula1_starting_2022.txt",header=TRUE)
 grid22[,1:5]
 ```
-
-
 
 ```{r mlecalc22, cache=TRUE}
 system.time(
@@ -147,4 +154,9 @@ system.time(bigmat <- sapply(lam,f,topn=topn,finish=finish22,grid=grid22))
 head(bigmat)
 ```
 
-
+```{r plotbigmat22}
+like <- bigmat[1,]
+like <- like - max(like)
+plot(lam,like,type='b')
+abline(h=c(0,-2))
+```
