@@ -81,7 +81,7 @@ order statistics is proposed.  We consider a field of $n+1$ entities
 that are ordered in some way [the preferred example is competitors in
   a running race, ordered by time of crossing the finishing line].
 One entity is of particular interest to us: the ``focal entity'', or
-focal competitor.  We assign Placket-Luce strength $a$ to the focal
+focal competitor.  We assign Plackett-Luce strength $a$ to the focal
 competitor and $b$ to all others; we require $a+b=1$.  The associated
 inference problem appears to have a wide range of applications and I
 present some analysis of datasets drawn from the fields of Olympic
@@ -123,11 +123,12 @@ proportional to
 However, estimation of the strengths is somewhat difficult if $n$ is
 even moderately large: even with as few as 20 competitors following
 Zipf's law~\cite{zipf1949} [a typical assumption for Bradley-Terry
-  strengths], Hankin~\cite{hankin2017_rmd} shows that maximum
-likelihood strengths identify the correct ranking with a probability
-of essentially zero.  The situation is worse in cases such as formula
-1 motor racing considered below, which requires us to consider
-${\mathcal O}(100)$ competitors.
+  strengths] and say 20 independent complete rank observations,
+Hankin~\cite{hankin2017_rmd} shows that maximum likelihood strengths
+identify the correct ranking with a probability of essentially zero.
+The situation is worse in cases such as formula 1 motor racing
+considered below, which requires us to consider ${\mathcal O}(100)$
+competitors.
 
 Consider a race between a competitor of Bradley-Terry strength $a$ and
 $n$ cloned competitors, each of strength $b=1-a$.  An observation is
@@ -262,10 +263,11 @@ strength on the vertical axis.  A null of equal strengths appears as
 the diagonal line.  We see that the maximum likelihood estimate is
 $\hat{p}_\mathrm{pure}=0.567$, $\hat{p}_\mathrm{applied}=0.887$.
 However, a constrained optimization shows that the maximum support
-along the null diagonal is about $-2.43$.  Edwards's two units of
-support criterion~\cite{edwards1972} is met, and we are justified in
-concluding that the student is indeed more competent at applied than
-pure mathematics.  Alternatively, we may observe that
+along the null diagonal is about $-2.43$, at
+${p}_\mathrm{pure}=0.567={p}_\mathrm{applied}=0.713$.  Edwards's two
+units of support criterion~\cite{edwards1972} is met, and we are
+justified in concluding that the student is indeed more competent at
+applied than pure mathematics.  Alternatively, we may observe that
 $2\mathcal{S}=4.86$ is in the tail region of its asymptotic $\chi^2_1$
 distribution, corresponding to a $p$-value of about $0.028$.
 
