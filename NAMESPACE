@@ -74,6 +74,7 @@ export("inc")
 export("indep")
 export("is.dirichlet")
 export("is.hyper3")
+export("is.namedvector")
 export("is_ok_hessian")
 export("is_ok_weightedplayers")
 export("is_valid_hyper2")
@@ -198,6 +199,8 @@ importFrom("disordR","lapply")
 importFrom("alabama","constrOptim.nl")
 
 importFrom("calibrator","MH")
+
+importFrom("frab","is.namedvector")
 
 import(methods)
 import(mathjaxr)
