@@ -87,7 +87,7 @@ head(bigmat)
 ```
 
 ```{r max_alpha,cache=TRUE}
-system.time(alpha_MLE <- optimize(function(a){f(a,topn=topn,finish=finish,grid=grid)[1]},c(0.95,0.99),maximum=TRUE))
+system.time(alpha_MLE <- optimize(function(a){f(a,topn=topn,finish=finish,grid=grid)[1]},c(0.90,0.95),maximum=TRUE))
 alpha_MLE
 ```
 
