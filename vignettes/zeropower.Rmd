@@ -70,8 +70,12 @@ chess
 
 and secondly, function `loglik()` traps nonzero power sums:
 
-```{r,loglikdoesnotwork,error=TRUE}
+```
 loglik(equalp(chess),chess)
+```
+
+```
+## Error in loglik_single(p, H, log = log): sum(powers(H)) == 0 is not TRUE
 ```
 
 The correct idiom would be
