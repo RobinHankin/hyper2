@@ -12,7 +12,7 @@ LazyData: yes
 Depends: methods, cubature, R (>= 3.5.0)
 Suggests: knitr, markdown, rmarkdown, testthat, bookdown, rticles, covr
 VignetteBuilder: knitr
-Imports: Rcpp (>= 1.0-7), partitions, mathjaxr, disordR (>= 0.0-9), alabama, calibrator, Rdpack, magrittr
+Imports: Rcpp (>= 1.0-7), partitions, mathjaxr, disordR (>= 0.0-9), alabama, calibrator, Rdpack, magrittr, frab
 LinkingTo: Rcpp
 URL: https://github.com/RobinHankin/hyper2
 BugReports: https://github.com/RobinHankin/hyper2/issues

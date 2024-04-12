@@ -79,6 +79,7 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
 }
 
 `as.hyper3` <- function(x){
+    if(is.hyper3(x)){return(x)}
     if(is.hyper2(x)){
         return(hyper3_bw(
             B=brackets(x),
@@ -632,6 +633,7 @@ stop("not yet written")
 }
 
 `setweight` <- function(x,index,value){
+    x <- as.hyper3(x)
     stopifnot(length(index) == length(value))
     for(i in seq_along(index)){
         x <- hyper3_nv(

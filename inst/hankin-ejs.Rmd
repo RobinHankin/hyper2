@@ -16,7 +16,10 @@ manuscript.
 
 ## Asymptotic likelihood expression {-}
 
-Following is a `sage`-compatible input:
+First we use Stirling's approximation $\log(n!)\sim
+(n+1/2)\log(n)-n+\log(2\pi)/2$ to simplify equation 4 of the manuscript
+Following is a `sage`-compatible input [the $\sqrt{2\pi}$ bit
+cancels]:
 
 ```
 var('B n r')
@@ -49,10 +52,12 @@ find, to first order,
 + K + \mathcal{O}\left(n^{-2}\right)
 \]
 
-
+where $K$ is a constant.
 
 ## Definition of likelihood and log-likelihood in R {-}
 
+Below I give R idiom for the ikelihood expression given by equation 4
+in the manuscript.  Some inline comments are included.
 
 ```{r,label=definefsingle}
 f_single <- function(a,r,n,log=FALSE){  # not vectorised
@@ -84,7 +89,9 @@ f_vec_arn <- function(a,r,n,log=FALSE){
 	}
 	return(out)
 }
+```
 
+```{r definefapprox}
 fapprox <- function(a,r,n,log=FALSE){
 	if(log){
 		return(log(B-1)-B*(r+1)/n)
@@ -93,6 +100,9 @@ fapprox <- function(a,r,n,log=FALSE){
 	}
 }
 ```
+
+Above, `fapprox()` gives the asymptotic expression (5) in the
+manuscript.
 
 ```{r label=defdiff}
 fdash <- function(a,r,n,log=TRUE){
@@ -103,7 +113,19 @@ fdash <- function(a,r,n,log=TRUE){
 }
 ```
 
-Now verify `fdash()`:
+Notation is $\mathcal{L}$ for likelihood and
+$\mathcal{S}=\log\mathcal{L}$ for log-likelihood (support).  Above we
+see `fdash()` implements either $\frac{\partial\mathcal{S}}{\partial
+a}$ or $\frac{\partial\mathcal{L}}{\partial a}$ [depending on the
+value of argument `log`.  We see that
+
+$$
+\frac{\partial\mathcal{S}}{\partial a}=
+B^2\left(\frac{1}{B-1}-\psi(B+n)+\psi(B+n-r-1)\right)$$
+
+and $\frac{\partial\mathcal{L}}{\partial a}$ is of course just
+$\frac{\mathcal{L}\partial\mathcal{S}}{\partial a}$.  Now, numerical
+verification of `fdash()`:
 
 ```{r label=verifydiff}
 a <- 0.34
@@ -121,8 +143,10 @@ c(
 )
 ```
 
+Above we see very close agreemen between numerical and analytical
+results, for both `log=TRUE` and `log=FALSE`.
 
-## Maximum likelihood estimation
+## Maximum likelihood estimation {-}
 
 Use numerical optimization [`optim()`] to find the maximum likelihood
 point [R function `MLE()`] and, as a check, use calculus `uniroot()`
@@ -153,7 +177,9 @@ showdiff(MLE(3,7),MLEa(3,7))
 )
 ```
 
-
+Above we see very close agreement between the two methods.  We can get
+a feel for the accuracy of the asymptotic result numerically using
+similar methods:
 
 ```{r usestirling}
 rbind(
@@ -174,10 +200,9 @@ showdiff(MLEa(10,5000),5000 /5011)
 
 ```
 
-
-
-
-Now verification
+Now another verification, this time comparing the R implementation
+against two different direct numerical implementations of equation 4
+of the manuscript:
 
 ```{r,label=verifytwo}
 a <- 0.23423434
@@ -191,6 +216,8 @@ way2 = (B-1)/prod(B+(5:8)),
 way3 = f_vec_arn(a,r,n,log=FALSE)
 )
 ```
+
+Above we see close agreement.
 
 ## Produce Maximum Likelihood diagram, Figure 1 {-}
 
@@ -485,16 +512,19 @@ wp <- category=='pure'
 wa <- category=='applied'
 ```
 
-Pure first
+Following lines show optimization of the _marginal_ Bradley Terry
+strength for pure and applied mathematics:
 
 ```{r dopurefurst}
 Lpure <- f_vec_arn(a,rank[wp]-1,class_size[wp]-1,log=TRUE)
 Lpure <- Lpure - max(Lpure,na.rm=TRUE)
 plot(a,Lpure,ylab='pure strength')
-optimize(function(a){f_vec_arn(a,rank[wp]-1,class_size[wp]-1,log=TRUE)},c(0.3,0.6),maximum=TRUE)
-optimize(function(a){f_vec_arn(a,rank[wa]-1,class_size[wa]-1,log=TRUE)},c(0.3,0.6),maximum=TRUE)
+optimize(function(a){f_vec_arn(a,rank[wp]-1,class_size[wp]-1,log=TRUE)},c(0.1,0.9),maximum=TRUE)
+optimize(function(a){f_vec_arn(a,rank[wa]-1,class_size[wa]-1,log=TRUE)},c(0.1,0.9),maximum=TRUE)
 ```
 
+[the evaluates above do not appear in the manuscript] Now we define a
+likelihood function for the two subjects jointly:
 
 ```{r definesupp2ed}
 supp2_ed <- function(vec,place1,place2,runners1,runners2){
@@ -532,6 +562,9 @@ plotpureandapplied()
 dev.off()
 ```
 
+Following code shows _joint_ maximization of likelihood:
+
+
 ```{r,label=defsupp2}
 jj1 <-
 optim(
@@ -543,12 +576,18 @@ optim(
 jj1
 ```
 
+Following code shows _constrained_ maximization of likelihood
+[constrained, that is, to follow the diagonal null line]:
+
 ```{r,label=findmaxlike}
 jj2 <-
 optimize(function(v){supp2_ed(c(v,v),rank[wp]-1,rank[wa]-1,class_size[wp]-1,class_size[wa]-1)},
 c(0.1,0.9),maximum=TRUE)
 jj2
 ```
+
+Extra support is thus $-86.9449 + 89.3732=2.4283$ (to 4 d.p.)  Now
+calculate the asymptotic $p$-value obtained from Wilks's theorem:
 
 ```{r,label=shochisw}
 pchisq(2*(jj1$value-jj2$objective),lower.tail=FALSE,df=1)

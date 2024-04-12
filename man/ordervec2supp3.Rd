@@ -32,7 +32,7 @@ args2ordervec(...)
 \arguments{
   \item{v}{Ranks in the form of a character vector.  Element \code{v[1]}
     is the first-placed competitor, element \code{v[2]} the second, and
-    so on}
+    so on.  For example, \code{ordervec2supp3(c('b','b','a','c','a'))}}
   \item{nonfinishers}{Character vector (a set) showing players that did
     not finish.  See details section and examples}
   \item{a}{An ordertable}

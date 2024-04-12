@@ -199,6 +199,8 @@ importFrom("alabama","constrOptim.nl")
 
 importFrom("calibrator","MH")
 
+importFrom("frab","is.namedvector")
+
 import(methods)
 import(mathjaxr)
 
