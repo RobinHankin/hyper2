@@ -1,0 +1,102 @@
+---
+title: "formula1: sequential correlation"
+output: html_document
+date: "2024-03-11"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+```
+
+Formula 1 grand prix racing, 2022 season.  We wonder whether placing
+well at a race helps the team in some way in the next race.  The
+"help" might be an $\alpha$ weighting term for just the winners, or a
+$\alpha^n$ term for placing $n$-th in the previous race.  I would have
+thought $\alpha>1$ [the help accruing from a win is positive] but it
+is possible that $\alpha<1$ which would correspond to it being a
+hindrance in some way.  Perhaps winning leads to overconfidence or
+complacency in the next one?
+
+
+```{r loadfinish}
+setwd("~/rstudio/hyper2/inst")
+finish <- read.table("formula1_2023.txt",header=TRUE)
+finish <- finish[,seq_len(ncol(finish)-1)]
+finish[1:9,1:5]
+```
+
+```{r starthyper2}
+f <- function(i){ # this is column 'i' of finish
+    ordertable2supp(finish[,i,drop=FALSE])
+}
+g <- function(i){
+    suppressWarnings(out <- as.numeric(finish[,i,drop=TRUE]))
+    out[is.na(out)] <- length(out)
+    names(out) <- rownames(finish)
+    return(out)
+}
+```
+
+```{r muckaboutwithlikelihood}
+	weightedlikelihood <- function(alpha){
+		out <- hyper3()
+		for(i in seq(from=2,to=ncol(finish))){
+			H <- f(i)
+			previous <- g(i-1)
+			H[names(previous)] <- as.weight(alpha^previous)
+			out <- out + H
+		}
+		return(out)
+}
+```
+
+```{r doweightedlike,cache=TRUE}
+H <- weightedlikelihood(0.9)
+mH <- maxp(H)
+```
+
+```{r showweightedlike}
+mH
+dotchart(mH)
+loglik(mH,H)
+```
+    
+```{r doweightedlike91,cache=TRUE}
+H91 <- weightedlikelihood(0.91)
+mH91 <- maxp(H91)
+```
+
+```{r showweightedlike91}
+mH91
+dotchart(mH91)
+loglik(mH91,H91)
+```
+    
+	
+```{r definelikealpha}
+likealpha <- function(alpha){
+	H <- weightedlikelihood(alpha)
+	mH <- maxp(H)
+	return(loglik(mH,H))
+}
+```
+
+
+```{r uselikealpha,cache=TRUE}
+alpha <- seq(from=0.95,to=1.02,by=0.01)
+likes <- sapply(alpha,likealpha)
+```
+
+```{r plotalpha}
+plot(alpha,likes-max(likes),type='b')
+abline(h=c(0,-2))
+abline(v=1)
+```
+
+
+
+	
+	
+	
+
