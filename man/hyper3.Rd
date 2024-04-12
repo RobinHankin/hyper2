@@ -130,10 +130,14 @@ hyper3_m(M,p,stripzeros=TRUE)
     object and returns a disoRdered list of named vectors corresponding
     to the brackets and their weights.
 
-    \item Function \code{setweight()} alters the weight of a particular
-    player.  Idiom \dQuote{\code{H["a"] <- as.weight(3)}} will set the
-    weight of every occurence of player \code{a} to 3.  If \code{H} is a
-    \code{hyper2} object, it will be coerced to \code{hyper3}.
+    \item Function \code{setweight()} alters the weight of every
+    occurrence of a set of players.  It is vectorised, so
+    \code{setweight(H,c("a","b"),88:89)} sets the weight of \code{a} to
+    88 and \code{b} to 89.  Replacement methods are defined, so
+    \dQuote{\code{H["a"] <- as.weight(3)}} will set the weight of every
+    occurrence of player \code{a} to 3.  If \code{H} is a \code{hyper2}
+    object, it will be coerced to \code{hyper3}.
+
   }
 }
 \value{
