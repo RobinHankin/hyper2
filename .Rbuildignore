@@ -224,3 +224,7 @@ CITATION.cff
 ^inst/formula1_start_vs_finish.Rmd$
 ^inst/olympic_athletics_mens_100m.txt$
 ^inst/olympic_athletics_mens_400m.txt$
+^inst/hankin-ejs.Rmd$
+^inst/hankin-ejs.tex$
+^inst/hankin-sts.Rmd$
+^inst/hankin-sts.tex$
