@@ -1,11 +1,24 @@
-\documentclass[ejs,noshowframe]{imsart}
+%% Template for the submission to:
+%%   Statistical Science [STS]
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% In this template, the places where you   %%
+%% need to fill in your information are     %%
+%% indicated by '???'.                      %%
+%%                                          %%
+%% Please do not use \input{...} to include %%
+%% other tex files. Submit your LaTeX       %%
+%% manuscript as one .tex document.         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[sts]{imsart}
 
 %% Packages
 \RequirePackage{amsthm,amsmath,amsfonts,amssymb}
 \RequirePackage[numbers]{natbib}
 %\RequirePackage[authoryear]{natbib}%% uncomment this for author-year citations
-\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
-\RequirePackage{graphicx}
+%\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}%% uncomment this for coloring bibliography citations and linked URLs
+\RequirePackage{graphicx}%% uncomment this for including figures
 
 \startlocaldefs
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,60 +35,56 @@
 %% use \theoremstyle{plain}                 %%
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\theoremstyle{plain}
-\newtheorem{axiom}{Axiom}
-\newtheorem{claim}[axiom]{Claim}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
+%\theoremstyle{plain}
+%\newtheorem{???}{???}
+%\newtheorem*{???}{???}
+%\newtheorem{???}{???}[???]
+%\newtheorem{???}[???]{???}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
 %% For Assumption, Definition, Example,     %%
 %% Notation, Property, Remark, Fact         %%
-%% use \theoremstyle{definition}            %%
+%% use \theoremstyle{remark}                %%
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem*{example}{Example}
-\newtheorem*{fact}{Fact}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                          %%
-%% For Case use \theoremstyle{remark}       %%
-%%                                          %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\theoremstyle{remark}
-\newtheorem{case}{Case}
+%\theoremstyle{remark}
+%\newtheorem{???}{???}
+%\newtheorem*{???}{???}
+%\newtheorem{???}{???}[???]
+%\newtheorem{???}[???]{???}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Please put your definitions here:        %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \endlocaldefs
 
 \begin{document}
+
 \begin{frontmatter}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the title of your article here     %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{A simplified Plackett-Luce likelihood function for rank orders}
+%\title{A sample article title with some additional note\thanksref{T1}}
 \runtitle{Simplified Plackett-Luce likelihood functions}
-%\thankstext{T1}{A sample additional note to the title.}
+%\thankstext{T1}{A sample of additional note to the title.}
 
 \begin{aug}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Only one address is permitted per author. %%
-%% Only division, organization and e-mail is %%
-%% included in the address.                  %%
-%% Additional information can be included in %%
-%% the Acknowledgments section if necessary. %%
 %% ORCID can be inserted by command:         %%
-%% \orcid{0000-0000-0000-0000}               %%
+\orcid{0000-0001-5982-0415}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\author[A]{\fnms{Robin}~\snm{Hankin}\ead[label=e1]{hankin.robin@gmail.com}},
+\author[A]{\fnms{Robin Hankin}~\snm{not sure what this is}\ead[label=e1]{hankin.robin@gmail.com}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Addresses                                %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\address[A]{Computer Science and Mathematics,
-University of Stirling\printead[presep={,\ }]{e1}}
-
+\address[A]{University of Stirlling\printead[presep={\ }]{e1}.}
 \end{aug}
 
 \begin{abstract}
+
 Here a simplification of the Plackett-Luce likelihood functions for
 order statistics is proposed.  We consider a field of $n+1$ entities
 that are ordered in some way [the preferred example is competitors in
@@ -88,19 +97,14 @@ present some analysis of datasets drawn from the fields of Olympic
 athletics, education, and Formula~1 motor racing.
 \end{abstract}
 
-\begin{keyword}[class=MSC]
-\kwd[Primary ]{6202}
+\begin{keyword}
 \kwd{Statistical inference under constraints}
-\kwd[ ; secondary: Plackett-Luce likelihood functions; ]{62F30}
 \end{keyword}
-
 
 \end{frontmatter}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Please use \tableofcontents for articles %%
-%% with 50 pages and more                   %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\tableofcontents
+%%%% Main text entry area:
+
 
 \section{Introduction}
 
@@ -141,11 +145,9 @@ function~\cite{luce1959,plackett1975} for this situation would be
 \begin{eqnarray}\label{likeforrn1}
   \mathcal{L}_{r,n}(a) &=&
 \frac{b}{a+ n   b}\cdot
-\frac{b}{a+(n-1)b}\cdot
-\frac{b}{a+(n-2)b}\cdots
-\frac{a}{a+(n-r)b}\\ \label{likeforrn2}
-&=& \frac{B-1}{(B+n-1)(B+n-2)\cdots(B+n-r-1)}\\ \label{likeforrn3}
-&=& \frac{(B-1)(B+n-r-2)!}{(B+n-1)!}
+\frac{b}{a+(n-1)b}\cdots\frac{a}{a+(n-r)b}\nonumber\\
+&=& \frac{B-1}{(B+n-1)(B+n-2)\cdots(B+n-r-1)}\nonumber\\ 
+&=& \frac{(B-1)(B+n-r-2)!}{(B+n-1)!}\label{likeforrn3}
 \end{eqnarray}
 
 \noindent where $B=1/b$.  Note carefully that these expressions are
@@ -154,11 +156,12 @@ analysis of expression~\ref{likeforrn3} shows that
 
 \begin{equation}\label{asymptotic}
 \log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n}
-+ K + \mathcal{O}\left(n^{-2}\right).
+\mathcal{O}\left(n^{-2}\right)
 \end{equation}
 
-Using $\mathcal{S}'=\log(B-1)-B\frac{r+1}{n}$ as an approximate support
-thus incurs an error of only $\mathcal{O}(n^{-2})$.  Observing that
+(up to an arbitrary additive constant).  Using
+$\mathcal{S}'=\log(B-1)-B\frac{r+1}{n}$ as an approximate support thus
+incurs an error of only $\mathcal{O}(n^{-2})$.  Observing that
 $\partial^2\mathcal{S'}/\partial B^2=-(B-1)^{-2}<0$, the evaluate
 would be unique; we have
 $\hat{B}=\frac{n+r+1}{r+1}+\mathcal{O}\left(n^{-1}\right)$, or
@@ -377,5 +380,82 @@ analysis of more than one focal competitor.
 %% if your bibliography is in bibtex format, uncomment commands:
 \bibliographystyle{imsart-number} % Style BST file (imsart-number.bst or imsart-nameyear.bst)
 \bibliography{hyper2}       % Bibliography file (usually '*.bib')
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Single Appendix:                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{appendix}
+%\section*{???}%% if no title is needed, leave empty \section*{}.
+%\end{appendix}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Multiple Appendixes:                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{appendix}
+%\section{???}
+%
+%\section{???}
+%
+%\end{appendix}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Support information, if any,             %%
+%% should be provided in the                %%
+%% Acknowledgements section.                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{acks}[Acknowledgments]
+% The authors would like to thank ...
+%\end{acks}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Funding information, if any,             %%
+%% should be provided in the                %%
+%% funding section.                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{funding}
+% The first author was supported by ...
+%
+% The second author was supported in part by ...
+%\end{funding}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Supplementary Material, including data   %%
+%% sets and code, should be provided in     %%
+%% {supplement} environment with title      %%
+%% and short description. It cannot be      %%
+%% available exclusively as external link.  %%
+%% All Supplementary Material must be       %%
+%% available to the reader on Project       %%
+%% Euclid with the published article.       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{supplement}
+%\stitle{???}
+%\sdescription{???.}
+%\end{supplement}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                  The Bibliography                       %%
+%%                                                         %%
+%%  imsart-???.bst  will be used to                        %%
+%%  create a .BBL file for submission.                     %%
+%%                                                         %%
+%%  Note that the displayed Bibliography will not          %%
+%%  necessarily be rendered by Latex exactly as specified  %%
+%%  in the online Instructions for Authors.                %%
+%%                                                         %%
+%%  MR numbers will be added by VTeX.                      %%
+%%                                                         %%
+%%  Use \cite{...} to cite references in text.             %%
+%%                                                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% if your bibliography is in bibtex format, uncomment commands:
+%\bibliographystyle{imsart-number} % Style BST file (imsart-number.bst or imsart-nameyear.bst)
+%\bibliography{bibliography}       % Bibliography file (usually '*.bib')
+
+%% or include bibliography directly:
+% \begin{thebibliography}{}
+% \bibitem{b1}
+% \end{thebibliography}
 
 \end{document}
