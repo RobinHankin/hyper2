@@ -116,4 +116,5 @@ M <- kka_array[,,1] + 1i*kka_array[,,3] # ignore draws
 home_away(M)
 # home_away3(M,lambda=1.3)  # works but takes too long (~3s)
 
+white_draw3(kka_array,1.88,1.11)
 }
