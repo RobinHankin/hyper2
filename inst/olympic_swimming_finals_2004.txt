@@ -1,0 +1,10 @@
+4 1 5 3 6 8 7 2 50   men   freestyle
+4 7 5 2 1 7 6 3 100  men   freestyle
+8 5 3 2 1 4 7 6 200  men   freestyle
+7 3 4 2 1 5 6 8 400  men   freestyle
+6 5 1 3 4 2 7 8	1500 men   freestyle
+7 6 2 1 3 5 4 8 50   women freestyle
+6 5 3 1 2 4 8 7 100  women freestyle
+1 4 7 2 3 6 5 8 200  women freestyle
+7 8 4 1 2 5 3 6 400  women freestyle
+5 7 2 1 6 3 4 8 800  women freestyle
