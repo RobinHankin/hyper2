@@ -179,8 +179,9 @@ chess3  # representative simple hyper3 object
 
 H1 <- rankvec_likelihood(letters[sample(6)])
 H2 <- rankvec_likelihood(letters[sample(6)])
-H1["a"] <- as.weight(2.1)  # "a" has some advantage
-H2["b"] <- as.weight(0.8)  # "b" has some disadvantage
+H1["a"] <- as.weight(1.2)         # "a" has some disadvantage in H1
+H1[c("b","c")] <- as.weight(2:3)  # "b" and "c" have some advantage in H1
+H2[c("c","d")] <- as.weight(1.5)  # "c" and "d" have some advantage in H2
 H1+H2
 
 }

@@ -634,6 +634,7 @@ stop("not yet written")
 
 `setweight` <- function(x,index,value){
     x <- as.hyper3(x)
+    if(length(value)==1){value <- rep(value,length(index))}
     stopifnot(length(index) == length(value))
     for(i in seq_along(index)){
         x <- hyper3_nv(
