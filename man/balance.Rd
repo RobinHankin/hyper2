@@ -24,6 +24,10 @@ balance(H)
     H[pnames(H)] <- -sum(pnames(H))
     H
   }
+
+Package vignette \code{zeropower} discusses the zero power sum
+condition.
+  
 }
 \value{Returns a balanced \code{hyper2} object}
 \author{Robin K. S. Hankin}
