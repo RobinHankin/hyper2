@@ -194,7 +194,7 @@ equalp.test(Hxy)             # ... and test the null that p_x = p_y
 
 a <- seq(from = 0.02, to = 0.8, len = 40)   # horizontal axis
 L <- sapply(a, function(p){loglik(p, Hxy)}) # vectorized idiom for loglikelihood function
-plot(a, L - max(L), type = "b", xlab = expression(p[a]), ylab = "likelihood") # plot normalized loglikelihood
+plot(a, L - max(L), type = "b", xlab = expression(p[a]), ylab = "support") # plot normalized loglikelihood
 abline(h = c(0, -2))    # two-units-of-support criterion
 abline(v = c(0.24))     # evaluate
 abline(v = c(0.5), lty = 2) # null
