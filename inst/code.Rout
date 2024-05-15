@@ -1,7 +1,7 @@
 
-R version 4.3.3 (2024-02-29) -- "Angel Food Cake"
+R version 4.4.0 (2024-04-24) -- "Puppy Cup"
 Copyright (C) 2024 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -274,7 +274,7 @@ p-value: 0.09253716
 > 
 > a <- seq(from = 0.02, to = 0.8, len = 40)   # horizontal axis
 > L <- sapply(a, function(p){loglik(p, Hxy)}) # vectorized idiom for loglikelihood function
-> plot(a, L - max(L), type = "b", xlab = expression(p[a]), ylab = "likelihood") # plot normalized loglikelihood
+> plot(a, L - max(L), type = "b", xlab = expression(p[a]), ylab = "support") # plot normalized loglikelihood
 > abline(h = c(0, -2))    # two-units-of-support criterion
 > abline(v = c(0.24))     # evaluate
 > abline(v = c(0.5), lty = 2) # null
@@ -520,9 +520,9 @@ p-value: 0.002119
 
 > 
 > date()
-[1] "Wed May 15 08:34:54 2024"
+[1] "Wed May 15 09:01:56 2024"
 > 
 > 
 > proc.time()
    user  system elapsed 
- 488.13    0.32  488.68 
+343.683   0.275 344.043 
