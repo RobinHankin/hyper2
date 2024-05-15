@@ -1,0 +1,528 @@
+
+R version 4.3.3 (2024-02-29) -- "Angel Food Cake"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> 
+> # title: "Replication script"
+> # author: Robin Hankin
+> 
+> # This R script aims at reproducing all figures, tables and other output
+> # presented in the manuscript. It includes the R functions and usage
+> # examples.  We understand the likelihood functions to be defined only for
+> # non-negative strengths.
+> 
+> 
+> ###################################################
+> ### code chunk number 1: setup
+> ###################################################
+> library("hyper2")
+Loading required package: cubature
+> 
+> 
+> ###################################################
+> ### code chunk number 2: jss_hyper3.Rnw:220-224
+> ###################################################
+> 
+> ## Illustration: creating a simple hyper3 object
+> ## using named vectors.  Here the likelihood function is a/(3a+2b+c), 
+> ## a+b+c = 1.
+> 
+> LL <- hyper3()                   ## initialization:  LL is an empty hyper3 object.
+> LL[c(a = 1)] <- 1                ## First term:  numerator of 'a'
+> LL[c(a = 3, b = 2, c = 1)] <- -1 ## Second term: denominator (3a+2b+c), with power (-1)
+> LL                               ## illustration of print method
+log( (a=1)^1 * (a=3, b=2, c=1)^-1)
+> 
+> 
+> ###################################################
+> ### code chunk number 3: jss_hyper3.Rnw:234-236
+> ###################################################
+> 
+> ## Use case of log-likelihood as implemented by function loglik().
+> ## We will evaluate log-likelihood function LL at two points on the
+> ## two-simplex:
+> 
+> loglik(c(a = 0.01, b = 0.01, c = 0.98), LL)    # L(0.01, 0.01, 0.98)
+[1] -4.634729
+> loglik(c(a = 0.90, b = 0.05, c = 0.05), LL)    # L(0.90, 0.05, 0.05)
+[1] -1.15268
+> 
+> 
+> ###################################################
+> ### code chunk number 4: jss_hyper3.Rnw:251-252
+> ###################################################
+> 
+> ## Illustration of an order statistic, with preferred interpretation
+> ## of a race between three clones of strength "a", two of strength
+> ## "b", and a singleton of strength "c".
+> 
+> (H <- ordervec2supp3(c("a", "c", "b", "a", "a", "b")))  
+log( (a=1)^3 * (a=1, b=1)^-1 * (a=2, b=1)^-1 * (a=2, b=2)^-1 * (a=2,
+b=2, c=1)^-1 * (a=3, b=2, c=1)^-1 * (b=1)^1 * (c=1)^1)
+> 
+> 
+> ###################################################
+> ### code chunk number 5: maxexamp
+> ###################################################
+> 
+> ## function maxp() is S3 generic, here returning the maximum
+> ## likelihood estimate for competitors a, b, c
+> 
+> (mH <- maxp(H))  
+         a          b          c 
+0.21324090 0.08724824 0.69951086 
+> 
+> 
+> ###################################################
+> ### code chunk number 6: testequality
+> ###################################################
+> 
+> ## builtin function equalp.test() is one of a family of functions for
+> ## testing a range of interesting nulls for compositional data
+> 
+> equalp.test(H) 
+
+	Constrained support maximization
+
+data:  H
+null hypothesis: a = b = c
+null estimate:
+        a         b         c 
+0.3333333 0.3333333 0.3333333 
+(argmax, constrained optimization)
+Support for null:  -6.579251 + K
+
+alternative hypothesis:  sum p_i=1 
+alternative estimate:
+         a          b          c 
+0.21324090 0.08724824 0.69951086 
+(argmax, free optimization)
+Support for alternative:  -5.73209 + K
+
+degrees of freedom: 2
+support difference = 0.8471613
+p-value: 0.42863 
+
+> 
+> 
+> ###################################################
+> ### code chunk number 7: maxpaba
+> ###################################################
+> 
+> ## function maxp() used to illustrate a simple use-case of two twins
+> ## and a singleton:
+> 
+> maxp(ordervec2supp3(c("a", "b", "a")))  
+        a         b 
+0.4142108 0.5857892 
+> 
+> 
+> ###################################################
+> ### code chunk number 8: jss_hyper3.Rnw:346-348
+> ###################################################
+> 
+> ## likelihood function for one-simplex {a, b|a+b = 1}, in a form suitable
+> ## for plotting
+> 
+> a <- 1/2 # null hypothesis H0
+> (S_delta <- log(a * (1 - a)/(1 + a)) - log(3 - 2 * sqrt(2)))
+[1] -0.0290123
+> 
+> 
+> ###################################################
+> ### code chunk number 9: jss_hyper3.Rnw:358-359
+> ###################################################
+> 
+> ## calculate the p-value of H0 above, using the asymptotic
+> ## distribution of the log-likelihood:
+> 
+> pchisq(-2 * S_delta, df = 1, lower.tail = FALSE)
+[1] 0.8096458
+> 
+> 
+> ###################################################
+> ### code chunk number 10: figaba
+> ###################################################
+> 
+> ## plot a support function for the observation a>b>a over the
+> ## one-simplex {a, b|a+b = 1} [figure 1]
+> 
+> a <- seq(from = 0, by = 0.005, to = 1)                             # specify horizontal axis
+> S <- function(a){log(a * (1 - a) / ((1 + a) * (3 - 2 * sqrt(2))))} # likelihood function for a>b>a
+> plot(a, S(a), type = "b", xlab = expression(p[a]), ylab = "support")     # plot
+> abline(h = c(0, -2))                                               # annotations [two units-of-support]
+> abline(v = c(0.02438102, 0.9524271), col = "red")                  # annotations [credible interval]
+> abline(v = sqrt(2) - 1)                                            # annotations [evaluate]
+> 
+> 
+> ###################################################
+> ### code chunk number 11: figabbabb
+> ###################################################
+> 
+> ##  plot harmonised likelihood functions for the three possible order
+> ##  statistics [viz a>a>b, a>b>a, b>a>a]
+> 
+> f_aab <- function(a){a^2 / (1 + a)}            # L(a>a>b)
+> f_aba <- function(a){a * (1 - a) / (1 + a)^2}  # L(a>b>a)
+> f_baa <- function(a){(1 - a) / (1 + a)}        # L(b>a>a)
+> p <- function(f, ...){                         # generic plot routine
++   a <- seq(from = 0, by = 0.005, to = 1)
++   points(a, f(a) / max(f(a)), ...)
++   }
+> plot(0:1, 0:1, xlab = expression(p[a]), ylab = "Likelihood", type = "n")  # empty plot
+> p(f_aab, type = "l", col = "black")        # L(a>a>b)  
+> p(f_aba, type = "l", col = "red")          # L(a>b>a)
+> p(f_baa, type = "l", col = "blue")         # L(b>a>a)
+> text(0.8, 0.8, "AAB")                        # annotation
+> text(0.8, 0.5, "ABA", col = "red")              # annotation
+> text(0.8, 0.15, "BAA", col = "blue")            # annotation
+> abline(h = exp(-2), lty = 2)               # two units-of-support criterion
+> 
+> 
+> ###################################################
+> ### code chunk number 12: jss_hyper3.Rnw:453-454
+> ###################################################
+> 
+> ## illustrate a more general observation, here a>b>>{a, b}; function
+> ## ordervec2supp3() allows the user to specify competitors who did not
+> ## finish.
+> 
+> maxp(ordervec2supp3(c("a", "b"), nonfinishers = c("a", "b")))
+        a         b 
+0.5857892 0.4142108 
+> 
+> 
+> ###################################################
+> ### code chunk number 13: define_xy_wilcox
+> ###################################################
+> 
+> ## placenta dataset as used in base::wilcox.Rd, here used to
+> ## illustrate Plackett-Luce approach to nonparametric tests:
+> 
+> x <- c(0.80, 0.83, 1.89, 1.04, 1.45, 1.38, 1.91, 1.64, 0.73, 1.46)
+> y <- c(1.15, 0.88, 0.90, 0.74, 1.21)
+> 
+> 
+> ###################################################
+> ### code chunk number 14: hyper3osdef
+> ###################################################
+> 
+> ## package idiom to test null of equal Plackett-Luce strength of x and
+> ## y:
+> 
+> names(x) <- rep("x", length(x))  
+> names(y) <- rep("y", length(y))
+> (os <- names(sort(c(x, y))))  # here "os" means "order statistic"
+ [1] "x" "y" "x" "x" "y" "y" "x" "y" "y" "x" "x" "x" "x" "x" "x"
+> 
+> 
+> ###################################################
+> ### code chunk number 15: hyper3xytest
+> ###################################################
+> 
+> ## Again use package idiom ordervec2supp3() but wit the the order
+> ## statistic specified above for the placenta dataset:
+> 
+> Hxy <- ordervec2supp3(os)    # create the likelihood function Hxy...
+> equalp.test(Hxy)             # ... and test the null that p_x = p_y
+
+	Constrained support maximization
+
+data:  Hxy
+null hypothesis: x = y
+null estimate:
+  x   y 
+0.5 0.5 
+(argmax, constrained optimization)
+Support for null:  -27.89927 + K
+
+alternative hypothesis:  sum p_i=1 
+alternative estimate:
+        x         y 
+0.2401539 0.7598461 
+(argmax, free optimization)
+Support for alternative:  -26.48443 + K
+
+degrees of freedom: 1
+support difference = 1.414837
+p-value: 0.09253716 
+
+> 
+> 
+> ###################################################
+> ### code chunk number 16: plotwilcoxlike
+> ###################################################
+> 
+> ## show the likelihood function for the Plackett-Luce strength of "a"
+> 
+> a <- seq(from = 0.02, to = 0.8, len = 40)   # horizontal axis
+> L <- sapply(a, function(p){loglik(p, Hxy)}) # vectorized idiom for loglikelihood function
+> plot(a, L - max(L), type = "b", xlab = expression(p[a]), ylab = "likelihood") # plot normalized loglikelihood
+> abline(h = c(0, -2))    # two-units-of-support criterion
+> abline(v = c(0.24))     # evaluate
+> abline(v = c(0.5), lty = 2) # null
+> 
+> 
+> ###################################################
+> ### code chunk number 17: javelintable
+> ###################################################
+> 
+> ## Show explicitly the dataset used for the Plackett-Luce strength of
+> ## the javelin competitors:
+> 
+> javelin_table
+          throw1 throw2 throw3 throw4 throw5 throw6
+Chopra     87.03  87.58  76.79      X      X  84.24
+Vadlejch   83.98      X      X  82.86  86.67      X
+Vesely     79.73  80.30  85.44      X  84.98      X
+Weber      85.30  77.90  78.00  83.10  85.15  75.72
+Nadeem     82.40      X  84.62  82.91  81.98      X
+Katkavets  82.49  81.03  83.71  79.24      X      X
+Mardare    81.16  81.73  82.84  81.90  83.30  81.09
+Etelatalo  78.43  76.59  83.28  79.20  79.99  83.05
+> 
+> 
+> ###################################################
+> ### code chunk number 18: converttosupp3
+> ###################################################
+> 
+> ## Use more sophisticated bespoke package idiom, here
+> ## attemptstable2supp3(), which returns a hyper3 likelihood function
+> ## for the entire dataset, 
+> 
+> javelin_vector <-
++   attemptstable2supp3(
++       javelin_table,     # primary dataset
++       decreasing = TRUE, # decreasing = TRUE specifies that high
++                          # numerical values win [compare race times, 
++                          # where low numerical values win]
++       give.supp = FALSE) # return the order statistic, not its support function
+> 
+> options(width = 60)      # formatting for output
+> javelin_vector           # return order statistic for inspection
+   Chopra    Chopra  Vadlejch    Vesely     Weber     Weber 
+    87.58     87.03     86.67     85.44     85.30     85.15 
+   Vesely    Nadeem    Chopra  Vadlejch Katkavets   Mardare 
+    84.98     84.62     84.24     83.98     83.71     83.30 
+Etelatalo     Weber Etelatalo    Nadeem  Vadlejch   Mardare 
+    83.28     83.10     83.05     82.91     82.86     82.84 
+Katkavets    Nadeem    Nadeem   Mardare   Mardare   Mardare 
+    82.49     82.40     81.98     81.90     81.73     81.16 
+  Mardare Katkavets    Vesely Etelatalo    Vesely Katkavets 
+    81.09     81.03     80.30     79.99     79.73     79.24 
+Etelatalo Etelatalo     Weber     Weber    Chopra Etelatalo 
+    79.20     78.43     78.00     77.90     76.79     76.59 
+    Weber  Vadlejch    Nadeem  Vadlejch    Chopra    Vesely 
+    75.72        NA        NA        NA        NA        NA 
+   Chopra Katkavets  Vadlejch    Vesely    Nadeem Katkavets 
+       NA        NA        NA        NA        NA        NA 
+> 
+> 
+> ###################################################
+> ### code chunk number 19: dothething2
+> ###################################################
+> 
+> ## Now use ordervec2supp3() with the javelin order statistic
+> ## calculated above to give a support function; discard no-throws
+> 
+> javelin <- ordervec2supp3(v = names(javelin_vector)[!is.na(javelin_vector)])
+> 
+> 
+> ###################################################
+> ### code chunk number 20: setdigits
+> ###################################################
+> 
+> ## formatting
+> options(digits = 3)
+> 
+> 
+> ###################################################
+> ### code chunk number 21: testthejav
+> ###################################################
+> 
+> ## Now maximize the likelihood over the 7-simplex corresponding to the
+> ## javelin throwers' Plackett-Luce strengths:
+> 
+> (mj <- maxp(javelin))                                           # use optimization to find evaluate
+   Chopra Etelatalo Katkavets   Mardare    Nadeem  Vadlejch 
+   0.0930    0.0482    0.0929    0.1173    0.1730    0.3206 
+   Vesely     Weber 
+   0.1140    0.0409 
+> dotchart(mj, pch = 16, xlab = "Estimated Bradley-Terry strength")  # visual plot of evaluate
+> 
+> 
+> ###################################################
+> ### code chunk number 22: havealook
+> ###################################################
+> 
+> ## generate a log-contrast plot for LC = log(p_Vadlejch / p_Vesely), 
+> ## using a bespoke function f(), which leverages output from
+> ## specificp.test() when used to assess a null of Vesely having a
+> ## particular strength.
+> 
+> f <- function(s){  
++   jj <- specificp.test(javelin, "Vesely", s, n = 2)  
++   p <- jj$null_estimate
++   return( # return a vector of two numeric values.  The first is the
++           # log-contrast LC [used as a horizontal axis in the next
++           # chunk] and the second is the maximum support for the
++           # particular value of p_Vesely
++       c(log(p[6] / p[7]), jj$null_support)
++   )
++ }
+> Ves <- seq(from = 0.0199, to = 0.33, len = 16)  # specify Vesely's Plackett-Luce strength
+> M <- sapply(Ves, f)  # apply function f() defined above to return LC and its support
+> M[2, ] <- M[2, ] - max(M[2, ]) # normalize 
+> rownames(M) <- c("logcontrast", "support")  # cosmetic 
+> 
+> 
+> ###################################################
+> ### code chunk number 23: plottheloglikcont
+> ###################################################
+> 
+> ## Plot  the log-contrast dataset calculated in the previous chunk
+> 
+> colnames(M) <-  as.character(Ves)
+> plot(t(M), type = "b")   # plot the figure
+> abline(h = c(0, -2))     # two-units-of support criterion
+> abline(v = 0, lty = 2)   # null 
+> abline(v = log(0.32062833 / 0.11402735)) # evaluate
+> 
+> 
+> ###################################################
+> ### code chunk number 24: showconstructortable
+> ###################################################
+> 
+> ## show the constructors' championship dataset used in the manuscript
+> 
+> constructor_2021_table[, 1:9]
+   Constructor BHR EMI POR ESP  MON AZE FRA STY
+1         Merc   1   2   1   1    7  12   2   2
+2         Merc   3 Ret   3   3  Ret  15   4   3
+3         RBRH   2   1   2   2    1   1   1   1
+4         RBRH   5  11   4   5    4  18   3   4
+5      Ferrari   6   4   6   4    2   4  11   6
+6      Ferrari   8   5  11   7 DNSP   8  16   7
+7           MM   4   3   5   6    3   5   5   5
+8           MM   7   6   9   8   12   9   6  13
+9           AR  13   9   7   9    9   6   8   9
+10          AR Ret  10   8  17   13 Ret  14  14
+11         ATH   9   7  10  10    6   3   7  10
+12         ATH  17  12  15 Ret   16   7  13 Ret
+13         AMM  10   8  13  11    5   2   9   8
+14         AMM  15  15  14  13    8 Ret  10  12
+15          WM  14 Ret  16  14   14  16  12  17
+16          WM  18 Ret  18  16   15  17  18 Ret
+17        ARRF  11  13  12  12   10  10  15  11
+18        ARRF  12  14 Ret  15   11  11  17  15
+19          HF  16  16  17  18   17  13  19  16
+20          HF Ret  17  19  19   18  14  20  18
+> 
+> 
+> ###################################################
+> ### code chunk number 25: maxpconstructor2021
+> ###################################################
+> 
+> ## Now Assess whether Mercedes have in fact decreased in strength
+> ## between 2020 and 2021.  Determine hyper3 likelihood functions
+> # for the two years:
+> 
+> const2020 <- ordertable2supp3(constructor_2020_table)  # likelihood function for constructors 2020
+> const2021 <- ordertable2supp3(constructor_2021_table)  # likelihood function for constructors 2021
+> options(digits = 4)     # formatting 
+> maxp(const2020, n = 1)  # show maximum likelihood estimate for 2020
+   ARRF     ATH Ferrari      HF    Merc      MR       R 
+0.04530 0.06807 0.06063 0.02623 0.37783 0.10026 0.09767 
+   RBRH  RPBWTM      WM 
+0.12072 0.08055 0.02273 
+> maxp(const2021, n = 1)  # show maximum likelihood estimate for 2021
+    AMM      AR    ARRF     ATH Ferrari      HF    Merc 
+0.05942 0.07543 0.06238 0.05611 0.16939 0.02023 0.19395 
+     MM    RBRH      WM 
+0.14126 0.18334 0.03848 
+> 
+> 
+> ###################################################
+> ### code chunk number 26: definecombinedlikelihoodfunction
+> ###################################################
+> 
+> ## Now use psubs() to distinguish 2020 results from 2021.  Effectively
+> ## define two teams, "Merc2020" for Mercedes 2020, and "Merc2021" for
+> ## 2021.  Note that the resulting likelihood function is very long and
+> ## difficult to interpret, which is why it is not printed in the
+> ## manuscript.
+> 
+> H <-
++   (
++     psubs(constructor_2020, "Merc", "Merc2020")   ## psubs() substitutes "Merc" for "Merc2020"
++          ## "+" is overloaded in the package.   Here, it
++     +    ## corresponds to addition of (independent) log-likelihood
++          ## functions.
++     psubs(constructor_2021, "Merc", "Merc2021")  # psubs() used again but for 2021
++   )
+> 
+> 
+> ###################################################
+> ### code chunk number 27: usesamep
+> ###################################################
+> 
+> ## Test the null that Mercedes had the same strength in 2020 as 2021, viz
+> ## H0:p_Merc2020 ==  p_Merc2021:
+> 
+> options(digits = 4)
+> samep.test(H, c("Merc2020", "Merc2021"))
+
+	Constrained support maximization
+
+data:  H
+null hypothesis: Merc2020 = Merc2021
+null estimate:
+     AMM       AR     ARRF      ATH  Ferrari       HF 
+ 0.04239  0.05413  0.04677  0.04374  0.07568  0.02323 
+Merc2020 Merc2021       MM       MR        R     RBRH 
+ 0.13903  0.13903  0.09016  0.07944  0.07475  0.10024 
+  RPBWTM       WM 
+ 0.06235  0.02905 
+(argmax, constrained optimization)
+Support for null:  -1189 + K
+
+alternative hypothesis:  sum p_i=1 
+alternative estimate:
+     AMM       AR     ARRF      ATH  Ferrari       HF 
+ 0.03766  0.04824  0.04333  0.04060  0.07036  0.02132 
+Merc2020 Merc2021       MM       MR        R     RBRH 
+ 0.23135  0.09216  0.07893  0.07973  0.07455  0.09322 
+  RPBWTM       WM 
+ 0.06177  0.02679 
+(argmax, free optimization)
+Support for alternative:  -1184 + K
+
+degrees of freedom: 1
+support difference = 4.722
+p-value: 0.002119 
+
+> 
+> date()
+[1] "Wed May 15 08:34:54 2024"
+> 
+> 
+> proc.time()
+   user  system elapsed 
+ 488.13    0.32  488.68 
