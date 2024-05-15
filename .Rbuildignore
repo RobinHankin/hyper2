@@ -230,6 +230,7 @@ CITATION.cff
 ^inst/hankin-sts.tex$
 ^inst/carcinoma.Rmd$
 ^inst/code.R$
+^inst/code.Rout$
 ^inst/collusion3.Rmd$
 ^inst/constructor_2018.txt$
 ^inst/constructor_2022.txt$
