@@ -14,7 +14,7 @@
 
 
 %% just as usual
-\author{Robin K. S. Hankin\\The University of Stirling}
+\author{Robin K. S. Hankin\\University of Stirling}
 \title{Integration in the \pkg{hyper2} package}
 %\VignetteIndexEntry{Integration in hyper2}
 
@@ -54,7 +54,7 @@ optimization, integration, simplex, unit-sum constraint}
 %% in the following format:
 \Address{
   Robin K. S. Hankin\\
-  The University of Stirling\\
+  University of Stirling\\
   E-mail: \email{hankin.robin@gmail.com}
 }
 %% It is also possible to add a telephone and fax number

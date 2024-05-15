@@ -67,7 +67,7 @@ optimization, Bradley-Terry}
 %% in the following format:
 \Address{
   Robin K. S. Hankin\\
-  The University of Stirling\\
+  University of Stirling\\
   E-mail: \email{hankin.robin@gmail.com}\\
 }
 %% It is also possible to add a telephone and fax number
