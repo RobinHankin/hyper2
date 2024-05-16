@@ -2,7 +2,7 @@
 \documentclass[article]{jss}
 
 
-\author{Robin K. S. Hankin\\Auckland University of Technology}
+\author{Robin K. S. Hankin\\University of Stirling}
 \title{Generalized Plackett-Luce Likelihoods}
 \Plainauthor{Robin K. S. Hankin} %% comma-separated
 \Plaintitle{Generalized Plackett-Luce Likelihoods}
@@ -37,10 +37,7 @@
 %% in the following format:
 \Address{
   Robin K. S. Hankin\\
-  School of Engineering and Mathematical Sciences\\
-  Auckland University of Technology\\
-  Wellesley Street\\
-  Auckland, New Zealand\\
+  University of Stirling\\
   E-mail: \email{hankin.robin@gmail.com}\\
   URL: \url{https://academics.aut.ac.nz/robin.hankin}
 }

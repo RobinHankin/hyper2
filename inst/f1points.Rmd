@@ -2,10 +2,9 @@
 documentclass: jss
 author:
   - name: Robin K. S. Hankin
-    affiliation: Auckland University of Technology
+    affiliation: University of Stirling
     address:
-      2-14 Wakefield Street
-      Auckland, New Zealand
+		Stirling, Scotland FK9 4LH
     email: \email{hankin.robin@gmail.com}
     url: http://aut.ac.nz/
 title:
