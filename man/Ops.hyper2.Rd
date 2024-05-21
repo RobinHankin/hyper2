@@ -62,7 +62,9 @@ hyper2_sum_numeric(H,r)
   \code{icons["L"] <- icons["L"] + 3} and \code{icons["L"] \%<>\%inc(3)}
   work (without this, one has to type \code{icons["L"] <-
   powers(icons["L"]) + 3}, which sucks).
-  
+
+  Raising a \code{hyper2} object to a power returns an error.
+
 }
 \value{
 Returns a \code{hyper2} object or a Boolean.
