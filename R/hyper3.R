@@ -361,7 +361,7 @@ char2nv <- function(x){
 }
 
        
-`rhyper3` <- function(n=5,s=3,type='race',...){
+`rhyper3` <- function(n=5,s=4,type='race',...){
     switch(type,
            race = rracehyper3(n=n,size=s,...),
            pair = rpair3(n=n,s=s,...)
