@@ -1,9 +1,8 @@
 \documentclass{article}
 \RequirePackage{amsthm,amsmath,amsfonts,amssymb}
-\RequirePackage[numbers]{natbib}
 \RequirePackage{graphicx}%% uncomment this for including figures
 \usepackage{setspace} \doublespacing
-
+\usepackage{apacite}
 
 \begin{document}
 
@@ -48,7 +47,7 @@ However, estimation of the strengths is somewhat difficult if $n$ is
 even moderately large: even with as few as 20 competitors following
 Zipf's law~\cite{zipf1949} [a typical assumption for Bradley--Terry
   strengths] and say 20 independent complete rank observations,
-Hankin~\cite{hankin2017_rmd} shows that maximum likelihood strengths
+\citeA{hankin2017_rmd} shows that maximum likelihood strengths
 identify the correct ranking with a probability of essentially zero.
 The situation is worse in cases such as formula 1 motor racing
 considered below, which requires us to consider ${\mathcal O}(100)$
@@ -215,12 +214,12 @@ distribution, corresponding to a $p$-value of about $0.028$.
 \subsection{Formula 1}
 
 Formula 1 motor racing is an important and prestigious motor sport
-\citep{codling2017,jenkins2010}.  Season ranking is based on a points
+\cite{codling2017,jenkins2010}.  Season ranking is based on a points
 allocation system wherein competitors are awarded points based on race
 finishing order; points accumulate additively.  The overall
 competition winner is the competitor who accumulates the most points
 after the final race.  However, as argued by
-Hankin~\cite{hankin2023_formula1points}, the drivers' {\em ranks} are
+\citeA{hankin2023_formula1points}, the drivers' {\em ranks} are
 statistically sufficient for analysis using Plackett--Luce approaches.
 The methods presented here may be used to assess competitive strengths
 of Formula 1 racing driver Sergio P\'{e}rez (``Checo'') over his
@@ -269,6 +268,6 @@ function with wide applicability.  Further work might include the
 analysis of more than one focal competitor.
 
 
-\bibliographystyle{plain}
+\bibliographystyle{apacite}
 \bibliography{hyper2}    
 \end{document}
