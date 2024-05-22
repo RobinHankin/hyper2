@@ -302,6 +302,7 @@ char2nv <- function(x){
             out <- hyper3_bw(jj[[1]],jj[[2]],jj[[3]],pnames=pnames(x)) # do not change pnames
         } else { # index introduces a new pname
             out <- hyper3_bw(jj[[1]],jj[[2]],jj[[3]])
+            pnames(out) <- sort(unique(c(pnames(x),names(index))))
         }
     }
     return(out)
