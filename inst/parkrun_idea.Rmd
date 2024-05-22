@@ -18,6 +18,9 @@ To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 @paul1995 [page 1401] state that "underdispersion will be seen very
 rarely in real-life situations".
 
+@prentice186 [page 322] states that "underdispersed data...may be rare
+in applications"
+
 Ranked data arises whenever multiple entities are sorted by some
 criterion; the preferred interpretation is a race in which the
 sufficient statistic is the order of competitors crossing the
