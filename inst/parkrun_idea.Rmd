@@ -15,8 +15,8 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 
 To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 
-@paul1995 state that "underdispersion will be seen very rarely in
-real-life situations".
+@paul1995 [page 1401] state that "underdispersion will be seen very
+rarely in real-life situations".
 
 Ranked data arises whenever multiple entities are sorted by some
 criterion; the preferred interpretation is a race in which the
