@@ -57,7 +57,7 @@ grad_weight_single <- function(H, probs, wpv, wanted){
   jj[setNames(rep(1,length(wanted)),wanted)] <- +1
   pnames(jj) <- pnames(H)
   alpha*loglik(probs,jj,log=FALSE)
-  }
+}
 ```
   
 Function `grad_weight_single()` takes a `hyper3` object `H`, a vector
@@ -213,6 +213,47 @@ diff <- (
 LHS <- diff  # using grad_weight_single()
 dD <- 1e-4
 RHS <- (loglik(probs,f2(w,D=D+dD/2)) - loglik(probs,f2(w=w,D=D-dD/2)))/dD  # d/dD via numerics
+c(LHS,RHS,LHS-RHS)
+```
+
+Come to think of it, all the `wanted` arguments are the same length
+(two).  A more exacting test would be:
+
+$$
+\frac{(p_1)^3\,(w p_2)^4}{(p_1+wp_2)^7}\cdot
+\frac{p_2^5\,(wp_1+wp_3)^2}{(wp_1+p_2+wp_3)^7}
+$$
+
+
+
+```{r label=moreexacting}
+m <- function(w){
+  H <- hyper3()
+  H[c(p1=1)] <- 3
+  H[c(p2=w)] <- 4
+  H[c(p1=1,p2=w)] <- -7
+  H[c(p2=1)] <- 5
+  H[c(p1=w,p3=w)] <- 2
+  H[c(p1=w,p2=1,p3=w)] <- -7
+  H
+}
+w <- 1.888
+dw <- 1e-4
+probs <- c(p1=0.4,p2=0.1, p3=0.5)
+m(w)
+
+H <- m(w)
+loglik(probs,H)
+
+diffD <- (
+ grad_weight_single(H, probs, c(p2=w          ), "p2"        ) +
+ grad_weight_single(H, probs, c(p1=1,p2=w     ), "p2"        ) +
+ grad_weight_single(H, probs, c(p1=w,p3=w     ), c("p1","p3")) +
+ grad_weight_single(H, probs, c(p1=w,p2=1,p3=w), c("p1","p3"))
+ )
+
+LHS <- (loglik(probs,m(w+dw/2)) -loglik(probs,m(w-dw/2)))/dw
+RHS <- diffD
 c(LHS,RHS,LHS-RHS)
 ```
 
