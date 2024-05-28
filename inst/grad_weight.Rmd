@@ -54,7 +54,7 @@ grad_weight_single <- function(H, probs, wpv, wanted){
   jj <- H[wpv]
   alpha <- drop(powers(jj))
   powers(jj) <- -1
-  jj[setNames(1,wanted)] <- +1
+  jj[setNames(rep(1,length(wanted)),wanted)] <- +1
   pnames(jj) <- pnames(H)
   alpha*loglik(probs,jj,log=FALSE)
   }
@@ -200,7 +200,23 @@ c(LHS,RHS2,LHS-RHS2)
 ```
 
 
-If we wish to differentiate with respect to `D` we need a different technique (TBA).
+If we wish to differentiate with respect to `D` we need a slight
+generalization, specifically that the `wanted` argument is length 2:
+
+```{r label=diffD}
+diff <- (
+ grad_weight_single(H, probs, c(p1=  D,p2=  D), c("p1","p2")) +
+ grad_weight_single(H, probs, c(p1=w+D,p2=1+D), c("p1","p2")) +
+ grad_weight_single(H, probs, c(p1=1+D,p2=w+D), c("p1","p2"))
+ )
+ 
+LHS <- diff  # using grad_weight_single()
+dD <- 1e-4
+RHS <- (loglik(probs,f2(w,D=D+dD/2)) - loglik(probs,f2(w=w,D=D-dD/2)))/dD  # d/dD via numerics
+c(LHS,RHS,LHS-RHS)
+```
+
+
 
 
 ### References {-}
