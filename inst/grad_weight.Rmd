@@ -179,12 +179,12 @@ Differentiate with respect to `w`:
 ```{r diffwrtw}
 probs <- c(p1=0.15 , p2=0.45, p3=0.4)
 diff <- (
- grad_weight_single(H, probs, c(p1=w), "p1") +
+ grad_weight_single(H, probs, c(p1=w)         , "p1") +
  grad_weight_single(H, probs, c(p1=w+D,p2=1+D), "p1") +
- grad_weight_single(H, probs, c(p2=w), "p2") +
+ grad_weight_single(H, probs, c(p2=w)         , "p2") +
  grad_weight_single(H, probs, c(p1=1+D,p2=w+D), "p2") +
- grad_weight_single(H, probs, c(p3=w), "p3")+
- grad_weight_single(H, probs, c(p3=w,p1=1),"p3")
+ grad_weight_single(H, probs, c(p3=w)         , "p3") +
+ grad_weight_single(H, probs, c(p3=w,p1=1)    , "p3")
  )
  
 LHS <- diff  # using grad_weight_single()
