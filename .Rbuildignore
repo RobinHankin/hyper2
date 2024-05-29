@@ -197,6 +197,8 @@ CITATION.cff
 ^inst/setpartitions_hyper2.Rmd$
 ^inst/timesData.csv$
 ^inst/jss_hyper3.Rnw$
+^inst/jss_hyper3.Rmd$
+^inst/javelin.Rmd$
 ^inst/jss_4832_minorcomments_rebuttal.tex$
 ^inst/carcinoma.txt$
 ^inst/constructor_2019.txt$
@@ -228,6 +230,7 @@ CITATION.cff
 ^inst/hankin-ejs.tex$
 ^inst/hankin-sts.Rmd$
 ^inst/hankin-sts.tex$
+^inst/hankin_american_statistician.tex$
 ^inst/carcinoma.Rmd$
 ^inst/code.R$
 ^inst/code.Rout$
