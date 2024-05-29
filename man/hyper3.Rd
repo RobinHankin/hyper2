@@ -20,9 +20,7 @@
 \alias{weights.hyper3}
 \alias{setweight}
 \alias{as.weight}
-\title{Weighted probability vectors: \code{hyper3} objects
-  \Sexpr[stage=build,results=hide]{require(hyper2)}
-}
+\title{Weighted probability vectors: \code{hyper3} objects}
 \description{\loadmathjax
 
 Objects of class \code{hyper3} are a generalization of \code{hyper2} objects
