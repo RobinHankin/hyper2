@@ -58,7 +58,7 @@
   information in a 3D array.
 
   All data drawn from \code{chessgames.com}, specifically
-  \url{https://www.chessgames.com/perl} (search for \dQuote{Kasparov vs
+  \url{https://www.chessgames.com} (search for \dQuote{Kasparov vs
   Karpov}, etc).  Note that the database allows one to sort by white
   wins or black wins (there is a \sQuote{refine search} tab at the
   bottom).  Some searches have more than one page of results.  Numbers
