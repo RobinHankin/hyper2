@@ -11,7 +11,7 @@
 \alias{specificp.ge.test}
 \alias{specificp.le.test}
 \title{Hypothesis testing}
-\description{\loadmathjax
+\description{
   Tests different nulls against a free alternative
 }
 \usage{
@@ -60,16 +60,16 @@ specificp.lt.test(H, i, specificp=1/size(H), ...)
 \itemize{
   \item Function \code{equalp.test(H,p)} tests the null that all
   strengths are equal to vector \code{p}.  If \code{p} is missing, it
-  tests \mjeqn{H_0\colon p_1=p_2=\cdots=p_n=\frac{1}{n}}{H0:
+  tests \eqn{H_0\colon p_1=p_2=\cdots=p_n=\frac{1}{n}}{H0:
     p1=p2=...=pn=1/n}, for example \code{equalp.test(icons)}
   \item Function \code{knownp.test()} tests the null that the strengths
   are equal to the elements of named vector \code{p}; it is a
   generalization of \code{equalp.test()}.  Example:
   \code{knownp.test(icons,zipf(6))}. 
   \item Function \code{specificp.test(H,i,p)} tests
-  \mjeqn{H_0\colon p_i=p}{H0: p_i=p}, for example
+  \eqn{H_0\colon p_i=p}{H0: p_i=p}, for example
   \code{specificp.test(icons,"NB",0.1)}
-  \item Function \code{samep.test()} tests \mjeqn{H_0\colon
+  \item Function \code{samep.test()} tests \eqn{H_0\colon
   p_{i_1}=p_{i_2}=\cdots=p_{i_k}}{omitted}, for example
   \code{samep.test(icons,c("NB","L"))} tests that \code{NB} has the same
   strength as \code{L}. 

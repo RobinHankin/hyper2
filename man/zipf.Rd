@@ -1,12 +1,12 @@
 \name{zipf}
 \alias{zipf}
 \title{Zipf's law}
-\description{\loadmathjax
+\description{
 
 A very short function that reproduces Zipf's law: a harmonic rank-probability
 distribution, formally
 
-\mjdeqn{p(i)=\frac{i^{-1}}{\sum_{i=1}^{N} i^{-1}},\qquad i=1,\ldots,N}{omitted}
+\deqn{p(i)=\frac{i^{-1}}{\sum_{i=1}^{N} i^{-1}},\qquad i=1,\ldots,N}{omitted}
 
 }
 \usage{zipf(n)}

@@ -5,7 +5,7 @@
 \alias{order_obs}
 \alias{salad}
 \title{Translate order tables to support functions}
-\description{\loadmathjax
+\description{
 
 Wikipedia gives a nice summary in table form of Formula 1 racing results
 on pages like
@@ -61,7 +61,7 @@ log( a * (a + b + c + d + e)^-1 * (a + b + d + e)^-1 * b * (b + d +
 e)^-1 * c * (d + e)^-1 * e)
 }
 
-\mjdeqn{
+\deqn{
 \frac{a}{a+b+c+d+e}\cdot
 \frac{b}{b+c+d+e}\cdot
 \frac{c}{c+d+e}\cdot
@@ -78,7 +78,7 @@ Zero entries mean \dQuote{did not finish}:
 log((a + b + c)^-1 * (a + c)^-1 * b * c)
   }
 
-\mjdeqn{
+\deqn{
 \frac{b}{a+b+c}\cdot
 \frac{c}{a+c}
 }{

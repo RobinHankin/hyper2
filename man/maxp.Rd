@@ -9,7 +9,7 @@
 \alias{allequal}
 \alias{equalprobs}
 \title{Maximum likelihood estimation}
-\description{\loadmathjax
+\description{
   Find the maximum likelihood estimate for p, also equal probabilities}
 \usage{
 maxp(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, n=1,
@@ -101,8 +101,8 @@ equalp(H)
   }
 
   where in \code{UI}, the first \eqn{n-1} rows enforce nonnegativity of
-  \mjseqn{p_i}, \mjeqn{1\leq p < n}{1<=i<n}; row \mjseqn{n} enforces
-  nonnegativity of the fillup value \mjseqn{p_n}; and the remaining
+  \eqn{p_i}, \eqn{1\leq p < n}{1<=i<n}; row \eqn{n} enforces
+  nonnegativity of the fillup value \eqn{p_n}; and the remaining
   (optional) rows enforce additional linear constraints.  Argument
   \code{CI} is a vector with corresponding elements.
 

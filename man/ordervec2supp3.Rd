@@ -12,7 +12,7 @@
 \alias{cheering3}
 \alias{rankvec_likelihood3}
 \title{Various functionality for races and hyper3 likelihood functions}
-\description{\loadmathjax
+\description{
 Various functions for calculating the likelihood function for order
 statistics in the context of hyper3 likelihood functions.  Compare
 \code{ggol()} for \code{hyper2} objects.  Used in the
@@ -65,7 +65,8 @@ args2ordervec(...)
   corresponds to a race between two twins of strength \code{a} and two
   twins of strength \code{b}, with only one of each pair finishing;
   \code{a} comes first and \code{b} comes second; symbolically
-  \mjdeqn{a\succ b\succ\left\lbrace a,b\right\rbrace\longrightarrow
+
+  \deqn{a\succ b\succ\left\lbrace a,b\right\rbrace\longrightarrow
     \mathcal{L}(a,b\left|a+b=1\right.)=\frac{a}{2a+2b}\cdot\frac{b}{a+2b}}{omitted}
 
   Further,
@@ -75,11 +76,11 @@ args2ordervec(...)
   corresponds to adding a singleton competitor of strength \code{c} who
   did not finish:
 
-  \mjdeqn{a\succ b\succ\left\lbrace a,b,c\right\rbrace\longrightarrow
+  \deqn{a\succ b\succ\left\lbrace a,b,c\right\rbrace\longrightarrow
     \mathcal{L}(a,b,c\left|a+b+c=1\right.)=\frac{a}{2a+2b+c}\cdot\frac{b}{a+2b+c}}{omitted}
 
   (observe that this likelihood function is informative about
-  \mjseqn{c}).  See the examples section below.  Experimental function
+  \eqn{c}).  See the examples section below.  Experimental function
   \code{ordervec2supp3a()} is a generalized version of
   \code{ordervec2supp3()} that allows for cheering effects.
 

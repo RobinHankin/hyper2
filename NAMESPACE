@@ -202,7 +202,6 @@ importFrom("calibrator","MH")
 importFrom("frab","is.namedvector")
 
 import(methods)
-import(mathjaxr)
 
 S3method(brackets,hyper2)
 S3method(powers,hyper2)

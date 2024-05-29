@@ -11,7 +11,7 @@
 \alias{Ops.lsl}
 \alias{lsl_add}
 \title{Methods for suplist objects}
-\description{\loadmathjax
+\description{
 
   Basic functionality for lists of \code{hyper2} objects, allowing the
   user to concatenate independent observations which are themselves
@@ -40,19 +40,19 @@ as.suplist(L)
   and exhaustive for \eqn{R}.  If \code{S} is a \code{suplist} object,
   and \code{S=list(H1,H2,...,Hn)} where the \code{Hi} are \code{hyper2}
   objects, then
-  \mjeqn{\mbox{Prob}(p|H_1)+\cdots+\mbox{Prob}(p|H_n)}{Prob(p|H1)+...+Prob(p|Hn)}.
+  \eqn{\mbox{Prob}(p|H_1)+\cdots+\mbox{Prob}(p|H_n)}{Prob(p|H1)+...+Prob(p|Hn)}.
   This is because the elements of a \code{suplist} object are disjoint
   alternatives.
 
  It is \strong{incorrect} to say that a likelihood function
-  \mjeqn{\mathcal{L}_S(p)}{L_S(p)} for \eqn{p} is the sum of separate
+  \eqn{\mathcal{L}_S(p)}{L_S(p)} for \eqn{p} is the sum of separate
   likelihood functions.  This is incorrect because the arbitrary
   multiplicative constant messes up the math, for example we might have
-  \mjeqn{\mathcal{L}_{H_1}(p)=C_1\mathrm{Prob}(p|H_1)}{?} and
-  \mjeqn{\mathcal{L}_{H_2}(p)=C_2\mathrm{Prob}(p|H_2)}{?} and indeed
-  \mjeqn{\mathcal{L}_{{H_1}\cup H_2}(p)=C_{12}\left(\mathrm{Prob}(p|H_1)+\mathrm{Prob}(p|H_2)\right)}{?}  but
+  \eqn{\mathcal{L}_{H_1}(p)=C_1\mathrm{Prob}(p|H_1)}{?} and
+  \eqn{\mathcal{L}_{H_2}(p)=C_2\mathrm{Prob}(p|H_2)}{?} and indeed
+  \eqn{\mathcal{L}_{{H_1}\cup H_2}(p)=C_{12}\left(\mathrm{Prob}(p|H_1)+\mathrm{Prob}(p|H_2)\right)}{?}  but
 
- \mjdeqn{\mathcal{L}_{H_1}(p)+\mathcal{L}_{H_2}(p) \neq
+ \deqn{\mathcal{L}_{H_1}(p)+\mathcal{L}_{H_2}(p) \neq
    C_1\mathrm{Prob}(p|H_1)+C_2\mathrm{Prob}(p|H_2)}{see PDF}
     
  (the right hand side is meaningless).
@@ -66,7 +66,7 @@ as.suplist(L)
   for \dQuote{\code{S1+S2}} is the likelihood function for \code{S1}
   followed by (independent) \code{S2}.  Formally
 
-  \mjdeqn{
+  \deqn{
     \mbox{Prob}(p|S_1+S_2) =
     \left(
     \mbox{Prob}(p|H_1)
@@ -78,7 +78,7 @@ as.suplist(L)
     \mbox{Prob}(p|I_s)
     \right)}{omitted; see PDF}
 
-  \mjdeqn{
+  \deqn{
     \log\mbox{Prob}(p|S_1+S_2) =
     \log\left(
     \mbox{Prob}(p|H_1)

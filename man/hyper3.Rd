@@ -21,26 +21,26 @@
 \alias{setweight}
 \alias{as.weight}
 \title{Weighted probability vectors: \code{hyper3} objects}
-\description{\loadmathjax
+\description{
 
 Objects of class \code{hyper3} are a generalization of \code{hyper2} objects
 that allow the brackets to contain weighted probabilities.
 
 As a motivating example, suppose two players with Bradley-Terry
-strengths \mjseqn{p_1,p_2} play chess where we quantify the first-mover
-advantage with a term \mjeqn{\lambda}{omitted}.  If \mjseqn{p_1} plays
-white \mjseqn{a+b} times with \mjseqn{a} wins and \mjseqn{b} losses, and
-plays black \mjseqn{c+d} times with \mjseqn{c} wins and \mjseqn{d}
+strengths \eqn{p_1,p_2} play chess where we quantify the first-mover
+advantage with a term \eqn{\lambda}{omitted}.  If \eqn{p_1} plays
+white \eqn{a+b} times with \eqn{a} wins and \eqn{b} losses, and
+plays black \eqn{c+d} times with \eqn{c} wins and \eqn{d}
 losses, then a sensible likelihood function might be
 
-\mjdeqn{
+\deqn{
   \left(\frac{\lambda p_1}{\lambda p_1 + p_2}\right)^{a}
   \left(\frac{p_2        }{\lambda p_1 + p_2}\right)^{b}
   \left(\frac{p_1        }{p_1 + \lambda p_2}\right)^{c}
   \left(\frac{\lambda p_2}{p_1 + \lambda p_2}\right)^{d}
   }{omitted: see PDF}
 
-If \mjseqn{a=1,b=2,c=3,d=4} and \mjeqn{\lambda=1.3}{omitted} appropriate
+If \eqn{a=1,b=2,c=3,d=4} and \eqn{\lambda=1.3}{omitted} appropriate
 package idiom might be:
 
 \preformatted{
@@ -58,18 +58,18 @@ H
 }
 
 The general form of terms of a \code{hyper3} object would be
-\mjeqn{\left(w_1p_1+\ldots+w_rp_r\right)^{\alpha}}{omitted}; the
+\eqn{\left(w_1p_1+\cdots+w_rp_r\right)^{\alpha}}{omitted}; the
 complete object would be
 
-\mjdeqn{
+\deqn{
   \mathcal{L}\left(p_1,\ldots,p_n\right)=
   \prod_{j=1}^N\left(\sum_{i=1}^n
   w_{ij}p_i\right)^{\alpha_i}
   }{omitted: see PDF}
 
-where we understand that \mjeqn{p_n=1-\sum_{i=1}^{n-1}p_i}{omitted};
+where we understand that \eqn{p_n=1-\sum_{i=1}^{n-1}p_i}{omitted};
 many of the weights might be zero.  We see that the weights
-\mjeqn{w_{ij}}{w_ij} may be arranged as a matrix and this form is taken
+\eqn{w_{ij}}{w_ij} may be arranged as a matrix and this form is taken
 by function \code{hyper3_m()}.
 
 }

@@ -4,7 +4,7 @@
 \alias{like_single_list}
 \alias{like_series}
 \title{Log likelihood functions}
-\description{\loadmathjax
+\description{
   Returns a log-likelihood for a given \code{hyper2} or \code{hyper3}
   object at a specific point in probability space
 }
@@ -28,7 +28,7 @@ like_series(p,L,log=TRUE)
   Function \code{loglik()} is a straightforward likelihood function.  It
   can take a vector of length \code{n=size(H)} or \code{size(H)-1}; if
   given the vector
-  \mjeqn{p=\left(p_1,\ldots,p_{n-1}\right)}{p=(p_1,...,p_{n-1})} it
+  \eqn{p=\left(p_1,\ldots,p_{n-1}\right)}{p=(p_1,...,p_{n-1})} it
   appends the fillup value, and then returns returns the (log)
   likelihood.
 
