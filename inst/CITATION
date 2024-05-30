@@ -1,15 +1,27 @@
-citHeader("To cite in publications use:")
-
-bibentry(
-  bibtype  = "Article",
-  title    = "{Partial rank data with the hyper2 package: likelihood functions for generalized {B}radley-{T}erry models}",
-  author   = person("Robin K. S. Hankin"),
-  journal  = "The R Journal",
-  year     = "2017",
-  volume   = "9",
-  number   = "2",
-  textVersion =
-  paste("Hankin, R. K. S. (2017).",
-  "Partial rank data with the hyper2 package: likelihood functions for generalized Bradley-Terry models",
-     "The R Journal, volume 9, number 2")
+bibentry(bibtype = "Article",
+  title        = "Generalized Plackett-Luce Likelihoods",
+  author       = person(given = c("Robin", "K.", "S."),
+                        family = "Hankin",
+                        email = "hankin.robin@gmail.com"),
+  journal      = "Journal of Statistical Software",
+  year         = "2024",
+  volume       = "109",
+  number       = "8",
+  pages        = "1--17",
+  doi          = "10.18637/jss.v109.i08",
+  mheader      = "To cite hyper2 in publications use:"
 )
+
+bibentry(bibtype = "Article",
+  title        = "Partial Rank Data with the {hyper2} Package: Likelihood Functions for Generalized {B}radley-{T}erry Models",
+  author       = person(given = c("Robin", "K.", "S."),
+                        family = "Hankin",
+                        email = "hankin.robin@gmail.com"),
+  journal      = "The R Journal",
+  year         = "2017",
+  volume       = "9",
+  number       = "2",
+  pages        = "429-439",
+  doi          = "10.32614/RJ-2017-061"
+)
+
