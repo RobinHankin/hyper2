@@ -9,7 +9,7 @@ bibentry(bibtype = "Article",
   number       = "8",
   pages        = "1--17",
   doi          = "10.18637/jss.v109.i08",
-  mheader      = "To cite hyper2 in publications use:"
+  mheader      = "To cite hyper2 in publications use:",
 )
 
 bibentry(bibtype = "Article",
@@ -22,6 +22,7 @@ bibentry(bibtype = "Article",
   volume       = "9",
   number       = "2",
   pages        = "429-439",
-  doi          = "10.32614/RJ-2017-061"
+  doi          = "10.32614/RJ-2017-061",
+  header       = "For generalized Bradley-Terry functionality, use:"
 )
 

@@ -5,8 +5,11 @@ Version: 3.1-0
 Authors@R: person(given=c("Robin", "K. S."), family="Hankin", role = c("aut","cre"), email="hankin.robin@gmail.com", comment = c(ORCID = "0000-0001-5982-0415"))
 Maintainer: Robin K. S. Hankin <hankin.robin@gmail.com>
 Description: A suite of routines for the hyperdirichlet distribution
-   and reified Bradley-Terry; supersedes the 'hyperdirichlet' package.
-   Uses 'disordR' discipline.
+   and reified Bradley-Terry; supersedes the 'hyperdirichlet' package;
+   uses 'disordR' discipline <doi:10.48550/ARXIV.2210.03856>.  To cite
+   in publications please use Hankin 2017 <doi:10.32614/rj-2017-061>,
+   and for Generalized Plackett-Luce likelihoods use Hankin 2024
+   <doi:10.18637/jss.v109.i08>.
 License: GPL (>= 2)
 LazyData: yes
 Depends: methods, cubature, R (>= 3.5.0)

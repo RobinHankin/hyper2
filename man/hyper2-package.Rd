@@ -30,7 +30,10 @@ Maintainer: \packageMaintainer{hyper2}
     \doi{10.18637/jss.v033.i11}
     \item R. K. S. Hankin 2017. \dQuote{Partial Rank Data with the hyper2
       Package: Likelihood Functions for Generalized Bradley-Terry Models}.
-    \emph{The \R Journal} 9:2, pages 429-439.
+    \emph{The \R Journal} 9:2, pages 429-439, \doi{10.32614/rj-2017-061}
+    \item R. K. S. Hankin 2024.  \dQuote{Generalized Plackett-Luce
+      Likelihoods}, \emph{Journal of Statistical Software}, 109(8), 1-17,
+    \doi{10.18637/jss.v109.i08}
   }
 }
 \keyword{ package }
