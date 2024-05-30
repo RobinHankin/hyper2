@@ -1,4 +1,4 @@
-all: NBA.html T20.html carcinoma.html collusion3.html cook.html cook_repeated.html counterstrike.html curacao1962_threeplayers_rest_monster.html curling.html distance_matrix_idea.html eurodance.html eurovision.html fatigue.html fisher_inf_PL3.html formula1.html formula1_allyears.html formula1_points.html formula1_top9.html global_liveability_ranking.html grad_weight.html gradient.html handover.html hepatitis.html home_advantage.html hunter.html icons.html interzonal.html javelin.html jester.html karate.html kka.html loser.html mann_whitney_wilcoxon.html masterchef.html moto.html multiset_hyper2.html notthewinner.html order.html ordertable_to_ranktable.html ordertrans.html pentathlon.html plackett_luce_monster.html powerboat.html pudding.html race3.html red_bus_blue_bus.pdf retain.html rock_paper_scissors_monster.html rowing.html salad.html skating.html skeleton.html soling.html surfing.html table_tennis_serve.html tennis.html ternaryplot_hyper2.html universities.html volleyball.html volvo.html zermelo.html
+all: NBA.html T20.html carcinoma.html collusion3.html cook.html cook_repeated.html counterstrike.html curacao1962_threeplayers_rest_monster.html curling.html distance_matrix_idea.html eurodance.html eurovision.html fatigue.html formula1.html formula1_allyears.html formula1_points.html formula1_top9.html global_liveability_ranking.html grad_weight.html gradient.html handover.html hepatitis.html home_advantage.html hunter.html icons.html interzonal.html javelin.html jester.html karate.html kka.html loser.html mann_whitney_wilcoxon.html masterchef.html moto.html multiset_hyper2.html notthewinner.html order.html ordertable_to_ranktable.html ordertrans.html pentathlon.html plackett_luce_monster.html powerboat.html pudding.html race3.html red_bus_blue_bus.pdf retain.html rock_paper_scissors_monster.html rowing.html salad.html skating.html skeleton.html soling.html surfing.html table_tennis_serve.html tennis.html ternaryplot_hyper2.html universities.html volleyball.html volvo.html zermelo.html
 
 NBA.html: NBA.Rmd
      Rscript -e "rmarkdown::render('NBA.Rmd')"
@@ -38,9 +38,6 @@ eurovision.html: eurovision.Rmd
 
 fatigue.html: fatigue.Rmd
 	 Rscript -e "rmarkdown::render('fatigue.Rmd')"
-
-fisher_inf_PL3.html: fisher_inf_PL3.Rmd
-		Rscript -e "rmarkdown::render('fisher_inf_PL3.Rmd')"
 
 formula1.html: formula1.Rmd
 	  Rscript -e "rmarkdown::render('formula1.Rmd')"
@@ -170,6 +167,9 @@ tennis.html: tennis.Rmd
 
 ternaryplot_hyper2.html: ternaryplot_hyper2.Rmd
 		    Rscript -e "rmarkdown::render('ternaryplot_hyper2.Rmd')"
+
+three_runners_plackett_luce.html: three_runners_plackett_luce.Rmd
+		    Rscript -e "rmarkdown::render('three_runners_plackett_luce.Rmd')"
 
 universities.html: universities.Rmd
 	      Rscript -e "rmarkdown::render('universities.Rmd')"
