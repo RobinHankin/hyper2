@@ -1,7 +1,6 @@
 ---
 title: "Three runners: Plackett-Luce likelihoods"
 output: html_document
-date: "2022-08-14"
 ---
 
 ```{r setup, include=FALSE}
