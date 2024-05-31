@@ -11,12 +11,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Introduction
 
 Here we consider different observations deriving from order statistics
-among three competitors.  It is not particularly well structured, it
-is just a place to keep a record of thoughts.  I consider the most
-general case first and then go on to consider more special cases.  In
-the interests of simplicity I will often identify a runner with his
-strength, so that $a$ represents a particular competitor, and also his
-Plackett-Luce strength.
+among three competitors.  This document is an informal list intended
+to support v109i08.pdf, currently under review at the Journal of
+Statistical Software.
+
+I consider the most general case first and then go on to consider more
+special cases.  In the interests of simplicity I will often identify a
+runner with his strength, so that $a$ represents a particular
+competitor, and also his Plackett-Luce strength.
 
 ## General three runner order statistic.
 
