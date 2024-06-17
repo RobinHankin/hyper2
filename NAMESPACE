@@ -199,8 +199,6 @@ importFrom("alabama","constrOptim.nl")
 
 importFrom("calibrator","MH")
 
-importFrom("frab","is.namedvector")
-
 import(methods)
 
 S3method(brackets,hyper2)

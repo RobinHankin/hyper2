@@ -1,6 +1,7 @@
 # hyper2 3.1-0
 
 * consistent handling of non-zero-sum powers 
+* no longer imports frab functionality
 
 # hyper2 3.0-1
 
@@ -20,4 +21,5 @@
 # hyper2 2.0-2
 
 * implement `alabama::constrOptim.nl()` as an alternative to `base::constrOptim()` to avoid wmmin bug
+
 
