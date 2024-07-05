@@ -23,8 +23,8 @@ general_grouped_rank_likelihood(H, ...)
 goodbad(winners,losers)
 elimination(all_players)
 rank_likelihood(M,times=1)
-rankvec_likelihood(v)
-race(v)
+rankvec_likelihood(v,nonfinishers)
+race(v,nonfinishers)
 }
 
 \arguments{
@@ -43,6 +43,11 @@ race(v)
   \item{v}{A character vector specifying ranks.  Thus
   \code{c("b","c","a")} means that \code{b} came first, \code{c} second,
   and \code{a} third} 
+\item{nonfinishers}{A character vector with entries corresponding to
+  competitors who did not finish.  Thus
+  \code{race(c("a","b"),c("p","q"))} means that the field is
+  \code{a,b,c,d}; \code{a} came first, \code{b} came second and \code{c}
+  and \code{d} did not finish}
 }
 \details{
 
@@ -113,7 +118,8 @@ r1 <- rrank(10,p=(7:1)/28)
 colnames(r1) <- letters[1:7]
 
 # Likelihood function for r1:
-W <- rank_likelihood(r1)
+rank_likelihood(r1)
+rank_likelihood(r1,nonfinishers=letters[8:9])
 
 # convert a rank table to a support function:
 rank_likelihood(wikitable_to_ranktable(volvo_table))
