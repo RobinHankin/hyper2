@@ -1,0 +1,298 @@
+---
+title: "Analysing `preflib` datasets with the `hyper2` package: netflix preferences and the Debian 2002 leader dataset"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
+---
+
+```{r setup, include=FALSE}
+set.seed(1)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  
+
+Here I show how to analyse a netflix dataset due to @bennett2007,
+previously considered by @turner2020.  It is part of the `Preflib`
+project, available at https://preflib.simonrey.fr/dataset/00004.  The
+original dataset looks like this:
+
+```
+# FILE NAME: 00004-00000101.soc
+# TITLE: Netflix Prize Data
+# DESCRIPTION: 
+# DATA TYPE: soc
+# MODIFICATION TYPE: induced
+# RELATES TO: 
+# RELATED FILES: 
+# PUBLICATION DATE: 2013-08-17
+# MODIFICATION DATE: 2022-09-16
+# NUMBER ALTERNATIVES: 4
+# NUMBER VOTERS: 1256
+# NUMBER UNIQUE ORDERS: 24
+# ALTERNATIVE NAME 1: The Wedding Planner
+# ALTERNATIVE NAME 2: Entrapment
+# ALTERNATIVE NAME 3: Lost in Translation
+# ALTERNATIVE NAME 4: The Exorcist
+228: 4,3,2,1
+220: 3,4,2,1
+169: 4,2,1,3
+98: 4,2,3,1
+78: 4,1,2,3
+64: 4,3,1,2
+63: 2,4,1,3
+62: 3,4,1,2
+47: 2,1,4,3
+41: 1,2,4,3
+28: 3,2,4,1
+26: 1,4,2,3
+23: 2,1,3,4
+20: 3,2,1,4
+16: 4,1,3,2
+15: 1,2,3,4
+14: 2,4,3,1
+14: 3,1,2,4
+10: 3,1,4,2
+9: 2,3,1,4
+4: 2,3,4,1
+4: 1,4,3,2
+2: 1,3,2,4
+1: 1,3,4,2
+```
+
+It is not in a form amenable to the high-level built-in functions of
+the `hyper2` package (such as `wikitable_to; here I show how to create a Plackett-Luce
+likelihood function for the data from scratch.
+
+```{r makemat}
+films <- c("TWP","En","LiT","TE")
+M <- matrix(c(
+4,3,2,1,3,4,2,1,4,2,1,3,4,2,3,1,4,1,2,3,4,3,1,2,2,4,1,3,
+3,4,1,2,2,1,4,3,1,2,4,3,3,2,4,1,1,4,2,3,2,1,3,4,3,2,1,4,
+4,1,3,2,1,2,3,4,2,4,3,1,3,1,2,4,3,1,4,2,2,3,1,4,2,3,4,1,
+1,4,3,2,1,3,2,4,1,3,4,2),byrow=TRUE,ncol=4)
+n <- c(228,220,169,98,78,64,63,62,47,41,28,26,23,20,16,15,14,14,10,9,4,4,2,1)
+head(M)
+```
+
+Now use `race()` to convert to a likelihood function:
+
+```{r userace}
+H <- hyper2()
+for(i in seq_along(n)){
+    H <- H + race(films[M[i,]])*n[i]
+}
+H
+```
+
+Then we can perform the standard analyses:
+
+
+```{r standardanal,cache=TRUE}
+maxp(H)
+equalp.test(H)
+```
+
+
+## Debian leader dataset
+
+This dataset is in a slightly different format
+
+
+```
+# FILE NAME: 00018-00000002.soi
+[snip]
+# ALTERNATIVE NAME 1: "Nancy Bernard"
+# ALTERNATIVE NAME 2: "John Butler"
+# ALTERNATIVE NAME 3: "John Erwin"
+# ALTERNATIVE NAME 4: "Bob Fine"
+# ALTERNATIVE NAME 5: "Mary Merrill Anderson"
+# ALTERNATIVE NAME 6: "Tom Nordyke"
+# ALTERNATIVE NAME 7: "David Wahstedt"
+# ALTERNATIVE NAME 8: "Annie Young"
+# ALTERNATIVE NAME 9: "Write In"
+3761: 4
+2065: 8
+1570: 7
+1484: 5
+1104: 3
+1095: 3,8,6
+947: 6
+735: 1
+615: 3,5,6
+[snip]
+1: 9,3,5
+1: 9,7,2
+1: 2,9
+1: 9,3
+1: 9,7
+1: 9,5
+```
+
+The inferences from this dataset are different, as the voters were
+allowed a maximum of three candidates.  Thus the first row of data,
+viz `3761: 4`, indicates that 3761 voters registered candidate number
+4 [who was Bob Fine] as their first (and only) choice.  A few lines
+down we see `1095: 3,8,6` which means that 1095 voters registered
+candidate number 3 as their favourite, followed by number 8, then
+number 6.  A few voters included four candidates on their return.
+Dealing with this in `hyper2` is possible but messy.  In a hidden
+chunk we convert the data to a list and show the first three elements:
+
+```{r,include = FALSE}
+
+names <- c("Bernard", "Butler", "Erwin", "Fine",
+           "Anderson", "Nordyke", "Wahstedt","Young", "In")
+
+n <- c(3761,2065,1570,1484,1104,1095,947,735,615,593,524,
+516,485,448,439,389,339,327,324,318,297,287,284,277,260,
+259,257,244,231,230,227,221,216,213,206,200,196,194,193,
+187,182,180,176,167,166,162,159,158,155,155,154,153,149,
+147,146,139,138,137,137,135,133,129,124,122,120,115,115,
+115,113,111,110,104,100,97,96,93,92,92,92,90,90,89,89,
+89,88,87,86,85,85,83,82,80,79,79,79,77,77,76,75,74,
+74,74,72,71,69,69,64,64,60,58,57,57,56,56,52,51,51,
+50,49,49,48,48,45,44,44,42,42,42,41,41,41,41,40,39,
+38,37,37,36,36,35,35,35,34,34,33,33,33,33,33,32,32,
+32,31,31,31,31,31,31,31,31,31,30,30,30,30,30,29,29,
+29,29,29,29,29,28,28,28,28,28,28,27,27,27,27,27,27,
+27,27,27,27,26,26,26,26,26,25,25,25,25,25,25,25,25,
+25,25,24,24,24,24,24,24,23,23,23,23,23,23,23,23,23,
+23,23,22,22,22,22,22,22,22,22,22,22,22,22,21,21,21,
+21,21,21,21,21,20,20,20,20,20,20,20,20,20,19,19,19,
+19,19,19,19,19,19,19,19,18,18,18,18,18,18,18,18,18,
+17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,
+17,16,16,16,16,16,16,16,16,15,15,15,15,15,15,15,15,
+15,15,15,15,15,14,14,14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,13,13,13,13,13,13,13,13,13,13,
+12,12,12,12,12,12,12,12,12,12,12,12,12,12,11,11,11,
+11,11,11,11,11,11,10,10,10,10,10,10,10,10,10,9,9,9,
+9,9,9,9,9,9,9,8,8,8,8,8,8,8,7,7,7,7,7,7,7,6,6,
+6,6,6,5,5,5,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,2,
+2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1)
+
+
+L <- list(c(4), c(8), c(7), c(5), c(3), c(3,8,6), c(6), c(1),
+c(3,5,6), c(5,3,6), c(3,6,8), c(8,1,5), c(8,3,6), c(2), c(3,6,5),
+c(3,8), c(5,8,1), c(8,3), c(8,5,1), c(8,3,5), c(5,6,3), c(4,8),
+c(4,5), c(1,5,8), c(6,3,5), c(3,8,5), c(6,5,3), c(8,6,3), c(4,5,8),
+c(8,4), c(5,3,8), c(4,8,5), c(6,3,8), c(1,8,5), c(4,8,1), c(3,6),
+c(3,5,8), c(4,6), c(5,8), c(5,4), c(8,5,3), c(8,5), c(5,1,8), c(9),
+c(6,8,3), c(4,5,6), c(5,4,8), c(8,5,6), c(5,8,3), c(5,8,6), c(4,5,3),
+c(8,6,5), c(6,3), c(5,8,4), c(6,4), c(8,4,5), c(8,5,4), c(4,8,6),
+c(3,8,4), c(8,6), c(4,6,5), c(4,6,8), c(6,5,8), c(3,4), c(5,6,8),
+c(3,6,4), c(4,1,8), c(4,3,6), c(7,4), c(4,3), c(3,5), c(6,8),
+c(4,6,3), c(4,8,3), c(8,1), c(6,4,5), c(5,6,4), c(8,4,1), c(8,6,4),
+c(6,5), c(5,3), c(6,8,5), c(3,4,5), c(4,1,5), c(6,4,8), c(6,5,4),
+c(5,4,6), c(4,3,8), c(8,3,4), c(4,3,5), c(5,3,4), c(6,8,4), c(3,5,4),
+c(3,4,8), c(4,5,1), c(3,4,6), c(5,4,3), c(5,6), c(8,1,4), c(6,3,4),
+c(4,5,7), c(8,4,6), c(4,2,3), c(4,1), c(8,4,3), c(4,8,2), c(3,8,1),
+c(4,6,1), c(4,1,2), c(5,4,1), c(3,6,7), c(4,7), c(6,4,3), c(4,6,7),
+c(3,8,7), c(6,7,4), c(4,8,7), c(4,6,2), c(4,7,6), c(6,8,1), c(4,2,8),
+c(1,8), c(8,6,7), c(4,3,7), c(4,2), c(4,1,3), c(1,8,4), c(4,7,1),
+c(8,3,1), c(6,4,1), c(7,2), c(8,7), c(4,3,2), c(4,2,6), c(1,5),
+c(8,4,2), c(7,8), c(4,7,5), c(7,6), c(8,6,1), c(6,3,7), c(5,1),
+c(4,2,1), c(7,6,4), c(5,8,7), c(8,2,4), c(1,4,8), c(7,4,1), c(4,1,6),
+c(6,1,5), c(8,1,2), c(5,7), c(8,1,6), c(7,8,6), c(4,7,8), c(7,4,8),
+c(8,3,7), c(2,3,6), c(4,7,3), c(7,4,5), c(6,4,2), c(7,4,2), c(5,7,8),
+c(2,8,4), c(5,6,1), c(1,4), c(5,4,7), c(7,6,3), c(2,1,8), c(8,4,7),
+c(1,8,2), c(8,2,1), c(4,3,1), c(7,4,6), c(7,4,3), c(3,8,2), c(7,8,3),
+c(7,8,5), c(7,6,8), c(5,2,8), c(7,8,4), c(8,7,6), c(7,5,6), c(7,2,1),
+c(6,4,7), c(6,1,8), c(8,5,7), c(1,2,5), c(4,7,2), c(5,1,4), c(5,8,2),
+c(3,7,8), c(3,6,1), c(7,3), c(7,2,8), c(3,4,1), c(6,5,1), c(8,7,5),
+c(8,1,3), c(2,3,7), c(3,4,2), c(7,2,6), c(1,4,5), c(3,7), c(6,3,1),
+c(3,7,6), c(2,3,4), c(7,2,3), c(8,7,1), c(4,5,2), c(7,3,6), c(7,3,4),
+c(3,7,2), c(3,6,2), c(8,7,4), c(7,3,8), c(6,7,8), c(5,6,7), c(1,5,4),
+c(8,2), c(3,2), c(5,1,6), c(5,1,2), c(3,1,8), c(7,5,4), c(7,8,1),
+c(2,7,3), c(1,3,8), c(4,2,7), c(7,5,8), c(7,6,2), c(8,7,3), c(6,7,3),
+c(3,2,8), c(3,2,6), c(2,3,8), c(2,4,8), c(2,8,1), c(4,1,7), c(6,1,4),
+c(7,2,4), c(1,5,7), c(7,1,5), c(5,4,2), c(4,2,5), c(8,2,3), c(2,4,3),
+c(6,5,7), c(7,3,5), c(7,5), c(6,7,5), c(3,7,4), c(5,2,1), c(1,2,8),
+c(6,7,2), c(8,3,2), c(1,3,6), c(8,5,2), c(3,1), c(7,1), c(6,1),
+c(5,7,4), c(7,1,8), c(1,5,3), c(1,8,6), c(1,6,3), c(6,3,2), c(8,1,7),
+c(2,5,3), c(7,1,2), c(8,6,2), c(8,7,2), c(1,4,3), c(1,4,7), c(3,4,7),
+c(5,7,6), c(1,6,8), c(3,2,4), c(7,2,5), c(2,6,3), c(1,2,3), c(3,2,1),
+c(5,1,3), c(8,9), c(2,4), c(1,2), c(4,9), c(2,8), c(3,2,7), c(6,7,1),
+c(7,6,5), c(3,5,1), c(3,7,1), c(6,2,3), c(1,3), c(2,7), c(3,5,2),
+c(3,1,2), c(5,2,4), c(8,2,6), c(3,1,6), c(5,7,1), c(6,2,8), c(2,5,8),
+c(5,1,7), c(8,2,7), c(1,5,6), c(6,2,5), c(7,9), c(1,2,7), c(7,8,2),
+c(1,8,7), c(6,1,3), c(6,8,7), c(6,2,4), c(3,5,7), c(2,1,7), c(2,8,5),
+c(1,5,2), c(1,4,6), c(2,3,1), c(5,2,7), c(3,7,5), c(8,2,5), c(7,5,1),
+c(7,1,4), c(2,8,7), c(6,7), c(2,1,4), c(7,6,1), c(7,3,2), c(1,7,8),
+c(2,4,6), c(1,3,4), c(1,7,5), c(5,7,3), c(5,3,1), c(1,6), c(5,7,2),
+c(1,7,6), c(1,7,2), c(7,1,3), c(2,1,3), c(5,3,2), c(2,6,7), c(5,2,3),
+c(7,3,1), c(3,1,5), c(1,6,5), c(7,5,3), c(6,8,2), c(1,8,3), c(5,3,7),
+c(1,2,4), c(5,2,6), c(2,7,1), c(2,1,5), c(2,4,1), c(6,2,1), c(2,5,1),
+c(2,6), c(1,3,7), c(2,8,6), c(1,4,2), c(2,3,5), c(2,4,5), c(3,1,7),
+c(2,1), c(5,2), c(2,5), c(2,6,4), c(2,7,6), c(3,1,4), c(6,2,7),
+c(2,6,1), c(7,5,2), c(7,1,6), c(6,5,2), c(1,3,5), c(6,2), c(1,6,4),
+c(1,7,4), c(1,2,6), c(2,1,6), c(2,5,6), c(2,3), c(1,7), c(2,7,8),
+c(2,7,4), c(2,4,7), c(1,6,2), c(2,5,7), c(1,7,3), c(2,8,3), c(2,6,8),
+c(5,6,2), c(2,7,5), c(1,6,7), c(5,9), c(5,8,9), c(2,6,5), c(3,2,5),
+c(4,8,9), c(6,1,7), c(8,3,9), c(2,5,4), c(3,4,9), c(6,9), c(3,9),
+c(9,1,8), c(4,3,9), c(6,1,9), c(5,4,9), c(4,5,9), c(6,1,2), c(3,5,9),
+c(4,9,8), c(9,8), c(7,9,2), c(3,8,9), c(6,7,9), c(1,3,2), c(8,4,9),
+c(4,7,9), c(4,6,9), c(6,5,9), c(8,6,9), c(9,4,3), c(9,5,8), c(3,2,9),
+c(9,4), c(1,6,9), c(9,4,5), c(8,1,9), c(1,7,9), c(8,2,9), c(4,9,5),
+c(9,8,7), c(1,3,9), c(8,9,5), c(5,3,9), c(5,9,2), c(9,3,2), c(9,6,5),
+c(6,4,9), c(3,9,4), c(9,8,4), c(2,7,9), c(8,5,9), c(8,9,4), c(9,1,7),
+c(7,2,9), c(9,8,1), c(1,9,8), c(7,9,3), c(7,8,9), c(2,9,3), c(9,8,5),
+c(2,8,9), c(9,3,1), c(9,6,4), c(7,9,5), c(4,9,1), c(7,4,9), c(9,3,5),
+c(9,7,2), c(2,9), c(9,3), c(9,7), c(9,5))
+
+L <- lapply(L,function(x){names[x]})
+
+```
+
+```{r}
+n[1:3]
+L[1:3]
+```
+
+Now to convert it to a likelihood function we need to treat each
+vector as the finishers of a race; elements not present are considerd
+to be "non finishers", as in Formula 1.  Thus `c(2,6,3)` corresponds
+to
+
+$$
+\frac{p_2}{p_1+p_2+p_3+p_4+p_5+p_6+p_7+p_8+p_9}\cdot
+\frac{p_6}{p_1+    p_3+p_4+p_5+p_6+p_7+p_8+p_9}\cdot
+\frac{p_3}{p_1+    p_3+p_4+p_5+    p_7+p_8+p_9}
+$$
+
+This is a straighforward loop:
+
+```{r straighforwardloop,cache=TRUE}
+H <- hyper2()
+for(i in seq_along(n)){
+    H <- H + n[i]*race(L[[i]],nonfinishers=setdiff(L[[i]],1:9))
+}
+```
+
+```{r}
+H
+```
+
+
+Then apply the usual tests to it:
+
+```{r,cache=TRUE}
+maxp(H)
+equalp.test(H)
+```
+
+
+
+
+
+
+# References {-}
+
