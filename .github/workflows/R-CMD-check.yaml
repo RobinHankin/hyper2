@@ -34,6 +34,7 @@ jobs:
       - run: tlmgr install doublestroke
       - run: tlmgr install bbm
       - run: tlmgr install bbm-macros
+      - run: tlmgr install wasysym
 
       - uses: r-lib/actions/check-r-package@v2
         with:
