@@ -37,6 +37,8 @@ jobs:
       - run: tlmgr install wasysym
       - run: tlmgr install yfonts
       - run: tlmgr install grfext
+      - run: tlmgr install
+      - run: tlmgr install cm-super
 
       - run: |
           sudo apt-get update
