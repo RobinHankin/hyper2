@@ -39,6 +39,7 @@ jobs:
       - run: tlmgr install grfext
       - run: tlmgr install
       - run: tlmgr install cm-super
+      - run: tlmgr install wasy10
 
       - run: |
           sudo apt-get update
