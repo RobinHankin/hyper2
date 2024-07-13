@@ -31,8 +31,9 @@ jobs:
       - uses: r-lib/actions/setup-tinytex@v2
 
       - run: tlmgr install wrapfig
-
       - run: tlmgr install doublestroke
+      - run: tlmgr install bbm
+      - run: tlmgr install bbm-macros
 
       - uses: r-lib/actions/check-r-package@v2
         with:
