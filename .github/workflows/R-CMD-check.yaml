@@ -30,6 +30,7 @@ jobs:
 
       - uses: r-lib/actions/setup-tinytex@v2
 
+      - run: tlmgr install scheme-basic
       - run: tlmgr install wrapfig
       - run: tlmgr install doublestroke
       - run: tlmgr install bbm
@@ -39,7 +40,6 @@ jobs:
       - run: tlmgr install grfext
       - run: tlmgr install
       - run: tlmgr install cm-super
-      - run: tlmgr install wasy10
 
       - run: |
           sudo apt-get update
