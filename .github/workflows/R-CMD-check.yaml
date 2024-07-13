@@ -36,6 +36,7 @@ jobs:
       - run: tlmgr install bbm-macros
       - run: tlmgr install wasysym
       - run: tlmgr install yfonts
+      - run: tlmgr install grfext
 
       - uses: r-lib/actions/check-r-package@v2
         with:
