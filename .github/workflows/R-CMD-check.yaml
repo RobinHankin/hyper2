@@ -32,6 +32,8 @@ jobs:
 
       - run: tlmgr install wrapfig
 
+      - run: tlmgr install doublestroke
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
