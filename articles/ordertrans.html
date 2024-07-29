@@ -167,10 +167,10 @@ the sense that they are a rearrangement of one another:</p>
 <p>One consequence of this is that the resulting Plackett-Luce support
 functions will be the same:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="va">Sx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">Sx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://robinhankin.github.io/hyper2/reference/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## log( a * (a + b + c + d)^-1 * (a + c)^-1 * (a + c + d)^-1 * b * d)</span></span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="va">So</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">So</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://robinhankin.github.io/hyper2/reference/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## log( a * (a + b + c + d)^-1 * (a + c)^-1 * (a + c + d)^-1 * b * d)</span></span></code></pre>
 <p>Note carefully that the two support functions above can be
 mathematically identical but not formally <code><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical()</a></code>

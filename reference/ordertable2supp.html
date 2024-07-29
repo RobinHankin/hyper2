@@ -93,7 +93,7 @@ usually signifies DNF as a blank).</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ordertable2supp</span><span class="op">(</span><span class="va">x</span>, <span class="va">noscore</span>, incomplete<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://robinhankin.github.io/hyper2/reference/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -132,7 +132,7 @@ sports.  Prepared text versions are available in the package in the
 <code>inst/</code> directory, for example <code>inst/motoGP_2019.txt</code>.  Use
 <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table()</a></code> to create a data frame which can be interpreted by
 <code>ordertable2supp()</code>.</p>
-<p>Function <code><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp()</a></code> takes an order vector <code>d</code> and
+<p>Function <code><a href="https://robinhankin.github.io/hyper2/reference/ordertable2supp.html" class="external-link">ordervec2supp()</a></code> takes an order vector <code>d</code> and
 returns the corresponding Plackett-Luce loglikelihood function as a
 <code>hyper2</code> object.  It requires a named vector; names of the elements
 are interpreted as names of the players.  Use argument <code>pnames</code> to
@@ -161,7 +161,7 @@ log((a + b + c)^-1 * (a + c)^-1 * b * c)
 \frac{b}{a+b+c}\cdot
 \frac{c}{a+c}
 $$</p>
-<p>Note carefully the difference between <code><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp()</a></code> and
+<p>Note carefully the difference between <code><a href="https://robinhankin.github.io/hyper2/reference/ordertable2supp.html" class="external-link">ordervec2supp()</a></code> and
 <code><a href="ggrl.html">rankvec_likelihood()</a></code>, which takes a character vector:</p>
 <div class="sourceCode"><pre><code>
 &gt;  names(sort(x))
@@ -176,7 +176,7 @@ e)^-1 * d * (d + e)^-1)
 
 <p>Function <code>order_obs()</code> was used in the integer-indexed paradigm but
 is obsolete in the name paradigm.  A short vignette applying
-<code><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp()</a></code> and <code>ordertable2supp()</code> to the salad
+<code><a href="https://robinhankin.github.io/hyper2/reference/ordertable2supp.html" class="external-link">ordervec2supp()</a></code> and <code>ordertable2supp()</code> to the salad
 dataset of the <a href="https://CRAN.R-project.org/package=prefmod" class="external-link"><span class="pkg">prefmod</span></a> package [and further analysed in the
 <a href="https://CRAN.R-project.org/package=PlackettLuce" class="external-link"><span class="pkg">PlackettLuce</span></a> package] is presented at <code>inst/salad.Rmd</code>.</p>
 
@@ -333,8 +333,8 @@ dataset of the <a href="https://CRAN.R-project.org/package=prefmod" class="exter
 <span class="r-in"><span><span class="co">## results of ordervec2supp() may be added with "+" [if the observations</span></span></span>
 <span class="r-in"><span><span class="co">## are independent]:</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">H1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">a1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">a2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">a3</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">H2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">a1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">a2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">a4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">H1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://robinhankin.github.io/hyper2/reference/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">a1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://robinhankin.github.io/hyper2/reference/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">a2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://robinhankin.github.io/hyper2/reference/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">a3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">H2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://robinhankin.github.io/hyper2/reference/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">a1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://robinhankin.github.io/hyper2/reference/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">a2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://robinhankin.github.io/hyper2/reference/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">a4</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Thus H1 and H2 are identical except for the third race.  In H1, 'd'</span></span></span>
 <span class="r-in"><span><span class="co">## and 'e' did not compete, but in H2, 'd' and 'e' did not finish (and</span></span></span>
