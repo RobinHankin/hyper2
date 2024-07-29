@@ -1,5 +1,6 @@
 ---
 title: "Monster or Lambda?  A likelihood analysis"
+subtitle: "Takes about an hour to run without cache"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
 bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
@@ -10,16 +11,17 @@ bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 set.seed(1)
 knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
+library("magrittr")
 ```
 
 ```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017_rmd;
-takes about an hour to process without cache.  Here I consider
-pairwise comparisons with a home-ground advantage and wish to compare
-two likelihood functions.  First, the monster parametrization:
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  Here I consider pairwise comparisons with a
+home-ground advantage and wish to compare two likelihood functions.
+Draws are excluded.  First, the monster parametrization:
 
 $$
 \mathcal{L_M}\left(p_1,p_2,M\right)=
@@ -62,20 +64,25 @@ $$
 $$
 
 
-## Start simple: two teams
+# Start simple: two teams {-}
+
+### Monster parametrization {-}
+
 
 ```{r,echo=FALSE}
-jj <- matrix(c(NA, 6+2i ,6+5i, NA),2,2,byrow=TRUE)
+jj <- matrix(c(NA, 7+2i ,6+5i, NA),2,2,byrow=TRUE)
 teams <- LETTERS[1:2]
 dimnames(jj) <- list("@home" = teams,"@away"=teams)
 dimnames(jj) <- list("@home" = teams,"@away"=teams)
 print(jj)
 ```
 
-Above we see that A played at home 3 times, winning 1 and losing 2
-[row 1 column 2 is $1+2i$]; B played at home 9 times, winning 4 and
-losing 5 [row 2 column 1 is $4+5i$].  In its most general form, the
-$2\times 2$ result matrix would be
+Above we see that A played at home 9 times, winning 7 and losing 2
+[row 1 column 2 is $7+2i$]; B played at home 11 times, winning 6 and
+losing 5 [row 2 column 1 is $6+5i$] (observe that the real components
+correspond to home wins and the imaginary components correspond to
+away wins.  Thus A wins 7 times at home and 5 times away).  In its
+most general form, the $2\times 2$ result matrix would be
 
 $$
 \begin{bmatrix}
@@ -84,7 +91,7 @@ $$
 \end{bmatrix}
 $$
 
-and the log-likelihood function would be, algebraically,
+and the monster log-likelihood function would be, algebraically,
 
 $$
 \mathcal{S}=\log\mathcal{L}=
@@ -112,7 +119,14 @@ $$
 \hat{B}=\frac{\beta }{\alpha  + \beta}
 $$
 
-Just to check, we evaluate the Hessian matrix and find
+Observe that the point
+$\left(\hat{A},\hat{B},\hat{M}=1-\hat{A}-\hat{B}\right)$ might be
+inadmissable.  For example, if $\beta,\delta>0$ and $\alpha=\gamma=0$
+then $\hat{A}=\hat{B}=1$ and $\hat{M}=-1$.  This would correspond to
+both teams winning all their games at home and losing none.
+
+Just to check the well-definedness of the ML estimate, we evaluate the
+Hessian matrix and find
 
 $$H=-
 \left(\begin{array}{cc} 
@@ -158,6 +172,9 @@ of $\hat{A}/(\hat{A}+\hat{B})=\frac{12}{23}\simeq 0.52$ for $A$
 winning in a match between $A$ and $B$ where the home team advantage
 is not operating (on neutral ground, for example).
 
+### Lambda parametrization {-}
+
+
 Now the $\lambda$ parameterization.  The likelihood function for the
 same dataset is
 
@@ -173,11 +190,9 @@ $$
 This is equal to $(\alpha+\delta)\log\lambda +(\alpha+\gamma)\log
 A+(\beta+\delta)\log B -(\alpha+\beta)\log(\lambda A+B)
 -(\gamma+\delta)\log(A+\lambda B)$ and even after simplifying [we may
-assume $A+B=1$] the result does not appear to have a simple analytical
-solution; we must proceed numerically.  To do so,
-
-
-we need to define a
+assume $B=1-A$] the result of maximizing $\mathcal{S}$ with respect to
+$A$ and $\lambda$ does not appear to have a simple analytical
+solution; we must proceed numerically.  To do so, we need to define a
 slight generalization of `home_away3()`:
 
 ```{r defineha3}
