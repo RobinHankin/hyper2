@@ -89,3 +89,4 @@ inst/skating_analysis_cache/
 inst/skating_analysis_files/
 inst/*.Rmd~
 inst/doc
+docs

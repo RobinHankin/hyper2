@@ -282,3 +282,7 @@ CITATION.cff
 ^inst/zermelo.Rmd$
 ^.github$
 ^.devcontainer$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

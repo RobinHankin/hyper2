@@ -17,7 +17,7 @@ Suggests: knitr, markdown, rmarkdown, testthat, bookdown, rticles, covr
 VignetteBuilder: knitr
 Imports: Rcpp (>= 1.0-7), partitions, disordR (>= 0.0-9), alabama, calibrator, Rdpack, magrittr
 LinkingTo: Rcpp
-URL: https://github.com/RobinHankin/hyper2
+URL: https://github.com/RobinHankin/hyper2, https://robinhankin.github.io/hyper2/
 BugReports: https://github.com/RobinHankin/hyper2/issues
 RoxygenNote: 7.1.1
 RdMacros: Rdpack
