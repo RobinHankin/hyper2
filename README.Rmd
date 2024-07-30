@@ -1,5 +1,5 @@
 ---
-title: "The hyper 2 package"
+title: "The hyper2 package"
 output:
   github_document:
     pandoc_args: --webtex

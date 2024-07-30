@@ -1,4 +1,4 @@
-The hyper 2 package
+The hyper2 package
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
