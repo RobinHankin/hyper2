@@ -85,7 +85,10 @@ where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.
   \code{\link{psubs}}
 }
 \examples{
-o <- hyper2(list("a","b","c",c("a","b"),letters[1:3]),1:5) 
+(o <- hyper2(list("a","b","c",c("a","b"),letters[1:3]),c(1:3,-1,-5)))
+(p <- hyper2(list("a",c("a","d")),c(1,-1)))
+o+p
+
 
 # Verify that the MLE is invariant under reordering
 pnames(icons) <- rev(pnames(icons))
