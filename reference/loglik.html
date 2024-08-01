@@ -103,11 +103,14 @@
 
 
 <p>Function <code>loglik()</code> is a straightforward likelihood function.  It
-  can take a vector of length <code>n=size(H)</code> or <code>size(H)-1</code>; if
+  can take a vector of length <code>n=size(H)</code> or <code>size(H)-1</code>.  If
   given the vector
   \(p=\left(p_1,\ldots,p_{n-1}\right)\) it
   appends the fillup value, and then returns returns the (log)
-  likelihood.</p>
+  likelihood (names are discarded in this case).  If given a vector
+  \(p=\left(p_1,\ldots,p_{n}\right)\) [notionally
+  summing to 1] it requires a named vector, and names must match those
+  of <code>H</code>.  The vector is reordered if necessary.</p>
 <p>If <code>p</code> is a matrix, the rows are interpreted as probability
   points.</p>
 <p>Function <code>loglik_single()</code> is a helper function that takes a
