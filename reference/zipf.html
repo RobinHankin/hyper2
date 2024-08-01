@@ -3,7 +3,11 @@
 
 A very short function that reproduces Zipf's law: a harmonic rank-probability
 distribution, formally
-$$p(i)=\frac{i^{-1}}{\sum_{i=1}^{N} i^{-1}},\qquad i=1,\ldots,N$$"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+$$p(i)=\frac{i^{-1}}{\sum_{i=1}^{N} i^{-1}},\qquad i=1,\ldots,N$$
+The volleyball dataset might reasonably be assumed to be zipf, but one
+can reject this hypothesis at \(5\%\), see the examples.
+
+"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -77,6 +81,10 @@ $$p(i)=\frac{i^{-1}}{\sum_{i=1}^{N} i^{-1}},\qquad i=1,\ldots,N$$"><!-- mathjax 
 <p>A very short function that reproduces Zipf's law: a harmonic rank-probability
 distribution, formally</p>
 <p>$$p(i)=\frac{i^{-1}}{\sum_{i=1}^{N} i^{-1}},\qquad i=1,\ldots,N$$</p>
+<p>The volleyball dataset might reasonably be assumed to be zipf, but one
+can reject this hypothesis at \(5\%\), see the examples.</p>
+
+
     </div>
 
     <div id="ref-usage">
@@ -104,10 +112,36 @@ distribution, formally</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">zipf</span><span class="op">(</span><span class="va">icons</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">zipf</span><span class="op">(</span><span class="va">icons</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         NB          L         PB        THC         OA       WAIS </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.40816327 0.20408163 0.13605442 0.10204082 0.08163265 0.06802721 </span>
+<span class="r-in"><span><span class="fu"><a href="tests.html">knownp.test</a></span><span class="op">(</span><span class="va">volleyball</span>,<span class="fu">zipf</span><span class="op">(</span><span class="va">volleyball</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	Constrained support maximization</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> data:  volleyball</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> null hypothesis: p1 = 0.3534858, p2 = 0.1767429, p3 = 0.1178286, p4 = 0.0883714, p5 = 0.0706972, p6 = 0.0589143, p7 = 0.050498, p8 = 0.0441857, p9 = 0.0392762</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> null estimate:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         p1         p2         p3         p4         p5         p6         p7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.35348576 0.17674288 0.11782859 0.08837144 0.07069715 0.05891429 0.05049797 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         p8         p9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.04418572 0.03927620 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (argmax, constrained optimization)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Support for null:  -33.33813 + K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alternative hypothesis:  sum p_i=1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alternative estimate:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           p1           p2           p3           p4           p5           p6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4.174629e-01 7.590639e-02 4.352590e-01 1.051670e-06 9.634895e-04 1.016641e-06 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           p7           p8           p9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1.000184e-06 2.904115e-02 4.136399e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (argmax, free optimization)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Support for alternative:  -25.32838 + K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> degrees of freedom: 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> support difference = 8.009745</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p-value: 0.04210199 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </div>
