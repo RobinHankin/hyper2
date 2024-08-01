@@ -26,11 +26,14 @@ like_series(p,L,log=TRUE)
 \details{
 
   Function \code{loglik()} is a straightforward likelihood function.  It
-  can take a vector of length \code{n=size(H)} or \code{size(H)-1}; if
+  can take a vector of length \code{n=size(H)} or \code{size(H)-1}.  If
   given the vector
   \eqn{p=\left(p_1,\ldots,p_{n-1}\right)}{p=(p_1,...,p_{n-1})} it
   appends the fillup value, and then returns returns the (log)
-  likelihood.
+  likelihood (names are discarded in this case).  If given a vector
+  \eqn{p=\left(p_1,\ldots,p_{n}\right)}{p=(p_1,...,p_{n})} [notionally
+  summing to 1] it requires a named vector, and names must match those
+  of \code{H}.  The vector is reordered if necessary.
 
   If \code{p} is a matrix, the rows are interpreted as probability
   points.
