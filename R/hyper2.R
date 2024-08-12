@@ -44,8 +44,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 ## setter methods end
 
-`is.hyper2` <- function(H){inherits(H,"hyper2") & !inherits(H,"hyper3")}
-`is.hyper3` <- function(H){inherits(H,"hyper2") &  inherits(H,"hyper3")}
+`is.hyper2` <- function(H){inherits(H,"hyper2") && !inherits(H,"hyper3")}
+`is.hyper3` <- function(H){inherits(H,"hyper2") &&  inherits(H,"hyper3")}
 
 `length.hyper2` <- function(x){length(x$brackets)}
 
@@ -817,7 +817,7 @@ rorder_single <- function(p){
 }
 
 `elimination` <- function(all_players){
-    if(is.numeric(all_players) & (length(all_players)==1)){
+    if(is.numeric(all_players) && (length(all_players)==1)){
       all_players <- letters[seq_len(all_players)]
     }
     all_players <- rev(all_players)
@@ -930,7 +930,7 @@ rorder_single <- function(p){
         winning_side <- onerow == 1
         losing_side  <- onerow == 0
         playing <- !is.na(onerow)
-        if(any(playing) & any(winning_side) & any(losing_side)){
+        if(any(playing) && any(winning_side) && any(losing_side)){
           out[pn[which(winning_side)]] %<>% inc
           out[pn[which(playing)]] %<>% dec
         }
@@ -1068,8 +1068,8 @@ rorder_single <- function(p){
 `wikitable_to_ranktable`  <- function(wikitable, strict=FALSE){
   f <- function(x){  # deal with DNF etc and zero
     suppressWarnings(out <- as.numeric(as.vector(x)))
-    DNF <- is.na(out) | (out == 0)
-    if(sum(DNF) > 1 & strict){
+    DNF <- is.na(out) || (out == 0)
+    if(sum(DNF) > 1 && strict){
       warning("more than one competitor did not place.  EM algorithm used")
     }
     out[DNF] <- max(out[!DNF]) + seq_len(sum(DNF))
@@ -1170,7 +1170,7 @@ rorder_single <- function(p){
     if(missing(players)){
       return(x[order(names(x))])
     } else {
-      if(is.hyper2(players) | is.hyper3(players)){
+      if(is.hyper2(players) || is.hyper3(players)){
         players <- pnames(players)
       }
     }
