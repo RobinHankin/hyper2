@@ -6,7 +6,7 @@
     
 `profile_support_single` <- function(H, i, p, evaluate=FALSE, ...){
     if(is.character(i)){
-      i <- which(pnames(H)==i)
+      i <- which(pnames(H) == i)
     }
     
     n <- size(H)
