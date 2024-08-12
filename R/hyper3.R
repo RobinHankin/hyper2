@@ -14,7 +14,7 @@
     stopifnot(length(B) == length(W))
     stopifnot(all(unlist(lapply(B,length)) == unlist(lapply(W,length))))
 
-    if(length(powers)==1){powers <- rep(powers,length(B))}
+    if(length(powers) == 1){powers <- rep(powers,length(B))}
     if(missing(pnames)){pnames <- sort(unique(c(B ,recursive=TRUE)))}
     out <- identityL3(B,W,powers)  # the meat
     out$pnames <- pnames
@@ -50,7 +50,7 @@
     if(any(is.null(names(x)))){
         return(FALSE)
     }
-    if(any(x<0)){
+    if(any(x < 0)){
         return(FALSE)
     }
     return(TRUE)
@@ -108,7 +108,7 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
     b <- elements(as.namedvectorlist(x))
     p <- elements(powers(x))
     if(!isFALSE(getOption("give_warning_on_nonzero_power_sum"))){
-      if(sum(powers(x)) !=0){
+      if(sum(powers(x)) != 0){
           warning("powers have nonzero sum")
       }
     }
@@ -267,7 +267,7 @@ char2nv <- function(x){
     value <- elements(value)
     stopifnot(is.numeric(value)) # coercion to integer is done in C
     stopifnot(is.vector(value))
-    if(length(value)==1){
+    if(length(value) == 1){
         value <- rep(value, length(index))
     }
     ## assigner3 <- function(L, W, p, L2, W2, value)
@@ -312,7 +312,7 @@ char2nv <- function(x){
 `loglik_single_redundant` <- function(p,H,log=TRUE){
   stopifnot(all(p>=0))
   if(length(p) == size(H)-1){
-    stopifnot(sum(p)<=1)
+    stopifnot(sum(p) <= 1)
     probs <- fillup(p)
   } else if(length(p) == size(H)){
     if(is.null(names(p))){stop("p==size(H), p must be a named vector")}
@@ -475,7 +475,7 @@ stop("not yet written")
         jj <- n[order(suppressWarnings(as.numeric(a[,i])),na.last=TRUE)]
         n_finishers    <- sum(!is.na(jj))
         n_nonfinishers <- sum( is.na(jj))
-        if(n_nonfinishers==0){ # technically not necessary:  "else" clause works for ==0
+        if(n_nonfinishers == 0){ # technically not necessary:  "else" clause works for == 0
             out <- out + ordervec2supp3(jj)
         } else { 
             out <- out + ordervec2supp3(jj[seq_len(n_finishers)],jj[n_finishers + seq_len(n_finishers)])
@@ -502,14 +502,14 @@ stop("not yet written")
 
 `args2ordervec` <- function(...){
     l <- list(...)
-    if(any(names(l) == "") && !all(names(l)=="")){
+    if(any(names(l) == "") && !all(names(l) == "")){
         stop("either name all of the arguments, or none of them")
     }
-    if(all(names(l)=="")){
+    if(all(names(l) == "")){
         names(l) <- paste("X",seq_len(nargs()),sep="")
     }
     x <- unlist(l,use.names=FALSE)
-    if(any(table(x)>1)){stop("ties not implemented")}
+    if(any(table(x) > 1)){stop("ties not implemented")}
     names(x) <- rep(names(l),lapply(l,length))
     return(names(sort(x)))
 }
@@ -617,9 +617,9 @@ stop("not yet written")
 }
 
 `sum.hyper3` <- function(x, ..., na.rm=FALSE){
-  if(nargs()==1){
+  if(nargs() == 1){
     return(x)
-  } else if (nargs()==2){
+  } else if (nargs() == 2){
     return(hyper3_add(x, ...))
   } else {
     return(hyper3_add(x, Recall(...)))
@@ -641,7 +641,7 @@ stop("not yet written")
         x <- hyper3_nv(
             lapply(as.namedvectorlist(x),
                    function(p){
-                       p[names(p)==index[i]] <- value[i] # The meat
+                       p[names(p) == index[i]] <- value[i] # The meat
                        return(p)
                    }),
             powers=powers(x),
