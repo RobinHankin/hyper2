@@ -129,7 +129,7 @@ setGeneric("weights",function(object, ...){standardGeneric("weights")})
 
 `powers<-.hyper3` <- function(H,value){
     stopifnot(consistent(powers(H),value))
-    if(!is.disord(value) & length(value)>1){stop("replacement not defined")}
+    if(!is.disord(value) && length(value) > 1){stop("replacement not defined")}
     hyper3_nv(as.namedvectorlist(H),powers=value,pnames=pnames(H))
 }
 
@@ -502,7 +502,7 @@ stop("not yet written")
 
 `args2ordervec` <- function(...){
     l <- list(...)
-    if(any(names(l) == "") & !all(names(l)=="")){
+    if(any(names(l) == "") && !all(names(l)=="")){
         stop("either name all of the arguments, or none of them")
     }
     if(all(names(l)=="")){
