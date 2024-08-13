@@ -30,6 +30,7 @@ to define a `hyper2` object:
 
 ```{r,label=defineH,message=FALSE}
 library("hyper2",quietly=TRUE)
+library("magrittr")
 (H <- hyper2(pnames=c("S","a","b","c")))
 ```
 
