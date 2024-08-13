@@ -1068,7 +1068,7 @@ rorder_single <- function(p){
 `wikitable_to_ranktable`  <- function(wikitable, strict=FALSE){
   f <- function(x){  # deal with DNF etc and zero
     suppressWarnings(out <- as.numeric(as.vector(x)))
-    DNF <- is.na(out) || (out == 0)
+    DNF <- is.na(out) | (out == 0)
     if(sum(DNF) > 1 && strict){
       warning("more than one competitor did not place.  EM algorithm used")
     }
