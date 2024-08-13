@@ -1,5 +1,6 @@
 \name{pairwise}
 \alias{pairwise}
+\alias{pair3}
 \alias{zermelo}
 \alias{home_away}
 \alias{home_away3}
@@ -20,6 +21,19 @@
   same, but returns a \code{hyper3} object.  A complex matrix is
   interpreted as real parts being the home wins and imaginary parts away
   wins.
+
+  Convenience function \code{pair3()} returns a likelihood function for
+  repeated comparisons between two players, one of which has a home (or
+  first-move) advantage.  Given
+
+  \preformatted{pair3(a=4, b=3, lambda=1.88)}
+
+  it returns
+
+  \deqn{\frac{\left(1.88{p_a}\right)^4{p_b}^3}{1.88p_a + p_b}.}
+
+  The first player is the one with the home advantage of \code{lambda}.
+  A use-case is given in \code{inst/table_tennis_serve.Rmd}.
 
   Function \code{white_draw3()} returns a \code{hyper3} likelihood
   function for pairwise comparisons, one of whom has a home team-type
@@ -102,6 +116,8 @@ M
 pairwise(M)
 zermelo(M)
 # maxp(pairwise(M))  # should be identical (takes ~10s to run)
+
+pair3(
 
 
 M2 <- matrix(c(NA,19+2i,17,11+2i,16+5i,NA,12+4i,12+6i,12+2i,19+10i,

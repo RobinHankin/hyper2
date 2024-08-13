@@ -34,14 +34,15 @@ library("magrittr")
 (H <- hyper2(pnames=c("S","a","b","c")))
 ```
 
-so the likelihood function is uniform, for the only term is raised to
-the zeroth power (players' names are not capitalised in R idiom for
-clarity).  Now we have to input the data, and we will go through the
-four scorelines above, one by one.  Note that this approach implicitly
-assumes independence of scores.
+so the likelihood function is uniform.  We have players `a`, `b`, `c`
+(players' names are not capitalised in R idiom for clarity) and a
+reified entity `S` representing the strength of the serve.  Now we
+have to input the data, and we will go through the four scorelines
+above, one by one.  Note that this approach implicitly assumes
+independence of scores.
 
 
-### A vs B, A serves, score 5-1:
+### A vs B, A serves, score 5-1: {-}
 ```{r,label=abaserve}
 H[c("a","S")]     %<>% "+"(5  ) # a+S win 5 games
 H["b"]            %<>% "+"(  1) # b wins 1 game
@@ -53,21 +54,21 @@ The likelihood function is of the form
 $\frac{\left(a+S\right)^5b}{\left(a+b+S\right)^6}$.  We can add the
 other observations to $H$:
 
-### A vs B, B serves, score 1-3:
+* A vs B, B serves, score 1-3:
 ```{r,label=abbserve}
 H[c("b","S")]     %<>% "+"(3  ) # b+S win 3 games
 H["a"]            %<>% "+"(  1) # a wins 1 game 
 H[c("a","b","S")] %<>% "-"(3+1) # a+b+S play 1+3=4 games
 ```
 
-### A vs C, A serves, score 4-1:
+* A vs C, A serves, score 4-1:
 ```{r,label=acaserve}
 H[c("a","S")]     %<>% "+"(4  ) # a+S win 4 games
 H["c"]            %<>% "+"(  1) # c wins 1 game 
 H[c("a","c","S")] %<>% "-"(4+1) # a+c+S play 1+4=5 games
 ```
 
-### A vs C, C serves, score 1-2:
+* A vs C, C serves, score 1-2:
 ```{r,label=accserve}
 H["a"]            %<>% "+"(1  ) # a wins 1 game
 H[c("c","S")]     %<>% "+"(  2) # c+S win 2 games
@@ -75,8 +76,6 @@ H[c("a","c","S")] %<>% "-"(1+2) # a+c+S play 1+2=3 games
 ```
 
 
-
-## Likelihood function
 
 For the entire dataset we have
 
@@ -111,27 +110,19 @@ Thus the tail area, pval, is about 0.022 which gives us a significant
 result: the serve has nonzero strength.
 
 
-
 ## Assessment of equal player strength.
 
 We now assess the hypothesis that the three (real) players are of zero
 strength:  $H_E\colon p_A=p_B=p_C$.
 
-## Assessment of B vs C
-
-The maximum likelihood estimate for strengths allows us to assess what
-might happen when B plays C (which was not observed).  For
-convenience, here is the evaluate:
-
-```{r,label=maxtab,cache=TRUE}
-maxp(table_tennis)
+```{r, label=equalplayerstrength,cache=TRUE}
+samep.test(table_tennis,c("a","b","c"))
 ```
 
-If B serves, we would have $B+S:C\simeq 0.14+0.45:0.15\equiv 59:15$,
-or B wins with probability of about $0.78$.  If C serves we have
-$B:C+S\simeq 0.14:0.16+0.45\equiv 14:61$, so B wins with a probability
-of about $0.19$.
-
+Above, `samep.test()` complains because it is performing a
+one-dimensional optimization (we may ignore this issue).  The result
+of the test is that there is no evidence to suggest a difference
+between players `a`, `b`, and `c`.
 
 # Profile likelihood for serve strength
 
@@ -148,6 +139,24 @@ abline(h=c(0,-2))
 
 So we can see that the credible range is from about 0.07-0.8 (and in
 particular excludes zero).
+
+
+# Assessment of B vs C
+
+The maximum likelihood estimate for strengths allows us to assess what
+might happen when B plays C (which was not observed).  For
+convenience, here is the evaluate:
+
+```{r,label=maxtab,cache=TRUE}
+maxp(table_tennis)
+```
+
+If B serves, we would have $B+S:C\simeq 0.14+0.45:0.15\equiv 59:15$,
+or B wins with probability of about $0.78$.  If C serves we have
+$B:C+S\simeq 0.14:0.16+0.45\equiv 14:61$, so B wins with a probability
+of about $0.19$.
+
+
 
 
 # Profile likelihood for B vs C
@@ -221,6 +230,68 @@ $\left(\frac{1}{1+e^{3}},\frac{1}{1+e^{-3}}\right)$, or about
 $(0.047,0.953)$.  However, it is not clear if $p_B$ and $p_C$ are
 meaningful in isolation, as a real table tennis point has to have a
 server and the value of $S$ is itself uncertain.
+
+
+# Weighted likelihoods
+
+We now try `hyper3` formalism:
+
+```{r,label=calcproflike,cache=TRUE}
+M_home <- matrix( c(NA, 5 , 4, 3, NA, 0, 2,0,NA),byrow=TRUE,3,3)
+jj <- letters[1:3]
+dimnames(M_home) <- list(jj,jj)
+
+M_away <- matrix( c(NA, 1 , 1, 1, NA, 0, 1,0,NA),byrow=TRUE,3,3)
+jj <- letters[1:3]
+dimnames(M_away) <- list(jj,jj)
+M_home
+M_away
+
+home_away3(M_home,M_away,lambda=1.8)
+
+f <- function(lam){
+    maxp(home_away3(M_home,M_away,lambda=lam),give=TRUE)$value
+}
+```
+
+```{r,makelamlike,cache=TRUE}
+lam <- exp(seq(from=log(0.6),to=log(20),len=9))
+L <- sapply(lam,f)
+```
+
+```{r,optimlamlike,cache=TRUE}
+maxf <- optimize(f,c(2,5),maximum=TRUE)
+maxf
+```
+
+
+```{r plotlikelam}
+L <- L-max(L)
+plot(lam,L,type='b',pch=16,log="x")
+abline(h=c(0,-2))
+```
+
+
+How does the situation change if we have some more observations?
+Suppose `c` plays at home to `d`, and loses.  If we use
+$\hat{\lambda}\simeq 3.35$:
+
+```{r, label=newdatacd,cache=TRUE}
+(Hnew <- home_away3(M_home,M_away,lambda=3.35) + pair3(c=0,d=1,lambda=3.35))
+maxp(Hnew)
+```
+
+Above we see that our _estimate_ would be that `d` has a BT strength
+of 1 and the other players have a strength of zero.  Is there strong
+evidence that the teams' strength differ?
+
+
+```{r,label=newdatatest,cache=TRUE}
+equalp.test(Hnew)
+```
+
+Above we see that there is no evidence that the teams' strengths do in
+fact differ.
 
 
 

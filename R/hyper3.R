@@ -649,3 +649,18 @@ stop("not yet written")
     }
     return(x)
 }
+
+`pair3` <- function(..., lambda){ # pair3(g=5, h=2, lambda=1.88)
+    jj <- list(...)
+    stopifnot(length(jj) == 2)
+    home_player <- names(jj)[1]
+    away_player <- names(jj)[2]
+    home_wins <- jj[[1]]
+    away_wins <- jj[[2]]
+    out <- hyper3()
+    out[setNames(lambda, home_player)] %<>% inc(home_wins)
+    out[setNames(1     , away_player)] %<>% inc(away_wins)
+    out[setNames(c(lambda, 1), c(home_player, away_player))] %<>% dec(home_wins + away_wins)
+    return(out)
+}
+
