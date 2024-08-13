@@ -184,7 +184,7 @@ importFrom("Rdpack",reprompt)
 
 
 importFrom(Rcpp, evalCpp)
-importFrom("stats", "constrOptim","runif","rnorm","pchisq","rgamma")
+importFrom("stats", "constrOptim","runif","rnorm","pchisq","rgamma","setNames")
 importFrom("utils", "head")
 importFrom("partitions","perms")
 importFrom("magrittr", "%>%", "%<>%")
