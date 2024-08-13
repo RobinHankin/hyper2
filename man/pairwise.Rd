@@ -117,8 +117,7 @@ pairwise(M)
 zermelo(M)
 # maxp(pairwise(M))  # should be identical (takes ~10s to run)
 
-pair3(
-
+pair3(a=3,b=6,lambda=1.88)
 
 M2 <- matrix(c(NA,19+2i,17,11+2i,16+5i,NA,12+4i,12+6i,12+2i,19+10i,
 NA,12+4i,11+2i,16+2i,11+7i,NA),4,4)
