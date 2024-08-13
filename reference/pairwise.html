@@ -12,6 +12,15 @@ Function home_away() takes two matrices, one for home wins and
   same, but returns a hyper3 object.  A complex matrix is
   interpreted as real parts being the home wins and imaginary parts away
   wins.
+Convenience function pair3() returns a likelihood function for
+  repeated comparisons between two players, one of which has a home (or
+  first-move) advantage.  Given
+pair3(a=4, b=3, lambda=1.88)
+
+it returns
+$$\frac{\left(1.88{p_a}\right)^4{p_b}^3}{1.88p_a + p_b}.$$
+The first player is the one with the home advantage of lambda.
+  A use-case is given in inst/table_tennis_serve.Rmd.
 Function white_draw3() returns a hyper3 likelihood
   function for pairwise comparisons, one of whom has a home team-type
   advantage (white player in the case of chess).  It is designed to
@@ -99,6 +108,15 @@ Function white_draw3() returns a hyper3 likelihood
   same, but returns a <code>hyper3</code> object.  A complex matrix is
   interpreted as real parts being the home wins and imaginary parts away
   wins.</p>
+<p>Convenience function <code>pair3()</code> returns a likelihood function for
+  repeated comparisons between two players, one of which has a home (or
+  first-move) advantage.  Given</p>
+<p></p><div class="sourceCode"><pre><code><span><span class="fu"><a href="../reference/pairwise.html">pair3</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">4</span>, b<span class="op">=</span><span class="fl">3</span>, lambda<span class="op">=</span><span class="fl">1.88</span><span class="op">)</span></span></code></pre></div>
+
+<p>it returns</p>
+<p>$$\frac{\left(1.88{p_a}\right)^4{p_b}^3}{1.88p_a + p_b}.$$</p>
+<p>The first player is the one with the home advantage of <code>lambda</code>.
+  A use-case is given in <code>inst/table_tennis_serve.Rmd</code>.</p>
 <p>Function <code>white_draw3()</code> returns a <code>hyper3</code> likelihood
   function for pairwise comparisons, one of whom has a home team-type
   advantage (white player in the case of chess).  It is designed to
@@ -192,70 +210,7 @@ number 1, pages 384–406</p></li>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span> <span class="co">#Data is the top 5 players from Borozki's table 1</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span><span class="fl">0</span>,<span class="fl">10</span>,<span class="fl">0</span>, <span class="fl">2</span>,<span class="fl">5</span>,</span></span>
-<span class="r-in"><span><span class="fl">4</span>, <span class="fl">0</span>,<span class="fl">0</span>, <span class="fl">6</span>,<span class="fl">6</span>,</span></span>
-<span class="r-in"><span><span class="fl">0</span>, <span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">15</span>,<span class="fl">0</span>,</span></span>
-<span class="r-in"><span><span class="fl">0</span>, <span class="fl">8</span>,<span class="fl">0</span>, <span class="fl">0</span>,<span class="fl">7</span>,</span></span>
-<span class="r-in"><span><span class="fl">1</span> ,<span class="fl">0</span>,<span class="fl">3</span>, <span class="fl">0</span>,<span class="fl">0</span></span></span>
-<span class="r-in"><span><span class="op">)</span>,<span class="fl">5</span>,<span class="fl">5</span>,byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> </span></span>
-<span class="r-in"><span><span class="va">players</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Agassi"</span>,<span class="st">"Becker"</span>,<span class="st">"Borg"</span>,<span class="st">"Connors"</span>,<span class="st">"Courier"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>winner<span class="op">=</span><span class="va">players</span>,loser<span class="op">=</span><span class="va">players</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">M</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          loser</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> winner    Agassi Becker Borg Connors Courier</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Agassi       0     10    0       2       5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Becker       4      0    0       6       6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Borg         0      0    0      15       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Connors      0      8    0       0       7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Courier      1      0    3       0       0</span>
-<span class="r-in"><span><span class="co"># e.g. Agassi beats Becker 10 times and loses 4 times</span></span></span>
-<span class="r-in"><span><span class="fu">pairwise</span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>powers have nonzero sum</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log(Agassi^17 * (Agassi + Becker)^-14 * (Agassi + Becker + Borg +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Connors + Courier)^-67 * (Agassi + Connors)^-2 * (Agassi + Courier)^-6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Becker^16 * (Becker + Connors)^-14 * (Becker + Courier)^-6 * Borg^15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * (Borg + Connors)^-15 * (Borg + Courier)^-3 * Connors^15 * (Connors +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Courier)^-7 * Courier^4)</span>
-<span class="r-in"><span><span class="fu">zermelo</span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Agassi     Becker       Borg    Connors    Courier </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.30345344 0.11650669 0.44416163 0.10115551 0.03472273 </span>
-<span class="r-in"><span><span class="co"># maxp(pairwise(M))  # should be identical (takes ~10s to run)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">M2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">19</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">17</span>,<span class="fl">11</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">16</span><span class="op">+</span><span class="fl">5i</span>,<span class="cn">NA</span>,<span class="fl">12</span><span class="op">+</span><span class="fl">4i</span>,<span class="fl">12</span><span class="op">+</span><span class="fl">6i</span>,<span class="fl">12</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">19</span><span class="op">+</span><span class="fl">10i</span>,</span></span>
-<span class="r-in"><span><span class="cn">NA</span>,<span class="fl">12</span><span class="op">+</span><span class="fl">4i</span>,<span class="fl">11</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">16</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">11</span><span class="op">+</span><span class="fl">7i</span>,<span class="cn">NA</span><span class="op">)</span>,<span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">M2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"@home"</span> <span class="op">=</span> <span class="va">teams</span>,<span class="st">"@away"</span><span class="op">=</span><span class="va">teams</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">home_away</span><span class="op">(</span><span class="va">M2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log(A^4 * (A + B + home)^-42 * (A + C + home)^-31 * (A + D + home)^-26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * (A + home)^39 * B^15 * (B + C + home)^-45 * (B + D + home)^-36 * (B +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> home)^54 * C^16 * (C + D + home)^-34 * (C + home)^40 * D^11 * (D +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> home)^35)</span>
-<span class="r-in"><span><span class="co"># home_away3(M2,lambda=1.2)  # works but takes too long (~3s)</span></span></span>
-<span class="r-in"><span><span class="fu">home_away3</span><span class="op">(</span><span class="va">M2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,lambda<span class="op">=</span><span class="fl">1.2</span><span class="op">)</span> </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log( (A=1)^2 * (A=1, B=1.2)^-21 * (A=1, C=1.2)^-17 * (A=1.2)^28 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (A=1.2, B=1)^-21 * (A=1.2, C=1)^-14 * (B=1)^9 * (B=1, C=1.2)^-16 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (B=1.2)^38 * (B=1.2, C=1)^-29 * (C=1)^12 * (C=1.2)^29)</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="va">kka_array</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1i</span><span class="op">*</span><span class="va">kka_array</span><span class="op">[</span>,,<span class="fl">3</span><span class="op">]</span> <span class="co"># ignore draws</span></span></span>
-<span class="r-in"><span><span class="fu">home_away</span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log(Anand^15 * (Anand + Karpov + home)^-43 * (Anand + Kasparov +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> home)^-34 * (Anand + home)^24 * Karpov^12 * (Karpov + Kasparov +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> home)^-64 * (Karpov + home)^25 * Kasparov^20 * (Kasparov + home)^45)</span>
-<span class="r-in"><span><span class="co"># home_away3(M,lambda=1.3)  # works but takes too long (~3s)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">white_draw3</span><span class="op">(</span><span class="va">kka_array</span>,<span class="fl">1.88</span>,<span class="fl">1.11</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log( (Anand=1)^15 * (Anand=1.11, Karpov=1.11)^49 * (Anand=1.11,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kasparov=1.11)^46 * (Anand=1.88)^24 * (Anand=2.11, Karpov=2.99)^-49 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Anand=2.11, Kasparov=2.99)^-43 * (Anand=2.99, Karpov=2.11)^-43 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Anand=2.99, Kasparov=2.11)^-37 * (Karpov=1)^12 * (Karpov=1.11,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kasparov=1.11)^129 * (Karpov=1.88)^25 * (Karpov=2.11,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kasparov=2.99)^-94 * (Karpov=2.99, Kasparov=2.11)^-99 * (Kasparov=1)^20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * (Kasparov=1.88)^45)</span>
-</code></pre></div>
+
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
