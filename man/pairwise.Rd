@@ -22,18 +22,20 @@
   interpreted as real parts being the home wins and imaginary parts away
   wins.
 
-  Convenience function \code{pair3()} returns a likelihood function for
-  repeated comparisons between two players, one of which has a home (or
-  first-move) advantage.  Given
+  Convenience function \code{pair3()} returns a \code{hyper3} likelihood
+  function for the simple case where we have two players, one of which
+  has a known home (or first-move) advantage.  Draws are not admitted.
+  The function takes two named arguments with names corresponding to
+  players and values corresponding to number of games won.  The first
+  argument is the one with the home advantage of \code{lambda}.  Idiom
+  \code{pair3(a=4, b=3, lambda=1.88)} means that \code{a} and \code{b}
+  played 7 times, player \code{a} having a home advantage of
+  \eqn{\lambda=1.88}{omitted}; it would return
+  \eqn{\left(1.88{p_a}\right)^4{p_b}^3\left(1.88p_a +
+  p_b\right)^{-7}}{omitted}.  A use-case is given in
+  \code{inst/table_tennis_serve.Rmd}.
 
-  \preformatted{pair3(a=4, b=3, lambda=1.88)}
 
-  it returns
-
-  \deqn{\frac{\left(1.88{p_a}\right)^4{p_b}^3}{1.88p_a + p_b}.}
-
-  The first player is the one with the home advantage of \code{lambda}.
-  A use-case is given in \code{inst/table_tennis_serve.Rmd}.
 
   Function \code{white_draw3()} returns a \code{hyper3} likelihood
   function for pairwise comparisons, one of whom has a home team-type

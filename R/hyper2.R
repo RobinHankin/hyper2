@@ -1245,10 +1245,11 @@ rorder_single <- function(p){
         rownames(M) <- paste("p",seq_len(nrow(M)),sep="_")
         colnames(M) <- rownames(M)
     }
+    out <- dirichlet(rowSums(M))
+    out[rownames(M)] <- 0
     jj <- M + t(M)
-    
     index <- which(upper.tri(M),arr.ind=TRUE)
-    dirichlet(rowSums(M)) - hyper2(apply(index,1,function(x){rownames(M)[x]},simplify=FALSE),jj[index])
+    return(out - hyper2(apply(index,1,function(x){rownames(M)[x]},simplify=FALSE),jj[index]))
 }
 
 `home_away` <- function (home_games_won, away_games_won){
