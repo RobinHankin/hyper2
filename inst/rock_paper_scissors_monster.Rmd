@@ -342,50 +342,18 @@ the `hyper2` idiom to make a `hyper3` object instead:
 
 ```{r,label=defineh3seven}
 H3seven <- function(lambda){
-  H3 <- hyper3()
-  for(i in 1:6){
-     jj <- 1  # diagonal players do not have lambda-advantage
-     names(jj) <- tt[i]
-     H3[jj] %<>% inc(hw[i,i])
-
-     jj <- lambda
-     names(jj) <- tt[i+1]
-     H3[jj] %<>% inc(hw[i,i+1])
-
-     jj <- c(1,lambda)
-     names(jj) <- c(tt[i],tt[i+1])
-     H3[jj] %<>% dec(hw[i,i] + hw[i,i+1])
-  }  # i loop closes
-
-  ## Now do final one:
-  jj <- 1
-  names(jj) <- tt[7]
-  H3[jj] %<>% inc(hw[7,7])
-
-  jj <- lambda
-  names(jj) <- tt[1]
-  H3[jj] %<>% inc(hw[7,1])
-
-  jj <- c(1,lambda)
-  names(jj) <- c(tt[7],tt[1])
-  H3[jj] %<>% dec(hw[7,7] + hw[7,1])
-
-  return(H3)
-}  # function H3seven() defn closes
+    out <- hyper3()
+    for(i in 1:6){
+        out %<>% inc(dirichlet3(powers=hw[i,i:(i+1)],lambda=c(1,lambda)))
+    }
+    out %<>% inc(dirichlet3(powers=hw[7,c(7,1)],lambda=c(1,lambda)))
+    return(out)
+}
+H3seven(lambda=1.66)
 ```
 
 
-Now we can execute it:
-
-```{r,label=executeh3seven}
-H3 <- H3seven(lambda=1.66)
-H3
-```
-
-
-
-
-```{r,label=defineproflikeh3}
+```{r,label=defineproflikeh3seven}
 profl <- function(lambda){
   H <- H3seven(lambda)
   return(loglik(maxp(H),H))

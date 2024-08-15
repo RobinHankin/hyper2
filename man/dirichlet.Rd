@@ -1,5 +1,6 @@
 \name{dirichlet}
 \alias{dirichlet}
+\alias{dirichlet3}
 \alias{rdirichlet}
 \alias{is.dirichlet}
 \alias{rp_unif}
@@ -19,6 +20,7 @@ generalized Dirichlet distribution due to Connor and Mosimann
 }
 \usage{
 dirichlet(powers, alpha)
+dirichlet3(powers, lambda=NULL)
 GD(alpha, beta, beta0=0)
 GD_wong(alpha, beta)
 rdirichlet(n,H)
@@ -31,6 +33,7 @@ rp_unif(n,H)
     generalized Dirichlet distribution}
   \item{beta0}{In function \code{GD()}, an arbitrary parameter}
   \item{H}{Object of class \code{hyper2}}
+  \item{lambda}{Vector of weights in \code{dirichlet3()}}
   \item{n}{Number of observations}
 }
 \details{
@@ -56,6 +59,13 @@ rp_unif(n,H)
   the names of \code{alpha} give the names of
   \eqn{x_1,\ldots,x_k}{x_1,...,x_k} and the last element of \code{beta}
   gives the name of \eqn{x_{k+1}}.
+
+  Function \code{dirichlet3()} returns a \code{hyper3} object with
+  weights \code{lambda}.  If \code{lambda} is length less than that of
+  \code{powers}, it is padded with \code{1}s [so default \code{NULL}
+  corresponds to unit weights, that is, a \code{hyper2} object].  A
+  use-case is given in \code{inst/rock_paper_scissors_monster.Rmd}.
+  
 }
 
 \references{
@@ -75,6 +85,9 @@ rp_unif(n,H)
   A dirichlet distribution can have a term with zero power.  But
   this poses problems for \code{hyper2} objects as zero power brackets
   are dropped.
+
+  Function \code{dirichlet3()} is a replacement for now removed function
+  \code{pair3()}.
 }
 
 \seealso{\code{\link{hyper2}},\code{\link{rp}}} \examples{
@@ -87,5 +100,8 @@ x1+x2
 H <- dirichlet(c(a=1,b=2,c=3,d=4))
 rdirichlet(10,H)
 colMeans(rdirichlet(1e4,H))
+
+dirichlet3(c(fish=3,chips=2),lambda=1.8)
+dirichlet3(c(x=6,y=5,z=2),1:3)
 
 }

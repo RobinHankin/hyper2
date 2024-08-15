@@ -2,6 +2,7 @@
 
 * consistent handling of non-zero-sum powers 
 * no longer imports frab functionality
+* new function dirichlet3()
 
 # hyper2 3.0-1
 

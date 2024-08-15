@@ -1,6 +1,5 @@
 \name{pairwise}
 \alias{pairwise}
-\alias{pair3}
 \alias{zermelo}
 \alias{home_away}
 \alias{home_away3}
@@ -21,21 +20,6 @@
   same, but returns a \code{hyper3} object.  A complex matrix is
   interpreted as real parts being the home wins and imaginary parts away
   wins.
-
-  Convenience function \code{pair3()} returns a \code{hyper3} likelihood
-  function for the simple case where we have two players, one of which
-  has a known home (or first-move) advantage.  Draws are not admitted.
-  The function takes two named arguments with names corresponding to
-  players and values corresponding to number of games won.  The first
-  argument is the one with the home advantage of \code{lambda}.  Idiom
-  \code{pair3(a=4, b=3, lambda=1.88)} means that \code{a} and \code{b}
-  played 7 times, player \code{a} having a home advantage of
-  \eqn{\lambda=1.88}{omitted}; it would return
-  \eqn{\left(1.88{p_a}\right)^4{p_b}^3\left(1.88p_a +
-  p_b\right)^{-7}}{omitted}.  A use-case is given in
-  \code{inst/table_tennis_serve.Rmd}.
-
-
 
   Function \code{white_draw3()} returns a \code{hyper3} likelihood
   function for pairwise comparisons, one of whom has a home team-type
@@ -100,6 +84,11 @@ An extended discussion of \code{pairwise()} is given in
 \code{home_away()} and \code{home_away3()} are described and used in
 \code{inst/home_advantage.Rmd}; see Davidson and Beaver 1977.
 
+Experimental function \code{pair3()} is now removed as
+  \code{dirichlet3()} is more general and has nicer idiom;
+  \code{pair3(a=4, b=3, lambda=1.88)} and \code{dirichlet3(c(a=4, b=3),
+  1.88)} give identical output.
+
 }
 \seealso{\code{\link{maxp}}}
 \examples{ #Data is the top 5 players from Borozki's table 1
@@ -118,8 +107,6 @@ M
 pairwise(M)
 zermelo(M)
 # maxp(pairwise(M))  # should be identical (takes ~10s to run)
-
-pair3(a=3,b=6,lambda=1.88)
 
 M2 <- matrix(c(NA,19+2i,17,11+2i,16+5i,NA,12+4i,12+6i,12+2i,19+10i,
 NA,12+4i,11+2i,16+2i,11+7i,NA),4,4)

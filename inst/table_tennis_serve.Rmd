@@ -277,7 +277,7 @@ Suppose `c` plays at home to `d`, and loses.  If we use
 $\hat{\lambda}\simeq 3.35$:
 
 ```{r, label=newdatacd,cache=TRUE}
-(Hnew <- home_away3(M_home,M_away,lambda=3.35) + pair3(c=0,d=1,lambda=3.35))
+(Hnew <- home_away3(M_home,M_away,lambda=3.35) + dirichlet3(c(c=0,d=1),lambda=3.35))
 maxp(Hnew)
 ```
 

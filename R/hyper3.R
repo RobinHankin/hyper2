@@ -650,17 +650,22 @@ stop("not yet written")
     return(x)
 }
 
-`pair3` <- function(..., lambda){ # pair3(g=5, h=2, lambda=1.88)
-    jj <- list(...)
-    stopifnot(length(jj) == 2)
-    home_player <- names(jj)[1]
-    away_player <- names(jj)[2]
-    home_wins <- jj[[1]]
-    away_wins <- jj[[2]]
+`dirichlet3` <- function(powers, lambda=NULL){
+    if(is.null(names(powers))){
+        stop("dirichlet3d() requires powers to be a _named_ vector")
+    }
+    if(!is.null(names(lambda)) & !identical(names(lambda),names(powers))){
+        stop("names(lambda) must match names(powers), if supplied")
+    }
+    if(length(lambda) < length(powers)){
+        lambda <- c(lambda,rep(1,length(powers)-length(lambda)))
+    }
+
     out <- hyper3()
-    out[setNames(lambda, home_player)] %<>% inc(home_wins)
-    out[setNames(1     , away_player)] %<>% inc(away_wins)
-    out[setNames(c(lambda, 1), c(home_player, away_player))] %<>% dec(home_wins + away_wins)
+    for(i in seq_along(powers)){
+        out[setNames(lambda[i],names(powers)[i])] %<>% inc(powers[i])
+    }
+    out[setNames(lambda,names(powers))] %<>% dec(sum(powers))
     return(out)
 }
 
