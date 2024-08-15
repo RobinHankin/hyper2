@@ -12,20 +12,6 @@ Function home_away() takes two matrices, one for home wins and
   same, but returns a hyper3 object.  A complex matrix is
   interpreted as real parts being the home wins and imaginary parts away
   wins.
-Convenience function pair3() returns a hyper3 likelihood
-  function for the simple case where we have two players, one of which
-  has a known home (or first-move) advantage.  Draws are not admitted.
-  The function takes two named arguments with names corresponding to
-  players and values corresponding to number of games won.  The first
-  argument is the one with the home advantage of lambda.  Idiom
-  pair3(a=4, b=3, lambda=1.88) means that a and b
-  played 7 times, player a having a home advantage of
-  \(\lambda=1.88\); it would return
-  \(\left(1.88{p_a}\right)^4{p_b}^3\left(1.88p_a +
-  p_b\right)^{-7}\).  A use-case is given in
-  inst/table_tennis_serve.Rmd.
-
-
 Function white_draw3() returns a hyper3 likelihood
   function for pairwise comparisons, one of whom has a home team-type
   advantage (white player in the case of chess).  It is designed to
@@ -65,6 +51,9 @@ Function white_draw3() returns a hyper3 likelihood
   </a>
   <ul class="dropdown-menu" role="menu"><li>
       <a href="../articles/dirichlet.html">The `dirichlet()` function in the `hyper2` package</a>
+    </li>
+    <li>
+      <a href="../articles/hyper3_creation.html">Creating `hyper3` objects in the `hyper2` package</a>
     </li>
     <li>
       <a href="../articles/icons.html">Public perception of climate change: the `icons` dataset in the `hyper2` package</a>
@@ -113,20 +102,6 @@ Function white_draw3() returns a hyper3 likelihood
   same, but returns a <code>hyper3</code> object.  A complex matrix is
   interpreted as real parts being the home wins and imaginary parts away
   wins.</p>
-<p>Convenience function <code>pair3()</code> returns a <code>hyper3</code> likelihood
-  function for the simple case where we have two players, one of which
-  has a known home (or first-move) advantage.  Draws are not admitted.
-  The function takes two named arguments with names corresponding to
-  players and values corresponding to number of games won.  The first
-  argument is the one with the home advantage of <code>lambda</code>.  Idiom
-  <code>pair3(a=4, b=3, lambda=1.88)</code> means that <code>a</code> and <code>b</code>
-  played 7 times, player <code>a</code> having a home advantage of
-  \(\lambda=1.88\); it would return
-  \(\left(1.88{p_a}\right)^4{p_b}^3\left(1.88p_a +
-  p_b\right)^{-7}\).  A use-case is given in
-  <code>inst/table_tennis_serve.Rmd</code>.</p>
-
-
 <p>Function <code>white_draw3()</code> returns a <code>hyper3</code> likelihood
   function for pairwise comparisons, one of whom has a home team-type
   advantage (white player in the case of chess).  It is designed to
@@ -212,6 +187,10 @@ number 1, pages 384–406</p></li>
 <code>inst/zermelo.Rmd</code> and also <code>inst/karate.Rmd</code>.  Functions
 <code>home_away()</code> and <code>home_away3()</code> are described and used in
 <code>inst/home_advantage.Rmd</code>; see Davidson and Beaver 1977.</p>
+<p>Experimental function <code>pair3()</code> is now removed as
+  <code><a href="dirichlet.html">dirichlet3()</a></code> is more general and has nicer idiom;
+  <code>pair3(a=4, b=3, lambda=1.88)</code> and <code>dirichlet3(c(a=4, b=3),
+  1.88)</code> give identical output.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -249,9 +228,6 @@ number 1, pages 384–406</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Agassi     Becker       Borg    Connors    Courier </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.30345344 0.11650669 0.44416163 0.10115551 0.03472273 </span>
 <span class="r-in"><span><span class="co"># maxp(pairwise(M))  # should be identical (takes ~10s to run)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">pair3</span><span class="op">(</span>a<span class="op">=</span><span class="fl">3</span>,b<span class="op">=</span><span class="fl">6</span>,lambda<span class="op">=</span><span class="fl">1.88</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1.88)^3 * (a=1.88, b=1)^-9 * (b=1)^6)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">M2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">19</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">17</span>,<span class="fl">11</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">16</span><span class="op">+</span><span class="fl">5i</span>,<span class="cn">NA</span>,<span class="fl">12</span><span class="op">+</span><span class="fl">4i</span>,<span class="fl">12</span><span class="op">+</span><span class="fl">6i</span>,<span class="fl">12</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">19</span><span class="op">+</span><span class="fl">10i</span>,</span></span>
 <span class="r-in"><span><span class="cn">NA</span>,<span class="fl">12</span><span class="op">+</span><span class="fl">4i</span>,<span class="fl">11</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">16</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">11</span><span class="op">+</span><span class="fl">7i</span>,<span class="cn">NA</span><span class="op">)</span>,<span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span></span></span>
