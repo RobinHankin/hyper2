@@ -4,7 +4,8 @@ pkgdown_sha: ~
 articles:
   dirichlet: dirichlet.html
   hyper3_creation: hyper3_creation.html
+  hyper3: hyper3.html
   icons: icons.html
   ordertrans: ordertrans.html
   zeropower: zeropower.html
-last_built: 2024-08-15T15:03Z
+last_built: 2024-08-15T21:36Z
