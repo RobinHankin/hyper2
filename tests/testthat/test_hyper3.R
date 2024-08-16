@@ -8,6 +8,7 @@ test_that("Miscellaneous hyper3 tests", {
 
     expect_true(h1+h2 == h3)
 
+    expect_error(hyper3_bw(list(c("a","b"),c("a","b","d")),list(c(1,4),c(1,-3,4)),c(1,-1),letters[1:5]))
 
     
 } )

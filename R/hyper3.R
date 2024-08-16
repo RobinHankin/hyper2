@@ -9,9 +9,10 @@
 }
 
 `hyper3_bw` <- function(B=list(), W=list(), powers=0,pnames){
-                                        # hyper3_bw(list(c("a","b"),c("b","c","e")),list(c(1,4),c(1,3,9)),1:2,letters[1:5]) 
+    ## hyper3_bw(list(c("a","b"),c("a","b","d")),list(c(1,4),c(1,3,4)),c(1,-1),letters[1:5])
   
     stopifnot(length(B) == length(W))
+    stopifnot(all(c(elements(W),recursive=TRUE) >= 0))
     stopifnot(all(unlist(lapply(B,length)) == unlist(lapply(W,length))))
 
     if(length(powers) == 1){powers <- rep(powers,length(B))}
