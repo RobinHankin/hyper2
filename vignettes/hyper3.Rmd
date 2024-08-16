@@ -40,7 +40,7 @@ different capabilities of the package.
 The `hyper2` package [@hankin2010,@hankin2017_rmd] furnishes
 computational support for generalized Plackett-Luce [@plackett1975]
 likelihood functions.  The preferred interpretation is a race (as in
-track and field athletics): Given six competitors $1-6$, we ascribe to
+track and field athletics): given six competitors $1-6$, we ascribe to
 them nonnegative strengths $p_1,\ldots, p_6$; the probability that $i$
 beats $j$ is $p_i/(p_i+p_j)$.  It is conventional to normalise so that
 the total strength is unity, and to identify a competitor with his
@@ -166,7 +166,7 @@ used with \proglang{weightedplayervector} objects mapping strings to
 long doubles (specifically, mapping player names to their
 multiplicities), and objects of class \proglang{hyper3} are maps from
 a \proglang{weightedplayervector} object to long doubles.  One
-advantage of this is efficiency: Search, removal, and insertion
+advantage of this is efficiency: search, removal, and insertion
 operations have logarithmic complexity.  As an example, the following
 \proglang{C++} pseudo code would create a log-likelihood function for
 the first term in the Plackett-Luce likelihood equation above:
@@ -539,11 +539,11 @@ competitors, say Vadlejch and Vesely, were to throw a javelin, then we
 would estimate the probability that Vadlejch would throw further than
 Vesely at $\displaystyle p_{\mbox{Vad}}/\left(p_{\mbox{Vad}} +
 p_{\mbox{Ves}}\right)\simeq 0.74$.  Indeed, from a training or
-selection perspective we might follow [@hankin2017_rmd] and observe
-that log-contrasts [@ohagan2004] appear to have approximately Gaussian
+selection perspective we might follow @hankin2017_rmd and observe that
+log-contrasts [@ohagan2004] appear to have approximately Gaussian
 likelihood functions for observations of the type considered here.
 Profile log-likelihood curves for log-contrasts are easily produced by
-the package, below. 
+the package, below.
 
 ```{r, echo=FALSE, fig.width=7, fig.height=7, fig.cap="Profile likelihood for log-contrast as per the text. Null indicated with a dotted line, and two-units-of-support limit indicated with horizontal lines; thus the null is not rejected"}
 M <-  structure(c(3.13462808462437, -3.49547133821576, 2.31958387909791, 
