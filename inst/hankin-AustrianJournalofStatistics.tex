@@ -77,12 +77,12 @@ Ranked data arises whenever multiple entities are sorted by some
 criterion; the preferred interpretation is a race in which the
 sufficient statistic is the order of competitors crossing the
 finishing line.  The Plackett--Luce likelihood
-function~\cite{luce1959,plackett1975} is a generalization of the
-Bradley--Terry model~\cite{bradley1952} in which non-negative strengths
-are assigned to each competitor; without loss of generality, if the
-finishing order is $1,2,\ldots,n$ and competitor $i$ has strength
-$p_i\geqslant 0$, then the Plackett--Luce likelihood function will be
-proportional to
+function~\citep{luce1959,plackett1975} is a generalization of the
+Bradley--Terry model~\citep{bradley1952} in which non-negative
+strengths are assigned to each competitor; without loss of generality,
+if the finishing order is $1,2,\ldots,n$ and competitor $i$ has
+strength $p_i\geqslant 0$, then the Plackett--Luce likelihood function
+will be proportional to
 
 \begin{equation}\label{plackettluce}
 \prod_{i=1}^n\frac{p_i}{\sum_{j=i}^np_j}
@@ -91,7 +91,7 @@ proportional to
 \noindent where the strengths are normalised so $\sum p_i=1$.
 However, estimation of the strengths is somewhat difficult if $n$ is
 even moderately large: even with as few as 20 competitors following
-Zipf's law~\cite{zipf1949} [a typical assumption for Bradley--Terry
+Zipf's law~\citep{zipf1949} [a typical assumption for Bradley--Terry
   strengths] and say 20 independent complete rank observations,
 \cite{hankin2017_rmd} shows that maximum likelihood strengths
 identify the correct ranking with a probability of essentially zero.
@@ -99,14 +99,13 @@ The situation is worse in cases such as formula 1 motor racing
 considered below, which requires us to consider ${\mathcal O}(100)$
 competitors.
 
-\cite{hankin2024_hyper3} considers Plackett-Luce likelihood functions
-for a race between a competitor of Bradley--Terry strength $a$ and
-$n=2$ or $n=3$ cloned competitors, each of strength $b=1-a$.  Here we
-consider the generalized case with arbitrary $n$.  Under these
-circumstances, an observation is indexed by~$r$, the number of
-strength $b$ clones finishing ahead of~$a$, and because we have $n+1$
+Consider a Plackett-Luce likelihood functions for a race between a
+competitor of Bradley--Terry strength $a$ and $n\geqslant 1$ cloned
+competitors, each of strength $b=1-a$.  Under these circumstances, an
+observation is indexed by~$r$, the number of strength $b$ clones
+finishing ahead of~$a$, and because we have $n+1$
 competitors %%%%%%%%%%%%%%%%%%%%%% $0\leqslant r\leqslant n$.  The
-initial field strength is $a+nb=n+(n-1)a$.  The Plackett--Luce
+initial field strength is $a+nb=n-(n-1)a$.  The Plackett--Luce
 likelihood function~\citep{luce1959,plackett1975} for this situation
 would be
 
@@ -124,7 +123,7 @@ analysis of expression~\ref{likeforrn3} shows that
 
 \begin{equation}\label{asymptotic}
 \log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n}
-\mathcal{O}\left(n^{-2}\right)
++\mathcal{O}\left(n^{-2}\right)
 \end{equation}
 
 (up to an arbitrary additive constant).  Using
@@ -149,12 +148,12 @@ $1\leqslant i\leqslant m$ we would have
 competitors); compare the binomial result of $1-\left.\sum
 r_i\right/\sum n_i$.
 
-Previous related work presented the case $n=2$ [in current notation].
-Considering the case $n=8$ gives us $8+1=9$ distinct likelihood
-functions, Figure~\ref{ninelikes}.  We see an unanticipated asymmetry
-between $r$ and $n-r$.  For $r=4$ one might expect that
-$\hat{a}=\frac{1}{2}$ on the grounds that the focal competitor's
-performance was median.  However, $\hat{a}\simeq 0.5886$.
+Previous related work \citep{hankin2024_hyper3} presented the case
+$n=2$ [in current notation].  Considering the case $n=8$ gives us
+$8+1=9$ distinct likelihood functions, Figure~\ref{ninelikes}.  We see
+an unanticipated asymmetry between $r$ and $n-r$.  For $r=4$ one might
+expect that $\hat{a}=\frac{1}{2}$ on the grounds that the focal
+competitor's performance was median.  However, $\hat{a}\simeq 0.5886$.
 
 \begin{figure}[t]
   \begin{centering}
@@ -192,8 +191,8 @@ competitors' ranks are used.  Figure~\ref{plotolymp} shows a
 log-likelihood curve for the Bradley--Terry strength of the focal
 competitor, here the runner in the innermost lane.  We see that the
 evaluate of $0.474$ is very close to the neutral value of $0.5$, for
-which the support is only $0.16$, far short of Edwards's two units of
-support criterion for rejection~\citep{edwards1972}.  This dataset
+which the support is only $0.16$, far short of the standard two units
+of support criterion for rejection~\citep{edwards1972}.  This dataset
 contains no evidence to support lane bias.
 
 \begin{figure}[t]
@@ -243,10 +242,10 @@ the diagonal line.  We see that the maximum likelihood estimate is
 $\hat{p}_\mathrm{pure}=0.567$, $\hat{p}_\mathrm{applied}=0.887$.
 However, a constrained optimization shows that the maximum support
 along the null diagonal is about $-2.43$, at
-${p}_\mathrm{pure}=0.567={p}_\mathrm{applied}=0.713$.  Edwards's two
-units of support criterion~\cite{edwards1972} is met, and we are
-justified in concluding that the student is indeed more competent at
-applied than pure mathematics.  Alternatively, we may observe that
+${p}_\mathrm{pure}=0.567={p}_\mathrm{applied}=0.713$.  The two units
+of support criterion~\citep{edwards1972} is met, and we are justified
+in concluding that the student is indeed more competent at applied
+than pure mathematics.  Alternatively, we may observe that
 $2\mathcal{S}=4.86$ is in the tail region of its asymptotic $\chi^2_1$
 distribution, corresponding to a $p$-value of about $0.028$.
 
