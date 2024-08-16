@@ -126,7 +126,7 @@ package.</p>
 (2017)</span> furnishes computational support for generalized
 Plackett-Luce <span class="citation">(Plackett 1975)</span> likelihood
 functions. The preferred interpretation is a race (as in track and field
-athletics): Given six competitors
+athletics): given six competitors
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">1-6</annotation></semantics></math>,
 we ascribe to them nonnegative strengths
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>p</mi><mn>6</mn></msub></mrow><annotation encoding="application/x-tex">p_1,\ldots, p_6</annotation></semantics></math>;
@@ -258,17 +258,16 @@ Formula 1 motor racing, and track-and-field athletics, are given.</p>
 <h3 id="computational-methodology-for-generalized-plackett-luce-likelihood-functions">Computational methodology for generalized Plackett-Luce likelihood
 functions<a class="anchor" aria-label="anchor" href="#computational-methodology-for-generalized-plackett-luce-likelihood-functions"></a>
 </h3>
-<p>Existing formalism as described by <span class="citation">Hankin
-(2017)</span> cannot represent the Plackett-Luce likelihood equation,
-because Equation the hyperdirichlet likelihood equation uses sets as the
-indexing elements, and in this case we need multisets. The
-declarations</p>
+<p>Existing <code>hyper2</code> formalism as described by <span class="citation">Hankin (2017)</span> cannot represent the Plackett-Luce
+likelihood equation, because Equation the hyperdirichlet likelihood
+equation uses sets as the indexing elements, and in this case we need
+multisets. The declarations</p>
 <pre><code>typedef map&lt;string, long double&gt; weightedplayervector;
 typedef map&lt;weightedplayervector, long double&gt; hyper3;</code></pre>
 <p>show how the class of the Standard Template Library is used with
 objects mapping strings to long doubles (specifically, mapping player
 names to their multiplicities), and objects of class are maps from a
-object to long doubles. One advantage of this is efficiency: Search,
+object to long doubles. One advantage of this is efficiency: search,
 removal, and insertion operations have logarithmic complexity. As an
 example, the following pseudo code would create a log-likelihood
 function for the first term in the Plackett-Luce likelihood equation
@@ -282,10 +281,11 @@ d["c"] = 1;
 hyper3 L;
 L[n] = 1;
 L[d] = -1;</code></pre>
-<p>Above, we understand and to represent numerator and denominator
-respectively. Object is an object of class ; it may be evaluated at
-points in probability space [that is, a vector of nonnegative values
-with unit sum] using standard idiom wrapping back end.</p>
+<p>Above, we understand <code>n</code> and <code>d</code> to represent
+numerator and denominator respectively. Object <code>L</code> is an
+object of class <code>hyper3</code>; it may be evaluated at points in
+probability space [that is, a vector <code>[a,b,c]</code> of nonnegative
+values with unit sum] using standard R idiom wrapping C++ back end.</p>
 </div>
 <div class="section level3">
 <h3 id="package-implementation">Package implementation<a class="anchor" aria-label="anchor" href="#package-implementation"></a>
@@ -301,13 +301,14 @@ vectors:</p>
 <span><span class="va">LL</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">3</span>, b <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1</span></span>
 <span><span class="va">LL</span></span></code></pre></div>
 <pre><code><span><span class="co">## log( (a=1)^1 * (a=3, b=2, c=1)^-1)</span></span></code></pre>
-<p>Above, we see object is a log-likelihood function of the players’
-strengths, which may be evaluated at specified points in probability
-space. A typical use-case would be to assess
+<p>Above, we see object <code>LL</code> is a log-likelihood function of
+the players’ strengths, which may be evaluated at specified points in
+probability space. A typical use-case would be to assess
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>1</mn></msub><mo>:</mo><msub><mi>p</mi><mi>a</mi></msub><mo>=</mo><mn>0.9</mn><mo>,</mo><msub><mi>p</mi><mi>b</mi></msub><mo>=</mo><mn>0.05</mn><mo>,</mo><msub><mi>p</mi><mi>c</mi></msub><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">H_1\colon
 p_a=0.9,p_b=0.05,p_c=0.05</annotation></semantics></math> and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>2</mn></msub><mo>:</mo><msub><mi>p</mi><mi>a</mi></msub><mo>=</mo><mn>0.01</mn><mo>,</mo><msub><mi>p</mi><mi>b</mi></msub><mo>=</mo><mn>0.01</mn><mo>,</mo><msub><mi>p</mi><mi>c</mi></msub><mo>=</mo><mn>0.98</mn></mrow><annotation encoding="application/x-tex">H_2\colon p_a=0.01,p_b=0.01,p_c=0.98</annotation></semantics></math>,
-and we may evaluate these hypotheses using generic function :</p>
+and we may evaluate these hypotheses using generic function
+<code><a href="../reference/loglik.html">loglik()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/loglik.html">loglik</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">0.01</span>, b <span class="op">=</span> <span class="fl">0.01</span>, c <span class="op">=</span> <span class="fl">0.98</span><span class="op">)</span>, <span class="va">LL</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] -4.634729</span></span></code></pre>
@@ -332,27 +333,30 @@ furnishes strong support against
 in favour of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>1</mn></msub><annotation encoding="application/x-tex">H_1</annotation></semantics></math>.</p>
 <p>The package includes many helper functions to work with order
-statistics of this type. Function , for example, can be used to generate
-a Plackett-Luce log-likelihood function:</p>
+statistics of this type. Function <code><a href="../reference/ordervec2supp3.html">ordervec2supp3()</a></code>, for
+example, can be used to generate a Plackett-Luce log-likelihood
+function:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ordervec2supp3.html">ordervec2supp3</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"c"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## log( (a=1)^3 * (a=1, b=1)^-1 * (a=2, b=1)^-1 * (a=2, b=2)^-1 * (a=2,</span></span>
 <span><span class="co">## b=2, c=1)^-1 * (a=3, b=2, c=1)^-1 * (b=1)^1 * (c=1)^1)</span></span></code></pre>
-<p>(the package gives extensive documentation at ). We may find a
-maximum likelihood estimate for the players’ strengths, using generic
-function , dispatching to a specialist method:</p>
+<p>(the package gives extensive documentation at
+<code>ordervec2supp.Rd</code>). We may find a maximum likelihood
+estimate for the players’ strengths, using generic function
+<code><a href="../reference/maxp.html">maxp()</a></code>, dispatching to a specialist <code>hyper3</code>
+method:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">mH</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/maxp.html">maxp</a></span><span class="op">(</span><span class="va">H</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##          a          b          c </span></span>
 <span><span class="co">## 0.21324090 0.08724824 0.69951086</span></span></code></pre>
-<p>(function uses standard optimization techniques to locate the
-evaluate; it has access to first derivatives of the log-likelihood and
-as such has rapid convergence, if its objective function is reasonably
-smooth).</p>
+<p>(function <code><a href="../reference/maxp.html">maxp()</a></code> uses standard optimization techniques
+to locate the evaluate; it has access to first derivatives of the
+log-likelihood and as such has rapid convergence, if its objective
+function is reasonably smooth).</p>
 <p>The package provides a number of statistical tests on likelihood
 functions, modified from <span class="citation">Hankin (2017)</span> to
-work with objects. For example, we may assess the hypothesis that all
-three players are of equal strength [viz
+work with <code>hyper3</code> objects. For example, we may assess the
+hypothesis that all three players are of equal strength [viz
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>0</mn></msub><mo>:</mo><msub><mi>p</mi><mi>a</mi></msub><mo>=</mo><msub><mi>p</mi><mi>b</mi></msub><mo>=</mo><msub><mi>p</mi><mi>c</mi></msub><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow><annotation encoding="application/x-tex">H_0\colon
 p_a=p_b=p_c=\frac{1}{3}</annotation></semantics></math>]:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -553,7 +557,8 @@ if we observe just the winner,
 and if we observe just the loser we have
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">|</mo><mi>ℐ</mi><mo stretchy="true" form="postfix">|</mo></mrow><mo>=</mo><mfrac><mn>16875</mn><mn>256</mn></mfrac><mo>≃</mo><mn>65.9</mn></mrow><annotation encoding="application/x-tex">\left|{\mathcal
 I}\right|=\frac{16875}{256}\simeq 65.9</annotation></semantics></math>.
-A brief discussion is given at .</p>
+A brief discussion is given at
+<code>inst/fisher\_inf\_PL3.Rmd</code>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f_aab</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">{</span><span class="va">a</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">a</span><span class="op">)</span><span class="op">}</span></span>
 <span><span class="va">f_aba</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">{</span><span class="va">a</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">a</span><span class="op">)</span><span class="op">}</span></span>
@@ -781,7 +786,7 @@ would estimate the probability that Vadlejch would throw further than
 Vesely at
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mtext mathvariant="normal">Vad</mtext></msub><mi>/</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mtext mathvariant="normal">Vad</mtext></msub><mo>+</mo><msub><mi>p</mi><mtext mathvariant="normal">Ves</mtext></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>≃</mo><mn>0.74</mn></mrow><annotation encoding="application/x-tex">\displaystyle p_{\mbox{Vad}}/\left(p_{\mbox{Vad}} +
 p_{\mbox{Ves}}\right)\simeq 0.74</annotation></semantics></math>.
-Indeed, from a training or selection perspective we might follow <span class="citation">(Hankin 2017)</span> and observe that log-contrasts
+Indeed, from a training or selection perspective we might follow <span class="citation">Hankin (2017)</span> and observe that log-contrasts
 <span class="citation">(O’Hagan and Forster 2004)</span> appear to have
 approximately Gaussian likelihood functions for observations of the type
 considered here. Profile log-likelihood curves for log-contrasts are
