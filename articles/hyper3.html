@@ -107,7 +107,7 @@ Hankin</h4>
 <p><img src="../../../_temp/Library/hyper2/help/figures/hyper2.png" width="20%" style="float:right; padding:10px"></p>
 <p>To cite the <code>hyper2</code> package in publications, please use
 <span class="citation">Hankin (2017)</span>; to cite <code>hyper3</code>
-functionality, use <span class="citation">(<strong>hankin2024?</strong>)</span>.</p>
+functionality, use <span class="citation">Hankin (2024)</span>.</p>
 <p>The <code>hyper2</code> package provides functionality to work with
 extensions of the Bradley-Terry probability model such as Plackett-Luce
 likelihood including team strengths and reified entities (monsters). The
@@ -122,8 +122,8 @@ package.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <code>hyper2</code> package <span class="citation">(Hankin 2009,
-hankin2017)</span> furnishes computational support for generalized
+<p>The <code>hyper2</code> package <span class="citation">Hankin
+(2017)</span> furnishes computational support for generalized
 Plackett-Luce <span class="citation">(Plackett 1975)</span> likelihood
 functions. The preferred interpretation is a race (as in track and field
 athletics): Given six competitors
@@ -142,11 +142,12 @@ say
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mn>1</mn></msub><mo>≻</mo><msub><mi>p</mi><mn>2</mn></msub><mo>≻</mo><msub><mi>p</mi><mn>3</mn></msub><mo>≻</mo><msub><mi>p</mi><mn>4</mn></msub></mrow><annotation encoding="application/x-tex">p_1\succ p_2\succ p_3\succ
 p_4</annotation></semantics></math>, the Plackett-Luce likelihood
 function would be</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msub><mi>p</mi><mn>1</mn></msub><mrow><msub><mi>p</mi><mn>1</mn></msub><mo>+</mo><msub><mi>p</mi><mn>2</mn></msub><mo>+</mo><msub><mi>p</mi><mn>3</mn></msub><mo>+</mo><msub><mi>p</mi><mn>4</mn></msub></mrow></mfrac><mo>⋅</mo><mfrac><msub><mi>p</mi><mn>2</mn></msub><mrow><msub><mi>p</mi><mn>2</mn></msub><mo>+</mo><msub><mi>p</mi><mn>3</mn></msub><mo>+</mo><msub><mi>p</mi><mn>4</mn></msub></mrow></mfrac><mo>⋅</mo><mfrac><msub><mi>p</mi><mn>3</mn></msub><mrow><msub><mi>p</mi><mn>3</mn></msub><mo>+</mo><msub><mi>p</mi><mn>4</mn></msub></mrow></mfrac><mo>⋅</mo><mfrac><msub><mi>p</mi><mn>4</mn></msub><msub><mi>p</mi><mn>4</mn></msub></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">\begin{equation}\label{PL_like}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msub><mi>p</mi><mn>1</mn></msub><mrow><msub><mi>p</mi><mn>1</mn></msub><mo>+</mo><msub><mi>p</mi><mn>2</mn></msub><mo>+</mo><msub><mi>p</mi><mn>3</mn></msub><mo>+</mo><msub><mi>p</mi><mn>4</mn></msub></mrow></mfrac><mo>⋅</mo><mfrac><msub><mi>p</mi><mn>2</mn></msub><mrow><msub><mi>p</mi><mn>2</mn></msub><mo>+</mo><msub><mi>p</mi><mn>3</mn></msub><mo>+</mo><msub><mi>p</mi><mn>4</mn></msub></mrow></mfrac><mo>⋅</mo><mfrac><msub><mi>p</mi><mn>3</mn></msub><mrow><msub><mi>p</mi><mn>3</mn></msub><mo>+</mo><msub><mi>p</mi><mn>4</mn></msub></mrow></mfrac><mo>⋅</mo><mfrac><msub><mi>p</mi><mn>4</mn></msub><msub><mi>p</mi><mn>4</mn></msub></mfrac><mspace width="2.0em"></mspace><mtext mathvariant="normal">Plackett-Luce</mtext></mrow><annotation encoding="application/x-tex">\begin{equation}\label{PL_like}
   \frac{p_1}{p_1+p_2+p_3+p_4}\cdot
   \frac{p_2}{    p_2+p_3+p_4}\cdot
   \frac{p_3}{        p_3+p_4}\cdot
-  \frac{p_4}{            p_4}.
+  \frac{p_4}{            p_4}
+  \qquad\mbox{Plackett-Luce}
 \end{equation}</annotation></semantics></math></p>
 <p><span class="citation">Mollica and Tardella (2014)</span> call this a
 forward ranking process on the grounds that the best (preferred;
@@ -162,28 +163,28 @@ related work for ranking statistics in <code>SAS</code> and <span class="citatio
 <p>However, the majority of software is written in the R computer
 language <span class="citation">( Core Team 2023)</span>, which includes
 extensive functionality for working with such likelihood functions:
-<span class="citation">H. L. Turner et al. (2020)</span> discuss several
+<span class="citation">Turner et al. (2020)</span> discuss several
 implementations from a computational perspective. The
 <code>BradleyTerry</code> package <span class="citation">(Firth
 2005)</span> considers pairwise comparisons using but cannot deal with
-ties or player-specific predictors; the package <span class="citation">(H. Turner and Firth 2012)</span> implements a flexible
+ties or player-specific predictors; the package <span class="citation">(Turner and Firth 2012)</span> implements a flexible
 user interface and wider range of models to be fitted to pairwise
 comparison datasets, specifically simple random effects. The package
-<span class="citation">(H. L. Turner et al. 2020)</span> generalizes
-this to likelihood functions of the form of Equation and applies the
-Poisson transformation of <span class="citation">(Baker 1994)</span> to
-express the problem as a log-linear model. The package, in contrast,
-gives a consistent language interface to create and manipulate
-likelihood functions over the simplex
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">|</mo><msub><mi>p</mi><mi>i</mi></msub><mo>≥</mo><mn>0</mn><mo>,</mo><mo>∑</mo><msub><mi>p</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">{S}_n=\left\lbrace\left(p_1,\ldots,p_n\right)\left|p_i\geq
-0,\sum p_i=1\right.\right\rbrace</annotation></semantics></math>. A
-further extension in the package generalizes this likelihood function to
+<span class="citation">(Turner et al. 2020)</span> generalizes this to
+likelihood functions of the form of the Plackett-Luce equation above,
+and applies the Poisson transformation of <span class="citation">(Baker
+1994)</span> to express the problem as a log-linear model. The package,
+in contrast, gives a consistent language interface to create and
+manipulate likelihood functions over the simplex
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">|</mo><msub><mi>p</mi><mi>i</mi></msub><mo>≥</mo><mn>0</mn><mo>,</mo><mo>∑</mo><msub><mi>p</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">{S}_n=\left\lbrace\left(p_1,\ldots,p_n\right)\left|p_i\geq 0,\sum
+p_i=1\right.\right\rbrace</annotation></semantics></math>. A further
+extension in the package generalizes this likelihood function to
 functions of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐩</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">{\mathbf
 p}=(p_1,\ldots,p_n)</annotation></semantics></math> with</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℒ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐩</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><munder><mo>∏</mo><mrow><mi>s</mi><mo>∈</mo><mi>𝒪</mi></mrow></munder><msup><mrow><mo stretchy="true" form="prefix">(</mo><munder><mo>∑</mo><mrow><mi>i</mi><mo>∈</mo><mi>s</mi></mrow></munder><msub><mi>p</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><msub><mi>n</mi><mi>s</mi></msub></msup></mrow><annotation encoding="application/x-tex">\begin{equation}\label{hyper2likelihood}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℒ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐩</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><munder><mo>∏</mo><mrow><mi>s</mi><mo>∈</mo><mi>𝒪</mi></mrow></munder><msup><mrow><mo stretchy="true" form="prefix">(</mo><munder><mo>∑</mo><mrow><mi>i</mi><mo>∈</mo><mi>s</mi></mrow></munder><msub><mi>p</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><msub><mi>n</mi><mi>s</mi></msub></msup><mspace width="2.0em"></mspace><mtext mathvariant="normal">Hyperdirichlet likelihood</mtext></mrow><annotation encoding="application/x-tex">\begin{equation}\label{hyper2likelihood}
 \mathcal{L}\left(\mathbf{p}\right)=
-\prod_{s\in \mathcal{O}}\left({\sum_{i\in s}}p_i\right)^{n_s}
+\prod_{s\in \mathcal{O}}\left({\sum_{i\in s}}p_i\right)^{n_s}\qquad\mbox{Hyperdirichlet likelihood}
 \end{equation}</annotation></semantics></math></p>
 <p>where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝒪</mi><annotation encoding="application/x-tex">\mathcal{O}</annotation></semantics></math>
@@ -198,18 +199,18 @@ ability to evaluate such likelihood functions at any point in
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>S</mi><mi>n</mi></msub><annotation encoding="application/x-tex">S_n</annotation></semantics></math>,
 thereby admitting a wide range of non-standard nulls such as order
 statistics on the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>i</mi></msub><annotation encoding="application/x-tex">p_i</annotation></semantics></math><span class="citation">(<strong>hankin2017?</strong>)</span>. It becomes
-possible to analyse a wider range of likelihood functions than standard
-Plackett-Luce <span class="citation">(H. L. Turner et al. 2020)</span>.
-For example, results involving incomplete order statistics or teams are
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>i</mi></msub><annotation encoding="application/x-tex">p_i</annotation></semantics></math><span class="citation">(Hankin 2017)</span>. It becomes possible to
+analyse a wider range of likelihood functions than standard
+Plackett-Luce <span class="citation">(Turner et al. 2020)</span>. For
+example, results involving incomplete order statistics or teams are
 tractable. Further, the introduction of reified entities (monsters)
 allows one to consider draws <span class="citation">(Hankin
-2009)</span>, noncompetitive tactics such as collusion <span class="citation">(Hankin 2020)</span>, and the phenomenon of team
+2010)</span>, noncompetitive tactics such as collusion <span class="citation">(Hankin 2020)</span>, and the phenomenon of team
 cohesion wherein the team becomes stronger than the sum of its parts
 <span class="citation">(Hankin 2010)</span>. Recent versions of the
-package include experimental functionality () to investigate the
-relaxing of the assumption of conditional independence of the
-forward-ranking process.</p>
+package include experimental functionality <code><a href="../reference/ordervec2supp3.html">cheering()</a></code> to
+investigate the relaxing of the assumption of conditional independence
+of the forward-ranking process.</p>
 <p>Here I present a different generalization. Consider a race in which
 there are six runners 1-6 but we happen to know that three of the
 runners (1,2,3) are clones of strength
@@ -237,14 +238,17 @@ came third and sixth, and
 came second. The Plackett-Luce likelihood function for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>a</mi></msub><mo>,</mo><msub><mi>p</mi><mi>b</mi></msub><mo>,</mo><msub><mi>p</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">p_a,p_b,p_c</annotation></semantics></math>
 would be</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msub><mi>p</mi><mi>a</mi></msub><mrow><mn>3</mn><msub><mi>p</mi><mi>a</mi></msub><mo>+</mo><mn>2</mn><msub><mi>p</mi><mi>b</mi></msub><mo>+</mo><msub><mi>p</mi><mi>c</mi></msub></mrow></mfrac><mo>⋅</mo><mfrac><msub><mi>p</mi><mi>c</mi></msub><mrow><mn>2</mn><msub><mi>p</mi><mi>a</mi></msub><mo>+</mo><mn>2</mn><msub><mi>p</mi><mi>b</mi></msub><mo>+</mo><msub><mi>p</mi><mi>c</mi></msub></mrow></mfrac><mo>⋅</mo><mfrac><msub><mi>p</mi><mi>b</mi></msub><mrow><mn>2</mn><msub><mi>p</mi><mi>a</mi></msub><mo>+</mo><mn>2</mn><msub><mi>p</mi><mi>b</mi></msub></mrow></mfrac><mo>⋅</mo><mfrac><msub><mi>p</mi><mi>a</mi></msub><mrow><mn>2</mn><msub><mi>p</mi><mi>a</mi></msub><mo>+</mo><msub><mi>p</mi><mi>b</mi></msub></mrow></mfrac><mo>⋅</mo><mfrac><msub><mi>p</mi><mi>a</mi></msub><mrow><msub><mi>p</mi><mi>a</mi></msub><mo>+</mo><msub><mi>p</mi><mi>b</mi></msub></mrow></mfrac><mo>⋅</mo><mfrac><msub><mi>p</mi><mi>b</mi></msub><msub><mi>p</mi><mi>b</mi></msub></mfrac><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>p</mi><mi>a</mi></msub><mo>+</mo><msub><mi>p</mi><mi>b</mi></msub><mo>+</mo><msub><mi>p</mi><mi>c</mi></msub><mo>=</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">\begin{equation}\label{plackettluce}
+<p><span class="math display">$$\begin{equation}\label{plackettluce}
 \frac{p_a}{3p_a+2p_b+p_c}\cdot
 \frac{p_c}{2p_a+2p_b+p_c}\cdot
 \frac{p_b}{2p_a+2p_b    }\cdot
 \frac{p_a}{2p_a+ p_b    }\cdot
-\frac{p_a}{ p_a+ p_b    }\cdot
-\frac{p_b}{      p_b    },\qquad p_a+p_b+p_c=1.
-\end{equation}</annotation></semantics></math></p>
+\frac{p_a}{ p_a+
+p_b\vphantom{x_{x_{x_{x_{x_{x_{x_{x_{x_{x_{x_{x_{x_{x_{x_{x_{x_{x}}}}}}}}}}}}}}}}}}
+                        }\cdot
+\frac{p_b}{      p_b    },\qquad p_a+p_b+p_c=1\\
+\mbox{generalized plackett-Luce likelihood}
+\end{equation}$$</span></p>
 <p>Here I consider such generalized Plackett-Luce likelihood functions,
 and give an exact analysis of several simple cases. I then show how this
 class of likelihood functions may be applied to a range of inference
@@ -254,9 +258,11 @@ Formula 1 motor racing, and track-and-field athletics, are given.</p>
 <h3 id="computational-methodology-for-generalized-plackett-luce-likelihood-functions">Computational methodology for generalized Plackett-Luce likelihood
 functions<a class="anchor" aria-label="anchor" href="#computational-methodology-for-generalized-plackett-luce-likelihood-functions"></a>
 </h3>
-<p>Existing formalism as described by <span class="citation">(<strong>hankin2017?</strong>)</span> cannot represent
-Equation , because Equation uses sets as the indexing elements, and in
-this case we need multisets. The declarations</p>
+<p>Existing formalism as described by <span class="citation">Hankin
+(2017)</span> cannot represent the Plackett-Luce likelihood equation,
+because Equation the hyperdirichlet likelihood equation uses sets as the
+indexing elements, and in this case we need multisets. The
+declarations</p>
 <pre><code>typedef map&lt;string, long double&gt; weightedplayervector;
 typedef map&lt;weightedplayervector, long double&gt; hyper3;</code></pre>
 <p>show how the class of the Standard Template Library is used with
@@ -265,7 +271,8 @@ names to their multiplicities), and objects of class are maps from a
 object to long doubles. One advantage of this is efficiency: Search,
 removal, and insertion operations have logarithmic complexity. As an
 example, the following pseudo code would create a log-likelihood
-function for the first term in Equation :</p>
+function for the first term in the Plackett-Luce likelihood equation
+above:</p>
 <pre><code>weightedplayervector n,d;
 n["a"] = 1; 
 d["a"] = 3; 
@@ -312,7 +319,7 @@ and we may evaluate these hypotheses using generic function :</p>
 over
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>2</mn></msub><annotation encoding="application/x-tex">H_2</annotation></semantics></math>
 with about 3.5 units of support, satisfying the standard two units of
-support criterion [<span class="citation">Edwards (1972)</span>}, and we
+support criterion <span class="citation">(Edwards 1972)</span>, and we
 conclude that our observation [in this case, that one of the three
 clones of player
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>
@@ -326,7 +333,7 @@ in favour of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>1</mn></msub><annotation encoding="application/x-tex">H_1</annotation></semantics></math>.</p>
 <p>The package includes many helper functions to work with order
 statistics of this type. Function , for example, can be used to generate
-a log-likelihood function for Equation :</p>
+a Plackett-Luce log-likelihood function:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ordervec2supp3.html">ordervec2supp3</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"c"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## log( (a=1)^3 * (a=1, b=1)^-1 * (a=2, b=1)^-1 * (a=2, b=2)^-1 * (a=2,</span></span>
@@ -343,9 +350,9 @@ evaluate; it has access to first derivatives of the log-likelihood and
 as such has rapid convergence, if its objective function is reasonably
 smooth).</p>
 <p>The package provides a number of statistical tests on likelihood
-functions, modified from <span class="citation">(<strong>hankin2017?</strong>)</span> to work with
-objects. For example, we may assess the hypothesis that all three
-players are of equal strength [viz
+functions, modified from <span class="citation">Hankin (2017)</span> to
+work with objects. For example, we may assess the hypothesis that all
+three players are of equal strength [viz
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>0</mn></msub><mo>:</mo><msub><mi>p</mi><mi>a</mi></msub><mo>=</mo><msub><mi>p</mi><mi>b</mi></msub><mo>=</mo><msub><mi>p</mi><mi>c</mi></msub><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow><annotation encoding="application/x-tex">H_0\colon
 p_a=p_b=p_c=\frac{1}{3}</annotation></semantics></math>]:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -491,20 +498,19 @@ and solving
 or
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mo>±</mo></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>X</mi><mo>±</mo><msqrt><mrow><mn>1</mn><mo>+</mo><mn>4</mn><mi>X</mi><mo>+</mo><msup><mi>X</mi><mn>2</mn></msup></mrow></msqrt><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">p_\pm=\left(1-X\pm\sqrt{1+4X+X^2}\right)/2</annotation></semantics></math>,
 the two roots being the lower and upper limits of the credible interval;
-Figure .</p>
-<pre><code>\begin{figure}[htbp]
-  \begin{center}
-&lt;&lt;figaba, fig=TRUE&gt;&gt;=
-a &lt;- seq(from = 0, by = 0.005, to = 1)
-S &lt;- function(a){log(a * (1 - a) / ((1 + a) * (3 - 2 * sqrt(2))))}
-plot(a, S(a), type = 'b',xlab=expression(p[a]),ylab="support")
-abline(h = c(0, -2))
-abline(v = c(0.02438102, 0.9524271), col = 'red')
-abline(v = sqrt(2) - 1)
-@
-\caption{A\label{ABA_likelihood} support function for $p_a$ with observation $a\succ b\succ a$.}
-\end{center}
-\end{figure}</code></pre>
+see the figure below.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, by <span class="op">=</span> <span class="fl">0.005</span>, to <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">S</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">a</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">a</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">3</span> <span class="op">-</span> <span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">a</span>, <span class="fu">S</span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">'b'</span>,xlab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">p</span><span class="op">[</span><span class="va">a</span><span class="op">]</span><span class="op">)</span>,ylab<span class="op">=</span><span class="st">"support"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="op">-</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.02438102</span>, <span class="fl">0.9524271</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">'red'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="hyper3_files/figure-html/unnamed-chunk-1-1.png" alt="A support function for a&gt;b&gt;a" width="672"><p class="caption">
+A support function for a&gt;b&gt;a
+</p>
+</div>
 <div class="section level3">
 <h3 id="fisher-information">Fisher information<a class="anchor" aria-label="anchor" href="#fisher-information"></a>
 </h3>
@@ -524,8 +530,9 @@ with
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>≻</mo><mi>a</mi><mo>≻</mo><mi>a</mi></mrow><annotation encoding="application/x-tex">b\succ a\succ a</annotation></semantics></math>
 at
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mn>1</mn><mo>−</mo><mi>a</mi></mrow><mrow><mn>1</mn><mo>+</mo><mi>a</mi></mrow></mfrac><annotation encoding="application/x-tex">\frac{1-a}{1+a}</annotation></semantics></math>.
-Likelihood functions for these order statistics are given in Figure . It
-can be shown that the Fisher information for such observations is</p>
+Likelihood functions for these order statistics are given in the figure
+below. It can be shown that the Fisher information for such observations
+is</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℐ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>2</mn><mfrac><mrow><mn>1</mn><mo>+</mo><mi>a</mi><mo>+</mo><msup><mi>a</mi><mn>2</mn></msup></mrow><mrow><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
 \mathcal{I}(a)=2\frac{1+a+a^2}{a(1-a)(1+a)^2}
 \end{equation}</annotation></semantics></math></p>
@@ -547,38 +554,36 @@ and if we observe just the loser we have
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">|</mo><mi>ℐ</mi><mo stretchy="true" form="postfix">|</mo></mrow><mo>=</mo><mfrac><mn>16875</mn><mn>256</mn></mfrac><mo>≃</mo><mn>65.9</mn></mrow><annotation encoding="application/x-tex">\left|{\mathcal
 I}\right|=\frac{16875}{256}\simeq 65.9</annotation></semantics></math>.
 A brief discussion is given at .</p>
-<pre><code>\begin{figure}[htbp]
-  \begin{center}
-&lt;&lt;figabbabb,echo=FALSE,fig=TRUE&gt;&gt;=
-f_aab &lt;- function(a){a^2 / (1 + a)}
-f_aba &lt;- function(a){a * (1 - a) / (1 + a)}
-f_baa &lt;- function(a){(1 - a) / (1 + a)}
-p &lt;- function(f, ...){
-  a &lt;- seq(from = 0, by = 0.005, to = 1)
-  points(a, f(a) / max(f(a)), ...)
-  }
-plot(0:1, 0:1, xlab = expression(p[a]), ylab = "Likelihood", type = "n")
-p(f_aab, type = "l", col = "black")
-p(f_aba, type = "l", col = "red")
-p(f_baa, type = "l", col = "blue")
-text(0.8,0.8,"AAB")
-text(0.8,0.4,"ABA",col="red")
-text(0.8,0.05,"BAA",col="blue")
-abline(h = exp(-2), lty = 2)
-@
-\caption{Likelihood \label{ABAetc_likelihood} functions for
-observations $a\succ a\succ b$, $a\succ b\succ a$, $b\succ a\succ a$.  Horizontal dotted
-line represents two units of support}
-\end{center}
-\end{figure}</code></pre>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f_aab</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">{</span><span class="va">a</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">a</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="va">f_aba</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">{</span><span class="va">a</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">a</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="va">f_baa</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">{</span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">a</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, by <span class="op">=</span> <span class="fl">0.005</span>, to <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">a</span>, <span class="fu">f</span><span class="op">(</span><span class="va">a</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">:</span><span class="fl">1</span>, xlab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">p</span><span class="op">[</span><span class="va">a</span><span class="op">]</span><span class="op">)</span>, ylab <span class="op">=</span> <span class="st">"Likelihood"</span>, type <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span></span>
+<span><span class="fu">p</span><span class="op">(</span><span class="va">f_aab</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span>
+<span><span class="fu">p</span><span class="op">(</span><span class="va">f_aba</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="fu">p</span><span class="op">(</span><span class="va">f_baa</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fl">0.8</span>,<span class="fl">0.8</span>,<span class="st">"AAB"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fl">0.8</span>,<span class="fl">0.4</span>,<span class="st">"ABA"</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fl">0.8</span>,<span class="fl">0.05</span>,<span class="st">"BAA"</span>,col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="hyper3_files/figure-html/unnamed-chunk-2-1.png" alt="Support functions for observations a&gt;a&gt;b, a&gt;b&gt;a and b&gt;a&gt;a.  Horizontal dotted line represents two units of support" width="672"><p class="caption">
+Support functions for observations a&gt;a&gt;b, a&gt;b&gt;a and
+b&gt;a&gt;a. Horizontal dotted line represents two units of support
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="nonfinishers">Nonfinishers<a class="anchor" aria-label="anchor" href="#nonfinishers"></a>
 </h3>
 <p>If we allow non-finishers—that is, a subset of competitors who are
-beaten by all the ranked competitors ([<span class="citation">H. L.
-Turner et al. (2020)</span>} call this a {}), there is another
-nontrivial order statistic, viz
+beaten by all the ranked competitors ([<span class="citation">Turner et
+al. (2020)</span>} call this a {}), there is another nontrivial order
+statistic, viz
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>≻</mo><mi>b</mi><mo>≻</mo><mrow><mo stretchy="true" form="prefix">{</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">a\succ b\succ\left\lbrace a,b\right\rbrace</annotation></semantics></math>
 [thus one of the two
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>’s
@@ -607,7 +612,7 @@ complete order statistic). The evaluate would be
 at
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">a=\frac{1}{2}</annotation></semantics></math>.
 An inference problem for a dataset including nonfinishers will be given
-below in Section .</p>
+below.</p>
 </div>
 </div>
 <div class="section level2">
@@ -663,26 +668,34 @@ using the Method of Support:</p>
 <span><span class="co">## degrees of freedom: 1</span></span>
 <span><span class="co">## support difference = 1.414837</span></span>
 <span><span class="co">## p-value: 0.09253716</span></span></code></pre>
-<p>Above, we use generic function
-<code>equalp.test()} to test the null that the permeability of the two groups both have Bradley-Terry strength of $0.5$.  We see a $p$ value of about 0.09; compare 0.25 from</code>wilcox.test()<code>.  However, observe that the</code>hyper3<code>likelihood approach gives more information than Wilcoxon's analysis: Firstly, we see that the maximum likelihood estimate for the Bradley-Terry strength of</code>x`
-is about 0.24, considerably less than the null of 0.5; further, we may
-plot a support curve for this dataset, given in Figure .</p>
-<pre><code>\begin{figure}[htbp]
-  \begin{center}
-&lt;&lt;plotwilcoxlike,echo=FALSE,fig=TRUE,cache=TRUE&gt;&gt;=
-a &lt;- seq(from = 0.02, to = 0.8, len = 40)
-L &lt;- sapply(a, function(p){loglik(p, Hxy)})
-plot(a, L - max(L), type = 'b',xlab=expression(p[a]),ylab="likelihood")
-abline(h = c(0, -2))
-abline(v = c(0.24))
-abline(v=c(0.5), lty=2)
-@
-\caption{A\label{wilcox_likelihood} support function for the Bradley-Terry
-strength $p_a$ of permeability at term.  The evaluate of 0.24 is
-shown; and the two-units-of support credible interval, which does not
-exclude $H_0\colon p_a=0.5$ (dotted line), is also shown.}
-\end{center}
-\end{figure}</code></pre>
+<p>Above, we use generic function <code><a href="../reference/tests.html">equalp.test()</a></code> to test the
+null that the permeability of the two groups both have Bradley-Terry
+strength of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.5</mn><annotation encoding="application/x-tex">0.5</annotation></semantics></math>.
+We see a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
+value of about 0.09; compare 0.25 from <code><a href="https://rdrr.io/r/stats/wilcox.test.html" class="external-link">wilcox.test()</a></code>.
+However, observe that the <code>hyper3</code> likelihood approach gives
+more information than Wilcoxon’s analysis: Firstly, we see that the
+maximum likelihood estimate for the Bradley-Terry strength of
+<code>x</code> is about 0.24, considerably less than the null of 0.5;
+further, we may plot a support curve for this dataset, given in the
+figure below.</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0.02</span>, to <span class="op">=</span> <span class="fl">0.8</span>, len <span class="op">=</span> <span class="fl">40</span><span class="op">)</span></span>
+<span><span class="va">L</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">a</span>, <span class="kw">function</span><span class="op">(</span><span class="va">p</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="../reference/loglik.html">loglik</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">Hxy</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">L</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">L</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">'b'</span>,xlab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">p</span><span class="op">[</span><span class="va">a</span><span class="op">]</span><span class="op">)</span>,ylab<span class="op">=</span><span class="st">"likelihood"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="op">-</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.24</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="hyper3_files/figure-html/unnamed-chunk-3-1.png" alt="A support function for the Bradley-Terry strength of permeability at term.  The evaluate of 0.24 is shown; and the two-units-of support credible interval, which does not exclude the null of strength 0.5 (dotted line), is also shown" width="672"><p class="caption">
+A support function for the Bradley-Terry strength of permeability at
+term. The evaluate of 0.24 is shown; and the two-units-of support
+credible interval, which does not exclude the null of strength 0.5
+(dotted line), is also shown
+</p>
+</div>
 <div class="section level3">
 <h3 id="a-generalization-of-the-mann-whitney-test-using-generalized-plackett-luce-likelihood">A generalization of the Mann-Whitney test using generalized
 Plackett-Luce likelihood<a class="anchor" aria-label="anchor" href="#a-generalization-of-the-mann-whitney-test-using-generalized-plackett-luce-likelihood"></a>
@@ -738,92 +751,115 @@ passing <code>give.supp=TRUE</code>:</p>
 <p>Above, object <code>javelin</code> is a <code>hyper3</code>
 likelihood function, so one has access to the standard likelihood-based
 methods, such as finding and displaying the maximum likelihood estimate,
-shown in Figure . From this, we see that Vadlejch has the highest
-estimated Bradley-Terry strength, but further analysis with
+shown in the figure below.</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">mj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/maxp.html">maxp</a></span><span class="op">(</span><span class="va">javelin</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    Chopra Etelatalo Katkavets   Mardare    Nadeem  Vadlejch </span></span>
+<span><span class="co">##    0.0930    0.0482    0.0929    0.1173    0.1730    0.3206 </span></span>
+<span><span class="co">##    Vesely     Weber </span></span>
+<span><span class="co">##    0.1140    0.0409</span></span></code></pre>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/dotchart.html" class="external-link">dotchart</a></span><span class="op">(</span><span class="va">mj</span>, pch <span class="op">=</span> <span class="fl">16</span>,xlab<span class="op">=</span><span class="st">"Estimated Bradley-Terry strength"</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="hyper3_files/figure-html/unnamed-chunk-4-1.png" alt="Maximum  likelihood estimate for javelin throwers' Bradley-Terry strengths" width="672"><p class="caption">
+Maximum likelihood estimate for javelin throwers’ Bradley-Terry
+strengths
+</p>
+</div>
+<p>From this, we see that Vadlejch has the highest estimated
+Bradley-Terry strength, but further analysis with
 <code><a href="../reference/tests.html">equalp.test()</a></code> reveals that there is no strong evidence in
 the dataset to reject the hypothesis of equal competitive strength
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>0.26</mn></mrow><annotation encoding="application/x-tex">p=0.26</annotation></semantics></math>),
 or that Vadlejch has a strength higher than the null value of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mn>1</mn><mn>8</mn></mfrac><annotation encoding="application/x-tex">\frac{1}{8}</annotation></semantics></math>
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>0.1</mn></mrow><annotation encoding="application/x-tex">p=0.1</annotation></semantics></math>).</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<pre><code>\begin{figure}[htbp]
-  \begin{center}
-&lt;&lt;testthejav, cache=TRUE, fig=TRUE&gt;&gt;=
-(mj &lt;- maxp(javelin))
-dotchart(mj, pch = 16,xlab="Estimated Bradley-Terry strength")
-@
-\caption{Maximum \label{javelinbradleyterry} likelihood estimate for javelin throwers' Bradley-Terry strengths.}
-\end{center}
-\end{figure}</code></pre>
 <p>A particularly attractive feature of this analysis is that the
 Bradley-Terry strengths have direct operational significance: If two
 competitors, say Vadlejch and Vesely, were to throw a javelin, then we
 would estimate the probability that Vadlejch would throw further than
-Vesely at <span class="math inline">$\displaystyle p_{\mbox{\tiny
-Vad}}/\left(p_{\mbox{\tiny
-Vad}} + p_{\mbox{\tiny Ves}}\right)\simeq 0.74$</span>. Indeed, from a
-training or selection perspective we might follow <span class="citation">(<strong>hankin2017?</strong>)</span> and observe that
-log-contrasts <span class="citation">(O’Hagan and Forster 2004)</span>
-appear to have approximately Gaussian likelihood functions for
-observations of the type considered here. Profile log-likelihood curves
-for log-contrasts are easily produced by the package, Figure . We see
-that the credible range for <span class="math inline">$\log\left(p_{\mbox{\tiny Vad}}/
-p_{\mbox{\tiny Ves}}\right)$</span> includes zero and we have no strong
-evidence for these athletes having different (Bradley-Terry)
-strengths.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">s</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">jj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tests.html">specificp.test</a></span><span class="op">(</span><span class="va">javelin</span>, <span class="st">"Vesely"</span>, <span class="va">s</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="va">jj</span><span class="op">$</span><span class="va">null_estimate</span></span>
-<span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">p</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span> <span class="op">/</span> <span class="va">p</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span>, <span class="va">jj</span><span class="op">$</span><span class="va">null_support</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">Ves</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0.0199</span>, to <span class="op">=</span> <span class="fl">0.33</span>, len <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span>
-<span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">Ves</span>, <span class="va">f</span><span class="op">)</span></span>
-<span><span class="va">M</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="va">M</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">M</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"logcontrast"</span>, <span class="st">"support"</span><span class="op">)</span></span></code></pre></div>
-<pre><code>\begin{figure}[htbp]
-\begin{center}
-&lt;&lt;plottheloglikcont,echo=FALSE,fig=TRUE,cache=TRUE&gt;&gt;=
-colnames(M) &lt;-  as.character(Ves)
-plot(t(M), type = "b")
-abline(h = c(0, -2))
-abline(v = 0, lty = 2)
-abline(v = log(0.32062833 / 0.11402735)) # these from mp
-@
-\caption{Profile \label{profliklogcont} likelihood for log-contrast
-$\log\left(p_{\mbox{\tiny Vad}}/ p_{\mbox{\tiny Ves}}\right)$.  Null
-of $p_{\mbox{\tiny Vad}}=p_{\mbox{\tiny Ves}}$ indicated with a dotted
-line, and two-units-of-support limit indicated with horizontal lines;
-thus the null is not rejected.}
-\end{center}
-\end{figure}</code></pre>
+Vesely at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mtext mathvariant="normal">Vad</mtext></msub><mi>/</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mtext mathvariant="normal">Vad</mtext></msub><mo>+</mo><msub><mi>p</mi><mtext mathvariant="normal">Ves</mtext></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>≃</mo><mn>0.74</mn></mrow><annotation encoding="application/x-tex">\displaystyle p_{\mbox{Vad}}/\left(p_{\mbox{Vad}} +
+p_{\mbox{Ves}}\right)\simeq 0.74</annotation></semantics></math>.
+Indeed, from a training or selection perspective we might follow <span class="citation">(Hankin 2017)</span> and observe that log-contrasts
+<span class="citation">(O’Hagan and Forster 2004)</span> appear to have
+approximately Gaussian likelihood functions for observations of the type
+considered here. Profile log-likelihood curves for log-contrasts are
+easily produced by the package, below.</p>
+<div class="figure">
+<img src="hyper3_files/figure-html/unnamed-chunk-5-1.png" alt="Profile likelihood for log-contrast as per the text. Null indicated with a dotted line, and two-units-of-support limit indicated with horizontal lines; thus the null is not rejected" width="672"><p class="caption">
+Profile likelihood for log-contrast as per the text. Null indicated with
+a dotted line, and two-units-of-support limit indicated with horizontal
+lines; thus the null is not rejected
+</p>
+</div>
+<p>We see that the credible range for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>log</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mtext mathvariant="normal">Vad</mtext></msub><mi>/</mi><msub><mi>p</mi><mtext mathvariant="normal">Ves</mtext></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\log\left(p_{\mbox{Vad}}/
+p_{\mbox{Ves}}\right)</annotation></semantics></math> includes zero and
+we have no strong evidence for these athletes having different
+(Bradley-Terry) strengths.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="formula-1-motor-racing-the-constructors-championship--the-identity-of-the-driver-is-viewed-as">Formula 1 motor racing: The Constructors’ Championship}. The
-identity of the driver is viewed as<a class="anchor" aria-label="anchor" href="#formula-1-motor-racing-the-constructors-championship--the-identity-of-the-driver-is-viewed-as"></a>
+<h2 id="formula-1-motor-racing-the-constructors-championship">Formula 1 motor racing: The Constructors’ Championship<a class="anchor" aria-label="anchor" href="#formula-1-motor-racing-the-constructors-championship"></a>
 </h2>
-<p>inadmissible information and indeed may change during a season.
-Alternatively, we may regard the driver and the constructor as a joint
-entity, with the constructor’s ability to attract and retain a skilled
-driver being part of the object of inference. The associated generalized
-Plackett-Luce <code>hyper3</code> object is easily constructed using
-package idiom, in this case <code><a href="../reference/ordervec2supp3.html">ordertable2supp3()</a></code>, and we may
-use this to assess the Plackett-Luce strengths of the constructors:</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<p>Formula 1 motor racing is an important and prestigious motor sport
+<span class="citation">(Codling 2017, jenkins2010)</span>. In Formula 1
+Grand Prix, the constructors’ championship takes place between
+<em>manufacturers</em> of racing cars (compare the drivers’
+championship, which is between drivers). In this analysis, the
+constructor is the object of inference. Each constructor typically
+fields two cars, each of which separately accumulates ranking-based
+points at each venue. Here we use a generalized Plackett-Luce model to
+assess the constructors’ performance. The following table, included in
+the <code>hyper2</code> package as a dataset, shows rankings for the
+first 9 venues of the 2021 season:</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">constructor_2021_table</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##    Constructor BHR EMI POR ESP  MON AZE FRA STY</span></span>
+<span><span class="co">## 1         Merc   1   2   1   1    7  12   2   2</span></span>
+<span><span class="co">## 2         Merc   3 Ret   3   3  Ret  15   4   3</span></span>
+<span><span class="co">## 3         RBRH   2   1   2   2    1   1   1   1</span></span>
+<span><span class="co">## 4         RBRH   5  11   4   5    4  18   3   4</span></span>
+<span><span class="co">## 5      Ferrari   6   4   6   4    2   4  11   6</span></span>
+<span><span class="co">## 6      Ferrari   8   5  11   7 DNSP   8  16   7</span></span>
+<span><span class="co">## 7           MM   4   3   5   6    3   5   5   5</span></span>
+<span><span class="co">## 8           MM   7   6   9   8   12   9   6  13</span></span>
+<span><span class="co">## 9           AR  13   9   7   9    9   6   8   9</span></span>
+<span><span class="co">## 10          AR Ret  10   8  17   13 Ret  14  14</span></span>
+<span><span class="co">## 11         ATH   9   7  10  10    6   3   7  10</span></span>
+<span><span class="co">## 12         ATH  17  12  15 Ret   16   7  13 Ret</span></span>
+<span><span class="co">## 13         AMM  10   8  13  11    5   2   9   8</span></span>
+<span><span class="co">## 14         AMM  15  15  14  13    8 Ret  10  12</span></span>
+<span><span class="co">## 15          WM  14 Ret  16  14   14  16  12  17</span></span>
+<span><span class="co">## 16          WM  18 Ret  18  16   15  17  18 Ret</span></span>
+<span><span class="co">## 17        ARRF  11  13  12  12   10  10  15  11</span></span>
+<span><span class="co">## 18        ARRF  12  14 Ret  15   11  11  17  15</span></span>
+<span><span class="co">## 19          HF  16  16  17  18   17  13  19  16</span></span>
+<span><span class="co">## 20          HF Ret  17  19  19   18  14  20  18</span></span></code></pre>
+<p>Above, we see that Mercedes (“<code>Merc</code>”) came first and
+third at Bahrain (<code>BHR</code>); and came second and retired at
+Emilia Romagna (<code>EMI</code>); full details of the notation and
+conventions are given in the package at <code>constructor.Rd</code>. The
+identity of the driver is viewed as inadmissible information and indeed
+may change during a season. Alternatively, we may regard the driver and
+the constructor as a joint entity, with the constructor’s ability to
+attract and retain a skilled driver being part of the object of
+inference. The associated generalized Plackett-Luce <code>hyper3</code>
+object is easily constructed using package idiom, in this case
+<code><a href="../reference/ordervec2supp3.html">ordertable2supp3()</a></code>, and we may use this to assess the
+Plackett-Luce strengths of the constructors:</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">const2020</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ordervec2supp3.html">ordertable2supp3</a></span><span class="op">(</span><span class="va">constructor_2020_table</span><span class="op">)</span></span>
 <span><span class="va">const2021</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ordervec2supp3.html">ordertable2supp3</a></span><span class="op">(</span><span class="va">constructor_2021_table</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/maxp.html">maxp</a></span><span class="op">(</span><span class="va">const2020</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##    ARRF     ATH Ferrari      HF    Merc      MR       R </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="fu"><a href="../reference/maxp.html">maxp</a></span><span class="op">(</span><span class="va">const2020</span><span class="op">)</span></span>
+<span><span class="co">##    ARRF     ATH Ferrari      HF    Merc      MR       R </span></span>
 <span><span class="co">## 0.04530 0.06807 0.06063 0.02623 0.37783 0.10026 0.09767 </span></span>
 <span><span class="co">##    RBRH  RPBWTM      WM </span></span>
 <span><span class="co">## 0.12072 0.08055 0.02273</span></span></code></pre>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/maxp.html">maxp</a></span><span class="op">(</span><span class="va">const2021</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##     AMM      AR    ARRF     ATH Ferrari      HF    Merc </span></span>
+<pre><code><span><span class="fu"><a href="../reference/maxp.html">maxp</a></span><span class="op">(</span><span class="va">const2021</span><span class="op">)</span></span>
+<span><span class="co">##     AMM      AR    ARRF     ATH Ferrari      HF    Merc </span></span>
 <span><span class="co">## 0.05942 0.07543 0.06238 0.05611 0.16939 0.02023 0.19395 </span></span>
 <span><span class="co">##      MM    RBRH      WM </span></span>
 <span><span class="co">## 0.14126 0.18334 0.03848</span></span></code></pre>
@@ -840,8 +876,14 @@ keeping track of the year:</p>
 <span>      <span class="fu"><a href="../reference/psubs.html">psubs</a></span><span class="op">(</span><span class="va">constructor_2020</span>, <span class="st">"Merc"</span>, <span class="st">"Merc2020"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>      <span class="fu"><a href="../reference/psubs.html">psubs</a></span><span class="op">(</span><span class="va">constructor_2021</span>, <span class="st">"Merc"</span>, <span class="st">"Merc2021"</span><span class="op">)</span></span>
 <span>     <span class="op">)</span></span></code></pre></div>
-<p>Above, we use generic function
-<code>psubs()} to change the name of Mercedes from</code>Merc<code>to</code>Merc2020<code>and</code>Merc2021<code>respectively.  Note the use of</code>+<code>to represent addition of log-likelihoods, corresponding to the assumption of conditional independence of results.  The null would be simply that the strengths of</code>Merc2020<code>and of</code>Merc2021<code>are identical.  Package idiom would be to use generic function</code>samep.test()`:</p>
+<p>Above, we use generic function <code><a href="../reference/psubs.html">psubs()</a></code> to change the
+name of Mercedes from <code>Merc</code> to <code>Merc2020</code> and
+<code>Merc2021</code> respectively. Note the use of <code>+</code> to
+represent addition of log-likelihoods, corresponding to the assumption
+of conditional independence of results. The null would be simply that
+the strengths of <code>Merc2020</code> and of <code>Merc2021</code> are
+identical. Package idiom would be to use generic function
+<code><a href="../reference/tests.html">samep.test()</a></code>:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/tests.html">samep.test</a></span><span class="op">(</span><span class="va">H</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Merc2020"</span>, <span class="st">"Merc2021"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -900,15 +942,15 @@ hypothesis that the strength of the Mercedes team remained unchanged
 between 2020 and 2021 was tested and rejected.</p>
 <p>Draws are not considered in the present work but in principle may be
 accommodated, either using likelihoods comprising sums of Plackett-Luce
-probabilities <span class="citation">(<strong>hankin2017?</strong>)</span>; or the
-introduction of a reified draw entity [<span class="citation">Hankin
-(2010)</span>}.</p>
+probabilities <span class="citation">(Hankin 2017)</span>; or the
+introduction of a reified draw entity <span class="citation">(Hankin
+2010)</span>.</p>
 <p>Further work might include a systematic comparison between
 <code>hyper3</code> approach and the Mann-Whitney-Wilcoxon test,
 including the characterisation of the power function of both tests. The
 package could easily be extended to allow non-integer multiplicities,
 which might prove useful in the context of reified Bradley Terry
-techniques [<span class="citation">Hankin (2020)</span>}.</p>
+techniques <span class="citation">(Hankin 2020)</span>.</p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -927,6 +969,9 @@ of Ranked Items.”</span> <em>Sociological Methodology</em> 24: 199–228.
 Baker, S. G. 1994. <span>“The Multinomial-<span>P</span>oisson
 Transformation.”</span> <em>The Statistician</em> 43 (4): 495–504.
 </div>
+<div id="ref-codling2017" class="csl-entry">
+Codling, S. 2017. <em>Speed Read <span>F1</span></em>. Motorbooks.
+</div>
 <div id="ref-rcore2023" class="csl-entry">
 Core Team. 2023. <em>: A Language and Environment for Statistical
 Computing</em>. Vienna, Austria: <span>Foundation</span> for
@@ -941,12 +986,8 @@ Firth, David. 2005. <span>“<span>B</span>radley-<span>T</span>erry
 Models in <span>R</span>.”</span> <em>Journal of Statistical
 Software</em> 12 (1).
 </div>
-<div id="ref-hankin2009" class="csl-entry">
-Hankin, R. K. S. 2009. <em>: A Generalization of the Dirichlet
-Distribution</em>. <a href="https://www.R-project.org" class="external-link">https://www.R-project.org</a>.
-</div>
 <div id="ref-hankin2010" class="csl-entry">
-———. 2010. <span>“A Generalization of the Dirichlet
+Hankin, R. K. S. 2010. <span>“A Generalization of the Dirichlet
 Distribution.”</span> <em>Journal of Statistical Software</em> 33 (11):
 1–18. <a href="https://doi.org/10.18637/jss.v033.i11" class="external-link">https://doi.org/10.18637/jss.v033.i11</a>.
 </div>
@@ -964,6 +1005,11 @@ Organization</em> 180: 325–33.
 </div>
 <div id="ref-hankin2022" class="csl-entry">
 ———. 2022. <em>: Non-Ordered Vectors</em>. <a href="https://github.com/RobinHankin/disordR" class="external-link">https://github.com/RobinHankin/disordR</a>.
+</div>
+<div id="ref-hankin2024_hyper3" class="csl-entry">
+———. 2024. <span>“Generalized <span>P</span>lackett-<span>L</span>uce
+Likelihoods.”</span> <em>Journal of Statistical Software</em> 109 (8).
+<a href="https://doi.org/10.18637/jss.v109.i08" class="external-link">https://doi.org/10.18637/jss.v109.i08</a>.
 </div>
 <div id="ref-hollander2013" class="csl-entry">
 Hollander, M., D. A. Wolfe, and E. Chicken. 2013. <em>Nonparametric
@@ -997,16 +1043,16 @@ Inference</em>. 2nd ed. John Wiley &amp; Sons. https://doi.org/<a href="https://
 Plackett, R. L. 1975. <span>“The Analysis of Permutations.”</span>
 <em>Applied Statistics</em> 24: 193–202.
 </div>
-<div id="ref-turner2020" class="csl-entry">
-Turner, Heather L., Jacob van Etten, David Firth, and Ioannis Kosmidis.
-2020. <span>“Modelling Rankings in : The Package.”</span>
-<em>Computational Statistics</em> 35: 1027–57. <a href="https://doi.org/10.1007/s00180-020-00959-3" class="external-link">https://doi.org/10.1007/s00180-020-00959-3</a>.
-</div>
 <div id="ref-turner2012" class="csl-entry">
-Turner, Heather, and David Firth. 2012.
+Turner, H. L., and David Firth. 2012.
 <span>“<span>B</span>radley-<span>T</span>erry Models in : The
 Package.”</span> <em>Journal of Statistical Software</em> 48 (9): 1–21.
 <a href="https://doi.org/10.18637/jss.v048.i09" class="external-link">https://doi.org/10.18637/jss.v048.i09</a>.
+</div>
+<div id="ref-turner2020" class="csl-entry">
+Turner, H. L., Jacob van Etten, David Firth, and Ioannis Kosmidis. 2020.
+<span>“Modelling Rankings in : The Package.”</span> <em>Computational
+Statistics</em> 35: 1027–57. <a href="https://doi.org/10.1007/s00180-020-00959-3" class="external-link">https://doi.org/10.1007/s00180-020-00959-3</a>.
 </div>
 </div>
 </div>
