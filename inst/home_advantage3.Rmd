@@ -227,9 +227,10 @@ library(Ternary)
 par(mar = rep(0.2, 4))
 TernaryPlot(alab = "p1", blab = "p2", clab = "M")
 
-FunctionToContour <- function(p1,p2,M) {
+f <- function(p1,p2,M) {
 pmax(-20,log(M+p1)*A + log(p2)*B - log(M+p1+p2)*(A+B+C+D) + log(p2+M)*C + log(p1)*D )
 }
+FunctionToContour <- function(a,b,c){f(p1=a, p2=b, M=c)}
 
 # Compute and plot colour tiles
 values <- TernaryPointValues(FunctionToContour, resolution = 24L)
