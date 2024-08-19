@@ -72,14 +72,14 @@ language [@rcore2023], which includes extensive functionality for
 working with such likelihood functions: @turner2020 discuss several
 implementations from a computational perspective.  The `BradleyTerry`
 package [@firth2005] considers pairwise comparisons using
-\proglang{glm} but cannot deal with ties or player-specific
-predictors; the \pkg{BradleyTerry2} package [@turner2012] implements a
+`glm` but cannot deal with ties or player-specific
+predictors; the `BradleyTerry2` package [@turner2012] implements a
 flexible user interface and wider range of models to be fitted to
 pairwise comparison datasets, specifically simple random effects.  The
-\pkg{PlackettLuce} package [@turner2020] generalizes this to
+`PlackettLuce` package [@turner2020] generalizes this to
 likelihood functions of the form of the Plackett-Luce equation above,
-and applies the Poisson transformation of [@baker1994] to express the
-problem as a log-linear model.  The \pkg{hyper2} package, in contrast,
+and applies the Poisson transformation of @baker1994 to express the
+problem as a log-linear model.  The `hyper2` package, in contrast,
 gives a consistent language interface to create and manipulate
 likelihood functions over the simplex
 ${S}_n=\left\lbrace\left(p_1,\ldots,p_n\right)\left|p_i\geq 0,\sum
@@ -92,23 +92,22 @@ p}=(p_1,\ldots,p_n)$ with
 \prod_{s\in \mathcal{O}}\left({\sum_{i\in s}}p_i\right)^{n_s}\qquad\mbox{Hyperdirichlet likelihood}
 \end{equation}
 
-where $\mathcal{O}$ is a set of observations and $s$ a
-subset of $\left\{1,2,\ldots,n\right\}$; numbers $n_s$ are integers
-which may be positive or negative.  The \pkg{hyper2} package has the
-ability to evaluate such likelihood functions at any point in $S_n$,
-thereby admitting a wide range of non-standard nulls such as order
-statistics on the $p_i$ [@hankin2017_rmd].  It becomes possible to
-analyse a wider range of likelihood functions than standard
-Plackett-Luce [@turner2020].  For example, results involving
+where $\mathcal{O}$ is a set of observations and $s$ a subset of
+$\left\{1,2,\ldots,n\right\}$; numbers $n_s$ are integers which may be
+positive or negative and we usually require $\sum_s n_s=0$.  The
+`hyper2` package has the ability to evaluate such likelihood functions
+at any point in $S_n$, thereby admitting a wide range of non-standard
+nulls such as order statistics on the $p_i$ [@hankin2017_rmd].  It
+becomes possible to analyse a wider range of likelihood functions than
+standard Plackett-Luce [@turner2020].  For example, results involving
 incomplete order statistics or teams are tractable.  Further, the
 introduction of reified entities (monsters) allows one to consider
-draws [@hankin2010], noncompetitive tactics such as
-collusion [@hankin2020], and the phenomenon of team cohesion
-wherein the team becomes stronger than the sum of its
-parts [@hankin2010].  Recent versions of the package include
-experimental functionality `cheering()` to investigate the
-relaxing of the assumption of conditional independence of the
-forward-ranking process.
+draws [@hankin2010], noncompetitive tactics such as collusion
+[@hankin2020], and the phenomenon of team cohesion wherein the team
+becomes stronger than the sum of its parts [@hankin2010].  Recent
+versions of the package include experimental functionality
+`cheering()` to investigate the relaxing of the assumption of
+conditional independence of the forward-ranking process.
 
 Here I present a different generalization.  Consider a race in which
 there are six runners 1-6 but we happen to know that three of the
@@ -144,32 +143,32 @@ given.
 
 ## Computational methodology for generalized Plackett-Luce likelihood functions
 
-Existing `hyper2` formalism as described by @hankin2017_rmd
-cannot represent the Plackett-Luce likelihood equation, because
-Equation the hyperdirichlet likelihood equation uses sets as the indexing elements,
+Existing `hyper2` formalism as described by @hankin2017_rmd cannot
+represent the Plackett-Luce likelihood equation, because the
+hyperdirichlet likelihood equation uses sets as the indexing elements,
 and in this case we need multisets\footnote{Note that the version of
-`hyper2` presented by @hankin2017_rmd and reviewed
-by [@turner2020] used integer-valued sets together with a print
-method that used a complicated mapping system from integers to
-competitor names.  Current methodology [following commit
-  `51a8b46`] is to use sets of character strings which represent
-the competitors directly; this allows for easier combination of
-observations including different competitors.}.  The declarations
+`hyper2` presented by @hankin2017_rmd and reviewed by [@turner2020]
+used integer-valued sets together with a print method that used a
+complicated mapping system from integers to competitor names.  Current
+methodology [following commit `51a8b46`] is to use sets of character
+strings which represent the competitors directly; this allows for
+easier combination of observations including different competitors.}.
+The declarations
 
 ```
 typedef map<string, long double> weightedplayervector;
 typedef map<weightedplayervector, long double> hyper3;
 ```
 
-show how the \proglang{map} class of the Standard Template Library is
-used with \proglang{weightedplayervector} objects mapping strings to
+show how the `map` class of the Standard Template Library is
+used with `weightedplayervector` objects mapping strings to
 long doubles (specifically, mapping player names to their
-multiplicities), and objects of class \proglang{hyper3} are maps from
-a \proglang{weightedplayervector} object to long doubles.  One
-advantage of this is efficiency: search, removal, and insertion
-operations have logarithmic complexity.  As an example, the following
-\proglang{C++} pseudo code would create a log-likelihood function for
-the first term in the Plackett-Luce likelihood equation above:
+multiplicities), and objects of class `hyper3` are maps from a
+`weightedplayervector` object to long doubles.  One advantage
+of this is efficiency: search, removal, and insertion operations have
+logarithmic complexity.  As an example, the following `C++`
+pseudo code would create a log-likelihood function for the first term
+in the Plackett-Luce likelihood equation above:
 
 ```
 weightedplayervector n,d;
@@ -191,10 +190,10 @@ using standard R idiom wrapping C++ back end.
 
 ## Package implementation
 
-The package includes an `S3` class `hyper3` for this
-type of object; extraction and replacement methods use `disordR`
-discipline [@hankin2022}.  Package idiom for creating such
-objects uses named vectors:
+The package includes an `S3` class `hyper3` for this type of object;
+extraction and replacement methods use `disordR` discipline
+[@hankin2022].  Package idiom for creating such objects uses named
+vectors:
 
 ```{r showLL}
 LL <- hyper3()
@@ -376,7 +375,7 @@ statistic, $\left|{\mathcal I}\right| =\frac{1323}{16}\simeq 82.7$; if
 we observe just the winner, $\left|{\mathcal I}\right|=27$, and if we
 observe just the loser we have $\left|{\mathcal
 I}\right|=\frac{16875}{256}\simeq 65.9$.  A brief discussion is given
-at `inst/fisher\_inf\_PL3.Rmd`.
+at `inst/fisher_inf_PL3.Rmd`.
 
 ```{r, fig.width=7, fig.height=7, fig.cap="Support functions for observations a>a>b, a>b>a and b>a>a.  Horizontal dotted line represents two units of support"}
 f_aab <- function(a){a^2 / (1 + a)}
@@ -399,11 +398,11 @@ abline(h = exp(-2), lty = 2)
 ## Nonfinishers
 
 If we allow non-finishers---that is, a subset of competitors who are
-beaten by all the ranked competitors ([@turner2020} call this a
-{\em top $n$ ranking}), there is another nontrivial order statistic,
-viz $a\succ b\succ\left\lbrace a,b\right\rbrace$ [thus one of the two
-  $a$'s won, one of the $b$'s came second, and one of each of $a$ and
-  $b$ failed to finish].  Now
+beaten by all the ranked competitors ([@turner2020] call this a _top
+$n$ ranking_), there is another nontrivial order statistic, viz
+$a\succ b\succ\left\lbrace a,b\right\rbrace$ [thus one of the two
+$a$'s won, one of the $b$'s came second, and one of each of $a$ and
+$b$ failed to finish].  Now
 
 \begin{equation}
 \mathcal{L}(a)=
