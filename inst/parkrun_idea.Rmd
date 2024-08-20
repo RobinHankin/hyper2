@@ -256,10 +256,10 @@ particular parkrun, of whom the author placed 173.
 \label{parkruntable}
 \begin{tabular}{ccccccccccc}
 \hline
-rank   &173  & 165 & 172 & 199 & 181 & 229 & 177 & 222 & 206 & 142 \\
-runners&238  & 238 & 196 & 242 & 242 & 318 & 259 & 305 & 297 & 241 \\ \\ \\
-rank   & 118 & 224 & 128 & 115 & 183 &     &     &     &     &\\
-runners& 179 & 338 & 203 & 245 & 254 &     &     &     &     &\\
+rank    & 173 & 165 & 172 & 199 & 181 & 229 & 177 & 222 & 206 & 142 \\
+runners & 238 & 238 & 196 & 242 & 242 & 318 & 259 & 305 & 297 & 241 \\ \\ \\
+rank    & 118 & 224 & 128 & 115 & 183 &     &     &     &     &\\
+runners & 179 & 338 & 203 & 245 & 254 &     &     &     &     &\\
 \hline
 \end{tabular}
 \end{table*}
