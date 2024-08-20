@@ -166,16 +166,17 @@ extensive functionality for working with such likelihood functions:
 <span class="citation">Turner et al. (2020)</span> discuss several
 implementations from a computational perspective. The
 <code>BradleyTerry</code> package <span class="citation">(Firth
-2005)</span> considers pairwise comparisons using but cannot deal with
-ties or player-specific predictors; the package <span class="citation">(Turner and Firth 2012)</span> implements a flexible
-user interface and wider range of models to be fitted to pairwise
-comparison datasets, specifically simple random effects. The package
-<span class="citation">(Turner et al. 2020)</span> generalizes this to
+2005)</span> considers pairwise comparisons using <code>glm</code> but
+cannot deal with ties or player-specific predictors; the
+<code>BradleyTerry2</code> package <span class="citation">(Turner and
+Firth 2012)</span> implements a flexible user interface and wider range
+of models to be fitted to pairwise comparison datasets, specifically
+simple random effects. The <code>PlackettLuce</code> package <span class="citation">(Turner et al. 2020)</span> generalizes this to
 likelihood functions of the form of the Plackett-Luce equation above,
-and applies the Poisson transformation of <span class="citation">(Baker
-1994)</span> to express the problem as a log-linear model. The package,
-in contrast, gives a consistent language interface to create and
-manipulate likelihood functions over the simplex
+and applies the Poisson transformation of <span class="citation">Baker
+(1994)</span> to express the problem as a log-linear model. The
+<code>hyper2</code> package, in contrast, gives a consistent language
+interface to create and manipulate likelihood functions over the simplex
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">|</mo><msub><mi>p</mi><mi>i</mi></msub><mo>≥</mo><mn>0</mn><mo>,</mo><mo>∑</mo><msub><mi>p</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">{S}_n=\left\lbrace\left(p_1,\ldots,p_n\right)\left|p_i\geq 0,\sum
 p_i=1\right.\right\rbrace</annotation></semantics></math>. A further
 extension in the package generalizes this likelihood function to
@@ -194,8 +195,10 @@ a subset of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">{</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>n</mi><mo stretchy="true" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\left\{1,2,\ldots,n\right\}</annotation></semantics></math>;
 numbers
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mi>s</mi></msub><annotation encoding="application/x-tex">n_s</annotation></semantics></math>
-are integers which may be positive or negative. The package has the
-ability to evaluate such likelihood functions at any point in
+are integers which may be positive or negative and we usually require
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∑</mo><mi>s</mi></msub><msub><mi>n</mi><mi>s</mi></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\sum_s n_s=0</annotation></semantics></math>.
+The <code>hyper2</code> package has the ability to evaluate such
+likelihood functions at any point in
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>S</mi><mi>n</mi></msub><annotation encoding="application/x-tex">S_n</annotation></semantics></math>,
 thereby admitting a wide range of non-standard nulls such as order
 statistics on the
@@ -259,19 +262,20 @@ Formula 1 motor racing, and track-and-field athletics, are given.</p>
 functions<a class="anchor" aria-label="anchor" href="#computational-methodology-for-generalized-plackett-luce-likelihood-functions"></a>
 </h3>
 <p>Existing <code>hyper2</code> formalism as described by <span class="citation">Hankin (2017)</span> cannot represent the Plackett-Luce
-likelihood equation, because Equation the hyperdirichlet likelihood
-equation uses sets as the indexing elements, and in this case we need
-multisets. The declarations</p>
+likelihood equation, because the hyperdirichlet likelihood equation uses
+sets as the indexing elements, and in this case we need multisets. The
+declarations</p>
 <pre><code>typedef map&lt;string, long double&gt; weightedplayervector;
 typedef map&lt;weightedplayervector, long double&gt; hyper3;</code></pre>
-<p>show how the class of the Standard Template Library is used with
-objects mapping strings to long doubles (specifically, mapping player
-names to their multiplicities), and objects of class are maps from a
-object to long doubles. One advantage of this is efficiency: search,
-removal, and insertion operations have logarithmic complexity. As an
-example, the following pseudo code would create a log-likelihood
-function for the first term in the Plackett-Luce likelihood equation
-above:</p>
+<p>show how the <code>map</code> class of the Standard Template Library
+is used with <code>weightedplayervector</code> objects mapping strings
+to long doubles (specifically, mapping player names to their
+multiplicities), and objects of class <code>hyper3</code> are maps from
+a <code>weightedplayervector</code> object to long doubles. One
+advantage of this is efficiency: search, removal, and insertion
+operations have logarithmic complexity. As an example, the following
+<code>C++</code> pseudo code would create a log-likelihood function for
+the first term in the Plackett-Luce likelihood equation above:</p>
 <pre><code>weightedplayervector n,d;
 n["a"] = 1; 
 d["a"] = 3; 
@@ -292,8 +296,8 @@ values with unit sum] using standard R idiom wrapping C++ back end.</p>
 </h3>
 <p>The package includes an <code>S3</code> class <code>hyper3</code> for
 this type of object; extraction and replacement methods use
-<code>disordR</code> discipline [<span class="citation">Hankin
-(2022)</span>}. Package idiom for creating such objects uses named
+<code>disordR</code> discipline <span class="citation">(Hankin
+2022)</span>. Package idiom for creating such objects uses named
 vectors:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">LL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hyper3.html">hyper3</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -557,8 +561,7 @@ if we observe just the winner,
 and if we observe just the loser we have
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">|</mo><mi>ℐ</mi><mo stretchy="true" form="postfix">|</mo></mrow><mo>=</mo><mfrac><mn>16875</mn><mn>256</mn></mfrac><mo>≃</mo><mn>65.9</mn></mrow><annotation encoding="application/x-tex">\left|{\mathcal
 I}\right|=\frac{16875}{256}\simeq 65.9</annotation></semantics></math>.
-A brief discussion is given at
-<code>inst/fisher\_inf\_PL3.Rmd</code>.</p>
+A brief discussion is given at <code>inst/fisher_inf_PL3.Rmd</code>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f_aab</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">{</span><span class="va">a</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">a</span><span class="op">)</span><span class="op">}</span></span>
 <span><span class="va">f_aba</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">{</span><span class="va">a</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">a</span><span class="op">)</span><span class="op">}</span></span>
@@ -586,9 +589,10 @@ b&gt;a&gt;a. Horizontal dotted line represents two units of support
 <h3 id="nonfinishers">Nonfinishers<a class="anchor" aria-label="anchor" href="#nonfinishers"></a>
 </h3>
 <p>If we allow non-finishers—that is, a subset of competitors who are
-beaten by all the ranked competitors ([<span class="citation">Turner et
-al. (2020)</span>} call this a {}), there is another nontrivial order
-statistic, viz
+beaten by all the ranked competitors (<span class="citation">(Turner et
+al. 2020)</span> call this a <em>top
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+ranking</em>), there is another nontrivial order statistic, viz
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>≻</mo><mi>b</mi><mo>≻</mo><mrow><mo stretchy="true" form="prefix">{</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">a\succ b\succ\left\lbrace a,b\right\rbrace</annotation></semantics></math>
 [thus one of the two
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>’s
