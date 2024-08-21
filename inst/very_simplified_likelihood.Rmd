@@ -1094,16 +1094,25 @@ jj2
 pchisq(2*(jj1$value-jj2$objective),lower.tail=FALSE,df=1)
 ```
 
+
 # Park run, version 2.
 
 ```{r}
+a <- read.table("parkrun_results.txt",header=TRUE)
+
+rank_auck    <- a$place  [a$venue == "auckland"]
+runners_auck <- a$runners[a$venue == "auckland"]
+
+rank_stir    <- a$place  [a$venue == "stirling"]
+runners_stir <- a$runners[a$venue == "stirling"]
 
 
-rank_auck    <- c(177, 222, 206, 142, 118, 224, 128, 115, 183)
-runners_auck <- c(259, 305, 297, 241, 179, 338, 203, 245, 254)
+rank_auck    
+runners_auck 
 
-rank_stir <-    c(145, 157, 156, 191, 172, 174, 173, 165, 172, 199, 181, 229)
-runners_stir <- c(193, 240, 197, 257, 227, 234, 238, 238, 196, 242, 242, 318)
+rank_stir 
+runners_stir 
+
 ```
 
 ```{r}
