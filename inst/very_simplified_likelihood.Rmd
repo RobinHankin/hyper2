@@ -18,25 +18,29 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 Consider a race between a competitor of Bradley-Terry strength $a$ and
 $n$ competitors each of strength $b$; we require $a+b=1$.  NB we have
 $n+1$ competitors in total, 1 of strength $a$ and $n$ of strength $b$.
-An observation is indexed by $r$, the number of $b$ clones finishing
-ahead of $a$, so $0\leqslant r\leqslant n$.  The initial field
-strength is $a+nb=1+b(n-1)$.
+An observation is indexed by $R$, the rank of the focal competitor: we
+have $1\leqslant R\leqslant n+1$.  Alternatively we might consider
+$r=R-1$, the number of $b$ clones finishing ahead of $a$, so
+$0\leqslant r\leqslant n$.  The initial field strength is
+$a+nb=1+b(n-1)$.
+
+$$r=R-1$$
 
 
-Suppose our bro comes first (zero $b$'s ahead of him):
+Suppose our bro comes first (zero $b$'s ahead of him) [$r=0, R=1$]:
 
 \[
 \mathcal{L}(a)=\frac{a}{a+nb}=\frac{1-b}{1+(n-1)b}
 \]
 
-Comes second, one $b$ ahead of him:
+Comes second [$r=1,R=2$], one $b$ ahead of him:
 
 \[
 \mathcal{L}(a)=\frac{b}{a+nb}\cdot\frac{a}{a+(n-1)b}
 \]
 
 
-Third, two ahead of him:
+Third [$r=2, R=3$]; two ahead of him:
 
 \[
 \mathcal{L}(a)=
@@ -46,7 +50,7 @@ Third, two ahead of him:
 \]
 
 
-Fourth, three ahead:
+Fourth [$r=3, R=4$], three ahead:
 
 \[
 \mathcal{L}(a)=
@@ -74,10 +78,25 @@ This is
 \mathcal{L}_{r,n}(a)=\frac{(B-1)(B+n-r-2)!}{(B+n-1)!},\qquad B=1/(1-a)
 \]
 
+
+\[
+\mathcal{L}_{R,n}(a)=\frac{(B-1)(B+n-R-1)!}{(B+n-1)!},\qquad B=1/(1-a)
+\]
+
+\[
+=\frac{(B-1)\Gamma(B+n-R)}{\Gamma(B+n)},\qquad B=1/(1-a)
+\]
+
+
 Then, using Stirling [viz $n!\sim n^ne^{-n}\sqrt{2\pi n}$] we get
 
 \[
 \log(B-1) + ((B+n-r-2)\log(B+n-r-2)-(B+n-r-2)+\frac{\log(B+n-r-2)}{2})
+          - ((B+n  -1)\log(B+n  -1)-(B+n  -1)+\frac{\log(B+n  -1)}{2})
+\]
+
+\[
+\log(B-1) + ((B+n-R-1)\log(B+n-R-1)-(B+n-R-1)+\frac{\log(B+n-R-1)}{2})
           - ((B+n  -1)\log(B+n  -1)-(B+n  -1)+\frac{\log(B+n  -1)}{2})
 \]
 
@@ -102,6 +121,22 @@ It returns this:
 +\log(B-1)+\mathcal{O}(n^{-3})
 \]
 
+Now using $R$ not $r$:
+
+```
+sage: var('B n R')
+(B, n, R)
+pretty_print_default(False)
+X = log(B-1) + (
+  + ((B+n-R-1)*log(B+n-R-1)-(B+n-R-1)+log(B+n-R-1)/2)
+  - ((B+n  -1)*log(B+n  -1)-(B+n  -1)+log(B+n  -1)/2)
+  )
+X
+(B - R + n - 1)*log(B - R + n - 1) - (B + n - 1)*log(B + n - 1) + R + 1/2*log(B - R + n - 1) - 1/2*log(B + n - 1) + log(B - 1)
+X.taylor(n,Infinity,2).full_simplify()
+-1/12*(12*R*n^2*log(n) + 3*(2*B - 1)*R^2 - 2*R^3 - 12*n^2*log(B - 1) - 6*(B^2 - B)*R + 6*((2*B - 1)*R - R^2)*n)/n^2
+```
+
 Note that if we use instead $n~\sim n^ne^{-n}\sqrt{2\pi
 n}\left(1+\frac{1}{12n}\right)$, then only terms of
 $\mathcal{O}(n^{-2})$ and above are changed; the first-order terms and
@@ -120,6 +155,41 @@ be unique; we have
 $\hat{B}=\frac{n+r+1}{r+1}+\mathcal{O}\left(n^{-1}\right)$, or
 alternatively $\hat{a}=\frac{n}{n+r+1}$.  I present some numerical
 results below.
+
+Now some Mathematica:
+
+```
+f[B_, n_, R_] := Log[(B - 1)*Gamma[B + n - R]/Gamma[B + n]] 
+Assuming[B > 1 && p > 0 && p < 1, 
+ Series[f[B, n, n*p], {n, Infinity, 1}]]
+```
+
+We get
+
+$$
+\log\left(
+(B-1)(1-p)^{B-1/2} +
+\frac{
+	(B-1)(1-6B+6B^2)(1-p)^{B-1/2}p
+}{
+	12(1-p)n
+}
+\right)
+$$
+
+or
+
+$$
+\log\left(
+(B-1)(1-p)^{B-1/2} \left[1+
+\frac{(1-6B+6B^2)p}{2(1-p)n}\right]\right)
+$$
+
+$$
+\log
+(B-1) + B\log(1-p) + 
+\frac{(1-6B+6B^2)p}{2(1-p)n}\right]\right)
+$$
 
 
 # Placing last
