@@ -182,35 +182,43 @@ or
 $$
 \log\left(
 (B-1)(1-p)^{B-1/2} \left[1+
-\frac{(1-6B+6B^2)p}{2(1-p)n}\right]\right)
+\frac{(1-6B+6B^2)p}{12(1-p)n}\right]\right)
 $$
 
 $$
 \log
-(B-1) + B\log(1-p) + 
-\frac{(1-6B+6B^2)p}{2(1-p)n}\right]\right)
+(B-1) + B\log(1-p) +
+n^{-1}
+\frac{(1-6B+6B^2)p}{12(1-p)} +{\mathcal O}\left(n^{-2}\right)
+$$
+
+$$
+\log
+(B-1) + B\log(1-p) +
+\frac{1}{12}n^{-1}\frac{p}{1-p}(1-6B+6B^2) + {\mathcal O}\left(n^{-2}\right)
 $$
 
 
 # Placing last
 
-Placing last is finishing  after $n=r$ clones finish:
+Placing last is finishing after $n=r$ clones finish, that is, $R=n+1$
+[me plus two clones, I come third].
 
 \[
-n=1\longrightarrow\mathcal{L}=b\]
+n=1,R=2\longrightarrow\mathcal{L}=b\]
 
 \[
-n=2\longrightarrow\mathcal{L}=\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^2}{1+b}
+n=2,R=3\longrightarrow\mathcal{L}=\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^2}{1+b}
 =\frac{1}{B(B+1)}
 \]
 
 \[
-n=3\longrightarrow\mathcal{L}=\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^3}{(1+2b)(1+b)}=\frac{1}{B(B+1)(B+2)}
+n=3,R=4\longrightarrow\mathcal{L}=\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^3}{(1+2b)(1+b)}=\frac{1}{B(B+1)(B+2)}
 \]
 
 
 \[
-n=4\longrightarrow\mathcal{L}=\frac{b}{a+4b}\cdot\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=
+n=4,R=n+1\longrightarrow\mathcal{L}=\frac{b}{a+4b}\cdot\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=
 \frac{b^4}{(1+3b)(1+2b)(1+b)}=
 \frac{1}{B(B+1)(B+2)(B+3)}
 \]
@@ -218,64 +226,66 @@ n=4\longrightarrow\mathcal{L}=\frac{b}{a+4b}\cdot\frac{b}{a+3b}\cdot\frac{b}{a+2
 For $n=4$ we have equivalently
 
 \[
-\frac{1}{(B+3)(B+2)(B+1)B}=\frac{(B-1)!}{(B+3)!}
+\frac{1}{(B+3)(B+2)(B+1)B}=\frac{(B-1)!}{(B+3)!}=\frac{\Gamma(B)}{\Gamma(B+2)}
 \]
 
 In general we would have
 
 \[
 \frac{1}{(B+n-1)(B+n-2)\cdots(B+1)B}=
-\frac{(B-1)!}{(B+n-1)!}
+\frac{(B-1)!}{(B+n-1)!}=
+\frac{\Gamma(B)}{\Gamma(B+n)}
 \]
 
 (denominator has $n+1$ terms).  Observe that this agrees with the
 $r<n$ case above (substituting $r=n$).  We may introduce some R idiom:
 
 ```{r,label=definefsingle}
-f_single <- function(a,r,n,log=FALSE){  # not vectorised
+f_single <- function(a,R,n,log=FALSE){  # not vectorised
+    stopifnot(R>0)
 	B <- 1/(1-a)
 	if(log){
-		out <- log(B-1) - lgamma(B+n) + lgamma(B+n-r-1)
+		out <- log(B-1) + lgamma(B+n-R) - lgamma(B+n)
 	} else {  # not-log
-		out <- (B-1)/prod(B+(n-r-1):(n-1))
+		out <- (B-1)/prod(B+(n-R):(n-1))
 	}
    return(out)
 }
 
-f_vec_a <- function(a,r,n, log=FALSE){  # vectorised in 'a' but not in 'r'
-	sapply(a,function(a){f_single(a,r=r,n=n,log=log)})
+f_vec_a <- function(a,R,n, log=FALSE){  # vectorised in 'a' but not in 'R'
+	sapply(a,function(a){f_single(a,R=R,n=n,log=log)})
 }
 
-f_vec_arn <- function(a,r,n,log=FALSE){
-	## vectorized in 'a'; treats 'r' and 'n' as
+f_vec_arn <- function(a,R,n,log=FALSE){
+	## vectorized in 'a'; treats 'R' and 'n' as
 	## vectors of independent observations
 
-	M <- cbind(r,n)
+	M <- cbind(R,n)
 
 	if(log){
 		out <- 0
-		for(i in seq_len(nrow(M))){out <- out + f_vec_a(a,r=M[i,1],n=M[i,2],log=TRUE)}
+		for(i in seq_len(nrow(M))){out <- out + f_vec_a(a,R=M[i,1],n=M[i,2],log=TRUE)}
 	} else {
 		out <- 1
-		for(i in seq_len(nrow(M))){out <- out * f_vec_a(a,r=M[i,1],n=M[i,2],log=FALSE)}
+		for(i in seq_len(nrow(M))){out <- out * f_vec_a(a,R=M[i,1],n=M[i,2],log=FALSE)}
 	}
 	return(out)
 }
 
-fapprox <- function(a,r,n,log=FALSE){
+fapprox <- function(a,R,n,log=FALSE){
 	if(log){
-		return(log(B-1)-B*(r+1)/n)
+		return(log(B-1)-B*R/n)
 	} else {
-		return(B-1 - (r+1)*exp(B)/n)
+		return((B-1)/exp(R*B/n))
 	}
 }
 ```
 
 ```{r label=defdiff}
-fdash <- function(a,r,n,log=TRUE){
+fdash <- function(a,R,n,log=TRUE){
 	B <- 1/(1-a)
-	out <- (1/(B-1) - psigamma(B+n) + psigamma(B+n-r-1))*B^2
-	if(!log){out <- out * f_vec_arn(a,r,n,log=FALSE)}
+	out <- (1/(B-1) - psigamma(B+n) + psigamma(B+n-R))*B^2
+	if(!log){out <- out * f_vec_arn(a,R,n,log=FALSE)}
 	return(out)
 }
 ```
@@ -285,31 +295,31 @@ Now verify `fdash()`:
 ```{r label=verifydiff}
 a <- 0.34
 d <- 1e-3
-r <- 4
+R <- 4
 n <- 10
 c(
-  numerical  = (f_single(a+d/2,r,n,log=TRUE)-f_single(a-d/2,r,n,log=TRUE))/d,
-  analytical = fdash(a,r,n)
+  numerical  = (f_single(a+d/2,R,n,log=TRUE)-f_single(a-d/2,R,n,log=TRUE))/d,
+  analytical = fdash(a,R,n)
 )
 
 c(
-  numerical  = (f_single(a+d/2,r,n,log=FALSE)-f_single(a-d/2,r,n,log=FALSE))/d,
-  analytical = fdash(a,r,n,log=FALSE)
+  numerical  = (f_single(a+d/2,R,n,log=FALSE)-f_single(a-d/2,R,n,log=FALSE))/d,
+  analytical = fdash(a,R,n,log=FALSE)
 )
 ```
 
 Now use the derivative to find the maximum likelihood point
 
 ```{r,label=defmle}
-MLE <- function(r,n,give=FALSE){
+MLE <- function(R,n,give=FALSE){
 	d <- 1e-6
-	out <- optimize(f_vec_arn,c(d,1-d),r=r,n=n,log=TRUE,maximum=TRUE)
+	out <- optimize(f_vec_arn,c(d,1-d),R=R,n=n,log=TRUE,maximum=TRUE)
 	if(!give){out <- out$maximum}
 	return(out)
 }
 
-MLEa <- function(r,n,give=FALSE,small=1e-4){
-	out <- uniroot(f=function(a){fdash(a,r,n)},interval=c(small,1-small))
+MLEa <- function(R,n,give=FALSE,small=1e-4){
+	out <- uniroot(f=function(a){fdash(a,R,n)},interval=c(small,1-small))
 	if(!give){out <- out$root}
 	return(out)
 }
@@ -317,7 +327,6 @@ MLEa <- function(r,n,give=FALSE,small=1e-4){
 showdiff <- function(x,y){c(way1=x,way2=y,diff=x-y,logratio=log(x/y))}
 
 rbind(
-showdiff(MLE(1,9),MLEa(1,9)),
 showdiff(MLE(3,9),MLEa(3,9)),
 showdiff(MLE(3,7),MLEa(3,7))
 )
@@ -355,11 +364,11 @@ a <- 0.23423434
 b <- 1-a
 B <- 1/b
 n <- 9
-r <- 3
+R <- 4
 c(
 way1 = b^3*a/((a+9*b) * (a+8*b) * (a+7*b) * (a+6*b)),
 way2 = (B-1)/prod(B+(5:8)),
-way3 = f_vec_arn(a,r,n,log=FALSE)
+way3 = f_vec_arn(a,R,n,log=FALSE)
 )
 ```
 
@@ -368,15 +377,15 @@ way3 = f_vec_arn(a,r,n,log=FALSE)
 out <- list()
 for(n in 1:10){
   out[[n]]  <- rep(NA,n+1)
-  for(r in 0:n){
-    if(r==0){
+  for(R in seq_len(n+1)){
+    if(R==1){
       jj <- 1
-    } else if(r==n){n
+    } else if(R == n+1){
       jj <- 0
     } else {
-      jj <- MLE(r,n)
+      jj <- MLE(R,n)
     }
-    out[[n]][r+1] <- jj
+    out[[n]][R] <- jj
   }
 }
 out
@@ -386,8 +395,8 @@ out
 plotterp <- function(...){
 plot(NA,xlim=c(1,10),ylim=c(0,1),type="n",xlab="n",ylab=expression(hat(a)))
 for(n in 1:10){
-  for(r in 0:n){   points(n,out[[n]][r+1],pch=16) }
-  for(r in 0:n){   text(n+0.2,out[[n]][r+1],r,cex=0.5,col='gray') }
+  for(R in seq_len(n+1)){   points(n,out[[n]][R],pch=16) }
+  for(R in seq_len(n+1)){   text(n+0.2,out[[n]][R],R,cex=0.5,col='gray') }
 }
 }
 plotterp()
@@ -544,23 +553,23 @@ jj <- f_vec_arn(a,3,n,log=FALSE)
 plot(a,jj/max(jj,na.rm=TRUE),type='n',xlab=expression(a),ylab="likelihood")
 grid()
 rain <- rainbow(n+1)
-for(r in seq(from=0,to=n)){
-  y <- f_vec_a(a,r,n,log=FALSE)
-  if(r==0){y[length(y)] <- 1}
+for(R in 1:n){
+  y <- f_vec_a(a,R,n,log=FALSE)
+  if(R==1){y[length(y)] <- 1}
   y <- y/max(y,na.rm=TRUE)
-  if(r>0){y[length(y)] <- 0}
-  points(a,y,type='l',lwd=4,col=rain[r+1])
+  if(R>1){y[length(y)] <- 0}
+  points(a,y,type='l',lwd=4,col=rain[R])
 }
-abline(v=MLE(r=4,n=8))
-text(0.07,0.95,"r=8",col=rain[9])
-text(0.20,0.95,"r=7",col=rain[8])
-text(0.26,0.91,"r=6",col=rain[7])
-text(0.29,0.83,"r=5",col=rain[6])
-text(0.33,0.76,"r=4",col=rain[5])
-text(0.35,0.64,"r=3",col=rain[4])
-text(0.39,0.53,"r=2",col=rain[3])
-text(0.45,0.41,"r=1",col=rain[2])
-text(0.63,0.22,"r=0",col=rain[1])
+abline(v=MLE(R=5,n=8))
+text(0.07,0.95,"R=9",col=rain[9])
+text(0.07,0.95,"R=8",col=rain[8])
+text(0.20,0.95,"R=7",col=rain[7])
+text(0.26,0.91,"R=6",col=rain[6])
+text(0.29,0.83,"R=5",col=rain[5])
+text(0.33,0.76,"R=4",col=rain[4])
+text(0.35,0.64,"R=3",col=rain[3])
+text(0.39,0.53,"R=2",col=rain[2])
+text(0.45,0.41,"R=1",col=rain[1])
 }
 
 plotter()
@@ -571,7 +580,7 @@ dev.off()
 
 
 ```{r shown4n8mle}
-MLE(r=4,n=8)
+MLE(R=5,n=8)
 ```
 
 
@@ -661,7 +670,7 @@ summary(lm(y~x))
 ```{r checofirst}
 checo_like <- function(a){
   out <- a*0
-  for(year in 2011:2023){ out <- out + f_vec_arn(a,getfoc(year)-1,getnum(year)-1,log=TRUE) }
+  for(year in 2011:2023){ out <- out + f_vec_arn(a,getfoc(year),getnum(year)-1,log=TRUE) }
   return(out)
 }
 
@@ -681,7 +690,7 @@ f1_logistic <- function(vec){
   for(year in 2011:2023){
      LO <- alpha + beta*(year-2011)
      strength <- exp(LO)/(1+exp(LO))
-     out <- out + f_vec_arn(strength,getfoc(year)-1,getnum(year)-1,log=TRUE)
+     out <- out + f_vec_arn(strength,getfoc(year),getnum(year)-1,log=TRUE)
   }
   return(out)
 }
@@ -874,7 +883,6 @@ O <- read.table("olympic_athletics_mens_100m.txt",header=TRUE)
 head(O)
 ```
 
-
 ```{r analuyzelmp,cache=TRUE}
 jjf <- function(x){f_vec_arn(x,O$rank,O$n,log=TRUE)}
 system.time(optolym <- optimize(jjf, c(0.45,0.5), maximum=TRUE))
@@ -897,8 +905,8 @@ L <- L-Lmax
 ```
 
 ```{r findcredint}
-(a_lower <- uniroot(function(x){jjf(x)+2-Lmax},interval=c(0.3,0.5))$root)
-(a_upper <- uniroot(function(x){jjf(x)+2-Lmax},interval=c(0.5,0.6))$root)
+(a_lower <- uniroot(function(x){jjf(x)+2-Lmax},interval=c(0.1,0.5))$root)
+(a_upper <- uniroot(function(x){jjf(x)+2-Lmax},interval=c(0.5,0.9))$root)
 ```
 
 ```{r plotolymp}
@@ -974,7 +982,7 @@ else there".
 
 ```{r calculatelikes1,cache=F}
 a <- seq(from=0.005,to=0.85,by=0.01)
-La <- f_vec_arn(a,r=results$place[1]-1,results$runners[1]-1,log=TRUE)
+La <- f_vec_arn(a,R=results$place[1],results$runners[1]-1,log=TRUE)
 La <- La - max(La,na.rm=TRUE)
 plot(a,La,type='b',ylab='fishy')
 abline(h=c(0,-2))
@@ -986,10 +994,10 @@ supp2 <- function(vec,place,runners){
   a_auckland <- vec[2]
   out <- 0
   for(i in 1:3){
-    out <- out + f_vec_a(a_stirling,r=place[i]-1,runners[i]-1,log=TRUE)
+    out <- out + f_vec_a(a_stirling,R=place[i],runners[i]-1,log=TRUE)
   }
   for(i in 4:10){
-    out <- out + f_vec_a(a_auckland,r=place[i]-1,runners[i]-1,log=TRUE)
+    out <- out + f_vec_a(a_auckland,R=place[i],runners[i]-1,log=TRUE)
   }
   return(out)
 }
@@ -1101,8 +1109,8 @@ Pure first
 Lpure <- f_vec_arn(a,rank[wp]-1,class_size[wp]-1,log=TRUE)
 Lpure <- Lpure - max(Lpure,na.rm=TRUE)
 plot(a,Lpure,ylab='pure strength')
-optimize(function(a){f_vec_arn(a,rank[wp]-1,class_size[wp]-1,log=TRUE)},c(0.3,0.6),maximum=TRUE)
-optimize(function(a){f_vec_arn(a,rank[wa]-1,class_size[wa]-1,log=TRUE)},c(0.3,0.6),maximum=TRUE)
+optimize(function(a){f_vec_arn(a,rank[wp],class_size[wp]-1,log=TRUE)},c(0.3,0.6),maximum=TRUE)
+optimize(function(a){f_vec_arn(a,rank[wa],class_size[wa]-1,log=TRUE)},c(0.3,0.6),maximum=TRUE)
 ```
 
 
@@ -1112,10 +1120,10 @@ supp2_ed <- function(vec,place1,place2,runners1,runners2){
   M1 <- cbind(place1,runners1)
   M2 <- cbind(place2,runners2)
   for(i in seq_len(nrow(M1))){
-    out <- out + f_vec_arn(vec[1],r=M1[i,1]-1,n=M1[i,2]-1,log=TRUE)
+    out <- out + f_vec_arn(vec[1],R=M1[i,1],n=M1[i,2]-1,log=TRUE)
   }
   for(i in seq_len(nrow(M2))){
-    out <- out + f_vec_arn(vec[2],r=M2[i,1]-1,n=M2[i,2]-1,log=TRUE)
+    out <- out + f_vec_arn(vec[2],R=M2[i,1],n=M2[i,2]-1,log=TRUE)
   }
   return(out)
 }
@@ -1147,7 +1155,7 @@ jj1 <-
 optim(
    c(.4,.8),
    function(vec){
-      supp2_ed(vec,rank[wp]-1,rank[wa]-1,class_size[wp]-1,class_size[wa]-1)},
+      supp2_ed(vec,rank[wp],rank[wa],class_size[wp]-1,class_size[wa]-1)},
    control=list(fnscale = -1)
 )
 jj1
