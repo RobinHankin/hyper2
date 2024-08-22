@@ -1045,8 +1045,38 @@ pchisq(2*(7381.496-7380.314),df=1,lower.tail=FALSE)
 ```
 
 Above shows that there is no evidence to suggest that the Stirling
-strength differs from the Auckland strength.  Now let's try a
+strength differs from the Auckland strength.  
+
+## Fisher parkrun
+
+```{r splitruns}
+a <- read.table("parkrun_results.txt",header=TRUE)
+
+rank_auck    <- a$place  [a$venue == "auckland"]
+runners_auck <- a$runners[a$venue == "auckland"]
+
+rank_stir    <- a$place  [a$venue == "stirling"]
+runners_stir <- a$runners[a$venue == "stirling"]
+```
+
+```{r fisherparkrun}
+M <- matrix(c(
+    sum(rank_auck-1),sum(runners_auck-rank_auck),
+    sum(rank_stir-1),sum(runners_stir-rank_stir)),2,2,byrow=TRUE)
+dimnames(M) <- list(venue=c("Auckland","Stirling"),better=c(T,F))
+M
+fisher.test(M)
+```
+    
+    
+
+## Logistic parkrun
+
+Now let's try a
 logistic-style regression:
+
+
+
 
 ```{r logisticsupportparkrun,cache=FALSE}
 results <- read.table("parkrun_results.txt",header=TRUE)
@@ -1172,69 +1202,3 @@ jj2
 pchisq(2*(jj1$value-jj2$objective),lower.tail=FALSE,df=1)
 ```
 
-
-# Park run, version 2.
-
-```{r}
-a <- read.table("parkrun_results.txt",header=TRUE)
-
-rank_auck    <- a$place  [a$venue == "auckland"]
-runners_auck <- a$runners[a$venue == "auckland"]
-
-rank_stir    <- a$place  [a$venue == "stirling"]
-runners_stir <- a$runners[a$venue == "stirling"]
-
-
-rank_auck    
-runners_auck 
-
-rank_stir 
-runners_stir 
-
-```
-
-```{r}
-support_vec <- function(a,ranks,runners){
-    out <- 0
-    for(i in seq_along(ranks)){
-        out <- out + f_single(a, ranks[i],runners[i],log=TRUE)
-    }
-    return(out)
-}
-
-support_ij <- function(v){
-    auck <- v[1]
-    stir <- v[2]
-    return(
-        support_vec(auck, rank_auck, runners_auck) +
-        support_vec(stir, rank_stir, runners_stir)
-    )
-}
-
-x <- seq(from=0.1,to=0.8,by=0.01)
-jj <- as.matrix(expand.grid(x,x))
-L <- apply(jj,1,support_ij)
-L <- L - max(L,na.rm=TRUE)
-L <- matrix(L,length(x),length(x))
-```
-
-
-```{r}
-parkrun_contour <- function(...){
-    par(pty='s')
-    contour(x,x,L,asp=1,xlim=range(x),ylim=range(x),levels=-(0:5),xlab="Auckland",ylab="Stirling")
-    abline(0,1)
-}
-parkrun_contour()
-```
-
-```{r}
-M <- matrix(c(
-    sum(rank_auck-1),sum(runners_auck-rank_auck),
-    sum(rank_stir-1),sum(runners_stir-rank_stir)),2,2,byrow=TRUE)
-dimnames(M) <- list(venue=c("Auckland","Stirling"),better=c(T,F))
-M
-fisher.test(M)
-```
-    
-    
