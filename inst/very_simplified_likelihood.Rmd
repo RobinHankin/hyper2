@@ -553,7 +553,7 @@ jj <- f_vec_arn(a,3,n,log=FALSE)
 plot(a,jj/max(jj,na.rm=TRUE),type='n',xlab=expression(a),ylab="likelihood")
 grid()
 rain <- rainbow(n+1)
-for(R in 1:n){
+for(R in seq_len(n+1)){
   y <- f_vec_a(a,R,n,log=FALSE)
   if(R==1){y[length(y)] <- 1}
   y <- y/max(y,na.rm=TRUE)
@@ -562,14 +562,14 @@ for(R in 1:n){
 }
 abline(v=MLE(R=5,n=8))
 text(0.07,0.95,"R=9",col=rain[9])
-text(0.07,0.95,"R=8",col=rain[8])
-text(0.20,0.95,"R=7",col=rain[7])
-text(0.26,0.91,"R=6",col=rain[6])
-text(0.29,0.83,"R=5",col=rain[5])
-text(0.33,0.76,"R=4",col=rain[4])
-text(0.35,0.64,"R=3",col=rain[3])
-text(0.39,0.53,"R=2",col=rain[2])
-text(0.45,0.41,"R=1",col=rain[1])
+text(0.20,0.95,"R=8",col=rain[8])
+text(0.26,0.91,"R=7",col=rain[7])
+text(0.29,0.83,"R=6",col=rain[6])
+text(0.33,0.76,"R=5",col=rain[5])
+text(0.35,0.64,"R=4",col=rain[4])
+text(0.39,0.53,"R=3",col=rain[3])
+text(0.45,0.41,"R=2",col=rain[2])
+text(0.54,0.21,"R=1",col=rain[1])
 }
 
 plotter()
@@ -803,7 +803,7 @@ likeinsilico <- function(vec,M){
     x <- M[i,1]
     LO <- alpha + beta * x
     p <- exp(LO)/(1+exp(LO))
-    S <- S + f_vec_arn(p,M[i,2]-1,M[i,3]-1,log=TRUE)
+    S <- S + f_vec_arn(p,R=M[i,2],n=M[i,3]-1,log=TRUE)
   }
 return(S)
 }
@@ -941,7 +941,7 @@ Above we see some parkrun results.  In parkrun number 148, I placed
 229 out of a field of 318.
 
 ```{r calculate_parksupp,cache=TRUE}
-S_parkrun <- function(a){f_vec_arn(a,r=results$place-1,results$runners-1,log=TRUE)}
+S_parkrun <- function(a){f_vec_arn(a,R=results$place,results$runners-1,log=TRUE)}
 (optparkrun <- optimize(S_parkrun, c(0.2,0.8),maximum=TRUE))
 
 ```
