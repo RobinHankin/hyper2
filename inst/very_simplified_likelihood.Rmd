@@ -883,9 +883,9 @@ O <- read.table("olympic_athletics_mens_100m.txt",header=TRUE)
 head(O)
 ```
 
-```{r analuyzelmp,cache=TRUE}
-jjf <- function(x){f_vec_arn(x,O$rank,O$n,log=TRUE)}
-system.time(optolym <- optimize(jjf, c(0.45,0.5), maximum=TRUE))
+```{r analyze_athletics_olymp,cache=TRUE}
+jjf <- function(x){f_vec_arn(x,O$rank,O$n-1,log=TRUE)}
+system.time(optolym <- optimize(jjf, c(0.45,0.65), maximum=TRUE))
 ```
 
 ```{r}
@@ -896,9 +896,9 @@ jjf(optolym$maximum)
 pchisq(LR,df=1,lower.tail=FALSE)
 ```
 
-```{r makeolymplike}
-a <- seq(from=0.3,to=0.65,len=45)
-L <- f_vec_arn(a,O$rank,O$n,log=TRUE)
+```{r make_athletic_like}
+a <- seq(from=0.35,to=0.65,len=45)
+L <- f_vec_arn(a,O$rank,O$n-1,log=TRUE)
 Lmax <- jjf(optolym$maximum)
 Lmax
 L <- L-Lmax
@@ -920,7 +920,7 @@ abline(v=0.5,lty=3)
 
 segments(x0=a_lower,y0=-1.5,y1=-3.5)
 segments(x0=a_upper,y0=-1.5,y1=-3.5)
-
+grid()
 text(x=a_lower,y=-3,"0.380",pos=4)
 text(x=a_upper,y=-3,"0.563",pos=2)
 }
