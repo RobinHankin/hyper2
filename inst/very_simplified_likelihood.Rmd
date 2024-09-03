@@ -16,277 +16,132 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 ```
 
 Consider a race between a competitor of Bradley-Terry strength $a$ and
-$n$ competitors each of strength $b$; we require $a+b=1$.  NB we have
-$n+1$ competitors in total, 1 of strength $a$ and $n$ of strength $b$.
-An observation is indexed by $R$, the rank of the focal competitor: we
-have $1\leqslant R\leqslant n+1$.  Alternatively we might consider
-$r=R-1$, the number of $b$ clones finishing ahead of $a$, so
-$0\leqslant r\leqslant n$.  The initial field strength is
-$a+nb=1+b(n-1)$.
+$n-1$ competitors each of strength $b$; we require $a+b=1$.  NB we
+have $n$ competitors in total, 1 of strength $a$ and $n-1$ of strength
+$b$.  An observation is indexed by $r$, the rank of the focal
+competitor: we have $1\leqslant r\leqslant n$.  The initial field
+strength is $a+(n-1)b=1+b(n-2)b$.
 
-$$r=R-1$$
-
-
-Suppose our bro comes first (zero $b$'s ahead of him) [$r=0, R=1$]:
+Suppose our bro comes first (zero $b$'s ahead of him) [$r=1$]:
 
 \[
-\mathcal{L}(a)=\frac{a}{a+nb}=\frac{1-b}{1+(n-1)b}
+\mathcal{L}(a)=\frac{a}{a+(n-1)b}=\frac{1-b}{1+(n-2)b}
 \]
 
-Comes second [$r=1,R=2$], one $b$ ahead of him:
+Comes second [$r=2$], one $b$ ahead of him:
 
 \[
-\mathcal{L}(a)=\frac{b}{a+nb}\cdot\frac{a}{a+(n-1)b}
+\mathcal{L}(a)=\frac{b}{a+(n-1)b}\cdot\frac{a}{a+(n-2)b}=
+\frac{b(1-b)}{(1+(n-2)b)\cdot(1+(n-3)b)}
 \]
 
 
-Third [$r=2, R=3$]; two ahead of him:
+Third [$r=3$]; two ahead of him:
 
-\[
-\mathcal{L}(a)=
+\begin{eqnarray}
+\mathcal{L}(a) &=&
 \frac{b}{a+ n   b}\cdot
 \frac{b}{a+(n-1)b}\cdot
-\frac{a}{a+(n-2)b}
-\]
+\frac{a}{a+(n-2)b}\\
+&=&
+\frac{b^2(1-b)\rule{0mm}{10mm}
+}{
+(1+(n-2)b)\cdot(1+(n-3)b)\cdot(1+(n-4)b)}
+\end{eqnarray}
 
 
-Fourth [$r=3, R=4$], three ahead:
-
-\[
-\mathcal{L}(a)=
-\frac{b}{a+ n   b}\cdot
-\frac{b}{a+(n-1)b}\cdot
-\frac{b}{a+(n-2)b}\cdot
-\frac{a}{a+(n-3)b}
-\]
-
-Placing after $r<n$ of the $n$ clones of strength $b$ finish:
+Fourth [$r=4$], three clones finish before the focal competitor:
 
 \[
 \mathcal{L}(a)=
-\frac{b^ra}{
-(a+nb)(a+(n-1)b)(a+(n-2)b)\cdots(a+(n-r)b)}
-=
-\frac{B-1}{(B+n-1)(B+n-2)\cdots(B+n-r-1)}
-\]
-
-where $B=1/b$ [also using the fact that $a+b=1$].
-
-This is
-
-\[
-\mathcal{L}_{r,n}(a)=\frac{(B-1)(B+n-r-2)!}{(B+n-1)!},\qquad B=1/(1-a)
+\frac{b^3(1-b)
+}{
+(1+(n-2)b)\cdot(1+(n-3)b)\cdot(1+(n-4)b)\cdot(1+(n-5)b)}
 \]
 
 
-\[
-\mathcal{L}_{R,n}(a)=\frac{(B-1)(B+n-R-1)!}{(B+n-1)!},\qquad B=1/(1-a)
-\]
+
+Placing with general rank $r$, $1\leqslant r\leqslant n$.  Rank $r$
+means $r-1$ clones finish ahead of the focal competitor:
+
+\begin{eqnarray}
+\mathcal{L}(a) &=&
+\frac{b^{r-1}(1-b)
+}{
+\underbrace{(1+(n-2)b)\cdot(1+(n-3)b)\cdots(1+(n-r-1)b)}_{\mbox{$r$ terms}}
+}
+\\&=&
+\frac{B-1\rule{1mm}{10mm}}{(n+B-2)\cdot(n+B-3)\cdots(n+B-r-1)}
+\end{eqnarray}
+
+where $B=1/b$.  Recall that $r$ is the rank and $r-1$ clones finish
+ahead of the FC.  This is
 
 \[
-=\frac{(B-1)\Gamma(B+n-R)}{\Gamma(B+n)},\qquad B=1/(1-a)
-\]
-
-
-Then, using Stirling [viz $n!\sim n^ne^{-n}\sqrt{2\pi n}$] we get
-
-\[
-\log(B-1) + ((B+n-r-2)\log(B+n-r-2)-(B+n-r-2)+\frac{\log(B+n-r-2)}{2})
-          - ((B+n  -1)\log(B+n  -1)-(B+n  -1)+\frac{\log(B+n  -1)}{2})
+\mathcal{L}_{r,n}(a)=\frac{(B-1)(n+B-r-2)!}{(n+B-2)!},\qquad B=1/(1-a)
 \]
 
 \[
-\log(B-1) + ((B+n-R-1)\log(B+n-R-1)-(B+n-R-1)+\frac{\log(B+n-R-1)}{2})
-          - ((B+n  -1)\log(B+n  -1)-(B+n  -1)+\frac{\log(B+n  -1)}{2})
+=\frac{(B-1)\Gamma(n+B-r-1)}{\Gamma(n+B-1)},\qquad B=1/(1-a)
 \]
-
-If you give Sage this:
-
-```
-var('B n r')
-pretty_print_default(True)
-X=log(B-1) + (
-+ ((B+n-r-2)*log(B+n-r-2)-(B+n-r-2)+log(B+n-r-2)/2)
-- ((B+n  -1)*log(B+n  -1)-(B+n  -1)+log(B+n  -1)/2)
-)
-X.taylor(n,Infinity,2)
-```
-
-It returns this:
-
-\[
--(r+1)\log n
--\frac{(2B-3)r-r^2+2B-2}{2n}
--\frac{3(2B-3)r^2-6B^2-6(B^2-3B+2)r+12B-5}{12n^2}
-+\log(B-1)+\mathcal{O}(n^{-3})
-\]
-
-Now using $R$ not $r$:
-
-```
-sage: var('B n R')
-(B, n, R)
-pretty_print_default(False)
-X = log(B-1) + (
-  + ((B+n-R-1)*log(B+n-R-1)-(B+n-R-1)+log(B+n-R-1)/2)
-  - ((B+n  -1)*log(B+n  -1)-(B+n  -1)+log(B+n  -1)/2)
-  )
-X
-(B - R + n - 1)*log(B - R + n - 1) - (B + n - 1)*log(B + n - 1) + R + 1/2*log(B - R + n - 1) - 1/2*log(B + n - 1) + log(B - 1)
-X.taylor(n,Infinity,2).full_simplify()
--1/12*(12*R*n^2*log(n) + 3*(2*B - 1)*R^2 - 2*R^3 - 12*n^2*log(B - 1) - 6*(B^2 - B)*R + 6*((2*B - 1)*R - R^2)*n)/n^2
-```
-
-Note that if we use instead $n~\sim n^ne^{-n}\sqrt{2\pi
-n}\left(1+\frac{1}{12n}\right)$, then only terms of
-$\mathcal{O}(n^{-2})$ and above are changed; the first-order terms and
-indeed the zeroth order terms are unaffected.  Anyway, after
-simplifying and taking an asymptotic expansion to order $n^{-1}$, we
-find, to first order,
-
-\[
-\mathcal{S}=\log\mathcal{L}_{r,n}(a)=\log(B-1)-B\frac{r+1}{n}
-+ K + \mathcal{O}\left(n^{-2}\right)
-\]
-
-(where $K$ is an arbitrary constant).  Observing that
-$\partial^2\mathcal{S}/\partial B^2=-(B-1)^{-2}<0$, the evaluate would
-be unique; we have
-$\hat{B}=\frac{n+r+1}{r+1}+\mathcal{O}\left(n^{-1}\right)$, or
-alternatively $\hat{a}=\frac{n}{n+r+1}$.  I present some numerical
-results below.
 
 Now some Mathematica:
 
 ```
-f[B_, n_, R_] := Log[(B - 1)*Gamma[B + n - R]/Gamma[B + n]] 
+f[B_, n_, r_] := 
+ Log[(B - 1)] + Log[Gamma[n + B - r - 1]/Gamma[n + B - 1]]
 Assuming[B > 1 && p > 0 && p < 1, 
  Series[f[B, n, n*p], {n, Infinity, 1}]]
 ```
 
-We get
+gives 
 
-$$
-\log\left(
-(B-1)(1-p)^{B-1/2} +
-\frac{
-	(B-1)(1-6B+6B^2)(1-p)^{B-1/2}p
-}{
-	12(1-p)n
-}
-\right)
-$$
-
-or
-
-$$
-\log\left(
-(B-1)(1-p)^{B-1/2} \left[1+
-\frac{(1-6B+6B^2)p}{12(1-p)n}\right]\right)
-$$
-
-$$
-\log
-(B-1) + B\log(1-p) +
-n^{-1}
-\frac{(1-6B+6B^2)p}{12(1-p)} +{\mathcal O}\left(n^{-2}\right)
-$$
-
-$$
-\log
-(B-1) + B\log(1-p) +
-\frac{1}{12}n^{-1}\frac{p}{1-p}(1-6B+6B^2) + {\mathcal O}\left(n^{-2}\right)
-$$
-
-
-# Placing last
-
-Placing last is finishing after $n=r$ clones finish, that is, $R=n+1$
-[me plus two clones, I come third].
 
 \[
-n=1,R=2\longrightarrow\mathcal{L}=b\]
-
-\[
-n=2,R=3\longrightarrow\mathcal{L}=\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^2}{1+b}
-=\frac{1}{B(B+1)}
+\mathcal{S}=\log\mathcal{L}_{r,n}(a)=\log(B-1) + (B-3/2)\log(1-r/n) + 
+\mathcal{O}\left(n^{-1}\right)
 \]
 
-\[
-n=3,R=4\longrightarrow\mathcal{L}=\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=\frac{b^3}{(1+2b)(1+b)}=\frac{1}{B(B+1)(B+2)}
-\]
+(where $K$ is an arbitrary constant).  Here, $\mathcal{S}$ is the
+support (log-likelihood).  Observing that
+$\partial^2\mathcal{S}/\partial B^2=-(B-1)^{-2}<0$, the evaluate would
+be unique.
 
 
-\[
-n=4,R=n+1\longrightarrow\mathcal{L}=\frac{b}{a+4b}\cdot\frac{b}{a+3b}\cdot\frac{b}{a+2b}\cdot\frac{b}{a+b}=
-\frac{b^4}{(1+3b)(1+2b)(1+b)}=
-\frac{1}{B(B+1)(B+2)(B+3)}
-\]
+# R idiom
 
-For $n=4$ we have equivalently
 
-\[
-\frac{1}{(B+3)(B+2)(B+1)B}=\frac{(B-1)!}{(B+3)!}=\frac{\Gamma(B)}{\Gamma(B+2)}
-\]
-
-In general we would have
-
-\[
-\frac{1}{(B+n-1)(B+n-2)\cdots(B+1)B}=
-\frac{(B-1)!}{(B+n-1)!}=
-\frac{\Gamma(B)}{\Gamma(B+n)}
-\]
-
-(denominator has $n+1$ terms).  Observe that this agrees with the
-$r<n$ case above (substituting $r=n$).  We may introduce some R idiom:
-
-```{r,label=definefsingle}
-f_single <- function(a,R,n,log=FALSE){  # not vectorised
-    stopifnot(R>0)
-	B <- 1/(1-a)
-	if(log){
-		out <- log(B-1) + lgamma(B+n-R) - lgamma(B+n)
-	} else {  # not-log
-		out <- (B-1)/prod(B+(n-R):(n-1))
-	}
-   return(out)
+```{r, label=definefsingle}
+f_single <- function(a, r, n) {  # not vectorised
+    stopifnot(r>0)
+B <- 1/(1-a)
+  log(B-1) + lgamma(n+B-r-1) - lgamma(n+B-1)
 }
 
-f_vec_a <- function(a,R,n, log=FALSE){  # vectorised in 'a' but not in 'R'
-	sapply(a,function(a){f_single(a,R=R,n=n,log=log)})
+f_vec_a <- function(a,r,n){  # vectorised in 'a' but not in 'R'
+	sapply(a,function(a){f_single(a,r=r,n=n)})
 }
 
-f_vec_arn <- function(a,R,n,log=FALSE){
-	## vectorized in 'a'; treats 'R' and 'n' as
+f_vec_arn <- function(a,r,n){
+	## vectorized in 'a'; treats 'r' and 'n' as
 	## vectors of independent observations
 
-	M <- cbind(R,n)
+	M <- cbind(r,n)
 
-	if(log){
-		out <- 0
-		for(i in seq_len(nrow(M))){out <- out + f_vec_a(a,R=M[i,1],n=M[i,2],log=TRUE)}
-	} else {
-		out <- 1
-		for(i in seq_len(nrow(M))){out <- out * f_vec_a(a,R=M[i,1],n=M[i,2],log=FALSE)}
-	}
+    out <- 0
+    for(i in seq_len(nrow(M))){out <- out + f_vec_a(a,r=M[i,1],n=M[i,2])}
 	return(out)
 }
 
-fapprox <- function(a,R,n,log=FALSE){
-	if(log){
-		return(log(B-1)-B*R/n)
-	} else {
-		return((B-1)/exp(R*B/n))
-	}
+fapprox <- function(a,r,n){
+    stop("not written")
 }
 ```
 
 ```{r label=defdiff}
-fdash <- function(a,R,n,log=TRUE){
+fdash <- function(a,r,n){  # dS/da = dS/dB*dB/da
 	B <- 1/(1-a)
-	out <- (1/(B-1) - psigamma(B+n) + psigamma(B+n-R))*B^2
-	if(!log){out <- out * f_vec_arn(a,R,n,log=FALSE)}
-	return(out)
+    (1/(B-1) + psigamma(n+B-r-1) - psigamma(n+B-1))*B^2
 }
 ```
 
@@ -295,31 +150,27 @@ Now verify `fdash()`:
 ```{r label=verifydiff}
 a <- 0.34
 d <- 1e-3
-R <- 4
+r <- 4
 n <- 10
 c(
-  numerical  = (f_single(a+d/2,R,n,log=TRUE)-f_single(a-d/2,R,n,log=TRUE))/d,
-  analytical = fdash(a,R,n)
+  numerical  = (f_single(a+d/2, r, n) - f_single(a-d/2, r, n))/d,
+  analytical = fdash(a,r,n)
 )
 
-c(
-  numerical  = (f_single(a+d/2,R,n,log=FALSE)-f_single(a-d/2,R,n,log=FALSE))/d,
-  analytical = fdash(a,R,n,log=FALSE)
-)
 ```
 
 Now use the derivative to find the maximum likelihood point
 
 ```{r,label=defmle}
-MLE <- function(R,n,give=FALSE){
+MLE <- function(r,n,give=FALSE){
 	d <- 1e-6
-	out <- optimize(f_vec_arn,c(d,1-d),R=R,n=n,log=TRUE,maximum=TRUE)
+	out <- optimize(f_vec_arn, c(d, 1-d), r=r, n=n, maximum=TRUE)
 	if(!give){out <- out$maximum}
 	return(out)
 }
 
-MLEa <- function(R,n,give=FALSE,small=1e-4){
-	out <- uniroot(f=function(a){fdash(a,R,n)},interval=c(small,1-small))
+MLEa <- function(r,n,give=FALSE,small=1e-4){
+	out <- uniroot(f=function(a){fdash(a,r,n)},interval=c(small,1-small))
 	if(!give){out <- out$root}
 	return(out)
 }
@@ -333,42 +184,18 @@ showdiff(MLE(3,7),MLEa(3,7))
 ```
 
 
-
-```{r usestirling}
-rbind(
-showdiff(MLE(10, 100), 100 / 111),
-showdiff(MLE(10, 500), 500 / 511),
-showdiff(MLE(10,1000),1000 /1011),
-showdiff(MLE(10,5000),5000 /5011)
-)
-```
-
-```{r usestirlinga}
-rbind(
-showdiff(MLEa(10, 100), 100 / 111),
-showdiff(MLEa(10, 500), 500 / 511),
-showdiff(MLEa(10,1000),1000 /1011),
-showdiff(MLEa(10,5000),5000 /5011)
-)
-
-
-```
-
-
-
-
 Now verification
 
 ```{r,label=verifytwo}
 a <- 0.23423434
 b <- 1-a
 B <- 1/b
-n <- 9
-R <- 4
+n <- 9  # 9 runners
+r <- 4  # FC came 4th
 c(
 way1 = b^3*a/((a+9*b) * (a+8*b) * (a+7*b) * (a+6*b)),
 way2 = (B-1)/prod(B+(5:8)),
-way3 = f_vec_arn(a,R,n,log=FALSE)
+way3 = f_vec_arn(a,r,n)
 )
 ```
 
@@ -377,15 +204,15 @@ way3 = f_vec_arn(a,R,n,log=FALSE)
 out <- list()
 for(n in 1:10){
   out[[n]]  <- rep(NA,n+1)
-  for(R in seq_len(n+1)){
-    if(R==1){
+  for(r in seq_len(n+1)){
+    if(r==1){
       jj <- 1
-    } else if(R == n+1){
+    } else if(r == n+1){
       jj <- 0
     } else {
-      jj <- MLE(R,n)
+      jj <- MLE(r,n)
     }
-    out[[n]][R] <- jj
+    out[[n]][r] <- jj
   }
 }
 out
@@ -393,10 +220,10 @@ out
 
 ```{r,label=plotjj}
 plotterp <- function(...){
-plot(NA,xlim=c(1,10),ylim=c(0,1),type="n",xlab="n",ylab=expression(hat(a)))
-for(n in 1:10){
-  for(R in seq_len(n+1)){   points(n,out[[n]][R],pch=16) }
-  for(R in seq_len(n+1)){   text(n+0.2,out[[n]][R],R,cex=0.5,col='gray') }
+plot(NA,xlim=c(2,10),ylim=c(0,1),type="n",xlab="n",ylab=expression(hat(a)))
+for(n in 2:10){
+  for(r in seq_len(n)){ points(n,out[[n]][r],pch=16,col='black') }
+  for(r in seq_len(n)){ text(n+0.2,out[[n]][r],r,cex=0.5,col='gray') }
 }
 }
 plotterp()
@@ -409,30 +236,30 @@ dev.off()
 # Note on the differences between probability and likelihood
 
 The likelihood calculations above can be confusing becuase likelihood
-is not the same as probability.
+is not the same as probability.  Consider, for example, $n=3$ so we
+have 3 competitors: the focal competitor of strength $a$ and two
+clones each of strength $b=1-a$.
 
-Consider, for example, $n=2$ so we have 3 competitors.
-
-probability of focal competitor coming first [i.e. $r=0$]:
+probability of focal competitor coming first [i.e. $r=1$]:
 
 \[\frac{a}{a+2b}=\frac{1-b}{1+b}\]
 
-Now what is the probability of coming second, that is, $r=1$?
+Now what is the probability of coming second, that is, $r=2$?
 
 My first thought was:
 
 \[
 \mbox{prob of coming second}   =
-\frac{b}{a+2b}\cdot\frac{a}{a+b}=\frac{b(1-b)}{1+b}\qquad\mbox{WRONG}
+\frac{b}{a+2b}\cdot\frac{a}{a+b}=\frac{b(1-b)}{1+b}\qquad{\mbox{WARNING}}
 \]
 
-but this is incorrect: there are two clones of (strength) $b$, and the
+but this is *incorrect*: there are two clones of strength $b$, and the
 likelihood arguments above do not distinguish between their finishing
 order.  We can name the competitors $a$, $b_1$ and $b_2$ and specify
-that $b_1$ and $b_2$ both have strength $b$.  Then "coming second"
-means that the finishing order was $b_1\succ a\succ b_2$ or $b_2\succ
-a\succ b_1$.  Noting that these events are disjoint, the probability
-would be
+that $b_1$ and $b_2$ both have strength $b$.  Then "the focal
+competitor came second" means that the finishing order was $b_1\succ
+a\succ b_2$ or $b_2\succ a\succ b_1$.  Noting that these events are
+disjoint, the probability would be
 
 \[\mbox{prob of coming second}   =
 \operatorname{P}(b_1\succ a\succ b_2)      +
@@ -441,9 +268,9 @@ would be
 \frac{b}{a+2b}\cdot\frac{a}{a+b} = \frac{2(1-b)}{1+b}
 \]
 
-Similarly for the focal competitor coming last we need to sum the
-probabilities of finishing orders $b_1\succ b_2\succ a$ and $b_2\succ
-b_1\succ a$:
+[see the factor of two difference].  Similarly for the focal
+competitor coming last we need to sum the probabilities of finishing
+orders $b_1\succ b_2\succ a$ and $b_2\succ b_1\succ a$:
 
 \[\mbox{prob of coming third}=
 \operatorname{P}(b_1\succ b_2\succ a) +
@@ -473,7 +300,8 @@ Now we see that the probabilities sum to
 \]
 
 
-Now try $r=3$ [i.e. 4 competitors].  Taking things one step at a time:
+Now try $n=4$ [i.e. 4 competitors: the FC and three clones].  Taking
+things one step at a time:
 
 \[
 \mbox{prob of coming first} =
@@ -503,8 +331,8 @@ Now try $r=3$ [i.e. 4 competitors].  Taking things one step at a time:
 The sum would be $[(1+b)(1-b) + 3b(1-b) + 6b^2(1-b) +
 6b^3]/[(1+b)(1+2b)]=1$.
 
-Now consider the general case.  Again, $n$ clones of strength $b$ and
-one of strength $a=1-b$, $n+1$ competitors.
+Now consider the general case.  This time we consider $n$ clones of
+strength $b$ and one of strength $a=1-b$, $n+1$ competitors.
 
 \[
 \mbox{prob of coming first} =
@@ -529,13 +357,13 @@ n!\cdot\frac{b}{a+nb}\cdot\frac{a}{a+(n-1)b}\cdot\frac{b}{(n-1)b}\cdot\frac{b}{(
 =\frac{n!}{(n-2)!}\cdot X
 \]
 
-Now consider the case where there are $r$ clones coming ahead of the
+Now consider the case where there are $p$ clones coming ahead of the
 focal competitor:
 
 
 \[
 \mbox{prob of having $r$ clones ahead}
-=\frac{n!}{(n-r)!}\cdot X
+=\frac{n!}{(n-p)!}\cdot X
 \]
 
 
@@ -548,28 +376,28 @@ Now some likelihood visuals.  Suppose $r=4,n=8$:
 ```{r,label=likevis,cache=F}
 plotter <- function(...){
 a <- seq(from=0,to=1,by=0.01)
-n <- 8
-jj <- f_vec_arn(a,3,n,log=FALSE)
+n <- 9 # the FC and 8 clones
+jj <- exp(f_vec_arn(a,3,n))
 plot(a,jj/max(jj,na.rm=TRUE),type='n',xlab=expression(a),ylab="likelihood")
 grid()
-rain <- rainbow(n+1)
-for(R in seq_len(n+1)){
-  y <- f_vec_a(a,R,n,log=FALSE)
-  if(R==1){y[length(y)] <- 1}
+rain <- rainbow(n)
+for(r in seq_len(n)){
+  y <- exp(f_vec_a(a,r,n))
+  if(r==1){y[length(y)] <- 1}
   y <- y/max(y,na.rm=TRUE)
-  if(R>1){y[length(y)] <- 0}
-  points(a,y,type='l',lwd=4,col=rain[R])
+  if(r>1){y[length(y)] <- 0}
+  points(a,y,type='l',lwd=4,col=rain[r])
 }
-abline(v=MLE(R=5,n=8))
-text(0.07,0.95,"R=9",col=rain[9])
-text(0.20,0.95,"R=8",col=rain[8])
-text(0.26,0.91,"R=7",col=rain[7])
-text(0.29,0.83,"R=6",col=rain[6])
-text(0.33,0.76,"R=5",col=rain[5])
-text(0.35,0.64,"R=4",col=rain[4])
-text(0.39,0.53,"R=3",col=rain[3])
-text(0.45,0.41,"R=2",col=rain[2])
-text(0.54,0.21,"R=1",col=rain[1])
+abline(v=MLE(r=5,n=8))
+text(0.09,0.95,"r=9",col=rain[9])
+text(0.18,0.93,"r=8",col=rain[8])
+text(0.25,0.90,"r=7",col=rain[7])
+text(0.29,0.83,"r=6",col=rain[6])
+text(0.33,0.76,"r=5",col=rain[5])
+text(0.35,0.65,"r=4",col=rain[4])
+text(0.39,0.54,"r=3",col=rain[3])
+text(0.45,0.41,"r=2",col=rain[2])
+text(0.59,0.21,"r=1",col=rain[1])
 }
 
 plotter()
@@ -580,7 +408,7 @@ dev.off()
 
 
 ```{r shown4n8mle}
-MLE(R=5,n=8)
+MLE(r=5,n=8)
 ```
 
 
@@ -633,14 +461,14 @@ bothmax <- MLE(both,22)
 
 d_ocon_max  <- MLE(d_ocon ,22)
 d_gasly_max <- MLE(d_gasly,22)
-f_vec_arn(bothmax,d_ocon ,22,log=TRUE)
-f_vec_arn(bothmax,d_gasly,22,log=TRUE)
-f_vec_arn(d_ocon_max ,d_ocon ,22,log=TRUE)
-f_vec_arn(d_gasly_max,d_gasly,22,log=TRUE)
+f_vec_arn(bothmax,d_ocon ,22)
+f_vec_arn(bothmax,d_gasly,22)
+f_vec_arn(d_ocon_max ,d_ocon ,22)
+f_vec_arn(d_gasly_max,d_gasly,22)
 
 Lambda <- (
-   (f_vec_arn(d_gasly_max  ,d_ocon,22,log=TRUE)+f_vec_arn(d_gasly_max  ,d_gasly,22,log=TRUE)) -
-   (f_vec_arn(bothmax      ,d_ocon,22,log=TRUE)+f_vec_arn(bothmax      ,d_gasly,22,log=TRUE))
+   (f_vec_arn(d_gasly_max  ,d_ocon,22)+f_vec_arn(d_gasly_max  ,d_gasly,22)) -
+   (f_vec_arn(bothmax      ,d_ocon,22)+f_vec_arn(bothmax      ,d_gasly,22))
 )
 Lambda
 pchisq(-2*Lambda,df=1,lower.tail=FALSE)
@@ -670,7 +498,7 @@ summary(lm(y~x))
 ```{r checofirst}
 checo_like <- function(a){
   out <- a*0
-  for(year in 2011:2023){ out <- out + f_vec_arn(a,getfoc(year),getnum(year)-1,log=TRUE) }
+  for(year in 2011:2023){ out <- out + f_vec_arn(a,getfoc(year),getnum(year)) }
   return(out)
 }
 
@@ -690,7 +518,7 @@ f1_logistic <- function(vec){
   for(year in 2011:2023){
      LO <- alpha + beta*(year-2011)
      strength <- exp(LO)/(1+exp(LO))
-     out <- out + f_vec_arn(strength,getfoc(year),getnum(year)-1,log=TRUE)
+     out <- out + f_vec_arn(strength,getfoc(year),getnum(year))
   }
   return(out)
 }
@@ -856,8 +684,8 @@ sametest <- function(d1,d2,n){
   d1max <- MLE(d1,n)
   d2max <- MLE(d2,n)
   Lambda <- (
-  (f_vec_arn(d2max  ,d1,n,log=TRUE)+f_vec_arn(d2max  ,d2,n,log=TRUE)) -
-  (f_vec_arn(bothmax,d1,n,log=TRUE)+f_vec_arn(bothmax,d2,n,log=TRUE))
+  (f_vec_arn(d2max  ,d1,n) + f_vec_arn(d2max  ,d2,n)) -
+  (f_vec_arn(bothmax,d1,n) + f_vec_arn(bothmax,d2,n))
 )
   pchisq(-2*Lambda,df=1,lower.tail=FALSE)
 }
@@ -884,7 +712,7 @@ head(O)
 ```
 
 ```{r analyze_athletics_olymp,cache=TRUE}
-jjf <- function(x){f_vec_arn(x,O$rank,O$n-1,log=TRUE)}
+jjf <- function(x){f_vec_arn(x,O$rank,O$n)}
 system.time(optolym <- optimize(jjf, c(0.45,0.65), maximum=TRUE))
 ```
 
@@ -898,7 +726,7 @@ pchisq(LR,df=1,lower.tail=FALSE)
 
 ```{r make_athletic_like}
 a <- seq(from=0.35,to=0.65,len=45)
-L <- f_vec_arn(a,O$rank,O$n-1,log=TRUE)
+L <- f_vec_arn(a,O$rank,O$n)
 Lmax <- jjf(optolym$maximum)
 Lmax
 L <- L-Lmax
@@ -980,9 +808,9 @@ of running faster than a randomly chosen Parkrun competitor] is about
 some support for Hankin's assertion that he is "as fit as anyone
 else there".
 
-```{r calculatelikes1,cache=F}
+```{r calculatelikes1, cache=F}
 a <- seq(from=0.005,to=0.85,by=0.01)
-La <- f_vec_arn(a,R=results$place[1],results$runners[1]-1,log=TRUE)
+La <- f_vec_arn(a,r=results$place[1],results$runners[1])
 La <- La - max(La,na.rm=TRUE)
 plot(a,La,type='b',ylab='fishy')
 abline(h=c(0,-2))
@@ -994,10 +822,10 @@ supp2 <- function(vec,place,runners){
   a_auckland <- vec[2]
   out <- 0
   for(i in 1:3){
-    out <- out + f_vec_a(a_stirling,R=place[i],runners[i]-1,log=TRUE)
+    out <- out + f_vec_a(a_stirling,r=place[i],runners[i])
   }
   for(i in 4:10){
-    out <- out + f_vec_a(a_auckland,R=place[i],runners[i]-1,log=TRUE)
+    out <- out + f_vec_a(a_auckland,r=place[i],runners[i])
   }
   return(out)
 }
@@ -1088,7 +916,7 @@ supp_logistic <- function(vec){
   for(i in seq_len(nrow(results))){
      LO <- alpha + beta*i
      strength <- exp(LO)/(1+exp(LO))
-     out <- out + f_vec_arn(strength,results$place[i]-1,results$runners[i]-1,log=TRUE)
+     out <- out + f_vec_arn(strength,results$place[i],results$runners[i])
   }
   return(out+13400)
 }
@@ -1136,11 +964,11 @@ wa <- category=='applied'
 Pure first
 
 ```{r dopurefurst}
-Lpure <- f_vec_arn(a,rank[wp]-1,class_size[wp]-1,log=TRUE)
+Lpure <- f_vec_arn(a,rank[wp],class_size[wp])
 Lpure <- Lpure - max(Lpure,na.rm=TRUE)
 plot(a,Lpure,ylab='pure strength')
-optimize(function(a){f_vec_arn(a,rank[wp],class_size[wp]-1,log=TRUE)},c(0.3,0.6),maximum=TRUE)
-optimize(function(a){f_vec_arn(a,rank[wa],class_size[wa]-1,log=TRUE)},c(0.3,0.6),maximum=TRUE)
+optimize(function(a){f_vec_arn(a,rank[wp],class_size[wp])},c(0.3,0.6),maximum=TRUE)
+optimize(function(a){f_vec_arn(a,rank[wa],class_size[wa])},c(0.3,0.6),maximum=TRUE)
 ```
 
 
@@ -1150,10 +978,10 @@ supp2_ed <- function(vec,place1,place2,runners1,runners2){
   M1 <- cbind(place1,runners1)
   M2 <- cbind(place2,runners2)
   for(i in seq_len(nrow(M1))){
-    out <- out + f_vec_arn(vec[1],R=M1[i,1],n=M1[i,2]-1,log=TRUE)
+    out <- out + f_vec_arn(vec[1],r=M1[i,1],n=M1[i,2])
   }
   for(i in seq_len(nrow(M2))){
-    out <- out + f_vec_arn(vec[2],R=M2[i,1],n=M2[i,2]-1,log=TRUE)
+    out <- out + f_vec_arn(vec[2],r=M2[i,1],n=M2[i,2])
   }
   return(out)
 }
