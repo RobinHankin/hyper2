@@ -163,15 +163,15 @@ would be unique; we have $\hat{B}=1-\log(1-r/n)^{-1}$, or
 alternatively $\hat{a}=(1-\log(1-r/n))^{-1}$.  Compare this with the
 result of asking ``what is the probability that the focal competitor
 beats a randomly chosen opponent?'' to which the binomial maximum
-likelihood estimate is $\frac{n-r}{n}$.  For repeated independent
+likelihood estimate is $\frac{r-1}{n-r}$.  For repeated independent
 observations $r_i,n_i$, $1\leqslant i\leqslant N$ we would have
 
 \begin{equation}
-  \hat{a} =   \frac{N}{N+\sum\log(1-r_i/n_i)};
+  \hat{a} =   \frac{1}{1-\sum\log(1-r_i/n_i)/N};
 \end{equation}
 
-compare the binomial result of $1-\left.\sum r_i\right/\sum n_i$.
-Below, I present three examples that showcase likelihood
+compare the binomial result of $\sum(r_i-1)/\sum n_i$.  Below, I
+present three examples that showcase likelihood
 function~\ref{likeforrn3}, drawn from the fields of athletics,
 education, and Formula~1 motor racing.
 
@@ -183,85 +183,100 @@ education, and Formula~1 motor racing.
 \end{centering}
 \end{figure}
 
-\subsection{Olympic track and field athletics}
-
-One long-standing contention in the athletic world is that of lane
-bias~\citep{munro2022}.  Running in the inner lane is frequently held
-to be a disadvantage; mechanisms include biomechanical issues arising
-from centrifugal acceleration, to competitors' inability to see their
-rivals.  Here attention is restricted to heats, for which lane placing
-is random.  I consider every heat in Men's 100m Olympic running from
-2004--2020 (a total of 41 heats, each of 8 or 9 competitors); only
-competitors' ranks are used.  Figure~\ref{plotolymp} shows a
-log-likelihood curve for the Bradley--Terry strength of the focal
-competitor, here the runner in the innermost lane.  We see that the
-evaluate of $0.474$ is very close to the neutral value of $0.5$, for
-which the support is only $0.16$, far short of the standard two units
-of support criterion for rejection~\citep{edwards1972}.  This dataset
-contains no evidence to support lane bias.
-
-\begin{figure}[t]
-  \begin{centering}
-\includegraphics[width=4in]{plotolymp} % produced by very_simplified_likelihood.Rmd
-\caption{Log-likelihood curve for the Bradley--Terry strength of the
-  lane-1 runner, Olympic qualifying heats 2012-2020 \label{plotolymp}}
-\end{centering}
-\end{figure}
+% \subsection{Olympic track and field athletics}
+% 
+% One long-standing contention in the athletic world is that of lane
+% bias~\citep{munro2022}.  Running in the inner lane is frequently held
+% to be a disadvantage; mechanisms include biomechanical issues arising
+% from centrifugal acceleration, to competitors' inability to see their
+% rivals.  Here attention is restricted to heats, for which lane placing
+% is random.  I consider every heat in Men's 100m Olympic running from
+% 2004--2020 (a total of 41 heats, each of 8 or 9 competitors); only
+% competitors' ranks are used.  Figure~\ref{plotolymp} shows a
+% log-likelihood curve for the Bradley--Terry strength of the focal
+% competitor, here the runner in the innermost lane.  We see that the
+% evaluate of $0.511$ is very close to the neutral value of $0.5$, for
+% which the support is only $0.029$, far short of the standard two units
+% of support criterion for rejection~\citep{edwards1972}.  This dataset
+% contains no evidence to support lane bias.
+% 
+% \begin{figure}[t]
+%   \begin{centering}
+% \includegraphics[width=4in]{plotolymp} % produced by very_simplified_likelihood.Rmd
+% \caption{Log-likelihood curve for the Bradley--Terry strength of the
+%   lane-1 runner, Olympic qualifying heats 2012-2020 \label{plotolymp}}
+% \end{centering}
+% \end{figure}
 
 \subsection{Park run}
-
 
 ``Parkrun'' is a distributed community initiative that organises
 weekly timed 5 km runs/walks in parks worldwide~\citep{hindley2020}.
 A typical event will have 200 participants.  Table~\ref{parkruntable}
 shows the author has completed a total of 21 parkruns to date,
-comprising 9 runs in Auckland and 12 at Stirling.  From the first pair
-of numbers we see that 259 runners attended that particular parkrun at
-Auckland, of whom the author placed 177.
+comprising 9 runs in 2023 and 12 in 2024.  From the first pair of
+numbers we see that 259 runners attended that particular parkrun in
+2023, of whom the author placed 177.
 
 \begin{table}[t]
   \centering
   \caption{Parkrun results}
 \label{parkruntable}
 \begin{tabular}{cccccccccc}\\
- & \multicolumn{9}{c}{Auckland}\\
+ & \multicolumn{9}{c}{2023}\\
 rank   & 177& 222& 206& 142& 118& 224& 128& 115& 183\\
 runners& 259& 305& 297& 241& 179& 338& 203& 245& 254\\ \\
 \end{tabular}
 \begin{tabular}{ccccccccccccc}
-  & \multicolumn{12}{c}{Stirling}\\
+  & \multicolumn{12}{c}{2024}\\
 rank   &  193& 240& 197& 257& 227& 234& 238& 238& 196& 242& 242& 318\\
 runners&  145& 157& 156& 191& 172& 174& 173& 165& 172& 199& 181& 229\\
 \end{tabular}
 \end{table}
 
 Is there evidence that the author's performance differs between
-Auckland and Stirling?  Figure~\ref{parkruncontour} shows contours of
+years?  Figure~\ref{parkruncontour} shows contours of
 support [again normalised so the support of the evaluate is zero] for
-the parkrun dataset, as a function of Auckland strength on the
-horizontal axis and Stirling strength on the vertical axis.  A null of
+the parkrun dataset, as a function of 2023 strength on the
+horizontal axis and 2024 strength on the vertical axis.  A null of
 equal strengths appears as the diagonal line.  We see that the maximum
-likelihood estimate is $\hat{p}_\mathrm{Auck}=0.427$,
-$\hat{p}_\mathrm{Stir}=0.408$.  However, a constrained optimization
+likelihood estimate is $\hat{p}_\mathrm{2023}=0.427$,
+$\hat{p}_\mathrm{2024}=0.408$.  However, a constrained optimization
 shows that the maximum support along the null diagonal is about
-$-2.43$, at ${p}_\mathrm{Auck}={p}_\mathrm{Stir}\simeq 0.409$.  The
+$-2.43$, at ${p}_\mathrm{2023}={p}_\mathrm{2024}\simeq 0.409$.  The
 two units of support criterion~\citep{edwards1972} is met, and we are
 justified in concluding that the student is indeed more competent at
 applied than pure mathematics.  Alternatively, we may observe that
 $2\mathcal{S}=4.86$ is in the tail region of its asymptotic $\chi^2_1$
 distribution, corresponding to a $p$-value of about $0.028$.
 
+Now consider table~\ref{fisherparkrun}, giving a summary of whether
+nonfocal ocmpetitors place ahead of the author, split by venue.  A
+two-sided Fisher test gives a $p$-value of about $5\times 10^{-14}$,
+surely an unreasonable conclusion given the author's perceived
+performance stagnation.
 
 
 \begin{figure}[t]
   \begin{centering}
 \includegraphics[width=4in]{parkruncontour} % produced by very_simplified_likelihood.Rmd
 \caption{Support contours for Bradley-Terry strength
-  at \label{parkruncontour} Auckland and Stirling.  Null of equal
-  strengths shown as a diagonal line}
+  for \label{parkruncontour} 2023 and 2024.  Null of equal strengths
+  shown as a diagonal line}
 \end{centering}
 \end{figure}
 
+
+
+\begin{table}[h]
+    \begin{tabular}{ l c r }
+       & \multicolumn{2}{c}{Faster?}\\
+       & yes  & no  \\
+  2023 & 1506 & 806 \\
+  2024 & 2102 & 708
+    \end{tabular}
+    \caption{Two-way contingency\label{fisherparkrun} table}
+\end{table}
 
 \subsection{Education}
 
@@ -285,7 +300,7 @@ dataset: what could a student infer from such data?
          linear algebra  & applied   & 3  &       9\\
  differential equations  & applied   & 2  &      13\\
                topology  &   pure    & 8  &      14\\
-     special relativity  & applied   & 5  &      13\\
+     special relativity  & applied   & 3  &      13\\
         fluid mechanics  & applied   & 4  &      12\\
             Lie algebra  &   pure    & 9  &      15\\
      \hline
@@ -299,15 +314,15 @@ Figure~\ref{plotpureandapplied} shows contours of support [again
 as a function of pure strength on the horizontal axis and applied
 strength on the vertical axis.  A null of equal strengths appears as
 the diagonal line.  We see that the maximum likelihood estimate is
-$\hat{p}_\mathrm{pure}=0.567$, $\hat{p}_\mathrm{applied}=0.887$.
+$\hat{p}_\mathrm{pure}=0.542$, $\hat{p}_\mathrm{applied}=0.852$.
 However, a constrained optimization shows that the maximum support
-along the null diagonal is about $-2.43$, at
-${p}_\mathrm{pure}={p}_\mathrm{applied}\simeq 0.713$.  The two units of
+along the null diagonal is about $-2.06$, at
+${p}_\mathrm{pure}={p}_\mathrm{applied}\simeq 0.683$.  The two units of
 support criterion~\citep{edwards1972} is met, and we are justified in
 concluding that the student is indeed more competent at applied than
 pure mathematics.  Alternatively, we may observe that
-$2\mathcal{S}=4.86$ is in the tail region of its asymptotic $\chi^2_1$
-distribution, corresponding to a $p$-value of about $0.028$.
+$2\mathcal{S}=4.11$ is in the tail region of its asymptotic $\chi^2_1$
+distribution, corresponding to a $p$-value of about $0.042$.
 
 \begin{figure}
 \begin{centering}

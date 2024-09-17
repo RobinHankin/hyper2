@@ -902,8 +902,6 @@ Now let's try a
 logistic-style regression:
 
 
-
-
 ```{r logisticsupportparkrun,cache=FALSE}
 results <- read.table("parkrun_results.txt",header=TRUE)
 results
@@ -936,16 +934,13 @@ optim(par=c(0,0),fn=function(v){supp_logistic(vec=c(v[1],0))},control=list(fnsca
 
 
 
-
-
-
 ## Education
 
 The focal competitor
 
 ```{r focaleducation}
-rank <- c( 9, 7, 2, 3,2 ,8 ,5 ,4 ,9 )
-class_size <- c(12, 17,23, 9,13,14,13,12,15)
+rank       <- c( 9,  7,  2, 3,  2,  8,  3,  4,  9)
+class_size <- c(12, 17, 23, 9, 13, 14, 13, 12, 15)
 course <- c("rings and modules","group theory","calculus","linear algebra",
 "differential equations","topology","special relativity","fluid mechanics","Lie algebra")
 category <- c("pure","pure","applied","applied","applied","pure","applied","applied","pure")
@@ -970,16 +965,14 @@ M
 fisher.test(M)
 ```
 
-
-
 Pure first
 
 ```{r dopurefurst}
 Lpure <- f_vec_arn(a,rank[wp],class_size[wp])
 Lpure <- Lpure - max(Lpure,na.rm=TRUE)
 plot(a,Lpure,ylab='pure strength')
-optimize(function(a){f_vec_arn(a,rank[wp],class_size[wp])},c(0.3,0.6),maximum=TRUE)
-optimize(function(a){f_vec_arn(a,rank[wa],class_size[wa])},c(0.3,0.6),maximum=TRUE)
+optimize(function(a){f_vec_arn(a,rank[wp],class_size[wp])},c(0.3,0.9),maximum=TRUE)
+optimize(function(a){f_vec_arn(a,rank[wa],class_size[wa])},c(0.3,0.9),maximum=TRUE)
 ```
 
 
@@ -1001,7 +994,7 @@ supp2_ed <- function(vec,place1,place2,runners1,runners2){
 ```{r,label=fishbish,cache=TRUE}
 x <- seq(from=0.1,to=0.99,by=0.01)
 jj <- as.matrix(expand.grid(x,x))
-L <- apply(jj,1,supp2_ed,rank[wp]-1,rank[wa]-1,class_size[wp]-1,class_size[wa]-1)
+L <- apply(jj,1,supp2_ed,rank[wp],rank[wa],class_size[wp],class_size[wa])
 L <- L - max(L,na.rm=TRUE)
 L <- matrix(L,length(x),length(x))
 ```
@@ -1024,7 +1017,7 @@ jj1 <-
 optim(
    c(.4,.8),
    function(vec){
-      supp2_ed(vec,rank[wp],rank[wa],class_size[wp]-1,class_size[wa]-1)},
+      supp2_ed(vec,rank[wp],rank[wa],class_size[wp],class_size[wa])},
    control=list(fnscale = -1)
 )
 jj1
@@ -1032,12 +1025,15 @@ jj1
 
 ```{r,label=findmaxlike}
 jj2 <-
-optimize(function(v){supp2_ed(c(v,v),rank[wp]-1,rank[wa]-1,class_size[wp]-1,class_size[wa]-1)},
+optimize(function(v){supp2_ed(c(v,v),rank[wp],rank[wa],class_size[wp],class_size[wa])},
 c(0.1,0.9),maximum=TRUE)
 jj2
 ```
 
 ```{r,label=shochisw}
+jj1$value
+jj2$objective
+jj1$value-jj2$objective
 pchisq(2*(jj1$value-jj2$objective),lower.tail=FALSE,df=1)
 ```
 
