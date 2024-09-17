@@ -631,7 +631,7 @@ likeinsilico <- function(vec,M){
     x <- M[i,1]
     LO <- alpha + beta * x
     p <- exp(LO)/(1+exp(LO))
-    S <- S + f_vec_arn(p,R=M[i,2],n=M[i,3]-1,log=TRUE)
+    S <- S + f_vec_arn(p,r=M[i,2],n=M[i,3]-1)
   }
 return(S)
 }
@@ -666,11 +666,8 @@ points(alpha_true,beta_true,pch=16,cex=4)
 jj <- optim_ab$par
 points(jj[1],jj[2],pch=4,cex=4,col='red')
 grid()
-persp(a,b,Z)
+#persp(a,b,Z)
 ```
-
-
-
 
 
 # Mathematical Olympiad
@@ -743,14 +740,14 @@ plot(a,L,type='l',ylab="log-likelihood",lwd=2)
 abline(h=c(0,-2))
 ahat <- optolym$maximum
 segments(x0=ahat,y0=-1.5,y1=0)
-text(ahat,-0.91,expression(hat(a)==0.573),pos=2)
+text(ahat,-0.91,expression(hat(a)==0.511),pos=2)
 abline(v=0.5,lty=3)
 
 segments(x0=a_lower,y0=-1.5,y1=-3.5)
 segments(x0=a_upper,y0=-1.5,y1=-3.5)
 grid()
-text(x=a_lower,y=-3,"0.380",pos=4)
-text(x=a_upper,y=-3,"0.563",pos=2)
+text(x=a_lower,y=-3,"0.414",pos=4)
+text(x=a_upper,y=-3,"0.602",pos=2)
 }
 plotolymp()
 pdf(file="plotolymp.pdf")
@@ -758,6 +755,7 @@ plotolymp()
 dev.off()
 ```
    
+
 # Parkrun
 
 ```{r readresults}
@@ -769,9 +767,8 @@ Above we see some parkrun results.  In parkrun number 148, I placed
 229 out of a field of 318.
 
 ```{r calculate_parksupp,cache=TRUE}
-S_parkrun <- function(a){f_vec_arn(a,R=results$place,results$runners-1,log=TRUE)}
+S_parkrun <- function(a){f_vec_arn(a, r=results$place, results$runners)}
 (optparkrun <- optimize(S_parkrun, c(0.2,0.8),maximum=TRUE))
-
 ```
 
 ```{r calcparka,cache=TRUE}
@@ -821,10 +818,10 @@ supp2 <- function(vec,place,runners){
   a_stirling <- vec[1]
   a_auckland <- vec[2]
   out <- 0
-  for(i in 1:3){
+  for(i in 1:12){
     out <- out + f_vec_a(a_stirling,r=place[i],runners[i])
   }
-  for(i in 4:10){
+  for(i in 13:21){
     out <- out + f_vec_a(a_auckland,r=place[i],runners[i])
   }
   return(out)
@@ -843,7 +840,7 @@ L <- matrix(L,length(x),length(x))
 ```{r,label=plotbothlikes}
 parkrun_contour <- function(...){
     par(pty='s')
-    contour(x,x,L,asp=1,xlim=range(x),ylim=range(x),levels=-(0:5),xlab="Auckland",ylab="Stirling")
+    contour(x,x,L,asp=1,xlim=range(x),ylim=range(x),levels=-(0:5),xlab="2023",ylab="2024")
     abline(0,1)
 }
 parkrun_contour()
@@ -895,6 +892,7 @@ dimnames(M) <- list(venue=c("Auckland","Stirling"),better=c(T,F))
 M
 fisher.test(M)
 ```
+
     
     
 
@@ -950,7 +948,7 @@ rank <- c( 9, 7, 2, 3,2 ,8 ,5 ,4 ,9 )
 class_size <- c(12, 17,23, 9,13,14,13,12,15)
 course <- c("rings and modules","group theory","calculus","linear algebra",
 "differential equations","topology","special relativity","fluid mechanics","Lie algebra")
-category=c("pure","pure","applied","applied","applied","pure","applied","applied","pure")
+category <- c("pure","pure","applied","applied","applied","pure","applied","applied","pure")
 data.frame(course,category,rank,class_size)
 ```
 
@@ -960,6 +958,19 @@ a <- seq(from=0.2,by=0.01,to=0.8)
 wp <- category=='pure'
 wa <- category=='applied'
 ```
+
+```{r dofishereducation}
+pure_betterthanme    <- sum(rank[wp]-1)
+pure_worsethanme     <- sum(class_size[wp] - rank[wp])
+applied_betterthanme <- sum(rank[wa]-1)
+applied_worsethanme  <-  sum(class_size[wa] - rank[wa])
+M <- matrix(c(pure_betterthanme,pure_worsethanme,applied_betterthanme,applied_worsethanme),2,2,byrow=TRUE)
+dimnames(M) <- list(type=c("pure","applied"),beatsme=c(T,F))
+M
+fisher.test(M)
+```
+
+
 
 Pure first
 
