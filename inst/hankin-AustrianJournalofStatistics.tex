@@ -123,14 +123,15 @@ this situation would be
 \noindent where $B=1/b$.  Note carefully that these expressions are
 likelihoods, not probabilities, and do not sum to 1.  Previous related
 work \citep{hankin2024_hyper3} presented the case $n=3$ [in current
-  notation].  Considering the case $n=8$ gives us $8+1=9$ distinct
-likelihood functions, Figure~\ref{ninelikes}.  We see an unanticipated
-asymmetry between $r$ and $n-r$.  For $r=5$ one might expect that
-$\hat{a}=\frac{1}{2}$ on the grounds that the focal competitor's
-performance was median.  However, $\hat{a}\simeq 0.5886$.
-Figure~\ref{dotprobs} shows the maximum likelihood estimator $\hat{a}$
-for various values of $n,r$, obtained by direct numerical maximization
-of equation~\ref{likeforrn3}.
+  notation] but here arbitrary $n$ may be considered.  Taking the case
+$n=8$, for example, gives us $8+1=9$ distinct likelihood functions,
+Figure~\ref{ninelikes}.  We see an unanticipated asymmetry between $r$
+and $n-r$.  For $r=5$ one might expect that $\hat{a}=\frac{1}{2}$ on
+the grounds that the focal competitor's performance was median.
+However, $\hat{a}\simeq 0.5886$.  Figure~\ref{dotprobs} shows the
+maximum likelihood estimator $\hat{a}$ for various values of $n,r$,
+obtained by direct numerical maximization of
+equation~\ref{likeforrn3}.
 
 \begin{figure}[t]
   \begin{centering}
@@ -234,28 +235,23 @@ runners&  145& 157& 156& 191& 172& 174& 173& 165& 172& 199& 181& 229\\
 \end{tabular}
 \end{table}
 
-Is there evidence that the author's performance differs between
-years?  Figure~\ref{parkruncontour} shows contours of
-support [again normalised so the support of the evaluate is zero] for
-the parkrun dataset, as a function of 2023 strength on the
-horizontal axis and 2024 strength on the vertical axis.  A null of
-equal strengths appears as the diagonal line.  We see that the maximum
-likelihood estimate is $\hat{p}_\mathrm{2023}=0.427$,
-$\hat{p}_\mathrm{2024}=0.408$.  However, a constrained optimization
-shows that the maximum support along the null diagonal is about
-$-2.43$, at ${p}_\mathrm{2023}={p}_\mathrm{2024}\simeq 0.409$.  The
-two units of support criterion~\citep{edwards1972} is met, and we are
-justified in concluding that the student is indeed more competent at
-applied than pure mathematics.  Alternatively, we may observe that
-$2\mathcal{S}=4.86$ is in the tail region of its asymptotic $\chi^2_1$
-distribution, corresponding to a $p$-value of about $0.028$.
-
-Now consider table~\ref{fisherparkrun}, giving a summary of whether
-nonfocal competitors place ahead of the author, split by year.  A
-two-sided Fisher test gives a $p$-value of about $5\times 10^{-14}$,
+Is there evidence that the author's performance differs between years?
+Figure~\ref{parkruncontour} shows contours of support [again
+  normalised so the support of the evaluate is zero] for the parkrun
+dataset, as a function of 2023 strength on the horizontal axis and
+2024 strength on the vertical axis.  A null of equal strengths appears
+as the diagonal line.  We see that the maximum likelihood estimate is
+$\hat{p}_\mathrm{2023}=0.413$, $\hat{p}_\mathrm{2024}=0.485$.
+However, a constrained optimization shows that the maximum support
+along the null diagonal is about $-0.22$, at
+${p}_\mathrm{2023}={p}_\mathrm{2024}\simeq 0.441$.  The two units of
+support criterion~\citep{edwards1972} is not met, and we conclude that
+there is no evidence for a change in competitive strength between the
+years.  Now consider table~\ref{fisherparkrun}, giving a summary of
+whether nonfocal competitors place ahead of the author, split by year.
+A two-sided Fisher test gives a $p$-value of about $5\times 10^{-14}$,
 surely an unreasonable conclusion given the author's perceived
 performance stagnation.
-
 
 \begin{figure}[t]
   \begin{centering}
