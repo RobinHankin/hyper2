@@ -5,7 +5,7 @@ output: html_vignette
 bibliography: hyper2.bib
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{zeropower}
+  %\VignetteIndexEntry{hyper3 creation methods}
   %\usepackage[utf8]{inputenc}
 ---
 
