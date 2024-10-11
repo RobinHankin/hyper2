@@ -371,7 +371,7 @@ focal competitor:
 ## Visuals
 
 
-Now some likelihood visuals.  Suppose $r=4,n=8$:
+Now some likelihood visuals.  Suppose $n=9$:
 
 ```{r,label=likevis,cache=F}
 plotter <- function(...){
@@ -388,7 +388,7 @@ for(r in seq_len(n)){
   if(r>1){y[length(y)] <- 0}
   points(a,y,type='l',lwd=4,col=rain[r])
 }
-abline(v=MLE(r=5,n=8))
+abline(v=MLE(r=5,n=9))
 text(0.09,0.95,"r=9",col=rain[9])
 text(0.18,0.93,"r=8",col=rain[8])
 text(0.25,0.90,"r=7",col=rain[7])
@@ -408,7 +408,7 @@ dev.off()
 
 
 ```{r shown4n8mle}
-MLE(r=5,n=8)
+MLE(r=5,n=9)
 ```
 
 
