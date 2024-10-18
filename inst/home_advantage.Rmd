@@ -1,5 +1,5 @@
 ---
-title: "Quantifying the home ground advantage with `hyper2` objects"
+title: "Quantifying the home ground advantage with `hyper2` and `hyper3` objects"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
 bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
