@@ -87,7 +87,9 @@ TernaryPoints(c(jj,1-sum(jj)), pch=16, col="red")
 
 Figures \@ref(fig:iconsmatplot) and \@ref(fig:selectjustbigones) show
 different aspects of the BT strengths of the six icons of the `icons`
-dataset.
+dataset.  Note that figure \@ref(fig:selectjustbigones) is potentially
+misleading: due to the sequential correlation of MH sampling, repeated
+observations are overplotted and thus under-represented.
 
 # Synthetic race data (`hyper3`)
 
