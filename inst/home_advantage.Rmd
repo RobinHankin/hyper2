@@ -16,7 +16,9 @@ options(warn = defaultW)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-(takes about fifteen minutes to run without cache). 
+<font size="1"> (takes about fifteen minutes to run without cache)
+</font>
+
 
 To cite the `hyper2` package in publications, please use
 @hankin2017_rmd.  Here I analyse a small synthetic dataset for home

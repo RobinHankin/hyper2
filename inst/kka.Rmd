@@ -18,12 +18,14 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017_rmd;
-this `Rmd` file takes about 45 minutes to process without cache.  Here
-we define dataset `kka` which is the observed scorelines between
-players Karpov, Kasparov, and Anand.  It is used to calculate
-likelihood functions: `karpov_kasparov_anand`, `kka_3whites` and
-`kka_3draws`.  This Rmd file supercedes files
+<font size="1"> (takes about forty five minutes to run without cache)
+</font>
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  Here we define dataset `kka` which is the observed
+scorelines between players Karpov, Kasparov, and Anand.  It is used to
+calculate likelihood functions: `karpov_kasparov_anand`, `kka_3whites`
+and `kka_3draws`.  This Rmd file supercedes files
 `inst/karpov_kasparov_anand.R` and `inst/kka_3draws.R` and
 `inst/kka_array.R`.  Some more detail is given in `man/kka.Rd`.
 

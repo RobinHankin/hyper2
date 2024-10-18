@@ -1,6 +1,8 @@
 ---
 title: "formula1"
-output: html_document
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: hyper2.bib  # copy from vignettes/
 ---
 
 ```{r setup, include=FALSE}
@@ -13,11 +15,16 @@ options("digits" = 5)
 
 ## Formula 1
 
-**This Rmd file takes about two hours to run without cache.**
 
-Formula 1 racing is an important and prestigious motor sport.  Here I
-analyse a series of racing results using the `hyper2` package which
-implements the Plackett-Luce likelihood function.
+<font size="1"> (takes about two hours to run without cache)
+</font>
+
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  Formula 1 racing is an important and prestigious
+motor sport.  Here I analyse a series of racing results using the
+`hyper2` package which implements the Plackett-Luce likelihood
+function.
 
 Consider the following dataset, taken from Wikipedia:
 

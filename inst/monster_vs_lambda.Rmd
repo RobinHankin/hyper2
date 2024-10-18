@@ -1,6 +1,5 @@
 ---
 title: "Monster or Lambda?  A likelihood analysis"
-subtitle: "Takes about an hour to run without cache"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
 bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
@@ -17,6 +16,10 @@ library("magrittr")
 ```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
+
+<font size="1"> (takes about an hour to run without cache)
+</font>
+
 
 To cite the `hyper2` package in publications, please use
 @hankin2017_rmd.  Here I consider pairwise comparisons with a

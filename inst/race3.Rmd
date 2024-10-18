@@ -16,12 +16,15 @@ library("hyper2")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-(takes about an hour to process without cache).  To cite the `hyper2`
-package in publications, please use @hankin2017_rmd.  Consider a race in
-which there are six runners 1-6 but we happen to know that three of
-the runners (1,2,3) are clones of strength $p_a$, say, two of the
-runners (4,5) have strength $p_b$, and the final runner (6) is of
-strength $p_c$.  The runners race and the finishing order is:
+<font size="1"> (takes about an hour to run without cache)
+</font>
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  Consider a race in which there are six runners 1-6
+but we happen to know that three of the runners (1,2,3) are clones of
+strength $p_a$, say, two of the runners (4,5) have strength $p_b$, and
+the final runner (6) is of strength $p_c$.  The runners race and the
+finishing order is:
 
 
 $$a\succ c\succ b\succ a\succ a \succ b$$

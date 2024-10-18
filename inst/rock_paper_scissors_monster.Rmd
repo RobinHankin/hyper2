@@ -16,13 +16,17 @@ abbreviated <- TRUE  # change to FALSE for full names
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017_rmd;
-takes about an hour to run without cache.  Here I use the `hyper2`
-package to quantify the strength of a circular rock-paper-scissors
-effect using the `hyper2` package, improving on previous results
-[@west2008] which merely established its existence.  I use two
-datasets, a three-player scoreline and a synthetic dataset referring
-to wear on a seven-tooth gear wheel.
+<font size="1"> (takes about an hour to run without cache)
+</font>
+
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  Here I use the `hyper2` package to quantify the
+strength of a circular rock-paper-scissors effect using the `hyper2`
+package, improving on previous results [@west2008] which merely
+established its existence.  I use two datasets, a three-player
+scoreline and a synthetic dataset referring to wear on a seven-tooth
+gear wheel.
 
 ## Rock Paper Scissors
 

@@ -18,14 +18,15 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017_rmd; 
-takes maybe twenty minutes to run without cache.  The value of
-`carcinoma_maxp` is calculated separately [discussed below], and that
-takes a few days to run.
+<font size="1"> (takes about fifteen minutes to run without cache; the
+value of `carcinoma_maxp` is calculated separately [discussed below],
+and that takes a few days to run.  </font>
 
-This is a short analysis of the carcinoma dataset presented by
-Agresti, table 13.1, p542.  Seven pathologists classified each of 118
-slides on the presence or absence of carcinoma in the uterine cervix.
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  This is a short analysis of the carcinoma dataset
+presented by Agresti, table 13.1, p542.  Seven pathologists classified
+each of 118 slides on the presence or absence of carcinoma in the
+uterine cervix.
 
 Here, the object of inference is the set of pathologists.  The
 probability model is as follows.  To each pathologist $i,1\leq i \leq

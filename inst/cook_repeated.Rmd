@@ -15,12 +15,15 @@ library("hyper2")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017_rmd;
-takes about five minutes without cache.  Suppose there are five people
-in a family.  Each day for five days, one person cooks a meal.  After
-the fifth day, each person considers the four meals cooked by other
-family members, and puts them in order of preference.  This process is
-repeated and here I consider how to interpret such data.
+<font size="1"> (takes about five minutes to run without cache)
+</font>
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  Suppose there are five people in a family.  Each day
+for five days, one person cooks a meal.  After the fifth day, each
+person considers the four meals cooked by other family members, and
+puts them in order of preference.  This process is repeated and here I
+consider how to interpret such data.
 
 ```{r loadlib,echo=FALSE}
 library(hyper2,quietly=TRUE)

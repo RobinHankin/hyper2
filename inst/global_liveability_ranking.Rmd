@@ -18,12 +18,15 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017_rmd;
-takes about an hour to process without cache.
+<font size="1"> (takes about an hour to run without cache)
+</font>
 
-_This analysis is essentially without value, see the very end for why_
+*This analysis is essentially without value, see the
+very end for why*
 
-[The global liveability
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  [The global liveability
 ranking](https://en.wikipedia.org/wiki/Global_Liveability_Ranking)
 shows the nicest places to live.
 
