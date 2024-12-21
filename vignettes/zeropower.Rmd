@@ -3,6 +3,7 @@ title: "The zero-sum-power issue in the `hyper2` package"
 author: "Robin K. S. Hankin"
 output: html_vignette
 bibliography: hyper2.bib
+link-citations: true
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{zeropower}

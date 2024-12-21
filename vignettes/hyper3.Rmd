@@ -2,6 +2,7 @@
 title: "Generalized Plackett-Luce Likelihoods"
 author: "Robin K. S. Hankin"
 bibliography: hyper2.bib
+link-citations: true
 output: html_vignette
 vignette: |
   %\VignetteIndexEntry{hyper3}

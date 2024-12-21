@@ -2,6 +2,7 @@
 title: "Public perception of climate change: the `icons` dataset in the `hyper2` package"
 author: "Robin K. S. Hankin"
 bibliography: hyper2.bib
+link-citations: true
 output: html_vignette
 vignette: |
   %\VignetteIndexEntry{icons}

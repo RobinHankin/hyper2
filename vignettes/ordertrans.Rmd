@@ -5,6 +5,7 @@ output:
   bookdown::html_document2:
       base_format: rmarkdown::html_vignette
 bibliography: hyper2.bib
+link-citations: true
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{ordertrans}
