@@ -55,7 +55,12 @@ change in the future.
 
 Object \code{F1_table_2017} is simply the first 20 columns of
 \code{read.table(inst/formula1_2017.txt)} and object
-\code{F1_points_2017} is column 21.  The likelihood function
+\code{F1_points_2017} is column 21.  The final column of all the text
+files is the points and it is easy to mistake this for a venue with
+results (doing so will give a \dQuote{\code{Error in ordervec2supp(o) :
+nonzero elements of d should be 1,2,3,4,...,n}} error).
+
+The likelihood function
 \code{formula1} is \code{ordertable2supp(F1_table_2017)}.  The datasets
 in the package are derived from text files in the \code{inst/} directory
 (e.g. \code{formula1_2017.txt}) by script file
