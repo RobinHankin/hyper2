@@ -119,7 +119,11 @@ fathers, being more eminent, should be the primary eponym] although this might
 change in the future.</p>
 <p>Object <code>F1_table_2017</code> is simply the first 20 columns of
 <code>read.table(inst/formula1_2017.txt)</code> and object
-<code>F1_points_2017</code> is column 21.  The likelihood function
+<code>F1_points_2017</code> is column 21.  The final column of all the text
+files is the points and it is easy to mistake this for a venue with
+results (doing so will give a “<code>Error in ordervec2supp(o) :
+nonzero elements of d should be 1,2,3,4,...,n</code>” error).</p>
+<p>The likelihood function
 <code>formula1</code> is <code>ordertable2supp(F1_table_2017)</code>.  The datasets
 in the package are derived from text files in the <code>inst/</code> directory
 (e.g. <code>formula1_2017.txt</code>) by script file
