@@ -280,6 +280,7 @@ CITATION.cff
 ^inst/three_runners_plackett_luce.Rmd$
 ^inst/very_simplified_likelihood.Rmd$
 ^inst/zermelo.Rmd$
+^inst/simplified.bib$
 ^.github$
 ^.devcontainer$
 ^_pkgdown\.yml$

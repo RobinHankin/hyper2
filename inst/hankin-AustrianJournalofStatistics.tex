@@ -19,9 +19,8 @@
 %% an abstract and keywords
 \Abstract{
 
-
-Here a simplification of the Plackett--Luce likelihood functions for
-order statistics is proposed.  We consider a field of $n$ entities
+Here a new simplification of the Plackett--Luce likelihood functions
+for order statistics is proposed.  We consider a field of $n$ entities
 that are ordered in some way [the preferred example is competitors in
   a running race, ordered by time of crossing the finishing line].
 One entity is of particular interest to us: the ``focal entity'', or
@@ -124,7 +123,7 @@ this situation would be
 likelihoods, not probabilities, and do not sum to 1.  Previous related
 work \citep{hankin2024_hyper3} presented the case $n=3$ [in current
   notation] but here arbitrary $n$ may be considered.  Taking the case
-$n=8$, for example, gives us $8+1=9$ distinct likelihood functions,
+$n=9$, for example, gives us 9 distinct likelihood functions,
 Figure~\ref{ninelikes}.  We see an unanticipated asymmetry between $r$
 and $n-r$.  For $r=5$ one might expect that $\hat{a}=\frac{1}{2}$ on
 the grounds that the focal competitor's performance was median.
@@ -136,7 +135,7 @@ equation~\ref{likeforrn3}.
 \begin{figure}[t]
   \begin{centering}
 \includegraphics[width=4in]{ninelikes}  % ninelikes.pdf produced by very_simplified_likelihood.Rmd
-\caption{Likelihood functions for $r=0(1)8$\label{ninelikes}.  Value
+\caption{Likelihood functions for $r=1,2,\ldots 9$\label{ninelikes}.  Value
   of $r$ indicated in colour by its curve; vertical line shows
   $\hat{a}\simeq 0.5886$ for the case $r=5$}
 \end{centering}
@@ -145,9 +144,12 @@ equation~\ref{likeforrn3}.
 
 \subsection{Asymptotic analysis}
 
-Analysis of expression~\ref{likeforrn3} for large $n$ and $r=pn$ for
-fixed $p$ shows that the support
-$\mathcal{S}=\log\mathcal{L}_{r,n}(a)$ is asymptotically
+Even though expression ~\ref{likeforrn3} represents a simplification
+of the Plackett-Luce likelihood function, it becomes intractable even
+for moderate values of $n$ and $r$.  Analysis of
+expression~\ref{likeforrn3} for large $n$ and $r=pn$ for fixed $p$
+shows that the support $\mathcal{S}=\log\mathcal{L}_{r,n}(a)$ is
+asymptotically
 
 \begin{equation}\label{asymptotic}
 \mathcal{S}=
@@ -245,7 +247,7 @@ $\hat{p}_\mathrm{2023}=0.413$, $\hat{p}_\mathrm{2024}=0.485$.
 However, a constrained optimization shows that the maximum support
 along the null diagonal is about $-0.22$, at
 ${p}_\mathrm{2023}={p}_\mathrm{2024}\simeq 0.441$.  The two units of
-support criterion~\citep{edwards1972} is not met, and we conclude that
+support criterion~\citep{edwards1992} is not met, and we conclude that
 there is no evidence for a change in competitive strength between the
 years.  Now consider table~\ref{fisherparkrun}, giving a summary of
 whether nonfocal competitors place ahead of the author, split by year.
@@ -314,7 +316,7 @@ $\hat{p}_\mathrm{pure}=0.542$, $\hat{p}_\mathrm{applied}=0.852$.
 However, a constrained optimization shows that the maximum support
 along the null diagonal is about $-2.06$, at
 ${p}_\mathrm{pure}={p}_\mathrm{applied}\simeq 0.683$.  The two units of
-support criterion~\citep{edwards1972} is met, and we are justified in
+support criterion~\citep{edwards1992} is met, and we are justified in
 concluding that the student is indeed more competent at applied than
 pure mathematics.  Alternatively, we may observe that
 $2\mathcal{S}=4.11$ is in the tail region of its asymptotic $\chi^2_1$
@@ -390,7 +392,7 @@ analysis of more than one focal competitor.
 
 
 %\bibliographystyle{plainat}
-\bibliography{hyper2}
+\bibliography{simplified.bib}
 
 
 
