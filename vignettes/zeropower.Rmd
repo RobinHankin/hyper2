@@ -97,17 +97,16 @@ including a check in the creation method---`hyper2()`---which would
 prevent the creation of a hyper2 object with unbalanced powers.
 However, this approach is not consistent with the package; consider
 the following situation.  Suppose we wish to incorporate a new
-observation into `chess`, specifically that Anand played Karpov twice,
-with one win each.  We might proceed as follows:
+observation into `chess`, specifically that Anand played Karpov once,
+with Anand winning.  We might proceed as follows:
 
 ```{r, newinfo}
-chess["Anand" ] %<>% inc
-chess["Karpov"] %<>% inc
-chess[c("Anand,Karpov")]  %<>% dec(2)
+chess["Anand"] %<>% inc
+chess[c("Anand, Karpov")] %<>% dec(2)
 chess
 ```
 
-However, after the increments but before the decrements, second,
+However, after the increment, but before the decrement,
 `chess` has a nonzero power sum, pending addition of another term.  At
 this point, `chess` is unbalanced; its nonzero power sum is an
 indicator that it is a temporary object.  That's OK as long as we
