@@ -423,10 +423,12 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         }
     }  # i loop closes
     if(justlikes){ return(likes) }
-    if(give){
+    if(isTRUE(give)){
         return(c(out,likes=list(likes),evaluate=list(fillup(out$par,H))))
+    } else if(isFALSE(give)){
+        return(fillup(out$par,H))
     } else {
-      return(fillup(out$par,H))
+        return(list(fillup(out$par,H),"Log-likelihood" = out$value))
     }
 }  # maxp() closes
 

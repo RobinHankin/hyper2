@@ -32,7 +32,10 @@ equalp(H)
     be removed by \code{indep()} (except for \code{maxp_lsl()})}
   \item{give}{Boolean, with default \code{FALSE} meaning to return just
     the evaluate (including fillup), and \code{TRUE} meaning to return
-    the entire formal output of the optimization routine}
+    the entire formal output of the optimization routine.  In function
+    \code{maxp()}, a non-logical value [such as \code{0}] gives only the
+    two most important pieces of information, viz the evaluate and a
+    log-likelihood}
   \item{fcm,fcv}{Further problem-specific constraints}
   \item{n}{Number of start points to use}
   \item{show}{Boolean, with \code{TRUE} meaning to show successive
