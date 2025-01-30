@@ -19,6 +19,7 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 <font size="1"> (takes about an hour to run without cache)
 </font>
 
+### Abstract {-}
 
 To cite the `hyper2` package in publications, please use
 @hankin2017_rmd.  Here I use the `hyper2` package to quantify the
@@ -28,7 +29,7 @@ established its existence.  I use two datasets, a three-player
 scoreline and a synthetic dataset referring to wear on a seven-tooth
 gear wheel.
 
-## Rock Paper Scissors
+# Introduction
 
 Consider the following dataset:
 
@@ -61,7 +62,7 @@ equalp.test(chess)
 Thus we fail to reject $H_0\colon p_T=p_A=p_K$ under T-A-K as the
 p-value is about 0.39.
 
-## RPS in chess
+# RPS in chess
 
 The existence of a rock-paper-scissors relationship between the
 players was discussed in @hankin2010 and the null of no RPS phenomena
@@ -79,16 +80,25 @@ to calculate the p-value for the hypothesis that $p_M=0$:
 binom.test(sum(diag(chess_table)),sum(chess_table,na.rm=TRUE),alternative="greater")
 ```
 
-Estimating $p_M$ is also straightforward:
+Above we see a p-value of about 1.2\%, sufficient to reject the null
+of zero monster strength^[Note that diagonal entries of `chess_table`
+correspond to procyclic wins and off-diagonal entries correspond to
+anti-cyclic wins.  This is due to the fact that `chess_table` is of
+the same type as the seven-toothed gear wheel dataset considered
+below, in which prograde "wins" appear on the diagonal and retrograde
+wins appear one place to the right (wrapped if necessary)].
+
+Estimating $M$, the strength of the monster, is also straightforward.
+First we consider the case where the probability of a procyclic win is
+known to be $p$ (a "procyclic win" is a win that would be expected
+under a strong monster).
 
 $$
-Prob(\mathrm{procyclic}\ \mathrm{win})=\frac{\alpha+M}{2\alpha+M}
+\operatorname{Prob}(\mathrm{procyclic}\ \mathrm{win})=\frac{\alpha+M}{2\alpha+M}
 $$
 
-
-(a "procyclic win" is a win that would be expected under a strong
-monster).  Here we also have $3\alpha+M=1$, so to estimate the
-strength of the monster we would solve
+Here we also have $3\alpha+M=1$, so to estimate the strength of the
+monster we would solve
 
 $$
 \frac{\alpha+M}{2\alpha+M}=p,\qquad{3\alpha + M}=1
@@ -203,7 +213,7 @@ hypothesis that $p_M=0$ under TAKM with a p-value of $0.04$ (compare
 0.012 from the binomial test).
 
 
-### Profile likelihood
+# Profile likelihood
 
 We may plot a profile likelihood curve for $M$:
 
@@ -329,7 +339,7 @@ suggesting that we may reject the hypothesis of zero monster strength
 with a p-value of about 4.7\%, even after accounting for the different
 strengths of the teeth.
 
-### Analysis of seven-tooth gear with `hyper3`
+## Analysis of seven-tooth gear with `hyper3`
 
 We can now use `hyper3` to analyse the same dataset.  Here the
 likelihood function for pairwise competition between $p_1$ and $p_2$,
