@@ -18,13 +18,17 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017_rmd.
-This short document defines the `podium()` function which tests the
-hypothesis that a Formula 1 driver's being on the podium at one venue
-affects his performance on the next.  Data from the 2007 season are
-used.  It uses `hyper3` objects from the `hyper2` package.  A detailed
-use-case for the top six drivers (Alonso, Hamilton, Heidfeld, Kubica,
-Massa, and Raikkonen), and only the first five venues (Austria,
+<font size="1"> (almost all the time is spent on chunk `podlikevec7`,
+which takes about one minute per evaluation) </font>
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  This short document defines the `podium()` function
+which tests the hypothesis that a Formula 1 driver's being on the
+podium at one venue affects his performance on the next.  Data from
+the 2007 season are used.  It uses `hyper3` objects from the `hyper2`
+package.  A detailed use-case for the top six drivers (Alonso,
+Hamilton, Heidfeld, Kubica, Massa, and Raikkonen^[Umlauts pose special
+problems for Rmd files]), and only the first five venues (Austria,
 Malaysia, Bahrain, Spain, and Monaco) is given.  
 
 ***TLDR***: Statistically significant evidence for the podium effect
@@ -84,9 +88,38 @@ podium <- function (lambda,x,print=FALSE){
 }
 ```
 
+The first race has standard Plackett-Luce likelihood:
 
+$$a\succ b\succ c\succ d\succ e\succ f$$
 
-Define a subset of it:
+has a PL likelihood of
+
+$$
+\frac{a}{a+b+c+d+e+f}\cdot
+\frac{b}{  b+c+d+e+f}\cdot
+\frac{c}{    c+d+e+f}\cdot
+\frac{d}{      d+e+f}\cdot
+\frac{e}{        e+f}
+$$
+
+However, if the result were 
+
+$$\overline{a}\succ b\succ\overline{c}\succ\overline{d}\succ e\succ f$$
+
+(where an overbar signifies that the driver was on the podium after
+the previous race), the likelihood function would be
+
+$$
+\frac{\lambda a}{\lambda a+b+\lambda c+\lambda d+e+f}\cdot
+\frac{        b}{          b+\lambda c+\lambda d+e+f}\cdot
+\frac{\lambda c}{            \lambda c+\lambda d+e+f}\cdot
+\frac{\lambda d}{                      \lambda d+e+f}\cdot
+\frac{        e}{                                e+f}\cdot
+$$
+
+and the null of no podium effect would be $H_0\colon\lambda=0$.  Next,
+we will take dataset `formula1_2007` and define a subset of it which
+we will call `b`:
 
 ```{r, definesubset}
 a <- read.table("formula1_2007.txt",header=TRUE)
@@ -100,19 +133,57 @@ b[,5] <- c(1,2,4,3,8,6)  # tests the 'incomplete' functionality of podium()
 b
 ```
 
+Taking Monaco (`MON`) as an example, the preceding race was in spain
+(`ESP`) at which Massa, Hamilton, and Alonso finished on the podium.
+The order statistic would be 
+
+$$
+\text{Raikkonen}\succ
+\overline{\text{Hamilton}}\succ
+\overline{\text{Massa}}\succ
+\overline{\text{Alonso}}\succ
+\text{Kubica}\succ
+\text{Heidfeld}
+$$
+
+where again an overbar signifies that the driver was on the podium in
+the previous race.  The likelihood function for Monaco would thus be
+
+$$
+\begin{split}
+\operatorname{\mathcal{L}}\left(\lambda;
+p_\text{Raikkonen},\ldots,p_\text{Heidfeld}
+\right)
+& =
+\frac{p_\text{Raikkonen}}{p_\text{Raikkonen}+\lambda p_\text{Hamilton}+\lambda p_\text{Massa}+\lambda p_\text{Alonso}+p_\text{Kubica}+p_\text{Heidfeld}}\\
+&{\qquad} \cdot\frac{\lambda p_\text{Hamilton}}{\lambda  p_\text{Hamilton}+\lambda p_\text{Massa}+\lambda p_\text{Alonso}+p_\text{Kubica}+p_\text{Heidfeld}}\\
+&{\qquad}\cdot\frac{\lambda p_\text{Massa}}{\lambda p_\text{Massa}+\lambda p_\text{Alonso}+p_\text{Kubica}+p_\text{Heidfeld}}\\
+&{\qquad}\cdot\frac{\lambda p_\text{Alonso}}{\lambda p_\text{Alonso}+p_\text{Kubika}+p_\text{Heidfeld}}\cdot
+\frac{p_\text{Kubica}}{p_\text{Kubica}+p_\text{Heidfeld}}
+\end{split}
+$$
+
+
+
 ```{r,usepodiu,cache=TRUE}
-Ha <- podium(1.4,b)
-Hb <- podium(1.5,b)
-ma <- maxp(Ha,give=TRUE,n=1)
-mb <- maxp(Hb,give=TRUE,n=1)
+Ha <- podium(1.4, b)
+Hb <- podium(2.1, b)
+ma <- maxp(Ha, give=0, n=1)
+mb <- maxp(Hb, give=0, n=1)
 ```
 
 ```{r}
 Ha
-Hb
+summary(Hb)
 ma
 mb
 ```
+
+Above we see that passing $\lambda$ values of 1.4 and 2.1 result in
+different likelihoods.  The difference of about 0.4 units of support
+is not significant, failing to reach the two-units-of-support
+criterion of Edwards.
+
 
 
 ```{r,usefuns,cache=TRUE}
@@ -150,7 +221,7 @@ podlike(1.9)
 
 ```{r,podlikevec7,cache=TRUE}
 date()
-lam <- seq(from=0.2,to=1.2,len=7)
+lam <- seq(from=0.2,to=1.2,len=15)
 like <- lapply(lam,podlike)
 date()
 ```
