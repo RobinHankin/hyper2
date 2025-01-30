@@ -1,4 +1,15 @@
 % -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
+
+% Notes:
+
+% To bibtex this file, copy hyper2.bib from the vignettes/ directory
+% of the repo (which is under version control).  To create the pdf
+% files for the figures, source file "jss4832_replication.R" which
+% will create them.  There are slight differences between the JSS
+% paper and the manuscript here and there in the citations.
+
+
+
 \documentclass[article]{jss}
 
 
@@ -52,7 +63,7 @@
 
 \section{Introduction}
 
-The \code{hyper2} package~\citep{hankin2009,hankin2017} furnishes
+The \code{hyper2} package~\citep{hankin2017_rmd} furnishes
 computational support for generalized
 Plackett-Luce~\citep{plackett1975} likelihood functions.  The
 preferred interpretation is a race (as in track and field athletics):
@@ -113,12 +124,12 @@ subset of~$\left\{1,2,\ldots,n\right\}$; numbers~$n_s$ are integers
 which may be positive or negative.  The \pkg{hyper2} package has the
 ability to evaluate such likelihood functions at any point in $S_n$,
 thereby admitting a wide range of non-standard nulls such as order
-statistics on the $p_i$~\citep{hankin2017}.  It becomes possible to
+statistics on the $p_i$~\citep{hankin2017_rmd}.  It becomes possible to
 analyse a wider range of likelihood functions than standard
 Plackett-Luce~\citep{turner2020}.  For example, results involving
 incomplete order statistics or teams are tractable.  Further, the
 introduction of reified entities (monsters) allows one to consider
-draws~\citep{hankin2009}, noncompetitive tactics such as
+draws~\citep{hankin2020}, noncompetitive tactics such as
 collusion~\citep{hankin2020}, and the phenomenon of team cohesion
 wherein the team becomes stronger than the sum of its
 parts~\citep{hankin2010}.  Recent versions of the package include
@@ -159,11 +170,11 @@ given.
 
 \subsection{Computational methodology for generalized Plackett-Luce likelihood functions}
 
-Existing \code{hyper2} formalism as described by \citet{hankin2017}
+Existing \code{hyper2} formalism as described by \citet{hankin2017_rmd}
 cannot represent Equation~\ref{plackettluce}, because
 Equation~\ref{hyper2likelihood} uses sets as the indexing elements,
 and in this case we need multisets\footnote{Note that the version of
-\code{hyper2} presented by \citet{hankin2017} and reviewed
+\code{hyper2} presented by \citet{hankin2017_rmd} and reviewed
 by~\cite{turner2020} used integer-valued sets together with a print
 method that used a complicated mapping system from integers to
 competitor names.  Current methodology [following commit
@@ -288,7 +299,7 @@ log-likelihood and as such has rapid convergence, if its objective
 function is reasonably smooth).
 
 The package provides a number of statistical tests on likelihood
-functions, modified from~\citet{hankin2017} to work with \code{hyper3}
+functions, modified from~\citet{hankin2017_rmd} to work with \code{hyper3}
 objects.  For example, we may assess the hypothesis that all three
 players are of equal strength [viz $H_0\colon
 p_a=p_b=p_c=\frac{1}{3}$]:
@@ -713,7 +724,7 @@ competitors, say Vadlejch and Vesely, were to throw a javelin, then we
 would estimate the probability that Vadlejch would throw further than
 Vesely at $\displaystyle p_{\mbox{\tiny Vad}}/\left(p_{\mbox{\tiny
 Vad}} + p_{\mbox{\tiny Ves}}\right)\simeq 0.74$.  Indeed, from a
-training or selection perspective we might follow \cite{hankin2017}
+training or selection perspective we might follow \cite{hankin2017_rmd}
 and observe that log-contrasts~\citep{ohagan2004} appear to have
 approximately Gaussian likelihood functions for observations of the
 type considered here.  Profile log-likelihood curves for log-contrasts
@@ -905,7 +916,7 @@ remained unchanged between 2020 and 2021 was tested and rejected.
 
 Draws are not considered in the present work but in principle may be
 accommodated, either using likelihoods comprising sums of
-Plackett-Luce probabilities~\citep{hankin2017}; or the introduction of
+Plackett-Luce probabilities~\citep{hankin2017_rmd}; or the introduction of
 a reified draw entity~\citep{hankin2010}.
 
 Further work might include a systematic comparison between
