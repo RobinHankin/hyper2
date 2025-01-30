@@ -110,7 +110,10 @@
   <dt id="arg-give">give<a class="anchor" aria-label="anchor" href="#arg-give"></a></dt>
 <dd><p>Boolean, with default <code>FALSE</code> meaning to return just
     the evaluate (including fillup), and <code>TRUE</code> meaning to return
-    the entire formal output of the optimization routine</p></dd>
+    the entire formal output of the optimization routine.  In function
+    <code>maxp()</code>, a non-logical value [such as <code>0</code>] gives only the
+    two most important pieces of information, viz the evaluate and a
+    log-likelihood</p></dd>
 
   <dt id="arg-fcm-fcv">fcm,fcv<a class="anchor" aria-label="anchor" href="#arg-fcm-fcv"></a></dt>
 <dd><p>Further problem-specific constraints</p></dd>
