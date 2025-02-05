@@ -914,10 +914,10 @@ rorder_single <- function(p){
     for(i in seq_len(nrow(M))){
         onerow <- M[i,]
         choices <- names(onerow[!is.na(onerow)])
-        out[choices] %<>%  `-`(sum(onerow,na.rm=TRUE))
+        out[choices] %<>%  subtract(sum(onerow,na.rm=TRUE))
     }
     for(j in seq_len(ncol(M))){
-        out[colnames(M)[j]] %<>% `+`(sum(M[,j],na.rm=TRUE))
+        out[colnames(M)[j]] %<>% add(sum(M[,j],na.rm=TRUE))
     }
     return(out)
 }
@@ -940,14 +940,14 @@ rorder_single <- function(p){
     return(out)
 }
 
-`inc` <- function(H,val=1){ H %<>% `+`(val)}   # increment
-`dec` <- function(H,val=1){ H %<>% `-`(val)}   # decrement
+`inc` <- function(H,val=1){ H %<>% add(val)}   # increment
+`dec` <- function(H,val=1){ H %<>% subtract(val)}   # decrement
 
 `trial` <- function(winners,players,val=1){
     stopifnot(all(winners %in% players))
     H <- hyper2()
-    H[winners] %<>% `+`(val)
-    H[players] %<>% `-`(val)
+    H[winners] %<>% add(val)
+    H[players] %<>% subtract(val)
     return(H)
 }   
 
@@ -1034,7 +1034,7 @@ rorder_single <- function(p){
     for(i in seq_len(nrow(fmat))){
         o <- fmat[i,,drop=TRUE]
         if(incomplete){ o[o>0] <- rank(o[o>0]) }
-        out %<>% `+`(ordervec2supp(o))
+        out %<>% add(ordervec2supp(o))
     } # i loop closes
     return(out)
 } 

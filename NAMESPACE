@@ -187,7 +187,7 @@ importFrom(Rcpp, evalCpp)
 importFrom("stats", "constrOptim","runif","rnorm","pchisq","rgamma","setNames")
 importFrom("utils", "head")
 importFrom("partitions","perms")
-importFrom("magrittr", "%>%", "%<>%")
+importFrom("magrittr", "%>%", "%<>%","add","subtract")
 importFrom("cubature", "adaptIntegrate")
 importFrom("graphics", "abline", "par", "text","points")
 
