@@ -107,7 +107,7 @@ considers~$n$ players and assigns a non-negative number $p_i$ to player
 $i$, with $\sum p_i=1$.  Then player $i$ beats player $j$ with
 probability $\frac{p_i}{p_i+p_j}$.  This simple system has been
 modified and extended many times, for example to account for multi-way
-competitions such as {\em MasterChef Australia}~\citep{hankin2017},
+competitions such as {\em MasterChef Australia}~\citep{hankin2017_rnw},
 and non-competitive situations such as consumer
 behaviour~\citep{hankin2010} and mating preference~\citep{west2008}.
 
@@ -278,7 +278,7 @@ result, but also the ply-count, data not used in the present analysis.
 The Method of Support \citep{edwards1972} involves only numerical
 optimization (not integration which is computationally expensive).
 The analysis presented here uses the framework of the
-R~\citep{rcore2019} \pkg{hyper2} package~\citep{hankin2017} as a
+R~\citep{rcore2019} \pkg{hyper2} package~\citep{hankin2017_rnw} as a
 convenient and unified interface.  Because gradients are available,
 convergence to the evaluate is generally rapid and hypothesis-specific
 constraints on parameter space are, in general, linear and
@@ -872,6 +872,6 @@ would admit such simulations and it might be interesting to compare results.
 R code for all statistical analysis given here is available at
 \url{https://github.com/RobinHankin/hyper2}.
 
-\bibliography{chess}
+\bibliography{hyper2}
 \end{document}
  
