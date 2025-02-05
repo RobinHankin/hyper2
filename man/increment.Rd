@@ -6,7 +6,12 @@
 \alias{dec}
 \title{Increment and decrement operators}
 \description{
-Syntactic sugar for incrementing and decrementing likelihood functions
+  Syntactic sugar for incrementing and decrementing likelihood functions.
+
+  Frankly they don't do anything that \code{magrittr:add()} and
+  \code{magrittr:subtract()} don't (except have a default value of 1
+  (which is surprisingly useful).
+  
 }
 \usage{
 inc(H, val = 1)
@@ -15,18 +20,19 @@ trial(winners,players,val=1)
 }
 \arguments{
   \item{H}{A hyper2 object}
-  \item{winners,players}{Numeric or character vectors specifying the
+  \item{winners, players}{Numeric or character vectors specifying the
     winning team and the losing team}
   \item{val}{Numeric}
 }
 \details{
-A very frequent operation is to increment a single term in a hyper2
-object.  If
+
+A very frequent operation is to increment a single term in a
+\code{hyper2} object.  If
 
 \preformatted{
-> H <- hyper2(list("b",c("a","b"),"c",c("b","c")),c(2,4,3,5))
+> H <- hyper2(list("a",c("a","b"),"c",c("a","b","c")),c(1:3,-6))
 > H
-a * (a + b)^4 * b^2 * (b + c)^5 * c^3
+log( a * (a + b + c)^-6 * b^2 * c^3)
 }
 
 Suppose we wish to increment the power of \code{a+b}.  We could do:
@@ -36,10 +42,11 @@ H[c("a","b")] <- H[c("a","b")] + 1
 }
 
 (see the discussion of \code{hyper2_sum_numeric} at
-\code{Ops.hyper2.Rd}).  Alternatively we could use \code{magrittr} pipes:
+\code{Ops.hyper2.Rd}; also vignette \code{zeropower}).  Alternatively we
+could use \code{magrittr} pipes:
 
 \preformatted{
-H[c("a","b")] \%<>\% `+`(1)
+H[c("a","b")] \%<>\% add(1)
 }
 
 But \code{inc} and \code{dec} furnish convenient idiom to accomplish the
@@ -74,6 +81,13 @@ containing all players.  The winners are expected to be players.
 }
 
 Using \code{trial()} in this way ensures that the powers sum to zero.
+
+
+\preformatted{
+  H <- trial(c("a","b"),c("a","b","c"))
+  H \%<>\% inc(trial("a",c("a","b")))
+  H
+}
 
 The \code{inc} and \code{dec} operators and the \code{trial()}
 function are used in \code{inst/kka.Rmd}.
