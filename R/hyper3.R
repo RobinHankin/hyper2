@@ -529,7 +529,7 @@ stop("not yet written")
     stopifnot(identical(teams,rownames(away_games_won)))
     stopifnot(identical(teams,colnames(away_games_won)))
 
-    H <- hyper3(pnames=c(teams,"lambda"))
+    H <- hyper3(pnames=c(teams))
 
     for(i in seq_len(nrow(home_games_won))){
         for(j in seq_len(ncol(home_games_won))){
