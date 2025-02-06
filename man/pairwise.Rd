@@ -3,6 +3,7 @@
 \alias{zermelo}
 \alias{home_away}
 \alias{home_away3}
+\alias{home_away_table}
 \alias{white_draw}
 \alias{white_draw3}
 \title{Pairwise comparisons}
@@ -21,6 +22,16 @@
   interpreted as real parts being the home wins and imaginary parts away
   wins.
 
+  Function \code{home_away_table()} takes a dataframe of results (each
+  row being a single match) and returns a table amenable to analysis by
+  \code{home_away()} or \code{home_away3()}.  If \code{give} takes its
+  default value of \code{FALSE}, draws are discarded and a complex
+  matrix of wins and losses is returned.  Files
+  \code{inst/monster_vs_lambda.Rmd} and \code{inst/home_advantage.Rmd}
+  show some use-cases.  Argument \code{teams} is a character vector that
+  specifies the teams to be tabulated (useful if one wishes to change
+  the default ordering of the teams).
+
   Function \code{white_draw3()} returns a \code{hyper3} likelihood
   function for pairwise comparisons, one of whom has a home team-type
   advantage (white player in the case of chess).  It is designed to
@@ -34,6 +45,7 @@ pairwise(M)
 zermelo(M, maxit = 100, start, tol = 1e-10, give = FALSE)
 home_away(home_games_won, away_games_won)
 home_away3(home_games_won, away_games_won,lambda)
+home_away_table(a, give=FALSE, teams)
 white_draw3(A,lambda,D)
 }
 \arguments{
@@ -42,8 +54,9 @@ white_draw3(A,lambda,D)
   \item{start}{Starting value for iteration; if missing, use
     \code{equalp()}}
   \item{tol}{Numerical tolerance for stopping criterion}
-  \item{give}{Boolean with default \code{FALSE} meaning to return the
-    evaluate and \code{TRUE} meaning to return all iterations}
+  \item{give}{In \code{zermelo()}, Boolean with default \code{FALSE}
+    meaning to return the evaluate and \code{TRUE} meaning to return all
+    iterations; in \code{home_away_table()} governs output form}
   \item{home_games_won, away_games_won}{Matrices showing home games won
     and away games won}
   \item{lambda}{The home ground advantage
@@ -53,6 +66,10 @@ white_draw3(A,lambda,D)
   corresponding to white wins, white draws, and white losses for
   \code{i=1,2,3}.  The canonical example would be \code{kka_array},
   see \code{inst/kka.Rmd} for details}
+  \item{a, teams}{In function \code{home_away_table()}, argument
+    \code{a} is a data frame (typically of football results),
+    \code{give} a boolean governing output form, and \code{teams} a list
+    of football teams.  See details}
 }
 \details{
   In function \code{zermelo()}, the diagonal is disregarded.

@@ -23,7 +23,10 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 To cite the `hyper2` package in publications, please use
 @hankin2017_rmd.  Here I analyse a small synthetic dataset for home
 ground advantage, then go on to discuss a dataset presented by
-Agresti.  But first, the smallest nontrivial example is a 2x2 case:
+Agresti.  At the end, I show how a results table can be created from
+scratch using bespoke function `home_away_table()`.
+
+But first, the smallest nontrivial example is a 2x2 case:
 
 ```{r,label=smallestexample}
 M <- matrix(c(
@@ -257,6 +260,99 @@ abline(v=0)
 plot(lam,L,type="b")
 abline(h=c(0,-2))
 ```
+
+# Creating a home/away results table from scratch
+
+Function `home_away_table()` takes a data frame of results and
+produces a table amenable to analysis by `home_away()` or
+`home_away3()`.
+
+
+```{r showdata}
+a <- read.table("celtic_rangers_livingston_falkirk.txt", header=TRUE)
+head(a)
+(aF <- home_away_table(a, give=FALSE))
+(aT <- home_away_table(a, give=TRUE))
+```
+
+```{r doscottish,cache=TRUE}
+(H <- home_away(aF))
+(mH <- maxp(H))
+```
+
+```{r testrangersandceltic, cache=TRUE}
+samep.test(H,c("Rangers","Celtic"))
+
+
+```{r  testhomezero, cache=TRUE}
+specificp.gt.test(H,"home",0)
+```
+
+```{r dohome3, cache=TRUE}
+home_away3(aF,lambda=1.88)
+maxp(home_away3(aF,lambda=1.88),give=1)
+maxp(home_away3(aF,lambda=1.11),give=1)
+```
+
+
+```{r calcsuppscotty,cache=TRUE}
+f <- function(l){ maxp(home_away3(aF,l),give=TRUE,n=1)$likes}
+lam <- seq(from=1.4,to=2.3,len=10)
+date()
+loglike <- sapply(lam,f)
+date()
+```
+
+```{r optscotty,cache=TRUE}
+(o <- optimize(f,c(1.1,4.6),maximum=TRUE))
+```
+
+```{r scottychisq,cache=TRUE}
+o
+maxL <- f(o$maximum)
+W <- maxL - f(1)    # f(1) being the likelihood of the null
+W
+pchisq(2*W,df=1,lower.tail=FALSE)
+```
+
+```{r scotmax}
+(H <- home_away3(home_away_table(a,give=FALSE),o$maximum))  # o$maximum ~= 1.353
+maxp(H,give=1)
+```
+
+```{r}
+plot(lam,loglike-max(loglike),type='b')
+abline(h=c(0,-2))
+abline(v=1)
+grid()
+```
+
+```{r rememberhyper2}
+(mH2 <- round(mH*1000))
+```
+
+
+```{r sfasdf, cache=TRUE}
+o$maximum
+mH3 <- maxp(home_away3(home_away_table(a,give=FALSE),o$maximum),give=FALSE)
+round(mH3*1000)
+```
+
+Now consider Celtic vs Falkirk, Celtic at home and also  Falkirk at home.
+
+
+### (Celtic at home) {-}
+* hyper2: P(Celtic;Falkirk) = $\frac{390+67; 56}{390 + 56 + 67}\simeq (0.89; 0.11)$
+* hyper3: P(Celtic;Falkirk) = $\frac{1.77*412; 74}{1.77*412+74}\simeq(0.92; 0.08)$
+
+actual scoreline:  61-8 or about $(0.88; 0.12)$
+
+###  (Celtic away)
+* hyper2: P(Celtic;Falkirk) = $\frac{390; 56+67}{390 + 56 + 67}\simeq (0.76;0.24)$
+* hyper3: P(Celtic;Falkirk) = $\frac{412; 1.77*74}{412 + 1.77*74}\simeq(0.76; 24)$ 
+
+actual scoreline: 43-17 or about $(0.72; 0.28)$
+
 
 ###  References
 

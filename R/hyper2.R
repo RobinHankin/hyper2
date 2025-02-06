@@ -1301,3 +1301,31 @@ rorder_single <- function(p){
     names(out) <- NULL
     return(out)
 }
+
+`home_away_table` <- function(a, give = FALSE, teams){
+    if(missing(teams)){ teams <- unique(c(a$hometeam, a$awayteam)) }
+    homewins <- matrix(0, length(teams), length(teams))
+    dimnames(homewins) <- list(`@home` = teams, `@away` = teams)
+    awaywins <- homewins
+    draws    <- homewins
+    for(i in seq_len(nrow(a))){
+        if(a$homescore[i] > a$awayscore[i]){ # home win
+            homewins[a$hometeam[i], a$awayteam[i]] %<>% add(1)
+        } else if(a$homescore[i] < a$awayscore[i]){  # away win
+            awaywins[a$hometeam[i], a$awayteam[i]] %<>% add(1)
+        } else { # draw
+            draws[a$hometeam[i], a$awayteam[i]] %<>% add(1)
+        }
+    }
+
+    diag(homewins) <- NA
+    diag(awaywins) <- NA
+    diag(draws)    <- NA
+    
+    if(give){
+        return(list(home_wins = homewins, away_wins = awaywins, draws = draws))
+    } else {
+        return(homewins + 1i*awaywins)
+    }
+}
+
