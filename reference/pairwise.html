@@ -12,6 +12,15 @@ Function home_away() takes two matrices, one for home wins and
   same, but returns a hyper3 object.  A complex matrix is
   interpreted as real parts being the home wins and imaginary parts away
   wins.
+Function home_away_table() takes a dataframe of results (each
+  row being a single match) and returns a table amenable to analysis by
+  home_away() or home_away3().  If give takes its
+  default value of FALSE, draws are discarded and a complex
+  matrix of wins and losses is returned.  Files
+  inst/monster_vs_lambda.Rmd and inst/home_advantage.Rmd
+  show some use-cases.  Argument teams is a character vector that
+  specifies the teams to be tabulated (useful if one wishes to change
+  the default ordering of the teams).
 Function white_draw3() returns a hyper3 likelihood
   function for pairwise comparisons, one of whom has a home team-type
   advantage (white player in the case of chess).  It is designed to
@@ -105,6 +114,15 @@ Function white_draw3() returns a hyper3 likelihood
   same, but returns a <code>hyper3</code> object.  A complex matrix is
   interpreted as real parts being the home wins and imaginary parts away
   wins.</p>
+<p>Function <code>home_away_table()</code> takes a dataframe of results (each
+  row being a single match) and returns a table amenable to analysis by
+  <code>home_away()</code> or <code>home_away3()</code>.  If <code>give</code> takes its
+  default value of <code>FALSE</code>, draws are discarded and a complex
+  matrix of wins and losses is returned.  Files
+  <code>inst/monster_vs_lambda.Rmd</code> and <code>inst/home_advantage.Rmd</code>
+  show some use-cases.  Argument <code>teams</code> is a character vector that
+  specifies the teams to be tabulated (useful if one wishes to change
+  the default ordering of the teams).</p>
 <p>Function <code>white_draw3()</code> returns a <code>hyper3</code> likelihood
   function for pairwise comparisons, one of whom has a home team-type
   advantage (white player in the case of chess).  It is designed to
@@ -118,6 +136,7 @@ Function white_draw3() returns a hyper3 likelihood
 <span><span class="fu">zermelo</span><span class="op">(</span><span class="va">M</span>, maxit <span class="op">=</span> <span class="fl">100</span>, <span class="va">start</span>, tol <span class="op">=</span> <span class="fl">1e-10</span>, give <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu">home_away</span><span class="op">(</span><span class="va">home_games_won</span>, <span class="va">away_games_won</span><span class="op">)</span></span>
 <span><span class="fu">home_away3</span><span class="op">(</span><span class="va">home_games_won</span>, <span class="va">away_games_won</span>,<span class="va">lambda</span><span class="op">)</span></span>
+<span><span class="fu">home_away_table</span><span class="op">(</span><span class="va">a</span>, give<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">teams</span><span class="op">)</span></span>
 <span><span class="fu">white_draw3</span><span class="op">(</span><span class="va">A</span>,<span class="va">lambda</span>,<span class="va">D</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -138,8 +157,9 @@ Function white_draw3() returns a hyper3 likelihood
 <dd><p>Numerical tolerance for stopping criterion</p></dd>
 
   <dt id="arg-give">give<a class="anchor" aria-label="anchor" href="#arg-give"></a></dt>
-<dd><p>Boolean with default <code>FALSE</code> meaning to return the
-    evaluate and <code>TRUE</code> meaning to return all iterations</p></dd>
+<dd><p>In <code>zermelo()</code>, Boolean with default <code>FALSE</code>
+    meaning to return the evaluate and <code>TRUE</code> meaning to return all
+    iterations; in <code>home_away_table()</code> governs output form</p></dd>
 
   <dt id="arg-home-games-won-away-games-won">home_games_won, away_games_won<a class="anchor" aria-label="anchor" href="#arg-home-games-won-away-games-won"></a></dt>
 <dd><p>Matrices showing home games won
@@ -157,6 +177,12 @@ Function white_draw3() returns a hyper3 likelihood
   corresponding to white wins, white draws, and white losses for
   <code>i=1,2,3</code>.  The canonical example would be <code>kka_array</code>,
   see <code>inst/kka.Rmd</code> for details</p></dd>
+
+  <dt id="arg-a-teams">a, teams<a class="anchor" aria-label="anchor" href="#arg-a-teams"></a></dt>
+<dd><p>In function <code>home_away_table()</code>, argument
+    <code>a</code> is a data frame (typically of football results),
+    <code>give</code> a boolean governing output form, and <code>teams</code> a list
+    of football teams.  See details</p></dd>
 
 </dl></div>
     <div id="details">
