@@ -236,7 +236,8 @@ baseball_table
 f <- function(l){ maxp(home_away3(baseball_table,l),give=TRUE,n=1)$likes}
 o <- optimize(f,c(0.8,1.6),maximum=TRUE)
 o
-maxL <- f(o$maximum)
+lambda_baseball <- o$maximum
+maxL <- f(lambda_baseball)
 W <- maxL - f(1)    # f(1) being the likelihood of the null
 W
 pchisq(2*W,df=1,lower.tail=FALSE)
@@ -246,10 +247,10 @@ The pvalue is significant.  Now plot a profile likelihood (support)
 curve:
 
 ```{r, label=hyper3_baseball,cache=TRUE}
-jj1  <- seq(from=log(o$maximum),to=log(1.9),len=7)
-jj2  <- seq(from=log(o$maximum),to=log(0.8),len=7)
+jj1  <- seq(from=log(lambda_baseball),to=log(1.9),len=7)
+jj2  <- seq(from=log(lambda_baseball),to=log(0.8),len=7)
 l <- sort(unique(exp(c(jj1,jj2))))
-lam  <- sort(c(l,o$maximum))
+lam  <- sort(c(l,lambda_baseball))
 L <- sapply(lam,f) - maxL
 ```
 
@@ -315,14 +316,16 @@ date()
 
 ```{r scottychisq,cache=TRUE}
 o
-maxL <- f(o$maximum)
+scot_max_lambda <- o$maximum
+maxL <- f(scot_max_lambda)
+
 W <- maxL - f(1)    # f(1) being the likelihood of the null
 W
 pchisq(2*W,df=1,lower.tail=FALSE)
 ```
 
 ```{r scotmax}
-(H <- home_away3(home_away_table(a,give=FALSE),o$maximum))  # o$maximum ~= 1.353
+(H <- home_away3(home_away_table(a,give=FALSE),scot_max_lambda))  # o$maximum ~= 1.353
 maxp(H,give=1)
 ```
 
@@ -340,7 +343,7 @@ grid()
 
 ```{r sfasdf, cache=TRUE}
 o$maximum
-mH3 <- maxp(home_away3(home_away_table(a,give=FALSE),o$maximum),give=FALSE)
+mH3 <- maxp(home_away3(home_away_table(a,give=FALSE),scot_max_lambda),give=FALSE)
 round(mH3*1000)
 ```
 
@@ -428,7 +431,7 @@ mH
 mH["Rangers"]
 mH["home"]
 mH3
-lambda <- o$maximum
+lambda <- scot_max_lambda
 h2_exp <- matrix(0,4,4)
 rownames(h2_exp) <- teams
 colnames(h2_exp) <- teams
@@ -491,6 +494,62 @@ abline(0,1)
 ```
 
 
+```{r defineexpectation2}
+expectation2 <- function(probs, results){
+    teams <- names(probs[names(probs) != "home"])
+    h2_exp <- matrix(0,4,4)
+    rownames(h2_exp) <- teams
+    colnames(h2_exp) <- teams
+    n_matches <- Re(aF) + Im(aF)
+    for(hometeam in teams){
+        for(awayteam in teams){
+            
+            h2_exp[hometeam,awayteam] <- (
+                n_matches[hometeam,awayteam] * (mH[hometeam] + mH["home"])/
+                (mH[hometeam] + mH[awayteam] + mH["home"])
+            )
+            
+            h2_exp[hometeam,awayteam] %<>%
+                add(1i*
+                    n_matches[hometeam,awayteam] * (mH[awayteam])/
+                    (mH[hometeam] + mH[awayteam] + mH["home"])
+                    )
+        }
+    }
+    return(h2_exp)
+}
+round(expectation2(mH,aF),1)
+```
+
+
+```{r defineexp3}
+
+expectation3 <- function(probs, results, lambda){
+    teams <- names(probs)
+    h3_exp <- matrix(0,4,4)
+    rownames(h3_exp) <- teams
+    colnames(h3_exp) <- teams
+    n_matches <- Re(aF) + Im(aF)
+    for(hometeam in teams){
+        for(awayteam in teams){
+            
+            h3_exp[hometeam,awayteam] <- (
+                n_matches[hometeam,awayteam] * (lambda* mH3[hometeam])/
+                (lambda* mH3[hometeam] + mH3[awayteam])
+            )
+            
+            h3_exp[hometeam,awayteam] %<>%
+                add(1i*
+                    n_matches[hometeam,awayteam] * (mH3[awayteam])/
+                    (lambda* mH3[hometeam] + mH3[awayteam])
+                    )
+        }
+    }
+    return(h3_exp)
+}
+
+round(expectation3(mH3[c("Rangers","Celtic","Falkirk","Livingston")],aF,scot_max_lambda),1)
+```
 
 ###  References
 
