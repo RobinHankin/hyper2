@@ -194,9 +194,17 @@ This is equal to $(\alpha+\delta)\log\lambda +(\alpha+\gamma)\log
 A+(\beta+\delta)\log B -(\alpha+\beta)\log(\lambda A+B)
 -(\gamma+\delta)\log(A+\lambda B)$ and even after simplifying [we may
 assume $B=1-A$] the result of maximizing $\mathcal{S}$ with respect to
-$A$ and $\lambda$ does not appear to have a simple analytical
-solution; we must proceed numerically.  To do so, we need to define a
-slight generalization of `home_away3()`:
+$A$ and $\lambda$ gives the following result:
+
+$$
+\hat{A} = \frac{\sqrt{\alpha\gamma}}{\sqrt{\alpha\gamma} + \sqrt{\beta\delta}}
+$$
+
+$$
+\hat{\lambda} = \sqrt{\frac{\alpha\delta}{\beta\gamma}}
+$$
+
+
 
 ```{r defineha3}
 `ha3` <- function(home_games_won,away_games_won,lambda){  # based on home_away3()
