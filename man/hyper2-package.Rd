@@ -12,10 +12,21 @@
 The DESCRIPTION file:
 \packageDESCRIPTION{hyper2}
 \packageIndices{hyper2}
+
   A generalization of the Dirichlet distribution, using a more
   computationally efficient method than the \pkg{hyperdirichlet}
   package.  The software is designed for the analysis of order
   statistics and team games.
+
+  The hex sticker features the \dQuote{draw monster}, a concept
+  introduced in Hankin (2020) as a reified entity, representing the
+  winner of a drawn chess game.  The character was visualized and
+  sketched by my daughter Annabel.  In the chess world, draws are often
+  seen as dull and undesirable, and the draw monster embodies this
+  sentiment: he is a dampening presence, a metaphorical wet blanket.
+  The drawing conveys this lack of fighting spirit well, capturing the
+  essence of an uninspired and anticlimactic outcome.
+  
 }
 \author{
 \packageAuthor{hyper2}
