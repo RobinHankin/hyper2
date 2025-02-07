@@ -9,6 +9,7 @@ bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 defaultW <- getOption("warn") 
 options(warn = -1) 
 library("hyper2",quietly=TRUE)
+library("magrittr")
 options(warn = defaultW)
 ```
 
@@ -271,12 +272,17 @@ produces a table amenable to analysis by `home_away()` or
 ```{r showdata}
 a <- read.table("celtic_rangers_livingston_falkirk.txt", header=TRUE)
 head(a)
-(aF <- home_away_table(a, give=FALSE))
-(aT <- home_away_table(a, give=TRUE))
+teams <- c("Rangers","Celtic","Falkirk","Livingston")
+(aF <- home_away_table(a, give=FALSE,teams = teams))
+(aT <- home_away_table(a, give=TRUE, teams = teams))
 ```
+
+(from here on we ignore draws and consider only won games)
 
 ```{r doscottish,cache=TRUE}
 (H <- home_away(aF))
+pnames(H) <- c(teams,"home")
+H
 (mH <- maxp(H))
 ```
 
@@ -338,20 +344,152 @@ mH3 <- maxp(home_away3(home_away_table(a,give=FALSE),o$maximum),give=FALSE)
 round(mH3*1000)
 ```
 
-Now consider Celtic vs Falkirk, Celtic at home and also  Falkirk at home.
+# Rangers vs Falkirk {-}
 
 
-### (Celtic at home) {-}
+**(Rangers at home)**
+
+* hyper2: P(Rangers;Falkirk) = $\frac{448+67; 56}{448 + 56 + 67}\simeq (0.902; 0.098)$
+* hyper3: P(Rangers;Falkirk) = $\frac{1.77*448; 56}{1.77*448+56}\simeq(0.934; 0.066)$
+
+actual scoreline: 69(R) / 2(F) or about $(0.972; 0.028)$. Expectation
+would be (64;7) (H2) or (66.3;4.7) (H3)
+
+*(Rangers away)*
+
+* hyper2: P(Rangers;Falkirk) = $\frac{448; 56+67}{448 + 56 + 67}\simeq (0.78;0.22)$
+* hyper3: P(Rangers;Falkirk) = $\frac{448; 1.77*56}{448 + 1.77*56}\simeq(0.82; 0.18)$ 
+
+actual scoreline: 57(R) /17(F) - or about $(0.77; 0.23)$
+
+# Rangers vs Livingston {-}
+
+
+**(Rangers at home)**
+
+* hyper2: P(Rangers;Livingston) = $\frac{448+67; 39}{448 + 39 + 67}\simeq (0.930; 0.070)$
+* hyper3: P(Rangers;Livingston) = $\frac{1.77*448; 39}{1.77*448+39}\simeq(0.953; 0.047)$
+
+actual scoreline:  15(R) / 0(L) or  $(1; 0)$
+
+*(Rangers away)*
+
+* hyper2: P(Rangers;Livingston) = $\frac{448; 39+67}{448 + 39 + 67}\simeq (0.81;0.19)$
+* hyper3: P(Rangers;Livingston) = $\frac{448; 1.77*39}{448 + 1.77*39}\simeq(0.86; 0.14)$ 
+
+actual scoreline: 12(R) /2(L) - or about $(0.86; 0.14)$
+
+
+# Celtic vs Falkirk {-}
+
+
+*(Celtic at home)*
+
 * hyper2: P(Celtic;Falkirk) = $\frac{390+67; 56}{390 + 56 + 67}\simeq (0.89; 0.11)$
 * hyper3: P(Celtic;Falkirk) = $\frac{1.77*412; 74}{1.77*412+74}\simeq(0.92; 0.08)$
 
 actual scoreline:  61-8 or about $(0.88; 0.12)$
 
-###  (Celtic away)
+*(Celtic away)*
+
 * hyper2: P(Celtic;Falkirk) = $\frac{390; 56+67}{390 + 56 + 67}\simeq (0.76;0.24)$
-* hyper3: P(Celtic;Falkirk) = $\frac{412; 1.77*74}{412 + 1.77*74}\simeq(0.76; 24)$ 
+* hyper3: P(Celtic;Falkirk) = $\frac{412; 1.77*74}{412 + 1.77*74}\simeq(0.76; 0.24)$ 
 
 actual scoreline: 43-17 or about $(0.72; 0.28)$
+
+
+
+# Livingston vs Falkirk {-}
+
+
+*(Livingston at home)*
+
+* hyper2: P(Livingston;Falkirk) = $\frac{39+67; 56}{39 + 67 + 56}\simeq (0.65; 0.35)$
+* hyper3: P(Livingston;Falkirk) = $\frac{1.77*42; 74}{1.77*42+74}\simeq(0.50; 0.50)$
+
+actual scoreline: 3-9 or about $(0.25; 0.75)$
+
+*(Livingston away)*
+
+* hyper2: P(Livingston;Falkirk) = $\frac{39; 56+67}{39 + 56 + 67}\simeq (0.24;0.76)$
+* hyper3: P(Livingston;Falkirk) = $\frac{42; 1.77*74}{42 + 1.77*74}\simeq(0.24; 0.76)$ 
+
+actual scoreline: 6-8 or about $(0.43; 0.57)$
+
+
+
+# Expectations
+
+
+First, hyper2:
+
+```{r}
+mH
+mH["Rangers"]
+mH["home"]
+mH3
+lambda <- o$maximum
+h2_exp <- matrix(0,4,4)
+rownames(h2_exp) <- teams
+colnames(h2_exp) <- teams
+h3_exp <- h2_exp
+n_matches <- Re(aF) + Im(aF)
+for(hometeam in teams){
+    for(awayteam in teams){
+
+        h2_exp[hometeam,awayteam] <- (
+            n_matches[hometeam,awayteam] * (mH[hometeam] + mH["home"])/
+            (mH[hometeam] + mH[awayteam] + mH["home"])
+        )
+        h2_exp[hometeam,awayteam] %<>%
+            add(1i*
+                n_matches[hometeam,awayteam] * (mH[awayteam])/
+                (mH[hometeam] + mH[awayteam] + mH["home"])
+                )
+        
+        h3_exp[hometeam,awayteam] <- (
+            n_matches[hometeam,awayteam] * (lambda* mH3[hometeam])/
+            (lambda* mH3[hometeam] + mH3[awayteam])
+        )
+
+        h3_exp[hometeam,awayteam] %<>%
+            add(1i*
+                n_matches[hometeam,awayteam] * (mH3[awayteam])/
+                (lambda* mH3[hometeam] + mH3[awayteam])
+        )
+    }
+}
+aF
+round(h2_exp,1)
+round(h3_exp,1)
+
+makev <- function(M){
+    out <- c(Re(M),Im(M))
+    out[!is.na(out)]
+}
+    
+
+(obs <- makev(aF))
+(exp2 <- makev(h2_exp))
+(exp3 <- makev(h3_exp))
+
+plot((obs-exp2)^2/exp2)
+plot((obs-exp3)^2/exp3)
+
+
+chisq2 <- sum((obs-exp2)^2/exp2)
+chisq3 <- sum((obs-exp3)^2/exp3)
+
+pchisq(chisq2,df=12-4,lower.tail=FALSE)
+pchisq(chisq3,df=12-4,lower.tail=FALSE)
+
+par(pty='s')
+plot(obs,exp2,log="xy",asp=1,xlim=c(1,100),ylim=c(1,100))
+abline(0,1)
+plot(obs,exp3,log="xy",asp=1,xlim=c(1,100),ylim=c(1,100))
+abline(0,1)
+```
+
 
 
 ###  References
