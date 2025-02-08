@@ -113,6 +113,10 @@ CITATION.cff
 ^inst/formula1_2018.txt$
 ^inst/formula1_2019.txt$
 ^inst/formula1_2020.txt$
+^inst/formula1_2021.txt$
+^inst/formula1_2022.txt$
+^inst/formula1_2023.txt$
+^inst/formula1_2024.txt$
 ^inst/formula1_allyears.R$
 ^inst/formula1_allyears.Rmd$
 ^inst/formula1_conditions.txt$
@@ -242,9 +246,6 @@ CITATION.cff
 ^inst/directplotofstrengths_postinkscape.svg$
 ^inst/distance_matrix_idea.Rmd$
 ^inst/elastic.R$
-^inst/formula1_2021.txt$
-^inst/formula1_2022.txt$
-^inst/formula1_2023.txt$
 ^inst/formula1_sequential_correlation.Rmd$
 ^inst/formula1_starting_2022.txt$
 ^inst/formula1_starting_2023.txt$
@@ -281,6 +282,10 @@ CITATION.cff
 ^inst/very_simplified_likelihood.Rmd$
 ^inst/zermelo.Rmd$
 ^inst/simplified.bib$
+^inst/celtic_rangers_livingston_falkirk.txt$
+^inst/hankin-AustrianJournalofStatistics.tex$
+^inst/hyper3.Rmd$
+^inst/preflib.Rmd$
 ^.github$
 ^.devcontainer$
 ^_pkgdown\.yml$
