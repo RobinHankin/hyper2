@@ -263,6 +263,40 @@ plot(lam,L,type="b")
 abline(h=c(0,-2))
 ```
 
+### Analysis of  Work by Davidson and Beaver
+
+```{r}
+DB <- # Davidson and Beaver
+matrix(c(
+    NA, 32+18i, 36+14i, 47+03i, 47+03i,
+14+36i,     NA, 34+16i, 43+07i, 46+04i,
+06+44i, 14+36i,     NA, 34+16i, 40+10i,
+02+48i, 07+43i, 12+38i,     NA, 28+22i,
+01+49i, 02+48i, 05+45i, 10+40i,     NA
+),5,5,byrow=TRUE
+)
+jj <- c("90g","95g","100g","105g","110g")
+dimnames(DB) <- list(`@home` = jj, `@away` = jj)
+DB
+```
+
+```{r first_second_likefun, cache=TRUE}
+f <- function(l){ maxp(home_away3(DB,l),give=TRUE,n=1)$likes}
+lam <- seq(from=0.6,to=1,len=19)
+date()
+loglike <- sapply(lam,f)
+date()
+```
+
+```{r plotfirstsecond}
+plot(lam,loglike-max(loglike),type='b')
+abline(h=c(0,-2))
+abline(v=1)
+```
+
+
+
+
 # Creating a home/away results table from scratch
 
 Function `home_away_table()` takes a data frame of results and
