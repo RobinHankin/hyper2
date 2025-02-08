@@ -67,8 +67,9 @@ original dataset looks like this:
 ```
 
 It is not in a form amenable to the high-level built-in functions of
-the `hyper2` package (such as `wikitable_to; here I show how to create a Plackett-Luce
-likelihood function for the data from scratch.
+the `hyper2` package (such as `wikitable_to_ranktable()`); here I show
+how to create a Plackett-Luce likelihood function for the data from
+scratch.
 
 ```{r makemat}
 films <- c("TWP","En","LiT","TE")
