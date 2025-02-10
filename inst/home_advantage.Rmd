@@ -22,28 +22,235 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 
 
 To cite the `hyper2` package in publications, please use
-@hankin2017_rmd.  Here I analyse a small synthetic dataset for home
-ground advantage, then go on to discuss a dataset presented by
-Agresti.  At the end, I show how a results table can be created from
-scratch using bespoke function `home_away_table()`.
+@hankin2017_rmd.  
 
-But first, the smallest nontrivial example is a 2x2 case:
 
-```{r,label=smallestexample}
-M <- matrix(c(
-    NA, 1+5i, 3+11i, NA),
-    nrow=2,ncol=2,byrow=TRUE)
 
-teams <- LETTERS[seq_len(2)]
-dimnames(M) <- list("@home" = teams,"@away"=teams)
-dimnames(M) <- list("@home" = teams,"@away"=teams)
-M
-home_away(M)
+Objects of class \code{hyper3} are a generalization
+of \code{hyper2} objects that allow the brackets to contain weighted
+probabilities.  Likelihood functions are defined on non-negative
+$p_1,\ldots, p_n$ subject to the unit-sum constraint $\sum p_i=1$.
+Given known weights $w^i_j$ with $1\leq i\leq j$ we have
+
+$$\mathcal{L}\left(p_1,\ldots, p_n\right)=\prod_j\left(\sum_{i=1}^n w^i_jp_i\right)^{n_j}.$$
+
+As a motivating example, suppose two teams (players) with
+Bradley-Terry strengths $p_1,p_2$ play football where we quantify the
+home-ground advantage with a term $\lambda$.  If $p_1$ plays at home
+$a+b$ times with $a$ wins and $b$ losses, and plays away [so $p_2$ is
+at home] $c+d$ times with $c$ wins and $d$ losses, then a sensible
+likelihood function might be
+
+$$\mathcal{L}(p_1,p_2,\lambda;A,B,C,D)=
+\underbrace{
+\overbrace{\left(\frac{\lambda p_1}{\lambda p_1 + p_2}\right)^{A}}^{\mbox{$A$ home wins for $p_1$}}\quad
+\overbrace{\left(\frac{p_2        }{\lambda p_1 + p_2}\right)^{B}}^{\mbox{$B$ away wins for $p_2$}}
+}_\mbox{$p_1$ plays at home to $p_2$ $A+B$ times}\quad
+\underbrace{
+\overbrace{\left(\frac{\lambda p_2}{p_1 + \lambda p_2}\right)^{C}}^{\mbox{$C$ home wins for $p_2$}}\quad
+\overbrace{\left(\frac{        p_1}{p_1 + \lambda p_2}\right)^{D}}^{\mbox{$D$ away wins for $p_1$}}
+}_\mbox{$p_2$ plays at home to $p_1$ $C+D$ times}
+$$
+
+where we understand that $p_1+p_2=1$, $p_1,p_2,\lambda\geqslant 0$.
+Elementary techniques allow us to identify a maximum and we find
+
+$$
+\hat{p_1}=\frac{\sqrt{AD}}{\sqrt{AD}+\sqrt{BC}}\qquad
+\hat{p_2}=\frac{\sqrt{BC}}{\sqrt{AD}+\sqrt{BC}}\qquad
+\hat{\lambda}=\sqrt{\frac{AC}{BD}}
+$$
+
+Note that the evaluate is unchanged if $A,B,C,D$ are all multiplied by
+a positive constant.
+
+# Aside: `hyper2` analysis of the same scoreline
+
+Now the likelihood function would be
+
+$$\mathcal{L}(p_1,p_2,\lambda;A,B,C,D)=
+\underbrace{
+\overbrace{\left(\frac{p_1+M}{p_1 + p_2+M}\right)^{A}}^{\mbox{$A$ home wins for $p_1$}}\quad
+\overbrace{\left(\frac{p_2  }{p_1 + p_2+M}\right)^{B}}^{\mbox{$B$ away wins for $p_2$}}
+}_\mbox{$p_1$ plays at home to $p_2$ $A+B$ times}\quad
+\underbrace{
+\overbrace{\left(\frac{p_2+M}{p_1 + p_2+M}\right)^{C}}^{\mbox{$C$ home wins for $p_2$}}\quad
+\overbrace{\left(\frac{p_1  }{p_1 + p_2+M}\right)^{D}}^{\mbox{$D$ away wins for $p_1$}}
+}_\mbox{$p_2$ plays at home to $p_1$ $C+D$ times}
+$$
+
+The maximum would be
+
+$$
+\hat{p_1}=\frac{D}{C+D}\qquad
+\hat{p_2}=\frac{B}{A+B}\qquad
+\hat{M}=\frac{AC-BD}{(A+B)(C+D)}
+$$
+
+although it is not clear to me what the _constrained_ optimal point
+[that is, requiring $M\geq 0$] is.
+
+## Numerical analysis
+
+```{r label=defineABCD}
+A <- 9
+B <- 5
+C <- 7
+D <- 3
+
+(p1hat <- sqrt(A*D)/(sqrt(A*D) + sqrt(B*C)))
+(p2hat <- sqrt(B*C)/(sqrt(A*D) + sqrt(B*C)))
+
+(lam_hat <- sqrt((A*C)/(B*D)))
 ```
 
-Above we see (from `M[1,2]`) that A played at home $1+5=6$ times,
-winning 1 and losing 5; and B played at home $3+11=14$ times, winning
-3 and losing 11.   A slightly more complicated example:
+$$
+\hat{p_1}=\frac{\sqrt{21}}{\sqrt{21} + \sqrt{35}}\simeq 0.47\qquad
+\hat{p_2}=\frac{\sqrt{63}}{\sqrt{21} + \sqrt{35}}\simeq 0.53\qquad
+\hat{\lambda}=\sqrt{\frac{AC}{BD}}=2.05.
+$$
+
+Moving to the monster formulation we have 
+
+$$
+\hat{p_1}=\frac{3}{7+3} = 0.3\qquad
+\hat{p_2}=\frac{5}{5+9}\simeq  0.36\qquad
+\hat{M}=\frac{63-21}{14\cdot 10} = 0.3
+$$
+
+
+Keeping $A=9,B=5, C=7,D=3$, and $\lambda=2.05$ [assumed for the moment
+to be known, estimation techniques are discussed later], we can
+represent this information in a standard format:
+
+```{r,label=usehomeaway3a}
+library("hyper2",quietly=TRUE)
+M <- matrix(c(NA, A+B*1i ,C+D*1i, NA),2,2,byrow=TRUE)
+teams <- c("p1","p2")
+dimnames(M) <- list("@home" = teams,"@away"=teams)
+dimnames(M) <- list("@home" = teams,"@away"=teams)
+print(M)
+```
+
+Above, object `M` has real parts being home wins and imaginary parts
+being away wins.  Appropriate package idiom to specify a likelihood
+function might be to use bespoke function `home_away3()`:
+
+```{r,label=ha3calc,cache=TRUE}
+(H <- home_away3(M,lambda=2.05))
+```
+
+Keeping $A=9,B=5, C=7,D=3$, and $\lambda=2.05$ [assumed for the moment
+to be known, estimation techniques are discussed later], we may
+estimate $p_1$ and $p_2$ using maximum likelihood, `maxp()` in package
+idiom:
+
+```{r,label=findtheevaluateh3,cache=TRUE}
+H
+maxp(H)
+```
+
+Further, we can test whether the players are in fact of equal strength:
+
+```{r,label=testequalitynow,cache=TRUE}
+equalp.test(H)
+```
+
+Showing convincingly that we may reject the null that $p_1=p_2$ and
+assert that the players do in fact differ in strength, at least with
+this value of $\lambda$.  Observe that a naive analysis would have
+$p_1$ winning $w=A+C=`r A+C`$ games and losing $l=B+D=`r B+D`$ games,
+from which we would obtain $\hat{p_1}=`r A+C`/`r A+B+C+D`$; a
+likelihood ratio for $H_0\colon p_1=0.5$ would be
+
+$$\frac
+{
+  {{w+l}\choose {w\, l}}\left(\frac{w}{w+l}\right)^w\left(\frac{l}{w+l}\right)^l
+}{
+  {{w+l}\choose {w\, l}}\left(\frac{1}{2}\right)^w\left(\frac{1}{2}\right)^l
+}=\frac{2^{w+l}w^wl^l}{(w+l)^{w+l}}\simeq 1.94,
+$$
+
+not significant.
+
+
+Now, how to estimate $\lambda$?
+
+```{r,label=estimatelambda3,cache=TRUE}
+f <- function(lambda){maxp(home_away3(M,lambda=lambda),give=TRUE)$value}
+f(2)
+f(2.1)
+lam <- seq(from=1,to=10,len=17)
+Supp <- sapply(lam,f)
+```
+
+
+```{r,label=plotsup}
+plot(log(lam),Supp-max(Supp),type="b")
+```
+
+Or even
+
+```{r,label=optimlambda,cache=TRUE}
+op <- optimize(f,interval=c(2,3),maximum=TRUE)
+op
+```
+
+
+We can proceed in two ways.  Firstly we can use $\hat{\lambda}$ directly:
+
+```{r,ept3,cache=TRUE}
+equalp.test(home_away3(M,lambda=op$maximum))
+```
+			
+The flaw in this analysis is that it is conditional on the estimated
+value of $\lambda$ [which is not too bad, IMO].  Secondly we can
+perform a fully 2D analysis, which allows for the fact that the
+evaluate might have a different value of $\lambda$ from the
+$\hat{\lambda}$:
+
+```{r,label=loopysuppcalc,cache=TRUE}
+probs <- seq(from=0.1,to=0.8,len=17)
+jj <- as.matrix(expand.grid(lam,probs))
+S <- rep(NA,nrow(jj))
+for(i in seq_len(nrow(jj))){
+    lambda <- jj[i,1]
+    p1 <- jj[i,2]
+    p <- c(p1,1-p1)
+    names(p) <- c("p1","p2")
+   S[i] <- loglik(p=p,H=home_away3(M,lambda=lambda),log=TRUE)
+}
+S <- matrix(S,length(lam),length(probs))
+```
+
+
+```{r}
+contour(lam,probs,S,levels=seq(from=-20,to=-10,by=0.5),xlab="lambda",ylab="p1")
+abline(h=0.5)
+```
+
+#  Ternary representation
+
+```{r,label=useternary}
+library(Ternary)
+
+par(mar = rep(0.2, 4))
+TernaryPlot(alab = "p1", blab = "p2", clab = "M")
+
+f <- function(p1,p2,M) {
+pmax(-20,log(M+p1)*A + log(p2)*B - log(M+p1+p2)*(A+B+C+D) + log(p2+M)*C + log(p1)*D )
+}
+FunctionToContour <- function(a,b,c){f(p1=a, p2=b, M=c)}
+
+# Compute and plot colour tiles
+values <- TernaryPointValues(FunctionToContour, resolution = 24L)
+ColourTernary(values)
+
+# Add contour lines
+TernaryContour(FunctionToContour, resolution = 36L)
+```
+
+A slightly more complicated example:
 
 ```{r,label=genthedata}
 home_games_won <- matrix(c(
@@ -160,6 +367,7 @@ Visually:
 ```{r,label=showmaxpAgresti}
 dotchart(baseball_maxp,pch=16)
 pie(baseball_maxp)
+
 ```
 
 Above, we see that the teams are all of roughly equal strength, and
@@ -550,6 +758,105 @@ expectation3 <- function(probs, results, lambda){
 
 round(expectation3(mH3[c("Rangers","Celtic","Falkirk","Livingston")],aF,scot_max_lambda),1)
 ```
+
+
+# Appendix
+
+
+Here is a transcript of a mathematica session which establishes the
+estimates above.  First the `hyper2` likelihood:
+
+```
+rhankin@rhrpi4:~ $ wolfram
+Mathematica 12.2.0 Kernel for Linux ARM (32-bit)
+Copyright 1988-2021 Wolfram Research, Inc.
+
+
+In[1]:= L = Log[M+p1]*A +Log[p2]*B- Log[M+p1+p2]*(A+B+C+D) + Log[p2+M]*C + Log[p1]*D 
+
+Out[1]= D Log[p1] + A Log[M + p1] + B Log[p2] + C Log[M + p2] - (A + B + C + D) Log[M + p1 + p2] 
+
+In[2]:= LL = L /. {p2 -> 1-p1-M} 
+
+Out[2]= C Log[1 - p1] + B Log[1 - M - p1] + D Log[p1] + A Log[M + p1] 
+
+In[3]:= dp = D[LL,p1]//FullSimplify 
+
+            C      D         B          A
+Out[3]=  ------- + -- + ----------- + ------
+         -1 + p1   p1   -1 + M + p1   M + p1
+
+In[4]:= dM = D[LL,M]//FullSimplify 
+
+              B          A
+Out[4]= ----------- + ------
+         -1 + M + p1   M + p1
+
+In[5]:= Solve[{dp==0,dM==0},{p1,M}] 
+
+                   D            A C - B D
+Out[5]=  {{p1 -> -----, M -> ---------------}}
+                 C + D       (A + B) (C + D)
+
+
+In[6]:= p2 = 1-p1-M /. {%} //FullSimplify 
+
+             B
+Out[6]=  {{-----}}
+           A + B
+
+```
+
+Now the `hyper3` likelihood:
+
+```
+rhankin@rhrpi4:~ $ wolfram
+Mathematica 12.2.0 Kernel for Linux ARM (32-bit)
+Copyright 1988-2021 Wolfram Research, Inc.
+
+In[1]:= L = A*Log[lambda*p1] + B*Log[p2] -(A+B)*Log[lambda*p1 + p2] + C*Log[lambda*p2] + D*Log[p1] -(C+D)*Log[p1 + lambda*p2] 
+
+Out[1]= D Log[p1] + A Log[lambda p1] + B Log[p2] + C Log[lambda p2] - (A + B) Log[lambda p1 + p2] - (C + D) Log[p1 + lambda p2]
+
+In[2]:= LL = L /. {p2 -> 1-p1} 
+
+Out[2]= B Log[1 - p1] + C Log[lambda (1 - p1)] + D Log[p1] + A Log[lambda p1] - (C + D) Log[lambda (1 - p1) + p1] - 
+ 
+>    (A + B) Log[1 - p1 + lambda p1]
+
+In[3]:= dp1 = D[LL,p1] //FullSimplify 
+
+         B + C    A + D   (A + B) (-1 + lambda)    (C + D) (-1 + lambda)
+Out[3]= ------- + ----- - --------------------- + -----------------------
+        -1 + p1    p1     1 + (-1 + lambda) p1    lambda + p1 - lambda p1
+
+
+In[4]:= dlam = D[LL,lambda]//FullSimplify                                                                                                     
+
+          A        C           (A + B) p1           (C + D) (-1 + p1)
+Out[4]= ------ + ------ - -------------------- + -----------------------
+        lambda   lambda   1 + (-1 + lambda) p1   lambda + p1 - lambda p1
+
+
+In[5]:= Solve[{dp1==0,dlam==0},{p1,lambda}]//FullSimplify 
+
+[snip]
+
+
+In[6]:= %[[1]] 
+
+                        1                     Sqrt[A] Sqrt[C]
+Out[6]= {p1 -> -------------------, lambda -> ---------------}
+                   Sqrt[B] Sqrt[C]            Sqrt[B] Sqrt[D]
+               1 + ---------------
+                   Sqrt[A] Sqrt[D]
+
+
+```
+
+
+
+
 
 ###  References
 
