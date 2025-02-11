@@ -18,11 +18,14 @@ abbreviated <- TRUE  # change to FALSE for full names
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017_rmd.
-The file `eurovision.txt`, used below, is copied from "Eurovision Song
-Contest 2009," Wikipedia, accessed May 13, 2018.  It refers to
-semi-final 1.  More documentation is given in `eurovision.Rd` [type
-`help(euro2009)` at the `R` prompt].
+ <font size=1.4px> (takes about 30 minutes to run without cache, most
+of the time taken processing the `maximi` chunk)</font>
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  The file `eurovision.txt`, used below, is copied
+from "Eurovision Song Contest 2009," Wikipedia, accessed May 13, 2018.
+It refers to semi-final 1.  More documentation is given in
+`eurovision.Rd` [type `help(euro2009)` at the `R` prompt].
 
 First we specify the matrix as appearing in the Wikipedia page:
 
