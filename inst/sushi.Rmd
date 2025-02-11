@@ -1,0 +1,68 @@
+---
+title: "Sushi monster"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("partitions")
+library("pdftools")
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
+
+
+
+```{r}
+a <- as.matrix(read.table("sushi.txt"))
+```
+
+```{r,defcalculate_sushi_H}
+make_sushi_H <- function(a, strength){
+    h <- c(1, strength) # strength of support
+    sushi_types <- c("ebi", "anago", "maguro", "ika", "uni", "sake", "tamago", "toro", "tekka", "kappa")
+    ec <- # equivalence classes
+        c(`ebi`  = 1, `anago` = 2, `maguro` = 1, `ika` = 1, `uni` = 1,
+          `sake` = 1, `tamago` = 1, `toro` = 2, `tekka-maki` = 2,
+          `kappa-maki` = 1)
+    
+    H <- hyper3()
+
+    for(i in seq_len(nrow(a))){
+        H <- H + cheering3(sushi_types[a[i,]], e=ec, h=h)
+    }
+    return(H)
+}
+```
+
+```{r tryH, cache=TRUE}
+wanted <- sample(seq_len(nrow(a)), 10, replace=TRUE, prob=a[,1])
+H1888 <- make_sushi_H(a[wanted,-1], strength=1.888)
+H1000 <- make_sushi_H(a[wanted,-1], strength=1.000)
+```
+
+
+```{r maxpsushiH,cache=TRUE}
+mHa <- maxp(H1888,give=1)
+mHb <- maxp(H1000,give=1)
+```
+
+
+```{r showsushiH}
+mHa
+mHb
+```
+
+
+
+
+
+
+## References {-}
