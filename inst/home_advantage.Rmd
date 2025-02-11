@@ -156,8 +156,7 @@ Further, we can test whether the players are in fact of equal strength:
 equalp.test(H)
 ```
 
-Showing convincingly that we may reject the null that $p_1=p_2$ and
-assert that the players do in fact differ in strength, at least with
+Showing that we fail to reject the null that $p_1=p_2$, at least with
 this value of $\lambda$.  Observe that a naive analysis would have
 $p_1$ winning $w=A+C=`r A+C`$ games and losing $l=B+D=`r B+D`$ games,
 from which we would obtain $\hat{p_1}=`r A+C`/`r A+B+C+D`$; a
@@ -328,9 +327,9 @@ ground advantage.
 
 # Example in Agresti
 
-Agresti considers a dataset of seven baseball teams who play one
-another repeatedly.  Each game is played at the home ground of one
-team, the other playing away.  The dataset is as follows:
+@agresti2002 (p438) considers a dataset of seven baseball teams who
+play one another repeatedly.  Each game is played at the home ground
+of one team, the other playing away.  The dataset is as follows:
 
 ```{r,label=makeAgrestimatrix}
 baseball_table <- matrix(c(
@@ -345,6 +344,7 @@ teams <- c("Milwaukee", "Detroit", "Toronto", "New York", "Boston","Cleveland","
 rownames(baseball_table) <- teams
 colnames(baseball_table) <- teams
 M <- baseball_table # saves typing
+M # for convenience
 ```
 
 Above, we represent home team wins with the real part of the matrix,
