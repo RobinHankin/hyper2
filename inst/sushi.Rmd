@@ -59,8 +59,19 @@ mHb
 ```
 
 
+```{r calclike, cache=TRUE}
+f <- function(strength){
+   H <- make_sushi_H(a[wanted,-1], strength=strength)
+   maxp(H,give=1)$`Log-likelihood`
+}
+s <- seq(from=0.4,to=2,len=8)
+L <- sapply(s,f)
+```
 
 
+```{r}
+plot(s,L-max(L),type='b')
+```
 
 
 ## References {-}
