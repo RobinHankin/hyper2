@@ -8,6 +8,9 @@ bibliography: hyper2.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.
+
 In this short discussion document I discuss three related problems:
 
 * The red bus-blue bus problem
@@ -15,14 +18,16 @@ In this short discussion document I discuss three related problems:
 * Holiday problem
 
 The red bus-blue bus problem was originally stated by @chipman1960 and
-discussed by @davidson1970 and @alvo2010 (page 153).
-Debussy-Beethoven was @debreu1960.  I have lost the original reference
-to the Holiday problem.
+discussed by @davidson1970 and @alvo2014 (page 153).
+Debussy-Beethoven was @debreu1960.  The Holiday problem is discussed
+in @tverskey1972 (in the form of trips to Paris or Rome), attributed
+to "L. J. Savage"; in this document I use Florida and California,
+which I did not make up, but cannot find the original reference.
 
 A traveller has a choice of going to work by car or taking a bus.  The
 bus may be red or blue.  Here, we assume that the traveller has strong
 (but unknown) views on cars vs buses.  If considering a car or bus,
-the colour of the bus is of no importance to him.  
+the colour of the bus is of no importance to him.
 However, when offered the choice between a red bus or a blue bus, the
 colour becomes important (having nothing else to guide his decision).
 
