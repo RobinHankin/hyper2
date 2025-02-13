@@ -146,6 +146,10 @@ Generally return or deal with \code{hyper3} objects
 Functionality for \code{hyper3} objects is generally indicated by adding
 a \dQuote{\code{3}} to function names, eg \code{gradient()} goes to
 \code{gradient3()}.
+
+Vignette \code{hyper3\_creation} discusses the different creation
+methods for \code{hyper3} objects.
+
 }
 \seealso{\code{\link{hyper2}}}
 
