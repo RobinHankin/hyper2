@@ -57,7 +57,7 @@ f(universities_table,2012)
 Now:
 ```{r,playerwithadvantage}
 universities <- hyper2(pnames=universities_table[1:8,1])
-for(i in 2013:2020){universities %<>% `+`(ordertable2supp(f(universities_table,i)))}
+for(i in 2013:2020){universities %<>% add(ordertable2supp(f(universities_table,i)))}
 universities
 ```
 
