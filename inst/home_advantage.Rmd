@@ -567,6 +567,7 @@ pchisq(2*W,df=1,lower.tail=FALSE)
 ```{r scotmax}
 (H <- home_away3(home_away_table(a,give=FALSE),RCLF3_lambda_max))  # o$maximum ~= 1.353
 maxp(H,give=1)
+RCLF3 <- H
 ```
 
 ```{r}
@@ -905,6 +906,6 @@ directory of the package.
 ```{r,label=savesolingdataset}
 RCLF3_table <- home_away_table(a, give=TRUE, teams = teams)
 
-save(RCLF3_table,  RCLF3_max, RCLF3_lambda_max, file="RCLF.rda")
+save(RCLF3_table,  RCLF3, RCLF3_max, RCLF3_lambda_max, file="RCLF.rda")
 ```
 

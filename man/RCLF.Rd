@@ -2,7 +2,7 @@
 \alias{RCLF}
 \alias{RCLF3}
 \alias{RCLF3_max}
-\alias{RCLF3_max_lambda}
+\alias{RCLF3_lambda_max}
 \alias{Rangers}
 \alias{Celtic}
 \alias{Livingston}
@@ -13,8 +13,10 @@
 
   These objects refer to results from football matches among four
   Scottish clubs: Rangers, Celtic, Livinston, Falkirk.
-  
 
+  Object \code{RCLF3} is a \code{hyper3} likelihood function for the
+  table.  \code{RCLF3_lambda_max} is the MLE for lambda.  Object
+  \code{RCLF3_max} is its evaluate at the MLE for lambda.
 
 }
 \usage{data(RCLF)}
