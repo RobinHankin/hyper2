@@ -503,8 +503,6 @@ abline(v=1)
 ```
 
 
-
-
 # Creating a home/away results table from scratch
 
 Function `home_away_table()` takes a data frame of results and
@@ -558,8 +556,8 @@ date()
 
 ```{r scottychisq,cache=TRUE}
 o
-scot_max_lambda <- o$maximum
-maxL <- f(scot_max_lambda)
+RCLF3_lambda_max <- o$maximum
+maxL <- f(RCLF3_lambda_max)
 
 W <- maxL - f(1)    # f(1) being the likelihood of the null
 W
@@ -567,7 +565,7 @@ pchisq(2*W,df=1,lower.tail=FALSE)
 ```
 
 ```{r scotmax}
-(H <- home_away3(home_away_table(a,give=FALSE),scot_max_lambda))  # o$maximum ~= 1.353
+(H <- home_away3(home_away_table(a,give=FALSE),RCLF3_lambda_max))  # o$maximum ~= 1.353
 maxp(H,give=1)
 ```
 
@@ -584,9 +582,9 @@ grid()
 
 
 ```{r sfasdf, cache=TRUE}
-o$maximum
-mH3 <- maxp(home_away3(home_away_table(a,give=FALSE),scot_max_lambda),give=FALSE)
-round(mH3*1000)
+RCLF3_lambda_max <- o$maximum
+RCLF3_max <- maxp(home_away3(home_away_table(a,give=FALSE),RCLF3_lambda_max),give=FALSE)
+round(RCLF3_max * 1000)
 ```
 
 # Rangers vs Falkirk {-}
@@ -672,8 +670,8 @@ First, hyper2:
 mH
 mH["Rangers"]
 mH["home"]
-mH3
-lambda <- scot_max_lambda
+RCLF3_max
+lambda <- RCLF3_lambda_max
 h2_exp <- matrix(0,4,4)
 rownames(h2_exp) <- teams
 colnames(h2_exp) <- teams
@@ -693,14 +691,14 @@ for(hometeam in teams){
                 )
         
         h3_exp[hometeam,awayteam] <- (
-            n_matches[hometeam,awayteam] * (lambda* mH3[hometeam])/
-            (lambda* mH3[hometeam] + mH3[awayteam])
+            n_matches[hometeam,awayteam] * (lambda* RCLF3_max[hometeam])/
+            (lambda* RCLF3_max[hometeam] + RCLF3_max[awayteam])
         )
 
         h3_exp[hometeam,awayteam] %<>%
             add(1i*
-                n_matches[hometeam,awayteam] * (mH3[awayteam])/
-                (lambda* mH3[hometeam] + mH3[awayteam])
+                n_matches[hometeam,awayteam] * (RCLF3_max[awayteam])/
+                (lambda* RCLF3_max[hometeam] + RCLF3_max[awayteam])
         )
     }
 }
@@ -776,21 +774,21 @@ expectation3 <- function(probs, results, lambda){
         for(awayteam in teams){
             
             h3_exp[hometeam,awayteam] <- (
-                n_matches[hometeam,awayteam] * (lambda* mH3[hometeam])/
-                (lambda* mH3[hometeam] + mH3[awayteam])
+                n_matches[hometeam,awayteam] * (lambda* RCLF3_max[hometeam])/
+                (lambda* RCLF3_max[hometeam] + RCLF3_max[awayteam])
             )
             
             h3_exp[hometeam,awayteam] %<>%
                 add(1i*
-                    n_matches[hometeam,awayteam] * (mH3[awayteam])/
-                    (lambda* mH3[hometeam] + mH3[awayteam])
+                    n_matches[hometeam,awayteam] * (RCLF3_max[awayteam])/
+                    (lambda* RCLF3_max[hometeam] + RCLF3_max[awayteam])
                     )
         }
     }
     return(h3_exp)
 }
 
-round(expectation3(mH3[c("Rangers","Celtic","Falkirk","Livingston")],aF,scot_max_lambda),1)
+round(expectation3(RCLF3_max[c("Rangers","Celtic","Falkirk","Livingston")],aF,RCLF3_lambda_max),1)
 ```
 
 
@@ -901,11 +899,12 @@ Out[6]= {p1 -> -------------------, lambda -> ---------------}
 
 ### Package dataset {-}
 
-Following lines create `baseball.rda`, residing in the `data/`
+Following lines create `RCLF.rda`, residing in the `data/`
 directory of the package.
 
 ```{r,label=savesolingdataset}
-save(baseball_table, baseball, baseball_maxp, 
-  file="baseball.rda")
+RCLF3_table <- home_away_table(a, give=TRUE, teams = teams)
+
+save(RCLF3_table,  RCLF3_max, RCLF3_lambda_max, file="RCLF.rda")
 ```
 
