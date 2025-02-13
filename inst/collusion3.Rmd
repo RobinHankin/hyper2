@@ -9,6 +9,7 @@ bibliography: hyper2.bib  # copy from vignettes/
 set.seed(1)
 knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
+library("magrittr")
 ```
 
 
