@@ -41,7 +41,7 @@ make_sushi_H <- function(a, strength){
 ```
 
 ```{r tryH, cache=TRUE}
-wanted <- sample(seq_len(nrow(a)), 10, replace=TRUE, prob=a[,1])
+wanted <- sample(seq_len(nrow(a)), 500, replace=TRUE, prob=a[,1])
 H1888 <- make_sushi_H(a[wanted,-1], strength=1.888)
 H1000 <- make_sushi_H(a[wanted,-1], strength=1.000)
 ```
@@ -59,12 +59,12 @@ mHb
 ```
 
 
-```{r calclike, cache=TRUE}
+```{r calclikesushi, cache=TRUE}
 f <- function(strength){
    H <- make_sushi_H(a[wanted,-1], strength=strength)
    maxp(H,give=1)$`Log-likelihood`
 }
-s <- seq(from=0.4,to=2,len=8)
+s <- seq(from=1.4,to=7.5,len=5)
 L <- sapply(s,f)
 ```
 
