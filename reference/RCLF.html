@@ -5,7 +5,7 @@ These objects refer to results from football matches among four
   Scottish clubs: Rangers, Celtic, Livinston, Falkirk.
 Object RCLF3 is a hyper3 likelihood function for the
   table.  RCLF3_lambda_max is the MLE for lambda.  Object
-  RCLF3_max is its evaluate at the MLE for lambda."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+  RCLF3_maxp is its evaluate at the MLE for lambda."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -86,7 +86,7 @@ Object RCLF3 is a hyper3 likelihood function for the
   Scottish clubs: Rangers, Celtic, Livinston, Falkirk.</p>
 <p>Object <code>RCLF3</code> is a <code>hyper3</code> likelihood function for the
   table.  <code>RCLF3_lambda_max</code> is the MLE for lambda.  Object
-  <code>RCLF3_max</code> is its evaluate at the MLE for lambda.</p>
+  <code>RCLF3_maxp</code> is its evaluate at the MLE for lambda.</p>
     </div>
 
     <div id="ref-usage">
@@ -109,13 +109,62 @@ Object RCLF3 is a hyper3 likelihood function for the
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">RCLF</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">RCLF_table</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'RCLF_table' not found</span>
-<span class="r-in"><span><span class="va">RCLF3_max</span></span></span>
+<span class="r-in"><span><span class="va">RCLF3_table</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $home_wins</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             @away</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @home        Rangers Celtic Falkirk Livingston</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Rangers         NA     81      69         15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Celtic          76     NA      61         15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Falkirk         17     17      NA          6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Livingston       2      2       3         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $away_wins</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             @away</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @home        Rangers Celtic Falkirk Livingston</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Rangers         NA     42       2          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Celtic          46     NA       8          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Falkirk         57     43      NA          8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Livingston      12     11       9         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $draws</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             @away</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @home        Rangers Celtic Falkirk Livingston</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Rangers         NA     44      14          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Celtic          47     NA      10          3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Falkirk         12     19      NA          4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Livingston       4      4       4         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">RCLF3_maxp</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Celtic    Falkirk Livingston    Rangers </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.41160418 0.07357108 0.04249528 0.47232945 </span>
-<span class="r-in"><span><span class="va">RCLF_lambda_max</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'RCLF_lambda_max' not found</span>
+<span class="r-in"><span><span class="va">RCLF3_lambda_max</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.773893</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="loglik.html">loglik</a></span><span class="op">(</span><span class="va">RCLF3_maxp</span>,<span class="va">RCLF3</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -305.933</span>
+<span class="r-in"><span><span class="fu"><a href="tests.html">equalp.test</a></span><span class="op">(</span><span class="va">RCLF3</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	Constrained support maximization</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> data:  RCLF3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> null hypothesis: Celtic = Falkirk = Livingston = Rangers</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> null estimate:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Celtic    Falkirk Livingston    Rangers </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       0.25       0.25       0.25       0.25 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (argmax, constrained optimization)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Support for null:  -405.5553 + K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alternative hypothesis:  sum p_i=1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alternative estimate:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Celtic    Falkirk Livingston    Rangers </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.41160418 0.07357108 0.04249528 0.47232945 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (argmax, free optimization)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Support for alternative:  -305.933 + K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> degrees of freedom: 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> support difference = 99.62227</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p-value: 6.143175e-43 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </div>
