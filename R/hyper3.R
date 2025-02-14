@@ -564,8 +564,8 @@ stop("not yet written")
 `home_draw_away3` <- function(home_games_won, drawn_games, away_games_won, lambda, D){
 
     if(is.list(home_games_won)){
-        away_games_won <- home_games_won[[3]]
-        drawn_games    <- home_games_won[[2]]
+        drawn_games    <- home_games_won[[3]]
+        away_games_won <- home_games_won[[2]]
         home_games_won <- home_games_won[[1]]
     }
         
