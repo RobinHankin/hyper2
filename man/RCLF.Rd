@@ -1,7 +1,7 @@
 \name{RCLF}
 \alias{RCLF}
 \alias{RCLF3}
-\alias{RCLF3_max}
+\alias{RCLF3_maxp}
 \alias{RCLF3_lambda_max}
 \alias{Rangers}
 \alias{Celtic}
@@ -16,7 +16,7 @@
 
   Object \code{RCLF3} is a \code{hyper3} likelihood function for the
   table.  \code{RCLF3_lambda_max} is the MLE for lambda.  Object
-  \code{RCLF3_max} is its evaluate at the MLE for lambda.
+  \code{RCLF3_maxp} is its evaluate at the MLE for lambda.
 
 }
 \usage{data(RCLF)}
@@ -30,7 +30,10 @@ The objects are created by \code{inst/home_advantage.Rmd}.
 \examples{
 data(RCLF)
 RCLF3_table
-RCLF3_max
+RCLF3_maxp
 RCLF3_lambda_max
+
+loglik(RCLF3_maxp,RCLF3)
+equalp.test(RCLF3)
 }
 \keyword{datasets}
