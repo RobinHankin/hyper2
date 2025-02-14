@@ -29,8 +29,8 @@ The objects are created by \code{inst/home_advantage.Rmd}.
 \author{Robin K. S. Hankin}
 \examples{
 data(RCLF)
-RCLF_table
+RCLF3_table
 RCLF3_max
-RCLF_lambda_max
+RCLF3_lambda_max
 }
 \keyword{datasets}
