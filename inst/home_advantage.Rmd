@@ -210,7 +210,7 @@ evaluate might have a different value of $\lambda$ from the
 $\hat{\lambda}$:
 
 ```{r,label=loopysuppcalc,cache=TRUE}
-probs <- seq(from=0.1,to=0.8,len=17)
+probs <- seq(from=0.1,to=0.8,len=2)
 jj <- as.matrix(expand.grid(lam,probs))
 S <- rep(NA,nrow(jj))
 for(i in seq_len(nrow(jj))){
@@ -803,8 +803,8 @@ f <- function(v){
     maxp(H,give=1)$`Log-likelihood`
 }
 n <- 20
-lambda_try <- seq(from=1.6,to=4,len=n)
-D_try <- seq(from=0.3,to=1,len=n)
+lambda_try <- seq(from=1,to=3,len=n)
+D_try <- seq(from=0.1,to=0.6,len=n)
 V <- as.matrix(expand.grid(lambda_try,D_try))
 LL <- apply(V,1,f)
 ```
@@ -814,6 +814,28 @@ LL <- matrix(LL,n,n) - max(LL)
 LL <- pmax(LL,-10)
 contour(lambda_try, D_try, LL,xlab="lambda",ylab="D")
 ```
+
+Now find the evaluate:
+
+```{r findtheevaluate, cache=TRUE}
+maxv <- optim(par=c(3,0.7), fn=f, control=list(fnscale = -1))
+```
+
+```{r showtheevaluate}
+maxv
+```
+
+```{r usetheevaluatefindmax, cache=TRUE}
+MLparams <- maxv$par
+mH <- maxp(home_draw_away3(aT, lambda = MLparams[1], D=MLparams[2]),give=1)
+```
+
+
+```{r}
+mH
+```
+
+
 
 # Appendix
 
