@@ -561,6 +561,59 @@ stop("not yet written")
     return(H)
 }
 
+`home_draw_away3` <- function(home_games_won, drawn_games, away_games_won, lambda, D){
+
+    if(is.list(home_games_won)){
+        away_games_won <- home_games_won[[3]]
+        drawn_games    <- home_games_won[[2]]
+        home_games_won <- home_games_won[[1]]
+    }
+        
+    teams <- rownames(home_games_won)
+    stopifnot(identical(teams,colnames(home_games_won)))
+    stopifnot(identical(teams,rownames(away_games_won)))
+    stopifnot(identical(teams,colnames(away_games_won)))
+    stopifnot(identical(teams,rownames(drawn_games   )))
+    stopifnot(identical(teams,colnames(drawn_games   )))
+
+    H <- hyper3(pnames=c(teams))
+
+    for(i in seq_len(nrow(home_games_won))){
+        for(j in seq_len(ncol(home_games_won))){
+            if(i != j){  
+                home_team <- teams[i]
+                away_team <- teams[j]
+
+		home_wins <- home_games_won[i,j]
+		away_wins <- away_games_won[i,j] 
+                draws     <-    drawn_games[i,j]
+                no_of_matches <- home_wins + away_wins + draws
+
+                ## home wins:
+                jj <- lambda
+                names(jj) <- home_team
+                H[jj] %<>% inc(home_wins)
+                
+                ## away wins:
+                jj <- 1
+                names(jj) <- away_team
+                H[jj] %<>% inc(away_wins)
+
+                ## draws:
+                jj <- c(D,D)
+                names(jj) <- c(home_team,away_team)
+                H[jj] %<>% inc(draws)
+
+                ## denominator
+                jj <- c(D + lambda, D + 1)
+                names(jj) <- c(home_team,away_team)
+                H[jj] %<>% dec(no_of_matches)
+            } # if(i != j) closes
+        } # j loop closes
+    } # i loop closes
+    return(H)
+}
+
 ## kka_array is arranged differently from the previous; it uses
 ## white_wins and white_losses, not white wins and white losses
 

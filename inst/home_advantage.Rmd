@@ -17,8 +17,9 @@ options(warn = defaultW)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-<font size="1"> (takes about fifteen minutes to run without cache)
-</font>
+<font size="1"> most of the time is taken calculating the contour
+graph right at the end; takes about an hour to run without cache for
+n=10 </font>
 
 
 To cite the `hyper2` package in publications, please use
@@ -518,7 +519,7 @@ teams <- c("Rangers","Celtic","Falkirk","Livingston")
 (aT <- home_away_table(a, give=TRUE, teams = teams))
 ```
 
-(from here on we ignore draws and consider only won games)
+(We will ignore draws for the moment, and consider only won games)
 
 ```{r doscottish,cache=TRUE}
 (H <- home_away(aF))
@@ -792,6 +793,27 @@ expectation3 <- function(probs, results, lambda){
 round(expectation3(RCLF3_maxp[c("Rangers","Celtic","Falkirk","Livingston")],aF,RCLF3_lambda_max),1)
 ```
 
+# Bring back draws
+
+```{r, bbdlambdaD,cache=TRUE}
+aT
+home_draw_away3(aT,lambda=1.888,D=0.3)
+f <- function(v){
+    H <- home_draw_away3(aT, lambda = v[1], D=v[2])
+    maxp(H,give=1)$`Log-likelihood`
+}
+n <- 20
+lambda_try <- seq(from=1.6,to=4,len=n)
+D_try <- seq(from=0.3,to=1,len=n)
+V <- as.matrix(expand.grid(lambda_try,D_try))
+LL <- apply(V,1,f)
+```
+
+```{r plotLL}
+LL <- matrix(LL,n,n) - max(LL)
+LL <- pmax(LL,-10)
+contour(lambda_try, D_try, LL,xlab="lambda",ylab="D")
+```
 
 # Appendix
 

@@ -3,6 +3,7 @@
 \alias{zermelo}
 \alias{home_away}
 \alias{home_away3}
+\alias{home_draw_away3}
 \alias{home_away_table}
 \alias{white_draw}
 \alias{white_draw3}
