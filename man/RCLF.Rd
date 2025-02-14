@@ -21,10 +21,10 @@
     \item  Object \code{RCLF3_table} is a table of results for the four
     clubs: home wins, draws, and away wins.
     \code{RCLF3_lambda_max} for the maximum likelihood estimate for
-    $\lambda$.
+    \eqn{\lambda}.
     \item Object \code{RCLF3} is a \code{hyper3} likelihood function for
     the table of won games only [that is, excluding draws], using
-    \code{RCLF3_lambda_max} for the value of $\lambda$.
+    \code{RCLF3_lambda_max} for the value of \eqn{\lambda}.
     \item Object \code{RCLF3_maxp} is its evaluate at the MLE for
     lambda}
   }
