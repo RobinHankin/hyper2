@@ -21,8 +21,15 @@ Print methods for \code{hyper2} and \code{hyper3} objects
 }
 \value{
   Returns the \code{hyper2} or \code{hyper3} object it was sent,
-  invisibly.  Function \code{pnv()} converts a named vector to a
-  character string that is used in the \code{hyper3} print method.
+  invisibly.
+
+  Function \code{pnv()} (\dQuote{\bold{p}rint \bold{n}amed
+  \bold{v}ector}) takes a named vector and returns a character string
+  that is used in the \code{hyper3} print method.  It is sensitive to
+  base R print options such as \code{digits} and \code{scipen}.
+  Currently there is no space around the \dQuote{=} symbol but this is
+  easy to change.
+  
 }
 \details{
 
@@ -40,7 +47,18 @@ Vignette \code{zeropower} gives a discussion of this issue.
 
 }
 \author{Robin K. S. Hankin}
+\note{
+  Sometimes the use of \code{pnv()} can be confusing, as distinct
+  brackets can appear to be identical, as per the example.  See how the
+  two terms with power \eqn{-1} appear to be identical but actually
+  differ by \code{1e-12}, invisible to the print method which only shows
+  seven significant figures.
+}
 \examples{
 data(chess)
 chess
+
+getOption("digits")
+hyper3(list(c(a=1), c(a=1, b=pi),c(a=1, b=pi+1e-12)), powers = c(2, -1, -1))
+
 }

@@ -65,8 +65,9 @@
     return(TRUE)
 }
 
-`pnv` <- function(x){ # "pnv" == "print method for named vectors"
-    paste(paste(names(x),unname(x),sep="="),collapse=", ")
+`pnv` <-function (x){ # "pnv" == "Print Named Vector"
+  f <- function(o){strsplit(capture.output(o)," ")[[1]][2]}
+  paste(paste(paste(names(x), sapply(unname(x), f), sep = "=")), collapse = ", ")
 }
 
 setGeneric("weights",function(object, ...){standardGeneric("weights")})
