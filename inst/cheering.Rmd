@@ -1,0 +1,492 @@
+---
+title: "Function `cheering()` in the `hyper2` package"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("partitions")
+library("pdftools")
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
+
+This document is a distillation and clarification of
+`inst/plackett_luce_monster.Rmd`.
+
+In the following, I use the ''race'' metaphor: five runners take part
+in a race and arrive in order: $a\succ b\succ c\succ d\succ 5e.
+Consider the following Plackett-Luce likelihood function for this
+observation:
+
+
+\begin{equation}
+\frac{p_a}{p_a + p_b + p_c + p_d + p_e}\cdot
+\frac{p_b}{      p_b + p_c + p_d + p_e}\cdot
+\frac{p_c}{            p_c + p_d + p_e}\cdot
+\frac{p_d}{                  p_d + p_e}\cdot
+\frac{p_e}{                        p_e}
+\end{equation}
+
+
+Note the use of multiplication between the terms, indicating
+conditional independence.  We may use the multiplicative
+generalization of Bradley-Terry strengths to introduce an element of
+non-independence between the terms.  There are many ways to do this,
+but one simple case would be to define equivalence classes of the
+competitors with each equivalence class comprising mutually supporting
+runners.  Equivalence classes of size one correspond to unsupported
+runners.  The metaphor would be that a runner who has finished the
+race is able to support other members of his equivalence class by
+cheering his teammates, boosting their better performance.  The
+`hyper2` package includes function `cheering()` which implements this
+functionality.
+
+As an example, consider figure 0.1 This shows a partial probability
+tree diagram for some of the $5!=120$ possible order statistics.  The
+standard Plackett-Luce likelihoods have been modified to account for
+two groups of mutually supporting runners: $\left\lbrace
+a,b,c\right\rbrace$ with support term $\lambda$, and $\left\lbrace
+d,e\right\rbrace$ with support term $\mu$.  From START, the first
+runner to cross the finishing line is associated with standard
+Plackett-Luce.  Taking the top path as an example, we see that the
+likelihood function for $a\succ b\succ c\succ d\succ e$ would be
+
+
+```{tikz, label=tikz3, fig.cap = "Partial probability\\label{tikzabcde} tree for five competitors $a$-$e$ with mutually supporting subsets $\\left\\lbrace a,b,c\\right\\rbrace$ [with support term $\\lambda$] and $(de)$ [with support term $\\mu$], hyper3 approach", fig.ext = 'png', echo=FALSE}
+\usetikzlibrary{arrows}
+\usetikzlibrary{patterns}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+\fill (0,0) circle[radius=2pt]; % root; paths abcde
+\draw (0,0) -- (2,3);
+\draw (0,0) -- (2,2);
+\draw (0,0) -- (2,1);
+\draw (0,0) -- (2,0);
+\draw (0,0) -- (2,-1);
+\node at (0,2.5) (eq1) {$\underbrace{\left\lbrace a,b,c\right\rbrace}_{\lambda}\underbrace{\left\lbrace d,e\right\rbrace}_{\mu}$};
+
+\node at (1.5,2.5) {$a$};
+\node at (1.5,1.7) {$b$};
+\node at (1.5,1.0) {$c$};
+\node at (1.5,0.2) {$d$};
+\node at (1.5,-0.5) {$e$};
+
+\node at (3, 3)  {$\frac{a}{a+b+c+d+e}$};
+\node at (3, 2)  {$\frac{b}{a+b+c+d+e}$};
+\node at (3, 1)  {$\frac{c}{a+b+c+d+e}$};
+\node at (3, 0)  {$\frac{d}{a+b+c+d+e}$};
+\node at (3,-1)  {$\frac{e}{a+b+c+d+e}$};
+
+\fill  (4, 3) circle[radius=2pt];  % a finishes; paths bcde
+\fill  (4, 2) circle[radius=2pt];  % terminal node
+\fill  (4, 1) circle[radius=2pt];  % terminal node
+\fill  (4, 0) circle[radius=2pt];  % d finishes; paths abce
+\fill  (4,-1) circle[radius=2pt];  % terminal node
+
+\draw (4,3) -- (5,5);
+\draw (4,3) -- (5,4);
+\draw (4,3) -- (5,3);
+\draw (4,3) -- (5,2);
+
+\node at (4.5,4.6) {$b$};
+\node at (4.5,3.7) {$c$};
+\node at (4.5,3.2) {$d$};
+\node at (4.5,2.7) {$e$};
+
+\newcommand{\la}[1]{\lambda{#1}}
+\newcommand{\ld}[1]{\mu    {#1}}
+\node at (6, 5)  {$\frac{\la{b}}{\la{b}+\la{c}+d+e}$};
+\node at (6, 4)  {$\frac{\la{c}}{\la{b}+\la{c}+d+e}$};
+\node at (6, 3)  {$\frac{d     }{\la{b}+\la{c}+d+e}$};
+\node at (6, 2)  {$\frac{e     }{\la{b}+\la{c}+d+e}$};
+
+\fill (7.4, 5) circle[radius=2pt];  % ab finishes; pahts cde
+\draw (7.4,5) -- (8.4,6);
+\draw (7.4,5) -- (8.4,5);
+\draw (7.4,5) -- (8.4,4);
+
+
+\node at (7.9,5.7) {$c$};
+\node at (7.9,5.2) {$d$};
+\node at (7.9,4.7) {$e$};
+\node at (9.3, 6) {$\frac{\la{c}}{\la{c}+d+e}$};
+\node at (9.3, 5) {$\frac{d  }{\la{c}+d+e}$};
+\node at (9.3, 4) {$\frac{e  }{\la{c}+d+e}$};
+
+\fill (10.2, 6) circle[radius=2pt];  % abc finishes; paths de
+\draw (10.2, 6) -- (11.2,7);
+\node at (10.7,6.8) {$d$};
+
+\node at (11.8, 7) {$\frac{d}{d+e}$};
+
+\draw (10.2, 6) -- (11.2,6.2);
+\node at (11.8, 6.2) {$\frac{e}{d+e}$};
+\node at (10.7,6.3) {$e$};
+
+\fill (10.2, 5) circle[radius=2pt];
+\draw (10.2, 5) -- (11.2,5.3);
+\node at (11.8, 5.3) {$\frac{\la{c}}{\la{c}+\ld{e}}$};
+\node at (10.7,5.3) {$c$};
+
+\draw (10.2, 5) -- (11.2,4.7);
+\node at (11.8, 4.7) {$\frac{\ld{e}}{\la{c}+\ld{e}}$};
+\node at (10.7,4.7) {$e$};
+
+\fill (10.2, 4) circle[radius=2pt];
+\draw (10.2, 4) -- (11.2,3.9);
+\node at (11.8, 3.9) {$\frac{\la{c}}{\la{c}+\ld{e}}$};
+\node at (10.7,4.1) {$c$};
+
+\draw (10.2, 4) -- (11.2,3.1);
+\node at (11.8, 3.1) {$\frac{\ld{e}}{\la{c}+\ld{e}}$};
+\node at (10.7,3.7) {$e$};
+
+\draw (4, 0) -- (5,1);
+\node at (6, 1)  {$\frac{a}{a+b+c+\ld{e}}$};
+
+\draw (4, 0) -- (5,0);
+\node at (6, 0)  {$\frac{b}{a+b+c+\ld{e}}$};
+
+\draw (4, 0) -- (5,-1);
+\node at (6, -1)  {$\frac{c}{a+b+c+\ld{e}}$};
+
+\draw (4, 0) -- (5,-2);
+\node at (6, -2)  {$\frac{\ld{e}}{a+b+c+\ld{e}}$};
+
+\node at (4.5,0.7) {$a$};
+\node at (4.5,0.2) {$b$};
+\node at (4.5,-0.3) {$c$};
+\node at (4.5,-0.8) {$e$};
+
+
+\fill (7.4, -2) circle[radius=2pt];  % de finishes; paths abc
+\draw (7.4, -2) -- (8.4,-1);
+\draw (7.4, -2) -- (8.4,-2);
+\draw (7.4, -2) -- (8.4,-3);
+
+\node at (7.9,-1.2) {$a$};
+\node at (7.9,-1.8) {$b$};
+\node at (7.9,-2.3) {$c$};
+
+\node at (9.3, -1) {$\frac{a}{a+b+c}$};
+\node at (9.3, -2) {$\frac{b}{a+b+c}$};
+\node at (9.3, -3) {$\frac{c}{a+b+c}$};
+
+\fill (10.2, -1) circle[radius=2pt];  % dea finishes; paths bc
+\fill (10.2, -2) circle[radius=2pt];  % deb finishes; paths ac
+\fill (10.2, -3) circle[radius=2pt];  % dec finishes; paths ab
+
+\draw (10.2, -1) -- (11.2,-0);
+\node at (10.6,-0.4) {$b$};
+\node at (10.6,-0.8) {$c$};
+
+
+\node at (11.8, 0) {$\frac{\la{b}}{\la{b}+\la{c}}$};
+\draw (10.2, -1) -- (11.2,-1);
+
+\node at (11.8, -1) {$\frac{\la{c}}{\la{b}+\la{c}}$};
+
+
+\draw (10.2, -2) -- (11.2,-1.6);
+\node at (11.8, -1.6) {$\frac{\la{a}}{\la{a}+\la{c}}$};
+
+\node at (10.6,-1.7) {$a$};
+\node at (10.6,-2) {$c$};
+
+\draw (10.2, -2) -- (11.2,-2.2);
+\node at (11.8, -2.2) {$\frac{\la{c}}{\la{a}+\la{c}}$};
+
+\draw (10.2, -3) -- (11.2,-2.9);
+\node at (11.8, -2.9) {$\frac{\la{a}}{\la{a}+\la{b}}$};
+
+\draw (10.2, -3) -- (11.2,-3.4);
+\node at (11.8, -3.4) {$\frac{\la{b}}{\la{a}+\la{b}}$};
+
+\node at (10.6,-2.8) {$a$};
+\node at (10.6,-3.3) {$b$};
+
+\fill (7.4, 1) circle[radius=2pt];  % da finishes; paths bce
+
+\draw (7.4, 1) -- (8.4,2);
+\draw (7.4, 1) -- (8.4,1);
+\draw (7.4, 1) -- (8.4,0);
+
+\node at (7.9,1.7) {$b$};
+\node at (7.9,1.2) {$c$};
+\node at (7.9,0.7) {$e$};
+
+\node at (9.3, 2) {$\frac{\la{b}}{\la{b}+\la{c}+e}$};
+\node at (9.3, 1) {$\frac{\la{c}}{\la{b}+\la{c}+e}$};
+\node at (9.3, 0) {$\frac{e     }{\la{b}+\la{c}+e}$};
+
+
+\fill (10.2, 1) circle[radius=2pt];  % da finishes; paths bce
+\draw (10.2, 1) -- (11.2,2);
+\node at (11.8, 2) {$\frac{\la{b}}{\la{b}+\ld{e}}$};
+\draw (10.2, 1) -- (11.2,1);
+\node at (11.8, 1) {$\frac{\ld{e}}{\la{b}+e}$};
+
+\end{tikzpicture}
+```
+
+\begin{equation}\label{asuccb}
+\frac{p_a}{p_a + p_b + p_c + p_d + p_e}\cdot
+\frac{\lambda p_b}{\lambda p_b + \lambda p_c + p_d + p_e}\cdot
+\frac{\lambda p_c}{\lambda p_c + p_d + p_e}\cdot
+\frac{p_d}{p_d + p_e}
+\end{equation}
+
+In equation \ref{asuccb}, the first term is standard Plackett-Luce: at
+this point, nooone has finished and cheering effects are absent.  The
+second term reflects the fact that competitors $b$ and $c$ are
+supported by competitor $a$, who has by this point finished the race
+and is supporting his teammates. 
+
+By contrast, the likelihood function for observation $d\succ a\succ
+c\succ b\succ e$ would be
+
+\begin{equation}
+\frac{p_d}{p_a + p_b + p_c + p_d + p_e}\cdot
+\frac{p_a}{p_a + p_b + p_c + \mu p_e}\cdot
+\frac{\lambda p_c}{\lambda p_b + \lambda p_c + p_e}\cdot
+\frac{\lambda p_b}{\lambda p_b + \mu p_e}
+\end{equation}
+
+where this likelihood function reflects the mutual support for
+equivalence class $\left\lbrace d,e\right\rbrace$.  Note that the
+final term reflects the fact that competitors $b$ and $e$ have their
+support active when vying for fourth place, as members of both their
+teams have finished at this point.
+
+This probability model could easily be modified to account for
+specific circumstances.  The cheering effect be asymmetrical (with $a$
+helping $b$ but not vice-versa, for example).  The effect could
+operate only on specific ordered pairs.  Or perhaps the effect might
+have a finite lifetime: if $a$ places $n^\mathrm{th}$, then the
+cheering effect is active only for competitors placing
+$(n+r)^\mathrm{th}$ or above.
+
+
+# Package idiom
+
+We can investigate red bus-blue bus phenomenon (as discussed, in a
+slightly different context, in `inst/red_bus_blue_bus.Rmd`).  Here, we
+consider a person who is given the choice of five transport methods:
+
+* `C`, car
+* `T`, train
+* `RB` a red bus
+* `BB` a blue bus
+* `W` walking
+
+
+Now, he does not really care what colour the bus is.  If we ask him to
+rank his options, it is highly probable that he will put `RB` and `BB`
+consecutively (because they are essentially indistinguishable).  Can
+we quantify the strength of this effect?  To do this, we define a
+bespoke function `RB_BB_LF()` which returns a `hyper3` log-likelihood
+function corresponding to repeated observations of our commuter's
+reported ranks for the five options:
+
+
+```{r,defineredbuslf}
+`RB_BB_LF` <- function(s){
+    ec <- c(C=1,T=2,RB=3,BB=3,W=4) # equivalence classes
+    h <- c(1,1,s,1)                # strength of support
+    (
+        cheering3(v=c("RB","BB","C" ,"T","W"),e=ec,h=h)*3 +
+        cheering3(v=c("BB","RB","T" ,"C","W"),e=ec,h=h)*2 +
+        cheering3(v=c("T" ,"BB","RB","C","W"),e=ec,h=h)*2 +
+        cheering3(v=c("W" ,"BB","RB","T","C"),e=ec,h=h)*4 +
+        cheering3(v=c("C" ,"RB","BB","W","T"),e=ec,h=h)*4 +
+        cheering3(v=c("BB","C" ,"RB","T","W"),e=ec,h=h)*3
+    )
+}
+```
+
+Above, we see from the function body that he reported `RB,BB,C,T,W`
+three times [first row], `BB,RB,T,C,W` twice [second row], and so on;
+perhaps his ranking depends on the weather or how tired he is on any
+given day.  Observe that in almost every case he ranks `RB` and `BB`
+consecutively.  Function `RB_BB_LF()` takes argument `s` that
+quantifies the perceived similarity between `RB` and `BB`.  For
+example:
+
+```{r,examplerbbblf,cache=TRUE}
+(H <- RB_BB_LF(s=1.8888))
+(mH <- maxp(H,n=1))
+```
+
+Now to find a profile likelihood function for `s`:
+
+```{r,label=proflikeredbus,cache=TRUE}
+o <- function(s){maxp(RB_BB_LF(s),give=TRUE,n=1)$likes} # optimand
+s <- exp(seq(from=log(1.3),to=log(47),len=17)) # putative similarity measures
+L <- sapply(s,o)
+L <- L-max(L)
+```
+
+We can plot these:
+
+
+
+```{r,plotproflike}
+plot(s,L,type="b")
+abline(h=c(0,-2))
+abline(v=1)
+plot(log(s),L,type="b")
+abline(h=c(0,-2))
+abline(v=0)
+```
+
+And formally maximize the likelihood:
+
+```{r,label=maxlikesim,cache=TRUE}
+(osup <- optimize(o,c(6,10),maximum=TRUE))
+```
+
+So a likelihood ratio test of the null that $S=1$ would be:
+
+```{r,label=LRT_RB,cache=TRUE}
+(suppdiff <- o(osup$maximum) - o(1))
+```
+
+
+Easily satisfying Edwards's two-units-of-support criterion; Wilks gives us an asymptotic $p$-value:
+
+```{r,label=RBBBpval}
+pchisq(suppdiff*2,df=1,lower.tail=FALSE)
+```
+
+
+Now use the evaluate for the likelihood function:
+
+```{r calcmaxmax, cache=TRUE}
+maxHmax <- maxp(RB_BB_LF(s = osup$maximum))
+```
+
+
+```{r showmaxmax}
+maxHmax
+```
+
+
+# University ranking analysis
+
+Here we use a dataset of university rankings, `timesData.csv`, taken
+from
+`https://github.com/arnaudbenard/university-ranking/blob/master/timesData.csv`.
+
+```{r, label=readtableandcalc,cache=TRUE}
+a <- read.table("timesData.csv",sep=",", header=TRUE)
+wanted <- c("California Institute of Technology", "Harvard University",
+"Massachusetts Institute of Technology", "Princeton University",
+"Stanford University", "University of Cambridge", "University of Oxford")
+names(wanted) <- c("cal","harv","mass","prin","stan","cam","ox")
+
+a <- a[a$university_name %in% wanted,]
+a <- cbind(a,"top7rank"=0)
+for(y in unique(a$year)){
+    a[a$year==y,"top7rank"] <- order(
+     			  as.numeric(a[a$year==y,"world_rank"]) +
+                                     a[a$year==y,"research"]/1e6,
+decreasing=TRUE)}
+a <- a[,c("top7rank","university_name","year")]
+a <- reshape(a,idvar="university_name",timevar="year",direction="wide")
+for(i in seq_len(nrow(a))){
+   a$university_name[i] <- names(which(wanted == a$university_name[i]))
+}
+rownames(a) <- a$university_name
+a <- a[,-1]
+colnames(a) <- paste("Y",2011:2016,sep="")
+a
+H <- ordertable2supp(a)
+```
+
+```{r,label=testuniv,cache=TRUE}
+equalp.test(H)
+samep.test(H,c("ox","cam"))
+```
+
+Start to use `hyper3` idiom:
+
+```{r,label=defineoxcam}
+H3 <- function(oxcam){
+  out <- hyper3()
+  for(i in seq_len(ncol(a))){
+    jj <- rep("",nrow(a))
+    jj[a[,i]] <- rownames(a)
+    out <- out + cheering3(v=jj,e=c(ox=1,cam=1,prin=2, stan=3, mass=4, harv=5, cal=6), help=c(oxcam,1,1,1,1,1))
+  }
+  return(out)
+}
+```
+
+```{r,label=calculateoxcam,cache=TRUE}
+o <- function(oxcam){maxp(H3(oxcam),give=TRUE,n=1)$likes}
+oc <- exp(seq(from=log(0.5),to=log(5),len=15))
+L <- sapply(oc,o)
+L <- L - max(L)
+```
+
+
+```{r,label=plotoxcam}
+plot(log(oc),L,type="b")
+abline(v=0)
+```
+
+
+# Five nations championship
+
+The five nations rugby championship was held from 1910 to 1999 and
+file `five_nations.txt` shows the order statistic for England (E),
+Scotland (S), Ireland (I), Wales (W), and France (F).
+
+`https://en.wikipedia.org/wiki/Six_Nations_Championship`
+
+Here is `hyper2` analysis:
+
+
+```{r,load5nationsdata,cache=TRUE}
+a <- as.matrix(read.table("five_nations.txt",header=FALSE))
+head(a)
+H <- hyper2()
+for(i in seq_len(nrow(a))){
+  H <- H + race(a[i,-1])
+}
+mH <- maxp(H)
+pie(mH)
+equalp.test(H)
+```
+
+
+Now use `hyper3` to see whether teams do better following a win:
+
+```{r,rugby3,cache=TRUE}
+rugby <- function(lambda){
+  H3a <- hyper3()
+  for(i in seq(from=2,to=nrow(a))){
+        last_year_winner <- a[i-1,2] # e.g. "W" or "E"
+        H3a <- H3a + ordervec2supp3a(a[i,-1],nonfinishers=NULL,helped=last_year_winner,lambda=lambda)
+  }
+  return(H3a)
+}
+rugby(1.888)
+rugby(1.111111)
+```
+
+
+```{r,rugby3max, cache=TRUE}
+maxp(rugby(1.8),n=1,give=TRUE)
+maxp(rugby(1.9),n=1,give=TRUE)
+```
+
+
+## References {-}
