@@ -71,7 +71,7 @@ f <- function(strength){
    H <- make_sushi_H(a[wanted,-1], strength=strength)
    maxp(H,give=1)$`Log-likelihood`
 }
-s <- seq(from=1.4,to=7.5,len=5)
+s <- seq(from=1.4,to=4,len=8)
 L <- sapply(s,f)
 ```
 

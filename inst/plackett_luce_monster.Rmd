@@ -978,6 +978,17 @@ Easily satisfying Edwards's two-units-of-support criterion; Wilks gives us an as
 pchisq(suppdiff*2,df=1,lower.tail=FALSE)
 ```
 
+Now use the evaluate for the likelihood function:
+
+```{r calcmaxmax}
+maxHmax <- maxp(RB_BB_LF(s = osup$maximum))
+```
+
+
+```{r showmaxmax}
+maxHmax
+```
+
 # University ranking analysis
 
 Here we use a dataset of university rankings, `timesData.csv`, taken
