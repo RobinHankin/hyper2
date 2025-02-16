@@ -124,7 +124,7 @@ Keeping $A=9,B=5, C=7,D=3$, and $\lambda=2.05$ [assumed for the moment
 to be known, estimation techniques are discussed later], we can
 represent this information in a standard format:
 
-```{r,label=usehomeaway3a}
+```{r, label=usehomeaway3a}
 library("hyper2",quietly=TRUE)
 M <- matrix(c(NA, A+B*1i ,C+D*1i, NA),2,2,byrow=TRUE)
 teams <- c("p1","p2")
@@ -137,7 +137,7 @@ Above, object `M` has real parts being home wins and imaginary parts
 being away wins.  Appropriate package idiom to specify a likelihood
 function might be to use bespoke function `home_away3()`:
 
-```{r,label=ha3calc,cache=TRUE}
+```{r, label=ha3calc, cache=TRUE}
 (H <- home_away3(M,lambda=2.05))
 ```
 
@@ -146,14 +146,14 @@ to be known, estimation techniques are discussed later], we may
 estimate $p_1$ and $p_2$ using maximum likelihood, `maxp()` in package
 idiom:
 
-```{r,label=findtheevaluateh3,cache=TRUE}
+```{r, label=findtheevaluateh3, cache=TRUE}
 H
 maxp(H)
 ```
 
 Further, we can test whether the players are in fact of equal strength:
 
-```{r,label=testequalitynow,cache=TRUE}
+```{r, label=testequalitynow, cache=TRUE}
 equalp.test(H)
 ```
 
@@ -176,7 +176,7 @@ not significant.
 
 Now, how to estimate $\lambda$?
 
-```{r,label=estimatelambda3,cache=TRUE}
+```{r, label=estimatelambda3, cache=TRUE}
 f <- function(lambda){maxp(home_away3(M,lambda=lambda),give=TRUE)$value}
 f(2)
 f(2.1)
@@ -185,13 +185,13 @@ Supp <- sapply(lam,f)
 ```
 
 
-```{r,label=plotsup}
+```{r, label=plotsup}
 plot(log(lam),Supp-max(Supp),type="b")
 ```
 
 Or even
 
-```{r,label=optimlambda,cache=TRUE}
+```{r, label=optimlambda, cache=TRUE}
 op <- optimize(f,interval=c(2,3),maximum=TRUE)
 op
 ```
@@ -199,7 +199,7 @@ op
 
 We can proceed in two ways.  Firstly we can use $\hat{\lambda}$ directly:
 
-```{r,ept3,cache=TRUE}
+```{r, ept3, cache=TRUE}
 equalp.test(home_away3(M,lambda=op$maximum))
 ```
 			
@@ -209,7 +209,7 @@ perform a fully 2D analysis, which allows for the fact that the
 evaluate might have a different value of $\lambda$ from the
 $\hat{\lambda}$:
 
-```{r,label=loopysuppcalc,cache=TRUE}
+```{r, label=loopysuppcalc, cache=TRUE}
 probs <- seq(from=0.1,to=0.8,len=2)
 jj <- as.matrix(expand.grid(lam,probs))
 S <- rep(NA,nrow(jj))
@@ -224,14 +224,14 @@ S <- matrix(S,length(lam),length(probs))
 ```
 
 
-```{r}
+```{r contlam}
 contour(lam,probs,S,levels=seq(from=-20,to=-10,by=0.5),xlab="lambda",ylab="p1")
 abline(h=0.5)
 ```
 
 #  Ternary representation
 
-```{r,label=useternary}
+```{r, label=useternary}
 library(Ternary)
 
 par(mar = rep(0.2, 4))
@@ -252,7 +252,7 @@ TernaryContour(FunctionToContour, resolution = 36L)
 
 A slightly more complicated example:
 
-```{r,label=genthedata}
+```{r, label=genthedata}
 home_games_won <- matrix(c(
     NA, 16, 12, 11,
     19, NA, 19, 16,
@@ -285,13 +285,13 @@ times and lost 2 times; and B played at home 19+5=24 times and won 19
 times and lost 5 times.  Alternatively we may use complex numbers to
 represent the same dataset:
 
-```{r,label=showhomeawayusingcomplex}
+```{r, label=showhomeawayusingcomplex}
 home_games_won + 1i*away_games_won
 ```
 
 We will create a hyper2 object with the teams and home ground advantage term:
 
-```{r,label=makehyper2,cache=TRUE}
+```{r, label=makehyper2, cache=TRUE}
 H <- home_away(home_games_won,away_games_won)
 H
 options("use_alabama" = FALSE) # to avoid the stupid wmmin bug
@@ -303,19 +303,19 @@ We see strong evidence to support the contention that home advantage
 is real.  Further, we may test the hypothesis that all the teams have
 the same strength, after accounting for the home team advantage:
 
-```{r,label=homegroundAgresti,cache=TRUE}
+```{r, label=homegroundAgresti, cache=TRUE}
 samep.test(H,teams)
 ```
 
 Above, we see no evidence for a difference in team strengths.  Visually:
 
-```{r,label=showvisH,cache=TRUE}
+```{r, label=showvisH, cache=TRUE}
 (mt <- maxp(H))
 ```
 
 A profile likelihood diagram:
 
-```{r,label=showprofilelikelihood, cache=TRUE}
+```{r, label=showprofilelikelihood, cache=TRUE}
 home_strength <- seq(from=0.15,to=0.45,length=13)
 plot(home_strength,profsupp(H,"home",home_strength),type="b",pch=16,
      xlab="home strength",ylab="support",main="profile likelihood for home advantage")
@@ -332,7 +332,7 @@ ground advantage.
 play one another repeatedly.  Each game is played at the home ground
 of one team, the other playing away.  The dataset is as follows:
 
-```{r,label=makeAgrestimatrix}
+```{r, label=makeAgrestimatrix}
 baseball_table <- matrix(c(
 NA,   4+3i, 4+2i, 4+3i, 6+1i, 4+2i, 6+0i,
 3+3i, NA  , 4+2i, 4+3i, 6+0i, 6+1i, 4+3i,
@@ -351,21 +351,21 @@ M # for convenience
 Above, we represent home team wins with the real part of the matrix,
 the imaginary component being away wins.  Now process it:
 
-```{r,label=makesuppfrommatrix}
+```{r, label=makesuppfrommatrix, cache=TRUE}
 baseball <- home_away(M)
 baseball
 ```
 
 Maximum likelihood:
 
-```{r,label=calculatemaxpAgresti,cache=TRUE}
+```{r, label=calculatemaxpAgresti, cache=TRUE}
 baseball_maxp <- maxp(baseball)
 baseball_maxp
 ```
 
 Visually:
 
-```{r,label=showmaxpAgresti}
+```{r, label=showmaxpAgresti}
 dotchart(baseball_maxp,pch=16)
 pie(baseball_maxp)
 
@@ -375,11 +375,11 @@ Above, we see that the teams are all of roughly equal strength, and
 the home advantage is small.  However, we may easily assess the null
 that the home strength is zero:
 
-```{r,analyseAgresti,cache=TRUE}
+```{r, analyseAgresti, cache=TRUE}
 specificp.gt.test(baseball,"home",0)
 ```
 
-```{r,Agrestiprofsupp,cache=TRUE}
+```{r, Agrestiprofsupp, cache=TRUE}
 home_strength <- seq(from=0.005,to=0.1,length=20)
 plot(home_strength,profsupp(baseball,"home",home_strength),type="b",pch=16,
      xlab="home strength",ylab="support",main="profile likelihood for home advantage")
@@ -388,7 +388,7 @@ abline(h=c(0,-2))
 
 Further, we may test the hypothesis that the baseball teams have the same strength:
 
-```{r,label=testhomegroundadvantage,cache=TRUE}
+```{r, label=testhomegroundadvantage, cache=TRUE}
 samep.test(baseball,teams)
 ```
 
@@ -474,7 +474,7 @@ abline(h=c(0,-2))
 
 ### Analysis of  Work by Davidson and Beaver
 
-```{r}
+```{r, label=defdavidsonbeaver}
 DB <- # Davidson and Beaver
 matrix(c(
     NA, 32+18i, 36+14i, 47+03i, 47+03i,
@@ -565,13 +565,13 @@ W
 pchisq(2*W,df=1,lower.tail=FALSE)
 ```
 
-```{r scotmax}
+```{r scotmax, cache=TRUE}
 (H <- home_away3(home_away_table(a,give=FALSE),RCLF3_lambda_max))  # o$maximum ~= 1.353
 maxp(H,give=1)
 RCLF3 <- H
 ```
 
-```{r}
+```{r plotlamloglike}
 plot(lam,loglike-max(loglike),type='b')
 abline(h=c(0,-2))
 abline(v=1)
@@ -668,7 +668,7 @@ actual scoreline: 6-8 or about $(0.43; 0.57)$
 
 First, hyper2:
 
-```{r}
+```{r, label=oldfirmexpectation}
 mH
 mH["Rangers"]
 mH["home"]
@@ -802,7 +802,7 @@ f <- function(v){
     H <- home_draw_away3(aT, lambda = v[1], D=v[2])
     maxp(H,give=1)$`Log-likelihood`
 }
-n <- 20
+n <- 2
 lambda_try <- seq(from=1,to=3,len=n)
 D_try <- seq(from=0.1,to=0.6,len=n)
 V <- as.matrix(expand.grid(lambda_try,D_try))
@@ -831,7 +831,7 @@ mH <- maxp(home_draw_away3(aT, lambda = MLparams[1], D=MLparams[2]),give=1)
 ```
 
 
-```{r}
+```{r, label=showmH}
 mH
 ```
 
