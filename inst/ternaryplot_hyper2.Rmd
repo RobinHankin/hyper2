@@ -53,6 +53,33 @@ the posterior and the red point is the maximum likelihood estimate for
 the three players' strengths.  We can adapt this technique to
 higher-dimensional `hyper2` objects.
 
+
+```{r plotternarychess}
+FunctionToContour <- function (a, b, c) {
+    M <- cbind(a, b, c)
+    colnames(M) <- c("Topalov", "Anand", "Karpov")
+    M[] <- pmax(M,0)
+    M <- sweep(M,1,rowSums(M),"/")
+    out <- loglik(M, chess)
+    out[is.infinite(out)] <- NA
+    out <- out - max(out,na.rm = TRUE)
+    out <- pmax(out, -20, na.rm = TRUE)
+    return(out)
+}
+
+originalPar <- par(mar = rep(0, 4))
+TernaryPlot(alab = "Topalov", blab = "Anand", clab = "Karpov")
+values <- TernaryPointValues(FunctionToContour, resolution = 24L)
+ColourTernary(
+  values,
+  legend = signif(seq(max(values), min(values), length.out = 4), 2),
+  bty = "n"
+)
+TernaryContour(FunctionToContour, resolution = 72L, nlevels=10)
+```
+
+
+
 # The `icons` dataset (`hyper2`)
 
 Consider the `icons` likelihood function:
