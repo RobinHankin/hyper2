@@ -14,6 +14,13 @@ library("hyper2")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
+
+<font size="1"> most of the time is taken calculating the
+`calclikesushi` chunk.  With a sample size of 500 in chunk `tryH`, and
+`n=5` in `calclikesushi`, it takes about half an hour to run without
+cache. </font>
+
+
 To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 
 
@@ -71,6 +78,15 @@ L <- sapply(s,f)
 
 ```{r}
 plot(s,L-max(L),type='b')
+```
+
+
+```{r label=justtryf1, cache=TRUE}
+f1 <- f(1)
+```
+
+```{r label=showf1}
+f1 - max(L)
 ```
 
 
