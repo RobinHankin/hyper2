@@ -1,0 +1,496 @@
+% -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
+\documentclass[article]{jss}
+\usepackage{booktabs}
+\usepackage{units}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+
+\author{Robin K. S. Hankin\\University of Stirling}
+\title{Generalized Bradley-Terry models}
+\Plainauthor{Robin K. S. Hankin} %% comma-separated
+\Plaintitle{Generalized Bradley-Terry models}
+
+%% an abstract and keywords
+\Abstract{
+
+  The \code{hyper2} package provides functionality to work with
+  extensions of the Bradley-Terry probability model such as reified
+  entities (monsters) that account for known enhancements in
+  competitive ability.  Here, I present a generalization of
+  \code{hyper2} in which Bradley-Terry strengths may be enhanced using
+  a multiplicative factor $\lambda$.  Generally, ordinary
+  Bradley-Terry is recovered if $\lambda=1$.  This approach offers
+  multiple advantages over reified Bradley-Terry, and several examples
+  are given.
+}
+\Keywords{Plackett-Luce,
+  Bradley-Terry, Mann-Whitney} \Plainkeywords{Plackett-Luce,
+  Bradley-Terry, Mann-Whitney}
+
+%% publication information
+%% NOTE: Typically, this can be left commented and will be filled out by the technical editor
+%% \Volume{50}
+%% \Issue{9}
+%% \Month{June}
+%% \Year{2012}
+%% \Submitdate{2012-06-04}
+%% \Acceptdate{2012-06-04}
+
+%% The address of (at least) one author should be given
+%% in the following format:
+\Address{
+  Robin K. S. Hankin\\
+  University of Stirling\\
+  E-mail: \email{hankin.robin@gmail.com}\\
+  URL: \url{https://academics.aut.ac.nz/robin.hankin}
+}
+
+%% for those who use Sweave please include the following line (with % symbols):
+%% need no \usepackage{Sweave.sty}
+
+%% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\headercell[1]{%
+   \smash[b]{\begin{tabular}[t]{@{}c@{}} #1 \end{tabular}}}
+\newcommand{\draw}{\ensuremath{\mathfrak{D}}}
+\newcommand{\cdraw}{\ensuremath{\mathfrak{C}}}
+\newcommand{\white}{\ensuremath{\mathfrak{W}}}
+\newcommand{\home}{\ensuremath{\mathfrak{H}}}
+\newcommand{\oo}{\vphantom{W^{W^{W^W}}}}
+
+\begin{document}
+
+<<setup, cache=FALSE,echo=FALSE>>=
+source("loadlibrary.R",echo=FALSE)  # to avoid stupid messages
+opts_chunk$set(cache=TRUE, autodep=TRUE)
+options(prompt = "R> ")
+@
+
+\section{Introduction}
+
+
+The Bradley-Terry model for datasets involving paired comparisons has
+wide uptake in the {R} community.  The canonical problem is to
+consider~$n$ players who compete against one another; the basic
+inference problem is to estimate
+numbers~$\mathbf{p}=\left({p_1,\ldots,p_n}\right)$, $p_i\geqslant 0$,
+$\sum p_i=1$ so that
+$\Prob(\mbox{$i$~beats~$j$})=\frac{p_i}{p_i+p_j}$.  Information about
+the~$p_i$ may be obtained from the results of paired comparisons
+between the players.
+
+One generalization of the Bradley-Terry model is due
+to~\citet{luce1959}, in which the probability of competitor~$i$
+winning in a field of~$j=1,\ldots, n$ is $\frac{p_i}{p_1+\cdots
+  +p_n}$.  It is then natural to quantify some ephemeral enhancement
+to competitor~$i$ using a multiplicative factor $\lambda$.  Then
+$\Prob(\mbox{$i$ wins})=\frac{\lambda p_i}{p_1+\cdots+\lambda
+  p_i+\cdots+p_n}$.  Examples of such enhancements include the
+home-ground advantage in football and rugby, playing white in chess,
+or XXXX.  Note that $\lambda < 1$ would correspond to a decrease in
+competitive ability.
+
+Further, one might follow HANKIN and consider teams of players.  In
+doubles tennis, for example, $\left\lbrace p_1,p_2\right\rbrace$ might
+play $\left\lbrace p_3,p_4\right\rbrace$ and win with probability
+$\frac{p_1+p_2}{p_1+p_2+p_3+p_4}$.  It is natural to combine this idea
+with that of a multiplicative factor.  For example, suppose $p_1$ has
+a special move against $p_3$, and $p_4$ has just been given a
+performance-enhancing drug, we might have a likelihood functions
+proportional to $\frac{\lambda p_1+ p_2}{p_1+p_2+p_3+\mu p_4}$.  Then
+the effectiveness of $p_3$'s special move and the enhancement afforded
+by the drug are measured by $\lambda$ and $\mu$ respectively with
+values $>1$ corresponding to a positive effect.
+
+In this paper I present a generalization of the {\tt hyper2} suite for
+Bradley-Terry likelihoods to accommodate general multiplicative
+factors.  The most general likelihood function would be
+
+\begin{equation}
+  \prod_{i=1}^N
+  \sum_{j=1}^n
+ \left(\lambda_{ij}p_i\right)^{w_i}
+  \end{equation}
+
+where the $p_i$ are traditional Bradley-Terry strengths and the
+$\lambda_{ij}\geqslant 0$ are multiplicative factors that account for
+ephemeral or temporary changes in competitive ability.  In practice,
+almost all the $\lambda_{ij}$ are zero.  To fix ideas, consider the
+data presented in Table~\ref{oldfirm}.  Ignoring draws for the moment,
+we have a likelihood proportional to
+
+\begin{equation}
+  \left(\frac{\lambda p_R}{\lambda p_R + p_C}\right)^{81}\cdot
+  \left(\frac{\lambda p_R}{\lambda p_R + p_F}\right)^{69}\cdots
+  \left(\frac{\lambda p_L}{\lambda p_L + p_F}\right)^{81}\cdots
+  \left(\frac{p_C}{p_C + \lambda p_R}\right)^{42}\cdots
+    \left(\frac{p_F}{p_F + \lambda p_L}\right)^{9}
+\end{equation}
+
+In {\tt hyper3} idiom, a term such as $\lambda p_R + p_C$ is
+represented as a named numeric vector.  For example, if the home
+strength were $\lambda = 1.8$ then the first bracket would be {\tt
+  c(Rangers=1.8, Celtic=1)} with an associated power of $-81$.  The
+computational methodology is a generalization of that used
+in~\cite{hankin2022} except that the multiplicative factors are real
+(as opposed to non-negative integer), and also unknown.
+
+\subsection{The package in use}
+Package idiom for creating a likelihood function for this dataset
+would look something like this: Considering only Rangers and Celtic:
+Rangers at home:
+
+<<defineoldfirm, cache=TRUE>>=
+oldfirm <- function(lambda){
+    H <- hyper3(pnames = c("Rangers", "Celtic"))
+    H[c(Rangers = lambda)            ] %<>% add(81) 
+    H[c(Celtic = 1)                  ] %<>% add(42) 
+    H[c(Rangers = lambda, Celtic = 1)] %<>% subtract(81 + 42)
+
+    H[c(Celtic = lambda)             ] %<>% add(76)
+    H[c(Rangers = 1)                 ] %<>% add(46)
+    H[c(Celtic = lambda, Rangers = 1)] %<>% subtract(46 + 76)
+    return(H)
+}
+@
+
+Above we see package idiom for creating a log-likelihood function.  We
+first create an empty {\tt hyper3} object with an appropriate names
+attribute.  The next three lines, using \pkg{magrittr} assignment
+pipes, give the results for Rangers at home, and the next three lines
+give the result for Celtic at home.  It is then easy to create a
+bespoke log-likelihood function for Rangers-Celtic matches:
+
+<<useoldfirm, cache = TRUE>>=
+oldfirm(1.88)
+@ 
+
+We see a log-likelihood function for all $82+42+76+46=245$
+Rangers-Celtic matches that were not score draws, conditional on
+assumed value $\lambda=1.88$.  We may make inferences about the true
+value of $\lambda$ using profile support:
+
+<<profilelikeoldfirm, cache=TRUE>>=
+f <- function(lambda){maxp(oldfirm(lambda),give=1)$`Log-likelihood`}
+lam <- seq(from=0.9, to=3, len=23)
+logLike <- sapply(lam,f)
+@ 
+
+Thus {\tt f()} returns the support at the evaluate, conditional on a
+supplied value of $\lambda$.  We may use this to create a profile
+likelihood:
+
+\begin{figure}[htbp]
+  \begin{center}
+<<plotproflikeoldfirm, echo=FALSE, fig=TRUE>>=
+plot(lam,logLike - max(logLike),type='b')
+abline(v=1,col='gray')
+segments(x0=1.785,y0=0.1,y1=-1,col='red')
+abline(h = c(0,-2),col='gray')
+@
+\caption{A\label{profilesupportlambda} profile support function for the
+  home-team advantage $\lambda$.  Vertical gray line shows
+  $H_0\colon\lambda =1$, horizontal lines show the 
+  two-units-of-support limits; small red bar shows
+  $\hat{\lambda}\simeq 1.785$}
+\end{center}
+\end{figure}
+
+
+<<optimoldfirm, cache=TRUE>>=
+(lambda_max <-  optimize(f,c(1.5,2.0),maximum=TRUE)$maximum)
+@ 
+
+<<mleoldfirm,cache=TRUE>>=
+maxp(oldfirm(lambda_max))
+@
+
+Compare with the theoretical value of $\widehat{p_{\mbox{\tiny
+      C}}}=\frac{\sqrt{42\cdot 76}}{\sqrt{81\cdot 46}+\sqrt{42\cdot
+    76}}\simeq 0.4807$, $\widehat{p_{\mbox{\tiny R}}}
+=\frac{\sqrt{81\cdot 46}}{\sqrt{81\cdot 46}+\sqrt{42\cdot 76}}\simeq
+0.5193$, and $\widehat{\lambda}=\frac{\sqrt{76\cdot 81}}{\sqrt{46\cdot
+    42}}\simeq 1.785$.
+
+
+\section{Score draws}
+
+About 22\% of matches in Table~\ref{oldfirm} end in a draw and {\tt
+  hyper2} formalism may be used to assess this.  Consider the
+likelihood function described in Table~\ref{windrawloss}; this has a
+number of desirable features.  Firstly, if we consider two players of
+identical strengths and nullify the home ground effect (that is,
+$\lambda=1$) then the probability of a draw is $\frac{2D}{2+2D}$; the
+odds of a draw is simply $D$, regardless of team strength.  Secondly,
+considering only won (that is, not score-drawn) games, the probability
+of a home win is $\frac{\lambda}{1+\lambda}$, that is, the odds of a
+home win is simply $\lambda$, independently of the player
+strength. Such arguments give direct operational significance to
+$\lambda$ and $D$.
+
+
+
+
+\begin{table}
+\centering
+\begin{tabular}{l|c|c}\\&
+{$i$ plays at home} &
+{$i$ plays away} \\
+  \hline
+  $\Prob{(\mbox{$i$ wins})}$                             &
+  $\frac{\lambda p_i}{\lambda p_i + D(p_i + p_j) + p_j}$  &
+  $\frac{p_i}{p_i + D(p_i + \lambda p_j) + p_j}$          \\
+  $\Prob{(\mbox{draw})}$                                 &  
+  $\frac{D(p_i + p_j)}{\lambda p_i+D(p_i+p_j) + p_j}$     &
+  $\frac{D(p_i + p_j)}{p_i + D(p_i+p_j) + \lambda p_j}$   \\
+  $\Prob{(\mbox{$i$ loses})}$                            &  
+  $\frac{p_j}{\lambda p_i + D(p_i+p_j) + p_j}$            &
+  $\frac{\lambda p_j}{p_i + D(p_i + p_j) + \lambda p_j}$  \\
+\end{tabular}
+\caption{Probabilities of a win, draw, loss for the two teams under a
+  multiplicative Bradley-Terry model\label{windrawloss} and a lambda thing}
+\end{table}
+
+We are now in a position to consider the entirety of
+Table~\ref{oldfirm}.  Bespoke function \code{home\_draw\_away3()}
+converts data in the form of Table~\ref{oldfirm} to a \code{hyper3}
+likelihood function following Table~\ref{windrawloss}; it takes
+numerical values for the home advantage $\lambda$ and proclivity to
+draw $D$:
+
+<<eg_RCLF3_lf, cache=TRUE>>=
+home_draw_away3(RCLF3_table, lambda=1.7, D=0.3)
+@
+
+Observe that the resulting likelihood function has two distinct types
+of parameters: the plain Bradley-Terry strengths $\mathbf{p}=(p_R,
+p_C,p_L,p_F)$, with unit sum; but also the auxiliary parameters
+$\lambda,D$.  To make inferences about these parameters we calculate a
+profile likelihood function: conditional on $\lambda,D$ we maximize
+the likelihood over possible values of $\mathbf{p}$.
+
+
+<<defineF>>=
+f <- function(v){
+    H <- home_draw_away3(RCLF3_table, lambda = v[1], D=v[2])
+    maxp(H,give=1)$`Log-likelihood`
+}
+@
+
+\begin{figure}[htbp]
+  \begin{center}
+<<makecontour, fig=TRUE, cache=TRUE>>=
+n <- 2
+lambda <- seq(from=1, to=3, len=n)
+D <- seq(from=0.1, to=0.6, len=n)
+V <- as.matrix(expand.grid(lambda, D))
+LL <- apply(V, 1, f)
+LL <- LL - max(LL)
+contour(lambda, D, matrix(LL, n, n))
+@
+\caption{Contours of support\label{contourlambdaD} for a grid}
+\end{center}
+\end{figure}
+
+Thus \code{f()} gives us a likelihood function for
+$\mathbf{v}=(\lambda,D)$.  We may apply \code{f()} over a grid and
+thereby determine a likelihood surface, shown in
+figure~\ref{contourlambdaD}.  Further, we may find the evaluate using
+\code{optim()}:
+
+<<findmaxlambdaD, cache=TRUE>>=
+maxv <- optim(par=c(2, 0.3), fn=f, control=list(fnscale = -1))$par
+maxv
+@ 
+
+<<testlambdazero, cache=TRUE>>=
+jj <- optimize(f=function(D){f(c(lambda=1,D))}, interval=c(0.1, 0.4), maximum=TRUE)
+jj
+@ 
+
+\section{Other stuff}
+
+
+functions~\citep{hankin2010,hankin2017_rnw} account for enhancements
+of competitive ability through the inclusion of reified entities
+(monsters) whose Bradley-Terry strength represents the extra strength.
+For example, if a player is at an advantage for some reason then a
+reified entity might help him and then
+$\Prob(\mbox{$i$~beats~$j$})=\frac{p_i+\mathfrak{M}}{p_i+p_j+\mathfrak{M}}$,
+where $\mathfrak{M}$ is a reified entity whose strength helps
+competitor $i$.
+Such considerations motivate the
+likelihood function in Equations~\ref{likefour}, originally set out by
+XXXXX and YYYY.
+
+\begin{align}\label{likefour}
+\Prob{(\mbox{$i$ wins at home})} &= \frac{\lambda p_i}{\lambda p_i+p_j}\\
+\Prob{(\mbox{$i$ wins away})} &= \frac{\lambda p_i}{\lambda p_i+p_j}\\
+\Prob{(\mbox{$j$ wins at home})} &= \frac{\lambda p_j}{p_i+\lambda p_j}\\
+\Prob{(\mbox{$j$ wins away})} &= \frac{p_j}{\lambda p_i+\lambda p_j}
+\end{align}
+
+Here, $\lambda\geqslant 0$ is a multiplicative constant accounting for
+the home-ground advantage. If $\lambda>1$ the advantage is positive
+and if $\lambda<1$ it is negative and helps the away side.
+
+Here I introduce {\tt hyper3} formalism 
+
+
+
+ 
+However, reified Bradley-Terry techniques suffer from the following
+defect, here illustrated using the context of Scottish football, and
+the home advantage helping the home team and hindering the away team.
+Consider the case of four teams 1-4 and represent the strength of the
+home ground advantage as a home monster of strength $\mathfrak{H}$
+(draws being discarded for the moment).  Now suppose that
+$p_1=p_2=p_A$, and $p_3=p_4=p_B$.  The unit-sum constraint gives
+$2p_A+2p_aB+\mathfrak{H}=1$.  The probability that team1 (at home)
+beats team 2 (away) is then
+$\frac{p_A+\mathfrak{H}}{2p_A+\mathfrak{H}}$; and the probability that
+team 3 (home) beats team 4 (away) is
+$\frac{p_B+\mathfrak{H}}{2p_B+\mathfrak{H}}$.  The odds ratios would
+be $1+\mathfrak{H}/p_A$ and be $1+\mathfrak{H}/p_B$.  Such analysis is
+incompatible with the perfectly reasonable requirement that the odds
+ratio of home victory between two teams of equal strength be constant;
+but here we see that weak teams are predicted to have an overwhelming
+home-ground advantage (finding actual datasets that illustrate
+precisely this phenomenon is not straightforward: reified
+Bradley-Terry methods have a suprising amount of flexibility and can
+accommodate wide ranges of strengths by dint of manipulating reified
+strengths and real strengths).  
+
+However, consider the data presented in table~\ref{oldfirm} in which
+we see football results from
+
+\begin{table}
+\centering
+\begin{tabular}{@{} *{5}{c} @{}}
+\headercell{\small{Plays at home,}\\ \small{wins}} &
+\multicolumn{4}{c@{}}{\small{Plays away, loses}}\\
+\cmidrule(l){2-5}
+&   Rangers     &    Celtic & Falkirk & Livingston\\
+\midrule
+   Rangers      &   NA &    81  &    69   &      15\\
+   Celtic       &   76 &    NA  &    61   &      15\\
+   Falkirk      &   17 &    17  &    NA   &       6\\
+   Livingston   &    2 &     2  &     3   &      NA\\
+\end{tabular}
+\\
+\rule{1mm}{6mm}
+\\
+\begin{tabular}{@{} *{5}{c} @{}}
+\headercell{\small{Plays at home,}\\ \small{draws}} &
+\multicolumn{4}{c@{}}{\small{Plays away, draws}}\\
+\cmidrule(l){2-5}
+&  Rangers     &    Celtic & Falkirk & Livingston\\
+\midrule
+   Rangers     &       NA  &   44 &     14   &       2\\
+   Celtic      &       47  &   NA &     10   &       3\\
+   Falkirk     &       12  &   19 &     NA   &       4\\
+   Livingston  &       4   &   4  &     4    &      NA\\
+   \end{tabular}
+\\
+\rule{1mm}{6mm}
+\\
+\begin{tabular}{@{} *{5}{c} @{}}
+\headercell{\small{Plays at home,}\\ \small{loses}} &
+\multicolumn{4}{c@{}}{\small{Plays away, wins}}\\
+\cmidrule(l){2-5}
+&  Rangers     &    Celtic & Falkirk & Livingston\\
+\midrule
+   Rangers     &   NA  &  42  &    2  &       0\\
+   Celtic      &   46  &  NA  &    8  &       0\\
+   Falkirk     &   57  &  43  &   NA  &       8\\
+   Livingston  &   12  &  11  &    9  &      NA\\
+  \end{tabular}
+\caption{The \label{oldfirm} dominance of the Old Firm: 669 matches
+  between Rangers, Celtic, Falkirk and Livingston arranged by home
+  wins, draws, and home losses.  Data from {\tt soccerworld}}
+\end{table}
+
+
+\section{Conclusions and further work}
+
+
+
+
+consider Table~\ref{kka}, originally considered
+by~\citet{hankin2020}.  Considering only non-drawn games for the
+moment, we wish to represent the first-mover advantage using a ``White
+monster'', of Bradley-Terry strength \white
+
+
+
+
+\begin{table}
+\centering
+\begin{tabular}{@{} *{4}{c} @{}}
+\headercell{\small{Plays White,}\\ \small{wins}} & \multicolumn{3}{c@{}}{\small{Plays black, loses}}\\
+\cmidrule(l){2-4}
+& An &  Kr & Ks        \\
+\midrule
+  An & -  &  18 &   6  \\
+  Kr &  7 &  -  &  18  \\
+  Ks & 15 &  30 &  -   \\
+\end{tabular}\quad
+\begin{tabular}{@{} *{4}{c} @{}}
+\headercell{\small{Plays W,}\\ \small{draws}} & \multicolumn{3}{c@{}}{\small{Plays black, draws}}\\
+ \cmidrule(l){2-4}
+& An &  Kr & Ks        \\
+\midrule
+  An & -  &  20 &  20  \\
+  Kr & 29 &  -  &  72  \\
+  Ks & 26 &  57 &  -   \\
+\end{tabular}\quad
+\begin{tabular}{@{} *{4}{c} @{}}
+\headercell{\small{Plays W,}\\ \small{loses}} & \multicolumn{3}{c@{}}{\small{Plays black, wins}}\\
+\cmidrule(l){2-4}
+& An &  Kr & Ks        \\
+\midrule
+  An & -  &   5 &   11  \\
+  Kr & 13 &  -  &    9  \\
+  Ks &  2 &   7 &  -   \\
+\end{tabular}
+\caption{Results of 365 chess games \label{kka} between Grandmaster
+  Anand, Grandmaster Karpov, and Grandmaster Kasparov.  For example,
+  Anand played white against Karpov a total of $18+20+13=51$ times and
+  won 18, drew 20, lost 13}
+\end{table}
+
+
+
+
+
+\begin{table}
+\centering
+\begin{tabular}{l|cc|cc}\\&
+  \multicolumn{2}{c}{$i$ plays at home} &
+  \multicolumn{2}{c}{$i$ plays away} \\
+ & Reified & $\lambda$ &
+   Reified & $\lambda$ \\
+  \hline
+  $\Prob{(\mbox{$i$ wins})}$  &
+  $\frac{p_i+\home\oo}{p_i+p_j+\home}$ &
+  $\frac{\lambda p_i}{\lambda p_i+p_j}$ &
+  $\frac{p_i}{p_i+p_j+\home}$ &
+  $\frac{p_i}{\lambda p_i+p_j}$ \\
+  $\Prob{(\mbox{$i$ loses})}$ &
+  $\frac{p_j\oo}{p_i+p_j+\home}$   &
+  $\frac{p_j}{p_i+\lambda p_j}$  &
+  $\frac{p_j+\home}{p_i+p_j+\home}$ &
+  $\frac{\lambda p_j}{p_i + \lambda p_j}$
+  \\
+\end{tabular}
+\caption{Probabilities of a win, draw, loss for the two teams under a reified
+  Bradley-Terry model\label{probabilities} and a lambda thing}
+\end{table}
+
+\section{Conclusions and further work}
+
+Plackett-Luce likelihood functions for rank datasets have been
+
+\bibliography{hyper2}
+\end{document}
