@@ -110,4 +110,32 @@ value from `specificp.test()` of $H_0\colon p_B=\frac{1}{4}$.  This is
 because `samep.test()` allows one to change the value of $p_C$ and we
 would expect a less significant result.
 
+
+# Acid analysis
+
+Turner goes on to assess whether a model of tartness using acetic and
+gluconic acids is appropriate.  This is possible using the `hyper2`
+formalism as follows.
+
+```{r}
+features <- data.frame(salad = LETTERS[1:4],
+                       acetic = c(0.5, 0.5, 1, 0),
+                       gluconic = c(0, 10, 0, 10))
+features
+(M <- as.matrix(features[,-1]))
+makestrengths <- function(v){
+    out <- exp(M %*% v)
+    out <- c(out/sum(out))
+    out <- pmax(out,0)
+    names(out) <- LETTERS[1:4]
+    return(out)
+}
+makestrengths(c(2,1))
+f <- function(v){loglik(makestrengths(v),H2)}
+(maxo <- optim(par=c(3, 0.3), fn=f,control=list(fnscale = -1)))
+makestrengths(maxo$par)
+loglik(makestrengths(maxo$pa),H1)
+maxp(H1,give=1)
+```
+
 # References
