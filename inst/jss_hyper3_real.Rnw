@@ -183,7 +183,7 @@ likelihood:
 
 \begin{figure}[htbp]
   \begin{center}
-<<plotproflikeoldfirm, echo=FALSE, fig=TRUE>>=
+<<plotproflikeoldfirm, echo=FALSE>>=
 plot(lam,logLike - max(logLike),type='b')
 abline(v=1,col='gray')
 segments(x0=1.785,y0=0.1,y1=-1,col='red')
@@ -278,25 +278,8 @@ f <- function(v){
 }
 @
 
-\begin{figure}[htbp]
-  \begin{center}
-<<makecontour, fig=TRUE, cache=TRUE>>=
-n <- 2
-lambda <- seq(from=1, to=3, len=n)
-D <- seq(from=0.1, to=0.6, len=n)
-V <- as.matrix(expand.grid(lambda, D))
-LL <- apply(V, 1, f)
-LL <- LL - max(LL)
-contour(lambda, D, matrix(LL, n, n))
-@
-\caption{Contours of support\label{contourlambdaD} for a grid}
-\end{center}
-\end{figure}
-
 Thus \code{f()} gives us a likelihood function for
-$\mathbf{v}=(\lambda,D)$.  We may apply \code{f()} over a grid and
-thereby determine a likelihood surface, shown in
-figure~\ref{contourlambdaD}.  Further, we may find the evaluate using
+$\mathbf{v}=(\lambda,D)$.  We may find the evaluate using
 \code{optim()}:
 
 <<findmaxlambdaD, cache=TRUE>>=
@@ -304,10 +287,57 @@ maxv <- optim(par=c(2, 0.3), fn=f, control=list(fnscale = -1))$par
 maxv
 @ 
 
-<<testlambdazero, cache=TRUE>>=
-jj <- optimize(f=function(D){f(c(lambda=1,D))}, interval=c(0.1, 0.4), maximum=TRUE)
-jj
+Then
+
+<<showevaluate, cache=TRUE>>=
+maxp(home_draw_away3(RCLF3_table, lambda = maxv[1], D=maxv[2]))
 @ 
+
+Such estimates have rich predictive power.  For example, if Rangers
+were to play Celtic with both teams away [thus nullifying the home
+  ground advantage: $\lambda=1$ in Table~\ref{windrawloss}], the
+probability of win/draw/loss for Rangers would be
+$\left(\frac{p_R}{(1+D)(p_R+p_C)};\frac{D}{1+D};\frac{p_R}{(1+D)(p_R+p_C)}\right)$,
+estimated at $(0.39;0.27;0.34)$.
+
+
+\begin{figure}[htbp]
+  \begin{center}
+<<makecontour, cache=TRUE>>=
+n <- 2
+lambda <- seq(from=1, to=3, len=n)
+D <- seq(from=0.1, to=0.6, len=n)
+V <- as.matrix(expand.grid(lambda, D))
+LL <- apply(V, 1, f)
+LL <- pmax(-20, LL - max(LL))
+contour(lambda, D, matrix(LL, n, n),levels = -2*(0:9), xlab=expression(lambda),ylab=expression(D))
+points(maxv[1], maxv[2], pch=16, col='red')
+@
+\caption{Contours of support\label{contourlambdaD} evaluated over
+  a grid.  Maximum likelihood estimate for $(\lambda, D)$ shown as
+  a red dot at the evaluate}
+  \end{center}
+\end{figure}
+
+
+<<testlambdazero, cache=TRUE, include=FALSE>>=
+jj <- optimize(f=function(D){f(c(lambda=1,D))}, interval=c(0.1, 0.4), maximum=TRUE)
+@ 
+
+Further, we may calculate a support function over the
+$(\lambda,D)$-plane, shown in figure~\ref{contourlambdaD}.  For
+example, we may test the hypothesis that $\lambda=1$ [corresponding to
+  the right hand side of figure~\ref{contourlambdaD}] for which the
+support is about \Sexpr{round(f(maxv) - jj$objective,2)}, far
+exceeding Edwards's two units of support per degree of freedom
+criteron.  Alternatively, we can observe that this lies in the tail
+region of its asymptotic null $\chi^2_4$ distribution with a $p$-value
+of about \Sexpr{signif(pchisq(f(maxv) -
+  jj$objective,lower.tail=FALSE,df=2),digits=2)}.
+
+
+
+
 
 \section{Other stuff}
 
