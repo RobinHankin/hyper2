@@ -4,7 +4,7 @@
 \usepackage{units}
 \usepackage{amsmath}
 \usepackage{amssymb}
-
+\usepackage{tikz}
 
 \author{Robin K. S. Hankin\\University of Stirling}
 \title{Generalized Bradley-Terry models}
@@ -144,8 +144,8 @@ Rangers at home:
 <<defineoldfirm, cache=TRUE>>=
 oldfirm <- function(lambda){
     H <- hyper3(pnames = c("Rangers", "Celtic"))
-    H[c(Rangers = lambda)            ] %<>% add(81) 
-    H[c(Celtic = 1)                  ] %<>% add(42) 
+    H[c(Rangers = lambda)            ] %<>% add(81)
+    H[c(Celtic = 1)                  ] %<>% add(42)
     H[c(Rangers = lambda, Celtic = 1)] %<>% subtract(81 + 42)
 
     H[c(Celtic = lambda)             ] %<>% add(76)
@@ -164,7 +164,7 @@ bespoke log-likelihood function for Rangers-Celtic matches:
 
 <<useoldfirm, cache = TRUE>>=
 oldfirm(1.88)
-@ 
+@
 
 We see a log-likelihood function for all $82+42+76+46=245$
 Rangers-Celtic matches that were not score draws, conditional on
@@ -175,7 +175,7 @@ value of $\lambda$ using profile support:
 f <- function(lambda){maxp(oldfirm(lambda),give=1)$`Log-likelihood`}
 lam <- seq(from=0.9, to=3, len=23)
 logLike <- sapply(lam,f)
-@ 
+@
 
 Thus {\tt f()} returns the support at the evaluate, conditional on a
 supplied value of $\lambda$.  We may use this to create a profile
@@ -191,7 +191,7 @@ abline(h = c(0,-2),col='gray')
 @
 \caption{A\label{profilesupportlambda} profile support function for the
   home-team advantage $\lambda$.  Vertical gray line shows
-  $H_0\colon\lambda =1$, horizontal lines show the 
+  $H_0\colon\lambda =1$, horizontal lines show the
   two-units-of-support limits; small red bar shows
   $\hat{\lambda}\simeq 1.785$}
 \end{center}
@@ -200,7 +200,7 @@ abline(h = c(0,-2),col='gray')
 
 <<optimoldfirm, cache=TRUE>>=
 (lambda_max <-  optimize(f,c(1.5,2.0),maximum=TRUE)$maximum)
-@ 
+@
 
 <<mleoldfirm,cache=TRUE>>=
 maxp(oldfirm(lambda_max))
@@ -241,10 +241,10 @@ $\lambda$ and $D$.
   $\Prob{(\mbox{$i$ wins})}$                             &
   $\frac{\lambda p_i}{\lambda p_i + D(p_i + p_j) + p_j}$  &
   $\frac{p_i}{p_i + D(p_i + \lambda p_j) + p_j}$          \\
-  $\Prob{(\mbox{draw})}$                                 &  
+  $\Prob{(\mbox{draw})}$                                 &
   $\frac{D(p_i + p_j)}{\lambda p_i+D(p_i+p_j) + p_j}$     &
   $\frac{D(p_i + p_j)}{p_i + D(p_i+p_j) + \lambda p_j}$   \\
-  $\Prob{(\mbox{$i$ loses})}$                            &  
+  $\Prob{(\mbox{$i$ loses})}$                            &
   $\frac{p_j}{\lambda p_i + D(p_i+p_j) + p_j}$            &
   $\frac{\lambda p_j}{p_i + D(p_i + p_j) + \lambda p_j}$  \\
 \end{tabular}
@@ -285,13 +285,13 @@ $\mathbf{v}=(\lambda,D)$.  We may find the evaluate using
 <<findmaxlambdaD, cache=TRUE>>=
 maxv <- optim(par=c(2, 0.3), fn=f, control=list(fnscale = -1))$par
 maxv
-@ 
+@
 
 Then
 
 <<showevaluate, cache=TRUE>>=
 maxp(home_draw_away3(RCLF3_table, lambda = maxv[1], D=maxv[2]))
-@ 
+@
 
 Such estimates have rich predictive power.  For example, if Rangers
 were to play Celtic with both teams away [thus nullifying the home
@@ -304,7 +304,7 @@ estimated at $(0.39;0.27;0.34)$.
 \begin{figure}[htbp]
   \begin{center}
 <<makecontour, cache=TRUE>>=
-n <- 2
+n <- 20
 lambda <- seq(from=1, to=3, len=n)
 D <- seq(from=0.1, to=0.6, len=n)
 V <- as.matrix(expand.grid(lambda, D))
@@ -322,7 +322,7 @@ points(maxv[1], maxv[2], pch=16, col='red')
 
 <<testlambdazero, cache=TRUE, include=FALSE>>=
 jj <- optimize(f=function(D){f(c(lambda=1,D))}, interval=c(0.1, 0.4), maximum=TRUE)
-@ 
+@
 
 Further, we may calculate a support function over the
 $(\lambda,D)$-plane, shown in figure~\ref{contourlambdaD}.  For
@@ -335,6 +335,264 @@ region of its asymptotic null $\chi^2_4$ distribution with a $p$-value
 of about \Sexpr{signif(pchisq(f(maxv) -
   jj$objective,lower.tail=FALSE,df=2),digits=2)}.
 
+
+\section{Non-independence in successive arrivals}
+
+In the following, I use the ``race'' metaphor: five runners take part
+in a race and arrive in order: $a\succ b\succ c\succ d\succ e$.
+Consider the following Plackett-Luce likelihood function for this
+observation:
+
+\begin{equation}
+\frac{p_a}{p_a + p_b + p_c + p_d + p_e}\cdot
+\frac{p_b}{      p_b + p_c + p_d + p_e}\cdot
+\frac{p_c}{            p_c + p_d + p_e}\cdot
+\frac{p_d}{                  p_d + p_e}\cdot
+\frac{p_e}{                        p_e}
+\end{equation}
+
+Note the use of multiplication between the terms, indicating
+conditional independence.  We may use the multiplicative
+generalization of Bradley-Terry strengths to introduce an element of
+non-independence between the terms.  There are many ways to do this,
+but one simple case would be to define equivalence classes of the
+competitors with each equivalence class comprising mutually supporting
+runners.  Equivalence classes of size one correspond to unsupported
+runners.  The metaphor would be that a runner who has finished the
+race is able to support other members of his equivalence class by
+cheering his teammates, boosting their performance.  The \pkg{hyper2}
+package includes function \code{cheering()} which implements this
+functionality.
+
+As an example, consider figure~\ref{tikzabcde}.  This shows a partial
+probability tree diagram for some of the $5!=120$ possible order
+statistics.  The standard Plackett-Luce likelihoods have been modified
+to account for two groups of mutually supporting runners:
+$\left\lbrace a,b,c\right\rbrace$ with support term $\lambda$, and
+$\left\lbrace d,e\right\rbrace$ with support term $\mu$.  From START,
+the first runner to cross the finishing line has standard
+Plackett-Luce probability.  Taking the top path as an example, we see
+that the likelihood function for $a\succ b\succ c\succ d\succ e$ would
+be
+
+\begin{figure}[htbp]
+  \begin{center}
+\usetikzlibrary{arrows}
+\usetikzlibrary{patterns}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+\fill (0,0) circle[radius=2pt]; % root; paths abcde
+\draw (0,0) -- (2, 3) -- (4.8, 3);
+\draw (0,0) -- (2, 2) -- (4.8, 2);
+\draw (0,0) -- (2, 1) -- (4.8, 1);
+\draw (0,0) -- (2, 0) -- (4.8, 0);
+\draw (0,0) -- (2,-1) -- (4.8,-1);
+\node at (0,2.5) (eq1) {$\underbrace{\left\lbrace a,b,c\right\rbrace}_{\lambda}\underbrace{\left\lbrace d,e\right\rbrace}_{\mu}$};
+
+\node at (4.8, 3) {$a$};
+\node at (4.8, 2) {$b$};
+\node at (4.8, 1) {$c$};
+\node at (4.8, 0) {$d$};
+\node at (4.8,-1) {$e$};
+
+\node at (3.4, 3.4)  {$\frac{p_a}{p_a+p_b+p_c+p_d+p_e}$};
+\node at (3.4, 2.4)  {$\frac{p_b}{p_a+p_b+p_c+p_d+p_e}$};
+\node at (3.4, 1.4)  {$\frac{p_c}{p_a+p_b+p_c+p_d+p_e}$};
+\node at (3.4, 0.4)  {$\frac{p_d}{p_a+p_b+p_c+p_d+p_e}$};
+\node at (3.4,-0.6)  {$\frac{p_e}{p_a+p_b+p_c+p_d+p_e}$};
+
+\fill  (4.8, 3) circle[radius=2pt];  % a finishes; paths bcde
+\fill  (4.8, 2) circle[radius=2pt];  % terminal node
+\fill  (4.8, 1) circle[radius=2pt];  % terminal node
+\fill  (4.8, 0) circle[radius=2pt];  % d finishes; paths abce
+\fill  (4.8,-1) circle[radius=2pt];  % terminal node
+
+\draw (4.8,3) -- (5.8,5);
+\draw (4.8,3) -- (5.8,4);
+\draw (4.8,3) -- (5.8,3);
+\draw (4.8,3) -- (5.8,2);
+
+\node at (4.5,4.6) {$b$};
+\node at (4.5,3.7) {$c$};
+\node at (4.5,3.2) {$d$};
+\node at (4.5,2.7) {$e$};
+
+\newcommand{\la}[1]{\lambda{#1}}
+\newcommand{\ld}[1]{\mu    {#1}}
+\node at (6, 5)  {$\frac{\la{p_b}}{\la{p_b}+\la{p_c}+p_d+p_e}$};
+\node at (6, 4)  {$\frac{\la{p_c}}{\la{p_b}+\la{p_c}+p_d+p_e}$};
+\node at (6, 3)  {$\frac{p_d     }{\la{p_b}+\la{p_c}+p_d+p_e}$};
+\node at (6, 2)  {$\frac{p_e     }{\la{p_b}+\la{p_c}+p_d+p_e}$};
+
+\fill (7.4, 5) circle[radius=2pt];  % ab finishes; pahts cde
+\draw (7.4,5) -- (8.4,6);
+\draw (7.4,5) -- (8.4,5);
+\draw (7.4,5) -- (8.4,4);
+
+
+\node at (7.9,5.7) {$p_c$};
+\node at (7.9,5.2) {$p_d$};
+\node at (7.9,4.7) {$p_e$};
+\node at (9.3, 6) {$\frac{\la{p_c}}{\la{p_c}+p_d+p_e}$};
+\node at (9.3, 5) {$\frac{p_d  }{\la{p_c}+p_d+p_e}$};
+\node at (9.3, 4) {$\frac{p_e  }{\la{p_c}+p_d+p_e}$};
+
+\fill (10.2, 6) circle[radius=2pt];  % abc finishes; paths de
+\draw (10.2, 6) -- (11.2,7);
+\node at (10.7,6.8) {$p_d$};
+
+\node at (11.8, 7) {$\frac{p_d}{p_d+p_e}$};
+
+\draw (10.2, 6) -- (11.2,6.2);
+\node at (11.8, 6.2) {$\frac{p_e}{p_d+p_e}$};
+\node at (10.7,6.3) {$p_e$};
+
+\fill (10.2, 5) circle[radius=2pt];
+\draw (10.2, 5) -- (11.2,5.3);
+\node at (11.8, 5.3) {$\frac{\la{p_c}}{\la{p_c}+\ld{p_e}}$};
+\node at (10.7,5.3) {$p_c$};
+
+\draw (10.2, 5) -- (11.2,4.7);
+\node at (11.8, 4.7) {$\frac{\ld{p_e}}{\la{p_c}+\ld{p_e}}$};
+\node at (10.7,4.7) {$p_e$};
+
+\fill (10.2, 4) circle[radius=2pt];
+\draw (10.2, 4) -- (11.2,3.9);
+\node at (11.8, 3.9) {$\frac{\la{p_c}}{\la{p_c}+\ld{p_e}}$};
+\node at (10.7,4.1) {$p_c$};
+
+\draw (10.2, 4) -- (11.2,3.1);
+\node at (11.8, 3.1) {$\frac{\ld{p_e}}{\la{p_c}+\ld{p_e}}$};
+\node at (10.7,3.7) {$p_e$};
+
+\draw (4, 0) -- (5,1);
+\node at (6, 1)  {$\frac{p_a}{p_a+p_b+p_c+\ld{p_e}}$};
+
+\draw (4, 0) -- (5,0);
+\node at (6, 0)  {$\frac{p_b}{p_a+p_b+p_c+\ld{p_e}}$};
+
+\draw (4, 0) -- (5,-1);
+\node at (6, -1)  {$\frac{p_c}{p_a+p_b+p_c+\ld{p_e}}$};
+
+\draw (4, 0) -- (5,-2);
+\node at (6, -2)  {$\frac{\ld{p_e}}{p_a+p_b+p_c+\ld{p_e}}$};
+
+\node at (4.5,0.7) {$a$};
+\node at (4.5,0.2) {$b$};
+\node at (4.5,-0.3) {$c$};
+\node at (4.5,-0.8) {$e$};
+
+
+\fill (7.4, -2) circle[radius=2pt];  % de finishes; paths abc
+\draw (7.4, -2) -- (8.4,-1);
+\draw (7.4, -2) -- (8.4,-2);
+\draw (7.4, -2) -- (8.4,-3);
+
+\node at (7.9,-1.2) {$p_a$};
+\node at (7.9,-1.8) {$p_b$};
+\node at (7.9,-2.3) {$p_c$};
+
+\node at (9.3, -1) {$\frac{p_a}{p_a+p_b+c}$};
+\node at (9.3, -2) {$\frac{p_b}{p_a+p_b+c}$};
+\node at (9.3, -3) {$\frac{p_c}{p_a+p_b+c}$};
+
+\fill (10.2, -1) circle[radius=2pt];  % dea finishes; paths bc
+\fill (10.2, -2) circle[radius=2pt];  % deb finishes; paths ac
+\fill (10.2, -3) circle[radius=2pt];  % dec finishes; paths ab
+
+\draw (10.2, -1) -- (11.2,-0);
+\node at (10.6,-0.4) {$b$};
+\node at (10.6,-0.8) {$c$};
+
+
+\node at (11.8, 0) {$\frac{\la{p_b}}{\la{p_b}+\la{p_c}}$};
+\draw (10.2, -1) -- (11.2,-1);
+
+\node at (11.8, -1) {$\frac{\la{p_c}}{\la{p_b}+\la{p_c}}$};
+
+
+\draw (10.2, -2) -- (11.2,-1.6);
+\node at (11.8, -1.6) {$\frac{\la{p_a}}{\la{p_a}+\la{p_c}}$};
+
+\node at (10.6,-1.7) {$a$};
+\node at (10.6,-2) {$c$};
+
+\draw (10.2, -2) -- (11.2,-2.2);
+\node at (11.8, -2.2) {$\frac{\la{p_c}}{\la{p_a}+\la{p_c}}$};
+
+\draw (10.2, -3) -- (11.2,-2.9);
+\node at (11.8, -2.9) {$\frac{\la{p_a}}{\la{p_a}+\la{p_b}}$};
+
+\draw (10.2, -3) -- (11.2,-3.4);
+\node at (11.8, -3.4) {$\frac{\la{p_b}}{\la{p_a}+\la{p_b}}$};
+
+\node at (10.6,-2.8) {$a$};
+\node at (10.6,-3.3) {$b$};
+
+\fill (7.4, 1) circle[radius=2pt];  % da finishes; paths bce
+
+\draw (7.4, 1) -- (8.4,2);
+\draw (7.4, 1) -- (8.4,1);
+\draw (7.4, 1) -- (8.4,0);
+
+\node at (7.9,1.7) {$b$};
+\node at (7.9,1.2) {$c$};
+\node at (7.9,0.7) {$e$};
+
+\node at (9.3, 2) {$\frac{\la{p_b}}{\la{p_b}+\la{p_c}+p_e}$};
+\node at (9.3, 1) {$\frac{\la{p_c}}{\la{p_b}+\la{p_c}+p_e}$};
+\node at (9.3, 0) {$\frac{e       }{\la{p_b}+\la{p_c}+p_e}$};
+
+
+\fill (10.2, 1) circle[radius=2pt];  % da finishes; paths bce
+\draw (10.2, 1) -- (11.2,2);
+\node at (11.8, 2) {$\frac{\la{p_b}}{\la{p_b}+\ld{p_e}}$};
+\draw (10.2, 1) -- (11.2,1);
+\node at (11.8, 1) {$\frac{\ld{p_e}}{\la{p_b}+p_e}$};
+
+\end{tikzpicture}
+\caption{Partial probability\label{tikzabcde} tree for five competitors
+  $a$-$e$ with mutually supporting subsets $\left\lbrace a,b,c\right\rbrace$
+  [with support term $\lambda$] and $(de)$ [with support term $\mu$]}
+\end{center}
+\end{figure}
+
+
+\begin{equation}\label{asuccb}
+\frac{p_a}{p_a + p_b + p_c + p_d + p_e}\cdot
+\frac{\lambda p_b}{\lambda p_b + \lambda p_c + p_d + p_e}\cdot
+\frac{\lambda p_c}{\lambda p_c + p_d + p_e}\cdot
+\frac{p_d}{p_d + p_e}
+\end{equation}
+
+In equation \ref{asuccb}, the first term is standard Plackett-Luce: at
+this point, no competitor has finished and cheering effects are
+absent.  The second term reflects the fact that competitors $b$ and
+$c$ are supported by competitor $a$, who has by this point finished
+the race and is supporting his teammates.
+
+By contrast, the likelihood function for observation $d\succ a\succ
+c\succ b\succ e$ would be
+
+\begin{equation}
+\frac{p_d}{p_a + p_b + p_c + p_d + p_e}\cdot
+\frac{p_a}{p_a + p_b + p_c + \mu p_e}\cdot
+\frac{\lambda p_c}{\lambda p_b + \lambda p_c + p_e}\cdot
+\frac{\lambda p_b}{\lambda p_b + \mu p_e}
+\end{equation}
+
+where this likelihood function reflects the mutual support for
+equivalence class $\left\lbrace d,e\right\rbrace$.  Note that the
+final term reflects the fact that competitors $b$ and $e$ have their
+support active when vying for fourth place, as members of both their
+teams have finished at this point.
+
+This probability model could easily be modified to account for
+specific circumstances.  The cheering effect be asymmetrical (with $a$
+helping $b$ but not vice-versa, for example).  The effect could
+operate only on specific ordered pairs.  Or perhaps the effect might
+have a finite lifetime: if $a$ places $n^\mathrm{th}$, then the
+cheering effect is active only for competitors placing
+$(n+r)^\mathrm{th}$ or above.
 
 
 
@@ -365,11 +623,11 @@ Here, $\lambda\geqslant 0$ is a multiplicative constant accounting for
 the home-ground advantage. If $\lambda>1$ the advantage is positive
 and if $\lambda<1$ it is negative and helps the away side.
 
-Here I introduce {\tt hyper3} formalism 
+Here I introduce {\tt hyper3} formalism
 
 
 
- 
+
 However, reified Bradley-Terry techniques suffer from the following
 defect, here illustrated using the context of Scottish football, and
 the home advantage helping the home team and hindering the away team.
@@ -390,7 +648,7 @@ home-ground advantage (finding actual datasets that illustrate
 precisely this phenomenon is not straightforward: reified
 Bradley-Terry methods have a suprising amount of flexibility and can
 accommodate wide ranges of strengths by dint of manipulating reified
-strengths and real strengths).  
+strengths and real strengths).
 
 However, consider the data presented in table~\ref{oldfirm} in which
 we see football results from
