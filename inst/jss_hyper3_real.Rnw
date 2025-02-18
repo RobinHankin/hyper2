@@ -381,11 +381,11 @@ be
 \usetikzlibrary{patterns}
 \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
 \fill (0,0) circle[radius=2pt]; % root; paths abcde
-\draw (0,0) -- (2, 3) -- (4.8, 3);
-\draw (0,0) -- (2, 2) -- (4.8, 2);
-\draw (0,0) -- (2, 1) -- (4.8, 1);
-\draw (0,0) -- (2, 0) -- (4.8, 0);
-\draw (0,0) -- (2,-1) -- (4.8,-1);
+\draw[thick] (0,0) -- (2, 3) -- (4.8, 3);
+\draw[thick] (0,0) -- (2, 2) -- (4.8, 2);
+\draw[thick] (0,0) -- (2, 1) -- (4.8, 1);
+\draw[thick] (0,0) -- (2, 0) -- (4.8, 0);
+\draw[thick] (0,0) -- (2,-1) -- (4.8,-1);
 \node at (0,2.5) (eq1) {$\underbrace{\left\lbrace a,b,c\right\rbrace}_{\lambda}\underbrace{\left\lbrace d,e\right\rbrace}_{\mu}$};
 
 \node at (4.8, 2.8) {$a$};
@@ -400,16 +400,16 @@ be
 \node at (3.4, 0.4)  {$\frac{p_d}{p_a+p_b+p_c+p_d+p_e}$};
 \node at (3.4,-0.6)  {$\frac{p_e}{p_a+p_b+p_c+p_d+p_e}$};
 
-\fill[red] (4.8, 3) circle[radius=2pt];  % a finishes; paths bcde
-\fill[red] (4.8, 2) circle[radius=2pt];  % terminal node
-\fill[red] (4.8, 1) circle[radius=2pt];  % terminal node
-\fill[red] (4.8, 0) circle[radius=2pt];  % d finishes; paths abce
-\fill[red] (4.8,-1) circle[radius=2pt];  % terminal node
+\fill (4.8, 3) circle[radius=2pt];  % a finishes; paths bcde
+\fill (4.8, 2) circle[radius=2pt];  % terminal node
+\fill (4.8, 1) circle[radius=2pt];  % terminal node
+\fill (4.8, 0) circle[radius=2pt];  % d finishes; paths abce
+\fill (4.8,-1) circle[radius=2pt];  % terminal node
 
-\draw (4.8,3) -- (5.8,5) -- (8.2,5);
-\draw (4.8,3) -- (5.8,4) -- (8.2,4);
-\draw (4.8,3) -- (5.8,3) -- (8.2,3);
-\draw (4.8,3) -- (5.8,2) -- (8.2,2);
+\draw[thick] (4.8,3) -- (5.8,5) -- (8.2,5);
+\draw[thick] (4.8,3) -- (5.8,4) -- (8.2,4);
+\draw[thick] (4.8,3) -- (5.8,3) -- (8.2,3);
+\draw[thick] (4.8,3) -- (5.8,2) -- (8.2,2);
 
 \newcommand{\la}[1]{\lambda{#1}}
 \newcommand{\ld}[1]{\mu    {#1}}
@@ -418,13 +418,19 @@ be
 \node at (7, 3.4)  {$\frac{p_d     }{\la{p_b}+\la{p_c}+p_d+p_e}$};
 \node at (7, 2.4)  {$\frac{p_e     }{\la{p_b}+\la{p_c}+p_d+p_e}$};
 
-\fill[blue] (8.2,5) circle[radius=2pt];  % ab finishes; paths cde
-\fill[blue] (8.2,4) circle[radius=2pt];  % ab finishes; paths cde
-\fill[blue] (8.2,3) circle[radius=2pt];  % ab finishes; paths cde
-\fill[blue] (8.2,2) circle[radius=2pt];  % ab finishes; paths cde
-\draw (8.2,5) -- (8.9,6) -- (10.6,6);
-\draw (8.2,5) -- (8.9,5) -- (10.6,5);
-\draw (8.2,5) -- (8.9,4) -- (10.6,4);
+\fill (8.2,5) circle[radius=2pt];  % ab finishes; paths cde
+\fill (8.2,4) circle[radius=2pt];  % ab finishes; paths cde
+\fill (8.2,3) circle[radius=2pt];  % ab finishes; paths cde
+\fill (8.2,2) circle[radius=2pt];  % ab finishes; paths cde
+
+\node at (8.2,4.8) {$b$};
+\node at (8.2,3.8) {$c$};
+\node at (8.2,2.8) {$d$};
+\node at (8.2,1.8) {$e$};
+
+\draw[thick] (8.2,5) -- (8.9,6) -- (10.6,6);
+\draw[thick] (8.2,5) -- (8.9,5) -- (10.6,5);
+\draw[thick] (8.2,5) -- (8.9,4) -- (10.6,4);
 
 
 
@@ -432,108 +438,139 @@ be
 \node at (9.5, 5.4) {$\frac{p_d  }{\la{p_c}+p_d+p_e}$};
 \node at (9.5, 4.4) {$\frac{p_e  }{\la{p_c}+p_d+p_e}$};
 
-\fill[green] (10.6, 6) circle[radius=2pt];  % abc finishes; paths de
-\draw (10.6, 6) -- (11.2,7) -- (12.2,7);
-\fill[red] (12.2,7) circle[radius=2pt];
+\fill (10.6, 6) circle[radius=2pt];  % abc finishes; paths de
+\node at (10.6,5.8) {$c$};
+\draw[thick] (10.6, 6) -- (11.2,7) -- (12.2,7);
+\fill (12.2,7) circle[radius=2pt];
+\node[anchor = west] at (12.2,7) {$a\succ b\succ c\succ d\succ e$};
 \node at (11.8, 7.4) {$\frac{p_d}{p_d+p_e}$};
 
-\draw (10.6, 6) -- (11.2,6.2) -- (12.2,6.2);
-\fill[red] (12.2,6.2) circle[radius=2pt];
+\draw[thick] (10.6, 6) -- (11.2,6.2) -- (12.2,6.2);
+\fill (12.2,6.2) circle[radius=2pt];
+\node[anchor = west] at (12.2,6.2) {$a\succ b\succ c\succ e\succ d$};
 \node at (11.8, 6.6) {$\frac{p_e}{p_d+p_e}$};
 
-\fill[green] (10.6, 5) circle[radius=2pt];
-\draw (10.6, 5) -- (11.2,5.3) -- (12.2, 5.3);
-\fill[red] (12.2,5.3) circle[radius=2pt];
+\fill (10.6, 5) circle[radius=2pt];
+\node at (10.6,4.8) {$d$};
+
+\draw[thick] (10.6, 5) -- (11.2,5.3) -- (12.2, 5.3);
+\fill (12.2,5.3) circle[radius=2pt];
+\node[anchor = west] at (12.2,5.3) {$a\succ b\succ d\succ c\succ e$};
 \node at (11.8, 5.7) {$\frac{\la{p_c}}{\la{p_c}+\ld{p_e}}$};
 
-\draw (10.6, 5) -- (11.2,4.7) -- (12.2, 4.7);
-\fill[red] (12.2,4.7) circle[radius=2pt];
+\draw[thick] (10.6, 5) -- (11.2,4.7) -- (12.2, 4.7);
+\fill (12.2,4.7) circle[radius=2pt];
+\node[anchor = west] at (12.2,4.7) {$a\succ b\succ d\succ e\succ c$};
 \node at (11.8, 5.0) {$\frac{\ld{p_e}}{\la{p_c}+\ld{p_e}}$};
 
-\fill[green] (10.6, 4) circle[radius=2pt];
-\draw (10.6, 4) -- (11.2,3.9) -- (12.2, 3.9);
-\fill[red] (12.2,3.9) circle[radius=2pt];
-\node at (11.8, 4.3) {$\frac{\la{p_c}}{\la{p_c}+\ld{p_e}}$};
+\fill (10.6, 4) circle[radius=2pt];
+\node at (10.6,3.8) {$e$};
+\draw[thick] (10.6, 4) -- (11.2,3.9) -- (12.2, 3.9);
+\fill (12.2,3.9) circle[radius=2pt];
+\node[anchor = west] at (12.2,3.9) {$a\succ b\succ e\succ c\succ d$};
+\node at (11.8, 4.3) {$\frac{\la{p_c}}{\la{p_c}+\ld{p_d}}$};
 
-\draw (10.6, 4) -- (11.2,3.1) -- (12.2,3.1);
-\fill[red] (12.2,3.1) circle[radius=2pt];
-\node at (11.8, 3.5) {$\frac{\ld{p_e}}{\la{p_c}+\ld{p_e}}$};
+\draw[thick] (10.6, 4) -- (11.2,3.1) -- (12.2,3.1);
+\fill (12.2,3.1) circle[radius=2pt];
+\node at (11.8, 3.5) {$\frac{\ld{p_d}}{\la{p_c}+\ld{p_d}}$};
+\node[anchor = west] at (12.2,3.1) {$a\succ b\succ e\succ d\succ c$};
 
-\draw (4.8, 0) -- (5.8,1) -- (8.2,1);
-\fill[red] (12.2,1) circle[radius=2pt];
 
+\draw[thick] (4.8, 0) -- (5.8,1) -- (8.2,1);
+\fill (12.2,1) circle[radius=2pt];
+\node[anchor = west] at (12.2,1) {$d\succ a\succ c\succ e\succ b$};
 \node at (7, 1.4)  {$\frac{p_a}{p_a+p_b+p_c+\ld{p_e}}$};
 
-\draw (4.8, 0) -- (5.8,0) -- (8.2,0);
-\fill[red] (12.2,0) circle[radius=2pt];
+\draw[thick] (4.8, 0) -- (5.8,0) -- (8.2,0);
+\fill (12.2,0) circle[radius=2pt];
+\node[anchor = west] at (12.2,0) {$d\succ e\succ a\succ b\succ c$};
 \node at (7, 0.4)  {$\frac{p_b}{p_a+p_b+p_c+\ld{p_e}}$};
 
-\draw (4.8, 0) -- (5.8,-1) -- (8.2,-1);
+\draw[thick] (4.8, 0) -- (5.8,-1) -- (8.2,-1);
 \node at (7, -0.6)  {$\frac{p_c}{p_a+p_b+p_c+\ld{p_e}}$};
 
-\draw (4.8, 0) -- (5.8,-2) -- (8.2,-2);
+\draw[thick] (4.8, 0) -- (5.8,-2) -- (8.2,-2);
 \node at (7, -1.6)  {$\frac{\ld{p_e}}{p_a+p_b+p_c+\ld{p_e}}$};
 
-\fill[blue] (8.2, -2) circle[radius=2pt];  % de finishes; paths abc
-\fill[blue] (8.2, -1) circle[radius=2pt];  % de finishes; paths abc
-\fill[blue] (8.2,  0) circle[radius=2pt];  % de finishes; paths abc
-\draw (8.2, -2) -- (8.9,-1) -- (10.6,-1);
-\draw (8.2, -2) -- (8.9,-2) -- (10.6,-2);
-\draw (8.2, -2) -- (8.9,-3) -- (10.6,-3);
+\fill (8.2, -2) circle[radius=2pt];  % de finishes; paths abc
+\fill (8.2, -1) circle[radius=2pt];  % de finishes; paths abc
+\fill (8.2,  0) circle[radius=2pt];  % de finishes; paths abc
 
-\fill[red] (12.2,-1) circle[radius=2pt];
+\node at (8.2, -2.2) {$e$};
+\node at (8.2, -1.2) {$c$};
+\node at (8.2, -0.2) {$b$};
+\node at (8.2,  0.8) {$a$};
 
+\draw[thick] (8.2, -2) -- (8.9,-1) -- (10.6,-1);
+\draw[thick] (8.2, -2) -- (8.9,-2) -- (10.6,-2);
+\draw[thick] (8.2, -2) -- (8.9,-3) -- (10.6,-3);
+
+\fill (12.2,-1) circle[radius=2pt];
+\node[anchor = west] at (12.2,-1) {$d\succ e\succ a\succ c\succ b$};
 
 \node at (9.5, -0.6) {$\frac{p_a}{p_a+p_b+p_c}$};
 \node at (9.5, -1.6) {$\frac{p_b}{p_a+p_b+p_c}$};
 \node at (9.5, -2.6) {$\frac{p_c}{p_a+p_b+p_c}$};
 
-\fill[green] (10.6, -1) circle[radius=2pt];  % dea finishes; paths bc
-\fill[green] (10.6, -2) circle[radius=2pt];  % deb finishes; paths ac
-\fill[green] (10.6, -3) circle[radius=2pt];  % dec finishes; paths ab
+\fill (10.6, -1) circle[radius=2pt];  % dea finishes; paths bc
+\fill (10.6, -2) circle[radius=2pt];  % deb finishes; paths ac
+\fill (10.6, -3) circle[radius=2pt];  % dec finishes; paths ab
+\node at (10.6,-1.2) {$a$};
+\node at (10.6,-2.2) {$b$};
+\node at (10.6,-3.2) {$c$};
 
-\draw (10.6, -1) -- (11.2,-0) -- (12.2,0);
+
+\draw[thick] (10.6, -1) -- (11.2,-0) -- (12.2,0);
 
 \node at (11.8, 0.4) {$\frac{\la{p_b}}{\la{p_b}+\la{p_c}}$};
-\draw (10.6, -1) -- (11.2,-1) -- (12.2,-1);
-
+\draw[thick] (10.6, -1) -- (11.2,-1) -- (12.2,-1);
 
 \node at (11.8, -0.6) {$\frac{\la{p_c}}{\la{p_b}+\la{p_c}}$};
 
-
-\draw(10.6, -2) -- (11.2,-1.8) -- (12.2,-1.8);
-\fill[red] (12.2,-1.8) circle[radius=2pt];
-
+\draw[thick](10.6, -2) -- (11.2,-1.8) -- (12.2,-1.8);
+\fill (12.2,-1.8) circle[radius=2pt];
+\node[anchor = west] at (12.2,-1.8) {$d\succ e\succ b\succ a\succ c$};
 \node at (11.8, -1.4) {$\frac{\la{p_a}}{\la{p_a}+\la{p_c}}$};
 
-\draw (10.6, -2) -- (11.2,-2.6) -- (12.2,-2.6);
-\fill[red] (12.2,-2.6) circle[radius=2pt];
+\draw[thick] (10.6, -2) -- (11.2,-2.6) -- (12.2,-2.6);
+\fill (12.2,-2.6) circle[radius=2pt];
+\node[anchor = west] at (12.2,-2.6) {$d\succ e\succ b\succ c\succ a$};
 \node at (11.8, -2.2) {$\frac{\la{p_c}}{\la{p_a}+\la{p_c}}$};
 
 
-%\draw (10.6, -3) -- (11.2,-2.9);
-%\fill[red] (12.2,-2.9) circle[radius=2pt];
-%\node[red] at (11.8, -2.9) {$\frac{\la{p_a}}{\la{p_a}+\la{p_b}}$};
+%\draw[thick] (10.6, -3) -- (11.2,-2.9);
+%\fill (12.2,-2.9) circle[radius=2pt];
+%\node at (11.8, -2.9) {$\frac{\la{p_a}}{\la{p_a}+\la{p_b}}$};
 
-\draw (10.6, -3) -- (11.2,-3.4) -- (12.2, -3.4);
-\fill[red] (12.2,-3.4) circle[radius=2pt];
+\draw[thick] (10.6, -3) -- (11.2,-3.4) -- (12.2, -3.4);
+\fill (12.2,-3.4) circle[radius=2pt];
+\node[anchor = west] at (12.2,-3.4) {$d\succ e\succ c\succ b\succ a$};
+
 \node at (11.8, -3) {$\frac{\la{p_b}}{\la{p_a}+\la{p_b}}$};
 
-\fill[blue] (8.2, 1) circle[radius=2pt];  % da finishes; paths bce
+\fill (8.2, 1) circle[radius=2pt];  % da finishes; paths bce
 
-\draw (8.2,1) -- (8.9,2) -- (10.6,2);
-\draw (8.2,1) -- (8.9,1) -- (10.6,1);
-\draw (8.2,1) -- (8.9,0) -- (10.6,0);
+\draw[thick] (8.2,1) -- (8.9,2) -- (10.6,2);
+\draw[thick] (8.2,1) -- (8.9,1) -- (10.6,1);
+\draw[thick] (8.2,1) -- (8.9,0) -- (10.6,0);
 
 \node at (9.5, 2.4) {$\frac{\la{p_b}}{\la{p_b}+\la{p_c}+p_e}$};
 \node at (9.5, 1.4) {$\frac{\la{p_c}}{\la{p_b}+\la{p_c}+p_e}$};
 \node at (9.5, 0.4) {$\frac{p_e     }{\la{p_b}+\la{p_c}+p_e}$};
-\fill[green] (10.6, 2) circle[radius=2pt];  % da finishes; paths bce
-\fill[green] (10.6, 1) circle[radius=2pt];  % da finishes; paths bce
-\fill[green] (10.6, 0) circle[radius=2pt];  % da finishes; paths bce
-\draw (10.6, 1) -- (11.2,2) -- (12.2,2);
+\fill (10.6, 2) circle[radius=2pt];  % da finishes; paths bce
+\fill (10.6, 1) circle[radius=2pt];  % da finishes; paths bce
+\fill (10.6, 0) circle[radius=2pt];  % da finishes; paths bce
+
+\node at (10.6, 1.8) {$b$};
+\node at (10.6, 0.8) {$c$};
+\node at (10.6,-0.2) {$e$};
+
+
+\draw[thick] (10.6, 1) -- (11.2,2) -- (12.2,2);
 \node at (11.8, 2.4) {$\frac{\la{p_b}}{\la{p_b}+\ld{p_e}}$};
-\draw (10.6, 1) -- (11.2,1) -- (12.2,1);
+\fill (12.2,2) circle[radius=2pt];
+\node[anchor = west] at (12.2,2) {$d\succ a\succ c\succ b\succ e$};
+\draw[thick] (10.6, 1) -- (11.2,1) -- (12.2,1);
 \node at (11.8, 1.4) {$\frac{\ld{p_e}}{\la{p_b}+p_e}$};
 
 \end{tikzpicture}
