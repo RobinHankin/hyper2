@@ -574,12 +574,12 @@ be
 \node at (11.8, 1.4) {$\frac{\ld{p_e}}{\la{p_b}+p_e}$};
 
 \end{tikzpicture}
-\caption{Partial probability\label{tikzabcde} tree for five competitors
-  $a$-$e$ with mutually supporting subsets $\left\lbrace a,b,c\right\rbrace$
-  [with support term $\lambda$] and $(de)$ [with support term $\mu$]}
+\caption{Partial probability\label{tikzabcde} tree for five
+  competitors $a$-$e$ with two mutually supporting subsets
+  $\left\lbrace a,b,c\right\rbrace$ and $\left\lbrace d,
+  e\right\rbrace$ having support $\lambda$, $\mu$ respectively}
 \end{center}
 \end{figure}
-
 
 
 \begin{equation}\label{asuccb}
@@ -612,13 +612,171 @@ support active when vying for fourth place, as members of both their
 teams have finished at this point.
 
 This probability model could easily be modified to account for
-specific circumstances.  The cheering effect be asymmetrical (with $a$
-helping $b$ but not vice-versa, for example).  The effect could
-operate only on specific ordered pairs.  Or perhaps the effect might
-have a finite lifetime: if $a$ places $n^\mathrm{th}$, then the
-cheering effect is active only for competitors placing
-$(n+r)^\mathrm{th}$ or above.
+specific circumstances.  The cheering effect could be asymmetrical
+(with $a$ helping $b$ but not vice-versa, for example).  The effect
+might operate only on certain ordered pairs, following a directed
+graph (cyclic or acyclic) instead of equivalence classes.  Or perhaps
+the effect might have a finite lifetime: if $a$ places
+$n^\mathrm{th}$, then the cheering effect is active only for
+competitors placing $(n+r)^\mathrm{th}$ or above, for some fixed $r$.
+There is no reason that $\lambda$ could not be less than one, which
+would indicate that some competitors inhibit, rather than help,
+others.
 
+The probability model of Figure~\ref{tikzabcde} is applied, in a
+simple one-parameter form, to two examples: Formula 1 motor racing,
+and also a preference rating.
+
+\section{Red bus, blue bus}
+
+The red bus-blue bus problem was originally stated by
+\cite{chipman1960} and discussed by \cite{davidson1970} and
+\cite[p153]{alvo2014}.  was \cite{debreu1960}.  The Holiday problem is
+discussed in \cite{tverskey1972}.  A traveller has a choice of going
+to work by different transport methods.  Here, we can assume that the
+traveller has strong but unknown views on different forms of transport
+which might incorporate a random component.  If considering a car or
+bus, the colour of the bus is of no importance to him.  However, when
+offered the choice between a red bus or a blue bus, the colour becomes
+important (having nothing else to guide his decision).  Now, he does
+not really care what colour the bus is.  If we ask him to rank his
+options, it is highly probable that he will put RB and BB
+consecutively (because they are essentially indistinguishable).  Can
+we quantify the strength of this effect?  To do this, we define a
+bespoke function \code{RB\_BB\_LF()} which returns a \code{hyper3}
+log-likelihood function corresponding to repeated observations of our
+commuter's reported ranks for the five options:
+
+
+<<defineredbuslf>>=
+`RB_BB_LF` <- function(lambda){
+    ec <- c(C=1, T=2, RB=3, BB=3, W=4) 
+    h <- c(1, 1, lambda, 1)           
+    (
+        cheering3(v=c("RB", "BB", "C" , "T", "W"), e=ec, h=h)*3 + 
+        cheering3(v=c("BB", "RB", "T" , "C", "W"), e=ec, h=h)*2 + 
+        cheering3(v=c("T" , "BB", "RB", "C", "W"), e=ec, h=h)*5 + 
+        cheering3(v=c("W" , "BB", "RB", "T", "C"), e=ec, h=h)*4 + 
+        cheering3(v=c("C" , "RB", "BB", "W", "T"), e=ec, h=h)*3 + 
+        cheering3(v=c("BB", "C" , "RB", "T", "W"), e=ec, h=h)*3
+    )
+}
+@
+
+Above, we see from the function body that he reported $RB\succ BB\succ
+C\succ T\succ W$ three times [first row], and so on; perhaps his
+ranking depends on the weather or how tired he is on any given day.
+Observe that in almost every case he ranks RB and BB consecutively.
+Function \code{RB_BB_LF()} takes argument \code{lambda} that
+quantifies the perceived similarity between RB and BB in the same way
+as function \code{oldfirm()} above.  It is straightforward to find a
+profile support function for $\lambda$,
+Figure~\ref{profilesupportlambdaRBBB}, and formally maximize the
+likelihood:
+
+\begin{figure}[htbp]
+\begin{center}
+<<plotproflike>>=
+o <- function(lambda){maxp(RB_BB_LF(lambda), give=1)$`Log-likelihood`} 
+lambda <- exp(seq(from=log(0.9), to=log(47), len=17)) 
+L <- sapply(lambda, o)
+plot(log(lambda), L-max(L), type="b")
+abline(h=c(0, -2))
+abline(v=0)
+@ 
+\caption{A\label{profilesupportlambdaRBBB} profile support function
+  for the red bus, blue bus parameter $\lambda$.  Vertical line
+  indicates null of $\lambda=1$, horizontal lines show maximum support
+  and $-2$}
+\end{center}
+\end{figure}
+
+
+
+
+<<label=maxlikesim, cache=TRUE>>=
+(osup <- optimize(o, c(10, 40), maximum=TRUE))
+@ 
+
+
+So a likelihood ratio test of the null that $\lambda=1$ would be:
+
+<<label=LRT_RB, cache=TRUE>>=
+(suppdiff <- o(osup$maximum) - o(1))
+@
+
+
+Easily satisfying Edwards's two-units-of-support criterion;
+alternatively, we could observe that this observation lies in the tail
+region of its asymptotic $\chi^2_1$ distribution (Wilks's theorem),
+with a $p$-value of \Sexpr{signif(pchisq(suppdiff*2, df=1,
+  lower.tail=FALSE),3)}.
+
+
+\subsection{Sushi}
+
+We now apply the ideas above to a dataset obtained from the {\tt
+  preflib} library.  
+
+
+
+
+<<readsushi>>=
+a <- as.matrix(read.table("sushi.txt"))
+head(a)
+@ 
+
+
+<<defcalculate_sushi_H}>>=
+make_sushi_H <- function(a, strength){
+    h <- c(1, strength) # strength of support
+    sushi_types <- c("ebi", "anago", "maguro", "ika", "uni", "sake", "tamago", "toro", "tekka", "kappa")
+    ec <- # equivalence classes
+        c(`ebi`  = 1, `anago` = 2, `maguro` = 1, `ika` = 1, `uni` = 1,
+          `sake` = 1, `tamago` = 1, `toro` = 2, `tekka-maki` = 2,
+          `kappa-maki` = 1)
+    
+    H <- hyper3()
+
+    for(i in seq_len(nrow(a))){
+        H <- H + cheering3(sushi_types[a[i,]], e=ec, h=h)
+    }
+    return(H)
+}
+@
+
+
+<<tryH,cache=TRUE>>=
+wanted <- sample(seq_len(nrow(a)), 50, replace=TRUE, prob=a[,1])
+H1888 <- make_sushi_H(a[wanted,-1], strength=1.888)
+H1000 <- make_sushi_H(a[wanted,-1], strength=1.000)
+@
+
+
+<<calclikesushi, cache=TRUE>>=
+f <- function(strength){
+   H <- make_sushi_H(a[wanted,-1], strength=strength)
+   maxp(H,give=1)$`Log-likelihood`
+}
+s <- seq(from=0.4,to=4,len=5)
+L <- sapply(s,f)
+@
+
+
+<<plotsushi>>=
+plot(s,L-max(L),type='b')
+@ 
+
+
+
+<<justf1>>=
+f1 <- f(1)
+@ 
+
+
+<<diffmaxlike>>=
+f1 - max(L)
+@
 
 
 
