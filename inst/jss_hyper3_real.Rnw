@@ -722,39 +722,30 @@ with a $p$-value of \Sexpr{signif(pchisq(suppdiff*2, df=1,
 \subsection{Sushi}
 
 We now apply the ideas above to a dataset obtained from the {\tt
-  preflib} library.  
+  preflib} library~\citep{MaWa13a} in which ten different types of
+sushi were placed in order of preference by 5000 judges.  Three of the
+sushis (maguro, toro, tekka-maki) were made with tuna, and it is
+reasonable to view these three types as being exchangeable in much the
+same way as the red and blue buses.  To proceed, we need to define
+equivalence classes of sushi---one for tuna-based sushis and one for
+everything else.  Of course, one can also imagine the opposite
+phenomenon whereby the judge decides he has had enough tuna for the
+moment and this disincentivises further tuna choices.  This mechanism
+would be modelled by having $\lambda<1$.
 
 
-<<defcalculate_sushi_H}>>=
-make_sushi_H <- function(a, lambda){
+<<defcalculate_sushi_H>>=
 
-    sushi_types <- c("ebi", "anago", "maguro", "ika", "uni", "sake", "tamago", "toro", "tekka", "kappa")
-    ec <- # equivalence classes
-        c(`ebi`  = 1, `anago` = 2, `maguro` = 1, `ika` = 1, `uni` = 1,
-          `sake` = 1, `tamago` = 1, `toro` = 2, `tekka-maki` = 2,
-          `kappa-maki` = 1)
-    
-    H <- hyper3()
+ec <- c("ebi"  = 1, "anago" = 2, "maguro" = 1, "ika" = 1, "uni" = 1,
+        "sake" = 1, "tamago" = 1, "toro" = 2, "tekka-maki" = 2,
+        "kappa-maki" = 1)
 
+make_sushi_H <- function(lambda){    
     for(i in seq_len(nrow(a))){
         H <- H + cheering3(sushi_types[a[i,]], e=ec, h=c(1, lambda))
     }
     return(H)
 }
-@
-
-
-<<readsushi>>=
-a <- as.matrix(read.table("sushi.txt",skip=22))
-wanted <- sample(seq_len(nrow(a)), 5, replace=TRUE, prob=a[,1])
-a <- a[wanted, -1]
-@ 
-
-
-<<tryH,cache=TRUE>>=
-
-H1888 <- make_sushi_H(a, strength=1.888)
-H1000 <- make_sushi_H(a, strength=1.000)
 @
 
 
