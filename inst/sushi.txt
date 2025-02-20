@@ -1,3 +1,25 @@
+# FILE NAME: 00014-00000001.soc
+# TITLE: Sushi 10 Rank
+# DESCRIPTION: 
+# DATA TYPE: soc
+# MODIFICATION TYPE: original
+# RELATES TO: 
+# RELATED FILES: 
+# PUBLICATION DATE: 2014-07-09
+# MODIFICATION DATE: 2022-09-16
+# NUMBER ALTERNATIVES: 10
+# NUMBER VOTERS: 5000
+# NUMBER UNIQUE ORDERS: 4926
+# ALTERNATIVE NAME 1: ebi (shrimp)
+# ALTERNATIVE NAME 2: anago (sea eel)
+# ALTERNATIVE NAME 3: maguro (tuna)
+# ALTERNATIVE NAME 4: ika (squid)
+# ALTERNATIVE NAME 5: uni (sea urchin)
+# ALTERNATIVE NAME 6: sake (salmon roe)
+# ALTERNATIVE NAME 7: tamago (egg)
+# ALTERNATIVE NAME 8: toro (fatty tuna)
+# ALTERNATIVE NAME 9: tekka-maki (tuna roll)
+# ALTERNATIVE NAME 10: kappa-maki (cucumber roll)
 3 7 4 5 1 10 2 8 3 9 6
 3 4 5 7 2 10 3 8 1 6 9
 3 4 5 7 2 10 3 1 8 6 9

@@ -6,6 +6,8 @@
 \usepackage{amssymb}
 \usepackage{tikz}
 
+
+
 \author{Robin K. S. Hankin\\University of Stirling}
 \title{Generalized Bradley-Terry models}
 \Plainauthor{Robin K. S. Hankin} %% comma-separated
@@ -722,7 +724,7 @@ We now apply the ideas above to a dataset obtained from the {\tt
 
 
 <<readsushi>>=
-a <- as.matrix(read.table("sushi.txt"))
+a <- as.matrix(read.table("sushi.txt",skip=22))
 head(a)
 @ 
 
@@ -747,7 +749,7 @@ make_sushi_H <- function(a, strength){
 
 
 <<tryH,cache=TRUE>>=
-wanted <- sample(seq_len(nrow(a)), 50, replace=TRUE, prob=a[,1])
+wanted <- sample(seq_len(nrow(a)), 5, replace=TRUE, prob=a[,1])
 H1888 <- make_sushi_H(a[wanted,-1], strength=1.888)
 H1000 <- make_sushi_H(a[wanted,-1], strength=1.000)
 @
