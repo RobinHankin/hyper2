@@ -6,7 +6,10 @@
 \usepackage{amssymb}
 \usepackage{tikz}
 
-
+%  Process with:
+%  
+%  Rscript -e 'library("knitr") ; knit("jss_hyper3_real.Rnw")' && pdflatex jss_hyper3_real && open jss_hyper3_real.pdf
+%
 
 \author{Robin K. S. Hankin\\University of Stirling}
 \title{Generalized Bradley-Terry models}
