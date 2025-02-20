@@ -16,78 +16,91 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 
 
 <font size="1"> most of the time is taken calculating the
-`calclikesushi` chunk.  With a sample size of 500 in chunk `tryH`, and
-`n=5` in `calclikesushi`, it takes about half an hour to run without
-cache. </font>
-
+`calclikesushi` and `maxlike`chunks.  With a sample size of 50 in
+chunk `tryH`, and 11 points on the graph, it takes about half an hour
+to run without cache. </font>
 
 To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 
-
-
 ```{r}
-a <- as.matrix(read.table("sushi.txt"))
+a <- as.matrix(read.table("sushi.txt", skip=22))
+set.seed(0)
+wanted <- sample(seq_len(nrow(a)),50,replace=TRUE,prob=a[,1])
+a <- a[wanted,-1]
 ```
 
-```{r,defcalculate_sushi_H}
-make_sushi_H <- function(a, strength){
-    h <- c(1, strength) # strength of support
-    sushi_types <- c("ebi", "anago", "maguro", "ika", "uni", "sake", "tamago", "toro", "tekka", "kappa")
-    ec <- # equivalence classes
-        c(`ebi`  = 1, `anago` = 2, `maguro` = 1, `ika` = 1, `uni` = 1,
-          `sake` = 1, `tamago` = 1, `toro` = 2, `tekka-maki` = 2,
-          `kappa-maki` = 1)
+```{r}
+sushi_types <- c("ebi", "anago", "maguro", "ika", "uni", "sake", "tamago", "toro", "tekka", "kappa")
+a[] <- sushi_types[a]
+noquote(a)
+    ec <- c("ebi"  = 1, "anago" = 2, "maguro" = 1, "ika" = 1, "uni" = 1,
+          "sake" = 1, "tamago" = 1, "toro" = 2, "tekka" = 2,
+          "kappa" = 1)
     
+```
+	
+
+```{r,defcalculate_sushi_H}
+make_sushi_H <- function(a, lambda){
     H <- hyper3()
 
     for(i in seq_len(nrow(a))){
-        H <- H + cheering3(sushi_types[a[i,]], e=ec, h=h)
+        H <- H + cheering3(a[i,], e=ec, h=c(1,lambda))
     }
     return(H)
 }
 ```
 
 ```{r tryH, cache=TRUE}
-wanted <- sample(seq_len(nrow(a)), 500, replace=TRUE, prob=a[,1])
-H1888 <- make_sushi_H(a[wanted,-1], strength=1.888)
-H1000 <- make_sushi_H(a[wanted,-1], strength=1.000)
+H1 <- make_sushi_H(a, lambda=1)
+H2 <- make_sushi_H(a, lambda=2)
 ```
 
 
 ```{r maxpsushiH,cache=TRUE}
-mHa <- maxp(H1888,give=1)
-mHb <- maxp(H1000,give=1)
+mH1 <- maxp(H1,give=1)
+mH2 <- maxp(H2,give=1)
 ```
 
 
 ```{r showsushiH}
-mHa
-mHb
+mH1
+mH2
 ```
 
-
 ```{r calclikesushi, cache=TRUE}
-f <- function(strength){
-   H <- make_sushi_H(a[wanted,-1], strength=strength)
+f <- function(lambda){
+   H <- make_sushi_H(a, lambda = lambda)
    maxp(H,give=1)$`Log-likelihood`
 }
-s <- seq(from=1.4,to=4,len=8)
+
+s <- exp(seq(from = log(0.9), to = log(6), len = 11))
 L <- sapply(s,f)
 ```
 
-
-```{r}
-plot(s,L-max(L),type='b')
+```{r maxlike, cache=TRUE}
+(jj <- optimize(f, 2:3, maximum=TRUE))
 ```
 
-
-```{r label=justtryf1, cache=TRUE}
-f1 <- f(1)
+```{r plotsushilike}
+plot(log(s), L-jj$objective, type='b')
 ```
 
-```{r label=showf1}
-f1 - max(L)
+```{r calc_sushi}
+sushi <- make_sushi_H(a, lambda = jj$maximum)
 ```
 
+```{r calc_sushimaxp}
+(sushi_maxp <- maxp(sushi))
+```
+
+### Package dataset {-}
+
+Following lines create `sushi.rda`, residing in the `data/` directory of the package.
+
+```{r,label=savesushidataset}
+sushi_table <- a
+save(sushi_table,  sushi, sushi_maxp, file="sushi.rda")
+```
 
 ## References {-}
