@@ -724,14 +724,6 @@ We now apply the ideas above to a dataset obtained from the {\tt
   preflib} library.  
 
 
-
-
-<<readsushi>>=
-a <- as.matrix(read.table("sushi.txt",skip=22))
-head(a)
-@ 
-
-
 <<defcalculate_sushi_H}>>=
 make_sushi_H <- function(a, strength){
     h <- c(1, strength) # strength of support
@@ -751,16 +743,26 @@ make_sushi_H <- function(a, strength){
 @
 
 
-<<tryH,cache=TRUE>>=
+<<readsushi>>=
+a <- as.matrix(read.table("sushi.txt",skip=22))
 wanted <- sample(seq_len(nrow(a)), 5, replace=TRUE, prob=a[,1])
-H1888 <- make_sushi_H(a[wanted,-1], strength=1.888)
-H1000 <- make_sushi_H(a[wanted,-1], strength=1.000)
+a <- a[wanted, -1]
+@ 
+
+
+
+
+
+<<tryH,cache=TRUE>>=
+
+H1888 <- make_sushi_H(a, strength=1.888)
+H1000 <- make_sushi_H(a, strength=1.000)
 @
 
 
 <<calclikesushi, cache=TRUE>>=
 f <- function(strength){
-   H <- make_sushi_H(a[wanted,-1], strength=strength)
+   H <- make_sushi_H(a, strength=strength)
    maxp(H,give=1)$`Log-likelihood`
 }
 s <- seq(from=0.4,to=4,len=5)
@@ -772,16 +774,6 @@ L <- sapply(s,f)
 plot(s,L-max(L),type='b')
 @ 
 
-
-
-<<justf1>>=
-f1 <- f(1)
-@ 
-
-
-<<diffmaxlike>>=
-f1 - max(L)
-@
 
 
 
