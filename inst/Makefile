@@ -183,5 +183,11 @@ volvo.html: volvo.Rmd
 zermelo.html: zermelo.Rmd
 	 Rscript -e "rmarkdown::render('zermelo.Rmd')"
 
+jss_hyper3_real.pdf: jss_hyper3_real.Rnw
+	Rscript -e 'library("knitr") ; knit("jss_hyper3_real.Rnw")' && pdflatex jss_hyper3_real
+
+
 clean:
 	rm -rf "*.html" 
+
+

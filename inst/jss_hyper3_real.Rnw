@@ -10,6 +10,7 @@
 %  
 %  Rscript -e 'library("knitr") ; knit("jss_hyper3_real.Rnw")' && pdflatex jss_hyper3_real && open jss_hyper3_real.pdf
 %
+%  (also the Makefile has an entry for this)
 
 \author{Robin K. S. Hankin\\University of Stirling}
 \title{Generalized Bradley-Terry models}
