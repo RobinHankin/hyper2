@@ -726,8 +726,8 @@ We now apply the ideas above to a dataset obtained from the {\tt
 
 
 <<defcalculate_sushi_H}>>=
-make_sushi_H <- function(a, strength){
-    h <- c(1, strength) # strength of support
+make_sushi_H <- function(a, lambda){
+
     sushi_types <- c("ebi", "anago", "maguro", "ika", "uni", "sake", "tamago", "toro", "tekka", "kappa")
     ec <- # equivalence classes
         c(`ebi`  = 1, `anago` = 2, `maguro` = 1, `ika` = 1, `uni` = 1,
@@ -737,7 +737,7 @@ make_sushi_H <- function(a, strength){
     H <- hyper3()
 
     for(i in seq_len(nrow(a))){
-        H <- H + cheering3(sushi_types[a[i,]], e=ec, h=h)
+        H <- H + cheering3(sushi_types[a[i,]], e=ec, h=c(1, lambda))
     }
     return(H)
 }
@@ -751,9 +751,6 @@ a <- a[wanted, -1]
 @ 
 
 
-
-
-
 <<tryH,cache=TRUE>>=
 
 H1888 <- make_sushi_H(a, strength=1.888)
@@ -762,8 +759,8 @@ H1000 <- make_sushi_H(a, strength=1.000)
 
 
 <<calclikesushi, cache=TRUE>>=
-f <- function(strength){
-   H <- make_sushi_H(a, strength=strength)
+f <- function(lambda){
+   H <- make_sushi_H(a, lambda=lambda)
    maxp(H,give=1)$`Log-likelihood`
 }
 s <- seq(from=0.4,to=4,len=5)
