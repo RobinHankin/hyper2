@@ -22,6 +22,19 @@ to run without cache. </font>
 
 To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 
+This short document applies `hyper3` formalism to a dataset
+obtained from the `preflib` library [@MaWa13a] in which ten
+different types of sushi were placed in order of preference by 5000
+judges.  Three of the sushis (maguro, toro, tekka-maki) were made with
+tuna, and it is reasonable to view these three types as being
+exchangeable in much the same way as the red and blue buses.  To
+proceed, we need to define equivalence classes of sushi---one for
+tuna-based sushis and one for everything else.  Of course, one can
+also imagine the opposite phenomenon whereby the judge decides he has
+had enough tuna for the moment and this disincentivises further tuna
+choices.  This mechanism would be modelled by having $\lambda<1$.
+
+
 ```{r}
 a <- as.matrix(read.table("sushi.txt", skip=22))
 set.seed(0)
