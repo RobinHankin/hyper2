@@ -46,10 +46,10 @@ a <- a[wanted,-1]
 sushi_types <- c("ebi", "anago", "maguro", "ika", "uni", "sake", "tamago", "toro", "tekka", "kappa")
 a[] <- sushi_types[a]
 noquote(a)
-    ec <- c("ebi"  = 1, "anago" = 2, "maguro" = 1, "ika" = 1, "uni" = 1,
-          "sake" = 1, "tamago" = 1, "toro" = 2, "tekka" = 2,
-          "kappa" = 1)
-    
+sushi_eq_classes <-
+    c("ebi"  = 1, "anago" = 2, "maguro" = 1, "ika" = 1, "uni" = 1,
+      "sake" = 1, "tamago" = 1, "toro" = 2, "tekka" = 2,
+      "kappa" = 1)
 ```
 	
 
@@ -58,7 +58,7 @@ make_sushi_H <- function(a, lambda){
     H <- hyper3()
 
     for(i in seq_len(nrow(a))){
-        H <- H + cheering3(a[i,], e=ec, h=c(1,lambda))
+        H <- H + cheering3(a[i,], e=sushi_eq_classes, h=c(1,lambda))
     }
     return(H)
 }
@@ -113,7 +113,7 @@ Following lines create `sushi.rda`, residing in the `data/` directory of the pac
 
 ```{r,label=savesushidataset}
 sushi_table <- a
-save(sushi_table,  sushi, sushi_maxp, file="sushi.rda")
+save(sushi_table,  sushi, sushi_maxp, sushi_eq_classes, file="sushi.rda")
 ```
 
 ## References {-}

@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{tikz}
+\usepackage{wrapfig}
 
 %  Process with:
 %  
@@ -75,6 +76,11 @@ options(prompt = "R> ")
 
 \section{Introduction}
 
+
+\begin{wrapfigure}{r}{0.1\textwidth}
+    \centering
+    \includegraphics[width=0.1\textwidth]{hyper2.png}\\
+\end{wrapfigure}
 
 The Bradley-Terry model for datasets involving paired comparisons has
 wide uptake in the {R} community.  The canonical problem is to
@@ -734,27 +740,36 @@ moment and this disincentivises further tuna choices.  This mechanism
 would be modelled by having $\lambda<1$.
 
 
+Implementation in \code{hyper3} formalism is straightforward.  Object
+\code{sushi\_eq\_class} specifies the two equivalence classes
+
+<<show_sushi_eq_classes>>=
+sushi_eq_classes
+head(noquote(sushi_table))
+@
+
+We can now use this to define a bespoke likelihood function, using
+$\lambda$ as  the argument:
+
 <<defcalculate_sushi_H>>=
-
-ec <- c("ebi"  = 1, "anago" = 2, "maguro" = 1, "ika" = 1, "uni" = 1,
-        "sake" = 1, "tamago" = 1, "toro" = 2, "tekka-maki" = 2,
-        "kappa-maki" = 1)
-
-make_sushi_H <- function(lambda){    
-    for(i in seq_len(nrow(a))){
-        H <- H + cheering3(sushi_types[a[i,]], e=ec, h=c(1, lambda))
+make_sushi_H <- function(lambda){
+    H <- hyper3()
+    for(i in seq_len(nrow(sushi_table))){
+        H <- H + cheering3(sushi_table[i,], e=sushi_eq_classes, h=c(1, lambda))
     }
     return(H)
 }
 @
 
 
+Then, as before, we may define a profile likelihood function of $\lambda$:
+
 <<calclikesushi, cache=TRUE>>=
 f <- function(lambda){
-   H <- make_sushi_H(a, lambda=lambda)
+   H <- make_sushi_H(lambda)
    maxp(H,give=1)$`Log-likelihood`
 }
-s <- seq(from=0.4,to=4,len=5)
+s <- seq(from=0.4,to=3,len=2)
 L <- sapply(s,f)
 @
 
@@ -762,8 +777,6 @@ L <- sapply(s,f)
 <<plotsushi>>=
 plot(s,L-max(L),type='b')
 @ 
-
-
 
 
 \section{Other stuff}
