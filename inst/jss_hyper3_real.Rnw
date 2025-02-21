@@ -739,17 +739,24 @@ phenomenon whereby the judge decides he has had enough tuna for the
 moment and this disincentivises further tuna choices.  This mechanism
 would be modelled by having $\lambda<1$.
 
+Implementation in \code{hyper3} formalism is straightforward.  The
+dataset used is \code{sushi\_table}, part of the \code{hyper2} package:
 
-Implementation in \code{hyper3} formalism is straightforward.  Object
-\code{sushi\_eq\_class} specifies the two equivalence classes
-
-<<show_sushi_eq_classes>>=
-sushi_eq_classes
+<<showsushitable>>=
 head(noquote(sushi_table))
 @
 
-We can now use this to define a bespoke likelihood function, using
-$\lambda$ as  the argument:
+Thus, from the top line, we see that the first judge placed tamago
+first, followed by anago and ika.  The equivalence classes are given
+by
+
+<<show_sushi_eq_classes>>=
+sushi_eq_classes
+@
+
+so class 2 is the tuna group and class 1 everything else.  We can now
+use these datapoint to define a bespoke likelihood function, using
+$\lambda$ as the argument:
 
 <<defcalculate_sushi_H>>=
 make_sushi_H <- function(lambda){
@@ -761,7 +768,6 @@ make_sushi_H <- function(lambda){
 }
 @
 
-
 Then, as before, we may define a profile likelihood function of $\lambda$:
 
 <<calclikesushi, cache=TRUE>>=
@@ -769,13 +775,13 @@ f <- function(lambda){
    H <- make_sushi_H(lambda)
    maxp(H,give=1)$`Log-likelihood`
 }
-s <- seq(from=0.4,to=3,len=2)
+s <- exp(seq(from = log(0.9), to = log(10), len = 12))
 L <- sapply(s,f)
 @
 
 
 <<plotsushi>>=
-plot(s,L-max(L),type='b')
+plot(log(s),L-max(L),type='b',xlab=expression(log(lambda)), ylab='Log-likelihood')
 @ 
 
 
