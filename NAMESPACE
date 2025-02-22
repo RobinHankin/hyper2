@@ -178,6 +178,14 @@ export(pnames)
 export(powers)
 export(size)
 
+export("ordertable_to_preftable")
+export("as.preftable")
+export("is.preftable")
+export("print.preftable")
+export("preftable_to_ranktable")
+export("preftable_to_supp")
+
+
 
 
 import("Rdpack")
@@ -247,3 +255,5 @@ S3method("[", hyper3)
 S3method("[<-", hyper3)
 S3method("weights", hyper3)
 S3method("pnames<-",hyper3)
+
+S3method("print", preftable)

@@ -113,7 +113,7 @@ sushi <- make_sushi_H(a, lambda = jj$maximum)
 Following lines create `sushi.rda`, residing in the `data/` directory of the package.
 
 ```{r,label=savesushidataset}
-sushi_table <- a
+sushi_table <- as.preftable(a)
 save(sushi_table,  sushi, sushi_maxp, sushi_eq_classes, file="sushi.rda")
 ```
 
