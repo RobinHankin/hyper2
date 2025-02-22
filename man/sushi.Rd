@@ -2,7 +2,7 @@
 \alias{sushi}
 \alias{sushi_table}
 \alias{sushi_maxp}
-\alias{sushi_eq_class}
+\alias{sushi_eq_classes}
 \docType{data}
 \title{Sushi dataset}
 \description{
