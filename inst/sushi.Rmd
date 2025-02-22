@@ -40,6 +40,7 @@ a <- as.matrix(read.table("sushi.txt", skip=22))
 set.seed(0)
 wanted <- sample(seq_len(nrow(a)),50,replace=TRUE,prob=a[,1])
 a <- a[wanted,-1]
+colnames(a) <- c("first","second","third","fourth","fifth","sixth","seventh","eighth","ninth","tenth")
 ```
 
 ```{r}
