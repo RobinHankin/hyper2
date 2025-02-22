@@ -9,7 +9,7 @@ The package makes extensive use of order tables and these are discussed
 here together with a list of order tables available in the package as
 data.  See also \code{ranktable.Rd}.
 
-Consider \code{pentathlon_table}:
+The prototypical ordertable would be \code{pentathlon_table}:
 
 \preformatted{
  > pentathlon_table
