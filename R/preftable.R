@@ -63,21 +63,3 @@ is.preftable <- function(M){inherits(M, "preftable")}
   return(H)
 }
 
-if(FALSE){
-a1 <- preftable_to_supp(as.preftable(sushi_table[1:5,]))
-a2 <- ordertable2supp(ranktable_to_ordertable(preftable_to_ranktable(as.preftable(sushi_table[1:5,]))))
-stopifnot(a1 == a2)
-
-# following is wrong:
-a3 <- rank_likelihood(preftable_to_ranktable(as.preftable(sushi_table[1:5,])))
-
-jj <- as.preftable(sushi_table[1:5,])
-
-a4 <- (
-    rankvec_likelihood(jj[1,]) + 
-    rankvec_likelihood(jj[2,]) + 
-    rankvec_likelihood(jj[3,]) + 
-    rankvec_likelihood(jj[4,]) + 
-    rankvec_likelihood(jj[5,])
-)
-}
