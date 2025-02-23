@@ -724,6 +724,7 @@ rorder_single <- function(p){
 }
 
 `print.ranktable` <- function(x,...){
+    cat("A ranktable:\n")
     print(ranktable_to_printable_object(x))
 }
 
