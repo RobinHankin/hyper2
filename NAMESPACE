@@ -177,6 +177,8 @@ export(hyper2_add)
 export(pnames)
 export(powers)
 export(size)
+export(as.ranktable)
+export(suppfun)
 
 export("ordertable_to_preftable")
 export("as.preftable")
@@ -184,7 +186,7 @@ export("is.preftable")
 export("print.preftable")
 export("preftable_to_ranktable")
 export("preftable_to_supp")
-
+export("ordertable")
 
 
 
@@ -226,6 +228,8 @@ S3method(print,ranktable)
 S3method(print,ranktablesummary)
 S3method(print,hyper2test)
 
+S3method(print,ordertable)
+
 S3method("[", hyper2)
 S3method("[<-", hyper2)
 
@@ -257,3 +261,9 @@ S3method("weights", hyper3)
 S3method("pnames<-",hyper3)
 
 S3method("print", preftable)
+
+S3method("as.ranktable",ordertable)
+
+S3method("suppfun", ranktable)
+S3method("suppfun", ordertable)
+S3method("suppfun", preftable)

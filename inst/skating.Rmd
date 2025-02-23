@@ -31,8 +31,7 @@ Lock and Lock (see skating.Rd for more details).  It also creates file
 
 ```{r,showskating}
 set.seed(0)
-skating_table <- read.table("skating.txt",header=TRUE)
-skating_table
+skating_table <- ordertable(read.table("skating.txt", header=TRUE))
 ```
 
 Object `skating_table` is an order table.  It is structured so that
@@ -64,7 +63,7 @@ differences between rank and order.
 We can convert an order table to a support function:
 
 ```{r,convertordertosupport}
-head(ordertable2supp(skating_table))
+summary(suppfun(ordertable(skating_table)))
 ```
 
 Further, we might ask how many judges ranked each competitor first,
@@ -201,7 +200,8 @@ mle_skaters
 Now compare these values with the unconstrained maximum likelihoods:
 
 ```{r,unconstrainedlikes, cache=TRUE}
-mgv <- maxp(skating, give=TRUE, n=10)$value
+options(use_alabama = TRUE)
+mgv <- maxp(skating, give=TRUE, n=1)$value
 mgv
 mgv  - out
 mgv  - max(out)
@@ -356,7 +356,7 @@ Following lines create `skating.rda`, residing in the `data/`
 directory of the package.
 
 ```{r,label=saveskatingdataset}
-save(skating_table,skating,skating_maxp,file="skating.rda")
+save(skating_table, skating, skating_maxp, file="skating.rda")
 ```
 
 ### References {-}

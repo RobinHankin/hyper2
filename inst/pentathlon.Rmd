@@ -39,7 +39,7 @@ analysing the order statistic for the top seven competitors:
 
 
 ```{r readpentathlontable}
-pentathlon_table <- as.matrix(read.table("pentathlon.txt"))
+pentathlon_table <- ordertable(as.matrix(read.table("pentathlon.txt")))
 pentathlon_table
 ```
 

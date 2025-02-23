@@ -25,7 +25,7 @@ stones and brooms.  Following dataset taken from
 women's tournament:
 
 ```{r readcurlingtable}
-curling_table  <- read.table("curling.txt",header=TRUE)
+curling_table  <- ordertable(read.table("curling.txt",header=TRUE))
 curling_table
 ```
 

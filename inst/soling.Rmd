@@ -14,7 +14,7 @@ options("digits" = 5)
 ```
 
 ```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
-knitr::includme_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
 To cite the `hyper2` package in publications, please use @hankin2017_rmd.
@@ -25,7 +25,7 @@ using a Plackett-Luce extension of the Bradley-Terry model.
 
 
 ```{r loadlib}
-soling_table <- read.table("soling.txt")
+soling_table <- ordertable(read.table("soling.txt"))
 soling_table
 ```
 
@@ -34,13 +34,13 @@ Thus we see, reading column 1, that in race 1, `norway` came fifth,
 information in a rank table format:
 
 ```{r interpretsoling}
-ordertable_to_ranktable(soling_table)
+as.ranktable(soling_table)
 ```
 
 and also convert it to a likelihood function:
 
 ```{r solingtolikelihood}
-soling <- ordertable2supp(soling_table)
+soling <- suppfun(soling_table)
 head(soling)
 ```
 

@@ -88,7 +88,7 @@ f <- function(lambda){
    maxp(H,give=1)$`Log-likelihood`
 }
 
-s <- exp(seq(from = log(0.9), to = log(6), len = 11))
+s <- exp(seq(from = log(0.9), to = log(6), len = 2))
 L <- sapply(s,f)
 ```
 

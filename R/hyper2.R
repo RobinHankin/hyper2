@@ -757,6 +757,10 @@ rorder_single <- function(p){
   return(out)
 }
 
+setGeneric("as.ranktable", function(x){standardGeneric("as.ranktable")})
+`as.ranktable` <- function(x){UseMethod("as.ranktable")}
+`as.ranktable.ordertable` <- function(x){ordertable_to_ranktable(x)}
+
 `.allorders` <- function(x){
   out <- perms(length(x))
   matrix(x[out],nrow=length(x))
@@ -1141,6 +1145,18 @@ rorder_single <- function(p){
     return(ranktable_to_ordertable(o))
 }
 
+`ordertable` <- function(x){
+    ## This is the only place class ordertable is set:
+    class(x) <- c("ordertable", setdiff(class(x), "ordertable"))
+    return(x)
+}
+
+`print.ordertable` <- function(x, ...){
+    cat("An ordertable:\n")
+    class(x) <- setdiff(class(x), "ordertable")
+    print(x)
+}
+
 `as.ordertable` <- function(w){
     out <-
         apply(w,2,    
@@ -1154,7 +1170,7 @@ rorder_single <- function(p){
                   return(out)
               } )
     rownames(out) <- rownames(w)
-    return(out)
+    return(ordertable(out))
 }
 
 `ordertable2points` <- function(o,points,totals=TRUE){

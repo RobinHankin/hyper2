@@ -1,6 +1,7 @@
 \name{ordertable}
 \alias{ordertable}
 \alias{order_table}
+\alias{print.ordertable}
 \title{Order tables}
 \description{Order tables}
 \details{
@@ -12,7 +13,8 @@ data.  See also \code{ranktable.Rd}.
 The prototypical ordertable would be \code{pentathlon_table}:
 
 \preformatted{
- > pentathlon_table
+> pentathlon_table
+An ordertable:
               shooting fencing swimming riding running
 Moiseev              5       1        1      6       5
 Zadneprovskis        6       2        5      5       1

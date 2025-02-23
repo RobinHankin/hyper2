@@ -1,5 +1,6 @@
 \name{ranktable}
 \alias{ranktable}
+\alias{as.ranktable}
 \alias{ranktable_to_ordertable}
 \alias{ordertable_to_ranktable}
 \alias{wikitable_to_ranktable}
