@@ -69,7 +69,7 @@ to some variation on \dQuote{did not finish}.  Consider the \link{volvo}
 dataset:
 
 \preformatted{
-> volvo_table_2014
+> volvo_table
            leg1 leg2 leg3 leg4 leg5 leg6 leg7 leg8 leg9
 AbuDhabi      1    3    2    2    1    2    5    3    5
 Brunel        3    1    5    5    4    3    1    5    2
@@ -103,7 +103,7 @@ to be contiguous], use \code{as.ordertable()}.
 \examples{
 
 ordertable_to_ranktable(soling_table)
-ordertable2supp(soling_table) == soling  # should be TRUE
+suppfun(soling_table) == soling  # should be TRUE
 
 
 }
