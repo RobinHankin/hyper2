@@ -5,6 +5,12 @@
 .gitignore
 .Rbuildignore
 CITATION.cff
+^inst/rock_paper_scissors_monster_cache$
+^inst/rock_paper_scissors_monster_files$
+^inst/monster_vs_lambda_cache$
+^inst/monster_vs_lambda_files$
+^inst/very_simplified_likelihood_cache$
+^inst/very_simplified_likelihood_files$
 ^inst/counterstrike_cache$
 ^inst/counterstrike_files$
 ^inst/handover_cache$
