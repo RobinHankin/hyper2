@@ -768,8 +768,11 @@ make_sushi_H <- function(lambda){
 }
 @
 
-Then, as before, we may define a profile likelihood function of $\lambda$:
+Then, as before, we may define a profile likelihood function of
+$\lambda$, Figure~\ref{profilesupportsushi}.
 
+\begin{figure}[htbp]
+  \begin{center}
 <<calclikesushi, cache=TRUE>>=
 f <- function(lambda){
    H <- make_sushi_H(lambda)
@@ -777,12 +780,15 @@ f <- function(lambda){
 }
 s <- exp(seq(from = log(0.9), to = log(10), len = 12))
 L <- sapply(s,f)
-@
-
-
-<<plotsushi>>=
-plot(log(s),L-max(L),type='b',xlab=expression(log(lambda)), ylab='Log-likelihood')
+plot(log(s),L-max(L),type='b',
+     xlab=expression(log(lambda)), ylab='Log-likelihood')
 @ 
+\caption{A\label{profilesupportsushi} profile support function for the
+  exchangeability term $\lambda$.  Vertical gray line shows
+  $H_0\colon\lambda =1$, horizontal lines show the
+  two-units-of-support limits}
+\end{center}
+\end{figure}
 
 
 \section{Other stuff}
