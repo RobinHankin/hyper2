@@ -87,7 +87,8 @@ here together with a list of order tables available in the package as
 data.  See also <code>ranktable.Rd</code>.</p>
 <p>The prototypical ordertable would be <code>pentathlon_table</code>:</p>
 <div class="sourceCode"><pre><code>
- &gt; pentathlon_table
+&gt; pentathlon_table
+An ordertable:
               shooting fencing swimming riding running
 Moiseev              5       1        1      6       5
 Zadneprovskis        6       2        5      5       1
@@ -137,7 +138,7 @@ discussion on the difference between rank and order is given in
 to some variation on “did not finish”.  Consider the <a href="volvo.html">volvo</a>
 dataset:</p>
 <div class="sourceCode"><pre><code>
-&gt; volvo_table_2014
+&gt; volvo_table
            leg1 leg2 leg3 leg4 leg5 leg6 leg7 leg8 leg9
 AbuDhabi      1    3    2    2    1    2    5    3    5
 Brunel        3    1    5    5    4    3    1    5    2
@@ -174,6 +175,7 @@ to be contiguous], use <code><a href="as.ordertable.html">as.ordertable()</a></c
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ranktable.html">ordertable_to_ranktable</a></span><span class="op">(</span><span class="va">soling_table</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A ranktable:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     c1          c2     c3      c4      c5          c6        c7      c8       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> I   netherlands russia nz      USA     norway      denmark   sweden  australia</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> II  ukraine     norway nz      finland netherlands italy     UK      russia   </span>
@@ -188,7 +190,7 @@ to be contiguous], use <code><a href="as.ordertable.html">as.ordertable()</a></c
 <span class="r-out co"><span class="r-pr">#&gt;</span> IV  france    sweden  netherlands denmark canada      finland   spain   USA    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> V   australia germany denmark     canada  finland     italy     ukraine sweden </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> VI  russia    italy   germany     ukraine UK          australia finland norway </span>
-<span class="r-in"><span><span class="fu"><a href="ordertable2supp.html">ordertable2supp</a></span><span class="op">(</span><span class="va">soling_table</span><span class="op">)</span> <span class="op">==</span> <span class="va">soling</span>  <span class="co"># should be TRUE</span></span></span>
+<span class="r-in"><span><span class="fu">suppfun</span><span class="op">(</span><span class="va">soling_table</span><span class="op">)</span> <span class="op">==</span> <span class="va">soling</span>  <span class="co"># should be TRUE</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
