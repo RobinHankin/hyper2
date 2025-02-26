@@ -240,7 +240,43 @@ save(counterstrike,counterstrike_maxp,zacslist,file="counterstrike.rda")
 ```
 
 
+## A red bus blue bus analysis.
 
+I now analyse every game played by `Cloud9` in the tournament.
+
+https://www.hltv.org/stats/teams/matches/5752/cloud9?event=3247
+
+
+As far as I can tell this is every match played at ELEAGUE Major 2018  in Boston by `Cloud9`.
+
+
+```{r}
+a <- read.table("cloud9_boston_2018.txt",header=TRUE)
+a
+```
+
+Above we see from the first line that on 28 Jan 2018, playing `FaZe` on the Inferno map we have a win, with deathorder Skadoodle, RUSH, etc.
+
+We will look at the effect of `Skadoodle` on `Stewie2K`.
+
+
+```{r}
+ec <-c(autimatic=1, RUSH=1, Skadoodle=2, Stewie2K=2, tarik=1)
+mk <- function(lam){
+  H3 <- hyper3()
+  for(i in seq_len(nrow(a))){
+    
+    d <- strsplit(a$deathorder[i],", ")[[1]]
+    H3 <- H3 + cheering3(d, e=ec, help=c(1,lam))
+  }
+  return(H3)
+}
+  
+
+```{r mkmaxp, cache=TRUE}
+maxp(mk(0.5),give=1)
+maxp(mk(1.01),give=1)
+```
 
 
 ### References {-}
