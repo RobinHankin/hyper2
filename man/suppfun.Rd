@@ -1,19 +1,27 @@
 \name{suppfun}
 \alias{suppfun}
+\alias{suppfun.ordertable}
+\alias{suppfun.ranktable}
+\alias{suppfun.preftable}
 \title{
 Convert various datasets to support functions.
 }
 \description{
+
+Function \code{suppfun()} is an S3 generic that returns a support
+function, dispatching on the class of its primary argument.  
+
+  
 }
 \usage{
-\method{suppfun}{ordertable}(x)
-\method{suppfun}{ranktable}(x)
-\method{suppfun}{preftable}(x)
-suppfun(x)
+\method{suppfun}{ordertable}(x, ...)
+\method{suppfun}{ranktable}(x, ...)
+\method{suppfun}{preftable}(x, ...)
+suppfun(x, ...)
 }
 \arguments{
-  \item{x}{Dataset to be converted to a support function
-  }
+  \item{x}{Dataset to be converted to a support function}
+  \item{...}{Further arguments}
 }
 \details{
 
