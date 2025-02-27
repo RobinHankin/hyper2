@@ -401,8 +401,10 @@ dataset of the <a href="https://CRAN.R-project.org/package=prefmod" class="exter
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( a * (a + b + c)^-1 * (a + b + c + d + e + f)^-2 * (a + b + c +</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> e)^-1 * (a + b + c + e + f)^-1 * b^2 * (b + c + d + e + f)^-1 * c * (c</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> + d + e + f)^-1 * d^2 * (d + e + f)^-1 * e^2 * (e + f)^-1 * f)</span>
-<span class="r-in"><span><span class="fu"><a href="suppfun.html">suppfun</a></span><span class="op">(</span><span class="va">x</span>, incomplete<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>           <span class="co"># use this instead</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in suppfun(x, incomplete = FALSE):</span> unused argument (incomplete = FALSE)</span>
+<span class="r-in"><span><span class="fu"><a href="suppfun.html">suppfun</a></span><span class="op">(</span><span class="fu"><a href="ordertable.html">ordertable</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, incomplete<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>           <span class="co"># use this instead</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log( a * (a + b + c)^-1 * (a + b + c + d + e + f)^-2 * (a + b + c +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> e)^-1 * (a + b + c + e + f)^-1 * b^2 * (b + c + d + e + f)^-1 * c * (c</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + d + e + f)^-1 * d^2 * (d + e + f)^-1 * e^2 * (e + f)^-1 * f)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Now consider just a-d; must use default incomplete=TRUE as at venue2</span></span></span>
