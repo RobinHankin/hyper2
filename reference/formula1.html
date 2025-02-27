@@ -135,7 +135,8 @@ and support functions as follows:</p>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="st">"formula1_2022.txt"</span>,header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="va">a</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">]</span>  <span class="co"># strips out the points column</span></span>
 <span><span class="fu"><a href="../reference/ranktable.html">wikitable_to_ranktable</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/ordertable2supp.html">ordertable2supp</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/ordertable2supp.html">ordertable2supp</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>      <span class="co"># works fine</span></span>
+<span><span class="fu"><a href="../reference/suppfun.html">suppfun</a></span><span class="op">(</span><span class="fu"><a href="../reference/ordertable.html">ordertable</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span>  <span class="co"># Same as previous line, but suppfun() needs to know what its argument is</span></span></code></pre></div>
 
 
 
