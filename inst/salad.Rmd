@@ -53,8 +53,7 @@ are clearer if we name the rows):
 ```{r}
 rownames(salad) <-
    paste("j",formatC(seq_len(nrow(salad)),width=2,format="d",flag="0"),sep="")
-ts <- t(salad)
-ts
+ts <- ordertable(t(salad))
 ```
 
 Above, we see that object `ts` is an order table.  It is just like the
@@ -64,7 +63,7 @@ most tart dressing" prize].  Converting this to a support function is
 accomplished with `ordertable2supp()`:
 
 ```{r useslickmethod,cache=TRUE}
-(H2 <- ordertable2supp(ts))
+(H2 <- suppfun(ts))
 ```
 
 Just to check:

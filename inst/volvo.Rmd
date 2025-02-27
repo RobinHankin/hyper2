@@ -26,7 +26,7 @@ over nine legs.  Dataset taken from the wikipedia page (see references
 below).
 
 ```{r readvolvotable}
-volvo_table <- read.table("volvo.txt")
+volvo_table <- ordertable(read.table("volvo.txt"))
 volvo_table
 ```
 
@@ -37,7 +37,7 @@ support function with `ordertable2supp()`, remembering to specify the
 noscore options:
 
 ```{r specifynoscore,cache=TRUE}
-volvo <- ordertable2supp(volvo_table,noscore=c("DNF","DNS"))
+volvo <- suppfun(volvo_table, noscore=c("DNF", "DNS"))
 (volvo_maxp <- maxp(volvo))
 ```
 
@@ -58,7 +58,7 @@ equalp.test(volvo)
 Following lines create `volvo.rda`, residing in the `data/` directory of the package.
 
 ```{r,label=savecurlingdataset}
-save(volvo_table,volvo_maxp,volvo,file="volvo.rda")
+save(volvo_table, volvo_maxp, volvo, file = "volvo.rda")
 ```
 
 

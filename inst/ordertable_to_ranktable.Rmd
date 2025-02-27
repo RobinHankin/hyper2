@@ -31,6 +31,7 @@ the volvo ocean racing dataset.
 OT <- cbind(1:5,c(1,5,2:4))
 rownames(OT) <- letters[seq_len(nrow(OT))]
 colnames(OT) <- c("J1","J2")
+OT <- ordertable(OT)
 OT
 ```
 

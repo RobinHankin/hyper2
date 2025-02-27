@@ -56,7 +56,7 @@ ordertable_to_ranktable(pentathlon_table)
 
 
 ```{r showpiechart,cache=TRUE}
-pentathlon <- ordertable2supp(pentathlon_table)
+pentathlon <- suppfun(pentathlon_table)
 pentathlon_maxp <- maxp(pentathlon)
 pentathlon_maxp
 pie(pentathlon_maxp)

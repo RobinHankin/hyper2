@@ -7,16 +7,8 @@
 \title{Translate order tables to support functions}
 \description{
 
-Wikipedia gives a nice summary in table form of Formula 1 racing results
-on pages like
-\url{https://en.wikipedia.org/wiki/2017_Formula_One_World_Championship}
-(at \emph{World Drivers' Championship standings}) but the data format is
-commonly used for many sports [see \code{ordertable.Rd}] and function
-\code{ordertable2supp()} translates such tables into a \code{hyper2}
-support function and also a order table.
-
-Both functions interpret zero to mean \dQuote{Did not finish} (wikipedia
-usually signifies DNF as a blank).
+Function \code{ordertable2supp()} is discouraged: use [\code{S3} generic]
+\code{suppfun()} instead.
 
 }
 \usage{
@@ -112,7 +104,9 @@ dataset of the \CRANpkg{prefmod} package [and further analysed in the
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{ordertable}},\code{\link{ordertable2supp3}}}
 \examples{
-ordertable2supp(soling_table)
+
+ordertable2supp(soling_table)    # discouraged
+suppfun(soling_table)            # use this instead
 
 # competitors a-f, racing at two venues:
 x <- data.frame(
@@ -122,7 +116,8 @@ x <- data.frame(
 ## First consider all competitors; incomplete=FALSE checks that all
 ## finishing competitors have ranks 1-n in some order for some n:
 
-ordertable2supp(x,incomplete=FALSE)
+ordertable2supp(x, incomplete=FALSE)   # discouraged
+suppfun(ordertable(x), incomplete=FALSE)           # use this instead
 
 
 ## Now consider just a-d; must use default incomplete=TRUE as at venue2

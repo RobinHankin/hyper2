@@ -2,17 +2,32 @@
 title: "Analysing `preflib` datasets with the `hyper2` package: netflix preferences and the Debian 2002 leader dataset"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
+bibliography: hyper2.bib
+---
+
+
+```{r setup, include=FALSE}
+set.seed(1)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  
 
 Here I show how to analyse two datasets from the `Preflib` project: a
-netflix dataset and a Debian leader dataset.
-
-Note that the `preftable` class does not really work for data of this
-type as it cannot cope with the first entry of the data rows
-corresponding to the number of times each order statistcis was
-observed.  The `
+netflix dataset and a Debian leader dataset.  Note that the
+`preftable` class does not really work for data of this type as it
+cannot cope with the first entry of the data rows corresponding to the
+number of times each order statistcis was observed.
 
 
-The first is a netflix dataset due to @bennett2007,
+The first dataset is from netflix, due to @bennett2007,
 previously considered by @turner2020_rmd.  It is part of the `Preflib`
 project, available at https://preflib.simonrey.fr/dataset/00004.  The
 original dataset looks like this:

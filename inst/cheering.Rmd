@@ -22,7 +22,7 @@ This document is a distillation and clarification of
 `inst/plackett_luce_monster.Rmd`.
 
 In the following, I use the ''race'' metaphor: five runners take part
-in a race and arrive in order: $a\succ b\succ c\succ d\succ 5e.
+in a race and arrive in order: $a\succ b\succ c\succ d\succ e$.
 Consider the following Plackett-Luce likelihood function for this
 observation:
 
@@ -301,12 +301,18 @@ reported ranks for the five options:
     ec <- c(C=1,T=2,RB=3,BB=3,W=4) # equivalence classes
     h <- c(1,1,s,1)                # strength of support
     (
-        cheering3(v=c("RB","BB","C" ,"T","W"),e=ec,h=h)*3 +
-        cheering3(v=c("BB","RB","T" ,"C","W"),e=ec,h=h)*2 +
-        cheering3(v=c("T" ,"BB","RB","C","W"),e=ec,h=h)*2 +
-        cheering3(v=c("W" ,"BB","RB","T","C"),e=ec,h=h)*4 +
-        cheering3(v=c("C" ,"RB","BB","W","T"),e=ec,h=h)*4 +
-        cheering3(v=c("BB","C" ,"RB","T","W"),e=ec,h=h)*3
+        cheering3(v=c("RB","BB","C" ,"T","W"), e=ec, h=h)*3 +
+        cheering3(v=c("W" ,"BB","RB","C","T"), e=ec, h=h)*7 +
+        cheering3(v=c("W" ,"RB","BB","C","T"), e=ec, h=h)*8 +
+        cheering3(v=c("W" ,"BB","RB","T","C"), e=ec, h=h)*7 +
+        cheering3(v=c("W" ,"RB","BB","C","T"), e=ec, h=h)*7 +
+        cheering3(v=c("RB","BB","C" ,"T","W"), e=ec, h=h)*3 +
+        cheering3(v=c("RB","BB","C" ,"T","W"), e=ec, h=h)*3 +
+        cheering3(v=c("BB","RB","T" ,"C","W"), e=ec, h=h)*2 +
+        cheering3(v=c("T" ,"BB","RB","C","W"), e=ec, h=h)*2 +
+        cheering3(v=c("W" ,"BB","RB","T","C"), e=ec, h=h)*4 +
+        cheering3(v=c("C" ,"RB","BB","W","T"), e=ec, h=h)*4 +
+        cheering3(v=c("BB","C" ,"RB","T","W"), e=ec, h=h)*3
     )
 }
 ```
@@ -326,9 +332,9 @@ example:
 
 Now to find a profile likelihood function for `s`:
 
-```{r,label=proflikeredbus,cache=TRUE}
+```{r,label=proflikeredbusbluebus,cache=TRUE}
 o <- function(s){maxp(RB_BB_LF(s),give=TRUE,n=1)$likes} # optimand
-s <- exp(seq(from=log(1.3),to=log(47),len=17)) # putative similarity measures
+s <- exp(seq(from=log(1.3),to=log(147),len=17)) # putative similarity measures
 L <- sapply(s,o)
 L <- L-max(L)
 ```
@@ -407,7 +413,7 @@ rownames(a) <- a$university_name
 a <- a[,-1]
 colnames(a) <- paste("Y",2011:2016,sep="")
 a
-H <- ordertable2supp(a)
+H <- suppfun(ordertable(a))
 ```
 
 ```{r,label=testuniv,cache=TRUE}
