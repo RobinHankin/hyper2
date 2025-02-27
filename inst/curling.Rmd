@@ -45,8 +45,8 @@ ct
 In this form we can easily convert to a support function:
 
 ```{r,definsupportb,cache=TRUE}
-curling1 <- ordertable2supp(ct)
-head(curling1)
+curling1 <- suppfun(ordertable(ct))
+summary(curling1)
 curling1_maxp <- maxp(curling1)
 pie(curling1_maxp)
 ```
@@ -67,7 +67,7 @@ for(i in seq_len(ncol(curling_table))){
     names(x) <- rownames(curling_table)
     curling2 <- curling2 + ordervec2supp(x[!is.na(x)])
 }
-head(curling2)
+summary(curling2)
 (curling2_maxp <- maxp(curling2))
 pie(curling2_maxp)
 ```

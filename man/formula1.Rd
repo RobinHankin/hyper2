@@ -74,7 +74,8 @@ and support functions as follows:
 a <- read.table("formula1_2022.txt",header=TRUE)
 a <- a[,seq_len(ncol(a)-1)]  # strips out the points column
 wikitable_to_ranktable(a)
-ordertable2supp(a)
+ordertable2supp(a)      # works fine
+suppfun(ordertable(a))  # Same as previous line, but suppfun() needs to know what its argument is
 }
 
 

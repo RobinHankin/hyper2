@@ -3,8 +3,7 @@ documentclass: jss
 author:
   - name: Robin K. S. Hankin
     affiliation: University of Stirling
-    address:
-		Stirling, Scotland FK9 4LH
+    address: Stirling, Scotland FK9 4LH
     email: \email{hankin.robin@gmail.com}
     url: http://aut.ac.nz/
 title:
@@ -211,6 +210,10 @@ H2017 <- ordertable2supp(F1_table_2017[seq_len(top),])
 H2018 <- ordertable2supp(F1_table_2018[seq_len(top),])
 H2019 <- ordertable2supp(F1_table_2019[seq_len(top),])
 ```
+
+Above, note that `F1_table_2016` _et seq_ are (currently) data frames,
+so `suppfun()` will not process them.
+
 
 \newcommand{\pham}{p_\mathrm{Ham}}
 \newcommand{\pvet}{p_\mathrm{Vet}}

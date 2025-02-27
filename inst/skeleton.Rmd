@@ -26,7 +26,7 @@ Olympics](https://en.wikipedia.org/wiki/Skeleton_at_the_2018_Winter_Olympics_%E2
 and analyses the order statistic for the competitors.
 
 ```{r readskeletontable}
-(skeleton_table <- read.table("skeleton2022.txt",header=TRUE))
+(skeleton_table <- ordertable(read.table("skeleton2022.txt",header=TRUE)))
 ```
 
 Thus the top line shows that Grotheer came first in runs 1-3 and sixth
@@ -144,7 +144,7 @@ came third, and so on.
 
 
 ```{r,label=processskeleton,cache=TRUE}
-skeleton <- ordertable2supp(skeleton_table)
+skeleton <- suppfun(skeleton_table)
 skeleton_maxp <- maxp(skeleton)
 skeleton_maxp
 pie(skeleton_maxp)

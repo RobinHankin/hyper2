@@ -108,7 +108,7 @@ the order given by this system.
 Now some data visualization.  First the MLE for the strengths:
 
 ```{r,maxshow, cache = TRUE}
-skating <- ordertable2supp(skating_table)
+skating <- suppfun(skating_table)
 options("use_alabama" = TRUE)
 skating_maxp <- maxp(skating,startp=
 c(5.0493913251e-06, 0.0053037393083, 0.090240695999, 
@@ -340,7 +340,7 @@ o
 Now create a likelihood function:
 
 ```{r makelikef}
-o <- ordertable2supp(o)
+o <- suppfun(o)
 o
 ```
 and have some fun with it:
