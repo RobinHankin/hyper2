@@ -117,7 +117,7 @@ x <- data.frame(
 ## finishing competitors have ranks 1-n in some order for some n:
 
 ordertable2supp(x, incomplete=FALSE)   # discouraged
-suppfun(x, incomplete=FALSE)           # use this instead
+suppfun(ordertable(x), incomplete=FALSE)           # use this instead
 
 
 ## Now consider just a-d; must use default incomplete=TRUE as at venue2
