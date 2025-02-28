@@ -690,6 +690,7 @@ rorder_single <- function(p){
     if(is.null(pnames)){pnames <- letters[seq_along(p)]}
     out <- t(replicate(n, rrank_single(p)))
     out[] <- pnames[out]
+    rownames(out) <- rnames
     return(as.ranktable(out))
 }
 
