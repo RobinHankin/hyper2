@@ -22,7 +22,6 @@ ggrl(H, ...)
 general_grouped_rank_likelihood(H, ...)
 goodbad(winners,losers)
 elimination(all_players)
-rank_likelihood(M,times=1)
 rankvec_likelihood(v,nonfinishers)
 race(v,nonfinishers)
 }
@@ -34,12 +33,6 @@ race(v,nonfinishers)
     in the argument list}
   \item{all_players,winners,losers}{Numeric or character vectors
     specifying competitors.  See details}
-  \item{M}{In function \code{rank_likelihood()}, a matrix with each
-    row corresponding to a race (or judge).  The columns
-    correspond to the finishing order; thus \code{a=M[i,j]} means that
-    competitor \code{a} finished in place \code{j} in race \code{i}}
-  \item{times}{Vector specifying the number of times each row is
-    observed}
   \item{v}{A character vector specifying ranks.  Thus
   \code{c("b","c","a")} means that \code{b} came first, \code{c} second,
   and \code{a} third} 
@@ -53,8 +46,11 @@ race(v,nonfinishers)
 
   These functions are designed to return likelihood functions, in the
   form of lists of \code{hyper2()} objects, for typical order statistics
-  such as the results of rowing heats or MasterChef tournaments.
+  such as the results of rowing heats or MasterChef ments.
 
+  Direct use of \code{rankvec_likelihood()} is discouraged: use
+  \code{suppfun()} instead, for example \code{suppfun(letters)}.
+  
   Function \code{ggrl()} is an easily-typed alias for
   \code{general_grouped_rank_likelihood()}.
 
@@ -81,18 +77,11 @@ race(v,nonfinishers)
   player to be eliminated (or alternatively the only player not to be
   eliminated).
 
-  Function \code{rank_likelihood()} takes a matrix \code{M} with rows
-  corresponding to a judge (or race); column names are interpreted as
-  competitor names.  A named vector is coerced to a one-row matrix.
-  Each row of \code{M} is an order statistic: thus \code{c(3,4,2,1)}
-  means that person 3 came first, person 4 came second, person 2 came
-  third and person 1 came last.  Note that in data frames like
-  \code{F1_table_2017}, each \emph{column} is a race.
-
-  Function \code{rankvec_likelihood()} takes a character vector of
-  competitors with the order of elements corresponding to the finishing
-  order; a Plackett-Luce likelihood function is returned.  Thus
-  \code{v=c("d","b","c","a")} corresponds to \code{d} coming first,
+  Function \code{rank_likelihood()} is deprecated: use [\code{S3}
+  generic] \code{supp.ranktable()} instead.  This takes a character
+  vector of competitors with the order of elements corresponding to the
+  finishing order; a Plackett-Luce likelihood function is returned.
+  Thus \code{v=c("d","b","c","a")} corresponds to \code{d} coming first,
   \code{b} second, \code{c} third, and \code{a} fourth.  Function
   \code{race()} is an arguably more memorable synonym.
 
@@ -118,11 +107,10 @@ r1 <- rrank(10,p=(7:1)/28)
 colnames(r1) <- letters[1:7]
 
 # Likelihood function for r1:
-rank_likelihood(r1)
-rank_likelihood(r1,nonfinishers=letters[8:9])
+suppfun(r1)
 
 # convert a rank table to a support function:
-rank_likelihood(wikitable_to_ranktable(volvo_table))
+suppfun(wikitable_to_ranktable(volvo_table))
 
 H <- hyper2()
 for(i in 1:20){

@@ -65,7 +65,7 @@ curling2 <- hyper2()
 for(i in seq_len(ncol(curling_table))){
     x <- curling_table[,i]
     names(x) <- rownames(curling_table)
-    curling2 <- curling2 + ordervec2supp(x[!is.na(x)])
+    curling2 <- curling2 + suppfun(x[!is.na(x)])
 }
 summary(curling2)
 (curling2_maxp <- maxp(curling2))

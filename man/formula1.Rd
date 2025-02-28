@@ -60,9 +60,11 @@ files is the points and it is easy to mistake this for a venue with
 results (doing so will give a \dQuote{\code{Error in ordervec2supp(o) :
 nonzero elements of d should be 1,2,3,4,...,n}} error).
 
-The likelihood function
-\code{formula1} is \code{ordertable2supp(F1_table_2017)}.  The datasets
-in the package are derived from text files in the \code{inst/} directory
+The likelihood function \code{formula1} is
+\code{ordertable2supp(F1_table_2017)} [NB: \code{suppfun(F1_table_2017)}
+fails: \code{suppfun()} will not try to guess whether its argument is a
+ranktable or an ordertable].  The datasets in the package are derived
+from text files in the \code{inst/} directory
 (e.g. \code{formula1_2017.txt}) by script file
 \code{inst/f1points_Omaker.R}.  Executing this script creates files like
 \code{formula1_results_2017.rda}.

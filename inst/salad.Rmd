@@ -42,7 +42,7 @@ explicit and slick.  First, explicit:
 ```{r useexplicitmethod,cache=TRUE}
 H1 <- hyper2()
 for(i in seq_len(nrow(salad))){
-   H1 <-  H1 + ordervec2supp(as.matrix(salad)[i,])
+   H1 <-  H1 + suppfun(as.matrix(salad)[i,])
 }
 H1
 ```

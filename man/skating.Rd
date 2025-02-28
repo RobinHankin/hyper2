@@ -25,7 +25,7 @@
   consistency between the judges.
 
   Note that file is structured so that each competitor is a row, and
-  each judge is a column.  Function \code{rank_likelihood()} requires a
+  each judge is a column.  Function \code{suppfun()} requires a
   transpose of this to operate.
 
   Object \code{skating_table} is an order table, taken from Lock and

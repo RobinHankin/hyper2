@@ -51,7 +51,7 @@ Now we treat each column as an order statistic:
 eurodance <- hyper2()
 for(i in seq_len(ncol(pref))){
 	x <- pref[,i]
-	eurodance %<>% `+`(ordervec2supp(x[!is.na(x)]))
+	eurodance %<>% `+`(suppfun(x[!is.na(x)]))
 }  # i loop closes
 eurodance_maxp <- maxp(eurodance)
 eurodance_maxp
@@ -94,13 +94,13 @@ LL <- rep(0,n)
 for(i in seq_len(n)){
 	jjstar <- sample(jury)
 	names(jjstar) <- names(jury)
-	LL[i] <- loglik(indep(eurodance_maxp),ordervec2supp(jjstar),log=FALSE)
+	LL[i] <- loglik(indep(eurodance_maxp),suppfun(jjstar),log=FALSE)
 }
 ```
 
 ```{r,label=comparelogliks}
 plot(sort(LL),log="y")
-p <- loglik(indep(eurodance_maxp),ordervec2supp(jury),log=FALSE)
+p <- loglik(indep(eurodance_maxp),suppfun(jury),log=FALSE)
 abline(h=p)
 ```
 

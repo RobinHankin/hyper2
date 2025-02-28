@@ -77,7 +77,7 @@ Now do some random sampling.  First create a likelihood function:
 ```{r,calcH,cache=TRUE}
 H <- hyper2(pnames=rownames(o))
  for(i in seq_len(ncol(o))){
-	H <- H + ordervec2supp(o[,i])
+	H <- H + suppfun(o[,i])
 }
 head(H)
 mL2017 <- maxp(H)

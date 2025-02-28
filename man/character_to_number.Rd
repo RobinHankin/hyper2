@@ -33,15 +33,13 @@ function is here because it is used in \code{ggrl()}.
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{rank_likelihood}}}
+\seealso{\code{\link{suppfun}}}
 \examples{
+
  x <- sample(9)
  names(x) <- sample(letters[1:9])
- H <- rank_likelihood(x)
+ H <- ordervec2supp(x)
  character_to_number(letters[1:3],pnames(H))
 
  char2num(c("PB","L"),pnames(icons))
-
-
-
 }
