@@ -35,9 +35,9 @@ canonical example is a race in which the probability of competitor
 \eqn{i} coming first is \eqn{p_i/\sum p_j}{p_i/sum p}, where the
 summation is over the competitors who have not already finished.
 
-If, say, the first row of \code{rrank()} is \code{c(2,5,1,3,4)}, then
-competitor 2 came first, competitor 5 came second, competitor 1 came
-third, and so on.
+If, say, the first row of \code{rrank()} is \code{c(e, d, b, a, c)},
+then competitor \code{e} came first, competitor \code{d} came second,
+competitor \code{b} came third, and so on.
 
 Note that function \code{rrank()} returns an object of class
 \code{ranktable}.  The column names appear as \dQuote{\code{c1, c2,
@@ -101,14 +101,14 @@ Function \code{rrank_single()} is a low-level helper function:
 
 \preformatted{
 > p <- c(0.02,0.02,0.9,0.02,0.02,0.02)  # competitor 3 the strongest
-> rank_single(p)
+> rrank_single(p)
 [1] 3 2 4 6 4 1
 }
 
 Above, we see from \code{p} that competitor 3 is the strongest, coming
-first with 90\% probability.  And indeed the resulting rank statistic
+first with 92\% probability.  And indeed the resulting rank statistic
 given by \code{rorder_single()} shows competitor 3 coming first, 2
-coming second, and so on.  Compare \code{rrank_single()}:
+coming second, and so on.  Compare \code{rorder_single()}:
 
 \preformatted{
 > rorder_single(p)
