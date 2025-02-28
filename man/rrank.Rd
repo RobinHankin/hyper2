@@ -40,10 +40,10 @@ competitor 2 came first, competitor 5 came second, competitor 1 came
 third, and so on.
 
 Note that function \code{rrank()} returns an object of class
-\code{ranktable}, which has its own special print method.  The column
-names appear as \dQuote{\code{c1, c2, ...}} which is intended to be read
-\dQuote{came first}, \dQuote{came second}, and so on.  The difference
-between \emph{rank} and \emph{order} can be confusing.
+\code{ranktable}.  The column names appear as \dQuote{\code{c1, c2,
+...}} which is intended to be read \dQuote{came first}, \dQuote{came
+second}, and so on.  The difference between \emph{rank} and \emph{order}
+can be confusing.
 
 \preformatted{
 > x <- c(a=3.01, b=1.04, c=1.99, d=4.1)
