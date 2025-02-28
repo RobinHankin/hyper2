@@ -684,7 +684,7 @@ rorder_single <- function(p){
     return(o)
 }
 
-`rrank` <- function(n=1, p, pnames=NULL, fill=FALSE, rnames=NULL){
+`rrank` <- function(n=7, p=(4:1)/10, pnames=NULL, fill=FALSE, rnames=NULL){
     if(fill){ p <- fillup(p) }
     if(is.null(pnames)){pnames <- names(p)}
     if(is.null(pnames)){pnames <- letters[seq_along(p)]}
@@ -692,6 +692,10 @@ rorder_single <- function(p){
     out[] <- pnames[out]
     rownames(out) <- rnames
     return(as.ranktable(out))
+}
+
+`rrankk` <- function(n = 37, p = (20:1)/210, rnames=state.abb[1:37]){
+    rrank(n = n, p = p, rnames = rnames)
 }
 
 `.allorders` <- function(x){

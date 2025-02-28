@@ -1,5 +1,6 @@
 \name{rrank}
 \alias{rrank}
+\alias{rrankk}
 \alias{rrank_single}
 \alias{rorder_single}
 \alias{print.ranktable}
@@ -9,7 +10,8 @@ A function for producing ranks randomly, consistent with a specified
 strength vector
 }
 \usage{
-rrank(n = 1, p, pnames=NULL, fill = FALSE, rnames=NULL)
+rrank(n = 7, p = (4:1)/10, pnames=NULL, fill = FALSE, rnames=NULL)
+rrankk(n = 37, p = (20:1)/210, rnames=state.abb[1:37])
 \method{print}{ranktable}(x, ...)
 rrank_single(p)
 rorder_single(p)
@@ -28,6 +30,10 @@ rorder_single(p)
 }
 
 \value{
+
+Random rank observations.  Function \code{rrank()}, with no arguments,
+returns a small get-you-going example of a ranktable object.  Function
+\code{rrankk()} returns a bigger and more complicated object.
 
 If \code{n=1}, \code{rrank()} returns a vector; if \code{n>1} it returns
 a matrix with \code{n} rows, each corresponding to a ranking.  The
