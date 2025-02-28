@@ -91,9 +91,9 @@ function, dispatching on the class of its primary argument.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'ordertable'</span></span>
 <span><span class="fu">suppfun</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for class 'ranktable'</span></span>
-<span><span class="fu">suppfun</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
-<span><span class="co"># S3 method for class 'preftable'</span></span>
-<span><span class="fu">suppfun</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">suppfun</span><span class="op">(</span><span class="va">x</span>, <span class="va">times</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for class 'character'</span></span>
+<span><span class="fu">suppfun</span><span class="op">(</span><span class="va">x</span>, <span class="va">nonfinishers</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">suppfun</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -102,6 +102,14 @@ function, dispatching on the class of its primary argument.</p>
     <p></p>
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>Dataset to be converted to a support function</p></dd>
+
+  <dt id="arg-times">times<a class="anchor" aria-label="anchor" href="#arg-times"></a></dt>
+<dd><p>Vector corresponding to rows of <code>x</code> giving how many
+    times that observation was obtained (cf <code>preflib</code> datasets)</p></dd>
+
+  <dt id="arg-nonfinishers">nonfinishers<a class="anchor" aria-label="anchor" href="#arg-nonfinishers"></a></dt>
+<dd><p>Character vector of competitors who did not
+    finish, passed to <code><a href="ggrl.html">rankvec_likelihood()</a></code></p></dd>
 
   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Further arguments</p></dd>
@@ -150,6 +158,47 @@ be interpreted as an ordertable or a ranktable, and return an error.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Meliakh + Michalik + Moiseev)^-1 * Michalik^4 * Moiseev^5 * (Moiseev +</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Walther + Zadneprovskis)^-1 * Walther^4 * (Walther + Zadneprovskis)^-1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Zadneprovskis^5)</span>
+<span class="r-in"><span><span class="fu">suppfun</span><span class="op">(</span><span class="fu"><a href="rrank.html">rrank</a></span><span class="op">(</span><span class="fl">10</span>, p <span class="op">=</span> <span class="op">(</span><span class="fl">7</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">28</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log(a^10 * (a + b + c + d + e + f + g)^-10 * (a + b + c + d + f + g)^-1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * (a + b + c + e + f + g)^-1 * (a + b + d + e + f + g)^-4 * (a + b + d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + f + g)^-1 * (a + b + e + f + g)^-1 * (a + c + d + e + f + g)^-2 * (a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + c + d + f + g)^-1 * (a + d + e + f + g)^-1 * (a + d + e + g)^-1 * (a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + d + f + g)^-1 * (a + d + g)^-1 * b^9 * (b + c + d + e + f + g)^-2 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (b + c + d + f + g)^-1 * (b + c + e + f + g)^-1 * (b + d + e + f +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> g)^-2 * (b + d + f + g)^-1 * (b + e + f + g)^-2 * (b + f)^-1 * (b + f +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> g)^-1 * c^10 * (c + d)^-1 * (c + d + e + f + g)^-2 * (c + d + f)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (c + d + f + g)^-3 * (c + e + f + g)^-1 * (c + f + g)^-2 * d^9 * (d + e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + f + g)^-1 * (d + e + g)^-2 * (d + f + g)^-1 * (d + g)^-2 * e^9 * (e +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> f + g)^-2 * (e + g)^-1 * f^9 * (f + g)^-5 * g^4)</span>
+<span class="r-in"><span><span class="fu">suppfun</span><span class="op">(</span><span class="va">letters</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log( a * (a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + q + r + s + t + u + v + w + x + y + z)^-1 * b * (b + c + d + e + f +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> g + h + i + j + k + l + m + n + o + p + q + r + s + t + u + v + w + x +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> y + z)^-1 * c * (c + d + e + f + g + h + i + j + k + l + m + n + o + p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + q + r + s + t + u + v + w + x + y + z)^-1 * d * (d + e + f + g + h +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> i + j + k + l + m + n + o + p + q + r + s + t + u + v + w + x + y +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> z)^-1 * e * (e + f + g + h + i + j + k + l + m + n + o + p + q + r + s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + t + u + v + w + x + y + z)^-1 * f * (f + g + h + i + j + k + l + m +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> n + o + p + q + r + s + t + u + v + w + x + y + z)^-1 * g * (g + h + i</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + j + k + l + m + n + o + p + q + r + s + t + u + v + w + x + y + z)^-1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * h * (h + i + j + k + l + m + n + o + p + q + r + s + t + u + v + w +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x + y + z)^-1 * i * (i + j + k + l + m + n + o + p + q + r + s + t + u</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + v + w + x + y + z)^-1 * j * (j + k + l + m + n + o + p + q + r + s +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t + u + v + w + x + y + z)^-1 * k * (k + l + m + n + o + p + q + r + s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + t + u + v + w + x + y + z)^-1 * l * (l + m + n + o + p + q + r + s +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t + u + v + w + x + y + z)^-1 * m * (m + n + o + p + q + r + s + t + u</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + v + w + x + y + z)^-1 * n * (n + o + p + q + r + s + t + u + v + w +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x + y + z)^-1 * o * (o + p + q + r + s + t + u + v + w + x + y + z)^-1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * p * (p + q + r + s + t + u + v + w + x + y + z)^-1 * q * (q + r + s +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t + u + v + w + x + y + z)^-1 * r * (r + s + t + u + v + w + x + y +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> z)^-1 * s * (s + t + u + v + w + x + y + z)^-1 * t * (t + u + v + w + x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + y + z)^-1 * u * (u + v + w + x + y + z)^-1 * v * (v + w + x + y +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> z)^-1 * w * (w + x + y + z)^-1 * x * (x + y + z)^-1 * y * (y + z)^-1)</span>
+<span class="r-in"><span><span class="fu">suppfun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>c <span class="op">=</span> <span class="fl">2</span>, b <span class="op">=</span> <span class="fl">1</span>, a <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log((a + b + c)^-1 * (a + c)^-1 * b * c)</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>

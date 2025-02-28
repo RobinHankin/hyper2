@@ -89,7 +89,6 @@
 <span><span class="fu">wikitable_to_ranktable</span><span class="op">(</span><span class="va">wikitable</span>, strict<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for class 'ranktable'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
-<span><span class="fu">ranktable_to_printable_object</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for class 'ranktablesummary'</span></span>
 <span><span class="fu"><a href="Print.html">print</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -150,78 +149,7 @@ interpretation of the internal structure of <code>ranktable</code> objects.</p>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">15</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">xrank</span> <span class="op">&lt;-</span> <span class="fu"><a href="rrank.html">rrank</a></span><span class="op">(</span><span class="fl">12</span>,<span class="va">p</span>,rnames<span class="op">=</span><span class="va">month.abb</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">xorder</span> <span class="op">&lt;-</span> <span class="fu">ranktable_to_ordertable</span><span class="op">(</span><span class="va">xrank</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Can convert back and forth:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">xrank</span>,<span class="fu">ordertable_to_ranktable</span><span class="op">(</span><span class="fu">ranktable_to_ordertable</span><span class="op">(</span><span class="va">xrank</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># maxp(ordertable2supp(xorder))  # should be close to p</span></span></span>
-<span class="r-in"><span><span class="fu">ordertable_to_ranktable</span><span class="op">(</span><span class="va">skating_table</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A ranktable:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    c1        c2        c3        c4        c5         c6         c7        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J1 hughes    kwan      slutskaya suguri    cohen      butyrskaya robinson  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J2 slutskaya cohen     kwan      hughes    butyrskaya volchkova  robinson  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J3 slutskaya kwan      hughes    cohen     suguri     liashenko  robinson  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J4 slutskaya kwan      cohen     hughes    suguri     kettunen   butyrskaya</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J5 hughes    kwan      cohen     slutskaya suguri     robinson   sebestyen </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J6 slutskaya hughes    kwan      cohen     butyrskaya sebestyen  suguri    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J7 hughes    slutskaya kwan      cohen     suguri     volchkova  kettunen  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J8 hughes    kwan      slutskaya cohen     suguri     robinson   butyrskaya</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J9 hughes    slutskaya kwan      cohen     suguri     butyrskaya robinson  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    c8         c9          c10         c11         c12         c13        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J1 sebestyen  kettunen    volchkova   onda        hubert      maniachenko</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J2 suguri     kettunen    sebestyen   fontana     maniachenko liashenko  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J3 butyrskaya meier       onda        maniachenko sebestyen   kettunen   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J4 sebestyen  robinson    liashenko   volchkova   maniachenko hubert     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J5 liashenko  fontana     volchkova   hubert      butyrskaya  kettunen   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J6 robinson   meier       kettunen    maniachenko volchkova   onda       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J7 butyrskaya fontana     robinson    maniachenko sebestyen   liashenko  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J8 sebestyen  volchkova   maniachenko kettunen    fontana     onda       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J9 sebestyen  maniachenko fontana     onda        meier       hubert     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    c14       c15       c16         c17       c18       c19       c20      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J1 fontana   liashenko meier       gusmeroli giunchi   soldatova hegel    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J2 onda      gusmeroli meier       hubert    soldatova giunchi   babiakova</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J3 volchkova gusmeroli hegel       hubert    fontana   babiakova giunchi  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J4 meier     onda      fontana     gusmeroli kopac     babiakova soldatova</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J5 meier     onda      maniachenko gusmeroli hegel     giunchi   babiakova</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J6 liashenko fontana   hubert      soldatova gusmeroli hegel     giunchi  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J7 hubert    onda      meier       gusmeroli soldatova babiakova giunchi  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J8 liashenko hubert    meier       gusmeroli soldatova hegel     giunchi  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J9 kettunen  volchkova liashenko   gusmeroli hegel     soldatova giunchi  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    c21       c22       c23  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J1 kopac     babiakova luca </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J2 hegel     kopac     luca </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J3 luca      soldatova kopac</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J4 giunchi   hegel     luca </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J5 soldatova kopac     luca </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J6 babiakova kopac     luca </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J7 hegel     kopac     luca </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J8 kopac     babiakova luca </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> J9 kopac     babiakova luca </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># convert a rank table to a support function:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="ggrl.html">rank_likelihood</a></span><span class="op">(</span><span class="fu">wikitable_to_ranktable</span><span class="op">(</span><span class="va">volvo_table</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log(AbuDhabi^9 * (AbuDhabi + Alvimedica + Brunel + Dongfeng + MAPFRE +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SCA + Vestas)^-9 * (AbuDhabi + Alvimedica + Brunel + MAPFRE + SCA +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vestas)^-2 * (AbuDhabi + Alvimedica + Dongfeng + MAPFRE + SCA +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vestas)^-3 * (AbuDhabi + Alvimedica + MAPFRE + SCA + Vestas)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (AbuDhabi + Brunel)^-1 * (AbuDhabi + Brunel + Dongfeng + MAPFRE + SCA +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vestas)^-2 * (AbuDhabi + Brunel + MAPFRE + SCA)^-1 * (AbuDhabi + Brunel</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + MAPFRE + SCA + Vestas)^-1 * (AbuDhabi + Brunel + SCA)^-1 * (AbuDhabi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Dongfeng + MAPFRE + SCA + Vestas)^-3 * (AbuDhabi + Dongfeng + SCA +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vestas)^-1 * (AbuDhabi + MAPFRE + SCA + Vestas)^-1 * (AbuDhabi + SCA +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vestas)^-1 * Alvimedica^9 * (Alvimedica + Brunel + Dongfeng + MAPFRE +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SCA + Vestas)^-2 * (Alvimedica + Brunel + Dongfeng + SCA + Vestas)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Alvimedica + Brunel + Dongfeng + Vestas)^-1 * (Alvimedica + Brunel +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MAPFRE + SCA + Vestas)^-2 * (Alvimedica + Dongfeng + Vestas)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Alvimedica + MAPFRE + SCA)^-1 * (Alvimedica + MAPFRE + SCA +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vestas)^-3 * (Alvimedica + SCA + Vestas)^-2 * (Alvimedica + Vestas)^-1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Brunel^8 * (Brunel + Dongfeng + MAPFRE + SCA + Vestas)^-1 * (Brunel +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dongfeng + SCA + Vestas)^-1 * Dongfeng^9 * (Dongfeng + MAPFRE + SCA +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vestas)^-1 * (Dongfeng + SCA + Vestas)^-2 * MAPFRE^8 * (MAPFRE +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SCA)^-1 * (MAPFRE + SCA + Vestas)^-1 * SCA^8 * (SCA + Vestas)^-6 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vestas^3)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

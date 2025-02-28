@@ -172,9 +172,7 @@ Placket-Luce likelihood for a race in which the rank statistic was
 <p><strong>Order:</strong> where did runner 1 come?  third.  Where did runner 2
 come?  first.  Where did runner 3 come?  second.  Where did runner 4
 come?  fourth.  Thus the order statistic would be <code>3124</code>.</p>
-<p>Function <code>rrank()</code> is designed for <code><a href="ggrl.html">rank_likelihood()</a></code>, which
-needs rank data, not order data.  Vignette
-“<code>skating_analysis</code>” gives another discussion.</p>
+<p>Vignette “<code>skating_analysis</code>” gives another discussion.</p>
 <p>Note that function <code>rrank()</code> returns an object of class
 “<code>rrank</code>”, which has its own print method.  This can be
 confusing.  Further details are given at <code>ranktable.Rd</code>.</p>
@@ -213,32 +211,35 @@ seq_along(o)</code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="ordertrans.html">ordertrans</a></code>,<code><a href="ggrl.html">rank_likelihood</a></code>,<code><a href="skating.html">skating</a></code>,<code><a href="rhyper3.html">rhyper3</a></code></p></div>
+    <div class="dont-index"><p><code><a href="ordertrans.html">ordertrans</a></code>,
+  <code><a href="suppfun.html">suppfun</a></code>,
+  <code><a href="skating.html">skating</a></code>,
+  <code><a href="rhyper3.html">rhyper3</a></code></p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">rrank_single</span><span class="op">(</span><span class="fu"><a href="zipf.html">zipf</a></span><span class="op">(</span><span class="fl">9</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3 6 4 2 1 9 8 7 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 8 4 6 5 3 1 9 7</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ptrue</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">10</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ptrue</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="fu">rrank</span><span class="op">(</span><span class="fl">10</span>,p<span class="op">=</span><span class="va">ptrue</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A ranktable:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       c1 c2 c3 c4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] d  b  a  c </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] b  c  a  d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] c  b  a  d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] d  a  b  c </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] b  d  c  a </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] b  a  c  d </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] b  a  c  d </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] a  b  d  c </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] b  a  c  d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] b  a  c  d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] b  a  c  d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] c  a  d  b </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] a  b  d  c </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] b  a  d  c </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] c  b  d  a </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] d  c  b  a </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] a  b  c  d </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] b  d  a  c </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] d  a  c  b </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu"><a href="ggrl.html">rank_likelihood</a></span><span class="op">(</span><span class="fu">rrank</span><span class="op">(</span><span class="fl">40</span>,p<span class="op">=</span><span class="va">ptrue</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu"><a href="suppfun.html">suppfun</a></span><span class="op">(</span><span class="fu">rrank</span><span class="op">(</span><span class="fl">10</span>,p<span class="op">=</span><span class="va">ptrue</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Following code commented out because they take too long:</span></span></span>
 <span class="r-in"><span></span></span>

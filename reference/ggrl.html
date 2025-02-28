@@ -84,7 +84,6 @@ statistics</p>
 <span><span class="fu">general_grouped_rank_likelihood</span><span class="op">(</span><span class="va">H</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">goodbad</span><span class="op">(</span><span class="va">winners</span>,<span class="va">losers</span><span class="op">)</span></span>
 <span><span class="fu">elimination</span><span class="op">(</span><span class="va">all_players</span><span class="op">)</span></span>
-<span><span class="fu">rank_likelihood</span><span class="op">(</span><span class="va">M</span>,times<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu">rankvec_likelihood</span><span class="op">(</span><span class="va">v</span>,<span class="va">nonfinishers</span><span class="op">)</span></span>
 <span><span class="fu">race</span><span class="op">(</span><span class="va">v</span>,<span class="va">nonfinishers</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -103,16 +102,6 @@ statistics</p>
   <dt id="arg-all-players-winners-losers">all_players,winners,losers<a class="anchor" aria-label="anchor" href="#arg-all-players-winners-losers"></a></dt>
 <dd><p>Numeric or character vectors
     specifying competitors.  See details</p></dd>
-
-  <dt id="arg-m">M<a class="anchor" aria-label="anchor" href="#arg-m"></a></dt>
-<dd><p>In function <code>rank_likelihood()</code>, a matrix with each
-    row corresponding to a race (or judge).  The columns
-    correspond to the finishing order; thus <code>a=M[i,j]</code> means that
-    competitor <code>a</code> finished in place <code>j</code> in race <code>i</code></p></dd>
-
-  <dt id="arg-times">times<a class="anchor" aria-label="anchor" href="#arg-times"></a></dt>
-<dd><p>Vector specifying the number of times each row is
-    observed</p></dd>
 
   <dt id="arg-v">v<a class="anchor" aria-label="anchor" href="#arg-v"></a></dt>
 <dd><p>A character vector specifying ranks.  Thus
@@ -133,7 +122,9 @@ statistics</p>
 
 <p>These functions are designed to return likelihood functions, in the
   form of lists of <code><a href="hyper2.html">hyper2()</a></code> objects, for typical order statistics
-  such as the results of rowing heats or MasterChef tournaments.</p>
+  such as the results of rowing heats or MasterChef ments.</p>
+<p>Direct use of <code>rankvec_likelihood()</code> is discouraged: use
+  <code><a href="suppfun.html">suppfun()</a></code> instead, for example <code>suppfun(letters)</code>.</p>
 <p>Function <code>ggrl()</code> is an easily-typed alias for
   <code>general_grouped_rank_likelihood()</code>.</p>
 <p>Function <code>goodbad()</code> is a convenience function for <code>ggrl()</code>
@@ -157,17 +148,11 @@ statistics</p>
   lowest strength).  The final element of <code>all_players</code> is the last
   player to be eliminated (or alternatively the only player not to be
   eliminated).</p>
-<p>Function <code>rank_likelihood()</code> takes a matrix <code>M</code> with rows
-  corresponding to a judge (or race); column names are interpreted as
-  competitor names.  A named vector is coerced to a one-row matrix.
-  Each row of <code>M</code> is an order statistic: thus <code>c(3,4,2,1)</code>
-  means that person 3 came first, person 4 came second, person 2 came
-  third and person 1 came last.  Note that in data frames like
-  <code>F1_table_2017</code>, each <em>column</em> is a race.</p>
-<p>Function <code>rankvec_likelihood()</code> takes a character vector of
-  competitors with the order of elements corresponding to the finishing
-  order; a Plackett-Luce likelihood function is returned.  Thus
-  <code>v=c("d","b","c","a")</code> corresponds to <code>d</code> coming first,
+<p>Function <code>rank_likelihood()</code> is deprecated: use [<code>S3</code>
+  generic] <code>supp.ranktable()</code> instead.  This takes a character
+  vector of competitors with the order of elements corresponding to the
+  finishing order; a Plackett-Luce likelihood function is returned.
+  Thus <code>v=c("d","b","c","a")</code> corresponds to <code>d</code> coming first,
   <code>b</code> second, <code>c</code> third, and <code>a</code> fourth.  Function
   <code>race()</code> is an arguably more memorable synonym.</p>
 <p>An example of <code>race()</code> is given in <code>inst/rowing.Rmd</code>, and
@@ -201,11 +186,10 @@ statistics</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Likelihood function for r1:</span></span></span>
-<span class="r-in"><span><span class="fu">rank_likelihood</span><span class="op">(</span><span class="va">r1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">rank_likelihood</span><span class="op">(</span><span class="va">r1</span>,nonfinishers<span class="op">=</span><span class="va">letters</span><span class="op">[</span><span class="fl">8</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="suppfun.html">suppfun</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># convert a rank table to a support function:</span></span></span>
-<span class="r-in"><span><span class="fu">rank_likelihood</span><span class="op">(</span><span class="fu"><a href="ranktable.html">wikitable_to_ranktable</a></span><span class="op">(</span><span class="va">volvo_table</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="suppfun.html">suppfun</a></span><span class="op">(</span><span class="fu"><a href="ranktable.html">wikitable_to_ranktable</a></span><span class="op">(</span><span class="va">volvo_table</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu"><a href="hyper2.html">hyper2</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span><span class="op">{</span></span></span>

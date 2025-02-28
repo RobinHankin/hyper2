@@ -113,17 +113,17 @@ until the final element is the last to cross the finishing line.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">0.4</span>, b<span class="op">=</span><span class="fl">0.3</span>, c<span class="op">=</span><span class="fl">0.2</span>, d<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">rrace</span><span class="op">(</span><span class="va">o</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "b" "a" "c" "d"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a" "b" "c" "d"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ggrl.html">rankvec_likelihood</a></span><span class="op">(</span><span class="fu">rrace</span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log( a * (a + b + c + d)^-1 * (a + b + d)^-1 * (a + d)^-1 * b * c)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log((a + b + c)^-1 * (a + b + c + d)^-1 * (a + c)^-1 * b * c * d)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fu">rrace</span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># 10 races</span></span></span>
 <span class="r-in"><span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu"><a href="hyper2.html">hyper2</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">D</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="va">H</span> <span class="op">&lt;-</span> <span class="va">H</span><span class="op">+</span><span class="fu"><a href="ggrl.html">rankvec_likelihood</a></span><span class="op">(</span><span class="va">D</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span><span class="op">)</span><span class="op">}</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="maxp.html">maxp</a></span><span class="op">(</span><span class="va">H</span><span class="op">)</span>  <span class="co"># should be close to o</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         a         b         c         d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.4717220 0.1638641 0.2510664 0.1133476 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          a          b          c          d </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.56015511 0.18969911 0.20193706 0.04820872 </span>
 </code></pre></div>
     </div>
   </div>

@@ -120,18 +120,19 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">rhyper2</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log(a^5 * (a + b)^-1 * (a + b + c + d + e + f + g)^-3 * (a + b + c + d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + e + f + g + h)^-10 * (a + b + c + e + f + g)^-1 * (a + b + c + e +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> g)^-1 * (a + b + c + h) * (a + b + d + e + f + g)^-1 * (a + b + d +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> f)^-1 * (a + b + d + f + g)^-1 * (a + b + f)^-1 * (a + c)^-1 * (a + c +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d + e + f)^-1 * (a + c + d + e + f + g)^-1 * (a + c + d + e + f + g +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> h)^-1 * (a + c + d + f + g + h)^-1 * (a + c + d + g)^-1 * (a + c + d +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> g + h)^-1 * (a + c + e)^-1 * (a + c + e + f)^-1 * (a + c + e + g)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (a + c + g)^-1 * (a + d)^-1 * (a + f)^-1 * b^5 * (b + c + d + e) * (b +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c + d + e + f + g + h)^-1 * (b + c + d + f + g + h)^-1 * (b + d + f +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> g) * (b + d + f + g + h)^-1 * (b + d + g + h)^-1 * c^4 * (c + d)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (c + e)^-2 * (c + e + g)^-1 * (c + f)^-1 * (c + h)^-1 * d^6 * (d + f +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> g + h)^2 * (d + g + h)^-1 * e^3 * f^7 * g^5 * (g + h)^-1 * h^5)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log(a^4 * (a + b)^-1 * (a + b + c + d + e + f)^-1 * (a + b + c + d + e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + f + g)^-1 * (a + b + c + d + e + f + g + h)^-10 * (a + b + c + d + f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + g)^-1 * (a + b + c + d + f + g + h)^-1 * (a + b + c + e)^-1 * (a + b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + c + e + f)^-1 * (a + b + c + e + f + g + h)^-1 * (a + b + c + e + f +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> h)^-1 * (a + b + c + e + h)^-1 * (a + b + d + e + f + g + h)^-1 * (a +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b + e)^-1 * (a + b + e + f + g)^-1 * (a + b + e + f + g + h)^-1 * (a +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b + e + h)^-1 * (a + b + g + h) * (a + c + d + f + g)^-1 * (a + c +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> e)^-1 * (a + d + f + g)^-1 * (a + e)^-3 * (a + e + g)^-1 * (a + h)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b^5 * (b + c + d + e + f + g + h)^-1 * (b + c + e + f + g + h)^-1 * (b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + c + e + g + h)^-1 * (b + d + e + h) * (b + e + g + h)^-1 * (b + g +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> h)^-1 * (b + h)^-1 * c^5 * (c + d)^-1 * (c + d + f + g) * (c + f)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> d^5 * (d + e + g + h) * (d + f)^-1 * (d + f + g)^-1 * e^6 * (e + h)^-1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * f^6 * g^5 * h^4)</span>
 <span class="r-in"><span><span class="fu"><a href="rp.html">rp</a></span><span class="op">(</span><span class="fl">2</span>,<span class="va">icons</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             NB         L        PB       THC        OA      WAIS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.1666667 0.1666667 0.1666667 0.1666667 0.1666667 0.1666667</span>
