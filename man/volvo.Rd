@@ -38,7 +38,6 @@ pie(volvo_maxp)
 # equalp.test(volvo)   # takes ~10 seconds to run
 
 # convert table to a support function:
-rank_likelihood(wikitable_to_ranktable(volvo_table))
-
+suppfun(volvo_table, noscore = c("DNF", "DNS"))
 
 }

@@ -53,7 +53,7 @@ podium <- function (lambda,x,print=FALSE){
 
      o <- fmat[1, , drop = TRUE]
      o[o > 0] <- rank(o[o > 0])
-     out <- as.hyper3(ordervec2supp(o))
+     out <- as.hyper3(suppfun(o))
      for (i in seq(from=2,to=nrow(fmat))){
        if(print){cat(paste(i,"/",nrow(fmat),"\n"))}
        yesterday <- fmat[i-1, , drop = TRUE]

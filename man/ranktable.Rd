@@ -1,11 +1,11 @@
 \name{ranktable}
 \alias{ranktable}
 \alias{as.ranktable}
+\alias{is.ranktable}
 \alias{ranktable_to_ordertable}
 \alias{ordertable_to_ranktable}
 \alias{wikitable_to_ranktable}
 \alias{print.ranktablesummary}
-\alias{ranktable_to_printable_object}
 \alias{summary.ranktable}
 \title{Convert rank tables to and from order tables}
 \description{
@@ -19,7 +19,6 @@ ranktable_to_ordertable(xrank)
 ordertable_to_ranktable(xorder)
 wikitable_to_ranktable(wikitable, strict=FALSE)
 \method{summary}{ranktable}(object, ...)
-ranktable_to_printable_object(x)
 \method{print}{ranktablesummary}(x,...)
 }
 \arguments{
@@ -62,16 +61,7 @@ interpretation of the internal structure of \code{ranktable} objects.
 p <- (5:1)/15
 names(p) <- letters[1:5]
 xrank <- rrank(12,p,rnames=month.abb)
-xorder <- ranktable_to_ordertable(xrank)
 
-## Can convert back and forth:
-identical(xrank,ordertable_to_ranktable(ranktable_to_ordertable(xrank)))
-
-# maxp(ordertable2supp(xorder))  # should be close to p
-ordertable_to_ranktable(skating_table)
-
-# convert a rank table to a support function:
-rank_likelihood(wikitable_to_ranktable(volvo_table))
 
 }
 

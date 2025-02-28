@@ -91,9 +91,7 @@ Placket-Luce likelihood for a race in which the rank statistic was
 come?  first.  Where did runner 3 come?  second.  Where did runner 4
 come?  fourth.  Thus the order statistic would be \code{3124}.
 
-Function \code{rrank()} is designed for \code{rank_likelihood()}, which
-needs rank data, not order data.  Vignette
-\dQuote{\code{skating_analysis}} gives another discussion.
+Vignette \dQuote{\code{skating_analysis}} gives another discussion.
 
 Note that function \code{rrank()} returns an object of class
 \dQuote{\code{rrank}}, which has its own print method.  This can be
@@ -130,7 +128,12 @@ seq_along(o)}.
 \note{Similar functionality is given by \code{rrace()}, documented at
   \link{rhyper3}.
 }
-\seealso{\code{\link{ordertrans}},\code{\link{rank_likelihood}},\code{\link{skating}},\code{\link{rhyper3}}}
+\seealso{
+  \code{\link{ordertrans}},
+  \code{\link{suppfun}},
+  \code{\link{skating}},
+  \code{\link{rhyper3}}
+}
 \examples{
 
 rrank_single(zipf(9))
@@ -139,7 +142,7 @@ ptrue <- (4:1)/10
 names(ptrue) <- letters[1:4]
 rrank(10,p=ptrue)
 
-H <- rank_likelihood(rrank(40,p=ptrue))
+H <- suppfun(rrank(10,p=ptrue))
 
 ## Following code commented out because they take too long:
 

@@ -1,6 +1,6 @@
 \name{head.hyper2}
 \alias{head.hyper2}
-\title{First few terms of a  distribution}
+\title{First few terms of a distribution: DEPRECATED}
 \description{First few terms in a hyperdirichlet distribution}
 \usage{\method{head}{hyper2}(x, ...)}
 \arguments{
@@ -14,7 +14,7 @@
 
 p <- zipf(5)
 names(p) <- letters[1:5]
-H <- rank_likelihood(rrank(20,p))
+H <- suppfun(rrank(20,p))
 head(H)
 
 

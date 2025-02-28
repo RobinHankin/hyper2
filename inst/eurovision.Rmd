@@ -119,7 +119,7 @@ eurovision <- hyper2()
 
 for(i in seq_len(ncol(preference))){   # cycle through the rows; each row is a voter
     d <- preference[,i,drop=TRUE]
-	eurovision <- eurovision + ordervec2supp(d[!is.na(d)])
+	eurovision <- eurovision + suppfun(d[!is.na(d)])
 } # i loop closes
 ```
 

@@ -637,22 +637,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 `head.hyper2` <- function(x,...){ x[head(elements(brackets(x)),...)] }
 
-`rank_likelihood` <- function(M,times=1){
-  M <- rbind(M)  # deals with vectors
-  times <- cbind(seq_len(nrow(M)),times)[,2]
-  if(is.null(colnames(M))){
-    cn <- NA
-  } else {
-    cn <- colnames(M)
-  }
-  out <- hyper2(pnames=cn)
-  for(i in seq_len(nrow(M))){
-      out <- out + ordervec2supp(rev(M[i,,drop=TRUE]))
-  } 
-  return(out)
-}
-
-`rankvec_likelihood` <- function(v,nonfinishers=NULL){
+`rankvec_likelihood` <- function(v, nonfinishers = NULL){
   stopifnot(all(table(v)==1))
   out <- hyper2()
   v <- rev(v)   # first-placed competitor is the first element of v
@@ -702,11 +687,10 @@ rorder_single <- function(p){
 `rrank` <- function(n=1, p, pnames=NULL, fill=FALSE, rnames=NULL){
     if(fill){ p <- fillup(p) }
     if(is.null(pnames)){pnames <- names(p)}
+    if(is.null(pnames)){pnames <- letters[seq_along(p)]}
     out <- t(replicate(n, rrank_single(p)))
-    colnames(out) <- pnames
-    rownames(out) <- rnames
-    class(out) <- "ranktable"
-    return(drop(out))
+    out[] <- pnames[out]
+    return(as.ranktable(out))
 }
 
 `.allorders` <- function(x){
@@ -1106,6 +1090,7 @@ rorder_single <- function(p){
 }
 
 `as.ordertable` <- function(w){
+    if(is.ranktable(w)){return(ranktable_to_ordertable(w))}
     out <-
         apply(w,2,    
               function(x){ # 'x' is a column of w
