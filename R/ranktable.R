@@ -54,11 +54,11 @@ setGeneric("as.ranktable", function(x){standardGeneric("as.ranktable")})
 
 `suppfun.ranktable` <- function(x, times, ...){
   x <- rbind(x)  # deals with vectors
-  if(missing(times)){times <- rep(1, nrow(x))}
-  stopifnot(length(times) == nrow(x))
+  if(missing(times)){times <- 1}
+  times <- cbind(times, rep(1, nrow(x)))[,1]
   out <- hyper2()
   for(i in seq_len(nrow(x))){
-      out <- out + rankvec_likelihood(x[i, , drop=TRUE]) * times[i]
+      out <- out + suppfun(x[i, , drop=TRUE]) * times[i]
   } 
   return(out)
 }

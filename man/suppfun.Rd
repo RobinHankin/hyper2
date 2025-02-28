@@ -23,7 +23,8 @@ suppfun(x, ...)
 \arguments{
   \item{x}{Dataset to be converted to a support function}
   \item{times}{Vector corresponding to rows of \code{x} giving how many
-    times that observation was obtained (cf \code{preflib} datasets)}
+    times that observation was obtained (cf \code{preflib} datasets);
+    recycled if necessary}
   \item{nonfinishers}{Character vector of competitors who did not
     finish, passed to \code{rankvec_likelihood()}}
   \item{...}{Further arguments}
