@@ -208,6 +208,9 @@ importFrom("alabama","constrOptim.nl")
 
 importFrom("calibrator","MH")
 
+importFrom("datasets", "state.abb")
+
+
 import(methods)
 
 S3method(brackets,hyper2)
