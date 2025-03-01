@@ -11,7 +11,7 @@ strength vector
 }
 \usage{
 rrank(n = 7, p = (4:1)/10, pnames=NULL, fill = FALSE, rnames=NULL)
-rrankk(n = 37, p = (20:1)/210, rnames=state.abb[1:37])
+rrankk(n = 37, p = (20:1)/210, pnames=NULL, fill=FALSE, rnames=NULL)
 \method{print}{ranktable}(x, ...)
 rrank_single(p)
 rorder_single(p)

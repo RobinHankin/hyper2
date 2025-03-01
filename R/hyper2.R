@@ -694,8 +694,8 @@ rorder_single <- function(p){
     return(as.ranktable(out))
 }
 
-`rrankk` <- function(n = 37, p = (20:1)/210, rnames=state.abb[1:37]){
-    rrank(n = n, p = p, rnames = rnames)
+`rrankk` <- function(n = 37, p = (20:1)/210, pnames=NULL, fill=FALSE, rnames=NULL){
+    rrank(n = n, p = p, pnames = pnames, fill = fill, rnames = rnames)
 }
 
 `.allorders` <- function(x){
