@@ -25,8 +25,8 @@ until the final element is the last to cross the finishing line.
 o <- c(a=0.4, b=0.3, c=0.2, d=0.1)
 rrace(o)
 
-rankvec_likelihood(rrace(o))
+suppfun(rrace(o))
 
-D <- as.preftable(t(replicate(10, rrace(o)))) # 10 races
-maxp(preftable_to_supp(D))  # should be close to o
+as.ranktable(t(replicate(10, rrace(o)))) # same as rrank(10,o)
+
 }
