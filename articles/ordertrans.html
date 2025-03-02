@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hyper2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2</span>
       </span>
     </div>
 
@@ -266,9 +266,9 @@ to study it (note that the skating dataset is analysed in more depth in
 to one another? We need to create vectors like <code>x</code> and
 <code>y</code> above:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">j1</span> <span class="op">&lt;-</span> <span class="va">skating_table</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>  <span class="co"># column 1 is judge number 1</span></span>
+<code class="sourceCode R"><span><span class="va">j1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">skating_table</span><span class="op">)</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>  <span class="co"># column 1 is judge number 1</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">j1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">skating_table</span><span class="op">)</span></span>
-<span><span class="va">j2</span> <span class="op">&lt;-</span> <span class="va">skating_table</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>  <span class="co"># column 2 is judge number 2</span></span>
+<span><span class="va">j2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">skating_table</span><span class="op">)</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>  <span class="co"># column 2 is judge number 2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">j2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">skating_table</span><span class="op">)</span></span>
 <span><span class="va">j1</span></span></code></pre></div>
 <pre><code><span><span class="co">##      hughes   slutskaya        kwan       cohen      suguri  butyrskaya </span></span>
