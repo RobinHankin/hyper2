@@ -32,6 +32,7 @@ Lock and Lock (see skating.Rd for more details).  It also creates file
 ```{r,showskating}
 set.seed(0)
 skating_table <- ordertable(read.table("skating.txt", header=TRUE))
+skating_table
 ```
 
 Object `skating_table` is an order table.  It is structured so that
@@ -53,7 +54,7 @@ differences between rank and order.
 We can convert an order table to a support function:
 
 ```{r,convertordertosupport}
-summary(suppfun(ordertable(skating_table)))
+summary(suppfun(skating_table))
 ```
 
 Further, we might ask how many judges ranked each competitor first,
@@ -259,14 +260,14 @@ kwan.  We can gain some understanding of this result by looking at the
 raw judging results for the three medallists:
 
 ```{r,threemedallists}
-head(skating_table,2)
+skating_table[1:3]
 ```
 
 and then calculating a table of the results:
 
 ```{r, tableofresults}
-hughes    <- unlist(skating_table[1,])
-slutskaya <- unlist(skating_table[2,])
+hughes    <- unclass(skating_table)[1,]
+slutskaya <- unclass(skating_table)[2,]
 table(hughes)
 table(slutskaya)
 ```
