@@ -35,6 +35,7 @@ as "did not start":
 ```{r}
 powerboat_table[powerboat_table==0] <- "DNS"
 powerboat_table[20:21,8] <- 0  # above does not apply to points
+powerboat_table <- ordertable(powerboat_table)
 powerboat_table
 ```
 

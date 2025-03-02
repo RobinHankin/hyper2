@@ -1083,15 +1083,16 @@ rorder_single <- function(p){
 }
 
 `ordertable` <- function(x){
+    x <- as.matrix(x)
+    if(is.null(rownames(x))){stop("rownames must be supplied")}
     ## This is the only place class ordertable is set:
-    class(x) <- c("ordertable", setdiff(class(x), "ordertable"))
+    class(x) <- c("ordertable", "matrix")
     return(x)
 }
 
 `print.ordertable` <- function(x, ...){
     cat("An ordertable:\n")
-    class(x) <- setdiff(class(x), "ordertable")
-    print(x)
+    print(noquote(unclass(x)))
 }
 
 `as.ordertable` <- function(w){
