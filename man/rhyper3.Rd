@@ -9,7 +9,7 @@
 
   Various random hyper3 objects, in the context of the race metaphor.
   They return \dQuote{get you going} examples of \code{hyper3} objects.
-  The defaults correspond to simple but non-trivial with straightforward
+  The defaults are simple but non-trivial and have straightforward
   interpretations.
 
   The defaults are
