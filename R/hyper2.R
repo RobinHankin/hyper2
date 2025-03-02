@@ -1285,3 +1285,4 @@ rorder_single <- function(p){
     }
 }
 
+`[.ordertable` <- function(x, ...){ ordertable(apply(unclass(x)[...,], 2, rank)) }

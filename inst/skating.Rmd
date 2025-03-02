@@ -35,21 +35,11 @@ skating_table <- ordertable(read.table("skating.txt", header=TRUE))
 ```
 
 Object `skating_table` is an order table.  It is structured so that
-each competitor is a row, and each judge is a column.  Function
-`rank_likelihood()` considers each row to be a race [or a judge], so
-we need to take a transpose.  The following R idiom is plausible but
-**incorrect**:
-
-```{r,skatingwrong}
-skating_incorrect <- rank_likelihood(t(skating_table)) # incorrect
-```
-
-The above is incorrect because we are applying a rank technique to an
-order table.  Correct analysis follows.  One good thing to do is to
-present the dataset as an order table;
+each competitor is a row, and each judge is a column.  One good thing
+to do is to present the dataset as an order table;
 
 ```{r,coercetoranktable}
-ordertable_to_ranktable(skating_table)
+as.ranktable(skating_table)
 ```
 
 In the above, the column names should be read "came first" (`c1`),
@@ -297,44 +287,16 @@ to Slutskaya and four preferred Slutsakaya to Hughes.
 
 # Just the top seven competitors
 
+Now we consider only the top seven competitors (that is, the top seven
+according to Judge 1).
+
 ```{r justtop7}
-skating_table
-o <- ordertable_to_ranktable(skating_table)
-o
+(o <- skating_table[1:7])
 ```
 
-```{r setclasstomatrix}
-class(o) <- "matrix"
-o
-```
-
-Select just the top seven:
-```{r selectthetop7}
-o <- o[,1:7]
-o
-```
-
-and now replace ranks with internal ranks (that is, rank among the top
-seven):
-
-```{r replaceranks}
-o <- t(apply(o,1,rank))
-colnames(o) <- rownames(skating_table)[1:7]
-o
-```
-
-Now coece to a `ranktable`:
-
-```{r coercetoranktble}
-class(o) <- "ranktable"
-o
-```
-
-Thence to an order table:
 
 ```{r thenceto}
-o <- ranktable_to_ordertable(o)
-o
+(o <- as.ranktable(o))
 ```
 
 Now create a likelihood function:

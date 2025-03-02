@@ -2,6 +2,7 @@
 \alias{ordertable}
 \alias{order_table}
 \alias{print.ordertable}
+\alias{[.ordertable}
 \title{Order tables}
 \description{Order tables}
 \details{
@@ -93,6 +94,11 @@ order table because no country is allowed to vote for itself.
 To coerce a table like the Volvo dataset shown above into an order table
 [that is, replace \code{DNS} with zeros, and also force nonzero entries
 to be contiguous], use \code{as.ordertable()}.
+
+There is an experimental extraction method which extracts certain rows
+of an ordertable; this is used in \code{inst/skating.Rmd}.
+
+
 
 }
 \author{Robin K. S Hankin}

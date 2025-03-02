@@ -154,9 +154,9 @@ We might ask how judges `J1` and `J2` compare to one another?  We need to
 create vectors like `x` and `y` above:
 
 ```{r,makej1j2}
-j1 <- skating_table[,1]  # column 1 is judge number 1
+j1 <- unclass(skating_table)[,1]  # column 1 is judge number 1
 names(j1) <- rownames(skating_table)
-j2 <- skating_table[,2]  # column 2 is judge number 2
+j2 <- unclass(skating_table)[,2]  # column 2 is judge number 2
 names(j2) <- rownames(skating_table)
 j1
 j2
