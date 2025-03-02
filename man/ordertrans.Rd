@@ -106,7 +106,7 @@ x <- c(e=4L,a=7L,c=6L,b=1L,f=2L,g=3L,h=5L,i=8L,d=9L)
 x
 ordertrans(x,letters[1:9])
 
-o <- skating_table[,1]
+o <- unclass(skating_table)[,1]
 names(o) <- rownames(skating_table)
 o
 ordertrans(o)
@@ -117,7 +117,7 @@ ordertrans(sample(icons_maxp),icons)
 rL <- volvo_maxp   # rL is "ranks Likelihood"
 rL[] <- rank(-volvo_maxp)
 
-r1 <- volvo_table[,1]  # ranks race 1
+r1 <- as.numeric(unclass(volvo_table)[,1])  # ranks race 1
 names(r1) <- rownames(volvo_table)
 ordertransplot(rL,r1,xlab="likelihood rank, all races",ylab="rank, race 1")
 
