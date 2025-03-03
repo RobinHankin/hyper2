@@ -791,6 +791,31 @@ plot(log(s),L-max(L),type='b',
 \end{figure}
 
 
+\subsection{Counterstrike}
+
+{\em Counter Strike: Global Offensive (CS:GO)} is a multiplayer
+first-person shooter game in which two teams of five compete in an
+immersive virtual reality combat environment.  Gameplay is typically
+complex, including features such as cooperative teamwork, within-team
+communication, and real-time strategic fluidity.
+
+Here I analyse a dataset taken from recent esports tournament {\em
+  ELEAGUE Major: Boston 2018}.  This Valve-sponsored Major featured 24
+elite teams competing for a million dollar prize pool; peak concurrent
+viewership exceeded $1.3\times 10^6$, the highest in CS:GO history at
+the time.  I study the performance of tournament champions {\em
+  Cloud9} who, as underdogs, narrowly defeated aggressive European
+rivals {\em FaZe Clan} in the final, which is widely considered to be
+the
+
+
+
+
+The dataset used is the deathorder 
+
+
+
+
 \section{Other stuff}
 
 
