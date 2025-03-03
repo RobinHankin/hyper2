@@ -301,29 +301,9 @@ head(H)
 maxp(H)
 ```
 
-Now we can test the hypothesis that Hamilton's wet strength `S` is zero:
+Now in principle we can test the hypothesis that Hamilton's wet
+strength `S` is zero but I have not done this yet.
 
-```{r,testwetstrengthzero,cache=TRUE}
-pnames(H)
-H9 <- keep_flawed(H,c("S",pnames(H)[1:8]))
-specificp.gt.test(H9,"S",0)
-```
-
-now profile likelihood:
-
-```{r,doproflikn,cache=TRUE}
-H9
-maxp(H9)
-p <- seq(from=0.11,to=0.13,len=50)
-u01 <- profsupp(H9,"Hamilton",p,n=01)
-plot(p,u01)
-u20 <- profsupp(H9,"Hamilton",p,n=20)
-plot(p,u20)
-u50 <- profsupp(H9,"Hamilton",p,n=50)
-plot(p,u50)
-uu <- pmax(u01,u20,u50)
-plot(p,uu)
-```
 
 # Pole position
 
