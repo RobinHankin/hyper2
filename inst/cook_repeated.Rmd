@@ -46,7 +46,7 @@ method.  First we will consider the support function for the first row only:
 
 ```{r lookatfirstrow}
 (day1 <- cooking_table[1,])
-H_row1 <- rank_likelihood(day1[day1>0])
+(H_row1 <- suppfun(names(sort(day1[day1 > 0]))))
 ```
  
 In the above, we calculate the Plackett-Luce likelihood function;
@@ -75,7 +75,7 @@ H <- hyper2()
 
 for(i in seq_len(nrow(cooking_table))){  # iterate over rows
 jj <- cooking_table[i,] 
-    H <- H + rank_likelihood(jj[jj>0])
+    H <- H + suppfun(sort(jj[jj > 0]))
 }
 H
 ```
@@ -142,47 +142,10 @@ No evidence for that.
 We can do slightly better, and test a more general hypothesis,
 specifically that the girls systematically vote other girls higher,
 and boys systematically vote boys higher, than warranted.  To test
-this hypothesis, we posit two reified entities, `girl` and `boy`.
+this hypothesis, we either posit two reified entities, `girl` and `boy`.
 Entity `girl` helps a girl when another girl is voting for her, and
 entity `boy` helps a boy when another boy is voting for him.
 
-```{r girlsvotinggirls,cache=TRUE}
-cooking_table <-
-	as.matrix(read.table("cooking_weekly.txt", header=TRUE))
-cooking_table <- cooking_table[rowSums(cooking_table==0)==1,]
-boys <-c("robin","zac")
-girls <- c("lesley","alice","annabel")
-cooks <- colnames(cooking_table)
-P <- hyper2()
-P0 <- hyper2()
-for(i in seq_len(nrow(cooking_table))){  # iterate over rows
-    x <- cooking_table[i,] 
-	if(sum(x==0)>1){break}
-    names(x) <- cooks
-	if(names(x[x==0]) %in% boys){  # if the voter is a boy
-		x <- x[x>0]  # remove the voter
-		Pjj <- pwa(rank_likelihood(x),names(x)[names(x) %in% boys], chameleon="boy")
-	} else if (names(x[x==0]) %in% girls){ # voter a girl
-		x <- x[x>0]
-		Pjj <- pwa(rank_likelihood(x),names(x)[names(x) %in% girls], chameleon="girl")
-	} else {
-		stop()
-	}
-    P <- P + Pjj
-}
-mP <- maxp(P)
-```
-
-```{r plotapie}
-mP
-pie(mP)
-```
-
-
-Now test whether the girls preferentially vote:
-
-```{r girlspref, cache=TRUE}
-specificp.gt.test(P,"girl",0)
-```
+Or we use multipliers and `hyper3` idiom (not yet done)
 
 ## References {-}
