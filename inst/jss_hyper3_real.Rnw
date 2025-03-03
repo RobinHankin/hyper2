@@ -805,13 +805,10 @@ elite teams competing for a million dollar prize pool; peak concurrent
 viewership exceeded $1.3\times 10^6$, the highest in CS:GO history at
 the time.  I study the performance of tournament champions {\em
   Cloud9} who, as underdogs, narrowly defeated aggressive European
-rivals {\em FaZe Clan} in the final, which is widely considered to be
-the
+rivals {\em FaZe Clan} in the final.
 
-
-
-
-The dataset used is the deathorder 
+The dataset used is the order statistic for number of deaths by each
+of the five {\em Cloud9} players.  Deaths are 
 
 
 
