@@ -63,7 +63,7 @@ method:
 curling2 <- hyper2()
 
 for(i in seq_len(ncol(curling_table))){
-    x <- curling_table[,i]
+    x <- unclass(curling_table)[,i]
     names(x) <- rownames(curling_table)
     curling2 <- curling2 + suppfun(x[!is.na(x)])
 }
