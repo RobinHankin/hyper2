@@ -793,13 +793,18 @@ plot(log(s),L-max(L),type='b',
 
 \subsection{Counterstrike}
 
+\newcommand{\skad}{{\sc Skadoodle}}
+\newcommand{\rush}{{\sc RUSH}}
+\newcommand{\tarik}{{\sc tarik}}
+\newcommand{\stew}{{\sc Stewie2K}}
+
 {\em Counter Strike: Global Offensive (CS:GO)} is a multiplayer
 first-person shooter game in which two teams of five compete in an
 immersive virtual reality combat environment.  Gameplay is typically
-complex, including features such as cooperative teamwork, within-team
-communication, and real-time strategic fluidity.
+complex, including features such as cooperative teamwork and real-time
+strategic fluidity.
 
-Here I analyse a dataset taken from recent esports tournament {\em
+Here I analyse a dataset taken from recent e-sports tournament {\em
   ELEAGUE Major: Boston 2018}.  This Valve-sponsored Major featured 24
 elite teams competing for a million dollar prize pool; peak concurrent
 viewership exceeded $1.3\times 10^6$, the highest in CS:GO history at
@@ -807,10 +812,104 @@ the time.  I study the performance of tournament champions {\em
   Cloud9} who, as underdogs, narrowly defeated aggressive European
 rivals {\em FaZe Clan} in the final.
 
-The dataset used is the order statistic for number of deaths by each
-of the five {\em Cloud9} players.  Deaths are 
+Typically when a player is killed, the team suffers a number of
+strategic disadvantages; player deaths are thus a quantifiable proxy
+for both individual ability and also both teams' tactical execution.
+Here I analyse the order statistic for number of deaths of each of the
+five {\em Cloud9} players.
+
+<<echo=FALSE>>=
+a <- read.table("cloud9_boston_2018.txt", header=TRUE)
+a[,-1]
+@
+
+From the first line we see that {\em Cloud9} played {\em FaZe Clan} on
+the {\em inferno} map, won the match, and \skad\ had the least number
+of deaths, followed by \rush, then \tarik, and so on.  Consider two
+{\em Cloud9} players: \skad\ and \stew.  These teammates, although
+comparable in skill [we fail to reject $H_0\colon p_{\mbox{\tiny\sc
+      Skadoodle}}\neq p_{\mbox{\tiny\sc Stewie2k}}$, Plackett-Luce,
+  $p=0.28$] have playing styles that stand in dramatic contrast.
+Commentators characterise \skad\ as emphasising reactive map control
+while \stew\ is more of a disruptive presence engaging in
+high-variance play.
+
+Given that these two players offer equally attractive and accessible
+targets to the opposing team, it is possible that some tactical
+situations might result in a systematic preference for targetting
+\skad, and some a preference for killing \stew.  If this is so, the
+deaths will be overdispersed and one would have a red bus-blue bus
+situation, but with $\lambda<1$.
+
+To assess this, we follow exactly the same protocol as for the sushi
+preference dataset but with modified Plackett-Luce likelihoods using
+the deathorder statistic from the dataset above, and equivalence
+classes comprising \skad\ and \stew, and everybody else:
+
+<<>>=
+ec <-c(autimatic=1, RUSH=1, Skadoodle=2, Stewie2K=2, tarik=1)
+@
 
 
+
+<<defredbusfunc, echo=FALSE>>=
+mk <- function(lam){
+  H3 <- hyper3()
+  for(i in seq_len(nrow(a))){
+    
+    d <- strsplit(a$deathorder[i],", ")[[1]]
+    H3 <- H3 + cheering3(d, e=ec, help=c(1,lam))
+  }
+  return(H3)
+}
+f <- function(l){maxp(mk(l), give=1)$`Log-likelihood`}
+@
+
+Find the MLE for $\lambda$:
+
+<<findopt, cache=TRUE, echo=FALSE>>=
+optlam <- optimize(f,c(0.09, 0.14), maximum = TRUE)
+evaluate <- optlam$maximum
+support <- optlam$objective - f(1)
+pvalue <- pchisq(support,df=1,lower.tail=FALSE)
+@
+
+<<calcklikelam, cache=TRUE, echo=FALSE>>=
+lam <- exp(seq(from = -4,to = log(1.1), len = 23))
+L <- sapply(lam, f)
+@ 
+
+<<findinterval, cache=TRUE, echo=FALSE>>=
+g <- function(l){f(l) - optlam$objective  + 2}
+jj1 <- uniroot(g, interval = exp(c(-4,-3)))
+jj2 <- uniroot(g, interval = exp(c(-1,-0)))
+lowerlimit <- jj1$root
+upperlimit <- jj2$root
+@ 
+
+\begin{figure}[htbp]
+  \begin{center}
+<<plotlikelam, echo=FALSE>>=
+plot(log(lam), L - max(L), type='b')
+segments(x0=log(optlam$maximum),y0 = -0.5, y1 = 0.1,col='red')
+abline(h=c(0,-2), col = 'gray')
+segments(x0 = log(jj1$root), y0 = -2.2, y1 = -1.8, col = 'blue')
+segments(x0 = log(jj2$root), y0 = -2.2, y1 = -1.8, col = 'blue')
+abline(v = 0, lty = 2)
+@ 
+\caption{A\label{profsupcounterstrike} profile support function for
+  the red bus-blue bus parameter $\log\lambda$ applied to mutually
+  supporting equivalence class
+  $\left\lbrace\mbox{\skad},\mbox{\stew}\right\rbrace$.  Vertical gray
+  line shows $H_0\colon\lambda =1$, for which the support is about
+  $\Sexpr{round(support,2)}$ relative to the evaluate
+  $\hat{\lambda}\simeq\Sexpr{round(evaluate,3)}$ (small red bar),
+  corresponding to a $p$-value of about $\Sexpr{round(pvalue,3)}$.
+  Horizontal lines show the two-units-of-support credible interval of
+  $(\Sexpr{round(lowerlimit,3)},\Sexpr{round(upperlimit,3)})$, marked
+  in blue}
+\end{center}
+\end{figure}
 
 
 \section{Other stuff}
