@@ -99,10 +99,10 @@ random_table
 then see how close it is to reality:
 
 ```{r howclosetoreality,cache=TRUE}
-maxp(rank_likelihood(random_table)) # should be close to mL2017
+maxp(suppfun(random_table)) # should be close to mL2017
 ```
 
-```{r checkagain}
+```
 a <- random_table
 class(a) <- "matrix"
 a[] <- points[a]
@@ -115,14 +115,14 @@ rando
 
 Thus we see that 
 
-```{r thuswesee}
+```
 jj <- sort(p,decreasing=TRUE)
 jj
 names(jj)
 ```
 
 
-```{r,dothework,cache=TRUE}
+```
 n <- 200
 goodness <- rep(-Inf,n)
 synthetic_winner_points     <- rep("",n)
