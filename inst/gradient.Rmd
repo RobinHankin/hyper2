@@ -240,7 +240,7 @@ using bordered Hessians:
 
 ```{r useborderedhess}
 
-dpc <- fillup(dp,0)   # constrained delta p
+dpc <- fillup(dp,icons)   # constrained delta p
 
 MC <- hessian(icons,p,border=TRUE)
 dLC1 <- sum(gradientn(icons,fillup(p))*dpc)    # first order approximation
