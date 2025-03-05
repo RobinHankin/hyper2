@@ -912,62 +912,6 @@ abline(v = 0, lty = 2)
 \end{figure}
 
 
-\section{Other stuff}
-
-
-functions~\citep{hankin2010,hankin2017_rnw} account for enhancements
-of competitive ability through the inclusion of reified entities
-(monsters) whose Bradley-Terry strength represents the extra strength.
-For example, if a player is at an advantage for some reason then a
-reified entity might help him and then
-$\Prob(\mbox{$i$~beats~$j$})=\frac{p_i+\mathfrak{M}}{p_i+p_j+\mathfrak{M}}$,
-where $\mathfrak{M}$ is a reified entity whose strength helps
-competitor $i$.
-Such considerations motivate the
-likelihood function in Equations~\ref{likefour}, originally set out by
-XXXXX and YYYY.
-
-\begin{align}\label{likefour}
-\Prob{(\mbox{$i$ wins at home})} &= \frac{\lambda p_i}{\lambda p_i+p_j}\\
-\Prob{(\mbox{$i$ wins away})} &= \frac{\lambda p_i}{\lambda p_i+p_j}\\
-\Prob{(\mbox{$j$ wins at home})} &= \frac{\lambda p_j}{p_i+\lambda p_j}\\
-\Prob{(\mbox{$j$ wins away})} &= \frac{p_j}{\lambda p_i+\lambda p_j}
-\end{align}
-
-Here, $\lambda\geqslant 0$ is a multiplicative constant accounting for
-the home-ground advantage. If $\lambda>1$ the advantage is positive
-and if $\lambda<1$ it is negative and helps the away side.
-
-Here I introduce {\tt hyper3} formalism
-
-
-
-
-However, reified Bradley-Terry techniques suffer from the following
-defect, here illustrated using the context of Scottish football, and
-the home advantage helping the home team and hindering the away team.
-Consider the case of four teams 1-4 and represent the strength of the
-home ground advantage as a home monster of strength $\mathfrak{H}$
-(draws being discarded for the moment).  Now suppose that
-$p_1=p_2=p_A$, and $p_3=p_4=p_B$.  The unit-sum constraint gives
-$2p_A+2p_aB+\mathfrak{H}=1$.  The probability that team1 (at home)
-beats team 2 (away) is then
-$\frac{p_A+\mathfrak{H}}{2p_A+\mathfrak{H}}$; and the probability that
-team 3 (home) beats team 4 (away) is
-$\frac{p_B+\mathfrak{H}}{2p_B+\mathfrak{H}}$.  The odds ratios would
-be $1+\mathfrak{H}/p_A$ and be $1+\mathfrak{H}/p_B$.  Such analysis is
-incompatible with the perfectly reasonable requirement that the odds
-ratio of home victory between two teams of equal strength be constant;
-but here we see that weak teams are predicted to have an overwhelming
-home-ground advantage (finding actual datasets that illustrate
-precisely this phenomenon is not straightforward: reified
-Bradley-Terry methods have a suprising amount of flexibility and can
-accommodate wide ranges of strengths by dint of manipulating reified
-strengths and real strengths).
-
-However, consider the data presented in table~\ref{oldfirm} in which
-we see football results from
-
 \begin{table}
 \centering
 \begin{tabular}{@{} *{5}{c} @{}}
