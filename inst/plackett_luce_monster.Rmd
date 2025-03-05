@@ -9,7 +9,6 @@ bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
 knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 library("partitions")
-library("pdftools")
 ```
 
 ```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
