@@ -26,17 +26,24 @@ dataset taken from the 2018 F1 Powerboat world championships.
 
 
 ```{r readpowerboattable}
-powerboat_table <- read.table("powerboat.txt",header=TRUE)
+jj <- read.table("powerboat.txt",header=TRUE)
 ```
 
 We need some data cleaning first; specifically a zero entry is treated
 as "did not start":
 
-```{r}
+```{r dotable}
+powerboat_table <- ordertable(jj[,1:7])
 powerboat_table[powerboat_table==0] <- "DNS"
-powerboat_table[20:21,8] <- 0  # above does not apply to points
-powerboat_table <- ordertable(powerboat_table)
 powerboat_table
+```
+
+
+```{r dopoints}
+points <- jj[,8]
+names(points) <- rownames(powerboat_table)
+points <- points[order(names(points))]
+points
 ```
 
 Each row is a driver and each column a venue (apart from the final
@@ -47,17 +54,14 @@ second, and so on.
 In this form we can easily convert to a support function:
 
 ```{r,definsupportb,cache=TRUE}
-powerboat <- ordertable2supp(powerboat_table[,1:7])
-head(powerboat)
+powerboat <- suppfun(powerboat_table)
 (powerboat_maxp <- maxp(powerboat))
+```
+
+```{r makeplots}
 pie(powerboat_maxp)
 par(pty="s")
-points <- as.numeric(powerboat_table[,8])
-names(points) <- rownames(powerboat_table)
-points
-points <- points[order(names(points))]
-points
-plot(powerboat_maxp,points*max(powerboat_maxp)/max(points),xlab="likelihood",ylab="points",pch=16)
+plot(powerboat_maxp,points/sum(points),xlab="likelihood",ylab="points",pch=16)
 abline(0,1)
 ```
 
