@@ -99,21 +99,23 @@ winning in a field of~$j=1,\ldots, n$ is $\frac{p_i}{p_1+\cdots
 to competitor~$i$ using a multiplicative factor $\lambda$.  Then
 $\Prob(\mbox{$i$ wins})=\frac{\lambda p_i}{p_1+\cdots+\lambda
   p_i+\cdots+p_n}$.  Examples of such enhancements include the
-home-ground advantage in football and rugby, playing white in chess,
-or XXXX.  Note that $\lambda < 1$ would correspond to a decrease in
-competitive ability.
+home-ground advantage in football and rugby, or playing white in
+chess~\citep{hankin2020}.  Note that $\lambda < 1$ would correspond to
+a decrease in competitive ability.
 
-Further, one might follow HANKIN and consider teams of players.  In
-doubles tennis, for example, $\left\lbrace p_1,p_2\right\rbrace$ might
-play $\left\lbrace p_3,p_4\right\rbrace$ and win with probability
-$\frac{p_1+p_2}{p_1+p_2+p_3+p_4}$.  It is natural to combine this idea
-with that of a multiplicative factor.  For example, suppose $p_1$ has
-a special move against $p_3$, and $p_4$ has just been given a
-performance-enhancing drug, we might have a likelihood functions
-proportional to $\frac{\lambda p_1+ p_2}{p_1+p_2+p_3+\mu p_4}$.  Then
-the effectiveness of $p_3$'s special move and the enhancement afforded
-by the drug are measured by $\lambda$ and $\mu$ respectively with
-values $>1$ corresponding to a positive effect.
+Further, one might follow~\cite{hankin2017_rnw} and consider teams of
+players.  In doubles tennis, for example, $\left\lbrace
+p_1,p_2\right\rbrace$ might play $\left\lbrace p_3,p_4\right\rbrace$
+and win with probability
+$\frac{p_1+p_2}{p_1+p_2+p_3+p_4}$~\citep{hankin2010}.  It is natural to
+combine this idea with that of a multiplicative factor.  For example,
+suppose $p_1$ has a special move against $p_3$, and $p_4$ has just
+been given a performance-enhancing drug, we might have a likelihood
+functions proportional to $\frac{\lambda p_1+ p_2}{\lambda
+  p_1+p_2+p_3+\mu p_4}$.  Then the effectiveness of $p_3$'s special
+move and the enhancement afforded by the drug are measured by
+$\lambda$ and $\mu$ respectively with values $>1$ corresponding to a
+positive effect.
 
 In this paper I present a generalization of the {\tt hyper2} suite for
 Bradley-Terry likelihoods to accommodate general multiplicative
@@ -132,6 +134,54 @@ almost all the $\lambda_{ij}$ are zero.  To fix ideas, consider the
 data presented in Table~\ref{oldfirm}.  Ignoring draws for the moment,
 we have a likelihood proportional to
 
+
+\begin{table}
+\centering
+\begin{tabular}{@{} *{5}{c} @{}}
+\headercell{\small{Plays at home,}\\ \small{wins}} &
+\multicolumn{4}{c@{}}{\small{Plays away, loses}}\\
+\cmidrule(l){2-5}
+&   Rangers     &    Celtic & Falkirk & Livingston\\
+\midrule
+   Rangers      &   NA &    81  &    69   &      15\\
+   Celtic       &   76 &    NA  &    61   &      15\\
+   Falkirk      &   17 &    17  &    NA   &       6\\
+   Livingston   &    2 &     2  &     3   &      NA\\
+\end{tabular}
+\\
+\rule{1mm}{6mm}
+\\
+\begin{tabular}{@{} *{5}{c} @{}}
+\headercell{\small{Plays at home,}\\ \small{draws}} &
+\multicolumn{4}{c@{}}{\small{Plays away, draws}}\\
+\cmidrule(l){2-5}
+&  Rangers     &    Celtic & Falkirk & Livingston\\
+\midrule
+   Rangers     &       NA  &   44 &     14   &       2\\
+   Celtic      &       47  &   NA &     10   &       3\\
+   Falkirk     &       12  &   19 &     NA   &       4\\
+   Livingston  &       4   &   4  &     4    &      NA\\
+   \end{tabular}
+\\
+\rule{1mm}{6mm}
+\\
+\begin{tabular}{@{} *{5}{c} @{}}
+\headercell{\small{Plays at home,}\\ \small{loses}} &
+\multicolumn{4}{c@{}}{\small{Plays away, wins}}\\
+\cmidrule(l){2-5}
+&  Rangers     &    Celtic & Falkirk & Livingston\\
+\midrule
+   Rangers     &   NA  &  42  &    2  &       0\\
+   Celtic      &   46  &  NA  &    8  &       0\\
+   Falkirk     &   57  &  43  &   NA  &       8\\
+   Livingston  &   12  &  11  &    9  &      NA\\
+  \end{tabular}
+\caption{The \label{oldfirm} dominance of the Old Firm: 669 matches
+  between Rangers, Celtic, Falkirk and Livingston arranged by home
+  wins, draws, and home losses.  Data from {\tt soccerworld}}
+\end{table}
+
+
 \begin{equation}
   \left(\frac{\lambda p_R}{\lambda p_R + p_C}\right)^{81}\cdot
   \left(\frac{\lambda p_R}{\lambda p_R + p_F}\right)^{69}\cdots
@@ -145,8 +195,8 @@ represented as a named numeric vector.  For example, if the home
 strength were $\lambda = 1.8$ then the first bracket would be {\tt
   c(Rangers=1.8, Celtic=1)} with an associated power of $-81$.  The
 computational methodology is a generalization of that used
-in~\cite{hankin2022} except that the multiplicative factors are real
-(as opposed to non-negative integer), and also unknown.
+in~\cite{hankin2024_hyper3} in which the multiplicative factors are
+known non-negative integers.
 
 \subsection{The package in use}
 Package idiom for creating a likelihood function for this dataset
@@ -341,10 +391,10 @@ $(\lambda,D)$-plane, shown in figure~\ref{contourlambdaD}.  For
 example, we may test the hypothesis that $\lambda=1$ [corresponding to
   the right hand side of figure~\ref{contourlambdaD}] for which the
 support is about \Sexpr{round(f(maxv) - jj$objective,2)}, far
-exceeding Edwards's two units of support per degree of freedom
-criteron.  Alternatively, we can observe that this lies in the tail
-region of its asymptotic null $\chi^2_4$ distribution with a $p$-value
-of about \Sexpr{signif(pchisq(f(maxv) -
+exceeding the two units of support per degree of freedom
+criteron~\citep{edwards1992}.  Alternatively, we can observe that this
+lies in the tail region of its asymptotic null $\chi^2_4$ distribution
+with a $p$-value of about \Sexpr{signif(pchisq(f(maxv) -
   jj$objective,lower.tail=FALSE,df=2),digits=2)}.
 
 
@@ -636,23 +686,34 @@ would indicate that some competitors inhibit, rather than help,
 others.
 
 The probability model of Figure~\ref{tikzabcde} is applied, in a
-simple one-parameter form, to two examples: Formula 1 motor racing,
-and also a preference rating.
+simple one-parameter form, to two datasets: one a set of preferences
+of different types of sushi, and one in the field of e-sports.
 
 \section{Red bus, blue bus}
 
 The red bus-blue bus problem was originally stated by
 \cite{chipman1960} and discussed by \cite{davidson1970} and
-\cite[p153]{alvo2014}.  was \cite{debreu1960}.  The Holiday problem is
-discussed in \cite{tverskey1972}.  A traveller has a choice of going
+\cite[p153]{alvo2014}.  
+by \cite{tverskey1972}.
+The canonical problem is as follows. A traveller has a choice of going
 to work by different transport methods.  Here, we can assume that the
 traveller has strong but unknown views on different forms of transport
-which might incorporate a random component.  If considering a car or
-bus, the colour of the bus is of no importance to him.  However, when
-offered the choice between a red bus or a blue bus, the colour becomes
-important (having nothing else to guide his decision).  Now, he does
-not really care what colour the bus is.  If we ask him to rank his
-options, it is highly probable that he will put RB and BB
+which might incorporate a random component.  If considering whether to
+use a car or a bus, the colour of the bus is of no importance to him.
+Such preferences are problematic for Bradley-Terry: If our subject is
+indifferent between cars and buses, say, $p_{C} = p_{RB}$ and also
+indifferent to colour of bus, so $p_{RB}=p_{BB}$, the following
+paradox occurs.  Bradley-Terry strengths must be equal so $p_{C} =
+p_{RB} = p_{BB}=\frac{1}{3}$.  Thus $\Prob(C| \left\lbrace
+C,RB\right\rbrace)=\frac{1}{2}$.  Now we introduce a blue bus as an
+option.  Any realistic choice model will have $\Prob(C | \left\lbrace
+C,RB,BB\right\rbrace)=\frac{1}{2}$ but Bradley-Terry gives us
+$\Prob(C| \left\lbrace C,RB\right\rbrace)=\frac{1}{3}$.  Various
+solutions to this problem have been proposed.  \cite{tverskey1972},
+for example, presents an approach involving overlapping aspects; 
+
+If we ask him to
+rank his options, it is highly probable that he will put RB and BB
 consecutively (because they are essentially indistinguishable).  Can
 we quantify the strength of this effect?  To do this, we define a
 bespoke function \code{RB\_BB\_LF()} which returns a \code{hyper3}
@@ -718,10 +779,10 @@ So a likelihood ratio test of the null that $\lambda=1$ would be:
 @
 
 
-Easily satisfying Edwards's two-units-of-support criterion;
-alternatively, we could observe that this observation lies in the tail
-region of its asymptotic $\chi^2_1$ distribution (Wilks's theorem),
-with a $p$-value of \Sexpr{signif(pchisq(suppdiff*2, df=1,
+Easily satisfying \citeauthor{edwards1992}'s two-units-of-support
+criterion; alternatively, we could observe that this observation lies
+in the tail region of its asymptotic $\chi^2_1$ distribution (Wilks's
+theorem), with a $p$-value of \Sexpr{signif(pchisq(suppdiff*2, df=1,
   lower.tail=FALSE),3)}.
 
 
@@ -841,17 +902,6 @@ situations might result in a systematic preference for targetting
 deaths will be overdispersed and one would have a red bus-blue bus
 situation, but with $\lambda<1$.
 
-To assess this, we follow exactly the same protocol as for the sushi
-preference dataset but with modified Plackett-Luce likelihoods using
-the deathorder statistic from the dataset above, and equivalence
-classes comprising \skad\ and \stew, and everybody else:
-
-<<>>=
-ec <-c(autimatic=1, RUSH=1, Skadoodle=2, Stewie2K=2, tarik=1)
-@
-
-
-
 <<defredbusfunc, echo=FALSE>>=
 mk <- function(lam){
   H3 <- hyper3()
@@ -864,8 +914,6 @@ mk <- function(lam){
 }
 f <- function(l){maxp(mk(l), give=1)$`Log-likelihood`}
 @
-
-Find the MLE for $\lambda$:
 
 <<findopt, cache=TRUE, echo=FALSE>>=
 optlam <- optimize(f,c(0.09, 0.14), maximum = TRUE)
@@ -911,129 +959,19 @@ abline(v = 0, lty = 2)
 \end{center}
 \end{figure}
 
+To assess this, we follow exactly the same protocol as for the sushi
+preference dataset but using the deathorder statistic from the dataset
+above.  We specify two equivalence classes: one comprising \skad\ and
+\stew, and one everyone else.  Figure~\ref{profsupcounterstrike} gives
+a support function for $\lambda$ showing, among other things, that we
+may reject the hypothesis that $\lambda=1$ in favour of $\lambda<1$ by
+a likelihood ratio of about $\Sexpr{round(support,2)}$.  We observe
+that this exceeds the two units of support criterion of
+\cite{edwards1992} [asymptotic $p$-value
+  $\simeq\Sexpr{round(pvalue,3)}$] so we may infer that there is
+indeed some systematic mechanism---perhaps a positive feedback
+loop---which tends to magnify differences in death statistic. 
 
-\begin{table}
-\centering
-\begin{tabular}{@{} *{5}{c} @{}}
-\headercell{\small{Plays at home,}\\ \small{wins}} &
-\multicolumn{4}{c@{}}{\small{Plays away, loses}}\\
-\cmidrule(l){2-5}
-&   Rangers     &    Celtic & Falkirk & Livingston\\
-\midrule
-   Rangers      &   NA &    81  &    69   &      15\\
-   Celtic       &   76 &    NA  &    61   &      15\\
-   Falkirk      &   17 &    17  &    NA   &       6\\
-   Livingston   &    2 &     2  &     3   &      NA\\
-\end{tabular}
-\\
-\rule{1mm}{6mm}
-\\
-\begin{tabular}{@{} *{5}{c} @{}}
-\headercell{\small{Plays at home,}\\ \small{draws}} &
-\multicolumn{4}{c@{}}{\small{Plays away, draws}}\\
-\cmidrule(l){2-5}
-&  Rangers     &    Celtic & Falkirk & Livingston\\
-\midrule
-   Rangers     &       NA  &   44 &     14   &       2\\
-   Celtic      &       47  &   NA &     10   &       3\\
-   Falkirk     &       12  &   19 &     NA   &       4\\
-   Livingston  &       4   &   4  &     4    &      NA\\
-   \end{tabular}
-\\
-\rule{1mm}{6mm}
-\\
-\begin{tabular}{@{} *{5}{c} @{}}
-\headercell{\small{Plays at home,}\\ \small{loses}} &
-\multicolumn{4}{c@{}}{\small{Plays away, wins}}\\
-\cmidrule(l){2-5}
-&  Rangers     &    Celtic & Falkirk & Livingston\\
-\midrule
-   Rangers     &   NA  &  42  &    2  &       0\\
-   Celtic      &   46  &  NA  &    8  &       0\\
-   Falkirk     &   57  &  43  &   NA  &       8\\
-   Livingston  &   12  &  11  &    9  &      NA\\
-  \end{tabular}
-\caption{The \label{oldfirm} dominance of the Old Firm: 669 matches
-  between Rangers, Celtic, Falkirk and Livingston arranged by home
-  wins, draws, and home losses.  Data from {\tt soccerworld}}
-\end{table}
-
-
-\section{Conclusions and further work}
-
-
-
-
-consider Table~\ref{kka}, originally considered
-by~\citet{hankin2020}.  Considering only non-drawn games for the
-moment, we wish to represent the first-mover advantage using a ``White
-monster'', of Bradley-Terry strength \white
-
-
-
-
-\begin{table}
-\centering
-\begin{tabular}{@{} *{4}{c} @{}}
-\headercell{\small{Plays White,}\\ \small{wins}} & \multicolumn{3}{c@{}}{\small{Plays black, loses}}\\
-\cmidrule(l){2-4}
-& An &  Kr & Ks        \\
-\midrule
-  An & -  &  18 &   6  \\
-  Kr &  7 &  -  &  18  \\
-  Ks & 15 &  30 &  -   \\
-\end{tabular}\quad
-\begin{tabular}{@{} *{4}{c} @{}}
-\headercell{\small{Plays W,}\\ \small{draws}} & \multicolumn{3}{c@{}}{\small{Plays black, draws}}\\
- \cmidrule(l){2-4}
-& An &  Kr & Ks        \\
-\midrule
-  An & -  &  20 &  20  \\
-  Kr & 29 &  -  &  72  \\
-  Ks & 26 &  57 &  -   \\
-\end{tabular}\quad
-\begin{tabular}{@{} *{4}{c} @{}}
-\headercell{\small{Plays W,}\\ \small{loses}} & \multicolumn{3}{c@{}}{\small{Plays black, wins}}\\
-\cmidrule(l){2-4}
-& An &  Kr & Ks        \\
-\midrule
-  An & -  &   5 &   11  \\
-  Kr & 13 &  -  &    9  \\
-  Ks &  2 &   7 &  -   \\
-\end{tabular}
-\caption{Results of 365 chess games \label{kka} between Grandmaster
-  Anand, Grandmaster Karpov, and Grandmaster Kasparov.  For example,
-  Anand played white against Karpov a total of $18+20+13=51$ times and
-  won 18, drew 20, lost 13}
-\end{table}
-
-
-
-
-
-\begin{table}
-\centering
-\begin{tabular}{l|cc|cc}\\&
-  \multicolumn{2}{c}{$i$ plays at home} &
-  \multicolumn{2}{c}{$i$ plays away} \\
- & Reified & $\lambda$ &
-   Reified & $\lambda$ \\
-  \hline
-  $\Prob{(\mbox{$i$ wins})}$  &
-  $\frac{p_i+\home\oo}{p_i+p_j+\home}$ &
-  $\frac{\lambda p_i}{\lambda p_i+p_j}$ &
-  $\frac{p_i}{p_i+p_j+\home}$ &
-  $\frac{p_i}{\lambda p_i+p_j}$ \\
-  $\Prob{(\mbox{$i$ loses})}$ &
-  $\frac{p_j\oo}{p_i+p_j+\home}$   &
-  $\frac{p_j}{p_i+\lambda p_j}$  &
-  $\frac{p_j+\home}{p_i+p_j+\home}$ &
-  $\frac{\lambda p_j}{p_i + \lambda p_j}$
-  \\
-\end{tabular}
-\caption{Probabilities of a win, draw, loss for the two teams under a reified
-  Bradley-Terry model\label{probabilities} and a lambda thing}
-\end{table}
 
 \section{Conclusions and further work}
 
