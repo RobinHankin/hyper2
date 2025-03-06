@@ -24,8 +24,8 @@ included a function `keep()` but this used flawed logic, hence the
 name of its replacement.  Here is a tiny example that should clarify
 things.  We will use a subset of `skating_table`:
 
-```{r}
-jj <- skating_table[1:3,1:6]
+```{r subsetofskating}
+jj <- unclass(skating_table)[1:3,1:6]
 rownames(jj) <- letters[1:3]
 jj
 ```
@@ -38,7 +38,7 @@ second-ranked competitor).
 
 We could convert explicitly:
 
-```{r}
+```{r convexp}
 a <- apply(jj,2,rank)
 a
 ```
@@ -47,7 +47,7 @@ So each column is a permutation of `123`.  So, for example judge 1
 ranked `a` first, `b` third, and `c` second.  We can coerce to a
 `hyper2` object with `ordertable2supp()`:
 
-```{r}
+```{r coerceto}
 OT <- ordertable2supp(a)
 OT
 ```
@@ -57,7 +57,7 @@ OT
 we are interested only in the first two competitors, `a` and `b`,
 which are competitors 1 and 2.
 
-```{r}
+```{r keepflaw}
 keep_flawed(OT, c("a","b"))
 ```
 
@@ -70,7 +70,7 @@ strength term on the denominator [viz `a+c`] as a *loss* for `a`.
 
 What happens if we keep only `a`?
 
-```{r}
+```{r keeponlya}
 keep_flawed(OT,"a")
 ```
 
