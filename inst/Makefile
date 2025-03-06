@@ -188,6 +188,6 @@ jss_hyper3_real.pdf: jss_hyper3_real.Rnw
 
 
 clean:
-	rm -rf "*.html" 
+	rm -rf *.html
 
 
