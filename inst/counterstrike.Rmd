@@ -247,7 +247,8 @@ I now analyse every game played by `Cloud9` in the tournament.
 https://www.hltv.org/stats/teams/matches/5752/cloud9?event=3247
 
 
-As far as I can tell this is every match played at ELEAGUE Major 2018  in Boston by `Cloud9`.
+As far as I can tell this is every match played at ELEAGUE Major 2018
+in Boston by `Cloud9`.
 
 
 ```{r}
@@ -255,9 +256,22 @@ a <- read.table("cloud9_boston_2018.txt",header=TRUE)
 a
 ```
 
-Above we see from the first line that on 28 Jan 2018, playing `FaZe` on the Inferno map we have a win, with deathorder Skadoodle, RUSH, etc.
+Above we see from the first line that on 28 Jan 2018, playing `FaZe`
+on the Inferno map we have a win, with deathorder Skadoodle, RUSH,
+etc.
 
 We will look at the effect of `Skadoodle` on `Stewie2K`.
+
+
+```{r, counterh2, echo=TRUE}
+H <- hyper2()
+  for(i in seq_len(nrow(a))){
+      d <- strsplit(a$deathorder[i],", ")[[1]]
+      H <- H + suppfun(d)
+  }
+H
+samep.test(H,c("Skadoodle","Stewie2K"))
+```
 
 
 ```{r}
@@ -272,25 +286,8 @@ mk <- function(lam){
   return(H3)
 }
 ```
-  
-  Now some profile likelihood
 
-```{r mkmaxp, cache=TRUE}
-maxp(mk(0.5),give=1)
-maxp(mk(1.01),give=1)
-```
-
-```{r calcklikef, cache=TRUE}
-f <- function(l){maxp(mk(l), give=1)$`Log-likelihood`}
-lam <- seq(from = 0.01,to = 1.1, len = 43)
-L <- sapply(lam, f)
-```
-
-
-```{r plotlikelam}
-plot(lam, L - max(L), type='b')
-plot(log(lam), L - max(L), type='b')
-```
+Find the MLE for $\lambda$:
 
 ```{r findaopt, cache=TRUE}
 optlam <- optimize(f,c(0.09, 0.14), maximum = TRUE)
@@ -301,8 +298,46 @@ optlam <- optimize(f,c(0.09, 0.14), maximum = TRUE)
 optlam
 ```
 
-```{r}
+And the BT strengths at the evaluate:
+
+```{r BTatevaluate, cache=TRUE}
 maxp(mk(optlam$maximum))
 ```
+
+  
+Now some profile likelihood
+
+```{r mkmaxp, cache=TRUE}
+maxp(mk(0.5),give=1)
+maxp(mk(1.01),give=1)
+```
+
+```{r calcklikelam, cache=TRUE}
+f <- function(l){maxp(mk(l), give=1)$`Log-likelihood`}
+lam <- exp(seq(from = -4,to = log(1.1), len = 33))
+L <- sapply(lam, f)
+```
+
+
+```{r findinterval, cache=TRUE}
+g <- function(l){f(l) - optlam$objective  + 2}
+jj1 <- uniroot(g, interval = exp(c(-4,-3)))
+jj2 <- uniroot(g, interval = exp(c(-1,-0)))
+jj1
+jj2
+```
+
+
+
+```{r plotlikelam}
+plot(log(lam), L - max(L), type='l')
+segments(x0=log(optlam$maximum),y0 = -0.5, y1 = 0.1,col='red')
+abline(h=c(0,-2), col = 'gray')
+segments(x0 = log(jj1$root), y0 = -2.2, y1 = -1.8, col = 'blue')
+segments(x0 = log(jj2$root), y0 = -2.2, y1 = -1.8, col = 'blue')
+abline(v = 0, lty = 2)
+```
+
+
 
 ### References {-}
