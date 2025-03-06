@@ -290,6 +290,7 @@ mk <- function(lam){
 Find the MLE for $\lambda$:
 
 ```{r findaopt, cache=TRUE}
+f <- function(l){maxp(mk(l), give=1)$`Log-likelihood`}
 optlam <- optimize(f,c(0.09, 0.14), maximum = TRUE)
 ```
 
