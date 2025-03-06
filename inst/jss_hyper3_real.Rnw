@@ -868,9 +868,9 @@ strategic fluidity.
 Here I analyse a dataset taken from recent e-sports tournament {\em
   ELEAGUE Major: Boston 2018}.  This Valve-sponsored Major featured 24
 elite teams competing for a million dollar prize pool; peak concurrent
-viewership exceeded $1.3\times 10^6$, the highest in CS:GO history at
-the time.  I study the performance of tournament champions {\em
-  Cloud9} who, as underdogs, narrowly defeated aggressive European
+viewership exceeded $1.3\times 10^6$, the highest in {\em CS:GO}
+history at the time.  I study the performance of tournament champions
+{\em Cloud9} who, as underdogs, narrowly defeated aggressive European
 rivals {\em FaZe Clan} in the final.
 
 Typically when a player is killed, the team suffers a number of
