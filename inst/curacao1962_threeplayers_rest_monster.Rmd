@@ -15,6 +15,7 @@ a rest monster.
 
 ```{r, label=loadlibrary}
 library("hyper2")
+library("magrittr")
 
 a <- read.table("curacao1962_candidates.txt",header=FALSE)
 colnames(a) <- c("W", "B", "result", "round")
