@@ -317,8 +317,8 @@ Consider this:
 p <- pudding_table
 p[1 ,4:6] <- c(10,10,37)  # 1v2
 p[2 ,4:6] <- c(10,10,27)  # 1v3
-p[4 ,4:6] <- c(10,10,24)  # 1v4
-p[7 ,4:6] <- c(10,10,20)  # 1v5
+p[4 ,4:6] <- c(10,10,34)  # 1v4
+p[7 ,4:6] <- c(20,20,10)  # 1v5
 p[11,4:6] <- c(10,10,31)  # 1v6
 p
 ```
@@ -328,6 +328,7 @@ p
 
 ```{r,tiepud,cache=TRUE}
 Hp <- convert(p)[[2]]
+options(use_alabama = TRUE)
 mHp <- maxp(Hp)
 mHpt <- mHp[7:12]  #just the tyers
 ```
@@ -502,8 +503,8 @@ having different strengths.
 
 Following lines create `pudding.rda`, residing in the `data/` directory of the package.
 
-```{r,label=savecurlingdataset}
-save(pudding_table,pudding,pudding_maxp,curling2_maxp,file="pudding.rda")
+```{r,label=savepuddingdataset}
+save(pudding_table, pudding, pudding_maxp, file = "pudding.rda")
 ```
 
 ### References {-}
