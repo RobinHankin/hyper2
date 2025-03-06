@@ -18,6 +18,8 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
+(takes about four hours to run without cache)
+
 To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 The [skeleton](https://en.wikipedia.org/wiki/Skeleton_(sport)) is a
 winter sliding sport.  This short document discusses a dataset taken
@@ -43,7 +45,7 @@ We can *try* to automate the above cycle as follows.  The first step
 is to convert `skeleton_table` to a numeric matrix, which proves to be
 a very awkward process.  NB: `data.matrix()` buggers things up:
 
-```{r,label=datamatrixfucksthingsup}
+```{r,label=datamatrixbuggersthingsup, error=TRUE}
 head(data.matrix(skeleton_table))
 ```
 
