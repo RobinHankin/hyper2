@@ -1,4 +1,5 @@
 venue    date       run place runners
+stirling 08/03/2025 207 284 321
 stirling 01/03/2025 206 269 291
 stirling 15/02/2025 204 272 308
 stirling 08/02/2025 203 300 331
