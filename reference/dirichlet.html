@@ -116,11 +116,12 @@ generalized Dirichlet distribution due to Connor and Mosimann</p>
     <h2>Details</h2>
     <p>These functions are really convenience functions.</p>
 <p>Function <code>rdirichlet()</code> returns random samples drawn from a
-  Dirichlet distribution.  If second argument <code>H</code> is a
-  <code>hyper2</code> object, it is tested [with <code>is.dirichlet()</code>] for
-  being a Dirichlet distribution.  If so, samples from it are returned.
-  If not, (e.g. <code>icons</code>), an error is given.  If <code>H</code> is not a
-  <code>hyper2</code> object, it is interpreted as a vector of parameters
+  Dirichlet distribution using the gamma distribution.  If second
+  argument <code>H</code> is a <code>hyper2</code> object, it is tested [with
+  <code>is.dirichlet()</code>] for being a Dirichlet distribution.  If so,
+  samples from it are returned.  If not, (e.g. <code>icons</code>), an error
+  is given.  If <code>H</code> is not a <code>hyper2</code> object, it is
+  interpreted as a (possibly named) vector of parameters
   \(\alpha\) [<strong>not</strong> a vector of powers].</p>
 <p>Function <code>rp_unif()</code> returns uniformly distributed vectors,
   effectively using <code>H*0</code>; but note that this uses Dirichlet
@@ -160,6 +161,10 @@ generalized Dirichlet distribution due to Connor and Mosimann</p>
   are dropped.</p>
 <p>Function <code>dirichlet3()</code> is a replacement for now removed function
   <code>pair3()</code>.</p>
+<p>Function <code>rdirichlet()</code> commits a very mild (but necessary in the
+  absence of a working <code>dismat</code> package) violation of <code>disordR</code>
+  discipline, as the columns of the returned matrix have the same order
+  as <code>pnames(H)</code></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -177,22 +182,20 @@ generalized Dirichlet distribution due to Connor and Mosimann</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu">dirichlet</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">3</span>,d<span class="op">=</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">rdirichlet</span><span class="op">(</span><span class="fl">10</span>,<span class="va">H</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs produced</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               a         b         c          d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]       NaN       NaN       NaN        NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]       NaN       NaN       NaN        NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]       NaN       NaN       NaN        NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 0.1647510 0.1562823 0.4987722 0.18019453</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]       NaN       NaN       NaN        NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]       NaN       NaN       NaN        NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]       NaN       NaN       NaN        NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]       NaN       NaN       NaN        NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.4421702 0.1811956 0.2933874 0.08324683</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]       NaN       NaN       NaN        NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                a          b         c         d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.01653885 0.32962037 0.2204260 0.4334148</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.34840871 0.11847266 0.3525040 0.1806146</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] 0.35844373 0.12892938 0.1223021 0.3903248</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 0.17345705 0.14856605 0.2933627 0.3846142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 0.28796978 0.18610197 0.2259234 0.3000049</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 0.08399798 0.15157662 0.1772073 0.5872181</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 0.03631235 0.46480777 0.1904721 0.3084078</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.15832040 0.03755438 0.5157921 0.2883331</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.15798996 0.26411078 0.4774408 0.1004585</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.10441438 0.26695332 0.2901505 0.3384818</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="fu">rdirichlet</span><span class="op">(</span><span class="fl">1e4</span>,<span class="va">H</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs produced</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   a   b   c   d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NaN NaN NaN NaN </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         a         b         c         d </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.1445195 0.2118687 0.2859401 0.3576717 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">dirichlet3</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>fish<span class="op">=</span><span class="fl">3</span>,chips<span class="op">=</span><span class="fl">2</span><span class="op">)</span>,lambda<span class="op">=</span><span class="fl">1.8</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (chips=1)^2 * (chips=1, fish=1.8)^-5 * (fish=1.8)^3)</span>

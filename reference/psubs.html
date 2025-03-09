@@ -129,17 +129,18 @@ a single player and its substitute; it is not intended for direct use.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> THC^24 * WAIS^9)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="rhyper2.html">rhyper2</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">psubs</span><span class="op">(</span><span class="va">letters</span>,<span class="va">LETTERS</span><span class="op">)</span>   <span class="co"># ignore i,j,k,...,z</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log(A^6 * (A + B + C + D + E + F + G + H)^-10 * (A + B + C + D + E + F</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + H)^-2 * (A + B + C + D + F + G + H)^-1 * (A + B + C + G) * (A + B + D</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + E + F + G)^-2 * (A + B + D + E + F + G + H)^-2 * (A + B + E + F +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> G)^-1 * (A + B + E + G)^-1 * (A + C + D + F + G + H)^-1 * (A + C + E +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F) * (A + C + E + G) * (A + C + F + H) * (A + D + E + F)^-1 * (A + D +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> E + F + G)^-1 * (A + D + F + G + H)^-1 * (A + D + G + H)^-1 * (A +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F)^-1 * B^5 * (B + C + D + E + F + H)^-2 * (B + C + D + F + H)^-2 * (B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + C + D + H)^-1 * (B + D + F + H)^-1 * (B + E)^-1 * (B + E + F + H) *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (B + E + G)^-1 * C^4 * (C + D)^-1 * (C + D + H)^-1 * D^4 * (D + E +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F)^-1 * (D + F)^-3 * (D + F + H)^-1 * (D + G + H)^-1 * E^7 * (E + G)^-3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * F^5 * G^4 * (G + H)^-1 * H^5)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log(A^5 * (A + B + C + D + E + F + G)^-1 * (A + B + C + D + E + F + G +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H)^-10 * (A + B + C + D + E + F + H)^-1 * (A + B + C + D + E + G +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H)^-2 * (A + B + C + D + E + H)^-2 * (A + B + C + E + F + G + H)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (A + B + C + F + G + H)^-1 * (A + B + C + G + H)^-1 * (A + B + D + E +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F + G)^-1 * (A + B + D + E + H)^-1 * (A + B + E + F + G)^-1 * (A + B +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> E + G) * (A + B + F + G)^-1 * (A + B + G)^-1 * (A + C + D + E + G +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H)^-1 * (A + C + D + E + H)^-1 * (A + D + E)^-1 * (A + D + E + H)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (A + E + F + H)^2 * B^5 * (B + C + D + E)^-1 * (B + C + D + E + H)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (B + C + F + H) * (B + C + G + H)^-1 * (B + D)^-1 * (B + D + E)^-1 * (B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + F)^-1 * (B + G)^-1 * (B + G + H)^-1 * (B + H)^-1 * C^7 * (C + D +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> E)^-1 * (C + G)^-2 * D^4 * (D + E)^-2 * E^4 * (E + F)^-1 * F^6 * (F +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H)^-1 * G^4 * H^5)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">psubs</span><span class="op">(</span><span class="va">icons</span>,<span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="fu"><a href="hyper2.html">pnames</a></span><span class="op">(</span><span class="va">icons</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log(l^24 * (l + nb + oa + thc)^-20 * (l + nb + oa + wais)^-9 * (l + nb</span>
