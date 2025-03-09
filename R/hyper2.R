@@ -1046,19 +1046,16 @@ rorder_single <- function(p){
 
 `rdirichlet` <- function(n, H){
     if(is.hyper2(H)){
-        if(is.dirichlet(H)){
-            alpha <- powers(H)+1
-            pn <- pnames(H)
-            s <- size(H)
-        } else { # hyper2, but not dirichlet
-            stop("hyper2 object supplied but is not a Dirichlet distribution")
-        }
+        stopifnot(is.dirichlet(H))
+        alpha <- setNames(sapply(seq_len(size(H)), function(i){powers(H[pnames(H)[i]])}), pnames(H)) + 1
+        pn <- pnames(H)
+        s <- size(H)
     } else {   # H is vector of alpha
         pn <- names(H)
         s <- length(H)
         alpha <- H
     }
-    out <- t(apply(matrix(rgamma(n*s,shape=alpha),s,n),2,function(x){x/sum(x)}))
+    out <- t(apply(matrix(rgamma(n*s, shape=alpha), s, n), 2, function(x){x/sum(x)}))
     colnames(out) <- pn
     return(out)
 }

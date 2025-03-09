@@ -40,13 +40,14 @@ rp_unif(n,H)
   These functions are really convenience functions.
 
   Function \code{rdirichlet()} returns random samples drawn from a
-  Dirichlet distribution.  If second argument \code{H} is a
-  \code{hyper2} object, it is tested [with \code{is.dirichlet()}] for
-  being a Dirichlet distribution.  If so, samples from it are returned.
-  If not, (e.g. \code{icons}), an error is given.  If \code{H} is not a
-  \code{hyper2} object, it is interpreted as a vector of parameters
+  Dirichlet distribution using the gamma distribution.  If second
+  argument \code{H} is a \code{hyper2} object, it is tested [with
+  \code{is.dirichlet()}] for being a Dirichlet distribution.  If so,
+  samples from it are returned.  If not, (e.g. \code{icons}), an error
+  is given.  If \code{H} is not a \code{hyper2} object, it is
+  interpreted as a (possibly named) vector of parameters
   \eqn{\alpha}{alpha} [\strong{not} a vector of powers].
-
+  
   Function \code{rp_unif()} returns uniformly distributed vectors,
   effectively using \code{H*0}; but note that this uses Dirichlet
   sampling which is much faster and better than the Metropolis-Hastings
@@ -88,6 +89,12 @@ rp_unif(n,H)
 
   Function \code{dirichlet3()} is a replacement for now removed function
   \code{pair3()}.
+
+  Function \code{rdirichlet()} commits a very mild (but necessary in the
+  absence of a working \code{dismat} package) violation of \code{disordR}
+  discipline, as the columns of the returned matrix have the same order
+  as \code{pnames(H)}
+
 }
 
 \seealso{\code{\link{hyper2}},\code{\link{rp}}} \examples{
