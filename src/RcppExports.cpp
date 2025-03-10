@@ -23,70 +23,70 @@ BEGIN_RCPP
 END_RCPP
 }
 // addL
-List addL(const List L1, const NumericVector p1, const List L2, const NumericVector p2);
+List addL(const List& L1, const NumericVector& p1, const List& L2, const NumericVector& p2);
 RcppExport SEXP _hyper2_addL(SEXP L1SEXP, SEXP p1SEXP, SEXP L2SEXP, SEXP p2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type L1(L1SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type p1(p1SEXP);
-    Rcpp::traits::input_parameter< const List >::type L2(L2SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type p2(p2SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L1(L1SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type p1(p1SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L2(L2SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type p2(p2SEXP);
     rcpp_result_gen = Rcpp::wrap(addL(L1, p1, L2, p2));
     return rcpp_result_gen;
 END_RCPP
 }
 // equality
-bool equality(const List L1, const NumericVector p1, const List L2, const NumericVector p2);
+bool equality(const List& L1, const NumericVector& p1, const List& L2, const NumericVector& p2);
 RcppExport SEXP _hyper2_equality(SEXP L1SEXP, SEXP p1SEXP, SEXP L2SEXP, SEXP p2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type L1(L1SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type p1(p1SEXP);
-    Rcpp::traits::input_parameter< const List >::type L2(L2SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type p2(p2SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L1(L1SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type p1(p1SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L2(L2SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type p2(p2SEXP);
     rcpp_result_gen = Rcpp::wrap(equality(L1, p1, L2, p2));
     return rcpp_result_gen;
 END_RCPP
 }
 // accessor
-List accessor(const List L, const NumericVector powers, const List Lwanted);
+List accessor(const List& L, const NumericVector& powers, const List& Lwanted);
 RcppExport SEXP _hyper2_accessor(SEXP LSEXP, SEXP powersSEXP, SEXP LwantedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type L(LSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type powers(powersSEXP);
-    Rcpp::traits::input_parameter< const List >::type Lwanted(LwantedSEXP);
+    Rcpp::traits::input_parameter< const List& >::type L(LSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type powers(powersSEXP);
+    Rcpp::traits::input_parameter< const List& >::type Lwanted(LwantedSEXP);
     rcpp_result_gen = Rcpp::wrap(accessor(L, powers, Lwanted));
     return rcpp_result_gen;
 END_RCPP
 }
 // overwrite
-List overwrite(const List L1, const NumericVector powers1, const List L2, const NumericVector powers2);
+List overwrite(const List& L1, const NumericVector& powers1, const List& L2, const NumericVector& powers2);
 RcppExport SEXP _hyper2_overwrite(SEXP L1SEXP, SEXP powers1SEXP, SEXP L2SEXP, SEXP powers2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type L1(L1SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type powers1(powers1SEXP);
-    Rcpp::traits::input_parameter< const List >::type L2(L2SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type powers2(powers2SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L1(L1SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type powers1(powers1SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L2(L2SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type powers2(powers2SEXP);
     rcpp_result_gen = Rcpp::wrap(overwrite(L1, powers1, L2, powers2));
     return rcpp_result_gen;
 END_RCPP
 }
 // assigner
-List assigner(const List L, const NumericVector p, const List L2, const NumericVector value);
+List assigner(const List& L, const NumericVector& p, const List& L2, const NumericVector& value);
 RcppExport SEXP _hyper2_assigner(SEXP LSEXP, SEXP pSEXP, SEXP L2SEXP, SEXP valueSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type L(LSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type p(pSEXP);
-    Rcpp::traits::input_parameter< const List >::type L2(L2SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type value(valueSEXP);
+    Rcpp::traits::input_parameter< const List& >::type L(LSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const List& >::type L2(L2SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type value(valueSEXP);
     rcpp_result_gen = Rcpp::wrap(assigner(L, p, L2, value));
     return rcpp_result_gen;
 END_RCPP
@@ -164,79 +164,79 @@ BEGIN_RCPP
 END_RCPP
 }
 // addL3
-List addL3(const List L1, const List W1, const NumericVector p1, const List L2, const List W2, const NumericVector p2);
+List addL3(const List& L1, const List& W1, const NumericVector& p1, const List& L2, const List& W2, const NumericVector& p2);
 RcppExport SEXP _hyper2_addL3(SEXP L1SEXP, SEXP W1SEXP, SEXP p1SEXP, SEXP L2SEXP, SEXP W2SEXP, SEXP p2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type L1(L1SEXP);
-    Rcpp::traits::input_parameter< const List >::type W1(W1SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type p1(p1SEXP);
-    Rcpp::traits::input_parameter< const List >::type L2(L2SEXP);
-    Rcpp::traits::input_parameter< const List >::type W2(W2SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type p2(p2SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L1(L1SEXP);
+    Rcpp::traits::input_parameter< const List& >::type W1(W1SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type p1(p1SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L2(L2SEXP);
+    Rcpp::traits::input_parameter< const List& >::type W2(W2SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type p2(p2SEXP);
     rcpp_result_gen = Rcpp::wrap(addL3(L1, W1, p1, L2, W2, p2));
     return rcpp_result_gen;
 END_RCPP
 }
 // equality3
-bool equality3(const List L1, const List W1, const NumericVector p1, const List L2, const List W2, const NumericVector p2);
+bool equality3(const List& L1, const List& W1, const NumericVector& p1, const List& L2, const List& W2, const NumericVector& p2);
 RcppExport SEXP _hyper2_equality3(SEXP L1SEXP, SEXP W1SEXP, SEXP p1SEXP, SEXP L2SEXP, SEXP W2SEXP, SEXP p2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type L1(L1SEXP);
-    Rcpp::traits::input_parameter< const List >::type W1(W1SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type p1(p1SEXP);
-    Rcpp::traits::input_parameter< const List >::type L2(L2SEXP);
-    Rcpp::traits::input_parameter< const List >::type W2(W2SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type p2(p2SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L1(L1SEXP);
+    Rcpp::traits::input_parameter< const List& >::type W1(W1SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type p1(p1SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L2(L2SEXP);
+    Rcpp::traits::input_parameter< const List& >::type W2(W2SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type p2(p2SEXP);
     rcpp_result_gen = Rcpp::wrap(equality3(L1, W1, p1, L2, W2, p2));
     return rcpp_result_gen;
 END_RCPP
 }
 // accessor3
-List accessor3(const List L, const List W, const NumericVector powers, const List Lwanted, const List Wwanted);
+List accessor3(const List& L, const List& W, const NumericVector& powers, const List& Lwanted, const List& Wwanted);
 RcppExport SEXP _hyper2_accessor3(SEXP LSEXP, SEXP WSEXP, SEXP powersSEXP, SEXP LwantedSEXP, SEXP WwantedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type L(LSEXP);
-    Rcpp::traits::input_parameter< const List >::type W(WSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type powers(powersSEXP);
-    Rcpp::traits::input_parameter< const List >::type Lwanted(LwantedSEXP);
-    Rcpp::traits::input_parameter< const List >::type Wwanted(WwantedSEXP);
+    Rcpp::traits::input_parameter< const List& >::type L(LSEXP);
+    Rcpp::traits::input_parameter< const List& >::type W(WSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type powers(powersSEXP);
+    Rcpp::traits::input_parameter< const List& >::type Lwanted(LwantedSEXP);
+    Rcpp::traits::input_parameter< const List& >::type Wwanted(WwantedSEXP);
     rcpp_result_gen = Rcpp::wrap(accessor3(L, W, powers, Lwanted, Wwanted));
     return rcpp_result_gen;
 END_RCPP
 }
 // overwrite3
-List overwrite3(const List L1, const List W1, const NumericVector powers1, const List L2, const List W2, const NumericVector powers2);
+List overwrite3(const List& L1, const List& W1, const NumericVector& powers1, const List& L2, const List& W2, const NumericVector& powers2);
 RcppExport SEXP _hyper2_overwrite3(SEXP L1SEXP, SEXP W1SEXP, SEXP powers1SEXP, SEXP L2SEXP, SEXP W2SEXP, SEXP powers2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type L1(L1SEXP);
-    Rcpp::traits::input_parameter< const List >::type W1(W1SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type powers1(powers1SEXP);
-    Rcpp::traits::input_parameter< const List >::type L2(L2SEXP);
-    Rcpp::traits::input_parameter< const List >::type W2(W2SEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type powers2(powers2SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L1(L1SEXP);
+    Rcpp::traits::input_parameter< const List& >::type W1(W1SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type powers1(powers1SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L2(L2SEXP);
+    Rcpp::traits::input_parameter< const List& >::type W2(W2SEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type powers2(powers2SEXP);
     rcpp_result_gen = Rcpp::wrap(overwrite3(L1, W1, powers1, L2, W2, powers2));
     return rcpp_result_gen;
 END_RCPP
 }
 // assigner3
-List assigner3(const List L, const List W, const NumericVector p, const List L2, const List W2, const NumericVector value);
+List assigner3(const List& L, const List& W, const NumericVector& p, const List& L2, const List& W2, const NumericVector value);
 RcppExport SEXP _hyper2_assigner3(SEXP LSEXP, SEXP WSEXP, SEXP pSEXP, SEXP L2SEXP, SEXP W2SEXP, SEXP valueSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type L(LSEXP);
-    Rcpp::traits::input_parameter< const List >::type W(WSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type p(pSEXP);
-    Rcpp::traits::input_parameter< const List >::type L2(L2SEXP);
-    Rcpp::traits::input_parameter< const List >::type W2(W2SEXP);
+    Rcpp::traits::input_parameter< const List& >::type L(LSEXP);
+    Rcpp::traits::input_parameter< const List& >::type W(WSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const List& >::type L2(L2SEXP);
+    Rcpp::traits::input_parameter< const List& >::type W2(W2SEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type value(valueSEXP);
     rcpp_result_gen = Rcpp::wrap(assigner3(L, W, p, L2, W2, value));
     return rcpp_result_gen;

@@ -2,7 +2,7 @@
 
 #include "hyperdirichlet2.h"
 
-weightedplayervector makeweightedplayervector3(const CharacterVector players, const NumericVector weights){
+weightedplayervector makeweightedplayervector3(const CharacterVector &players, const NumericVector &weights){
     assert(players.size() == weights.size());
     weightedplayervector out;
     for(size_t i=0 ; i < (size_t) players.size() ; i++){
@@ -39,7 +39,7 @@ playerstrengths preparepmap3(const NumericVector &probs, const CharacterVector &
     return(out);
 }
 
-List makebrackets3(const hyper3 H){// Returns a list of players, eg list('a',c('a','b'),c('a','xt'))
+List makebrackets3(const hyper3 &H){// Returns a list of players, eg list('a',c('a','b'),c('a','xt'))
     List out;
     size_t i;
     for(auto ih=H.begin(); ih != H.end(); ++ih){
@@ -54,7 +54,7 @@ List makebrackets3(const hyper3 H){// Returns a list of players, eg list('a',c('
     return(out);
 }
 
-List makeweights3(const hyper3 H){// Returns a list of weights, eg list(1,1:2,2.2)
+List makeweights3(const hyper3 &H){// Returns a list of weights, eg list(1,1:2,2.2)
     List out;
     hyper3::const_iterator ih;
     size_t i;
@@ -71,7 +71,7 @@ List makeweights3(const hyper3 H){// Returns a list of weights, eg list(1,1:2,2.
      return(out);
  }
  
-NumericVector makepowers3(const hyper3 H){
+NumericVector makepowers3(const hyper3 &H){
     NumericVector out(H.size());   // data
     size_t i=0;
     
@@ -99,8 +99,8 @@ List identityL3(const List &L, const List &W, const NumericVector &p){
  
 //[[Rcpp::export]]
 List addL3(
-           const List L1, const List W1, const NumericVector p1,
-           const List L2, const List W2, const NumericVector p2
+           const List &L1, const List &W1, const NumericVector &p1,
+           const List &L2, const List &W2, const NumericVector &p2
           ){
     hyper3 h1 = prepareL3(L1,W1,p1);
     hyper3 h2 = prepareL3(L2,W2,p2);
@@ -121,8 +121,8 @@ List addL3(
 
 //[[Rcpp::export]]
 bool equality3(  // modelled on spray_equality()
-               const List L1, const List W1, const NumericVector p1,
-               const List L2, const List W2, const NumericVector p2
+               const List &L1, const List &W1, const NumericVector &p1,
+               const List &L2, const List &W2, const NumericVector &p2
            ){
     hyper3 h1,h2;
     
@@ -151,11 +151,11 @@ bool equality3(  // modelled on spray_equality()
 
 //[[Rcpp::export]]
 List accessor3(
-              const List L,
-              const List W,
-              const NumericVector powers,
-              const List Lwanted,
-              const List Wwanted
+              const List &L,
+              const List &W,
+              const NumericVector &powers,
+              const List &Lwanted,
+              const List &Wwanted
               ){
 
     const hyper3 h=prepareL3(L,W,powers);
@@ -180,8 +180,8 @@ List accessor3(
     
 //[[Rcpp::export]]
 List overwrite3(  // H1[] <- H2
-                const List L1, const List W1, const NumericVector powers1,
-                const List L2, const List W2, const NumericVector powers2
+                const List &L1, const List &W1, const NumericVector &powers1,
+                const List &L2, const List &W2, const NumericVector &powers2
               ){
 
           hyper3 h1=prepareL3(L1,W1,powers1);
@@ -196,8 +196,8 @@ List overwrite3(  // H1[] <- H2
 
 //[[Rcpp::export]]
 List assigner3(  // H[L] <- v
-               const List L , const List W, const NumericVector p,
-               const List L2, const List W2,
+               const List &L , const List &W, const NumericVector &p,
+               const List &L2, const List &W2,
                const NumericVector value
               ){
     hyper3 h=prepareL3(L,W,p);

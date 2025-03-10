@@ -40,7 +40,7 @@ List makebrackets(const hyper2 H){  // takes a hyper2, returns the brackets
     return(out);
 }
 
-NumericVector makepowers(const hyper2 H){  // takes a hyper2, returns powers
+NumericVector makepowers(const hyper2 &H){  // takes a hyper2, returns powers
     NumericVector out(H.size());   // data
     unsigned int i=0;
     hyper2::const_iterator it;   // it iterates through a hyper2 object
@@ -66,8 +66,8 @@ List identityL(const List &L, const NumericVector &p){
  
 //[[Rcpp::export]]
 List addL(
-          const List L1, const NumericVector p1,
-          const List L2, const NumericVector p2  // p==powers
+          const List &L1, const NumericVector &p1,
+          const List &L2, const NumericVector &p2  // p==powers
           ){
     hyper2 h1 = prepareL(L1,p1);
     hyper2 h2 = prepareL(L2,p2);
@@ -89,8 +89,8 @@ List addL(
 
 //[[Rcpp::export]]
 bool equality(  // modelled on spray_equality()
-          const List L1, const NumericVector p1,
-          const List L2, const NumericVector p2  // p==powers
+          const List &L1, const NumericVector &p1,
+          const List &L2, const NumericVector &p2  // p==powers
            ){
     hyper2 h1,h2;
     hyper2::const_iterator it;
@@ -120,9 +120,9 @@ bool equality(  // modelled on spray_equality()
 
 //[[Rcpp::export]]
 List accessor(
-              const List L,
-              const NumericVector powers,
-              const List Lwanted
+              const List &L,
+              const NumericVector &powers,
+              const List &Lwanted
               ){
 
     const hyper2 h=prepareL(L,powers);
@@ -149,8 +149,8 @@ List accessor(
     
 //[[Rcpp::export]]
 List overwrite(  // H1[] <- H2
-              const List L1, const NumericVector powers1,
-              const List L2, const NumericVector powers2
+              const List &L1, const NumericVector &powers1,
+              const List &L2, const NumericVector &powers2
               ){
 
           hyper2 h1=prepareL(L1,powers1);
@@ -166,9 +166,9 @@ List overwrite(  // H1[] <- H2
 
 //[[Rcpp::export]]
 List assigner(  // H[L] <- v
-            const List L, const NumericVector p,
-            const List L2,
-            const NumericVector value
+            const List &L, const NumericVector &p,
+            const List &L2,
+            const NumericVector &value
               ){
     hyper2 h=prepareL(L,p);
     bracket b;
