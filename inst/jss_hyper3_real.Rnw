@@ -19,21 +19,21 @@
 \Plaintitle{Generalized Bradley-Terry models}
 
 %% an abstract and keywords
-\Abstract{
+\Abstract{ 
+  
+  A generalization of \code{hyper2} is presented in which
+  Bradley-Terry strengths may be modified using a multiplicative
+  factor $\lambda$; Generally, ordinary Bradley-Terry is recovered if
+  $\lambda=1$.  This approach offers multiple advantages over other
+  generalizations such as reified Bradley-Terry.  It becomes possible
+  to represent non-independence of successive observations in
+  Plackett-Luce likelihood functions which allows a parametrization of
+  the ``red bus, blue bus'' problem in preference analysis.  I present
+  examples drawn from the fields of food preference and the e-sport
+  {\em Counterstrike}.  }
 
-  The \code{hyper2} package provides functionality to work with
-  extensions of the Bradley-Terry probability model such as reified
-  entities (monsters) that account for known enhancements in
-  competitive ability.  Here, I present a generalization of
-  \code{hyper2} in which Bradley-Terry strengths may be enhanced using
-  a multiplicative factor $\lambda$.  Generally, ordinary
-  Bradley-Terry is recovered if $\lambda=1$.  This approach offers
-  multiple advantages over reified Bradley-Terry, and several examples
-  are given.
-}
-\Keywords{Plackett-Luce,
-  Bradley-Terry, Mann-Whitney} \Plainkeywords{Plackett-Luce,
-  Bradley-Terry, Mann-Whitney}
+\Keywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
+\Plainkeywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
 
 %% publication information
 %% NOTE: Typically, this can be left commented and will be filled out by the technical editor
@@ -107,33 +107,47 @@ Further, one might follow~\cite{hankin2017_rnw} and consider teams of
 players.  In doubles tennis, for example, $\left\lbrace
 p_1,p_2\right\rbrace$ might play $\left\lbrace p_3,p_4\right\rbrace$
 and win with probability
-$\frac{p_1+p_2}{p_1+p_2+p_3+p_4}$~\citep{hankin2010}.  It is natural to
-combine this idea with that of a multiplicative factor.  For example,
-suppose $p_1$ has a special move against $p_3$, and $p_4$ has just
-been given a performance-enhancing drug, we might have a likelihood
-functions proportional to $\frac{\lambda p_1+ p_2}{\lambda
-  p_1+p_2+p_3+\mu p_4}$.  Then the effectiveness of $p_3$'s special
-move and the enhancement afforded by the drug are measured by
-$\lambda$ and $\mu$ respectively with values $>1$ corresponding to a
-positive effect.
+$\frac{p_1+p_2}{p_1+p_2+p_3+p_4}$~\citep{hankin2010}.  It is natural
+to combine this idea with that of a multiplicative factor.  For
+example, suppose $p_1$ has a special move against $p_3$, and $p_4$ has
+just been given a performance-enhancing drug.  If so, we might have
+likelihood function
 
-In this paper I present a generalization of the {\tt hyper2} suite for
-Bradley-Terry likelihoods to accommodate general multiplicative
-factors.  The most general likelihood function would be
+\begin{equation}\label{like1234}
+  \mathcal{L}{\left(p_1,p_2,p_3,p_4;\lambda,\mu\right)}\propto
+  \frac{
+    \left(\lambda p_1 + p_2\right)^{w_{12}}\cdot
+    \left(p_3 + \mu p_4\right)^{w_{34}}
+    }{
+    \left(\lambda p_1+p_2+p_3+\mu p_4\right)^{w_{12} + w_{34}}
+    }
+\end{equation}
+
+
+where $w_{12}$ and $w_{34}$ are the number of wins by each team
+respectively.  Then $\lambda$ and $\mu$ represent the effectiveness of
+$p_1$'s special move and the enhancement afforded to $p_4$ by the
+drug, with values $>1$ corresponding to a positive effect.  In this
+paper I generalize the {\tt hyper2} suite for Bradley-Terry
+likelihoods~\citep{hankin2017_rnw} to accommodate this class of
+multiplicative factors.  The most general likelihood function would be
+proportional to
 
 \begin{equation}
   \prod_{i=1}^N
   \sum_{j=1}^n
- \left(\lambda_{ij}p_i\right)^{w_i}
+ \left(\lambda_{ij}p_j\right)^{w_i}
   \end{equation}
 
-where the $p_i$ are traditional Bradley-Terry strengths and the
-$\lambda_{ij}\geqslant 0$ are multiplicative factors that account for
-ephemeral or temporary changes in competitive ability.  In practice,
-almost all the $\lambda_{ij}$ are zero.  To fix ideas, consider the
-data presented in Table~\ref{oldfirm}.  Ignoring draws for the moment,
-we have a likelihood proportional to
-
+where the $p_j$ are traditional Bradley-Terry strengths, $p_j\geqslant
+0$, $\sum p_j=1$, and the $\lambda_{ij}\geqslant 0$ are multiplicative
+factors that account for ephemeral or temporary changes in competitive
+ability.  The data $w_1,\ldots w_N$ correspond to the number of
+``wins'' and number of matches, as per $w_{12},w_{34}$ in
+equation~\ref{like1234}.  In practice, almost all the $\lambda_{ij}$
+are zero.  To fix ideas, consider the data presented in
+Table~\ref{oldfirm}.  Ignoring draws for the moment, we have a
+likelihood proportional to
 
 \begin{table}
 \centering
@@ -181,8 +195,7 @@ we have a likelihood proportional to
   wins, draws, and home losses.  Data from {\tt soccerworld}}
 \end{table}
 
-
-\begin{equation}
+\begin{equation}\label{firstfewRCFL}
   \left(\frac{\lambda p_R}{\lambda p_R + p_C}\right)^{81}\cdot
   \left(\frac{\lambda p_R}{\lambda p_R + p_F}\right)^{69}\cdots
   \left(\frac{\lambda p_L}{\lambda p_L + p_F}\right)^{81}\cdots
@@ -190,28 +203,30 @@ we have a likelihood proportional to
     \left(\frac{p_F}{p_F + \lambda p_L}\right)^{9}
 \end{equation}
 
-In {\tt hyper3} idiom, a term such as $\lambda p_R + p_C$ is
-represented as a named numeric vector.  For example, if the home
-strength were $\lambda = 1.8$ then the first bracket would be {\tt
-  c(Rangers=1.8, Celtic=1)} with an associated power of $-81$.  The
-computational methodology is a generalization of that used
-in~\cite{hankin2024_hyper3} in which the multiplicative factors are
-known non-negative integers.
+where the home-ground advantage is represented by~$\lambda$.  In {\tt
+  hyper3} idiom, a term such as $\lambda p_R + p_C$ is represented as
+a named numeric vector.  For example, if the home strength were
+$\lambda = 1.8$ then the first bracket would be {\tt c(Rangers=1.8,
+  Celtic=1)} with an associated power of $-81$.  The computational
+methodology is a generalization of that used
+in~\cite{hankin2024_hyper3} in which the multiplicative factors
+correspond to number of clones.  However, in~\cite{hankin2024_hyper3}
+the factors are known non-negative integers, and here they are, in
+general, unknown non-negative real numbers.
 
 \subsection{The package in use}
-Package idiom for creating a likelihood function for this dataset
-would look something like this: Considering only Rangers and Celtic:
-Rangers at home:
+Package idiom for creating a likelihood function for this dataset is
+straightforward.  Considering first only Rangers-Celtic matches:
 
 <<defineoldfirm, cache=TRUE>>=
 oldfirm <- function(lambda){
     H <- hyper3(pnames = c("Rangers", "Celtic"))
-    H[c(Rangers = lambda)            ] %<>% add(81)
-    H[c(Celtic = 1)                  ] %<>% add(42)
+    H[c(Rangers = lambda            )] %<>%      add(81     )
+    H[c(                  Celtic = 1)] %<>%      add(     42)
     H[c(Rangers = lambda, Celtic = 1)] %<>% subtract(81 + 42)
 
-    H[c(Celtic = lambda)             ] %<>% add(76)
-    H[c(Rangers = 1)                 ] %<>% add(46)
+    H[c(Celtic = lambda             )] %<>%      add(     76)
+    H[c(                 Rangers = 1)] %<>%      add(46     )
     H[c(Celtic = lambda, Rangers = 1)] %<>% subtract(46 + 76)
     return(H)
 }
@@ -228,9 +243,11 @@ bespoke log-likelihood function for Rangers-Celtic matches:
 oldfirm(1.88)
 @
 
+
 We see a log-likelihood function for all $82+42+76+46=245$
 Rangers-Celtic matches that were not score draws, conditional on
-assumed value $\lambda=1.88$.  We may make inferences about the true
+assumed value $\lambda=1.88$.  This corresponds to the relevant terms
+of equation~\ref{firstfewRCFL}.  We may make inferences about the true
 value of $\lambda$ using profile support:
 
 <<profilelikeoldfirm, cache=TRUE>>=
@@ -241,7 +258,8 @@ logLike <- sapply(lam,f)
 
 Thus {\tt f()} returns the support at the evaluate, conditional on a
 supplied value of $\lambda$.  We may use this to create a profile
-likelihood:
+likelihood (figure~\ref{profilesupportlambda}), or to find the maximum
+likelihood estimate for $\lambda$:
 
 \begin{figure}[htbp]
   \begin{center}
@@ -251,8 +269,8 @@ abline(v=1,col='gray')
 segments(x0=1.785,y0=0.1,y1=-1,col='red')
 abline(h = c(0,-2),col='gray')
 @
-\caption{A\label{profilesupportlambda} profile support function for the
-  home-team advantage $\lambda$.  Vertical gray line shows
+\caption{A\label{profilesupportlambda} profile support function for
+  the home-team advantage $\lambda$.  Vertical gray line shows
   $H_0\colon\lambda =1$, horizontal lines show the
   two-units-of-support limits; small red bar shows
   $\hat{\lambda}\simeq 1.785$}
@@ -263,6 +281,9 @@ abline(h = c(0,-2),col='gray')
 <<optimoldfirm, cache=TRUE>>=
 (lambda_max <-  optimize(f,c(1.5,2.0),maximum=TRUE)$maximum)
 @
+
+Then using this value we may estimate the Bradley-Terry strengths of
+Rangers and Celtic:
 
 <<mleoldfirm,cache=TRUE>>=
 maxp(oldfirm(lambda_max))
@@ -316,13 +337,11 @@ $\lambda$ and $D$.
 \end{table}
 
 We are now in a position to consider the entirety of
-Table~\ref{oldfirm}.  Bespoke function \code{home\_draw\_away3()}
-converts data in the form of Table~\ref{oldfirm} to a \code{hyper3}
-likelihood function following Table~\ref{windrawloss}; it takes
-numerical values for the home advantage $\lambda$ and proclivity to
-draw $D$:
-
-
+Table~\ref{oldfirm}.  Bespoke package function
+\code{home\_draw\_away3()} converts data in the form of
+Table~\ref{oldfirm} to a \code{hyper3} likelihood function following
+Table~\ref{windrawloss}; it takes numerical values for the home
+advantage $\lambda$ and proclivity to draw $D$:
 
 
 <<eg_RCLF3_lf, cache=TRUE>>=
@@ -363,11 +382,11 @@ Such estimates have rich predictive power.  For example, if Rangers
 were to play Celtic with both teams away [thus nullifying the home
   ground advantage: $\lambda=1$ in Table~\ref{windrawloss}], the
 probability of win/draw/loss for Rangers would be
-$\left(\frac{p_R}{(1+D)(p_R+p_C)};\frac{D}{1+D};\frac{p_R}{(1+D)(p_R+p_C)}\right)$,
+$\left(\frac{p_R}{(1+D)(p_R+p_C)};\frac{D}{1+D};\frac{p_C}{(1+D)(p_R+p_C)}\right)$,
 estimated at $(0.39;0.27;0.34)$.
 
 
-<<makecontourdata, cache=TRUE>>=
+<<makecontourdata, echo=FALSE, cache=TRUE>>=
 n <- 20
 lambda <- seq(from=1, to=3, len=n)
 D <- seq(from=0.1, to=0.6, len=n)
@@ -376,10 +395,6 @@ LL <- apply(V, 1, f)
 LL <- pmax(-20, LL - max(LL))
 @ 
 
-
-<<>>=
-lambda
-@ 
 
 \begin{figure}[htbp]
   \begin{center}
@@ -413,9 +428,9 @@ with a $p$-value of about \Sexpr{signif(pchisq(f(maxv) -
 \section{Non-independence in successive arrivals}
 
 In the following, I use the ``race'' metaphor: five runners take part
-in a race and arrive in order: $a\succ b\succ c\succ d\succ e$.
-Consider the following Plackett-Luce likelihood function for this
-observation:
+in a race and arrive in order $a\succ b\succ c\succ d\succ e$.  Thus
+competitor $a$ wins, $b$ comes second, and so on.  Consider the
+following Plackett-Luce likelihood function for this observation:
 
 \begin{equation}
 \frac{p_a}{p_a + p_b + p_c + p_d + p_e}\cdot
@@ -426,17 +441,16 @@ observation:
 \end{equation}
 
 Note the use of multiplication between the terms, indicating
-conditional independence.  We may use the multiplicative
+conditional independence.  Now we use the multiplicative
 generalization of Bradley-Terry strengths to introduce an element of
 non-independence between the terms.  There are many ways to do this,
-but one simple case would be to define equivalence classes of the
+but one simple way would be to define equivalence classes of the
 competitors with each equivalence class comprising mutually supporting
-runners.  Equivalence classes of size one correspond to unsupported
 runners.  The metaphor would be that a runner who has finished the
 race is able to support other members of his equivalence class by
-cheering his teammates, boosting their performance.  The \pkg{hyper2}
-package includes function \code{cheering()} which implements this
-functionality.
+cheering his still-running teammates, boosting their performance.  The
+\pkg{hyper2} package includes function \code{cheering()} which
+implements this functionality.
 
 As an example, consider figure~\ref{tikzabcde}.  This shows a partial
 probability tree diagram for some of the $5!=120$ possible order
@@ -706,24 +720,23 @@ of different types of sushi, and one in the field of e-sports.
 The classic red bus-blue bus problem was originally stated by
 \cite{mcfadden1980} although different metaphors have been employed
 for the same phenomenon by \cite{tverskey1972}.  The canonical problem
-is as follows.  A traveller has a choice of going to work by different
-transport methods.  Here, we can assume that the traveller has strong
-but unknown views on different forms of transport which might
-incorporate a random component.  If considering whether to use a car
-or a bus, the colour of the bus is of no importance to him.  Such
+is as follows.  A commuter has a choice of going to work by different
+transport methods.  Here, we can assume that he has possibly
+strong---but unknown---views on different forms of transport which
+might incorporate a random component.  If considering whether to use a
+car or a bus, the colour of the bus is of no importance to him.  Such
 preferences are problematic for Bradley-Terry: If our subject is
-indifferent between cars and buses, say, $p_{C} = p_{RB}$ and also
-indifferent to colour of bus, so $p_{RB}=p_{BB}$, the following
+indifferent between cars and buses, then $p_{C} = p_{RB}$.  If he is
+also indifferent to colour of bus, so $p_{RB}=p_{BB}$, the following
 paradox occurs.  Bradley-Terry strengths must be equal so $p_{C} =
 p_{RB} = p_{BB}=\frac{1}{3}$.  Thus $\Prob(C| \left\lbrace
 C,RB\right\rbrace)=\frac{1}{2}$.  Now we introduce a blue bus as an
 option.  Any realistic choice model will have $\Prob(C | \left\lbrace
 C,RB,BB\right\rbrace)=\frac{1}{2}$ but Bradley-Terry gives us
-$\Prob(C| \left\lbrace C,RB\right\rbrace)=\frac{1}{3}$.  Various
-solutions to this problem have been proposed.  \cite{tverskey1972},
-for example, presents an approach involving overlapping ``aspects'' of
-the elements of choice set; \cite{mcfadden1980} suggests using a
-generalized extreme-value model.
+$\frac{1}{3}$.  Various solutions to this problem have been proposed.
+\cite{tverskey1972}, for example, presents an approach involving
+overlapping ``aspects'' of the elements of choice set;
+\cite{mcfadden1980} suggests using a generalized extreme-value model.
 
 Here I sugest an alternative in the form of a generalization of
 Plackett-Luce likelihood functions for ranking options, using the
@@ -754,10 +767,13 @@ options:
 Above, we see from the function body that he reported $RB\succ BB\succ
 C\succ T\succ W$ three times [first row], and so on; perhaps his
 ranking depends on the weather or how tired he is on any given day.
-Observe that in almost every case he ranks RB and BB consecutively.
-Function \code{RB_BB_LF()} takes argument \code{lambda} that
-quantifies the perceived similarity between RB and BB in the same way
-as function \code{oldfirm()} above.
+Vector \code{ec} places the options into equivalence classes;
+equivalence class 3 comprises the two buses and the other classes are
+unsupported as they are of size one.  Vector \code{h} encodes the
+strength of the nonindependence.  Observe that in almost every case he
+ranks RB and BB consecutively.  Function \code{RB_BB_LF()} takes
+argument \code{lambda} that quantifies the perceived similarity
+between RB and BB in the same way as function \code{oldfirm()} above.
 
 <<definefunctiono>>=
 o <- function(lambda){maxp(RB_BB_LF(lambda), give=1)$`Log-likelihood`} 
@@ -785,26 +801,30 @@ dint of choosing instead $\lambda = 10.49$.  This easily satisfies
 alternatively, we could observe that this observation lies in the tail
 region of its asymptotic $\chi^2_1$ distribution (Wilks's theorem),
 with a $p$-value of \Sexpr{signif(pchisq(suppdiff*2, df=1,
-  lower.tail=FALSE),3)}.  It is straightforward to find a profile
-support function for $\lambda$, Figure~\ref{profilesupportlambdaRBBB}.
-We see that support of $\log\lambda$ is closely quadratic over a broad
-range.
+  lower.tail=FALSE),3)}.
 
-\begin{figure}[htbp]
-\begin{center}
-<<plotproflike>>=
-lambda <- exp(seq(from=log(0.9), to=log(67), len=19)) 
-L <- sapply(lambda, o)
-plot(log(lambda), L-max(L), type="b")
-abline(h=c(0, -2))
-abline(v=0)
+%It is straightforward to find a profile
+%support function for $\lambda$, Figure~\ref{profilesupportlambdaRBBB}.
+%We see that support of $\log\lambda$ is closely quadratic over a broad
+%range.
+
+%\begin{figure}[htbp]
+%\begin{center}
+<<plotproflike, echo=FALSE>>=
+if(FALSE){
+    lambda <- exp(seq(from=log(0.9), to=log(67), len=19)) 
+    L <- sapply(lambda, o)
+    plot(log(lambda), L-max(L), type="b")
+    abline(h=c(0, -2))
+    abline(v=0)
+}
 @ 
-\caption{A\label{profilesupportlambdaRBBB} profile support function
-  for the red bus, blue bus parameter $\lambda$, synthetic dataset.
-  Vertical line indicates null of $\lambda=1$, horizontal lines show
-  maximum support and $-2$}
-\end{center}
-\end{figure}
+%\caption{A\label{profilesupportlambdaRBBB} profile support function
+%  for the red bus, blue bus parameter $\lambda$, synthetic dataset.
+%  Vertical line indicates null of $\lambda=1$, horizontal lines show
+%  maximum support and $-2$}
+%\end{center}
+%\end{figure}
 
 \subsection{Sushi}
 
@@ -824,7 +844,7 @@ Implementation in \code{hyper3} formalism is straightforward.  The
 dataset used is \code{sushi\_table}, part of the \code{hyper2} package:
 
 <<showsushitable>>=
-head(noquote(sushi_table))
+noquote(head(sushi_table))
 @
 
 Thus, from the top line, we see that the first judge placed tamago
@@ -836,7 +856,7 @@ sushi_eq_classes
 @
 
 so class 2 is the tuna group and class 1 everything else.  We can now
-use these datapoint to define a bespoke likelihood function, using
+define a bespoke likelihood function for these observations, using
 $\lambda$ as the argument:
 
 <<defcalculate_sushi_H>>=
@@ -852,7 +872,6 @@ make_sushi_H <- function(lambda){
 Then, as before, we may define a profile likelihood function of
 $\lambda$, Figure~\ref{profilesupportsushi}.
 
-
 <<calclikesushi,echo=FALSE, cache=TRUE>>=
 f <- function(lambda){
    H <- make_sushi_H(lambda)
@@ -862,18 +881,38 @@ s <- exp(seq(from = log(0.9), to = log(10), len = 23))
 L <- sapply(s,f)
 @ 
 
+<<findstuffsushi,echo=FALSE,cache=TRUE>>=
+osushi <- optimize(f, c(2,4), maximum=TRUE)
+@ 
 
+<<tinysushi,echo=FALSE>>=
+sushi_maxlambda <- osushi$maximum
+@ 
+
+<<findothersushistuff, echo=FALSE, cache=TRUE>>=
+g <- function(lambda){f(lambda) - osushi$objective + 2}
+sushi_lower <- uniroot(g, interval = exp(c(0,1)), tol = 0.01)$root
+sushi_upper <- uniroot(g, interval = exp(c(1,2)), tol = 0.01)$root
+@ 
 
 \begin{figure}[htbp]
   \begin{center}
-<<plotlikesushi>>=
+<<plotlikesushi, echo=FALSE>>=
 plot(log(s),L-max(L),type='b',
      xlab=expression(log(lambda)), ylab='Log-likelihood')
+abline(v=0,col='gray')
+abline(h=c(0,-2),col='gray')
+segments(x0 = log(sushi_maxlambda), y0 =  0.1, y1 = -1.0, col = 'red' )
+segments(x0 = log(sushi_lower    ), y0 = -2.2, y1 = -1.8, col = 'blue')
+segments(x0 = log(sushi_upper    ), y0 = -2.2, y1 = -1.8, col = 'blue')
 @ 
 \caption{A\label{profilesupportsushi} profile support function for the
   exchangeability term $\lambda$ in the case of sushi preferences.
   Vertical gray line shows $H_0\colon\lambda =1$, horizontal lines
-  show the two-units-of-support limits}
+  show the two-units-of-support limits with the credible interval of
+  $(\Sexpr{round(sushi_lower,2)},\Sexpr{round(sushi_upper,2)})$,
+  marked in blue.  Red bar shows evaluate at
+  $\lambda\simeq\Sexpr{round(sushi_maxlambda,2)}$}
 \end{center}
 \end{figure}
 
@@ -915,7 +954,7 @@ the {\em inferno} map, won the match, and \skad\ had the least number
 of deaths, followed by \rush, then \tarik, and so on.  Consider two
 {\em Cloud9} players: \skad\ and \stew.  These teammates, although
 comparable in skill [we fail to reject $H_0\colon p_{\mbox{\tiny\sc
-      Skadoodle}}\neq p_{\mbox{\tiny\sc Stewie2k}}$, Plackett-Luce,
+      Skadoodle}} = p_{\mbox{\tiny\sc Stewie2k}}$, Plackett-Luce,
   $p=0.28$] have playing styles that stand in dramatic contrast.
 Commentators characterise \skad\ as emphasising reactive map control
 while \stew\ is more of a disruptive presence engaging in
@@ -941,46 +980,46 @@ mk <- function(lam){
 f <- function(l){maxp(mk(l), give=1)$`Log-likelihood`}
 @
 
-<<findopt, cache=TRUE, echo=TRUE>>=
-optlam <- optimize(f,c(0.09, 0.14), maximum = TRUE)
-evaluate <- optlam$maximum
-support <- optlam$objective - f(1)
-pvalue <- pchisq(support, df = 1, lower.tail = FALSE)
+<<csgo_findopt, cache=TRUE, echo=FALSE>>=
+csgo_optimize <- optimize(f,c(0.09, 0.14), maximum = TRUE, tol = 0.01)
+csgo_optlam   <- csgo_optimize$maximum
+csgo_support  <- csgo_optimize$objective - f(1)
+csgo_pvalue   <- pchisq(csgo_support, df = 1, lower.tail = FALSE)
 @
 
-<<calcklikelambda, cache=TRUE, echo=FALSE>>=
-lam <- exp(seq(from = -4,to = log(1.1), len = 23))
+
+<<csgo_calcklikelambda, cache=TRUE, echo=FALSE>>=
+lam <- exp(seq(from = -4, to = log(1.1), len = 23))
 L <- sapply(lam, f)
 @
 
-<<findinterval, cache=TRUE, echo=FALSE>>=
-g <- function(l){f(l) - optlam$objective  + 2}
-jj1 <- uniroot(g, interval = exp(c(-4,-3)))
-jj2 <- uniroot(g, interval = exp(c(-1,-0)))
-lowerlimit <- jj1$root
-upperlimit <- jj2$root
+<<cgso_findinterval, cache=TRUE, echo=FALSE>>=
+g <- function(l){f(l) - csgo_optimize$objective  + 2}
+csgo_lower <- uniroot(g, interval = exp(c(-4,-3)))$root
+csgo_upper <- uniroot(g, interval = exp(c(-1,-0)))$root
 @ 
 
 \begin{figure}[htbp]
   \begin{center}
-<<plotlikelam, echo=FALSE>>=
+<<csgo_plotlikelam, echo=FALSE>>=
 plot(log(lam), L - max(L), type='b')
-segments(x0=log(optlam$maximum),y0 = -0.5, y1 = 0.1,col='red')
-abline(h=c(0,-2), col = 'gray')
-segments(x0 = log(lowerlimit), y0 = -2.2, y1 = -1.8, col = 'blue')
-segments(x0 = log(upperlimit), y0 = -2.2, y1 = -1.8, col = 'blue')
-abline(v = 0, lty = 2)
+segments(x0 = log(csgo_optlam),y0 = -0.5, y1 =  0.1, col='red')
+segments(x0 = log(csgo_lower), y0 = -2.2, y1 = -1.8, col = 'blue')
+segments(x0 = log(csgo_upper), y0 = -2.2, y1 = -1.8, col = 'blue')
+abline(v = 0, col = 'gray')
+abline(h = c(0, -2), col = 'gray')
 @ 
 \caption{A\label{profsupcounterstrike} profile support function for
   the red bus-blue bus parameter $\log\lambda$ applied to mutually
   supporting equivalence class
   $\left\lbrace\mbox{\skad},\mbox{\stew}\right\rbrace$.  Vertical gray
   line shows $H_0\colon\lambda =1$, for which the support is about
-  $\Sexpr{round(support,2)}$ relative to the evaluate
-  $\hat{\lambda}\simeq\Sexpr{round(evaluate,3)}$ (small red bar),
-  corresponding to a $p$-value of about $\Sexpr{round(pvalue,3)}$.
-  Horizontal lines show the two-units-of-support credible interval of
-  $(\Sexpr{round(lowerlimit,3)},\Sexpr{round(upperlimit,3)})$, marked
+  $\Sexpr{round(csgo_support,2)}$ relative to the evaluate
+  $\hat{\lambda}\simeq\Sexpr{round(csgo_optlam,3)}$ (small red bar),
+  corresponding to a $p$-value of about
+  $\Sexpr{round(csgo_pvalue,3)}$.  Horizontal lines show the
+  two-units-of-support credible interval of
+  $(\Sexpr{round(csgo_lower,3)},\Sexpr{round(csgo_upper,3)})$, marked
   in blue}
 \end{center}
 \end{figure}
@@ -991,17 +1030,39 @@ above.  We specify two equivalence classes: one comprising \skad\ and
 \stew, and one everyone else.  Figure~\ref{profsupcounterstrike} gives
 a support function for $\lambda$ showing, among other things, that we
 may reject the hypothesis that $\lambda=1$ in favour of $\lambda<1$ by
-a likelihood ratio of about $\Sexpr{round(support,2)}$.  We observe
-that this exceeds the two units of support criterion of
+a likelihood ratio of about $\Sexpr{round(csgo_support,2)}$.  We
+observe that this exceeds the two units of support criterion of
 \cite{edwards1992} [asymptotic $p$-value
-  $\simeq\Sexpr{round(pvalue,3)}$] so we may infer that there is
+  $\simeq\Sexpr{round(csgo_pvalue,3)}$] so we may infer that there is
 indeed some systematic mechanism---perhaps a positive feedback
-loop---which tends to magnify differences in death statistic. 
-
+loop---which tends to magnify differences in death statistic.
 
 \section{Conclusions and further work}
 
-Plackett-Luce likelihood functions for rank datasets have been
+Bradley-Terry strengths $p_1,\ldots,p_n$, $p_i\geqslant 0$, $\sum
+p_i=1$ are generalized with non-negative multiplicative $\lambda$-
+factors that represent temporary or ephemeral changes in competitive
+strength.  The {\tt hyper2} R package implements the resulting
+likelihood functions, and furnishes a wide range of functionality
+geared towards assessing meaningful nulls using likelihood methods.
+
+The standard Plackett-Luce likelihood function
+$\prod_{i=1}^{n}p_{(i)}\left[\sum_{j=i}^n p_{(j)}\right]^{-1}$ over
+Bradley-Terry strengths assumes conditional independence of successive
+rank observations $p_{(1)},\ldots p_{(n)}$, an assumption which is
+broken in the current work.  As indicated above, multiplicative
+$\lambda$- factors may be used to implement many different
+non-independence schemes and comparing these might be interesting.
+
+Further work might include an individualised multiplicative draw
+factor, giving rise to likelihood functions such as
+$\frac{p_1^{w_1};(\lambda_1p_1+\lambda_2p_2)^{d_{12}};
+  p_2^{w_2}}{\left(p_1(1+\lambda_1)+p_2(1+\lambda_2)\right)^{w_1+d_{12}+w_2}}$.
+One might also consider multiplicative factors for the strengths of
+{\em reified} entities.  These modifications would be directly
+representable with existing {\tt hyper3} idiom.
+
+
 
 \bibliography{hyper2}
 \end{document}
