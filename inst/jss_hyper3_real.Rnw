@@ -529,12 +529,14 @@ d\succ e$ would be
 \node at (10.6,5.8) {$c$};
 \draw[thick] (10.6, 6) -- (11.2,7) -- (12.2,7);
 \fill (12.2,7) circle[radius=2pt];
-\node[anchor = west] at (12.2,7) {$a\succ b\succ c\succ d\succ e$};
+\node at (12.3,6.8) {$d$};
+\node[anchor = west] at (12.5,7) {$a\succ b\succ c\succ d\succ e$};
 \node at (11.8, 7.4) {$\frac{p_d}{p_d+p_e}$};
 
 \draw[thick] (10.6, 6) -- (11.2,6.2) -- (12.2,6.2);
 \fill (12.2,6.2) circle[radius=2pt];
-\node[anchor = west] at (12.2,6.2) {$a\succ b\succ c\succ e\succ d$};
+\node at (12.3,6.0) {$e$};
+\node[anchor = west] at (12.5,6.2) {$a\succ b\succ c\succ e\succ d$};
 \node at (11.8, 6.6) {$\frac{p_e}{p_d+p_e}$};
 
 \fill (10.6, 5) circle[radius=2pt];
@@ -542,35 +544,41 @@ d\succ e$ would be
 
 \draw[thick] (10.6, 5) -- (11.2,5.3) -- (12.2, 5.3);
 \fill (12.2,5.3) circle[radius=2pt];
-\node[anchor = west] at (12.2,5.3) {$a\succ b\succ d\succ c\succ e$};
+\node at (12.3,5.1) {$c$};
+\node[anchor = west] at (12.5,5.3) {$a\succ b\succ d\succ c\succ e$};
 \node at (11.8, 5.7) {$\frac{\la{p_c}}{\la{p_c}+\ld{p_e}}$};
 
 \draw[thick] (10.6, 5) -- (11.2,4.7) -- (12.2, 4.7);
 \fill (12.2,4.7) circle[radius=2pt];
-\node[anchor = west] at (12.2,4.7) {$a\succ b\succ d\succ e\succ c$};
+\node at (12.3,4.5) {$e$};
+\node[anchor = west] at (12.5,4.7) {$a\succ b\succ d\succ e\succ c$};
 \node at (11.8, 5.0) {$\frac{\ld{p_e}}{\la{p_c}+\ld{p_e}}$};
 
 \fill (10.6, 4) circle[radius=2pt];
 \node at (10.6,3.8) {$e$};
 \draw[thick] (10.6, 4) -- (11.2,3.9) -- (12.2, 3.9);
 \fill (12.2,3.9) circle[radius=2pt];
-\node[anchor = west] at (12.2,3.9) {$a\succ b\succ e\succ c\succ d$};
+\node at (12.3,3.7) {$c$};
+\node[anchor = west] at (12.5,3.9) {$a\succ b\succ e\succ c\succ d$};
 \node at (11.8, 4.3) {$\frac{\la{p_c}}{\la{p_c}+\ld{p_d}}$};
 
 \draw[thick] (10.6, 4) -- (11.2,3.1) -- (12.2,3.1);
 \fill (12.2,3.1) circle[radius=2pt];
 \node at (11.8, 3.5) {$\frac{\ld{p_d}}{\la{p_c}+\ld{p_d}}$};
-\node[anchor = west] at (12.2,3.1) {$a\succ b\succ e\succ d\succ c$};
+\node at (12.3,2.9) {$d$};
+\node[anchor = west] at (12.5,3.1) {$a\succ b\succ e\succ d\succ c$};
 
 
 \draw[thick] (4.8, 0) -- (5.8,1) -- (8.2,1);
 \fill (12.2,1) circle[radius=2pt];
-\node[anchor = west] at (12.2,1) {$d\succ a\succ c\succ e\succ b$};
+\node at (12.3,0.8) {$e$};
+\node[anchor = west] at (12.5,1.0) {$d\succ a\succ c\succ e\succ b$};
 \node at (7, 1.4)  {$\frac{p_a}{p_a+p_b+p_c+\ld{p_e}}$};
 
 \draw[thick] (4.8, 0) -- (5.8,0) -- (8.2,0);
 \fill (12.2,0) circle[radius=2pt];
-\node[anchor = west] at (12.2,0) {$d\succ e\succ a\succ b\succ c$};
+\node at (12.3, -0.2) {$b$};
+\node[anchor = west] at (12.5, 0) {$d\succ e\succ a\succ b\succ c$};
 \node at (7, 0.4)  {$\frac{p_b}{p_a+p_b+p_c+\ld{p_e}}$};
 
 \draw[thick] (4.8, 0) -- (5.8,-1) -- (8.2,-1);
@@ -593,7 +601,8 @@ d\succ e$ would be
 \draw[thick] (8.2, -2) -- (8.9,-3) -- (10.6,-3);
 
 \fill (12.2,-1) circle[radius=2pt];
-\node[anchor = west] at (12.2,-1) {$d\succ e\succ a\succ c\succ b$};
+\node at (12.3,-1.2) {$c$};
+\node[anchor = west] at (12.5,-1) {$d\succ e\succ a\succ c\succ b$};
 
 \node at (9.5, -0.6) {$\frac{p_a}{p_a+p_b+p_c}$};
 \node at (9.5, -1.6) {$\frac{p_b}{p_a+p_b+p_c}$};
@@ -616,12 +625,14 @@ d\succ e$ would be
 
 \draw[thick](10.6, -2) -- (11.2,-1.8) -- (12.2,-1.8);
 \fill (12.2,-1.8) circle[radius=2pt];
-\node[anchor = west] at (12.2,-1.8) {$d\succ e\succ b\succ a\succ c$};
+\node at (12.3, -2.0) {$a$};
+\node[anchor = west] at (12.5, -1.8) {$d\succ e\succ b\succ a\succ c$};
 \node at (11.8, -1.4) {$\frac{\la{p_a}}{\la{p_a}+\la{p_c}}$};
 
 \draw[thick] (10.6, -2) -- (11.2,-2.6) -- (12.2,-2.6);
 \fill (12.2,-2.6) circle[radius=2pt];
-\node[anchor = west] at (12.2,-2.6) {$d\succ e\succ b\succ c\succ a$};
+\node at (12.3, -2.8) {$c$};
+\node[anchor = west] at (12.5,-2.6) {$d\succ e\succ b\succ c\succ a$};
 \node at (11.8, -2.2) {$\frac{\la{p_c}}{\la{p_a}+\la{p_c}}$};
 
 
@@ -631,7 +642,8 @@ d\succ e$ would be
 
 \draw[thick] (10.6, -3) -- (11.2,-3.4) -- (12.2, -3.4);
 \fill (12.2,-3.4) circle[radius=2pt];
-\node[anchor = west] at (12.2,-3.4) {$d\succ e\succ c\succ b\succ a$};
+\node at (12.3, -3.6) {$b$};
+\node[anchor = west] at (12.5,-3.4) {$d\succ e\succ c\succ b\succ a$};
 
 \node at (11.8, -3) {$\frac{\la{p_b}}{\la{p_a}+\la{p_b}}$};
 
@@ -656,7 +668,8 @@ d\succ e$ would be
 \draw[thick] (10.6, 1) -- (11.2,2) -- (12.2,2);
 \node at (11.8, 2.4) {$\frac{\la{p_b}}{\la{p_b}+\ld{p_e}}$};
 \fill (12.2,2) circle[radius=2pt];
-\node[anchor = west] at (12.2,2) {$d\succ a\succ c\succ b\succ e$};
+\node at (12.3, 1.8) {$b$};
+\node[anchor = west] at (12.5, 2) {$d\succ a\succ c\succ b\succ e$};
 \draw[thick] (10.6, 1) -- (11.2,1) -- (12.2,1);
 \node at (11.8, 1.4) {$\frac{\ld{p_e}}{\la{p_b}+p_e}$};
 
