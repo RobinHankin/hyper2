@@ -49,8 +49,7 @@
 \Address{
   Robin K. S. Hankin\\
   University of Stirling\\
-  E-mail: \email{hankin.robin@gmail.com}\\
-  URL: \url{https://academics.aut.ac.nz/robin.hankin}
+  E-mail: \email{hankin.robin@gmail.com}
 }
 
 %% for those who use Sweave please include the following line (with % symbols):
@@ -83,9 +82,9 @@ options(prompt = "R> ")
 \end{wrapfigure}
 
 The Bradley-Terry model for datasets involving paired comparisons has
-wide uptake in the {R} community.  The canonical problem is to
-consider~$n$ players who compete against one another; the basic
-inference problem is to estimate
+wide uptake in the {R} community.  The canonical case is to
+consider~$n$ players who compete against one another in pairs; the
+basic inference problem is to estimate
 numbers~$\mathbf{p}=\left({p_1,\ldots,p_n}\right)$, $p_i\geqslant 0$,
 $\sum p_i=1$ so that
 $\Prob(\mbox{$i$~beats~$j$})=\frac{p_i}{p_i+p_j}$.  Information about
@@ -125,9 +124,9 @@ likelihood function
 
 
 where $w_{12}$ and $w_{34}$ are the number of wins by each team
-respectively.  Then $\lambda$ and $\mu$ represent the effectiveness of
-$p_1$'s special move and the enhancement afforded to $p_4$ by the
-drug, with values $>1$ corresponding to a positive effect.  In this
+respectively.  Then $\lambda$ would represent the effectiveness of
+$p_1$'s special move, and $\mu$ the enhancement afforded to $p_4$ by
+the drug; values $>1$ would correspond to a positive effect.  In this
 paper I generalize the {\tt hyper2} suite for Bradley-Terry
 likelihoods~\citep{hankin2017_rnw} to accommodate this class of
 multiplicative factors.  The most general likelihood function would be
@@ -420,7 +419,7 @@ example, we may test the hypothesis that $\lambda=1$ [corresponding to
 support is about \Sexpr{round(f(maxv) - jj$objective,2)}, far
 exceeding the two units of support per degree of freedom
 criteron~\citep{edwards1992}.  Alternatively, we can observe that this
-lies in the tail region of its asymptotic null $\chi^2_4$ distribution
+lies in the tail region of its asymptotic null $\chi^2_2$ distribution
 with a $p$-value of about \Sexpr{signif(pchisq(f(maxv) -
   jj$objective,lower.tail=FALSE,df=2),digits=2)}.
 
@@ -454,14 +453,14 @@ implements this functionality.
 
 As an example, consider figure~\ref{tikzabcde}.  This shows a partial
 probability tree diagram for some of the $5!=120$ possible order
-statistics.  The standard Plackett-Luce likelihoods have been modified
-to account for two groups of mutually supporting runners:
-$\left\lbrace a,b,c\right\rbrace$ with support term $\lambda$, and
-$\left\lbrace d,e\right\rbrace$ with support term $\mu$.  From START,
-the first runner to cross the finishing line has standard
-Plackett-Luce probability.  Taking the top path as an example, we see
-that the likelihood function for $a\succ b\succ c\succ d\succ e$ would
-be
+statistics for five competitors.  The standard Plackett-Luce
+likelihoods have been modified to account for two groups of mutually
+supporting runners: $\left\lbrace a,b,c\right\rbrace$ with support
+term $\lambda$, and $\left\lbrace d,e\right\rbrace$ with support term
+$\mu$.  From START, the first runner to cross the finishing line has
+standard Plackett-Luce probability.  Taking the top path as an
+example, we see that the likelihood function for $a\succ b\succ c\succ
+d\succ e$ would be
 
 \begin{figure}[htbp]
   \begin{center}
