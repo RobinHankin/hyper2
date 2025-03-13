@@ -21,16 +21,16 @@
 %% an abstract and keywords
 \Abstract{ 
   
-  A generalization of \code{hyper2} is presented in which
-  Bradley-Terry strengths may be modified using a multiplicative
-  factor $\lambda$; Generally, ordinary Bradley-Terry is recovered if
-  $\lambda=1$.  This approach offers multiple advantages over other
-  generalizations such as reified Bradley-Terry.  It becomes possible
-  to represent non-independence of successive observations in
-  Plackett-Luce likelihood functions which allows a parametrization of
-  the ``red bus, blue bus'' problem in preference analysis.  I present
-  examples drawn from the fields of food preference and the e-sport
-  {\em Counterstrike}.  }
+  A generalization of the Bradley-Terry model is presented in which
+  strengths may be modified using a multiplicative factor $\lambda$;
+  Generally, ordinary Bradley-Terry is recovered if $\lambda=1$.  This
+  approach offers multiple advantages over other generalizations such
+  as reified Bradley-Terry.  It becomes possible to represent
+  non-independence of successive observations in Plackett-Luce
+  likelihood functions which allows a parametrization of the ``red
+  bus, blue bus'' problem in preference analysis.  I present examples
+  drawn from the fields of food preference and the e-sport {\em
+    Counterstrike}.  }
 
 \Keywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
 \Plainkeywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
@@ -85,11 +85,10 @@ The Bradley-Terry model for datasets involving paired comparisons has
 wide uptake in the {R} community.  The canonical case is to
 consider~$n$ players who compete against one another in pairs; the
 basic inference problem is to estimate
-numbers~$\mathbf{p}=\left({p_1,\ldots,p_n}\right)$, $p_i\geqslant 0$,
-$\sum p_i=1$ so that
-$\Prob(\mbox{$i$~beats~$j$})=\frac{p_i}{p_i+p_j}$.  Information about
-the~$p_i$ may be obtained from the results of paired comparisons
-between the players.
+numbers~$\left({p_1,\ldots,p_n}\right)$, $p_i\geqslant 0$, $\sum
+p_i=1$ so that $\Prob(\mbox{$i$~beats~$j$})=\frac{p_i}{p_i+p_j}$.
+Information about the~$p_i$ may be obtained from the results of paired
+comparisons between the players.
 
 One generalization of the Bradley-Terry model is due
 to~\citet{luce1959}, in which the probability of competitor~$i$
@@ -127,10 +126,10 @@ where $w_{12}$ and $w_{34}$ are the number of wins by each team
 respectively.  Then $\lambda$ would represent the effectiveness of
 $p_1$'s special move, and $\mu$ the enhancement afforded to $p_4$ by
 the drug; values $>1$ would correspond to a positive effect.  In this
-paper I generalize the {\tt hyper2} suite for Bradley-Terry
-likelihoods~\citep{hankin2017_rnw} to accommodate this class of
-multiplicative factors.  The most general likelihood function would be
-proportional to
+paper I generalize the {\tt hyper2} R package~\citep{hankin2017_rnw},
+available on CRAN~\citep{rcore2025}, for Bradley-Terry likelihoods to
+accommodate this class of multiplicative factors.  The most general
+likelihood function would be proportional to
 
 \begin{equation}
   \prod_{i=1}^N
@@ -162,7 +161,7 @@ likelihood proportional to
    Livingston   &    2 &     2  &     3   &      NA\\
 \end{tabular}
 \\
-\rule{1mm}{6mm}
+\rule{0mm}{16mm}
 \\
 \begin{tabular}{@{} *{5}{c} @{}}
 \headercell{\small{Plays at home,}\\ \small{draws}} &
@@ -176,7 +175,7 @@ likelihood proportional to
    Livingston  &       4   &   4  &     4    &      NA\\
    \end{tabular}
 \\
-\rule{1mm}{6mm}
+\rule{0mm}{16mm}
 \\
 \begin{tabular}{@{} *{5}{c} @{}}
 \headercell{\small{Plays at home,}\\ \small{loses}} &
@@ -202,16 +201,16 @@ likelihood proportional to
     \left(\frac{p_F}{p_F + \lambda p_L}\right)^{9}
 \end{equation}
 
-where the home-ground advantage is represented by~$\lambda$.  In {\tt
-  hyper3} idiom, a term such as $\lambda p_R + p_C$ is represented as
-a named numeric vector.  For example, if the home strength were
-$\lambda = 1.8$ then the first bracket would be {\tt c(Rangers=1.8,
-  Celtic=1)} with an associated power of $-81$.  The computational
-methodology is a generalization of that used
-in~\cite{hankin2024_hyper3} in which the multiplicative factors
-correspond to number of clones.  However, in~\cite{hankin2024_hyper3}
-the factors are known non-negative integers, and here they are, in
-general, unknown non-negative real numbers.
+where the home-ground advantage is represented by~$\lambda$.  In
+package idiom, a term such as $\lambda p_R + p_C$ is represented as a
+named numeric vector.  For example, if the home strength were $\lambda
+= 1.8$ then the first bracket would be {\tt c(Rangers=1.8, Celtic=1)}
+with an associated power of $-81$.  The computational methodology is a
+generalization of that used in~\cite{hankin2024_hyper3} in which the
+multiplicative factors correspond to number of clones.  However,
+in~\cite{hankin2024_hyper3} the factors are known non-negative
+integers, and here they are, in general, unknown non-negative real
+numbers.
 
 \subsection{The package in use}
 Package idiom for creating a likelihood function for this dataset is
@@ -881,9 +880,6 @@ make_sushi_H <- function(lambda){
 }
 @
 
-Then, as before, we may define a profile likelihood function of
-$\lambda$, Figure~\ref{profilesupportsushi}.
-
 <<calclikesushi,echo=FALSE, cache=TRUE>>=
 f <- function(lambda){
    H <- make_sushi_H(lambda)
@@ -893,19 +889,44 @@ s <- exp(seq(from = log(0.9), to = log(10), len = 23))
 L <- sapply(s,f)
 @ 
 
-<<findstuffsushi,echo=FALSE,cache=TRUE>>=
+% chunk 'findstuffsushi' takes about 10-20 minutes to run
+
+<<findstuffsushi,echo=FALSE, cache=TRUE>>=
 osushi <- optimize(f, c(2,4), maximum=TRUE)
 @ 
 
-<<tinysushi,echo=FALSE>>=
-sushi_maxlambda <- osushi$maximum
-@ 
+% chunk tinysushi' takes about 5 minutes to run
+
+<<tinysushi, echo=FALSE, cache=TRUE>>=
+sushimaxlambda <- osushi$maximum
+sushisupport <- osushi$objective - f(1)
+@
+
+% chunk 'findotherstuffsushi' takes about 10 minutes to run
 
 <<findothersushistuff, echo=FALSE, cache=TRUE>>=
 g <- function(lambda){f(lambda) - osushi$objective + 2}
 sushi_lower <- uniroot(g, interval = exp(c(0,1)), tol = 0.01)$root
 sushi_upper <- uniroot(g, interval = exp(c(1,2)), tol = 0.01)$root
 @ 
+
+(above, we note that the return value {\tt H} is the sum of successive
+log-likelihood functions of each row of the table, assumed to be
+independent).  Then, as before, we may define a profile likelihood
+function of $\lambda$, Figure~\ref{profilesupportsushi}.  We
+reject~$H_0\colon\lambda=1$ in favour of
+$H_A\colon\lambda=\Sexpr{round(sushimaxlambda,2)}$ with about
+$\Sexpr{round(sushisupport,2)}$ units of support.  Alternatively, we
+may observe that this lies in the tail region of its asymptotic
+$\chi^2_1$ distribution with a $p$-value of about
+$\Sexpr{round(pchisq(sushisupport,df=1,lower.tail=FALSE),3)}$.  We can
+therefore be reasonably sure that tuna sushi are somehow analagous to
+red and blue buses, in the sense that all three tuna items tend to
+occupy closely separated places in judges' preference ranks.
+
+
+
+
 
 \begin{figure}[htbp]
   \begin{center}
@@ -914,7 +935,7 @@ plot(log(s),L-max(L),type='b',
      xlab=expression(log(lambda)), ylab='Log-likelihood')
 abline(v=0,col='gray')
 abline(h=c(0,-2),col='gray')
-segments(x0 = log(sushi_maxlambda), y0 =  0.1, y1 = -1.0, col = 'red' )
+segments(x0 = log(sushimaxlambda), y0 =  0.1, y1 = -1.0, col = 'red' )
 segments(x0 = log(sushi_lower    ), y0 = -2.2, y1 = -1.8, col = 'blue')
 segments(x0 = log(sushi_upper    ), y0 = -2.2, y1 = -1.8, col = 'blue')
 @ 
@@ -924,7 +945,7 @@ segments(x0 = log(sushi_upper    ), y0 = -2.2, y1 = -1.8, col = 'blue')
   show the two-units-of-support limits with the credible interval of
   $(\Sexpr{round(sushi_lower,2)},\Sexpr{round(sushi_upper,2)})$,
   marked in blue.  Red bar shows evaluate at
-  $\lambda\simeq\Sexpr{round(sushi_maxlambda,2)}$}
+  $\lambda\simeq\Sexpr{round(sushimaxlambda,2)}$}
 \end{center}
 \end{figure}
 
