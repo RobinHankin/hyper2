@@ -107,9 +107,9 @@ p_1,p_2\right\rbrace$ might play $\left\lbrace p_3,p_4\right\rbrace$
 and win with probability
 $\frac{p_1+p_2}{p_1+p_2+p_3+p_4}$~\citep{hankin2010}.  It is natural
 to combine this idea with that of a multiplicative factor.  For
-example, suppose $p_1$ has a special move against $p_3$, and $p_4$ has
-just been given a performance-enhancing drug.  If so, we might have
-likelihood function
+example, suppose $p_1$ has just learned a new special technique, and
+$p_4$ has just been given a performance-enhancing drug.  If so, we
+might have likelihood function
 
 \begin{equation}\label{like1234}
   \mathcal{L}{\left(p_1,p_2,p_3,p_4;\lambda,\mu\right)}\propto
@@ -121,15 +121,15 @@ likelihood function
     }
 \end{equation}
 
-
 where $w_{12}$ and $w_{34}$ are the number of wins by each team
 respectively.  Then $\lambda$ would represent the effectiveness of
-$p_1$'s special move, and $\mu$ the enhancement afforded to $p_4$ by
-the drug; values $>1$ would correspond to a positive effect.  In this
-paper I generalize the {\tt hyper2} R package~\citep{hankin2017_rnw},
-available on CRAN~\citep{rcore2025}, for Bradley-Terry likelihoods to
-accommodate this class of multiplicative factors.  The most general
-likelihood function would be proportional to
+$p_1$'s special technique, and $\mu$ the enhancement afforded to $p_4$
+by the drug; values $>1$ would correspond to a positive effect.  In
+this paper I generalize the {\tt hyper2} R
+package~\citep{hankin2017_rnw}, available on CRAN~\citep{rcore2025},
+for Bradley-Terry likelihoods to accommodate this class of
+multiplicative factors.  The most general likelihood function would be
+proportional to
 
 \begin{equation}
   \prod_{i=1}^N
@@ -188,7 +188,7 @@ likelihood proportional to
    Falkirk     &   57  &  43  &   NA  &       8\\
    Livingston  &   12  &  11  &    9  &      NA\\
   \end{tabular}
-\caption{The \label{oldfirm} dominance of the Old Firm: 669 matches
+\caption{The \label{oldfirm} dominance of the Old Firm: 769 matches
   between Rangers, Celtic, Falkirk and Livingston arranged by home
   wins, draws, and home losses.  Data from {\tt soccerworld}}
 \end{table}
@@ -196,7 +196,7 @@ likelihood proportional to
 \begin{equation}\label{firstfewRCFL}
   \left(\frac{\lambda p_R}{\lambda p_R + p_C}\right)^{81}\cdot
   \left(\frac{\lambda p_R}{\lambda p_R + p_F}\right)^{69}\cdots
-  \left(\frac{\lambda p_L}{\lambda p_L + p_F}\right)^{81}\cdots
+  \left(\frac{\lambda p_L}{\lambda p_L + p_F}\right)^{3}\cdots
   \left(\frac{p_C}{p_C + \lambda p_R}\right)^{42}\cdots
     \left(\frac{p_F}{p_F + \lambda p_L}\right)^{9}
 \end{equation}
@@ -322,7 +322,7 @@ $\lambda$ and $D$.
   \hline
   $\Prob{(\mbox{$i$ wins})}$                             &
   $\frac{\lambda p_i}{\lambda p_i + D(p_i + p_j) + p_j}$  &
-  $\frac{p_i}{p_i + D(p_i + \lambda p_j) + p_j}$          \\
+  $\frac{p_i}{p_i + D(p_i + p_j) + p_j}$          \\
   $\Prob{(\mbox{draw})}$                                 &
   $\frac{D(p_i + p_j)}{\lambda p_i+D(p_i+p_j) + p_j}$     &
   $\frac{D(p_i + p_j)}{p_i + D(p_i+p_j) + \lambda p_j}$   \\
@@ -397,12 +397,14 @@ LL <- pmax(-20, LL - max(LL))
 \begin{figure}[htbp]
   \begin{center}
 <<docontourplot, cache=FALSE>>=
-contour(lambda, D, matrix(LL, n, n),levels = -2*(1:9), xlab=expression(lambda),ylab=expression(D))
-points(maxv[1], maxv[2], pch=16, col='red')
+contour(lambda, D, matrix(LL, n, n), levels = -2*(1:9),
+        xlab = expression(lambda), ylab = expression(D))
+points(maxv[1], maxv[2], pch = 16, col = 'red')
+abline(v=1, col = 'gray')
 @
 \caption{Contours of support\label{contourlambdaD} evaluated over
   a grid.  Maximum likelihood estimate for $(\lambda, D)$ shown as
-  a red dot at the evaluate}
+  a red dot at the evaluate.  Vertical gray line shows $H_0\colon\lambda=1$}
   \end{center}
 \end{figure}
 
@@ -414,14 +416,13 @@ jj <- optimize(f=function(D){f(c(lambda=1,D))}, interval=c(0.1, 0.4), maximum=TR
 Further, we may calculate a support function over the
 $(\lambda,D)$-plane, shown in figure~\ref{contourlambdaD}.  For
 example, we may test the hypothesis that $\lambda=1$ [corresponding to
-  the right hand side of figure~\ref{contourlambdaD}] for which the
+  the left hand side of figure~\ref{contourlambdaD}] for which the
 support is about \Sexpr{round(f(maxv) - jj$objective,2)}, far
 exceeding the two units of support per degree of freedom
 criteron~\citep{edwards1992}.  Alternatively, we can observe that this
 lies in the tail region of its asymptotic null $\chi^2_2$ distribution
 with a $p$-value of about \Sexpr{signif(pchisq(f(maxv) -
   jj$objective,lower.tail=FALSE,df=2),digits=2)}.
-
 
 \section{Non-independence in successive arrivals}
 
@@ -700,7 +701,7 @@ c\succ b\succ e$ would be
 \begin{equation}
 \frac{p_d}{p_a + p_b + p_c + p_d + p_e}\cdot
 \frac{p_a}{p_a + p_b + p_c + \mu p_e}\cdot
-\frac{\lambda p_c}{\lambda p_b + \lambda p_c + p_e}\cdot
+\frac{\lambda p_c}{\lambda p_b + \lambda p_c + \mu p_e}\cdot
 \frac{\lambda p_b}{\lambda p_b + \mu p_e}
 \end{equation}
 
@@ -724,7 +725,7 @@ others.
 
 The probability model of Figure~\ref{tikzabcde} is applied, in a
 simple one-parameter form, to two datasets: one a set of preferences
-of different types of sushi, and one in the field of e-sports.
+of different types of sushi, and one in the field of esports.
 
 \section{Red bus, blue bus}
 
@@ -749,7 +750,7 @@ $\frac{1}{3}$.  Various solutions to this problem have been proposed.
 overlapping ``aspects'' of the elements of choice set;
 \cite{mcfadden1980} suggests using a generalized extreme-value model.
 
-Here I sugest an alternative in the form of a generalization of
+Here I suggest an alternative in the form of a generalization of
 Plackett-Luce likelihood functions for ranking options, using the
 multiplicative generalization to Bradley-Terry strengths presented
 above.  If we ask our respondent to rank his options, it is highly
@@ -963,7 +964,7 @@ immersive virtual reality combat environment.  Gameplay is typically
 complex, including features such as cooperative teamwork and real-time
 strategic fluidity.
 
-Here I analyse a dataset taken from recent e-sports tournament {\em
+Here I analyse a dataset taken from recent esports tournament {\em
   ELEAGUE Major: Boston 2018}.  This Valve-sponsored Major featured 24
 elite teams competing for a million dollar prize pool; peak concurrent
 viewership exceeded $1.3\times 10^6$, the highest in {\em CS:GO}
