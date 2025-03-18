@@ -128,7 +128,11 @@ by the drug; values $>1$ would correspond to a positive effect.  In
 this paper I generalize the {\tt hyper2} R
 package~\citep{hankin2017_rnw}, available on CRAN~\citep{rcore2025},
 for Bradley-Terry likelihoods to accommodate this class of
-multiplicative factors.  The most general likelihood function would be
+multiplicative factors with new \proglang{S3} class {\tt hyper3} and
+associated methods.
+
+
+The most general likelihood function would be
 proportional to
 
 \begin{equation}
@@ -725,9 +729,12 @@ others.
 
 The probability model of Figure~\ref{tikzabcde} is applied, in a
 simple one-parameter form, to two datasets: one a set of preferences
-of different types of sushi, and one in the field of esports.
+of different types of sushi, and one in the field of esports.  First,
+however, we discuss a synthetic example showing how generalizing
+Placket-Luce to admit non-independence of successive arrivals can be
+applied to an apparently different situation.
 
-\section{Red bus, blue bus}
+\subsection{Red bus, blue bus}
 
 The classic red bus-blue bus problem was originally stated by
 \cite{mcfadden1980} although different metaphors have been employed
@@ -750,28 +757,33 @@ $\frac{1}{3}$.  Various solutions to this problem have been proposed.
 overlapping ``aspects'' of the elements of choice set;
 \cite{mcfadden1980} suggests using a generalized extreme-value model.
 
-Here I suggest an alternative in the form of a generalization of
-Plackett-Luce likelihood functions for ranking options, using the
-multiplicative generalization to Bradley-Terry strengths presented
-above.  If we ask our respondent to rank his options, it is highly
-probable that he will put RB and BB consecutively (because they are
-essentially indistinguishable).  Can we quantify the strength of this
-effect?  To do this, we define a bespoke function \code{RB\_BB\_LF()}
-which returns a \code{hyper3} log-likelihood function corresponding to
+Here I suggest an alternative in the form of a one-parameter
+generalization of Plackett-Luce likelihood functions for ranking
+options, using the multiplicative generalization to Bradley-Terry
+strengths presented above.  As a synthetic example, we specify options
+RB and BB for red bus and blue bus together options C, T and W for
+car, train, and walking.
+
+Specifically, it seems reasonable to assume that if we ask our
+respondent to rank his options, it is highly probable that he will put
+RB and BB consecutively (because they are essentially
+indistinguishable).  Can we quantify the strength of this effect?  To
+do this, we define a bespoke function \code{RB\_BB\_LF()} which
+returns a \code{hyper3} log-likelihood function corresponding to
 repeated observations of our commuter's reported ranks for the five
-options:
+options.
 
 <<defineredbuslf>>=
 `RB_BB_LF` <- function(lambda){
     ec <- c(C=1, T=2, RB=3, BB=3, W=4) 
     h <- c(1, 1, lambda, 1)           
     (
-        cheering3(v=c("RB", "BB", "C" , "T", "W"), e=ec, h=h)*3 + 
-        cheering3(v=c("BB", "RB", "T" , "C", "W"), e=ec, h=h)*2 + 
-        cheering3(v=c("T" , "BB", "RB", "C", "W"), e=ec, h=h)*5 + 
-        cheering3(v=c("W" , "BB", "RB", "T", "C"), e=ec, h=h)*4 + 
-        cheering3(v=c("C" , "RB", "BB", "W", "T"), e=ec, h=h)*3 + 
-        cheering3(v=c("BB", "C" , "RB", "T", "W"), e=ec, h=h)*3
+        cheering3(v=c("RB", "BB", "C" , "T", "W"), e = ec, h = h) * 3 + 
+        cheering3(v=c("BB", "RB", "T" , "C", "W"), e = ec, h = h) * 2 + 
+        cheering3(v=c("T" , "BB", "RB", "C", "W"), e = ec, h = h) * 5 + 
+        cheering3(v=c("W" , "BB", "RB", "T", "C"), e = ec, h = h) * 4 + 
+        cheering3(v=c("C" , "RB", "BB", "W", "T"), e = ec, h = h) * 3 + 
+        cheering3(v=c("BB", "C" , "RB", "T", "W"), e = ec, h = h) * 3
     )
 }
 @
@@ -850,10 +862,9 @@ equivalence classes of sushi---one for tuna-based sushis and one for
 everything else.  Of course, one can also imagine the opposite
 phenomenon whereby the judge decides he has had enough tuna for the
 moment and this disincentivises further tuna choices.  This mechanism
-would be modelled by having $\lambda<1$.
-
-Implementation in \code{hyper3} formalism is straightforward.  The
-dataset used is \code{sushi\_table}, part of the \code{hyper2} package:
+would be modelled by having $\lambda<1$.  Implementation in
+\code{hyper3} formalism is straightforward.  The dataset used is
+\code{sushi\_table}, part of the \code{hyper2} package:
 
 <<showsushitable>>=
 noquote(head(sushi_table))
@@ -1077,8 +1088,9 @@ Bradley-Terry strengths $p_1,\ldots,p_n$, $p_i\geqslant 0$, $\sum
 p_i=1$ are generalized with non-negative multiplicative $\lambda$-
 factors that represent temporary or ephemeral changes in competitive
 strength.  The {\tt hyper2} R package implements the resulting
-likelihood functions, and furnishes a wide range of functionality
-geared towards assessing meaningful nulls using likelihood methods.
+likelihood functions using \proglang{S3} class {\tt hyper3}, and
+furnishes a wide range of functionality geared towards assessing
+meaningful nulls using likelihood methods.
 
 The standard Plackett-Luce likelihood function
 $\prod_{i=1}^{n}p_{(i)}\left[\sum_{j=i}^n p_{(j)}\right]^{-1}$ over
@@ -1086,7 +1098,7 @@ Bradley-Terry strengths assumes conditional independence of successive
 rank observations $p_{(1)},\ldots p_{(n)}$, an assumption which is
 broken in the current work.  As indicated above, multiplicative
 $\lambda$- factors may be used to implement many different
-non-independence schemes and comparing these might be interesting.
+non-independence schemes.
 
 Further work might include an individualised multiplicative draw
 factor, giving rise to likelihood functions such as
@@ -1095,8 +1107,6 @@ $\frac{p_1^{w_1};(\lambda_1p_1+\lambda_2p_2)^{d_{12}};
 One might also consider multiplicative factors for the strengths of
 {\em reified} entities.  These modifications would be directly
 representable with existing {\tt hyper3} idiom.
-
-
 
 \bibliography{hyper2}
 \end{document}
