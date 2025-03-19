@@ -1,0 +1,299 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "hyper2",
+  "description": "A suite of routines for the hyperdirichlet distribution and reified Bradley-Terry; supersedes the 'hyperdirichlet' package; uses 'disordR' discipline <doi:10.48550/ARXIV.2210.03856>. To cite in publications please use Hankin 2017 <doi:10.32614/rj-2017-061>, and for Generalized Plackett-Luce likelihoods use Hankin 2024 <doi:10.18637/jss.v109.i08>.",
+  "name": "hyper2: The Hyperdirichlet Distribution, Mark 2",
+  "relatedLink": ["https://robinhankin.github.io/hyper2/", "https://CRAN.R-project.org/package=hyper2"],
+  "codeRepository": "https://github.com/RobinHankin/hyper2",
+  "issueTracker": "https://github.com/RobinHankin/hyper2/issues",
+  "license": "https://spdx.org/licenses/GPL-2.0",
+  "version": "3.2",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 4.4.3 (2025-02-28)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": ["Robin", "K. S."],
+      "familyName": "Hankin",
+      "email": "hankin.robin@gmail.com",
+      "@id": "https://orcid.org/0000-0001-5982-0415"
+    }
+  ],
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": ["Robin", "K. S."],
+      "familyName": "Hankin",
+      "email": "hankin.robin@gmail.com",
+      "@id": "https://orcid.org/0000-0001-5982-0415"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "markdown",
+      "name": "markdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=markdown"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "bookdown",
+      "name": "bookdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=bookdown"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rticles",
+      "name": "rticles",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rticles"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "covr",
+      "name": "covr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=covr"
+    }
+  ],
+  "softwareRequirements": {
+    "1": {
+      "@type": "SoftwareApplication",
+      "identifier": "methods",
+      "name": "methods"
+    },
+    "2": {
+      "@type": "SoftwareApplication",
+      "identifier": "cubature",
+      "name": "cubature",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=cubature"
+    },
+    "3": {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 4.1.0"
+    },
+    "4": {
+      "@type": "SoftwareApplication",
+      "identifier": "Rcpp",
+      "name": "Rcpp",
+      "version": ">= 1.0-7",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=Rcpp"
+    },
+    "5": {
+      "@type": "SoftwareApplication",
+      "identifier": "partitions",
+      "name": "partitions",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=partitions"
+    },
+    "6": {
+      "@type": "SoftwareApplication",
+      "identifier": "disordR",
+      "name": "disordR",
+      "version": ">= 0.0-9",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=disordR"
+    },
+    "7": {
+      "@type": "SoftwareApplication",
+      "identifier": "alabama",
+      "name": "alabama",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=alabama"
+    },
+    "8": {
+      "@type": "SoftwareApplication",
+      "identifier": "calibrator",
+      "name": "calibrator",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=calibrator"
+    },
+    "9": {
+      "@type": "SoftwareApplication",
+      "identifier": "Rdpack",
+      "name": "Rdpack",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=Rdpack"
+    },
+    "10": {
+      "@type": "SoftwareApplication",
+      "identifier": "magrittr",
+      "name": "magrittr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=magrittr"
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "49141.487KB",
+  "citation": [
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2024",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": ["Robin", "K.", "S."],
+          "familyName": "Hankin",
+          "email": "hankin.robin@gmail.com"
+        }
+      ],
+      "name": "Generalized Plackett-Luce Likelihoods",
+      "identifier": "10.18637/jss.v109.i08",
+      "pagination": "1--17",
+      "@id": "https://doi.org/10.18637/jss.v109.i08",
+      "sameAs": "https://doi.org/10.18637/jss.v109.i08",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "issueNumber": "8",
+        "datePublished": "2024",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "volumeNumber": "109",
+          "name": "Journal of Statistical Software"
+        }
+      }
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2017",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": ["Robin", "K.", "S."],
+          "familyName": "Hankin",
+          "email": "hankin.robin@gmail.com"
+        }
+      ],
+      "name": "Partial Rank Data with the {hyper2} Package: Likelihood Functions for Generalized {B}radley-{T}erry Models",
+      "identifier": "10.32614/RJ-2017-061",
+      "pagination": "429-439",
+      "@id": "https://doi.org/10.32614/RJ-2017-061",
+      "sameAs": "https://doi.org/10.32614/RJ-2017-061",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "issueNumber": "2",
+        "datePublished": "2017",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "volumeNumber": "9",
+          "name": "The R Journal"
+        }
+      }
+    }
+  ],
+  "releaseNotes": "https://github.com/RobinHankin/hyper2/blob/master/NEWS.md",
+  "readme": "https://github.com/RobinHankin/hyper2/blob/master/README.md"
+}
