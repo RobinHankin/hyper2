@@ -2,7 +2,7 @@
 title: "Global liveability ranking"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
+bibliography: hyper2.bib
 ---
 
 

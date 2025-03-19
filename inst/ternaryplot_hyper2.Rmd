@@ -2,7 +2,7 @@
 title: "Ternary plots for `hyper2` and `hyper3` samples"
 author: "Robin Hankin"
 output: bookdown::html_document2
-bibliography: hyper2.bib  # copy vignettes/hyper2.bib to inst/
+bibliography: hyper2.bib
 ---
 
 ```{r setup, include=FALSE}
