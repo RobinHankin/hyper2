@@ -29,7 +29,7 @@
   non-independence of successive observations in Plackett-Luce
   likelihood functions which allows a parametrization of the ``red
   bus, blue bus'' problem in preference analysis.  I present examples
-  drawn from the fields of food preference and the e-sport {\em
+  drawn from the fields of food preference and the esport {\em
     Counterstrike}.  }
 
 \Keywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
