@@ -64,7 +64,7 @@ championship using a consistent and intuitive statistical model.
 
 # Previous related work
 
-@farley2013 analyse surfing results using one-way ANOVA techniques and
+@farley2015 analyse surfing results using one-way ANOVA techniques and
 report comparisons between the top 10 and bottom 10 surfers in the
 2013 World Championship Tour and conclude that the top-ranked athletes
 are more consistent than the lower-ranked group. They report that "To
