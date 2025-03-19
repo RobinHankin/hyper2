@@ -135,7 +135,7 @@ associated methods.
 The most general likelihood function would be
 proportional to
 
-\begin{equation}
+\begin{equation}\label{mostgeneral}
   \prod_{i=1}^N
   \sum_{j=1}^n
  \left(\lambda_{ij}p_j\right)^{w_i}
@@ -194,7 +194,7 @@ likelihood proportional to
   \end{tabular}
 \caption{The \label{oldfirm} dominance of the Old Firm: 769 matches
   between Rangers, Celtic, Falkirk and Livingston arranged by home
-  wins, draws, and home losses.  Data from {\tt soccerworld}}
+  wins, draws, and home losses.  Data from {\tt stats.football.co.uk}}
 \end{table}
 
 \begin{equation}\label{firstfewRCFL}
@@ -428,12 +428,19 @@ lies in the tail region of its asymptotic null $\chi^2_2$ distribution
 with a $p$-value of about \Sexpr{signif(pchisq(f(maxv) -
   jj$objective,lower.tail=FALSE,df=2),digits=2)}.
 
+Equation~\ref{mostgeneral} is very general and may be applied to a
+range of situations in which standard Bradley-Terry strengths are
+modified in some way.  In the following section, I apply it to
+Plackett-Luce likelihoods~\citep{plackett1975} likelihood function for
+rank data.
+
 \section{Non-independence in successive arrivals}
 
 In the following, I use the ``race'' metaphor: five runners take part
 in a race and arrive in order $a\succ b\succ c\succ d\succ e$.  Thus
 competitor $a$ wins, $b$ comes second, and so on.  Consider the
-following Plackett-Luce likelihood function for this observation:
+following Plackett-Luce~\citep{plackett1975} likelihood function for
+this observation:
 
 \begin{equation}
 \frac{p_a}{p_a + p_b + p_c + p_d + p_e}\cdot
