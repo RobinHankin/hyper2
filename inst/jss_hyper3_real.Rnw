@@ -1,5 +1,12 @@
-% -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
 \documentclass[article]{jss}
+
+%% -- LaTeX packages and custom commands ---------------------------------------
+
+%% recommended packages
+\usepackage{orcidlink,thumbpdf,lmodern}
+
+%% another package (only for this demo article)
+\usepackage{framed}
 \usepackage{booktabs}
 \usepackage{units}
 \usepackage{amsmath}
@@ -7,20 +14,41 @@
 \usepackage{tikz}
 \usepackage{wrapfig}
 
-%  Process with:
-%  
-%  Rscript -e 'library("knitr") ; knit("jss_hyper3_real.Rnw")' && pdflatex jss_hyper3_real && open jss_hyper3_real.pdf
-%
-%  (also the Makefile has an entry for this)
 
-\author{Robin K. S. Hankin\\University of Stirling}
+%% new custom commands
+\newcommand{\class}[1]{`\code{#1}'}
+\newcommand{\fct}[1]{\code{#1()}}
+\newcommand\headercell[1]{%
+   \smash[b]{\begin{tabular}[t]{@{}c@{}} #1 \end{tabular}}}
+
+%% For Sweave-based articles about R packages:
+%% need no \usepackage{Sweave}
+\SweaveOpts{engine=R, eps=FALSE, keep.source = TRUE}
+<<preliminaries, echo=FALSE, results=hide>>=
+options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
+library("hyper2")
+library("magrittr")
+howmany <- 23  # set to a smaller value to save time
+@
+
+
+%% -- Article metainformation (author, title, ...) -----------------------------
+
+%% - \author{} with primary affiliation (and optionally ORCID link)
+%% - \Plainauthor{} without affiliations
+%% - Separate authors by \And or \AND (in \author) or by comma (in \Plainauthor).
+%% - \AND starts a new line, \And does not.
+\author{Robin K. S. Hankin~\orcidlink{0000-0001-5982-0415}\\University of Stirling}
+\Plainauthor{Robin K. S Hankin}
+
+%% - \title{} in title case
+%% - \Plaintitle{} without LaTeX markup (if any)
+%% - \Shorttitle{} with LaTeX markup (if any), used as running title
+
 \title{Generalized Bradley-Terry models}
-\Plainauthor{Robin K. S. Hankin} %% comma-separated
-\Plaintitle{Generalized Bradley-Terry models}
 
-%% an abstract and keywords
-\Abstract{ 
-  
+%% - \Abstract{} almost as usual
+\Abstract{
   A generalization of the Bradley-Terry model is presented in which
   strengths may be modified using a multiplicative factor $\lambda$;
   Generally, ordinary Bradley-Terry is recovered if $\lambda=1$.  This
@@ -30,52 +58,46 @@
   likelihood functions which allows a parametrization of the ``red
   bus, blue bus'' problem in preference analysis.  I present examples
   drawn from the fields of food preference and the esport {\em
-    Counterstrike}.  }
+    Counterstrike}.
+}
 
-\Keywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
-\Plainkeywords{Plackett-Luce, Bradley-Terry, Mann-Whitney}
+%% - \Keywords{} with LaTeX markup, at least one required
+%% - \Plainkeywords{} without LaTeX markup (if necessary)
+%% - Should be comma-separated and in sentence case.
+\Keywords{JSS, style guide, comma-separated, not capitalized, \proglang{R}}
+\Plainkeywords{JSS, style guide, comma-separated, not capitalized, R}
+\Keywords{Plackett-Luce, Bradley-Terry, \proglang{R}}
+\Plainkeywords{Plackett-Luce, Bradley-Terry, R}
 
-%% publication information
-%% NOTE: Typically, this can be left commented and will be filled out by the technical editor
-%% \Volume{50}
-%% \Issue{9}
-%% \Month{June}
-%% \Year{2012}
-%% \Submitdate{2012-06-04}
-%% \Acceptdate{2012-06-04}
 
-%% The address of (at least) one author should be given
-%% in the following format:
+%% - \Address{} of at least one author
+%% - May contain multiple affiliations for each author
+%%   (in extra lines, separated by \emph{and}\\).
+%% - May contain multiple authors for the same affiliation
+%%   (in the same first line, separated by comma).
 \Address{
   Robin K. S. Hankin\\
   University of Stirling\\
   E-mail: \email{hankin.robin@gmail.com}
 }
 
-%% for those who use Sweave please include the following line (with % symbols):
-%% need no \usepackage{Sweave.sty}
-
-%% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand\headercell[1]{%
-   \smash[b]{\begin{tabular}[t]{@{}c@{}} #1 \end{tabular}}}
-\newcommand{\draw}{\ensuremath{\mathfrak{D}}}
-\newcommand{\cdraw}{\ensuremath{\mathfrak{C}}}
-\newcommand{\white}{\ensuremath{\mathfrak{W}}}
-\newcommand{\home}{\ensuremath{\mathfrak{H}}}
-\newcommand{\oo}{\vphantom{W^{W^{W^W}}}}
-
 \begin{document}
 
-<<setup, cache=FALSE,echo=FALSE>>=
-source("loadlibrary.R",echo=FALSE)  # to avoid stupid messages
-opts_chunk$set(cache=TRUE, autodep=TRUE)
-options(prompt = "R> ")
-@
+
+%% -- Introduction -------------------------------------------------------------
+
+%% - In principle "as usual".
+%% - But should typically have some discussion of both _software_ and _methods_.
+%% - Use \proglang{}, \pkg{}, and \code{} markup throughout the manuscript.
+%% - If such markup is in (sub)section titles, a plain text version has to be
+%%   added as well.
+%% - All software mentioned should be properly \cite-d.
+%% - All abbreviations should be introduced.
+%% - Unless the expansions of abbreviations are proper names (like "Journal
+%%   of Statistical Software" above) they should be in sentence case (like
+%%   "generalized linear models" below).
 
 \section{Introduction}
-
-
 \begin{wrapfigure}{r}{0.1\textwidth}
     \centering
     \includegraphics[width=0.1\textwidth]{hyper2.png}\\
@@ -110,7 +132,7 @@ to combine this idea with that of a multiplicative factor.  For
 example, suppose $p_1$ has just learned a new special technique, and
 $p_4$ has just been given a performance-enhancing drug.  If so, we
 might have likelihood function
-
+%
 \begin{equation}\label{like1234}
   \mathcal{L}{\left(p_1,p_2,p_3,p_4;\lambda,\mu\right)}\propto
   \frac{
@@ -120,27 +142,27 @@ might have likelihood function
     \left(\lambda p_1+p_2+p_3+\mu p_4\right)^{w_{12} + w_{34}}
     }
 \end{equation}
-
+%
 where $w_{12}$ and $w_{34}$ are the number of wins by each team
 respectively.  Then $\lambda$ would represent the effectiveness of
 $p_1$'s special technique, and $\mu$ the enhancement afforded to $p_4$
 by the drug; values $>1$ would correspond to a positive effect.  In
-this paper I generalize the {\tt hyper2} R
+this paper I generalize the \pkg{hyper2} R
 package~\citep{hankin2017_rnw}, available on CRAN~\citep{rcore2025},
 for Bradley-Terry likelihoods to accommodate this class of
-multiplicative factors with new \proglang{S3} class {\tt hyper3} and
+multiplicative factors with new \proglang{S3} \class{hyper3} and
 associated methods.
 
 
 The most general likelihood function would be
 proportional to
-
+%
 \begin{equation}\label{mostgeneral}
   \prod_{i=1}^N
   \sum_{j=1}^n
  \left(\lambda_{ij}p_j\right)^{w_i}
-  \end{equation}
-
+\end{equation}
+%
 where the $p_j$ are traditional Bradley-Terry strengths, $p_j\geqslant
 0$, $\sum p_j=1$, and the $\lambda_{ij}\geqslant 0$ are multiplicative
 factors that account for ephemeral or temporary changes in competitive
@@ -150,8 +172,8 @@ equation~\ref{like1234}.  In practice, almost all the $\lambda_{ij}$
 are zero.  To fix ideas, consider the data presented in
 Table~\ref{oldfirm}.  Ignoring draws for the moment, we have a
 likelihood proportional to
-
-\begin{table}
+%
+\begin{table}[t!]
 \centering
 \begin{tabular}{@{} *{5}{c} @{}}
 \headercell{\small{Plays at home,}\\ \small{wins}} &
@@ -196,7 +218,7 @@ likelihood proportional to
   between Rangers, Celtic, Falkirk and Livingston arranged by home
   wins, draws, and home losses.  Data from {\tt stats.football.co.uk}}
 \end{table}
-
+%
 \begin{equation}\label{firstfewRCFL}
   \left(\frac{\lambda p_R}{\lambda p_R + p_C}\right)^{81}\cdot
   \left(\frac{\lambda p_R}{\lambda p_R + p_F}\right)^{69}\cdots
@@ -204,7 +226,7 @@ likelihood proportional to
   \left(\frac{p_C}{p_C + \lambda p_R}\right)^{42}\cdots
     \left(\frac{p_F}{p_F + \lambda p_L}\right)^{9}
 \end{equation}
-
+%
 where the home-ground advantage is represented by~$\lambda$.  In
 package idiom, a term such as $\lambda p_R + p_C$ is represented as a
 named numeric vector.  For example, if the home strength were $\lambda
@@ -214,12 +236,13 @@ generalization of that used in~\cite{hankin2024_hyper3} in which the
 multiplicative factors correspond to number of clones.  However,
 in~\cite{hankin2024_hyper3} the factors are known non-negative
 integers, and here they are, in general, unknown non-negative real
-numbers.
+numbers.  The \class{hyper3} class enforces \pkg{disordR}
+discipline~\citep{hankin2022_disordR}.
 
 \subsection{The package in use}
 Package idiom for creating a likelihood function for this dataset is
 straightforward.  Considering first only Rangers-Celtic matches:
-
+%
 <<defineoldfirm, cache=TRUE>>=
 oldfirm <- function(lambda){
     H <- hyper3(pnames = c("Rangers", "Celtic"))
@@ -233,32 +256,31 @@ oldfirm <- function(lambda){
     return(H)
 }
 @
-
+%
 Above we see package idiom for creating a log-likelihood function.  We
 first create an empty {\tt hyper3} object with an appropriate names
 attribute.  The next three lines, using \pkg{magrittr} assignment
 pipes, give the results for Rangers at home, and the next three lines
 give the result for Celtic at home.  It is then easy to create a
 bespoke log-likelihood function for Rangers-Celtic matches:
-
+%
 <<useoldfirm, cache = TRUE>>=
 oldfirm(1.88)
 @
-
-
+%
 We see a log-likelihood function for all $82+42+76+46=245$
 Rangers-Celtic matches that were not score draws, conditional on
 assumed value $\lambda=1.88$.  This corresponds to the relevant terms
 of equation~\ref{firstfewRCFL}.  We may make inferences about the true
 value of $\lambda$ using profile support:
-
+%
 <<profilelikeoldfirm, cache=TRUE>>=
 f <- function(lambda){maxp(oldfirm(lambda),give=1)$`Log-likelihood`}
-lam <- seq(from=0.9, to=3, len=23)
+lam <- seq(from=0.9, to=3, len=howmany)
 logLike <- sapply(lam,f)
 @
-
-Thus {\tt f()} returns the support at the evaluate, conditional on a
+%
+Thus \fct{f} returns the support at the evaluate, conditional on a
 supplied value of $\lambda$.  We may use this to create a profile
 likelihood (figure~\ref{profilesupportlambda}), or to find the maximum
 likelihood estimate for $\lambda$:
@@ -286,18 +308,17 @@ abline(h = c(0,-2),col='gray')
 
 Then using this value we may estimate the Bradley-Terry strengths of
 Rangers and Celtic:
-
+%
 <<mleoldfirm,cache=TRUE>>=
 maxp(oldfirm(lambda_max))
 @
-
+%
 Compare with the theoretical value of $\widehat{p_{\mbox{\tiny
       C}}}=\frac{\sqrt{42\cdot 76}}{\sqrt{81\cdot 46}+\sqrt{42\cdot
     76}}\simeq 0.4807$, $\widehat{p_{\mbox{\tiny R}}}
 =\frac{\sqrt{81\cdot 46}}{\sqrt{81\cdot 46}+\sqrt{42\cdot 76}}\simeq
 0.5193$, and $\widehat{\lambda}=\frac{\sqrt{76\cdot 81}}{\sqrt{46\cdot
     42}}\simeq 1.785$.
-
 
 \section{Score draws}
 
@@ -315,10 +336,7 @@ home win is simply $\lambda$, independently of the player
 strength. Such arguments give direct operational significance to
 $\lambda$ and $D$.
 
-
-
-
-\begin{table}
+\begin{table}[t!]
 \centering
 \begin{tabular}{l|c|c}\\&
 {$i$ plays at home} &
@@ -337,66 +355,62 @@ $\lambda$ and $D$.
 \caption{Probabilities of a win, draw, loss for the two teams under a
   two-parameter multiplicative Bradley-Terry model\label{windrawloss}}
 \end{table}
-
+%
 We are now in a position to consider the entirety of
 Table~\ref{oldfirm}.  Bespoke package function
 \code{home\_draw\_away3()} converts data in the form of
 Table~\ref{oldfirm} to a \code{hyper3} likelihood function following
 Table~\ref{windrawloss}; it takes numerical values for the home
 advantage $\lambda$ and proclivity to draw $D$:
-
-
+%
 <<eg_RCLF3_lf, cache=TRUE>>=
 home_draw_away3(RCLF3_table, lambda=1.7, D=0.3)
 @
-
+%
 Observe that the resulting likelihood function has two distinct types
 of parameters: the plain Bradley-Terry strengths $\mathbf{p}=(p_R,
 p_C,p_L,p_F)$, with unit sum; but also the auxiliary parameters
 $\lambda,D$.  To make inferences about these parameters we calculate a
 profile likelihood function: conditional on $\lambda,D$ we maximize
 the likelihood over possible values of $\mathbf{p}$.
-
-
+%
 <<defineF>>=
 f <- function(v){
     H <- home_draw_away3(RCLF3_table, lambda = v[1], D=v[2])
     maxp(H,give=1)$`Log-likelihood`
 }
 @
-
+%
 Thus \code{f()} gives us a likelihood function for
 $\mathbf{v}=(\lambda,D)$.  We may find the evaluate using
 \code{optim()}:
-
+%
 <<findmaxlambdaD, cache=TRUE>>=
 maxv <- optim(par=c(2, 0.3), fn=f, control=list(fnscale = -1))$par
 maxv
 @
-
+%
 Then
-
+%
 <<showevaluate, cache=TRUE>>=
 maxp(home_draw_away3(RCLF3_table, lambda = maxv[1], D=maxv[2]))
 @
-
+%
 Such estimates have rich predictive power.  For example, if Rangers
 were to play Celtic with both teams away [thus nullifying the home
   ground advantage: $\lambda=1$ in Table~\ref{windrawloss}], the
 probability of win/draw/loss for Rangers would be
 $\left(\frac{p_R}{(1+D)(p_R+p_C)};\frac{D}{1+D};\frac{p_C}{(1+D)(p_R+p_C)}\right)$,
 estimated at $(0.39;0.27;0.34)$.
-
-
+%
 <<makecontourdata, echo=FALSE, cache=TRUE>>=
-n <- 20
+n <- howmany
 lambda <- seq(from=1, to=3, len=n)
 D <- seq(from=0.1, to=0.6, len=n)
 V <- as.matrix(expand.grid(lambda, D))
 LL <- apply(V, 1, f)
 LL <- pmax(-20, LL - max(LL))
 @ 
-
 
 \begin{figure}[htbp]
   \begin{center}
@@ -416,17 +430,16 @@ abline(v=1, col = 'gray')
 <<testlambdazero, cache=TRUE, include=FALSE>>=
 jj <- optimize(f=function(D){f(c(lambda=1,D))}, interval=c(0.1, 0.4), maximum=TRUE)
 @
-
+%
 Further, we may calculate a support function over the
 $(\lambda,D)$-plane, shown in figure~\ref{contourlambdaD}.  For
 example, we may test the hypothesis that $\lambda=1$ [corresponding to
   the left hand side of figure~\ref{contourlambdaD}] for which the
-support is about \Sexpr{round(f(maxv) - jj$objective,2)}, far
+support is about \Sexpr{round(f(maxv)-jj$objective,2)}, far
 exceeding the two units of support per degree of freedom
 criteron~\citep{edwards1992}.  Alternatively, we can observe that this
 lies in the tail region of its asymptotic null $\chi^2_2$ distribution
-with a $p$-value of about \Sexpr{signif(pchisq(f(maxv) -
-  jj$objective,lower.tail=FALSE,df=2),digits=2)}.
+with a $p$-value of about \Sexpr{signif(pchisq(f(maxv)-jj$objective,lower.tail=FALSE,df=2),digits=2)}.
 
 Equation~\ref{mostgeneral} is very general and may be applied to a
 range of situations in which standard Bradley-Terry strengths are
@@ -441,7 +454,7 @@ in a race and arrive in order $a\succ b\succ c\succ d\succ e$.  Thus
 competitor $a$ wins, $b$ comes second, and so on.  Consider the
 following Plackett-Luce~\citep{plackett1975} likelihood function for
 this observation:
-
+%
 \begin{equation}
 \frac{p_a}{p_a + p_b + p_c + p_d + p_e}\cdot
 \frac{p_b}{      p_b + p_c + p_d + p_e}\cdot
@@ -449,7 +462,7 @@ this observation:
 \frac{p_d}{                  p_d + p_e}\cdot
 \frac{p_e}{                        p_e}
 \end{equation}
-
+%
 Note the use of multiplication between the terms, indicating
 conditional independence.  Now we use the multiplicative
 generalization of Bradley-Terry strengths to introduce an element of
@@ -473,7 +486,7 @@ standard Plackett-Luce probability.  Taking the top path as an
 example, we see that the likelihood function for $a\succ b\succ c\succ
 d\succ e$ would be
 
-\begin{figure}[htbp]
+\begin{figure}[t!]
   \begin{center}
 \usetikzlibrary{arrows}
 \usetikzlibrary{patterns}
@@ -692,14 +705,13 @@ d\succ e$ would be
 \end{center}
 \end{figure}
 
-
 \begin{equation}\label{asuccb}
 \frac{p_a}{p_a + p_b + p_c + p_d + p_e}\cdot
 \frac{\lambda p_b}{\lambda p_b + \lambda p_c + p_d + p_e}\cdot
 \frac{\lambda p_c}{\lambda p_c + p_d + p_e}\cdot
 \frac{p_d}{p_d + p_e}
 \end{equation}
-
+%
 In equation \ref{asuccb}, the first term is standard Plackett-Luce: at
 this point, no competitor has finished and cheering effects are
 absent.  The second term reflects the fact that competitors $b$ and
@@ -708,14 +720,14 @@ the race and is supporting his teammates.
 
 By contrast, the likelihood function for observation $d\succ a\succ
 c\succ b\succ e$ would be
-
+%
 \begin{equation}
 \frac{p_d}{p_a + p_b + p_c + p_d + p_e}\cdot
 \frac{p_a}{p_a + p_b + p_c + \mu p_e}\cdot
 \frac{\lambda p_c}{\lambda p_b + \lambda p_c + \mu p_e}\cdot
 \frac{\lambda p_b}{\lambda p_b + \mu p_e}
 \end{equation}
-
+%
 where this likelihood function reflects the mutual support for
 equivalence class $\left\lbrace d,e\right\rbrace$.  Note that the
 final term reflects the fact that competitors $b$ and $e$ have their
@@ -779,7 +791,7 @@ do this, we define a bespoke function \code{RB\_BB\_LF()} which
 returns a \code{hyper3} log-likelihood function corresponding to
 repeated observations of our commuter's reported ranks for the five
 options.
-
+%
 <<defineredbuslf>>=
 `RB_BB_LF` <- function(lambda){
     ec <- c(C=1, T=2, RB=3, BB=3, W=4) 
@@ -794,7 +806,7 @@ options.
     )
 }
 @
-
+%
 Above, we see from the function body that he reported $RB\succ BB\succ
 C\succ T\succ W$ three times [first row], and so on; perhaps his
 ranking depends on the weather or how tired he is on any given day.
@@ -805,40 +817,39 @@ strength of the nonindependence.  Observe that in almost every case he
 ranks RB and BB consecutively.  Function \code{RB_BB_LF()} takes
 argument \code{lambda} that quantifies the perceived similarity
 between RB and BB in the same way as function \code{oldfirm()} above.
-
+%
 <<definefunctiono>>=
 o <- function(lambda){maxp(RB_BB_LF(lambda), give=1)$`Log-likelihood`} 
 @ 
-
+%
 Above, we define function \code{o()} which returns the support for a
 given value of $\lambda$ at the evaluate [over permissible Bradley
   Terry strengths for the options].  We can treat \code{o()} as a
 support function for $\lambda$, and then maximize it:
-
+%
 <<label=maxlikesim, cache=TRUE>>=
 (osup <- optimize(o, c(10, 40), maximum=TRUE))
 @ 
-
+%
 So a likelihood ratio test of the null that $\lambda=1$ would be:
-
+%
 <<label=LRT_RB, cache=TRUE>>=
 (suppdiff <- osup$objective - o(lambda = 1))
 @
-
+%
 We can thus improve the hypothesis that $\lambda=1$, corresponding to
 an unaltered Plackett-Luce system, by over 5.6 units of support by
 dint of choosing instead $\lambda = 10.49$.  This easily satisfies
 \citeauthor{edwards1992}'s two-units-of-support criterion;
 alternatively, we could observe that this observation lies in the tail
 region of its asymptotic $\chi^2_1$ distribution (Wilks's theorem),
-with a $p$-value of \Sexpr{signif(pchisq(suppdiff*2, df=1,
-  lower.tail=FALSE),3)}.
-
+with a $p$-value of \Sexpr{signif(pchisq(suppdiff*2,df=1,lower.tail=FALSE),3)}.
+%
 %It is straightforward to find a profile
 %support function for $\lambda$, Figure~\ref{profilesupportlambdaRBBB}.
 %We see that support of $\log\lambda$ is closely quadratic over a broad
 %range.
-
+%
 %\begin{figure}[htbp]
 %\begin{center}
 <<plotproflike, echo=FALSE>>=
@@ -871,24 +882,24 @@ phenomenon whereby the judge decides he has had enough tuna for the
 moment and this disincentivises further tuna choices.  This mechanism
 would be modelled by having $\lambda<1$.  Implementation in
 \code{hyper3} formalism is straightforward.  The dataset used is
-\code{sushi\_table}, part of the \code{hyper2} package:
-
+\code{sushi\_table}, part of the \pkg{hyper2} package:
+%
 <<showsushitable>>=
 noquote(head(sushi_table))
 @
-
+%
 Thus, from the top line, we see that the first judge placed tamago
 first, followed by anago and ika.  The equivalence classes are given
 by
-
+%
 <<show_sushi_eq_classes>>=
 sushi_eq_classes
 @
-
+%
 so class 2 is the tuna group and class 1 everything else.  We can now
 define a bespoke likelihood function for these observations, using
 $\lambda$ as the argument:
-
+%
 <<defcalculate_sushi_H>>=
 make_sushi_H <- function(lambda){
     H <- hyper3()
@@ -898,37 +909,37 @@ make_sushi_H <- function(lambda){
     return(H)
 }
 @
-
+%
 <<calclikesushi,echo=FALSE, cache=TRUE>>=
 f <- function(lambda){
    H <- make_sushi_H(lambda)
    maxp(H,give=1)$`Log-likelihood`
 }
-s <- exp(seq(from = log(0.9), to = log(10), len = 23))
+s <- exp(seq(from = log(0.9), to = log(10), len = howmany))
 L <- sapply(s,f)
 @ 
-
+%
 % chunk 'findstuffsushi' takes about 10-20 minutes to run
-
+%
 <<findstuffsushi,echo=FALSE, cache=TRUE>>=
 osushi <- optimize(f, c(2,4), maximum=TRUE)
 @ 
-
+%
 % chunk tinysushi' takes about 5 minutes to run
-
+%
 <<tinysushi, echo=FALSE, cache=TRUE>>=
 sushimaxlambda <- osushi$maximum
 sushisupport <- osushi$objective - f(1)
 @
-
+%
 % chunk 'findotherstuffsushi' takes about 10 minutes to run
-
+%
 <<findothersushistuff, echo=FALSE, cache=TRUE>>=
 g <- function(lambda){f(lambda) - osushi$objective + 2}
 sushi_lower <- uniroot(g, interval = exp(c(0,1)), tol = 0.01)$root
 sushi_upper <- uniroot(g, interval = exp(c(1,2)), tol = 0.01)$root
 @ 
-
+%
 (above, we note that the return value {\tt H} is the sum of successive
 log-likelihood functions of each row of the table, assumed to be
 independent).  Then, as before, we may define a profile likelihood
@@ -942,10 +953,6 @@ $\Sexpr{round(pchisq(sushisupport,df=1,lower.tail=FALSE),3)}$.  We can
 therefore be reasonably sure that tuna sushi are somehow analagous to
 red and blue buses, in the sense that all three tuna items tend to
 occupy closely separated places in judges' preference ranks.
-
-
-
-
 
 \begin{figure}[htbp]
   \begin{center}
@@ -995,12 +1002,12 @@ strategic disadvantages; player deaths are thus a quantifiable proxy
 for both individual ability and also both teams' tactical execution.
 Here I analyse the order statistic for number of deaths of each of the
 five {\em Cloud9} players.
-
+%
 <<echo=FALSE>>=
 a <- read.table("cloud9_boston_2018.txt", header=TRUE)
 a[,-1]
 @
-
+%
 From the first line we see that {\em Cloud9} played {\em FaZe Clan} on
 the {\em inferno} map, won the match, and \skad\ had the least number
 of deaths, followed by \rush, then \tarik, and so on.  Consider two
@@ -1018,7 +1025,7 @@ situations might result in a systematic preference for targetting
 \skad, and some a preference for killing \stew.  If this is so, the
 deaths will be overdispersed and one would have a red bus-blue bus
 situation, but with $\lambda<1$.
-
+%
 <<defredbusfunc, echo=FALSE>>=
 mk <- function(lam){
     e <- c(Skadoodle=2, RUSH=1, tarik=1, autimatic=1, Stewie2K=2)
@@ -1031,24 +1038,23 @@ mk <- function(lam){
 }
 f <- function(l){maxp(mk(l), give=1)$`Log-likelihood`}
 @
-
+%
 <<csgo_findopt, cache=TRUE, echo=FALSE>>=
 csgo_optimize <- optimize(f,c(0.09, 0.14), maximum = TRUE, tol = 0.01)
 csgo_optlam   <- csgo_optimize$maximum
 csgo_support  <- csgo_optimize$objective - f(1)
 csgo_pvalue   <- pchisq(csgo_support, df = 1, lower.tail = FALSE)
 @
-
-
+%
 <<csgo_calcklikelambda, cache=TRUE, echo=FALSE>>=
-lam <- exp(seq(from = -4, to = log(1.1), len = 23))
+lam <- exp(seq(from = -4, to = log(1.1), len = howmany))
 L <- sapply(lam, f)
 @
-
+%
 <<cgso_findinterval, cache=TRUE, echo=FALSE>>=
 g <- function(l){f(l) - csgo_optimize$objective  + 2}
-csgo_lower <- uniroot(g, interval = exp(c(-4,-3)))$root
-csgo_upper <- uniroot(g, interval = exp(c(-1,-0)))$root
+csgo_lower <- uniroot(g, interval = exp(c(-4,-3)), tol = 0.01)$root
+csgo_upper <- uniroot(g, interval = exp(c(-1,-0)), tol = 0.01)$root
 @ 
 
 \begin{figure}[htbp]
@@ -1094,7 +1100,7 @@ loop---which tends to magnify differences in death statistic.
 Bradley-Terry strengths $p_1,\ldots,p_n$, $p_i\geqslant 0$, $\sum
 p_i=1$ are generalized with non-negative multiplicative $\lambda$-
 factors that represent temporary or ephemeral changes in competitive
-strength.  The {\tt hyper2} R package implements the resulting
+strength.  The \pkg{hyper2} R package implements the resulting
 likelihood functions using \proglang{S3} class {\tt hyper3}, and
 furnishes a wide range of functionality geared towards assessing
 meaningful nulls using likelihood methods.
