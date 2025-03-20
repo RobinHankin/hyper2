@@ -821,7 +821,7 @@ Vector \code{ec} places the options into equivalence classes;
 equivalence class 3 comprises the two buses and the other classes are
 unsupported as they are of size one.  Vector \code{h} encodes the
 strength of the nonindependence.  Observe that in almost every case he
-ranks RB and BB consecutively.  Function \fct{RB_BB_LF} takes
+ranks RB and BB consecutively.  Function \fct{RB\_BB\_LF} takes
 argument \code{lambda} that quantifies the perceived similarity
 between RB and BB in the same way as function \fct{oldfirm} above.
 %
