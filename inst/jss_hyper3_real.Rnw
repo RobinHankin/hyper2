@@ -104,9 +104,10 @@ howmany <- 23  # set to a smaller value to save time
 \end{wrapfigure}
 
 The Bradley-Terry model for datasets involving paired comparisons has
-wide uptake in the {R} community.  The canonical case is to
-consider~$n$ players who compete against one another in pairs; the
-basic inference problem is to estimate
+wide uptake in the {R} community [see, for example,
+\citet{turner2012,turner2020} and references therein].  The canonical
+case is to consider~$n$ players who compete against one another in
+pairs; the basic inference problem is to estimate
 numbers~$\left({p_1,\ldots,p_n}\right)$, $p_i\geqslant 0$, $\sum
 p_i=1$ so that $\Prob(\mbox{$i$~beats~$j$})=\frac{p_i}{p_i+p_j}$.
 Information about the~$p_i$ may be obtained from the results of paired
@@ -322,19 +323,25 @@ Compare with the theoretical value of $\widehat{p_{\mbox{\tiny
 
 \section{Score draws}
 
-About 22\% of matches in Table~\ref{oldfirm} end in a draw and {\tt
-  hyper2} formalism may be used to assess this.  Consider the
-likelihood function described in Table~\ref{windrawloss}; this has a
-number of desirable features not present in the reified entity
-approach of~\citet{hankin2020_jss}.  Firstly, if we consider two players
-of identical strengths and nullify the home ground effect (that is,
-$\lambda=1$) then the probability of a draw is $\frac{2D}{2+2D}$; the
-odds of a draw is simply $D$, regardless of team strength.  Secondly,
-considering only won (that is, not score-drawn) games, the probability
-of a home win is $\frac{\lambda}{1+\lambda}$, that is, the odds of a
-home win is simply $\lambda$, independently of the player
-strength. Such arguments give direct operational significance to
-$\lambda$ and $D$.
+About 22\% of matches in Table~\ref{oldfirm} end in a draw and
+\pkg{hyper2} formalism may be used to assess this.  Consider the
+likelihood function described in Table~\ref{windrawloss}; this is not
+easily represented as a generalized linear model using the techniques
+of~\citet{turner2020}.  Relatedlikelihood functions for drawn matches
+were considered using the reified entity technique
+of~\citet{hankin2020_jss} in which a drawn match was considered to be
+won by a fictitious entity (a ``draw monster'') who possessed his own
+BT strength.  However, the likelihood function of
+table~\ref{windrawloss} has a number of desirable featureas not
+present in the reified entity approach of~\citet{hankin2020_jss}.
+Firstly, if we consider two players of identical strengths and nullify
+the home ground effect (that is, $\lambda=1$) then the probability of
+a draw is $\frac{2D}{2+2D}$; the odds of a draw is simply $D$,
+regardless of team strength.  Secondly, considering only won (that is,
+not score-drawn) games, the probability of a home win is
+$\frac{\lambda}{1+\lambda}$, that is, the odds of a home win is simply
+$\lambda$, independently of the player strength. Such arguments give
+direct operational significance to $\lambda$ and $D$.
 
 \begin{table}[t!]
 \centering
@@ -444,8 +451,8 @@ with a $p$-value of about \Sexpr{signif(pchisq(f(maxv)-jj$objective,lower.tail=F
 Equation~\ref{mostgeneral} is very general and may be applied to a
 range of situations in which standard Bradley-Terry strengths are
 modified in some way.  In the following section, I apply it to
-Plackett-Luce likelihoods~\citep{plackett1975_jss} likelihood function for
-rank data.
+Plackett-Luce \citep{plackett1975_jss} likelihood functions for
+rank data
 
 \section{Non-independence in successive arrivals}
 
@@ -463,17 +470,17 @@ this observation:
 \frac{p_e}{                        p_e}
 \end{equation}
 %
-Note the use of multiplication between the terms, indicating
-conditional independence.  Now we use the multiplicative
-generalization of Bradley-Terry strengths to introduce an element of
-non-independence between the terms.  There are many ways to do this,
-but one simple way would be to define equivalence classes of the
-competitors with each equivalence class comprising mutually supporting
-runners.  The metaphor would be that a runner who has finished the
-race is able to support other members of his equivalence class by
-cheering his still-running teammates, boosting their performance.  The
-\pkg{hyper2} package includes function \fct{cheering} which
-implements this functionality.
+Note the use of multiplication between the terms, indicating the
+standard assumption~\citep{turner2020} of conditional independence.
+Now we use the multiplicative generalization of Bradley-Terry
+strengths to introduce an element of non-independence between the
+terms.  There are many ways to do this, but one simple way would be to
+define equivalence classes of the competitors with each equivalence
+class comprising mutually supporting runners.  The metaphor would be
+that a runner who has finished the race is able to support other
+members of his equivalence class by cheering his still-running
+teammates, boosting their performance.  The \pkg{hyper2} package
+includes function \fct{cheering} which implements this functionality.
 
 As an example, consider figure~\ref{tikzabcde}.  This shows a partial
 probability tree diagram for some of the $5!=120$ possible order
