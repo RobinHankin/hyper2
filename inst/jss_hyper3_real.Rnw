@@ -358,7 +358,7 @@ $\lambda$ and $D$.
 %
 We are now in a position to consider the entirety of
 Table~\ref{oldfirm}.  Bespoke package function
-\code{home\_draw\_away3()} converts data in the form of
+\fct{home\_draw\_away3} converts data in the form of
 Table~\ref{oldfirm} to a \code{hyper3} likelihood function following
 Table~\ref{windrawloss}; it takes numerical values for the home
 advantage $\lambda$ and proclivity to draw $D$:
@@ -381,9 +381,9 @@ f <- function(v){
 }
 @
 %
-Thus \code{f()} gives us a likelihood function for
+Thus \fct{f} gives us a likelihood function for
 $\mathbf{v}=(\lambda,D)$.  We may find the evaluate using
-\code{optim()}:
+\fct{optim}:
 %
 <<findmaxlambdaD, cache=TRUE>>=
 maxv <- optim(par=c(2, 0.3), fn=f, control=list(fnscale = -1))$par
@@ -472,7 +472,7 @@ competitors with each equivalence class comprising mutually supporting
 runners.  The metaphor would be that a runner who has finished the
 race is able to support other members of his equivalence class by
 cheering his still-running teammates, boosting their performance.  The
-\pkg{hyper2} package includes function \code{cheering()} which
+\pkg{hyper2} package includes function \fct{cheering} which
 implements this functionality.
 
 As an example, consider figure~\ref{tikzabcde}.  This shows a partial
@@ -787,7 +787,7 @@ Specifically, it seems reasonable to assume that if we ask our
 respondent to rank his options, it is highly probable that he will put
 RB and BB consecutively (because they are essentially
 indistinguishable).  Can we quantify the strength of this effect?  To
-do this, we define a bespoke function \code{RB\_BB\_LF()} which
+do this, we define a bespoke function \fct{RB\_BB\_LF} which
 returns a \code{hyper3} log-likelihood function corresponding to
 repeated observations of our commuter's reported ranks for the five
 options.
@@ -814,17 +814,17 @@ Vector \code{ec} places the options into equivalence classes;
 equivalence class 3 comprises the two buses and the other classes are
 unsupported as they are of size one.  Vector \code{h} encodes the
 strength of the nonindependence.  Observe that in almost every case he
-ranks RB and BB consecutively.  Function \code{RB_BB_LF()} takes
+ranks RB and BB consecutively.  Function \fct{RB_BB_LF} takes
 argument \code{lambda} that quantifies the perceived similarity
-between RB and BB in the same way as function \code{oldfirm()} above.
+between RB and BB in the same way as function \fct{oldfirm} above.
 %
 <<definefunctiono>>=
 o <- function(lambda){maxp(RB_BB_LF(lambda), give=1)$`Log-likelihood`} 
 @ 
 %
-Above, we define function \code{o()} which returns the support for a
+Above, we define function \fct{o} which returns the support for a
 given value of $\lambda$ at the evaluate [over permissible Bradley
-  Terry strengths for the options].  We can treat \code{o()} as a
+  Terry strengths for the options].  We can treat \fct{o} as a
 support function for $\lambda$, and then maximize it:
 %
 <<label=maxlikesim, cache=TRUE>>=
