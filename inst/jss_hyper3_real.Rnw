@@ -120,10 +120,10 @@ to competitor~$i$ using a multiplicative factor $\lambda$.  Then
 $\Prob(\mbox{$i$ wins})=\frac{\lambda p_i}{p_1+\cdots+\lambda
   p_i+\cdots+p_n}$.  Examples of such enhancements include the
 home-ground advantage in football and rugby, or playing white in
-chess~\citep{hankin2020}.  Note that $\lambda < 1$ would correspond to
+chess~\citep{hankin2020_jss}.  Note that $\lambda < 1$ would correspond to
 a decrease in competitive ability.
 
-Further, one might follow~\cite{hankin2017_rnw} and consider teams of
+Further, one might follow~\cite{hankin2017_rnw_jss} and consider teams of
 players.  In doubles tennis, for example, $\left\lbrace
 p_1,p_2\right\rbrace$ might play $\left\lbrace p_3,p_4\right\rbrace$
 and win with probability
@@ -148,7 +148,7 @@ respectively.  Then $\lambda$ would represent the effectiveness of
 $p_1$'s special technique, and $\mu$ the enhancement afforded to $p_4$
 by the drug; values $>1$ would correspond to a positive effect.  In
 this paper I generalize the \pkg{hyper2} R
-package~\citep{hankin2017_rnw}, available on CRAN~\citep{rcore2025},
+package~\citep{hankin2017_rnw_jss}, available on CRAN~\citep{rcore2025},
 for Bradley-Terry likelihoods to accommodate this class of
 multiplicative factors with new \proglang{S3} \class{hyper3} and
 associated methods.
@@ -232,12 +232,12 @@ package idiom, a term such as $\lambda p_R + p_C$ is represented as a
 named numeric vector.  For example, if the home strength were $\lambda
 = 1.8$ then the first bracket would be {\tt c(Rangers=1.8, Celtic=1)}
 with an associated power of $-81$.  The computational methodology is a
-generalization of that used in~\cite{hankin2024_hyper3} in which the
+generalization of that used in~\cite{hankin2024_hyper3_jss} in which the
 multiplicative factors correspond to number of clones.  However,
-in~\cite{hankin2024_hyper3} the factors are known non-negative
+in~\cite{hankin2024_hyper3_jss} the factors are known non-negative
 integers, and here they are, in general, unknown non-negative real
 numbers.  The \class{hyper3} class enforces \pkg{disordR}
-discipline~\citep{hankin2022_disordR}.
+discipline~\citep{hankin2022_disordR_jss}.
 
 \subsection{The package in use}
 Package idiom for creating a likelihood function for this dataset is
@@ -326,7 +326,7 @@ About 22\% of matches in Table~\ref{oldfirm} end in a draw and {\tt
   hyper2} formalism may be used to assess this.  Consider the
 likelihood function described in Table~\ref{windrawloss}; this has a
 number of desirable features not present in the reified entity
-approach of~\citet{hankin2020}.  Firstly, if we consider two players
+approach of~\citet{hankin2020_jss}.  Firstly, if we consider two players
 of identical strengths and nullify the home ground effect (that is,
 $\lambda=1$) then the probability of a draw is $\frac{2D}{2+2D}$; the
 odds of a draw is simply $D$, regardless of team strength.  Secondly,
