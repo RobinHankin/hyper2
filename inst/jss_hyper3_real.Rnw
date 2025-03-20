@@ -113,7 +113,7 @@ Information about the~$p_i$ may be obtained from the results of paired
 comparisons between the players.
 
 One generalization of the Bradley-Terry model is due
-to~\citet{luce1959}, in which the probability of competitor~$i$
+to~\citet{luce1959_jss}, in which the probability of competitor~$i$
 winning in a field of~$j=1,\ldots, n$ is $\frac{p_i}{p_1+\cdots
   +p_n}$.  It is then natural to quantify some ephemeral enhancement
 to competitor~$i$ using a multiplicative factor $\lambda$.  Then
@@ -444,7 +444,7 @@ with a $p$-value of about \Sexpr{signif(pchisq(f(maxv)-jj$objective,lower.tail=F
 Equation~\ref{mostgeneral} is very general and may be applied to a
 range of situations in which standard Bradley-Terry strengths are
 modified in some way.  In the following section, I apply it to
-Plackett-Luce likelihoods~\citep{plackett1975} likelihood function for
+Plackett-Luce likelihoods~\citep{plackett1975_jss} likelihood function for
 rank data.
 
 \section{Non-independence in successive arrivals}
@@ -452,7 +452,7 @@ rank data.
 In the following, I use the ``race'' metaphor: five runners take part
 in a race and arrive in order $a\succ b\succ c\succ d\succ e$.  Thus
 competitor $a$ wins, $b$ comes second, and so on.  Consider the
-following Plackett-Luce~\citep{plackett1975} likelihood function for
+following Plackett-Luce~\citep{plackett1975_jss} likelihood function for
 this observation:
 %
 \begin{equation}
@@ -757,7 +757,7 @@ applied to an apparently different situation.
 
 The classic red bus-blue bus problem was originally stated by
 \cite{mcfadden1980} although different metaphors have been employed
-for the same phenomenon by \cite{tverskey1972}.  The canonical problem
+for the same phenomenon by \cite{tverskey1972_jss}.  The canonical problem
 is as follows.  A commuter has a choice of going to work by different
 transport methods.  Here, we can assume that he has possibly
 strong---but unknown---views on different forms of transport which
