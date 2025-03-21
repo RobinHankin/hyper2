@@ -244,7 +244,7 @@ discipline~\citep{hankin2022_disordR_jss}.
 Package idiom for creating a likelihood function for this dataset is
 straightforward.  Considering first only Rangers-Celtic matches:
 %
-<<defineoldfirm, cache=TRUE>>=
+<<defineoldfirm, cache = TRUE>>=
 oldfirm <- function(lambda){
     H <- hyper3(pnames = c("Rangers", "Celtic"))
     H[c(Rangers = lambda            )] %<>%      add(81     )
@@ -276,9 +276,9 @@ of Equation~\ref{firstfewRCFL}.  We may make inferences about the true
 value of $\lambda$ using profile support:
 %
 <<profilelikeoldfirm, cache=TRUE>>=
-f <- function(lambda){maxp(oldfirm(lambda),give=1)$`Log-likelihood`}
-lam <- seq(from=0.9, to=3, len=howmany)
-logLike <- sapply(lam,f)
+f <- function(lambda){maxp(oldfirm(lambda), give = 1)$`Log-likelihood`}
+lam <- seq(from = 0.9, to = 3, len = howmany)
+logLike <- sapply(lam, f)
 @
 %
 Thus \fct{f} returns the support at the evaluate, conditional on a
@@ -289,10 +289,10 @@ likelihood estimate for $\lambda$:
 \begin{figure}[htbp]
   \begin{center}
 <<plotproflikeoldfirm, echo=FALSE>>=
-plot(lam,logLike - max(logLike),type='b')
-abline(v=1,col='gray')
-segments(x0=1.785,y0=0.1,y1=-1,col='red')
-abline(h = c(0,-2),col='gray')
+plot(lam, logLike - max(logLike), type = 'b')
+abline(v = 1, col = 'gray')
+segments(x0 = 1.785, y0 = 0.1, y1 = -1, col = 'red')
+abline(h = c(0, -2), col = 'gray')
 @
 \caption{A\label{profilesupportlambda} profile support function for
   the home-team advantage $\lambda$.  Vertical gray line shows
@@ -304,13 +304,13 @@ abline(h = c(0,-2),col='gray')
 
 
 <<optimoldfirm, cache=TRUE>>=
-(lambda_max <-  optimize(f,c(1.5,2.0),maximum=TRUE)$maximum)
+(lambda_max <-  optimize(f, c(1.5, 2.0), maximum = TRUE)$maximum)
 @
 
 Then using this value we may estimate the Bradley-Terry strengths of
 Rangers and Celtic:
 %
-<<mleoldfirm,cache=TRUE>>=
+<<mleoldfirm, cache=TRUE>>=
 maxp(oldfirm(lambda_max))
 @
 %
@@ -370,8 +370,8 @@ Table~\ref{oldfirm} to a \code{hyper3} likelihood function following
 Table~\ref{windrawloss}; it takes numerical values for the home
 advantage $\lambda$ and proclivity to draw $D$:
 %
-<<eg_RCLF3_lf, cache=TRUE>>=
-home_draw_away3(RCLF3_table, lambda=1.7, D=0.3)
+<<eg_RCLF3_lf, cache = TRUE>>=
+home_draw_away3(RCLF3_table, lambda = 1.7, D = 0.3)
 @
 %
 Observe that the resulting likelihood function has two distinct types
@@ -383,8 +383,8 @@ the likelihood over possible values of $\mathbf{p}$.
 %
 <<defineF>>=
 f <- function(v){
-    H <- home_draw_away3(RCLF3_table, lambda = v[1], D=v[2])
-    maxp(H,give=1)$`Log-likelihood`
+    H <- home_draw_away3(RCLF3_table, lambda = v[1], D = v[2])
+    maxp(H, give = 1)$`Log-likelihood`
 }
 @
 %
@@ -392,15 +392,15 @@ Thus \fct{f} gives us a likelihood function for
 $\mathbf{v}=(\lambda,D)$.  We may find the evaluate using
 \fct{optim}:
 %
-<<findmaxlambdaD, cache=TRUE>>=
-maxv <- optim(par=c(2, 0.3), fn=f, control=list(fnscale = -1))$par
+<<findmaxlambdaD, cache = TRUE>>=
+maxv <- optim(par=c(2, 0.3), fn = f, control = list(fnscale = -1))$par
 maxv
 @
 %
 Then
 %
-<<showevaluate, cache=TRUE>>=
-maxp(home_draw_away3(RCLF3_table, lambda = maxv[1], D=maxv[2]))
+<<showevaluate, cache = TRUE>>=
+maxp(home_draw_away3(RCLF3_table, lambda = maxv[1], D = maxv[2]))
 @
 %
 Such estimates have rich predictive power.  For example, if Rangers
@@ -410,10 +410,10 @@ probability of win/draw/loss for Rangers would be
 $\left(\frac{p_R}{(1+D)(p_R+p_C)};\frac{D}{1+D};\frac{p_C}{(1+D)(p_R+p_C)}\right)$,
 estimated at $(0.39;0.27;0.34)$.
 %
-<<makecontourdata, echo=FALSE, cache=TRUE>>=
+<<makecontourdata, echo = FALSE, cache = TRUE>>=
 n <- howmany
-lambda <- seq(from=1, to=3, len=n)
-D <- seq(from=0.1, to=0.6, len=n)
+lambda <- seq(from = 1, to = 3, len = n)
+D <- seq(from = 0.1, to = 0.6, len = n)
 V <- as.matrix(expand.grid(lambda, D))
 LL <- apply(V, 1, f)
 LL <- pmax(-20, LL - max(LL))
@@ -421,7 +421,7 @@ LL <- pmax(-20, LL - max(LL))
 
 \begin{figure}[htbp]
   \begin{center}
-<<docontourplot, cache=FALSE>>=
+<<docontourplot, cache = FALSE>>=
 contour(lambda, D, matrix(LL, n, n), levels = -2*(1:9),
         xlab = expression(lambda), ylab = expression(D))
 points(maxv[1], maxv[2], pch = 16, col = 'red')
@@ -434,8 +434,8 @@ abline(v=1, col = 'gray')
 \end{figure}
 
 
-<<testlambdazero, cache=TRUE, include=FALSE>>=
-jj <- optimize(f=function(D){f(c(lambda=1,D))}, interval=c(0.1, 0.4), maximum=TRUE)
+<<testlambdazero, cache = TRUE, include = FALSE>>=
+jj <- optimize(f = function(D){f(c(lambda=1, D))}, interval = c(0.1, 0.4), maximum = TRUE)
 @
 %
 Further, we may calculate a support function over the
@@ -801,7 +801,7 @@ options.
 %
 <<defineredbuslf>>=
 `RB_BB_LF` <- function(lambda){
-    ec <- c(C=1, T=2, RB=3, BB=3, W=4) 
+    ec <- c(C = 1, T = 2, RB = 3, BB = 3, W = 4) 
     h <- c(1, 1, lambda, 1)           
     (
         cheering3(v=c("RB", "BB", "C" , "T", "W"), e = ec, h = h) * 3 + 
@@ -826,7 +826,7 @@ argument \code{lambda} that quantifies the perceived similarity
 between RB and BB in the same way as function \fct{oldfirm} above.
 %
 <<definefunctiono>>=
-o <- function(lambda){maxp(RB_BB_LF(lambda), give=1)$`Log-likelihood`} 
+o <- function(lambda){maxp(RB_BB_LF(lambda), give = 1)$`Log-likelihood`} 
 @ 
 %
 Above, we define function \fct{o} which returns the support for a
@@ -834,13 +834,13 @@ given value of $\lambda$ at the evaluate [over permissible Bradley
   Terry strengths for the options].  We can treat \fct{o} as a
 support function for $\lambda$, and then maximize it:
 %
-<<label=maxlikesim, cache=TRUE>>=
-(osup <- optimize(o, c(10, 40), maximum=TRUE))
+<<label = maxlikesim, cache = TRUE>>=
+(osup <- optimize(o, c(10, 40), maximum = TRUE))
 @ 
 %
 So a likelihood ratio test of the null that $\lambda=1$ would be:
 %
-<<label=LRT_RB, cache=TRUE>>=
+<<label = LRT_RB, cache = TRUE>>=
 (suppdiff <- osup$objective - o(lambda = 1))
 @
 %
@@ -859,13 +859,13 @@ with a $p$~value of \Sexpr{signif(pchisq(suppdiff*2,df=1,lower.tail=FALSE),3)}.
 %
 %\begin{figure}[htbp]
 %\begin{center}
-<<plotproflike, echo=FALSE>>=
+<<plotproflike, echo = FALSE>>=
 if(FALSE){
-    lambda <- exp(seq(from=log(0.9), to=log(67), len=19)) 
+    lambda <- exp(seq(from = log(0.9), to = log(67), len = 19)) 
     L <- sapply(lambda, o)
-    plot(log(lambda), L-max(L), type="b")
-    abline(h=c(0, -2))
-    abline(v=0)
+    plot(log(lambda), L - max(L), type = "b")
+    abline(h = c(0, -2))
+    abline(v = 0)
 }
 @ 
 %\caption{A\label{profilesupportlambdaRBBB} profile support function
@@ -911,40 +911,40 @@ $\lambda$ as the argument:
 make_sushi_H <- function(lambda){
     H <- hyper3()
     for(i in seq_len(nrow(sushi_table))){
-        H <- H + cheering3(sushi_table[i,], e=sushi_eq_classes, h=c(1, lambda))
+        H <- H + cheering3(sushi_table[i,], e = sushi_eq_classes, h = c(1, lambda))
     }
     return(H)
 }
 @
 %
-<<calclikesushi,echo=FALSE, cache=TRUE>>=
+<<calclikesushi, echo = FALSE, cache = TRUE>>=
 f <- function(lambda){
    H <- make_sushi_H(lambda)
-   maxp(H,give=1)$`Log-likelihood`
+   maxp(H, give = 1)$`Log-likelihood`
 }
 s <- exp(seq(from = log(0.9), to = log(10), len = howmany))
-L <- sapply(s,f)
+L <- sapply(s, f)
 @ 
 %
 % chunk 'findstuffsushi' takes about 10-20 minutes to run
 %
-<<findstuffsushi,echo=FALSE, cache=TRUE>>=
-osushi <- optimize(f, c(2,4), maximum=TRUE)
+<<findstuffsushi, echo = FALSE, cache = TRUE>>=
+osushi <- optimize(f, c(2, 4), maximum = TRUE)
 @ 
 %
 % chunk tinysushi' takes about 5 minutes to run
 %
-<<tinysushi, echo=FALSE, cache=TRUE>>=
+<<tinysushi, echo = FALSE, cache = TRUE>>=
 sushimaxlambda <- osushi$maximum
 sushisupport <- osushi$objective - f(1)
 @
 %
 % chunk 'findotherstuffsushi' takes about 10 minutes to run
 %
-<<findothersushistuff, echo=FALSE, cache=TRUE>>=
+<<findothersushistuff, echo = FALSE, cache = TRUE>>=
 g <- function(lambda){f(lambda) - osushi$objective + 2}
-sushi_lower <- uniroot(g, interval = exp(c(0,1)), tol = 0.01)$root
-sushi_upper <- uniroot(g, interval = exp(c(1,2)), tol = 0.01)$root
+sushi_lower <- uniroot(g, interval = exp(c(0, 1)), tol = 0.01)$root
+sushi_upper <- uniroot(g, interval = exp(c(1, 2)), tol = 0.01)$root
 @ 
 %
 (above, we note that the return value {\tt H} is the sum of successive
@@ -963,11 +963,11 @@ occupy closely separated places in judges' preference ranks.
 
 \begin{figure}[htbp]
   \begin{center}
-<<plotlikesushi, echo=FALSE>>=
-plot(log(s),L-max(L),type='b',
-     xlab=expression(log(lambda)), ylab='Log-likelihood')
-abline(v=0,col='gray')
-abline(h=c(0,-2),col='gray')
+<<plotlikesushi, echo = FALSE>>=
+plot(log(s), L - max(L), type = 'b',
+     xlab = expression(log(lambda)), ylab = 'Log-likelihood')
+abline(v = 0, col = 'gray')
+abline(h = c(0, -2), col = 'gray')
 segments(x0 = log(sushimaxlambda), y0 =  0.1, y1 = -1.0, col = 'red' )
 segments(x0 = log(sushi_lower    ), y0 = -2.2, y1 = -1.8, col = 'blue')
 segments(x0 = log(sushi_upper    ), y0 = -2.2, y1 = -1.8, col = 'blue')
@@ -1010,9 +1010,9 @@ for both individual ability and also both teams' tactical execution.
 Here I analyse the order statistic for number of deaths of each of the
 five {\em Cloud9} players.
 %
-<<echo=FALSE>>=
-a <- read.table("cloud9_boston_2018.txt", header=TRUE)
-a[,-1]
+<<echo = FALSE>>=
+a <- read.table("cloud9_boston_2018.txt", header = TRUE)
+a[, -1]
 @
 %
 From the first line we see that {\em Cloud9} played {\em FaZe Clan} on
@@ -1033,21 +1033,21 @@ situations might result in a systematic preference for targetting
 deaths will be overdispersed and one would have a red bus-blue bus
 situation, but with $\lambda<1$.
 %
-<<defredbusfunc, echo=FALSE>>=
+<<defredbusfunc, echo = FALSE>>=
 mk <- function(lam){
-    e <- c(Skadoodle=2, RUSH=1, tarik=1, autimatic=1, Stewie2K=2)
+    e <- c(Skadoodle = 2, RUSH = 1, tarik = 1, autimatic = 1, Stewie2K = 2)
     H3 <- hyper3()
     for(i in seq_len(nrow(a))){
         d <- strsplit(a$deathorder[i],", ")[[1]]
-        H3 <- H3 + cheering3(d, e=e, help=c(1, lam))
+        H3 <- H3 + cheering3(d, e = e, help = c(1, lam))
     }
     return(H3)
 }
 f <- function(l){maxp(mk(l), give=1)$`Log-likelihood`}
 @
 %
-<<csgo_findopt, cache=TRUE, echo=FALSE>>=
-csgo_optimize <- optimize(f,c(0.09, 0.14), maximum = TRUE, tol = 0.01)
+<<csgo_findopt, cache = TRUE, echo = FALSE>>=
+csgo_optimize <- optimize(f, c(0.09, 0.14), maximum = TRUE, tol = 0.01)
 csgo_optlam   <- csgo_optimize$maximum
 csgo_support  <- csgo_optimize$objective - f(1)
 csgo_pvalue   <- pchisq(csgo_support, df = 1, lower.tail = FALSE)
@@ -1060,15 +1060,15 @@ L <- sapply(lam, f)
 %
 <<cgso_findinterval, cache=TRUE, echo=FALSE>>=
 g <- function(l){f(l) - csgo_optimize$objective  + 2}
-csgo_lower <- uniroot(g, interval = exp(c(-4,-3)), tol = 0.01)$root
-csgo_upper <- uniroot(g, interval = exp(c(-1,-0)), tol = 0.01)$root
+csgo_lower <- uniroot(g, interval = exp(c(-4, -3)), tol = 0.01)$root
+csgo_upper <- uniroot(g, interval = exp(c(-1, -0)), tol = 0.01)$root
 @ 
 
 \begin{figure}[htbp]
   \begin{center}
 <<csgo_plotlikelam, echo=FALSE>>=
 plot(log(lam), L - max(L), type='b')
-segments(x0 = log(csgo_optlam),y0 = -0.5, y1 =  0.1, col='red')
+segments(x0 = log(csgo_optlam),y0 = -0.5, y1 =  0.1, col = 'red')
 segments(x0 = log(csgo_lower), y0 = -2.2, y1 = -1.8, col = 'blue')
 segments(x0 = log(csgo_upper), y0 = -2.2, y1 = -1.8, col = 'blue')
 abline(v = 0, col = 'gray')
