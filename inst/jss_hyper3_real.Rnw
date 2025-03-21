@@ -169,7 +169,7 @@ where the $p_j$ are traditional Bradley-Terry strengths, $p_j\geqslant
 factors that account for ephemeral or temporary changes in competitive
 ability.  The data $w_1,\ldots w_N$ correspond to the number of
 ``wins'' and number of matches, as per $w_{12},w_{34}$ in
-equation~\ref{like1234}.  In practice, almost all the $\lambda_{ij}$
+Equation~\ref{like1234}.  In practice, almost all the $\lambda_{ij}$
 are zero.  To fix ideas, consider the data presented in
 Table~\ref{oldfirm}.  Ignoring draws for the moment, we have a
 likelihood proportional to
@@ -272,7 +272,7 @@ oldfirm(1.88)
 We see a log-likelihood function for all $82+42+76+46=245$
 Rangers-Celtic matches that were not score draws, conditional on
 assumed value $\lambda=1.88$.  This corresponds to the relevant terms
-of equation~\ref{firstfewRCFL}.  We may make inferences about the true
+of Equation~\ref{firstfewRCFL}.  We may make inferences about the true
 value of $\lambda$ using profile support:
 %
 <<profilelikeoldfirm, cache=TRUE>>=
@@ -719,7 +719,7 @@ d\succ e$ would be
 \frac{p_d}{p_d + p_e}
 \end{equation}
 %
-In equation \ref{asuccb}, the first term is standard Plackett-Luce: at
+In Equation \ref{asuccb}, the first term is standard Plackett-Luce: at
 this point, no competitor has finished and cheering effects are
 absent.  The second term reflects the fact that competitors $b$ and
 $c$ are supported by competitor $a$, who has by this point finished
