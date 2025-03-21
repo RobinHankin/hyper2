@@ -779,7 +779,7 @@ C,RB\right\rbrace)=\frac{1}{2}$.  Now we introduce a blue bus as an
 option.  Any realistic choice model will have $\Prob(C | \left\lbrace
 C,RB,BB\right\rbrace)=\frac{1}{2}$ but Bradley-Terry gives us
 $\frac{1}{3}$.  Various solutions to this problem have been proposed.
-\cite{tverskey1972}, for example, presents an approach involving
+\cite{tverskey1972_jss}, for example, presents an approach involving
 overlapping ``aspects'' of the elements of choice set;
 \cite{mcfadden1980} suggests using a generalized extreme-value model.
 
