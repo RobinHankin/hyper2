@@ -446,7 +446,7 @@ support is about \Sexpr{round(f(maxv)-jj$objective,2)}, far
 exceeding the two units of support per degree of freedom
 criteron~\citep{edwards1992}.  Alternatively, we can observe that this
 lies in the tail region of its asymptotic null $\chi^2_2$ distribution
-with a $p$-value of about \Sexpr{signif(pchisq(f(maxv)-jj$objective,lower.tail=FALSE,df=2),digits=2)}.
+with a $p$~value of about \Sexpr{signif(pchisq(f(maxv)-jj$objective,lower.tail=FALSE,df=2),digits=2)}.
 
 Equation~\ref{mostgeneral} is very general and may be applied to a
 range of situations in which standard Bradley-Terry strengths are
@@ -850,7 +850,7 @@ dint of choosing instead $\lambda = 10.49$.  This easily satisfies
 \citeauthor{edwards1992}'s two-units-of-support criterion;
 alternatively, we could observe that this observation lies in the tail
 region of its asymptotic $\chi^2_1$ distribution (Wilks's theorem),
-with a $p$-value of \Sexpr{signif(pchisq(suppdiff*2,df=1,lower.tail=FALSE),3)}.
+with a $p$~value of \Sexpr{signif(pchisq(suppdiff*2,df=1,lower.tail=FALSE),3)}.
 %
 %It is straightforward to find a profile
 %support function for $\lambda$, Figure~\ref{profilesupportlambdaRBBB}.
@@ -955,7 +955,7 @@ reject~$H_0\colon\lambda=1$ in favour of
 $H_A\colon\lambda=\Sexpr{round(sushimaxlambda,2)}$ with about
 $\Sexpr{round(sushisupport,2)}$ units of support.  Alternatively, we
 may observe that this lies in the tail region of its asymptotic
-$\chi^2_1$ distribution with a $p$-value of about
+$\chi^2_1$ distribution with a $p$~value of about
 $\Sexpr{round(pchisq(sushisupport,df=1,lower.tail=FALSE),3)}$.  We can
 therefore be reasonably sure that tuna sushi are somehow analagous to
 red and blue buses, in the sense that all three tuna items tend to
@@ -1081,7 +1081,7 @@ abline(h = c(0, -2), col = 'gray')
   line shows $H_0\colon\lambda =1$, for which the support is about
   $\Sexpr{round(csgo_support,2)}$ relative to the evaluate
   $\hat{\lambda}\simeq\Sexpr{round(csgo_optlam,3)}$ (small red bar),
-  corresponding to a $p$-value of about
+  corresponding to a $p$~value of about
   $\Sexpr{round(csgo_pvalue,3)}$.  Horizontal lines show the
   two-units-of-support credible interval of
   $(\Sexpr{round(csgo_lower,3)},\Sexpr{round(csgo_upper,3)})$, marked
@@ -1097,7 +1097,7 @@ a support function for $\lambda$ showing, among other things, that we
 may reject the hypothesis that $\lambda=1$ in favour of $\lambda<1$ by
 a likelihood ratio of about $\Sexpr{round(csgo_support,2)}$.  We
 observe that this exceeds the two units of support criterion of
-\cite{edwards1992} [asymptotic $p$-value
+\cite{edwards1992} [asymptotic $p$~value
   $\simeq\Sexpr{round(csgo_pvalue,3)}$] so we may infer that there is
 indeed some systematic mechanism---perhaps a positive feedback
 loop---which tends to magnify differences in death statistic.
