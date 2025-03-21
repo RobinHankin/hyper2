@@ -30,6 +30,7 @@ jobs:
 
       - uses: r-lib/actions/setup-tinytex@v2
 
+      - run: tlmgr update --self
       - run: tlmgr install scheme-full
       - run: tlmgr install wrapfig
       - run: tlmgr install doublestroke
