@@ -332,7 +332,7 @@ were considered using the reified entity technique
 of~\citet{hankin2020_jss} in which a drawn match was considered to be
 won by a fictitious entity (a ``draw monster'') who possessed his own
 BT strength.  However, the likelihood function of
-table~\ref{windrawloss} has a number of desirable featureas not
+table~\ref{windrawloss} has a number of desirable features not
 present in the reified entity approach of~\citet{hankin2020_jss}.
 Firstly, if we consider two players of identical strengths and nullify
 the home ground effect (that is, $\lambda=1$) then the probability of
@@ -452,7 +452,7 @@ Equation~\ref{mostgeneral} is very general and may be applied to a
 range of situations in which standard Bradley-Terry strengths are
 modified in some way.  In the following section, I apply it to
 Plackett-Luce \citep{plackett1975_jss} likelihood functions for
-rank data
+rank data.
 
 \section{Non-independence in successive arrivals}
 
