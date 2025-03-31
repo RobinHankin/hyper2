@@ -275,7 +275,7 @@ assumed value $\lambda=1.88$.  This corresponds to the relevant terms
 of Equation~\ref{firstfewRCFL}.  We may make inferences about the true
 value of $\lambda$ using profile support:
 %
-<<profilelikeoldfirm, cache=TRUE>>=
+<<profilelikeoldfirm, cache = TRUE>>=
 f <- function(lambda){maxp(oldfirm(lambda), give = 1)$`Log-likelihood`}
 lam <- seq(from = 0.9, to = 3, len = howmany)
 logLike <- sapply(lam, f)
@@ -859,15 +859,15 @@ with a $p$~value of \Sexpr{signif(pchisq(suppdiff*2,df=1,lower.tail=FALSE),3)}.
 %
 %\begin{figure}[htbp]
 %\begin{center}
-<<plotproflike, echo = FALSE>>=
-if(FALSE){
-    lambda <- exp(seq(from = log(0.9), to = log(67), len = 19)) 
-    L <- sapply(lambda, o)
-    plot(log(lambda), L - max(L), type = "b")
-    abline(h = c(0, -2))
-    abline(v = 0)
-}
-@ 
+%<<plotproflike, echo = FALSE>>=
+%if(FALSE){
+%    lambda <- exp(seq(from = log(0.9), to = log(67), len = 19)) 
+%    L <- sapply(lambda, o)
+%    plot(log(lambda), L - max(L), type = "b")
+%    abline(h = c(0, -2))
+%    abline(v = 0)
+%}
+%@ 
 %\caption{A\label{profilesupportlambdaRBBB} profile support function
 %  for the red bus, blue bus parameter $\lambda$, synthetic dataset.
 %  Vertical line indicates null of $\lambda=1$, horizontal lines show
