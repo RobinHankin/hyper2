@@ -48,7 +48,7 @@ sushi_types <- c("ebi", "anago", "maguro", "ika", "uni", "sake", "tamago", "toro
 a[] <- sushi_types[a]
 noquote(a)
 sushi_eq_classes <-
-    c("ebi"  = 1, "anago" = 2, "maguro" = 1, "ika" = 1, "uni" = 1,
+    c("ebi"  = 1, "anago" = 1, "maguro" = 2, "ika" = 1, "uni" = 1,
       "sake" = 1, "tamago" = 1, "toro" = 2, "tekka" = 2,
       "kappa" = 1)
 ```
@@ -88,7 +88,7 @@ f <- function(lambda){
    maxp(H,give=1)$`Log-likelihood`
 }
 
-s <- exp(seq(from = log(0.9), to = log(6), len = 2))
+s <- exp(seq(from = log(0.9), to = log(6), len = 11))
 L <- sapply(s,f)
 ```
 
@@ -100,11 +100,11 @@ L <- sapply(s,f)
 plot(log(s), L-jj$objective, type='b')
 ```
 
-```{r calc_sushi}
+```{r calc_sushi, cache=TRUE}
 sushi <- make_sushi_H(a, lambda = jj$maximum)
 ```
 
-```{r calc_sushimaxp}
+```{r calc_sushimaxp, cache=TRUE}
 (sushi_maxp <- maxp(sushi))
 ```
 
@@ -113,7 +113,7 @@ sushi <- make_sushi_H(a, lambda = jj$maximum)
 Following lines create `sushi.rda`, residing in the `data/` directory of the package.
 
 ```{r,label=savesushidataset}
-sushi_table <- as.preftable(a)
+sushi_table <- a
 save(sushi_table,  sushi, sushi_maxp, sushi_eq_classes, file="sushi.rda")
 ```
 

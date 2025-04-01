@@ -231,7 +231,7 @@ likelihood proportional to
 where the home-ground advantage is represented by~$\lambda$.  In
 package idiom, a term such as $\lambda p_R + p_C$ is represented as a
 named numeric vector.  For example, if the home strength were $\lambda
-= 1.8$ then the first bracket would be {\tt c(Rangers=1.8, Celtic=1)}
+= 1.8$ then one bracket would be {\tt c(Rangers=1.8, Celtic=1)}
 with an associated power of $-81$.  The computational methodology is a
 generalization of that used in~\cite{hankin2024_hyper3_jss} in which the
 multiplicative factors correspond to number of clones.  However,
@@ -327,7 +327,7 @@ About 22\% of matches in Table~\ref{oldfirm} end in a draw and
 \pkg{hyper2} formalism may be used to assess this.  Consider the
 likelihood function described in Table~\ref{windrawloss}; this is not
 easily represented as a generalized linear model using the techniques
-of~\citet{turner2020}.  Relatedlikelihood functions for drawn matches
+of~\citet{turner2020}.  Related likelihood functions for drawn matches
 were considered using the reified entity technique
 of~\citet{hankin2020_jss} in which a drawn match was considered to be
 won by a fictitious entity (a ``draw monster'') who possessed his own
@@ -434,7 +434,7 @@ abline(v=1, col = 'gray')
 \end{figure}
 
 
-<<testlambdazero, cache = TRUE, include = FALSE>>=
+<<testlambdazero, cache = TRUE, eval = TRUE, echo = FALSE>>=
 jj <- optimize(f = function(D){f(c(lambda=1, D))}, interval = c(0.1, 0.4), maximum = TRUE)
 @
 %
@@ -963,7 +963,7 @@ occupy closely separated places in judges' preference ranks.
 
 \begin{figure}[htbp]
   \begin{center}
-<<plotlikesushi, echo = FALSE>>=
+<<plotlikesushi, echo = FALSE, fig = TRUE>>=
 plot(log(s), L - max(L), type = 'b',
      xlab = expression(log(lambda)), ylab = 'Log-likelihood')
 abline(v = 0, col = 'gray')
