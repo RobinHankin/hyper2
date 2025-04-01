@@ -283,7 +283,7 @@ logLike <- sapply(lam, f)
 %
 Thus \fct{f} returns the support at the evaluate, conditional on a
 supplied value of $\lambda$.  We may use this to create a profile
-likelihood (figure~\ref{profilesupportlambda}), or to find the maximum
+likelihood (Figure~\ref{profilesupportlambda}), or to find the maximum
 likelihood estimate for $\lambda$:
 
 \begin{figure}[htbp]
@@ -434,14 +434,14 @@ abline(v=1, col = 'gray')
 \end{figure}
 
 
-<<testlambdazero, cache = TRUE, eval = TRUE, echo = FALSE>>=
+<<testlambdazero, cache = TRUE, eval = TRUE, echo = FALSE, fig = TRUE>>=
 jj <- optimize(f = function(D){f(c(lambda=1, D))}, interval = c(0.1, 0.4), maximum = TRUE)
 @
 %
 Further, we may calculate a support function over the
-$(\lambda,D)$-plane, shown in figure~\ref{contourlambdaD}.  For
+$(\lambda,D)$-plane, shown in Figure~\ref{contourlambdaD}.  For
 example, we may test the hypothesis that $\lambda=1$ [corresponding to
-  the left hand side of figure~\ref{contourlambdaD}] for which the
+  the left hand side of Figure~\ref{contourlambdaD}] for which the
 support is about \Sexpr{round(f(maxv)-jj$objective,2)}, far
 exceeding the two units of support per degree of freedom
 criteron~\citep{edwards1992}.  Alternatively, we can observe that this
@@ -482,7 +482,7 @@ members of his equivalence class by cheering his still-running
 teammates, boosting their performance.  The \pkg{hyper2} package
 includes function \fct{cheering} which implements this functionality.
 
-As an example, consider figure~\ref{tikzabcde}.  This shows a partial
+As an example, consider Figure~\ref{tikzabcde}.  This shows a partial
 probability tree diagram for some of the $5!=120$ possible order
 statistics for five competitors.  The standard Plackett-Luce
 likelihoods have been modified to account for two groups of mutually
