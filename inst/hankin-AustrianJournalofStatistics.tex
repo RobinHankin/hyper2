@@ -115,7 +115,7 @@ this situation would be
   \mathcal{L}_{r,n}(a) &=&
 \frac{b}{1+ (n-2)b}\cdot
 \frac{b}{a+(n-3)b}\cdots\frac{a}{a+(n-r-1)b}\nonumber\\
-&=& \frac{B-1}{(B+n-1)(B+n-2)\cdots(B+n-r-1)}\nonumber\\ 
+&=& \frac{B-1}{(B+n-2)\cdots(B+n-r-1)}\nonumber\\ 
 &=& \frac{(B-1)(B+n-r-2)!}{(B+n-1)!}\label{likeforrn3}
 \end{eqnarray}
 
@@ -232,8 +232,8 @@ runners& 259& 305& 297& 241& 179& 338& 203& 245& 254\\ \\
 \end{tabular}
 \begin{tabular}{ccccccccccccc}
   & \multicolumn{12}{c}{2024}\\
-rank   &  193& 240& 197& 257& 227& 234& 238& 238& 196& 242& 242& 318\\
-runners&  145& 157& 156& 191& 172& 174& 173& 165& 172& 199& 181& 229\\
+rank      &  145& 157& 156& 191& 172& 174& 173& 165& 172& 199& 181& 229\\
+runners   &  193& 240& 197& 257& 227& 234& 238& 238& 196& 242& 242& 318\\
 \end{tabular}
 \end{table}
 
@@ -315,12 +315,13 @@ the diagonal line.  We see that the maximum likelihood estimate is
 $\hat{p}_\mathrm{pure}=0.542$, $\hat{p}_\mathrm{applied}=0.852$.
 However, a constrained optimization shows that the maximum support
 along the null diagonal is about $-2.06$, at
-${p}_\mathrm{pure}={p}_\mathrm{applied}\simeq 0.683$.  The two units of
-support criterion~\citep{edwards1992} is met, and we are justified in
-concluding that the student is indeed more competent at applied than
-pure mathematics.  Alternatively, we may observe that
-$2\mathcal{S}=4.11$ is in the tail region of its asymptotic $\chi^2_1$
-distribution, corresponding to a $p$-value of about $0.042$.
+${p}_\mathrm{pure}={p}_\mathrm{applied}\simeq 0.683$.  The two units
+of support criterion~\citep{edwards1992} is met, and we are justified
+in concluding that the student indeed has a higher ranking in the
+applied modules than the pure modules.  Alternatively, we may observe
+that $2\mathcal{S}=4.11$ is in the tail region of its asymptotic
+$\chi^2_1$ distribution, corresponding to a $p$-value of about
+$0.042$.
 
 \begin{figure}
 \begin{centering}
