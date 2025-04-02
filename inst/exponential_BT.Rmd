@@ -1,0 +1,181 @@
+---
+title: "exponential_BT"
+author: "robin hankin"
+date: "2025-04-02"
+output: html_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(hyper2)
+library(stringr)
+set.seed(0)
+```
+
+Basic idea is to have $n$ competitors with BT strengths $\beta, \beta
+x,\ldots \beta x^{n-1}$ with $x\in[0,1]$.  The unit sum constraint
+gives $\beta=\frac{1-x}{1-x^n}$ but this usually cancels out.  One of
+the competitors is the _focal_ competitor with BT strength $\beta
+x^{r-1}$ for some $r$ with $1\leqslant r < n$.  Thus $r=1$ means that
+the focal competitor is the strongest among the $n$, $r=2$ means he is
+the second, and so on.
+
+
+```{r}
+BT <- function(n,x){
+    out <- x^(0:(n-1))
+    if(x != 1){
+        out <- out*(1-x)/(1-x^n)
+    } else {
+        out <- out/n
+    }
+    names(out) <- paste0("p",str_pad(1:n,ceiling(log10(n))))
+    out
+}
+BT(4,0.5)
+sum(BT(4,0.5))
+```
+
+We will consider $n=9$, $x=0.5$, $r=4$ and make repeated observations:
+
+
+```{r}
+(jj <- BT(9,0.5))
+o <- tabulate(replicate(1e4,which(rrace(jj) == "p4")))
+o
+plot(o,type='h')
+```
+
+
+    
+```{r, cache=TRUE}
+getprob <- function(n, r, x, N=1e4){
+    jj <- BT(n, x)
+    wanted <- paste0("p", str_pad(r ,ceiling(log10(n))))
+    c(r=r, x=x, setNames(tabulate(replicate(N, which(rrace(jj) == wanted)),nbins=n), paste0("p", 1:n)))
+}
+rbind(
+getprob(9,1,0.5,N=100),
+getprob(9,2,0.5,N=100),
+getprob(9,3,0.5,N=100),
+getprob(9,4,0.5,N=100),
+getprob(9,5,0.5,N=100),
+getprob(9,6,0.5,N=100),
+getprob(9,7,0.5,N=100),
+getprob(9,8,0.5,N=100),
+getprob(9,9,0.5,N=100)
+)
+
+rbind(
+getprob(9,1,0.2,N=100),
+getprob(9,2,0.2,N=100),
+getprob(9,3,0.2,N=100),
+getprob(9,4,0.2,N=100),
+getprob(9,5,0.2,N=100),
+getprob(9,6,0.2,N=100),
+getprob(9,7,0.2,N=100),
+getprob(9,8,0.2,N=100),
+getprob(9,9,0.2,N=100)
+)
+rbind(
+getprob(9,1,0.9,N=100),
+getprob(9,2,0.9,N=100),
+getprob(9,3,0.9,N=100),
+getprob(9,4,0.9,N=100),
+getprob(9,5,0.9,N=100),
+getprob(9,6,0.9,N=100),
+getprob(9,7,0.9,N=100),
+getprob(9,8,0.9,N=100),
+getprob(9,9,0.9,N=100)
+)
+```
+
+```{r makeII,cache=TRUE}
+r_try <- 1:9
+x_try <- seq(from = 0.1, to = 1, by = 0.1)
+jj <- as.matrix(expand.grid(r_try, x_try))
+II <- t(apply(jj,1,function(v){getprob(9,v[1],v[2],N=1e4)}))
+head(II)
+```
+
+
+```{r makesupp, cache=TRUE}
+r_true <- 3
+x_true <- 0.85
+o <- getprob(9, r_true, x_true, 17)  # observations
+o[1:2]
+o[-(1:2)]
+
+support_func <- function(o,v){
+    v <- v[-(1:2)]
+    v <- v/sum(v)
+    dmultinom(o[-(1:2)], prob=v, log=TRUE)
+}
+support <- rep(0,nrow(II))
+for(i in seq_len(nrow(II))){
+    support[i] <- support_func(o,II[i,])
+}
+```
+    
+```{r}
+support <- support-max(support)
+support <- pmax(support,-10)
+support  <- matrix(support,length(r_try),length(x_try))
+contour(r_try, x_try, support, xlab="r", ylab="x", levels = -(1:5)*2)
+abline(v = r_true)
+abline(h = x_true)
+abline(v = 1:9, col = 'gray', lty = 3, lwd = 0.3)
+filled.contour(r_try, x_try, support, xlab = "r", ylab = "x")
+```
+
+```{R showjj}
+jj <- cbind(II[,1:2],c(support))
+jj[jj[,2] == 1,]
+```
+
+#  Analysis from a single observation
+
+
+We translate $\alpha\in [0,1]$ to a number from 1 to $n$ inclusive
+with $\lceil n\alpha\rceil$
+
+Write a likelihood function for 9,12 [that is, came 9th in a class of
+12] There are 8 better and 3 worse than the focal student.
+
+We need a likelihood function for the observation (9) of $\alpha,x$.
+Let's try again.
+
+```{r ninetwelve, cache=TRUE}
+n <- 12
+a_try <- seq(from=0.01,to=0.99,len=10)
+p_try <- ceiling(n * a_try)
+x_try <- seq(from = 0.1, to = 1, by = 0.1)
+jj <- as.matrix(expand.grid(p_try, x_try))
+II <- t(apply(jj,1,function(v){getprob(n, v[1], v[2], N=1e4)}))
+head(II)
+tail(II)
+S912 <- matrix(II[,11],length(a_try),length(x_try))
+```
+
+
+```{r show912}
+S912 <- S912/max(S912)
+contour(p_try,a_try,log(S912))
+```
+
+
+
+# Variable class sizes
+
+Let's try this on the apocryphal education dataset
+
+
+
+```{r}
+M <- matrix(c(
+    9, 7, 2, 3, 2, 8, 3, 4, 9,
+    12,17,23,09,13,14,13,12,15
+),nrow=2,byrow=TRUE)
+M
+```
