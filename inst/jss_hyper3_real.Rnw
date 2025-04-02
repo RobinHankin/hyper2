@@ -434,7 +434,7 @@ abline(v=1, col = 'gray')
 \end{figure}
 
 
-<<testlambdazero, cache = TRUE, eval = TRUE, echo = FALSE, fig = TRUE>>=
+<<testlambdazero, cache = TRUE, eval = TRUE, echo = FALSE>>=
 jj <- optimize(f = function(D){f(c(lambda=1, D))}, interval = c(0.1, 0.4), maximum = TRUE)
 @
 %
@@ -1066,7 +1066,7 @@ csgo_upper <- uniroot(g, interval = exp(c(-1, -0)), tol = 0.01)$root
 
 \begin{figure}[htbp]
   \begin{center}
-<<csgo_plotlikelam, echo=FALSE>>=
+<<csgo_plotlikelam, echo = FALSE, fig = TRUE>>=
 plot(log(lam), L - max(L), type='b')
 segments(x0 = log(csgo_optlam),y0 = -0.5, y1 =  0.1, col = 'red')
 segments(x0 = log(csgo_lower), y0 = -2.2, y1 = -1.8, col = 'blue')
