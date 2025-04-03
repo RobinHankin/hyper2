@@ -201,23 +201,23 @@ pchisq(max(S_pure) + max(S_applied) - max(S_all),df=2,lower.tail=FALSE)
 # In this chunk, each execution of single_like_fun(...,N=100) takes ~1
 # minute
 
- print(system.time(parkrun01 <- single_like_fun(259, 177/259, N=1e3)))
- print(system.time(parkrun02 <- single_like_fun(305, 222/305, N=1e3)))
- print(system.time(parkrun03 <- single_like_fun(297, 206/297, N=1e3)))
-#print(system.time(parkrun04 <- single_like_fun(241, 142/241, N=1e1)))
-#print(system.time(parkrun05 <- single_like_fun(179, 118/179, N=1e1)))
-#print(system.time(parkrun06 <- single_like_fun(338, 224/338, N=1e1)))
-#print(system.time(parkrun07 <- single_like_fun(203, 128/203, N=1e1)))
+ print(system.time(parkrun01 <- single_like_fun(259, 177/259, N=4e3)))
+ print(system.time(parkrun02 <- single_like_fun(305, 222/305, N=4e3)))
+ print(system.time(parkrun03 <- single_like_fun(297, 206/297, N=4e3)))
+ print(system.time(parkrun04 <- single_like_fun(241, 142/241, N=4e3)))
+ print(system.time(parkrun05 <- single_like_fun(179, 118/179, N=4e3)))
+ print(system.time(parkrun06 <- single_like_fun(338, 224/338, N=4e3)))
+ print(system.time(parkrun07 <- single_like_fun(203, 128/203, N=4e3)))
 ```
 
 ```{r}
 parkrun01
 parkrun02
 parkrun03
-#parkrun04
-#parkrun05
-#parkrun06
-#parkrun07
+parkrun04
+parkrun05
+parkrun06
+parkrun07
 sum(parkrun01)
 sum(parkrun02)
 sum(parkrun03)
@@ -225,3 +225,4 @@ parkrun01 * parkrun02 *parkrun03
 sum(parkrun01 * parkrun02 *parkrun03)
 ```    
 
+1
