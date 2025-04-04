@@ -1,5 +1,5 @@
 ---
-title: "exponential_BT"
+title: "exponential Bradley-Terry"
 author: "robin hankin"
 date: "2025-04-02"
 output: html_document
@@ -22,7 +22,7 @@ the focal competitor is the strongest among the $n$, $r=2$ means he is
 the second, and so on.
 
 
-```{r}
+```{r defineBT}
 BT <- function(n,x){
     out <- x^(0:(n-1))
     if(x != 1){
@@ -40,7 +40,7 @@ sum(BT(4,0.5))
 We will consider $n=9$, $x=0.5$, $r=4$ and make repeated observations:
 
 
-```{r}
+```{r showtabulate}
 (jj <- BT(9,0.5))
 o <- tabulate(replicate(1e4,which(rrace(jj) == "p4")))
 o
@@ -49,7 +49,7 @@ plot(o,type='h')
 
 
     
-```{r, cache=TRUE}
+```{r definegetprob, cache=TRUE}
 getprob <- function(n, r, x, N=1e4){
     jj <- BT(n, x)
     wanted <- paste0("p", str_pad(r ,ceiling(log10(n))))
@@ -91,7 +91,7 @@ getprob(9,9,0.9,N=100)
 )
 ```
 
-```{r makeII,cache=TRUE}
+```{r makeII, cache=TRUE}
 r_try <- 1:9
 x_try <- seq(from = 0.1, to = 1, by = 0.1)
 jj <- as.matrix(expand.grid(r_try, x_try))
@@ -145,10 +145,9 @@ Write a likelihood function for 9,12 [that is, came 9th in a class of
 
 
 ```{r ninetwelve}
-a_try <- seq(from=0.01,to=0.99,len=10)
-x_try <- seq(from = 0.1, to = 1, by = 0.1)
-
-single_like_fun <- function(n, a, N=1e4){
+single_like_fun <- function(n, a,          # n competitors, places a [e.g a=3 -> third]
+                            a_try, x_try,  # values to try
+                            N=1e2){        # N is number of trials
     p_try <- ceiling(n * a_try)
     jj <- as.matrix(expand.grid(p_try, x_try))
     II <- t(apply(jj,1,function(v){getprob(n, v[1], v[2], N)}))
@@ -158,14 +157,16 @@ single_like_fun <- function(n, a, N=1e4){
 
 
 ```{r makesupp912, cache=TRUE}
+a_try <- seq(from = 0.01, to = 0.99, len = 10)
+x_try <- seq(from = 0.2, to = 1, by = 0.1)
 allsupp <- list(
-    log(single_like_fun(12, a =  8/12)),  # pure
-    log(single_like_fun(17, a = 12/17)),  # pure
-    log(single_like_fun(23, a = 18/23)),  # pure
-    log(single_like_fun(14, a =  5/14)),  # applied
-    log(single_like_fun(13, a =  3/13)),  # applied
-    log(single_like_fun(11, a =  2/11)),  # applied
-    log(single_like_fun(13, a =  3/13))   # applied
+    log(single_like_fun(12, a =  8/12, a_try, x_try)),  # pure
+    log(single_like_fun(17, a = 12/17, a_try, x_try)),  # pure
+    log(single_like_fun(23, a = 18/23, a_try, x_try)),  # pure
+    log(single_like_fun(14, a =  5/14, a_try, x_try)),  # applied
+    log(single_like_fun(13, a =  3/13, a_try, x_try)),  # applied
+    log(single_like_fun(11, a =  2/11, a_try, x_try)),  # applied
+    log(single_like_fun(13, a =  3/13, a_try, x_try))   # applied
 )
 ```
 
@@ -191,38 +192,86 @@ pchisq(max(S_pure) + max(S_applied) - max(S_all),df=2,lower.tail=FALSE)
 ```
 
 
-
-
 # Parkrun
 
+In the following chunks, each execution of
+`single_like_fun(...,N=1000)` takes  about 5 minutes
 
-```{r parkrunlikefun1, cache=TRUE}
+```{r sethowmany}
+howmany <- 1000
+```
 
-# In this chunk, each execution of single_like_fun(...,N=100) takes ~1
-# minute
-
- print(system.time(parkrun01 <- single_like_fun(259, 177/259, N=4e3)))
- print(system.time(parkrun02 <- single_like_fun(305, 222/305, N=4e3)))
- print(system.time(parkrun03 <- single_like_fun(297, 206/297, N=4e3)))
- print(system.time(parkrun04 <- single_like_fun(241, 142/241, N=4e3)))
- print(system.time(parkrun05 <- single_like_fun(179, 118/179, N=4e3)))
- print(system.time(parkrun06 <- single_like_fun(338, 224/338, N=4e3)))
- print(system.time(parkrun07 <- single_like_fun(203, 128/203, N=4e3)))
+```{r parkrunlikefunobs1, cache = TRUE}
+print(system.time(parkrun01 <- single_like_fun(259, 177/259, N = howmany, a_try, x_try)))
 ```
 
 ```{r}
 parkrun01
-parkrun02
-parkrun03
-parkrun04
-parkrun05
-parkrun06
-parkrun07
-sum(parkrun01)
-sum(parkrun02)
-sum(parkrun03)
-parkrun01 * parkrun02 *parkrun03
-sum(parkrun01 * parkrun02 *parkrun03)
-```    
+```
 
-1
+```{r parkrunlikefunobs2, cache = TRUE}
+ print(system.time(parkrun02 <- single_like_fun(305, 222/305, N = howmany, a_try, x_try)))
+```
+
+```{r}
+parkrun02
+```
+
+```{r parkrunlikefunobs3, cache = TRUE}
+print(system.time(parkrun03 <- single_like_fun(297, 206/297, N = howmany, a_try, x_try)))
+```
+
+```{r}
+parkrun03
+```
+
+```{r parkrunlikefunobs4, cache = TRUE}
+print(system.time(parkrun04 <- single_like_fun(241, 142/241, N = howmany, a_try, x_try)))
+```
+
+```{r}
+parkrun04
+```
+
+```{r parkrunlikefunobs5, cache = TRUE}
+print(system.time(parkrun05 <- single_like_fun(179, 118/179, N = howmany, a_try, x_try)))
+```
+
+```{r}
+parkrun05
+```
+ 
+```{r parkrunlikefunobs6, cache = TRUE}
+print(system.time(parkrun06 <- single_like_fun(338, 224/338, N = howmany, a_try, x_try)))
+```
+
+```{r}
+parkrun06
+```
+
+```{r parkrunlikefunobs7, cache = TRUE}
+print(system.time(parkrun07 <- single_like_fun(203, 128/203, N = howmany, a_try, x_try)))
+```
+
+```{r}
+parkrun07
+```
+
+
+```{r}
+c(
+sum(parkrun01),
+sum(parkrun02),
+sum(parkrun03),
+sum(parkrun04),
+sum(parkrun05),
+sum(parkrun06),
+sum(parkrun07)
+)
+```
+
+```{r}
+contour(a_try,x_try,parkrun05)
+contour(a_try,x_try,parkrun06)
+parkrun01*parkrun02*parkrun03*parkrun04*parkrun05*parkrun06*parkrun07
+```
