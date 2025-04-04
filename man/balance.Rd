@@ -25,8 +25,10 @@ balance(H)
     H
   }
 
-Package vignette \code{zeropower} discusses the zero power sum
-condition.
+
+(the first line ensures that \code{H[pnames(H)]} is over-written
+correctly by the second).  Package vignette \code{zeropower} discusses
+the zero power sum condition.
   
 }
 \value{Returns a balanced \code{hyper2} object}
