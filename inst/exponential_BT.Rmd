@@ -275,3 +275,55 @@ contour(a_try,x_try,parkrun05)
 contour(a_try,x_try,parkrun06)
 parkrun01*parkrun02*parkrun03*parkrun04*parkrun05*parkrun06*parkrun07
 ```
+
+
+
+## Formula 1
+
+
+```{r checo}
+n <- 20 # 20 drivers
+multiple_like_fun <- function(n,           # n competitors
+                            a_try, x_try,  # values to try
+                            N=1e2){        # N is number of trials
+    p_try <- ceiling(n * a_try)
+    jj <- as.matrix(expand.grid(p_try, x_try))
+    t(apply(jj,1,function(v){getprob(n, v[1], v[2], N)}))
+}
+```
+
+
+```{r checo2023}
+o <- c(6,8,3,5,2,1,2,4,2,2,20,3,2,5,1,3,4,1,4,2,6,6,10) # lando norris 2024
+```
+
+```{r trymultx, cache=TRUE}
+II <- multiple_like_fun(20, a_try,x_try,1e4)
+head(II)
+nrow(II)
+length(a_try)
+length(x_try)
+```
+
+```{r calcmultx, cache=TRUE}
+like <- list()
+dim(II)
+o
+for(i in seq_along(o)){
+    like[[i]] <-  matrix(II[, o[i] + 2], length(a_try), length(x_try))
+}
+```
+
+```{r showlike}
+like
+alllike <- Reduce("*",like)
+alllike 
+alllike/max(alllike)
+S <- log(alllike)
+S <- S-max(S)
+S <- pmax(S,-15)
+contour(S,levels = -(0:6)*2, lwd=c(1,4,1,1,1,1,1))
+filled.contour(S)
+```
+
+
