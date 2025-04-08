@@ -293,6 +293,8 @@ CITATION.cff
 ^inst/hyper3.Rmd$
 ^inst/preflib.Rmd$
 ^inst/hyper2.bib$
+^inst/imo.txt$
+^inst/imo.Rmd$
 ^.github$
 ^.devcontainer$
 ^_pkgdown\.yml$

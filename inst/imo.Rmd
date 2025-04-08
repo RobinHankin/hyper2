@@ -1,0 +1,114 @@
+---
+title: "imo"
+author: "robin hankin"
+date: "2025-04-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(hyper2)
+library(stringr)
+```
+
+## R Markdown
+
+
+```{r}
+oecd <- read.csv("oecd.txt",header=FALSE)$V1
+oecd
+length(oecd)
+oecd <- oecd[!(oecd %in% c("Chile", "Democratic People's Republic of Korea", "Turkiye"))]
+
+years <- 2001:2024
+
+jj <- read.table("imo.txt", header=TRUE)
+ranks <- list()
+for(i in seq_along(years)){
+    ranks[[i]] <- subset(jj, jj$year == years[[i]])$country
+}
+names(ranks) <- years
+```
+
+
+```{r}
+for(i in seq_along(ranks)){
+    jj <- ranks[[i]]
+    ranks[[i]] <- jj[jj %in% oecd]
+}
+ranks
+```
+
+
+```{r}
+uk <- seq_along(ranks)*0
+for(i in seq_along(ranks)){
+    uk[i] <- which(ranks[[i]] == "Australia")
+}
+uk
+```
+
+    
+
+```{r checo}
+BT <- function(n,x){
+    out <- x^(0:(n-1))
+    if(x != 1){
+        out <- out*(1-x)/(1-x^n)
+    } else {
+        out <- out/n
+    }
+    names(out) <- paste0("p",str_pad(1:n,ceiling(log10(n))))
+    out
+}
+
+getprob <- function(n, r, x, N=1e2){
+    jj <- BT(n, x)
+    wanted <- paste0("p", str_pad(r ,ceiling(log10(n))))
+    c(r=r, x=x, setNames(tabulate(replicate(N, which(rrace(jj) == wanted)),nbins=n), paste0("p", 1:n)))
+}
+n <- length(oecd)
+a_try <- seq(from = 0.01, to = 0.99, len = 20)
+x_try <- seq(from = 0.2, to = 1, by = 0.05)
+multiple_like_fun <- function(n,           # n competitors
+                            a_try, x_try,  # values to try
+                            N=1e2){        # N is number of trials
+    p_try <- ceiling(n * a_try)
+    jj <- as.matrix(expand.grid(p_try, x_try))
+    t(apply(jj,1,function(v){getprob(n, v[1], v[2], N)}))
+}
+```
+
+
+```{r trymultxy, cache=TRUE}
+print(system.time(II <- multiple_like_fun(length(oecd), a_try, x_try, 1e4)))
+head(II)
+nrow(II)
+length(a_try)
+length(x_try)
+```
+
+```{r calcmultxy, cache=TRUE}
+like <- list()
+dim(II)
+o <- uk # o for observation
+o
+for(i in seq_along(o)){
+    like[[i]] <-  matrix(II[, o[i] + 2], length(a_try), length(x_try))
+}
+```
+
+```{r showlike}
+alllike <- Reduce("*",like)
+alllike 
+alllike/max(alllike)
+S <- log(alllike)
+S <- S-max(S)
+S <- pmax(S,-15)
+round(S,2)
+contour(S,levels = -(0:6)*2, lwd=c(1,4,1,1,1,1,1))
+filled.contour(S)
+```
+
+
+
