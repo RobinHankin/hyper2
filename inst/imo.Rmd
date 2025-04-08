@@ -15,9 +15,9 @@ library(stringr)
 
 
 ```{r}
-oecd <- read.csv("oecd.txt",header=FALSE)$V1
+oecd <- as.character(read.csv("oecd.txt",header=FALSE)$V1)
 oecd
-length(oecd)
+
 oecd <- oecd[!(oecd %in% c("Chile", "Democratic People's Republic of Korea", "Turkiye"))]
 
 years <- 2001:2024
@@ -36,7 +36,6 @@ for(i in seq_along(ranks)){
     jj <- ranks[[i]]
     ranks[[i]] <- jj[jj %in% oecd]
 }
-ranks
 ```
 
 
@@ -47,8 +46,6 @@ for(i in seq_along(ranks)){
 }
 uk
 ```
-
-    
 
 ```{r checo}
 BT <- function(n,x){
@@ -100,15 +97,21 @@ for(i in seq_along(o)){
 
 ```{r showlike}
 alllike <- Reduce("*",like)
-alllike 
-alllike/max(alllike)
 S <- log(alllike)
 S <- S-max(S)
-S <- pmax(S,-15)
-round(S,2)
-contour(S,levels = -(0:6)*2, lwd=c(1,4,1,1,1,1,1))
+S <- pmax(S, -9.999)
+jj <- S
+jj[jj < -9.99] <- NA
+round(jj,2)
+contour(a_try, x_try, S,
+        xlab = "BT strength (scaled)", ylab = "x",
+        levels = -(0:6)*2, lwd=c(1,4,1,1,1,1,1))
+dim(S)
+contour(a_try[1:8], x_try[6:17], S[1:8, 6:17], levels = -(0:6)*2, lwd=c(1,4,1,1,1,1,1))
 filled.contour(S)
 ```
 
 
-
+```{r}
+like[[1]]
+```
