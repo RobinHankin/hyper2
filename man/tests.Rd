@@ -27,7 +27,7 @@ specificp.lt.test(H, i, specificp=1/size(H), ...)
 }
 \arguments{
   \item{H}{A likelihood function, an object of class \code{hyper2}}
-  \item{p}{In \code{equalp.test()}, putative strength vector to be
+  \item{p}{In \code{knownp.test()}, putative strength vector to be
     tested}
   \item{...}{Further arguments passed by \code{equalp.test()} to
     \code{maxp()} and ignored by \code{print.hyper2test()}}
