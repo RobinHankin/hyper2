@@ -1,5 +1,5 @@
 ---
-title: "imo"
+title: "International Mathematical Olympiad using Plackett-Luce"
 author: "robin hankin"
 date: "2025-04-07"
 output: html_document
