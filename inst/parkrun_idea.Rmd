@@ -163,3 +163,17 @@ contour(a_try,x_try,parkrun05)
 contour(a_try,x_try,parkrun06)
 parkrun01*parkrun02*parkrun03*parkrun04*parkrun05*parkrun06*parkrun07
 ```
+
+
+```{r}
+M <- matrix(c(
+259, 177,
+305, 222,
+297, 206,
+241, 142,
+179, 118,
+338, 224,
+203, 128),ncol=2,byrow=TRUE)
+M
+plot(M[,2]/M[,1])
+```
