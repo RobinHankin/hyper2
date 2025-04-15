@@ -1,0 +1,17 @@
+universe = Vanilla
+executable = runr.sh
+transfer_input_files    = resources/
+should_transfer_files   = YES
+when_to_transfer_output = ON_EXIT
+output = outfiles/out$(Process).txt
+error = errorfiles/out$(Process).err
+log = logfiles/out$(Process).log
+# requirements = (OpSys == "LINUX") && (Machine != "meh.cs.stir.ac.uk")
+requirements = (OpSys == "LINUX")
+
+#arguments = use_results_table.R $(Process) 
+#queue 6887
+
+arguments = use_results_table.R 1238
+queue 1
+

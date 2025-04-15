@@ -1,0 +1,11 @@
+This directory is for exponentially-parametrized Bradley Terry, applied to parkrun.
+To run it, type
+
+condor_submit condor.jd
+
+when logged in to euro.  File condor.jd is the job description file.
+The R scripts and maybe data files are in directory resources/.  The
+results are placed in answerfiles/ and possibly outfiles/.
+
+File wipe is a shellscript that deletes output files from previous
+runs, so a new run can start in a clean environment.
