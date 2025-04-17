@@ -5,7 +5,36 @@ condor_submit condor.jd
 
 when logged in to euro.  File condor.jd is the job description file.
 The R scripts and maybe data files are in directory resources/.  The
-results are placed in answerfiles/ and possibly outfiles/.
+results are placed in directories
+
+answerfiles/
+outfiles/
+logfiles/
+
+These directories might have to be created, otherwise condor will give
+"directory does not exist" errors.
 
 File wipe is a shellscript that deletes output files from previous
 runs, so a new run can start in a clean environment.
+
+
+
+I have got (rare) intermittent errors which look like this:
+
+
+rha@euro0:~/condor/exponential_BT/errorfiles$ cat out2553.err 
+Loading required package: cubature
+
+ *** caught segfault ***
+address 0x1a3100610c, cause 'memory not mapped'
+*** recursive gc invocation
+
+Traceback:
+ 1: rrace(BT(n, x_suggested))
+ 2: like(n = no_of_comp, a = this_place/no_of_comp, v, N = howmany)
+An irrecoverable exception occurred. R is aborting now ...
+/var/lib/condor/execute/dir_40717/runr.sh: line 3: 40720 Segmentation fault      Rscript $1 $2 $3 $4
+rha@euro0:~/condor/exponential_BT/errorfiles$ 
+
+
+I discussed this with Sam and we reckon that this is a bug in R.
