@@ -1,26 +1,25 @@
 #!/usr/bin/env Rscript
 
 library("hyper2")
-library("stringr")
-howmany <- 10000
+howmany <- 5000
 
 
 args = commandArgs(trailingOnly=TRUE)
-
 argument_from_condor <- as.numeric(args[1]) + 1
 
 wanted_line <- argument_from_condor
-results_table <- read.table("results_imo.txt", header=TRUE)
+results_table <- read.table("imo_nz_results.txt", header=TRUE)
 
-a_try <- seq(from = 0.01, to = 0.3, len = 71)
-x_try <- seq(from = 0.75, to = 1, len = 97)
+a_try <- seq(from = 0.2, to = 0.7, len = 71)
+x_try <- seq(from = 0.8, to = 1.0, len = 97)
 
 v <- as.matrix(expand.grid(a_try, x_try))[wanted_line,]
 
+str_pad <- function(x, width=6){sprintf(paste0("%0", width, "d"), x)}
 
 filename <- paste(
-    "/home/rha/condor/exponential_BT/answerfiles/Xans",
-    str_pad(argument_from_condor, pad = "0", width = 6),
+    "/home/rha/condor/exponential_BT/answerfiles/ans",
+    str_pad(argument_from_condor,  width = 6),
     ".txt",
     sep="")
 
@@ -31,7 +30,7 @@ BT <- function(n, x){
     } else {
         out <- out/n
     }
-    names(out) <- paste0("p",str_pad(1:n,ceiling(log10(n))))
+    names(out) <- paste0("p",str_pad(1:n, 3))
     out
 }
 
@@ -52,7 +51,7 @@ like <- function(n, a_obs, v, N=1e4){
     rank_observed <- ceiling(n * a_obs) 
 
     name_suggested <-  # this is the name of the suggested focal competitor
-        paste0("p", str_pad(which_suggested, ceiling(log10(n)))) # focal competitor
+        paste0("p", str_pad(which_suggested, 3))             # focal competitor
                                                              # (something like "p45")
     out <- 0
     for(i in 1:N){
