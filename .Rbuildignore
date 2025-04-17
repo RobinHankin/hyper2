@@ -295,6 +295,7 @@ CITATION.cff
 ^inst/hyper2.bib$
 ^inst/imo.txt$
 ^inst/imo.Rmd$
+^inst/condor
 ^.github$
 ^.devcontainer$
 ^_pkgdown\.yml$
