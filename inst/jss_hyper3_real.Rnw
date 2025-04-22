@@ -957,7 +957,7 @@ $H_A\colon\lambda=\Sexpr{round(sushimaxlambda,2)}$ with about
 $\Sexpr{round(sushisupport,2)}$ units of support.  Alternatively, we
 may observe that this lies in the tail region of its asymptotic
 $\chi^2_1$ distribution with a $p$~value of about
-$\Sexpr{round(pchisq(2*sushisupport,df=1,lower.tail=FALSE),3)}$.  We can
+$\Sexpr{round(pchisq(2*sushisupport,df=1,lower.tail=FALSE),4)}$.  We can
 therefore be reasonably sure that tuna sushi are somehow analagous to
 red and blue buses, in the sense that all three tuna items tend to
 occupy closely separated places in judges' preference ranks.
