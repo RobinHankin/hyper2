@@ -115,3 +115,40 @@ filled.contour(S)
 ```{r}
 like[[1]]
 ```
+
+
+# Some thoughts about including variable numbers of competitors
+
+
+Above we used OECD countries for Australia to compete against.  Here I
+use all the competitors:
+
+
+```{r}
+a <- read.table("imo.txt", header = TRUE)
+min(a$year)
+max(a$year)
+which(subset(a,a$year == 2015)$country == "Australia")
+competitors <- function(year,a){ table(a$year)[as.character(year)]   }
+competitors(2013, a)
+rank <- function(place, y, a){
+    which(subset(a,a$year == y)$country == place)
+}
+
+rank("Australia",2001,a)
+rank("Australia",2002,a)
+rank("Australia",2024,a)
+cbind(place = sapply(2001:2024,function(y){rank("Australia",y,a)}),
+      competitors = table(a$year)
+      )
+```
+
+
+Now try New Zealand:
+
+
+```{r imo_nz}
+cbind(place = sapply(2001:2024,function(y){rank("New Zealand",y,a)}),
+      competitors = table(a$year)
+      )
+```
