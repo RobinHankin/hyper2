@@ -149,11 +149,10 @@ respectively.  Then $\lambda$ would represent the effectiveness of
 $p_1$'s special technique, and $\mu$ the enhancement afforded to $p_4$
 by the drug; values $>1$ would correspond to a positive effect.  In
 this paper I generalize the \pkg{hyper2} R
-package~\citep{hankin2017_rnw_jss}, available on CRAN~\citep{rcore2025},
-for Bradley-Terry likelihoods to accommodate this class of
-multiplicative factors with new \proglang{S3} \class{hyper3} and
-associated methods.
-
+package~\citep{hankin2017_rnw_jss}, available on
+CRAN~\citep{rcore2025}, for Bradley-Terry likelihoods to accommodate
+this class of multiplicative factors with new \proglang{S3} class
+\class{hyper3} and associated methods.
 
 The most general likelihood function would be
 proportional to
@@ -241,8 +240,10 @@ numbers.  The \class{hyper3} class enforces \pkg{disordR}
 discipline~\citep{hankin2022_disordR_jss}.
 
 \subsection{The package in use}
-Package idiom for creating a likelihood function for this dataset is
-straightforward.  Considering first only Rangers-Celtic matches:
+Creating a likelihood function for this dataset is straightforward.
+As an illustration of package idiom, one way of representing a
+likelihood function for Rangers-Celtic matches (here, ignoring draws)
+would be:
 %
 <<defineoldfirm, cache = TRUE>>=
 oldfirm <- function(lambda){
@@ -283,8 +284,8 @@ logLike <- sapply(lam, f)
 %
 Thus \fct{f} returns the support at the evaluate, conditional on a
 supplied value of $\lambda$.  We may use this to create a profile
-likelihood (Figure~\ref{profilesupportlambda}), or to find the maximum
-likelihood estimate for $\lambda$:
+likelihood curve (Figure~\ref{profilesupportlambda}), or to find the
+maximum likelihood estimate for $\lambda$:
 
 \begin{figure}[htbp]
   \begin{center}
@@ -764,9 +765,9 @@ applied to an apparently different situation.
 
 The classic red bus-blue bus problem was originally stated by
 \cite{mcfadden1980} although different metaphors have been employed
-for the same phenomenon by \cite{tverskey1972_jss}.  The canonical problem
-is as follows.  A commuter has a choice of going to work by different
-transport methods.  Here, we can assume that he has possibly
+for the same phenomenon by \cite{tverskey1972_jss}.  The canonical
+problem is as follows.  A commuter has a choice of going to work by
+different transport methods.  Here, we can assume that he has possibly
 strong---but unknown---views on different forms of transport which
 might incorporate a random component.  If considering whether to use a
 car or a bus, the colour of the bus is of no importance to him.  Such
@@ -780,15 +781,15 @@ option.  Any realistic choice model will have $\Prob(C | \left\lbrace
 C,RB,BB\right\rbrace)=\frac{1}{2}$ but Bradley-Terry gives us
 $\frac{1}{3}$.  Various solutions to this problem have been proposed.
 \cite{tverskey1972_jss}, for example, presents an approach involving
-overlapping ``aspects'' of the elements of choice set;
-\cite{mcfadden1980} suggests using a generalized extreme-value model.
+overlapping ``aspects'' of the choice set; \cite{mcfadden1980}
+suggests using a generalized extreme-value model.
 
 Here I suggest an alternative in the form of a one-parameter
 generalization of Plackett-Luce likelihood functions for ranking
 options, using the multiplicative generalization to Bradley-Terry
 strengths presented above.  As a synthetic example, we specify options
-RB and BB for red bus and blue bus together options C, T and W for
-car, train, and walking.
+RB and BB for red bus and blue bus together with options C, T and W
+for car, train, and walking.
 
 Specifically, it seems reasonable to assume that if we ask our
 respondent to rank his options, it is highly probable that he will put
@@ -929,7 +930,7 @@ L <- sapply(s, f)
 % chunk 'findstuffsushi' takes about 10-20 minutes to run
 %
 <<findstuffsushi, echo = FALSE, cache = TRUE>>=
-osushi <- optimize(f, c(2, 4), maximum = TRUE)
+osushi <- optimize(f, c(1, 4), maximum = TRUE)
 @ 
 %
 % chunk tinysushi' takes about 5 minutes to run
@@ -956,7 +957,7 @@ $H_A\colon\lambda=\Sexpr{round(sushimaxlambda,2)}$ with about
 $\Sexpr{round(sushisupport,2)}$ units of support.  Alternatively, we
 may observe that this lies in the tail region of its asymptotic
 $\chi^2_1$ distribution with a $p$~value of about
-$\Sexpr{round(pchisq(sushisupport,df=1,lower.tail=FALSE),3)}$.  We can
+$\Sexpr{round(pchisq(2*sushisupport,df=1,lower.tail=FALSE),3)}$.  We can
 therefore be reasonably sure that tuna sushi are somehow analagous to
 red and blue buses, in the sense that all three tuna items tend to
 occupy closely separated places in judges' preference ranks.
