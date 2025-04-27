@@ -26,14 +26,14 @@ over nine legs.  Dataset taken from the wikipedia page (see references
 below).
 
 ```{r readvolvotable}
-volvo_table <- ordertable(read.table("volvo.txt"))
+volvo_table <- read.table("volvo.txt")
 volvo_table
 ```
 
 Thus the first column refers to leg 1, in which competitor Abu Dhabi
 came first, Brunel third, and so on.  Here, `DNF` signifies "did not
 finish" and `DNS` "did not start".  We can convert the table to a
-support function with `ordertable2supp()`, remembering to specify the
+support function with `suppfun()`, remembering to specify the
 noscore options:
 
 ```{r specifynoscore,cache=TRUE}
