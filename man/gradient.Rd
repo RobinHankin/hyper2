@@ -103,7 +103,7 @@ ignore the fillup value and return an \eqn{n-1}-by-\eqn{n-1} matrix.
 
 Calling \code{hessian()} at the evaluate will not return exact zeros for
 the constraint on the fillup value; \code{gradient()} is used and this
-does not return exactly zeros at the evaluate.
+does not return exact zeros at the evaluate.
 }
 
 \author{Robin K. S. Hankin}
