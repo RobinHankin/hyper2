@@ -182,20 +182,20 @@ generalized Dirichlet distribution due to Connor and Mosimann</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu">dirichlet</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">3</span>,d<span class="op">=</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">rdirichlet</span><span class="op">(</span><span class="fl">10</span>,<span class="va">H</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                a          b         c         d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.01653885 0.32962037 0.2204260 0.4334148</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.34840871 0.11847266 0.3525040 0.1806146</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] 0.35844373 0.12892938 0.1223021 0.3903248</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 0.17345705 0.14856605 0.2933627 0.3846142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 0.28796978 0.18610197 0.2259234 0.3000049</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 0.08399798 0.15157662 0.1772073 0.5872181</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 0.03631235 0.46480777 0.1904721 0.3084078</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.15832040 0.03755438 0.5157921 0.2883331</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.15798996 0.26411078 0.4774408 0.1004585</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.10441438 0.26695332 0.2901505 0.3384818</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  a          b          c         d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.0698338839 0.38993756 0.25283428 0.2873943</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.1448540010 0.21033998 0.30826230 0.3365437</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] 0.1832757239 0.06909965 0.52069376 0.2269309</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 0.1845775775 0.21675537 0.06744803 0.5312190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 0.0557913550 0.20200073 0.28383412 0.4583738</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 0.0005998024 0.19507661 0.39434571 0.4099779</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 0.1476608625 0.44786105 0.20207301 0.2024051</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.1430131001 0.36925576 0.26885324 0.2188779</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.0148905271 0.27730047 0.17545514 0.5323539</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.1649035793 0.44734917 0.21954889 0.1681984</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="fu">rdirichlet</span><span class="op">(</span><span class="fl">1e4</span>,<span class="va">H</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         a         b         c         d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.1445195 0.2118687 0.2859401 0.3576717 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.1443720 0.2121002 0.2859183 0.3576095 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">dirichlet3</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>fish<span class="op">=</span><span class="fl">3</span>,chips<span class="op">=</span><span class="fl">2</span><span class="op">)</span>,lambda<span class="op">=</span><span class="fl">1.8</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (chips=1)^2 * (chips=1, fish=1.8)^-5 * (fish=1.8)^3)</span>
