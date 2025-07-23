@@ -382,7 +382,7 @@ jj
 Above, the elements of vector `jj` are the maximum likelihoods for
 each of the separate components of the parameter space allowed under
 $H_0$.  Note that these components are not disjoint.  So the maximum
-likelhood for the whole of allowable parameters under $H_0$ would be
+likelihood for the whole of allowable parameters under $H_0$ would be
 the maximum of these maxima:
 
 ```{r maxjj}

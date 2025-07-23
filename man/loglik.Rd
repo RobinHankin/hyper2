@@ -29,7 +29,7 @@ like_series(p,L,log=TRUE)
   can take a vector of length \code{n=size(H)} or \code{size(H)-1}.  If
   given the vector
   \eqn{p=\left(p_1,\ldots,p_{n-1}\right)}{p=(p_1,...,p_{n-1})} it
-  appends the fillup value, and then returns returns the (log)
+  appends the fillup value, and then returns the (log)
   likelihood (names are discarded in this case).  If given a vector
   \eqn{p=\left(p_1,\ldots,p_{n}\right)}{p=(p_1,...,p_{n})} [notionally
   summing to 1] it requires a named vector, and names must match those
@@ -38,8 +38,8 @@ like_series(p,L,log=TRUE)
   If \code{p} is a matrix, the rows are interpreted as probability
   points.
 
-  Function \code{loglik_single()} is a helper function that takes a
-  single point in probability space.  Functions
+  Function \code{loglik_single()} is a helper function that evaluates a
+  likelihood function single point in probability space.  Functions
   \code{like_single_list()} and \code{like_series()} are intended for
   use with \code{ggrl()}.
 
@@ -53,7 +53,7 @@ like_series(p,L,log=TRUE)
   If function \code{loglik()} is given a probability vector of length
   \code{n}, the vector must satisfy the unit sum constraint (up to a
   small tolerance).  Also, it must be a named vector with names
-  (collectively) equal to the \code{pnames} of argument \code{H}.
+  matching the \code{pnames} of argument \code{H}.
 
   \preformatted{
   > pnames(chess)
