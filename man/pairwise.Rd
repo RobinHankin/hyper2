@@ -12,7 +12,7 @@
 
   Function \code{pairwise()} takes a matrix of pairwise comparisons and
   returns a \code{hyper2} likelihood function.  Function
-  \code{zermelo()} gives a standard iterative procedure for likelihood
+  \code{zermelo()} implements a standard iterative procedure for
   maximization of pairwise Bradley-Terry likelihoods (such as those
   produced by function \code{pairwise()}).
 
