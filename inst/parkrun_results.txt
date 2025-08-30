@@ -1,4 +1,5 @@
 venue    date       run place runners
+stirling 30/08/2025 232 231 313 35:15
 stirling 16/08/2025 230 289 341 35:58
 stirling 09/08/2025 229 247 293 37:12
 stirling 19/07/2025 226 200 264 33:56
