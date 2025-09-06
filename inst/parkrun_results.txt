@@ -1,4 +1,5 @@
-venue    date       run place runners
+venue    date       run place runners time
+stirling 06/09/2025 233 191 233 36:51
 stirling 30/08/2025 232 231 313 35:15
 stirling 16/08/2025 230 289 341 35:58
 stirling 09/08/2025 229 247 293 37:12
