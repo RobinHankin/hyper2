@@ -28,10 +28,10 @@ that allow the brackets to contain weighted probabilities.
 
 As a motivating example, suppose two players with Bradley-Terry
 strengths \eqn{p_1,p_2} play chess where we quantify the first-mover
-advantage with a term \eqn{\lambda}{omitted}.  If \eqn{p_1} plays
-white \eqn{a+b} times with \eqn{a} wins and \eqn{b} losses, and
-plays black \eqn{c+d} times with \eqn{c} wins and \eqn{d}
-losses, then a sensible likelihood function might be
+advantage with a term \eqn{\lambda}{omitted}.  Suppose \eqn{p_1} plays
+white \eqn{a+b} times with \eqn{a} wins and \eqn{b} losses, and plays
+black \eqn{c+d} times with \eqn{c} wins and \eqn{d} losses.  Then a
+sensible likelihood function might be
 
 \deqn{
   \left(\frac{\lambda p_1}{\lambda p_1 + p_2}\right)^{a}
@@ -40,7 +40,7 @@ losses, then a sensible likelihood function might be
   \left(\frac{\lambda p_2}{p_1 + \lambda p_2}\right)^{d}
   }{omitted: see PDF}
 
-If \eqn{a=1,b=2,c=3,d=4} and \eqn{\lambda=1.3}{omitted} appropriate
+If \eqn{a=1,b=2,c=3,d=4} and \eqn{\lambda=1.3}{omitted}, appropriate
 package idiom might be:
 
 \preformatted{
@@ -116,7 +116,7 @@ hyper3_m(M,p,stripzeros=TRUE)
     written).  But the intention is that it will maximize the
     log-likelihood of a \code{hyper3} object over the Bradley Terry
     strengths \emph{and} any weights given.  This might not be possible
-    as envisaged right now; I present some thoughts in
+    as currently envisaged; I present some thoughts in
     \code{inst/kka.Rmd}.
 
     \item Function \code{list2nv()} converts a list of character vectors
@@ -144,7 +144,7 @@ Generally return or deal with \code{hyper3} objects
 \author{Robin K. S. Hankin}
 \note{
 Functionality for \code{hyper3} objects is generally indicated by adding
-a \dQuote{\code{3}} to function names, eg \code{gradient()} goes to
+a \dQuote{\code{3}} to function names, e.g. \code{gradient()} goes to
 \code{gradient3()}.
 
 Vignette \code{hyper3\_creation} discusses the different creation
