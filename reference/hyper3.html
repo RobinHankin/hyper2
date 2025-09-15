@@ -5,17 +5,17 @@ Objects of class hyper3 are a generalization of hyper2 objects
 that allow the brackets to contain weighted probabilities.
 As a motivating example, suppose two players with Bradley-Terry
 strengths \(p_1,p_2\) play chess where we quantify the first-mover
-advantage with a term \(\lambda\).  If \(p_1\) plays
-white \(a+b\) times with \(a\) wins and \(b\) losses, and
-plays black \(c+d\) times with \(c\) wins and \(d\)
-losses, then a sensible likelihood function might be
+advantage with a term \(\lambda\).  Suppose \(p_1\) plays
+white \(a+b\) times with \(a\) wins and \(b\) losses, and plays
+black \(c+d\) times with \(c\) wins and \(d\) losses.  Then a
+sensible likelihood function might be
 $$
   \left(\frac{\lambda p_1}{\lambda p_1 + p_2}\right)^{a}
   \left(\frac{p_2        }{\lambda p_1 + p_2}\right)^{b}
   \left(\frac{p_1        }{p_1 + \lambda p_2}\right)^{c}
   \left(\frac{\lambda p_2}{p_1 + \lambda p_2}\right)^{d}
   $$
-If \(a=1,b=2,c=3,d=4\) and \(\lambda=1.3\) appropriate
+If \(a=1,b=2,c=3,d=4\) and \(\lambda=1.3\), appropriate
 package idiom might be:
 
 
@@ -123,17 +123,17 @@ by function hyper3_m()."><!-- mathjax --><script src="https://cdnjs.cloudflare.c
 that allow the brackets to contain weighted probabilities.</p>
 <p>As a motivating example, suppose two players with Bradley-Terry
 strengths \(p_1,p_2\) play chess where we quantify the first-mover
-advantage with a term \(\lambda\).  If \(p_1\) plays
-white \(a+b\) times with \(a\) wins and \(b\) losses, and
-plays black \(c+d\) times with \(c\) wins and \(d\)
-losses, then a sensible likelihood function might be</p>
+advantage with a term \(\lambda\).  Suppose \(p_1\) plays
+white \(a+b\) times with \(a\) wins and \(b\) losses, and plays
+black \(c+d\) times with \(c\) wins and \(d\) losses.  Then a
+sensible likelihood function might be</p>
 <p>$$
   \left(\frac{\lambda p_1}{\lambda p_1 + p_2}\right)^{a}
   \left(\frac{p_2        }{\lambda p_1 + p_2}\right)^{b}
   \left(\frac{p_1        }{p_1 + \lambda p_2}\right)^{c}
   \left(\frac{\lambda p_2}{p_1 + \lambda p_2}\right)^{d}
   $$</p>
-<p>If \(a=1,b=2,c=3,d=4\) and \(\lambda=1.3\) appropriate
+<p>If \(a=1,b=2,c=3,d=4\) and \(\lambda=1.3\), appropriate
 package idiom might be:</p>
 <div class="sourceCode"><pre><code>
 
@@ -220,7 +220,7 @@ by function <code>hyper3_m()</code>.</p>
     written).  But the intention is that it will maximize the
     log-likelihood of a <code>hyper3</code> object over the Bradley Terry
     strengths <em>and</em> any weights given.  This might not be possible
-    as envisaged right now; I present some thoughts in
+    as currently envisaged; I present some thoughts in
     <code>inst/kka.Rmd</code>.</p></li>
 <li><p>Function <code>list2nv()</code> converts a list of character vectors
     into a named vector suitable for use as argument <code>e</code> of
@@ -248,7 +248,7 @@ by function <code>hyper3_m()</code>.</p>
     <div id="note">
     <h2>Note</h2>
     <p>Functionality for <code>hyper3</code> objects is generally indicated by adding
-a “<code>3</code>” to function names, eg <code><a href="gradient.html">gradient()</a></code> goes to
+a “<code>3</code>” to function names, e.g. <code><a href="gradient.html">gradient()</a></code> goes to
 <code>gradient3()</code>.</p>
 <p>Vignette <code>hyper3\_creation</code> discusses the different creation
 methods for <code>hyper3</code> objects.</p>
