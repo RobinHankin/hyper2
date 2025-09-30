@@ -80,9 +80,18 @@ ordertable2supp(a)      # works fine
 suppfun(ordertable(a))  # Same as previous line, but suppfun() needs to know what its argument is
 }
 
+To convert to a numeric matrix with \code{DNS} etc converted to
+\code{NA}:
 
+\preformatted{
+a <- read.table("formula1_2024.txt",header=TRUE)
+a <- a[, -ncol(a)]
+a <- as.matrix(a)
+storage.mode(a) <- "numeric"
+}
 
-
+[this is used in file \code{inst/test_formula1.R}, which provides a
+consistency check for files \code{inst/formula1_???.txt}].
 
 Function \code{formula1_points_system()} gives various possible points
 systems for the winner, second, third, etc, placing drivers.  
