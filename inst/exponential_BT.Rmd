@@ -294,7 +294,10 @@ multiple_like_fun <- function(n,           # n competitors
 
 
 ```{r checo2023}
-o <- c(6,8,3,5,2,1,2,4,2,2,20,3,2,5,1,3,4,1,4,2,6,6,10) # lando norris 2024
+
+o <- c(5,5,2,6,6,4,2,3,8,3,4,4,6,6,3,5,2,8,7,9)  # Lewis Hamilton 2023
+# o <- c(7,9,9,9,6,6,7,4,3,4,1,3,1,8,5,9,6,4,10,2,12,4) # Lewis Hamilton 2024
+# o <- c(6,8,3,5,2,1,2,4,2,2,20,3,2,5,1,3,4,1,4,2,6,6,10) # lando norris 2024
 ```
 
 ```{r trymultx, cache=TRUE}
@@ -314,7 +317,8 @@ for(i in seq_along(o)){
 }
 ```
 
-```{r showlike}
+```{r showlike, cache=FALSE}
+options(digits=5)
 like
 alllike <- Reduce("*",like)
 alllike 
