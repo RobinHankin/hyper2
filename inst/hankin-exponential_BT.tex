@@ -1,0 +1,443 @@
+\documentclass[article]{ajs}
+\RequirePackage{amsthm,amsmath,amsfonts,amssymb}
+\RequirePackage{graphicx}%% uncomment this for including figures
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+%% almost as usual
+\author{Robin K. S. Hankin\,\orcidlink{0000-0001-5982-0415}\\
+  University of Stirling\\ Scotland}
+\title{A Simplified Plackett-Luce Likelihood Function for Rank Orders}
+
+%% for pretty printing and a nice hypersummary also set:
+\Plainauthor{Robin K. S. Hankin} %% comma-separated
+\Plaintitle{A Parametrized Plackett-Luce Likelihood Function for Rank Orders}
+
+
+%% an abstract and keywords
+\Abstract{
+
+Here a new simplification of the Plackett--Luce likelihood functions
+for order statistics is proposed.  We consider a field of $n$ entities
+that are ordered in some way [the preferred example is competitors in
+  a running race, ordered by time of crossing the finishing line].  We
+assign Plackett--Luce strengths $\alpha x,\alpha x^2\ldots,\alpha x^n$
+where $0\leq x\leqslant 1$ is a common ratio and $\alpha$ a
+normalising constant.  One entity is of particular interest to us: the
+``focal entity'', or focal competitor whose strength is $\alpha x^r$
+for some unknown value of $r$ with $1\leqslant r\leqslant n$.  We
+consider the following inference problem: given the order statistic
+for the focal competitor [first, second, etc], and the total number of
+competitors, what might we infer about $x$ and $r$?  Such problems
+arise when non-focal competitors' performances are censored, unknown,
+or irrelevant.  }
+
+\Keywords{keywords, comma-separated, non-capitalized, \proglang{R}}
+\Plainkeywords{keywords, comma-separated, non-capitalized, R} %% without formatting
+%% at least one keyword must be supplied
+
+%% publication information
+%% NOTE: Typically, this can be left commented and will be filled out by the technical editor
+%% \Volume{50}
+%% \Issue{9}
+%% \Month{June}
+%% \Year{2012}
+%% \Submitdate{2012-06-04}
+%% \Acceptdate{2012-06-04}
+%% \setcounter{page}{1}
+\Pages{1--xx}
+
+%% The address of (at least) one author should be given
+%% in the following format:
+\Address{
+  Robin K. S. Hankin\\
+  University of Stirling\\
+  Scotland\\
+  E-mail: \email{hankin.robin@gmail.com}\\
+  URL: \url{https://www.stir.ac.uk/people/1966824}
+}
+%% It is also possible to add a telephone and fax number
+%% before the e-mail in the following format:
+%% Telephone: +43/512/507-7103
+%% Fax: +43/512/507-2851
+
+%% for those who use Sweave please include the following line (with % symbols):
+%% need no \usepackage{Sweave.sty}
+
+%% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%% include your article here, just as usual
+
+\section{Introduction}
+
+Ranked data arises whenever multiple entities are sorted by some
+criterion; the preferred interpretation is a race in which the
+sufficient statistic is the order of competitors crossing the
+finishing line.  The Plackett--Luce likelihood
+function~\citep{luce1959,plackett1975} is a generalization of the
+Bradley--Terry model~\citep{bradley1952} in which non-negative
+strengths are assigned to each competitor; without loss of generality,
+if the finishing order is $1,2,\ldots,n$ and competitor $i$ has
+strength $p_i\geqslant 0$, then the Plackett--Luce likelihood function
+for this observation will be proportional to
+
+\begin{equation}\label{plackettluce}
+\prod_{i=1}^n\frac{p_i}{\sum_{j=i}^np_j}
+\end{equation}
+
+\noindent where the strengths are normalised so $\sum p_i=1$.
+However, estimation of the strengths is somewhat difficult if $n$ is
+even moderately large: even with as few as 20 competitors following
+Zipf's law~\citep{zipf1949} [a typical assumption for Bradley--Terry
+  strengths] and say 20 independent complete rank observations,
+\cite{hankin2017_rmd} shows that maximum likelihood strengths
+identify the correct ranking with a probability of essentially zero.
+The situation is worse in cases such as formula 1 motor racing
+considered below, which requires us to consider ${\mathcal O}(100)$
+competitors.
+
+\subsection{Some simple cases}
+
+We consider the smallest non-trivial cases $n=3$ and $n=4$.  For $n=3$
+we have Plackett-Luce strengths $\alpha x,\alpha x^2,\alpha x^3$ [the
+  extra factor of $x$ allows us to identify the $r$ in ``$\alpha x^r$''
+  with the rank of the competitor, the best being rank 1].  Suppose
+the focal competitor came first, the likelihood function would be
+
+\begin{equation}
+  \mathcal{L}(x,r)=\frac{x^{r-1}}{1+x+x^2}\qquad r=1,2,3
+\end{equation}
+
+If the focal competitor came second we would have two Plackett-Luce
+probabilities to add, corresponding to $\alpha x^i$ or $\alpha x^j$
+coming first where $i,j\neq r$.  For example, if $r=1$ we would have
+two finishing orders that are consistent with the observation: $2\succ
+1\succ 3$ and $3\succ 1\succ 2$.  These are disjoint so the likelihood
+will be proportional to
+
+$$
+\frac{x^2}{x+x^2+x^3}\cdot\frac{x}{x+x^3} + 
+\frac{x^3}{x+x^2+x^3}\cdot\frac{x}{x+x^2}
+$$
+
+After simplification:
+
+\begin{equation}
+  \mathcal{L}(x,r)=
+  \begin{cases}
+    \frac{x  }{x+x^2+x^3}\left(\frac{x^2}{x+x^3}   + \frac{x^3}{x+x^2}\right)\qquad r=1\\
+    \frac{x^2}{x+x^2+x^3}\left(\frac{x  }{x^2+x^3} + \frac{x^3}{x+x^2}\right)\qquad r=2\\
+    \frac{x^3}{x+x^2+x^3}\left(\frac{x  }{x^2+x^3} + \frac{x^2}{x+x^3}\right)\qquad r=3
+\end{cases}
+\end{equation}
+
+The $n=4$ case is harder as we potentially have six consistent
+orderings for each observation.  As an example, if the focal
+competitor comes third we have $1
+
+
+\subsection{Simplified Plackett-Luce likelihoods}
+
+As noted, likelihood function~\ref{plackettluce} becomes unmanageable
+with $n$ even moderately large and some form of simplification is
+needed.  To that end, consider a Plackett-Luce likelihood function for
+a race between a competitor of Bradley-Terry strength $a$ and
+$n-1\geqslant 1$ cloned competitors, each of strength $b=1-a$.  Under
+these circumstances, an observation is indexed by~$r$, the rank of the
+focal competitor, and because we have $n$ competitors $1\leqslant
+r\leqslant n$.  The initial field strength is $a+(n-1)b=1+(n-2)b$.  The
+Plackett--Luce likelihood function~\citep{luce1959,plackett1975} for
+this situation would be
+
+\begin{eqnarray}\label{likeforrn1}
+  \mathcal{L}_{r,n}(a) &=&
+\frac{b}{1+ (n-2)b}\cdot
+\frac{b}{a+(n-3)b}\cdots\frac{a}{a+(n-r-1)b}\nonumber\\
+&=& \frac{B-1}{(B+n-2)\cdots(B+n-r-1)}\nonumber\\ 
+&=& \frac{(B-1)(B+n-r-2)!}{(B+n-1)!}\label{likeforrn3}
+\end{eqnarray}
+
+\noindent where $B=1/b$.  Note carefully that these expressions are
+likelihoods, not probabilities, and do not sum to 1.  Previous related
+work \citep{hankin2024_hyper3} presented the case $n=3$ [in current
+  notation] but here arbitrary $n$ may be considered.  Taking the case
+$n=9$, for example, gives us 9 distinct likelihood functions,
+Figure~\ref{ninelikes}.  We see an unanticipated asymmetry between $r$
+and $n-r$.  For $r=5$ one might expect that $\hat{a}=\frac{1}{2}$ on
+the grounds that the focal competitor's performance was median.
+However, $\hat{a}\simeq 0.5886$.  Figure~\ref{dotprobs} shows the
+maximum likelihood estimator $\hat{a}$ for various values of $n,r$,
+obtained by direct numerical maximization, in the R programming
+language \cite{rcore2024}, of equation~\ref{likeforrn3}.
+
+\begin{figure}[t]
+  \begin{centering}
+\includegraphics[width=4in]{ninelikes}  % ninelikes.pdf produced by very_simplified_likelihood.Rmd
+\caption{Likelihood functions for $r=1,2,\ldots 9$\label{ninelikes}.  Value
+  of $r$ indicated in colour by its curve; vertical line shows
+  $\hat{a}\simeq 0.5886$ for the case $r=5$}
+\end{centering}
+\end{figure}
+
+
+\subsection{Asymptotic analysis}
+
+Even though expression ~\ref{likeforrn3} represents a simplification
+of the Plackett-Luce likelihood function, it becomes intractable even
+for moderate values of $n$ and $r$.  Analysis of
+expression~\ref{likeforrn3} for large $n$ and $r=pn$ for fixed $p$
+shows that the support $\mathcal{S}=\log\mathcal{L}_{r,n}(a)$ is
+asymptotically
+
+\begin{equation}\label{asymptotic}
+\mathcal{S}=
+%\log\mathcal{L}_{r,n}(a)=
+\log(B-1) + B\log(1-r/n)
++\mathcal{O}\left(n^{-1}\right)
+\end{equation}
+
+(up to an arbitrary additive constant).  Using
+$\mathcal{S}^*=\log(B-1)+B\log(1-r/n)$ as an approximate support thus
+incurs an error of only $\mathcal{O}(n^{-1})$.  Observing that
+$\partial^2\mathcal{S}^*/\partial B^2=-(B-1)^{-2}<0$, the evaluate
+would be unique; we have $\hat{B}=1-\log(1-r/n)^{-1}$, or
+alternatively $\hat{a}=(1-\log(1-r/n))^{-1}$.  Compare this with the
+result of asking ``what is the probability that the focal competitor
+beats a randomly chosen opponent?'' to which the binomial maximum
+likelihood estimate is $\frac{r-1}{n-1}$.  For repeated independent
+observations $r_i,n_i$, $1\leqslant i\leqslant N$ we would have
+
+\begin{equation}
+  \hat{a} =   \frac{1}{1-\sum\log(1-r_i/n_i)/N};
+\end{equation}
+
+compare the binomial result of $\sum(r_i-1)/\sum n_i$.  Below, I
+present three examples that showcase likelihood
+function~\ref{likeforrn3}, drawn from the fields of athletics,
+education, and Formula~1 motor racing.
+
+\begin{figure}[t]
+  \begin{centering}
+\includegraphics[width=4in]{dotprobs}  % produced by very_simplified_likelihood.Rmd
+\caption{Maximum likelihood estimator $\hat{a}$ for $n=2(1)10$
+  and\label{dotprobs}} $r=1(1)n$
+\end{centering}
+\end{figure}
+
+% \subsection{Olympic track and field athletics}
+% 
+% One long-standing contention in the athletic world is that of lane
+% bias~\citep{munro2022}.  Running in the inner lane is frequently held
+% to be a disadvantage; mechanisms include biomechanical issues arising
+% from centrifugal acceleration, to competitors' inability to see their
+% rivals.  Here attention is restricted to heats, for which lane placing
+% is random.  I consider every heat in Men's 100m Olympic running from
+% 2004--2020 (a total of 41 heats, each of 8 or 9 competitors); only
+% competitors' ranks are used.  Figure~\ref{plotolymp} shows a
+% log-likelihood curve for the Bradley--Terry strength of the focal
+% competitor, here the runner in the innermost lane.  We see that the
+% evaluate of $0.511$ is very close to the neutral value of $0.5$, for
+% which the support is only $0.029$, far short of the standard two units
+% of support criterion for rejection~\citep{edwards1972}.  This dataset
+% contains no evidence to support lane bias.
+% 
+% \begin{figure}[t]
+%   \begin{centering}
+% \includegraphics[width=4in]{plotolymp} % produced by very_simplified_likelihood.Rmd
+% \caption{Log-likelihood curve for the Bradley--Terry strength of the
+%   lane-1 runner, Olympic qualifying heats 2012-2020 \label{plotolymp}}
+% \end{centering}
+% \end{figure}
+
+\subsection{Park run}
+
+``Parkrun'' is a distributed community initiative that organises
+weekly timed 5 km runs/walks in parks worldwide~\citep{hindley2020}.
+A typical event will have 200 participants.  Table~\ref{parkruntable}
+shows the author has completed a total of 21 parkruns to date,
+comprising 9 runs in 2023 and 12 in 2024.  From the first pair of
+numbers we see that 259 runners attended that particular parkrun in
+2023, of whom the author placed 177.
+
+\begin{table}[t]
+  \centering
+  \caption{Parkrun results}
+\label{parkruntable}
+\begin{tabular}{cccccccccc}\\
+ & \multicolumn{9}{c}{2023}\\
+rank   & 177& 222& 206& 142& 118& 224& 128& 115& 183\\
+runners& 259& 305& 297& 241& 179& 338& 203& 245& 254\\ \\
+\end{tabular}
+\begin{tabular}{ccccccccccccc}
+  & \multicolumn{12}{c}{2024}\\
+rank      &  145& 157& 156& 191& 172& 174& 173& 165& 172& 199& 181& 229\\
+runners   &  193& 240& 197& 257& 227& 234& 238& 238& 196& 242& 242& 318\\
+\end{tabular}
+\end{table}
+
+Is there evidence that the author's performance differs between years?
+Figure~\ref{parkruncontour} shows contours of support [again
+  normalised so the support of the evaluate is zero] for the parkrun
+dataset, as a function of 2023 strength on the horizontal axis and
+2024 strength on the vertical axis.  A null of equal strengths appears
+as the diagonal line.  We see that the maximum likelihood estimate is
+$\hat{p}_\mathrm{2023}=0.413$, $\hat{p}_\mathrm{2024}=0.485$.
+However, a constrained optimization shows that the maximum support
+along the null diagonal is about $-0.22$, at
+${p}_\mathrm{2023}={p}_\mathrm{2024}\simeq 0.441$.  The two units of
+support criterion~\citep{edwards1992} is not met, and we conclude that
+there is no evidence for a change in competitive strength between the
+years.  Now consider table~\ref{fisherparkrun}, giving a summary of
+whether nonfocal competitors place ahead of the author, split by year.
+A two-sided Fisher test gives a $p$-value of about $5\times 10^{-14}$,
+surely an unreasonable conclusion given the author's perceived
+performance stagnation.
+
+\begin{figure}[t]
+  \begin{centering}
+\includegraphics[width=4in]{parkruncontour} % produced by very_simplified_likelihood.Rmd
+\caption{Support contours for Bradley-Terry strength
+  for \label{parkruncontour} 2023 and 2024.  Null of equal strengths
+  shown as a diagonal line}
+\end{centering}
+\end{figure}
+
+
+
+\begin{table}[h]
+    \begin{tabular}{ l c r }
+       & \multicolumn{2}{c}{Faster?}\\
+       & yes  & no  \\
+  2023 & 1506 & 806 \\
+  2024 & 2102 & 708
+    \end{tabular}
+    \caption{Two-way contingency\label{fisherparkrun} table}
+\end{table}
+
+\subsection{Education}
+
+In educational research, confidentiality of examination scores is
+often an issue, and individual results are generally regarded as
+sensitive and private information.  Nevertheless, it is common for a
+student to possess some informative observations, for example the
+total enrollment in a specific class and their individual ranking
+within that class.  Table~\ref{educationtable} shows an apocryphal
+dataset: what could a student infer from such data?
+
+\begin{table*}[t]
+  \caption{Educational dataset}
+\label{educationtable}
+\begin{tabular}{llll}
+\hline
+                   course&category   &rank&class size\\ \hline
+      rings and modules  &  pure     & 9  &      12\\
+           group theory  &  pure     & 7  &      17\\
+               calculus  & applied   & 2  &      23\\
+         linear algebra  & applied   & 3  &       9\\
+ differential equations  & applied   & 2  &      13\\
+               topology  &   pure    & 8  &      14\\
+     special relativity  & applied   & 3  &      13\\
+        fluid mechanics  & applied   & 4  &      12\\
+            Lie algebra  &   pure    & 9  &      15\\
+     \hline
+\end{tabular}
+\end{table*}
+
+One might wonder whether the student was better at pure or applied
+mathematics and, if so, to quantify the difference.
+Figure~\ref{plotpureandapplied} shows contours of support [again
+  normalised so the support of the evaluate is zero] for the dataset,
+as a function of pure strength on the horizontal axis and applied
+strength on the vertical axis.  A null of equal strengths appears as
+the diagonal line.  We see that the maximum likelihood estimate is
+$\hat{p}_\mathrm{pure}=0.542$, $\hat{p}_\mathrm{applied}=0.852$.
+However, a constrained optimization shows that the maximum support
+along the null diagonal is about $-2.06$, at
+${p}_\mathrm{pure}={p}_\mathrm{applied}\simeq 0.683$.  The two units
+of support criterion~\citep{edwards1992} is met, and we are justified
+in concluding that the student indeed has a higher ranking in the
+applied modules than the pure modules.  Alternatively, we may observe
+that $2\mathcal{S}=4.11$ is in the tail region of its asymptotic
+$\chi^2_1$ distribution, corresponding to a $p$-value of about
+$0.042$.
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=4in]{plotpureandapplied}  % plotpureandapplied.pdf produced by very_simplified_likelihood.Rmd
+\caption{Contours of equal support for pure (horizontal) and applied
+  (vertical) strength; null of equal strengths shown as a diagonal
+  line \label{plotpureandapplied}}
+\end{centering}
+\end{figure}
+
+
+\subsection{Formula 1}
+
+Formula 1 motor racing is an important and prestigious motor sport
+\citep{codling2017,jenkins2010}.  Season ranking is based on a points
+allocation system wherein competitors are awarded points based on race
+finishing order; points accumulate additively.  The overall
+competition winner is the competitor who accumulates the most points
+after the final race.  However, as argued by
+\cite{hankin2023_formula1points}, the drivers' {\em ranks} are
+statistically sufficient for analysis using Plackett--Luce approaches.
+The methods presented here may be used to assess competitive strengths
+of Formula 1 racing driver Sergio P\'{e}rez (``Checo'') over his
+career from 2011 to 2023.  Checo's Formula 1 performance began
+somewhat inauspiciously as second driver for Sauber for whom he
+finished no higher than P7 in 2011, but his performance rose
+subsequently, culminating in his achievement of a startling 20 podium
+finishes in 2022--3.  Noting that Checo raced against 73 distinct
+competitors---this rendering estimation of the other players'
+Plackett--Luce strengths effectively
+impossible~\citep{hankin2020}---we are nevertheless in a position to
+consider competitive strength using the modified likelihood approach
+presented here.  We consider the following inference problem:
+
+\begin{equation}
+  a = a(t) = \frac{e^{\alpha + \beta t}}{1+e^{\alpha + \beta t}},\qquad\alpha,\beta\in\mathbb{R}
+\end{equation}
+
+(that is, a logistic regression of generalized Bradley--Terry strength
+$a$ against time $t$, with $\alpha$ and $\beta$ being linear
+coefficients).  Contours of equal support are shown in
+Figure~\ref{showchecolike}, again normalized so that
+$\mathcal{S}(\hat{\alpha},\hat{\beta})=0$.  We see the expected
+elliptical contours, and further $H_0\colon\beta=0$ may be rejected in
+favour of $\alpha=-0.27$, $\beta=0.081$, on the grounds that
+$\mathcal{S}(\alpha,0)\leqslant 9.2$.  Alternatively we may observe
+that $2\mathcal{S}=18.4$ would correspond to a $p$-value of about
+$1.7\times 10^{-5}$ on its asymptotic $\chi^2_1$ null distribution.
+
+\begin{figure}[t]
+  \begin{centering}
+\includegraphics[width=4in]{showchecolike}  % showchecolike.pdf produced by very_simplified_likelihood.Rmd
+\caption{Log-likelihood contours for $\alpha,\beta$ for Checo's racing
+  career 2011--2023\label{showchecolike}}
+\end{centering}
+\end{figure}
+
+\section{Conclusions and further work}
+
+Here a simplification of the Plackett--Luce likelihood functions for
+order statistics was proposed, some simple properties obtained, and
+inference problems from three disciplines given.  The results seem to
+be difficult to obtain any other way.  The assumptions furnish a
+reasonable, intuitive, and computationally tractable likelihood
+function with wide applicability.  Further work might include the
+analysis of more than one focal competitor.
+
+
+
+
+%\bibliographystyle{plainat}
+\bibliography{simplified.bib}
+
+
+
+\end{document}
