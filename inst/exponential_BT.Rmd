@@ -21,6 +21,126 @@ x^{r-1}$ for some $r$ with $1\leqslant r < n$.  Thus $r=1$ means that
 the focal competitor is the strongest among the $n$, $r=2$ means he is
 the second, and so on.
 
+# Some simple cases
+
+
+We consider the smallest non-trivial cases $n=3$ and $n=4$.  For $n=3$
+we have Plackett-Luce strengths $\alpha x,\alpha x^2,\alpha x^3$ [the
+  extra factor of $x$ allows us to identify the $r$ in ``$\alpha x^r$''
+  with the rank of the competitor, the best being rank 1].  Suppose
+the focal competitor came first, the likelihood function would be
+
+\begin{equation}
+  \mathcal{L}(x,r)=\frac{x^{r-1}}{1+x+x^2}\qquad r=1,2,3
+\end{equation}
+
+```{r plot123first}
+f <- function(x,r){ x^r/(x + x^2 + x^3) }
+
+x <- seq(from=0.01 , to=1, by=0.01)
+plot(c(-3,0),c(-3,1),type='n', xlab="log x", ylab="support",
+     main = "support for x,r", sub="Three competitors, focal competitor came FIRST"
+     )
+points(log(x),log(f(x,1)),type="l",col="black")
+points(log(x),log(f(x,2)),type="l", col="red")
+points(log(x),log(f(x,3)),type="l", col="blue")
+
+abline(h=c(0,-2))
+
+legend("topright",lty=1, col=c("black","red","blue"),
+       legend=c("r=1","r=2","r=3"))
+
+```
+
+
+
+
+If the focal competitor came second we would have two Plackett-Luce
+probabilities to add, corresponding to different order statistics.
+$\alpha x^i$ or $\alpha x^j$ coming first where $i,j\neq r$.  For
+example, if $r=1$ we would have two finishing orders that are
+consistent with the observation: $2\succ 1\succ 3$ and $3\succ 1\succ
+2$.  These are disjoint so the likelihood will be proportional to
+
+$$
+\frac{x^2}{x+x^2+x^3}\cdot\frac{x}{x+x^3} + 
+\frac{x^3}{x+x^2+x^3}\cdot\frac{x}{x+x^2}
+$$
+
+After simplification:
+
+\begin{equation}
+  \mathcal{L}(x,r)=
+  \begin{cases}
+    \frac{x  }{x+x^2+x^3}\left(\frac{x^2}{x+x^3}   + \frac{x^3}{x+x^2}\right)\qquad r=1\\
+    \frac{x^2}{x+x^2+x^3}\left(\frac{x  }{x^2+x^3} + \frac{x^3}{x+x^2}\right)\qquad r=2\\
+    \frac{x^3}{x+x^2+x^3}\left(\frac{x  }{x^2+x^3} + \frac{x^2}{x+x^3}\right)\qquad r=3
+\end{cases}
+\end{equation}
+
+
+```{r plot123second}
+like <- function(x,r){
+  S <- x + x^2 + x^3
+  switch(r,
+         '1' = x^2/S*x^1/(x^1+x^3) + x^3/S*x^1/(x^1+x^2), # 213+312
+         '2' = x^1/S*x^2/(x^2+x^3) + x^3/S*x^2/(x^1+x^2), # 123+321
+         '3' = x^1/S*x^3/(x^2+x^3) + x^2/S*x^3/(x^1+x^3)  # 132+231
+  )
+}
+
+x <- seq(from=0.01 , to=1, by=0.01)
+plot(c(-3,0),c(-3,1),type='n', xlab="log x", ylab="support",
+     main = "support for x,r", sub="Three competitors, focal competitor came SECOND"
+     )
+points(log(x),log(like(x,1)),type="l",col="black")
+points(log(x),log(like(x,2)),type="l", col="red")
+points(log(x),log(like(x,3)),type="l", col="blue")
+
+abline(h=c(0,-2))
+
+legend("topright",lty=1, col=c("black","red","blue"),
+       legend=c("r=1","r=2","r=3"))
+
+```
+
+Now the focal competitor comes last:
+
+
+```{r plot123third}
+like <- function(x,r){
+  S <- x + x^2 + x^3
+  switch(r,
+         '1' = x^3/S*x^2/(x^1+x^2) + x^2/S*x^3/(x^1+x^3), # 213+312
+         '2' = x^1/S*x^3/(x^2+x^3) + x^3/S*x^1/(x^1+x^2), # 123+321
+         '3' = x^1/S*x^2/(x^2+x^3) + x^2/S*x^1/(x^1+x^3)  # 132+231
+  )
+}
+
+x <- seq(from=0.01 , to=1, by=0.01)
+plot(c(-3,0),c(-3,1),type='n', xlab="log x", ylab="support",
+     main = "support for x,r", sub="Three competitors, focal competitor came THIRD"
+     )
+points(log(x),log(like(x,1)),type="l",col="black")
+points(log(x),log(like(x,2)),type="l", col="red")
+points(log(x),log(like(x,3)),type="l", col="blue")
+
+abline(h=c(0,-2))
+
+legend("topright",lty=1, col=c("black","red","blue"),
+       legend=c("r=1","r=2","r=3"))
+
+```
+
+
+
+
+
+The $n=4$ case is harder as we potentially have six consistent
+orderings for each observation.  As an example, if the focal
+competitor comes third we have $1
+
+
 
 ```{r defineBT}
 BT <- function(n,x){
