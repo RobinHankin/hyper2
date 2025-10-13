@@ -35,25 +35,40 @@ the focal competitor came first, the likelihood function would be
 \end{equation}
 
 ```{r plot123first}
+worker_123first <- function(...){
 f <- function(x,r){ x^r/(x + x^2 + x^3) }
 
 x <- seq(from=0.01 , to=1, by=0.01)
-plot(c(-3,0),c(-3,1),type='n', xlab="log x", ylab="support",
-     main = "support for x,r", sub="Three competitors, focal competitor came FIRST"
-     )
-points(log(x),log(f(x,1)),type="l",col="black")
-points(log(x),log(f(x,2)),type="l", col="red")
-points(log(x),log(f(x,3)),type="l", col="blue")
+plot(c(-3,0), c(-3,0), type='n',
+     xlab="log x", ylab="log-likelihood",main="(a)")
+points(log(x),log(f(x,1)), type="l", col="black")
+points(log(x),log(f(x,2)), type="l", col="red"  )
+points(log(x),log(f(x,3)), type="l", col="blue" )
 
-abline(h=c(0,-2))
+abline(h=0, lty=2)
+abline(h = -2)
+e <- exp(1)
+r2reject <- ((e^2-1)-sqrt(e^4-2*e^2-3))/2
+segments(x0=log(r2reject), y0=-2.2,y1=-1.8)
 
-legend("topright",lty=1, col=c("black","red","blue"),
+r3reject <- (1+sqrt(1+4*(e^2-1)))/(2*(e^2-1))
+segments(x0=log(r3reject), y0=-2.2,y1=-1.8)
+legend(x= -3, y= - 0.5, lty=1, col=c("black","red","blue"),
        legend=c("r=1","r=2","r=3"))
+}
+e <- exp(1)
+r2reject <- ((e^2-1)-sqrt(e^4-2*e^2-3))/2
+print(r2reject)
+r3reject <- (1+sqrt(1+4*(e^2-1)))/(2*(e^2-1))
+print(r3reject)
+
+worker_123first()
+pdf(file="123first.pdf")
+worker_123first()
+dev.off()
+
 
 ```
-
-
-
 
 If the focal competitor came second we would have two Plackett-Luce
 probabilities to add, corresponding to different order statistics.
@@ -80,6 +95,7 @@ After simplification:
 
 
 ```{r plot123second}
+worker_123second <- function(...){
 like <- function(x,r){
   S <- x + x^2 + x^3
   switch(r,
@@ -89,25 +105,30 @@ like <- function(x,r){
   )
 }
 
-x <- seq(from=0.01 , to=1, by=0.01)
-plot(c(-3,0),c(-3,1),type='n', xlab="log x", ylab="support",
-     main = "support for x,r", sub="Three competitors, focal competitor came SECOND"
-     )
-points(log(x),log(like(x,1)),type="l",col="black")
-points(log(x),log(like(x,2)),type="l", col="red")
-points(log(x),log(like(x,3)),type="l", col="blue")
+x <- seq(from=0.01, to=1, by=0.01)
+plot(c(-3,0),c(-3,0), type='n',
+     xlab="log x", ylab="log-likelihood", main="(b)")
+points(log(x),log(like(x,1)), type="l", col="black")
+points(log(x),log(like(x,2)), type="l", col="red"  )
+points(log(x),log(like(x,3)), type="l", col="blue" )
 
-abline(h=c(0,-2))
+abline(h=0,lty=2)
+abline(h=-2)
 
-legend("topright",lty=1, col=c("black","red","blue"),
-       legend=c("r=1","r=2","r=3"))
-
+legend(x = -3, y = -0.5, lty=1, col=c("black","red","blue"),
+       legend=c("r=1", "r=2", "r=3"))
+}
+worker_123second()
+pdf(file="123second.pdf")
+worker_123second()
+dev.off()
 ```
 
 Now the focal competitor comes last:
 
 
 ```{r plot123third}
+worker_123third <- function(...){
 like <- function(x,r){
   S <- x + x^2 + x^3
   switch(r,
@@ -117,29 +138,44 @@ like <- function(x,r){
   )
 }
 
-x <- seq(from=0.01 , to=1, by=0.01)
-plot(c(-3,0),c(-3,1),type='n', xlab="log x", ylab="support",
-     main = "support for x,r", sub="Three competitors, focal competitor came THIRD"
-     )
-points(log(x),log(like(x,1)),type="l",col="black")
-points(log(x),log(like(x,2)),type="l", col="red")
-points(log(x),log(like(x,3)),type="l", col="blue")
+x <- seq(from=0.01, to=1, by=0.01)
+plot(c(-3,0),c(-3,0),type='n',
+     xlab="log x", ylab="log-likelihood", main="(c)")
+points(log(x),log(like(x,1)), type="l", col="black")
+points(log(x),log(like(x,2)), type="l", col="red"  )
+points(log(x),log(like(x,3)), type="l", col="blue" )
 
-abline(h=c(0,-2))
+abline(h=0,lty=2)
+abline(h=-2)
 
-legend("topright",lty=1, col=c("black","red","blue"),
-       legend=c("r=1","r=2","r=3"))
+legend(x = -3, y = -0.5, lty=1, col=c("black", "red", "blue"),
+       legend=c("r=1", "r=2", "r=3"))
+}
 
+worker_123third()
+pdf(file="123third.pdf")
+worker_123third()
+dev.off()
 ```
 
 
-
-
-
+```{r allthree}
+worker_allthree <- function(...){
+op <- par(mfrow=c(1,3))
+worker_123first()
+worker_123second()
+worker_123third()
+dev.off()
+par(op)
+}
+worker_allthree()
+pdf(file="123all.pdf",height=4)
+worker_allthree()
+dev.off()
+```
 The $n=4$ case is harder as we potentially have six consistent
 orderings for each observation.  As an example, if the focal
-competitor comes third we have $1
-
+competitor comes third we have $1$
 
 
 ```{r defineBT}

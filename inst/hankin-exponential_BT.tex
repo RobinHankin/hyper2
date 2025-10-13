@@ -114,11 +114,11 @@ the focal competitor came first, the likelihood function would be
 \end{equation}
 
 If the focal competitor came second we would have two Plackett-Luce
-probabilities to add, corresponding to $\alpha x^i$ or $\alpha x^j$
-coming first where $i,j\neq r$.  For example, if $r=1$ we would have
-two finishing orders that are consistent with the observation: $2\succ
-1\succ 3$ and $3\succ 1\succ 2$.  These are disjoint so the likelihood
-will be proportional to
+probabilities to add, corresponding to different order statistics.
+$\alpha x^i$ or $\alpha x^j$ coming first where $i,j\neq r$.  For
+example, if $r=1$ we would have two finishing orders that are
+consistent with the observation: $2\succ 1\succ 3$ and $3\succ 1\succ
+2$.  These are disjoint so the likelihood will be proportional to
 
 $$
 \frac{x^2}{x+x^2+x^3}\cdot\frac{x}{x+x^3} + 
@@ -130,16 +130,24 @@ After simplification:
 \begin{equation}
   \mathcal{L}(x,r)=
   \begin{cases}
-    \frac{x  }{x+x^2+x^3}\left(\frac{x^2}{x+x^3}   + \frac{x^3}{x+x^2}\right)\qquad r=1\\
-    \frac{x^2}{x+x^2+x^3}\left(\frac{x  }{x^2+x^3} + \frac{x^3}{x+x^2}\right)\qquad r=2\\
-    \frac{x^3}{x+x^2+x^3}\left(\frac{x  }{x^2+x^3} + \frac{x^2}{x+x^3}\right)\qquad r=3
+    \frac{x^1}{x^1+x^2+x^3}\left(\frac{x^2}{x^1+x^3} + \frac{x^3}{x^1+x^2}\right)\qquad r=1\\
+    \frac{x^2}{x^1+x^2+x^3}\left(\frac{x^1}{x^2+x^3} + \frac{x^3}{x^1+x^2}\right)\qquad r=2\\
+    \frac{x^3}{x^1+x^2+x^3}\left(\frac{x^1}{x^2+x^3} + \frac{x^2}{x^1+x^3}\right)\qquad r=3
 \end{cases}
 \end{equation}
 
+\begin{figure}[t]
+  \begin{centering}
+\includegraphics[width=4in]{123all}  % 123all.pdf produced by exponential_BT.Rmd
+\caption{Log-likelihood functions \label{123all} for support
+  $\in\left\lbrace 1, 2,3\right\rbrace\times\mathbb{R}$}
+\end{centering}
+\end{figure}
+
+
 The $n=4$ case is harder as we potentially have six consistent
 orderings for each observation.  As an example, if the focal
-competitor comes third we have $1
-
+competitor comes third we have $1$
 
 \subsection{Simplified Plackett-Luce likelihoods}
 
