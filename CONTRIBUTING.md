@@ -7,6 +7,8 @@ and inclusive environment.  Various forms of contributions are
 welcome:
 
 - **Bug Reports**: Feel free to report any bugs you encounter.
+- **Use cases**: if you use `stokes`, tell me about it!  I want to
+  know how the software is being used!
 - **Documentation**: Typos, clarity issues, or missing guides: your
   help is welcome here.
 - **Feature Discussions/Requests**: Got an idea? Open an issue to
