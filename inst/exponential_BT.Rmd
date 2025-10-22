@@ -214,7 +214,6 @@ and so on.
 
 
 ```{r fourcompetitors}
-worker <- function(...){
 PL <- function(v){
   stopifnot(length(v) == 4)
   v[1]/(v[1]+v[2]+v[3]+v[4]) *
@@ -264,6 +263,9 @@ f4 <- function(v){  # focal competitor came third, r=4
   )
 }
 
+
+worker <- function(...){
+
 o <- 1:4
 
 plot(c(-3,0),c(-3,0), type='n',
@@ -276,17 +278,50 @@ points(log(x),log(sapply(x,f3)), type="l", col="blue")
 points(log(x),log(sapply(x,f4)), type="l", col="green")
 
 abline(h=0,lty=2)
-abline(h = -2, lty=1)
+abline(h = -2, lty=1, col="gray")
            
-legend("topright",lty=1,col=c("black","red","blue","green"),
-       legend=c("r=1","r=2","r=3","r=4"), bg="white")
-}
+legend("topright",lty=1,col=c("black", "red", "blue", "green"),
+       legend=c("r=1", "r=2", "r=3", "r=4"), bg="white")
+
+
+f1_solve <- function(x){log(sapply(exp(x), f1)) + 2}
+f2_solve <- function(x){log(sapply(exp(x), f2)) + 2}
+f4_solve <- function(x){log(sapply(exp(x), f4)) + 2}
+
+root1 <- uniroot(f1_solve, c(-3,-0.1))$root
+root2 <- uniroot(f2_solve, c(-3,-0.1))$root
+root4 <- uniroot(f4_solve, c(-3,-0.1))$root
+
+segments(x0=root1, y0=-2.1, y1=-1.9, col="gray")
+segments(x0=root2, y0=-2.1, y1=-1.9, col="gray")
+segments(x0=root4, y0=-2.1, y1=-1.9, col="gray")
+
+print(c(root1, root2, root4))
+} # worker() def closes
+
+
 
 worker()
 pdf(file="1234third.pdf")
 worker()
 dev.off()
+
+
 ```
+
+
+# Try 7 competitors, focal competitor comes third
+
+```{r}
+
+
+library(partitions)
+perms(7) -> x
+## first r=1
+
+jj <- x[,x[3,] == 1]
+
+
 
 
 # More stuff
