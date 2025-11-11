@@ -10,6 +10,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(hyper2)
 library(stringr)
+library("partitions")
+library("magrittr")
 set.seed(0)
 ```
 
@@ -310,19 +312,47 @@ dev.off()
 ```
 
 
-# Try 7 competitors, focal competitor comes third
-
-```{r}
+# Try 8 competitors, focal competitor comes third
 
 
-library(partitions)
-perms(7) -> x
-## first r=1
+```{r calconetoeight, cache=TRUE}
+pl <- function(v){
+  out <- 1
+  n <- length(v)
+  for(i in seq_len(n-1)){
+    out <- out*v[i]
+    out <- out/sum(v[seq(from=i, to=n)])
+  }
+  return(out)
+}
 
-jj <- x[,x[3,] == 1]
+f <- function(x, place, no_of_comp){
+    M <- perms(no_of_comp)
+    out <- rep(0, no_of_comp)
+    for(i in seq_len(ncol(M))){
+        out[M[place,i]] %<>% `+`(pl(x^M[,i]))
+    }
+    return(out)
+}
 
+n <- 8
+place <- 3
+x <- seq(from = 0.1, to=1, by=0.01)
+L <- matrix(0, length(x), n)
+for(i in seq_along(x)){
+    L[i,] <- f(x[i], place, n)
+}
+```
 
-
+```{r onetoeight}
+worker <- function(...){
+    matplot(log(x),log(L), type='l', lty=1,ylim=c(-4,0))
+}
+pdf(file = "onetoeight.pdf")
+worker()
+dev.off()
+worker()
+```
 
 # More stuff
 
@@ -358,7 +388,7 @@ plot(o,type='h')
 
 
     
-```{r definegetprob, cache=TRUE}
+```{r definegetprob, caasdf=TRUE}
 getprob <- function(n, r, x, N=1e4){
     jj <- BT(n, x)
     wanted <- paste0("p", str_pad(r ,ceiling(log10(n))))
