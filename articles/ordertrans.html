@@ -105,7 +105,7 @@ Hankin</h4>
 
     
     
-<p><img src="../../../_temp/Library/hyper2/help/figures/hyper2.png" width="20%" style="float:right; padding:10px"></p>
+<p><img src="../../../_temp/Library/hyper2/help/figures/hyper2.png" class="r-plt" width="20%" style="float:right; padding:10px"></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ordertrans</span></span></code></pre></div>
 <pre><code><span><span class="co">## function (x, players) </span></span>
@@ -326,7 +326,7 @@ have identical names, in the same order. Observe that
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>  <span class="co"># diagonal line</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">j1</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">j1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,<span class="va">j2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">j1</span><span class="op">)</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,pos<span class="op">=</span><span class="fl">4</span>,col<span class="op">=</span><span class="st">'gray'</span>,cex<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span><span class="op">}</span></span></code></pre></div>
 <div class="figure">
-<img src="ordertrans_files/figure-html/j1vsj2-1.png" alt="Judge 1 vs judge 2" width="576"><p class="caption">
+<img src="ordertrans_files/figure-html/j1vsj2-1.png" class="r-plt" alt="Judge 1 vs judge 2" width="576"><p class="caption">
 Judge 1 vs judge 2
 </p>
 </div>
@@ -397,7 +397,7 @@ but in alphabetical order, to facilitate comparison with
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mL</span>,<span class="fu"><a href="../reference/ordertrans.html">ordertrans</a></span><span class="op">(</span><span class="va">mP</span>,<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">mL</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="ordertrans_files/figure-html/crapplot-1.png" alt="points-based ranks vs likelihood ranks" width="576"><p class="caption">
+<img src="ordertrans_files/figure-html/crapplot-1.png" class="r-plt" alt="points-based ranks vs likelihood ranks" width="576"><p class="caption">
 points-based ranks vs likelihood ranks
 </p>
 </div>
@@ -407,7 +407,7 @@ figure @ref(fig:showoffordertransplot).</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ordertrans.html">ordertransplot</a></span><span class="op">(</span><span class="va">mL</span>,<span class="va">mP</span>,xlab<span class="op">=</span><span class="st">"likelihood rank"</span>,ylab<span class="op">=</span><span class="st">"Borda rank"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="ordertrans_files/figure-html/showoffordertransplot-1.png" alt="points=based rank vs likelihood rank using `ordertransplot()`" width="576"><p class="caption">
+<img src="ordertrans_files/figure-html/showoffordertransplot-1.png" class="r-plt" alt="points=based rank vs likelihood rank using `ordertransplot()`" width="576"><p class="caption">
 points=based rank vs likelihood rank using <code><a href="../reference/ordertrans.html">ordertransplot()</a></code>
 </p>
 </div>
@@ -415,7 +415,7 @@ points=based rank vs likelihood rank using <code><a href="../reference/ordertran
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ordertrans.html">ordertransplot</a></span><span class="op">(</span><span class="va">mL</span>,<span class="va">j1</span>,xlab<span class="op">=</span><span class="st">"likelihood rank"</span>,ylab<span class="op">=</span><span class="st">"Judge 1 rank"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="ordertrans_files/figure-html/transplotjudge1-1.png" alt="Likelihood rank vs rank according to Judge 1" width="576"><p class="caption">
+<img src="ordertrans_files/figure-html/transplotjudge1-1.png" class="r-plt" alt="Likelihood rank vs rank according to Judge 1" width="576"><p class="caption">
 Likelihood rank vs rank according to Judge 1
 </p>
 </div>
@@ -453,7 +453,7 @@ Generalized <span>B</span>radley-<span>T</span>erry Models.”</span>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer>
