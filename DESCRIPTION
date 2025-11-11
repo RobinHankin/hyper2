@@ -12,10 +12,10 @@ Description: A suite of routines for the hyperdirichlet distribution
    <doi:10.18637/jss.v109.i08>.
 License: GPL (>= 2)
 LazyData: yes
-Depends: methods, cubature, R (>= 4.1.0)
+Depends: R (>= 4.1.0)
 Suggests: knitr, markdown, rmarkdown, testthat, bookdown, rticles, covr
 VignetteBuilder: knitr
-Imports: Rcpp (>= 1.0-7), partitions, disordR (>= 0.0-9), alabama, calibrator, Rdpack, magrittr
+Imports: Rcpp (>= 1.0-7), partitions, disordR (>= 0.0-9), alabama, calibrator, Rdpack, magrittr, cubature, methods
 LinkingTo: Rcpp
 URL: https://github.com/RobinHankin/hyper2, https://robinhankin.github.io/hyper2/
 BugReports: https://github.com/RobinHankin/hyper2/issues
