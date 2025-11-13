@@ -1,3 +1,13 @@
+# hyper2 3.2-1
+
+* multinom()
+
+# hyper2 3.2
+
+* rationalisation: suppfun() is now generic
+
+
+
 # hyper2 3.1-0
 
 * consistent handling of non-zero-sum powers 

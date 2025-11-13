@@ -105,6 +105,7 @@ export("maxplist")
 export("mean_hyper2")
 export("mgf")
 export("mult_grid")
+export("multinom")
 export("num3")
 export("ordertable2points")
 export("ordertable2supp")
@@ -204,6 +205,9 @@ importFrom("disordR","consistent")
 importFrom("disordR","elements")
 importFrom("disordR","is.disord")
 importFrom("disordR","lapply")
+
+importFrom("frab", "values")
+importFrom("frab", "as.frab")
 
 importFrom("alabama","constrOptim.nl")
 

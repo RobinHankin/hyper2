@@ -11,6 +11,7 @@
 \alias{GD_wong}
 \alias{Connor}
 \alias{Mosimann}
+\alias{multinom}
 \title{
 Dirichlet distribution and generalizations
 }
@@ -26,9 +27,11 @@ GD_wong(alpha, beta)
 rdirichlet(n,H)
 is.dirichlet(H)
 rp_unif(n,H)
+multinom(x)
 }
 \arguments{
-  \item{powers}{In function \code{dirichlet()} a (named) vector of powers}
+  \item{powers,x}{In functions \code{dirichlet()} and \code{multinom()},
+    a (named) vector of powers}
   \item{alpha,beta}{A vector of parameters for the Dirichlet or
     generalized Dirichlet distribution}
   \item{beta0}{In function \code{GD()}, an arbitrary parameter}
@@ -66,7 +69,20 @@ rp_unif(n,H)
   \code{powers}, it is padded with \code{1}s [so default \code{NULL}
   corresponds to unit weights, that is, a \code{hyper2} object].  A
   use-case is given in \code{inst/rock_paper_scissors_monster.Rmd}.
-  
+
+  Experimental function \code{multinom()} also takes a named vector and
+  interprets it in almost the same way as \code{dirichlet()}, but it
+  allows for repeated names.  It is interpreted as the support function
+  for multinomial trials.  If \code{x} is a named vector with no
+  repeats, \code{dirichlet(x) == multinom(x)}.  But \code{multinom()}
+  uses \CRANpkg{frab} formalism to deal with multiple entries with the
+  same name, which are summed.  This is the Right Way (tm) to do this.
+  Negative numbers, having no natural interpretation in this context,
+  are not allowed.  The numbers do not need to be integers.  One
+  use-case is given in the examples (which should be faster than looping
+  over the named vector and accumulating a \code{hyper2} object, element
+  by element; but I have no timings on this as yet).
+   
 }
 
 \references{
@@ -103,6 +119,11 @@ x1 <- dirichlet(c(a=1,b=2,c=3))
 x2 <- dirichlet(c(c=3,d=4))
 
 x1+x2
+
+multinom(c(x=2,a=3,b=3,x=1))  # NB repeated 'x'
+
+x <- setNames(rpois(40,2.2), sample(letters[1:4],40,replace=TRUE))
+multinom(x)
 
 H <- dirichlet(c(a=1,b=2,c=3,d=4))
 rdirichlet(10,H)
