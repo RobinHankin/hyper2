@@ -31,7 +31,7 @@ The defaults are
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hyper2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2-1</span>
       </span>
     </div>
 
@@ -181,33 +181,30 @@ The defaults are
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">rracehyper3</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^6 * (a=1, b=1, c=2)^-1 * (a=1, b=1, c=2, d=1)^-1 * (a=1,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b=1, c=2, d=2)^-1 * (a=1, b=1, c=3, d=2)^-1 * (a=1, b=1, c=3, d=3)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (a=1, c=2)^-1 * (a=1, c=2, d=3)^-1 * (a=1, c=3, d=2)^-1 * (a=1, c=3,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d=3)^-1 * (a=2, b=1, c=3, d=2)^-1 * (a=2, b=1, c=3, d=3)^-3 * (a=2,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c=3, d=2)^-1 * (a=2, c=3, d=3)^-1 * (b=1)^3 * (c=1)^8 * (c=1, d=2)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (c=1, d=3)^-1 * (c=2)^-1 * (c=2, d=2)^-1 * (c=2, d=3)^-1 * (c=3,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d=2)^-1 * (d=1)^7 * (d=2)^-2 * (d=3)^-1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^12 * (a=1, b=1, d=3)^-1 * (a=1, b=1, d=4)^-1 * (a=1, d=3)^-1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * (a=1, d=4)^-1 * (a=2, b=1, d=3)^-1 * (a=2, b=1, d=4)^-3 * (a=2,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> d=4)^-1 * (a=3, b=1, d=4)^-3 * (a=4, b=1, d=4)^-3 * (b=1)^3 * (b=1,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> d=2)^-1 * (b=1, d=3)^-1 * (b=1, d=4)^-1 * (d=1)^9 * (d=2)^-3 * (d=3)^-2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * (d=4)^-1)</span>
 <span class="r-in"><span><span class="fu">rrace3</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "d" "c" "c" "b" "a" "a" "b" "b" "b"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a" "b" "d" "c" "c" "a" "b" "b" "b"</span>
 <span class="r-in"><span><span class="fu">rwinner3</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "c"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a"</span>
 <span class="r-in"><span><span class="fu">rhyper3</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^3 * (a=1, b=1, c=2)^-3 * (a=1, c=1)^-1 * (a=1, c=2)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (b=1)^3 * (b=1, c=1)^-2 * (b=1, c=2)^-2 * (c=1)^3)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^3 * (a=1, c=1, d=1)^-1 * (a=1, c=1, d=2)^-3 * (c=1)^2 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (c=1, d=1)^-2 * (c=1, d=2)^-2 * (d=1)^4 * (d=2)^-1)</span>
 <span class="r-in"><span><span class="fu">rpair3</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log( (b=1, e=1.3)^-1 * (c=1, d=1.3)^-1 * (c=1, e=1.3)^-1 * (d=1.3)^1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (e=1.3)^2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1, d=1.3)^-1 * (a=1.3)^1 * (a=1.3, e=1)^-1 * (b=1.3)^1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (b=1.3, e=1)^-1 * (d=1.3)^1)</span>
 <span class="r-in"><span><span class="fu"><a href="ordervec2supp3.html">ordervec2supp3</a></span><span class="op">(</span><span class="fu">rrace3</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^2 * (a=1, b=1)^-1 * (a=1, b=2)^-1 * (a=1, b=2, c=1)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (a=1, b=2, c=2)^-1 * (a=1, b=2, c=2, d=1)^-1 * (a=1, b=3, c=2, d=1)^-1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * (a=1, b=4, c=2, d=1)^-1 * (a=2, b=4, c=2, d=1)^-1 * (b=1)^3 * (c=1)^2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * (d=1)^1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^2 * (a=1, b=2)^-1 * (a=1, b=3)^-1 * (a=1, b=3, c=1)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (a=2, b=3, c=1)^-1 * (a=2, b=3, c=1, d=1)^-1 * (a=2, b=4, c=1, d=1)^-1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * (a=2, b=4, c=2, d=1)^-1 * (b=1)^3 * (b=2)^-1 * (c=1)^2 * (d=1)^1)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">100</span>,<span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu">rrace3</span><span class="op">(</span>pn<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">10</span><span class="op">)</span>,ps<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">0.9</span>,b<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span><span class="op">)</span><span class="op">==</span><span class="st">'a'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1  2  3  4  5  6 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48 27 12  9  3  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45 31 16  4  2  2 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hyper2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2-1</span>
       </span>
     </div>
 
@@ -120,19 +120,17 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">rhyper2</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log(a^4 * (a + b + c + d + e + f + g + h)^-10 * (a + b + c + d + e + f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + h)^-1 * (a + b + c + d + e + g + h)^-1 * (a + b + c + e + f + h)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (a + b + c + g)^2 * (a + b + d + e + f + g + h)^-1 * (a + b + e + f +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> g)^-1 * (a + b + e + f + g + h)^-1 * (a + c + d + e + f)^-1 * (a + c +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d + e + f + g + h)^-1 * (a + c + d + e + f + h)^-1 * (a + d + e)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (a + d + e + f)^-1 * (a + e)^-1 * (a + e + f + g) * (a + e + f + h) *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b^6 * (b + c)^-1 * (b + c + d + e + f + g + h)^-1 * (b + c + d + e + g</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + h)^-1 * (b + c + e + f + h)^-1 * (b + d + e + f + g + h)^-1 * (b + e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + f + g)^-1 * (b + e + f + g + h)^-1 * (b + e + g + h)^-1 * (b + f +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> g)^-1 * (b + g + h)^-1 * c^6 * (c + d)^-1 * (c + d + e + g + h)^-1 * (c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + e + f + h)^-1 * (c + f + g + h) * (c + g)^-2 * d^6 * (d + e + g +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> h)^-1 * e^3 * (e + f)^-1 * (e + f + h)^-1 * (e + g + h)^-1 * (e + h)^-1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * f^4 * (f + g)^-1 * (f + h)^-1 * g^6 * (g + h)^-1 * h^5)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log(a^7 * (a + b)^-1 * (a + b + c + d + e + f + g + h)^-10 * (a + b + c</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + d + e + f + h)^-1 * (a + b + c + e + f + g + h)^-1 * (a + b + c + e +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> f + h)^-2 * (a + b + c + f + h)^-1 * (a + b + d + e) * (a + b + d + e +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> f + g + h)^-1 * (a + b + e + f + g + h)^-1 * (a + b + f + h)^-1 * (a +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b + h)^-1 * (a + c)^-1 * (a + c + d + e + f + g + h)^-2 * (a + c + d +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> e + f + h)^-2 * (a + c + e)^-1 * (a + c + e + f + h)^-2 * (a + c + e +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> h)^-1 * (a + e + f + h)^-1 * (a + e + g + h) * (a + e + h)^-1 * (a +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> f)^-1 * b^5 * (b + d)^-1 * (b + e + f + g + h)^-1 * (b + e + g + h)^-1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * c^4 * (c + d + e + f + h)^-1 * (c + d + f + h) * (c + e)^-1 * (c + e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + g + h) * (c + e + h)^-1 * (c + h)^-1 * d^5 * e^5 * (e + f)^-2 * (e +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> g)^-1 * (e + g + h)^-1 * (e + h)^-1 * f^6 * g^4 * h^4)</span>
 <span class="r-in"><span><span class="fu"><a href="rp.html">rp</a></span><span class="op">(</span><span class="fl">2</span>,<span class="va">icons</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             NB         L        PB       THC        OA      WAIS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.1666667 0.1666667 0.1666667 0.1666667 0.1666667 0.1666667</span>
