@@ -22,9 +22,9 @@ wikitable_to_ranktable(wikitable, strict=FALSE)
 \method{print}{ranktablesummary}(x,...)
 }
 \arguments{
-  \item{x,xrank,object}{A rank table, an object with class
+  \item{x, xrank, object}{A rank table, an object with class
     \code{ranktable}, for example the value of \code{rrank()}}
-  \item{xorder,wikitable}{Order tables.  Argument \code{wikitable}
+  \item{xorder, wikitable}{Order tables.  Argument \code{wikitable}
     refers to a generalized order table which can include entries such
     as DNF signifying did not finish.}
   \item{strict}{Controls for \code{wikitable_to_ranktable()}}
@@ -60,8 +60,6 @@ interpretation of the internal structure of \code{ranktable} objects.
 
 p <- (5:1)/15
 names(p) <- letters[1:5]
-xrank <- rrank(12,p,rnames=month.abb)
-
-
+xrank <- rrank(12, p, rnames=month.abb)
 }
 
