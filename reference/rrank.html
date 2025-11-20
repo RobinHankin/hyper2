@@ -119,8 +119,9 @@ strength vector</p>
 
 
 <p>Random rank observations.  Function <code>rrank()</code>, with no arguments,
-returns a small get-you-going example of a ranktable object.  Function
-<code>rrankk()</code> returns a bigger and more complicated object.</p>
+returns a small get-you-going example of a ranktable object [see
+<code>ranktable.Rd</code>].  Function <code>rrankk()</code> returns a bigger and
+more complicated object.</p>
 <p>If <code>n=1</code>, <code>rrank()</code> returns a vector; if <code>n&gt;1</code> it returns
 a matrix with <code>n</code> rows, each corresponding to a ranking.  The
 canonical example is a race in which the probability of competitor
@@ -188,7 +189,7 @@ confusing.  Further details are given at <code>ranktable.Rd</code>.</p>
 </code></pre></div>
 
 <p>Above, we see from <code>p</code> that competitor 3 is the strongest, coming
-first with 92% probability.  And indeed the resulting rank statistic
+first with probability 0.9.  And indeed the resulting rank statistic
 given by <code>rorder_single()</code> shows competitor 3 coming first, 2
 coming second, and so on.  Compare <code>rorder_single()</code>:</p>
 <div class="sourceCode"><pre><code>
@@ -197,12 +198,12 @@ coming second, and so on.  Compare <code>rorder_single()</code>:</p>
 &gt;
 </code></pre></div>
 
-<p>Above we see see from <code>rrank_single(p)</code> that competitor 1 came
-sixth, competitor 2 came third, and competitor 3 came first (as you
-might expect, as competitor 3 is the strongest).  Note that the R idiom
-for <code>rorder_single()</code> is the same as that used in the
-<a href="https://CRAN.R-project.org/package=permutations" class="external-link"><span class="pkg">permutations</span></a> package for inverting a permutation: <code>o[o] &lt;-
-seq_along(o)</code>.</p>
+<p>Above we see, reading elements of <code>rorder_single(p)</code> sequentially,
+that competitor 1 came sixth, competitor 2 came third, and competitor 3
+came first (as you might expect, as competitor 3 is the strongest).</p>
+<p>Note that the R idiom for <code>rorder_single()</code> is the same as that
+used in the <a href="https://CRAN.R-project.org/package=permutations" class="external-link"><span class="pkg">permutations</span></a> package for inverting a permutation:
+<code>o[o] &lt;- seq_along(o)</code>.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -210,12 +211,13 @@ seq_along(o)</code>.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>Similar functionality is given by <code><a href="rrace.html">rrace()</a></code>, documented at
+    <p>Similar functionality is given by <code><a href="rhyper3.html">rrace3()</a></code>, documented at
   <a href="rhyper3.html">rhyper3</a>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="ordertrans.html">ordertrans</a></code>,
+  <code><a href="ranktable.html">ranktable</a></code>,
   <code><a href="suppfun.html">suppfun</a></code>,
   <code><a href="skating.html">skating</a></code>,
   <code><a href="rhyper3.html">rhyper3</a></code></p></div>
