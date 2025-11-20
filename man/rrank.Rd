@@ -32,8 +32,9 @@ rorder_single(p)
 \value{
 
 Random rank observations.  Function \code{rrank()}, with no arguments,
-returns a small get-you-going example of a ranktable object.  Function
-\code{rrankk()} returns a bigger and more complicated object.
+returns a small get-you-going example of a ranktable object [see
+\code{ranktable.Rd}].  Function \code{rrankk()} returns a bigger and
+more complicated object.
 
 If \code{n=1}, \code{rrank()} returns a vector; if \code{n>1} it returns
 a matrix with \code{n} rows, each corresponding to a ranking.  The
@@ -112,7 +113,7 @@ Function \code{rrank_single()} is a low-level helper function:
 }
 
 Above, we see from \code{p} that competitor 3 is the strongest, coming
-first with 92\% probability.  And indeed the resulting rank statistic
+first with probability 0.9.  And indeed the resulting rank statistic
 given by \code{rorder_single()} shows competitor 3 coming first, 2
 coming second, and so on.  Compare \code{rorder_single()}:
 
@@ -136,6 +137,7 @@ seq_along(o)}.
 }
 \seealso{
   \code{\link{ordertrans}},
+  \code{\link{ranktable}},
   \code{\link{suppfun}},
   \code{\link{skating}},
   \code{\link{rhyper3}}
