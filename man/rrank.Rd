@@ -123,16 +123,17 @@ coming second, and so on.  Compare \code{rorder_single()}:
 > 
 }
 
-Above we see see from \code{rrank_single(p)} that competitor 1 came
-sixth, competitor 2 came third, and competitor 3 came first (as you
-might expect, as competitor 3 is the strongest).  Note that the R idiom
-for \code{rorder_single()} is the same as that used in the
-\CRANpkg{permutations} package for inverting a permutation: \code{o[o] <-
-seq_along(o)}.
+Above we see, reading elements of \code{rorder_single(p)} sequentially,
+that competitor 1 came sixth, competitor 2 came third, and competitor 3
+came first (as you might expect, as competitor 3 is the strongest).
+
+Note that the R idiom for \code{rorder_single()} is the same as that
+used in the \CRANpkg{permutations} package for inverting a permutation:
+\code{o[o] <- seq_along(o)}.
 
 }
 \author{Robin K. S. Hankin}
-\note{Similar functionality is given by \code{rrace()}, documented at
+\note{Similar functionality is given by \code{rrace3()}, documented at
   \link{rhyper3}.
 }
 \seealso{
