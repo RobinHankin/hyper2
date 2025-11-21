@@ -19,14 +19,14 @@ statistics in the context of hyper3 likelihood functions.  Compare
 \code{constructor()} suite of analysis.
 }
 \usage{
-num3(v,helped=NULL,lambda=1)
-den3(v,helped=NULL,lambda=1)
+num3(v, helped=NULL, lambda=1)
+den3(v, helped=NULL, lambda=1)
 char2nv(x)
-ordervec2supp3(v,nonfinishers=NULL)
-ordervec2supp3a(v,nonfinishers=NULL,helped=NULL,lambda=1)
-rankvec_likelihood3(v,nonfinishers=NULL)
+ordervec2supp3(v, nonfinishers=NULL)
+ordervec2supp3a(v, nonfinishers=NULL, helped=NULL, lambda=1)
+rankvec_likelihood3(v, nonfinishers=NULL)
 ordertable2supp3(a)
-cheering3(v,e,help,nonfinishers=NULL)
+cheering3(v, e, help, nonfinishers=NULL)
 args2ordervec(...)
 }
 \arguments{
@@ -37,7 +37,7 @@ args2ordervec(...)
     not finish.  See details section and examples}
   \item{a}{An ordertable}
   \item{helped}{vector of entities being helped}
-  \item{e,help,lambda}{Parameters controlling non-independence with
+  \item{e, help,lambda}{Parameters controlling non-independence with
     \code{e} a named integer vector specifying equivalence classes of
     the competitors: names correspond to the competitors, values to
     their equivalence class, and \code{help} a numeric vector with
@@ -60,7 +60,7 @@ args2ordervec(...)
   It can take the output of \code{args2ordervec()} or \code{rrace3()}.
   For example:
 
-  \code{ordervec2supp3(c("a","b"),nonfinishers=c("a","b"))}
+  \code{ordervec2supp3(c("a","b"), nonfinishers=c("a","b"))}
 
   corresponds to a race between two twins of strength \code{a} and two
   twins of strength \code{b}, with only one of each pair finishing;
@@ -71,7 +71,7 @@ args2ordervec(...)
 
   Further,
 
-  \code{ordervec2supp3(c("a","b"),c("a","b","c"))}
+  \code{ordervec2supp3(c("a","b"), c("a","b","c"))}
 
   corresponds to adding a singleton competitor of strength \code{c} who
   did not finish:
@@ -120,9 +120,9 @@ args2ordervec(...)
 \examples{
 
 
-ordervec2supp3(c("a","a","b","c","a","b","c"))
+ordervec2supp3(c("a", "a", "b", "c", "a", "b", "c"))
 ordervec2supp3(rrace3())
-ordervec2supp3(c("a","b"),nonfinishers=c("a","b"))  # a > b >> {a,b}
+ordervec2supp3(c("a","b"), nonfinishers=c("a","b"))  # a > b >> {a,b}
 
 
 
@@ -139,8 +139,7 @@ H
 ## considered: that of (acd) and that of (bf), which we will take to be
 ## 1.88 and 1.1111 respectively:
 
-cheering3(v=letters[1:6],e=c(a=1,c=1,b=2,d=1,e=2),help=c(1.88,1.1111))
-
+cheering3(v=letters[1:6], e=c(a=1,c=1,b=2,d=1,e=2), help=c(1.88,1.1111))
 
 
 
@@ -148,21 +147,19 @@ cheering3(v=letters[1:6],e=c(a=1,c=1,b=2,d=1,e=2),help=c(1.88,1.1111))
 ## singletons "b" and "c".  Here "a" helps his clone at 1.88; and "b"
 ## and "c" help one another at 1.111:
 
-cheering3(v=c("a","b","a","c"),e=c(a=1,b=2,c=2),help=c(1.8,1.111))
+cheering3(v=c("a","b","a","c"), e=c(a=1,b=2,c=2), help=c(1.8,1.111))
 
 
 ## Same race as above but this time there are two clones of "b", one of
 ## whom did not finish:
 
-cheering3(v=c("a","b","a","c"),e=c(a=1,b=2,c=2),help=c(1.8,1.111),"b")
+cheering3(v=c("a","b","a","c"), e=c(a=1,b=2,c=2), help=c(1.8,1.111), "b")
 
 
 ## Most common case would be that the clones help each other but noone
 ## else:
 
-cheering3(v=c("a","b","a","c"),e=c(a=1,b=2,c=3),help=c(1.8,1.111,1),"b")
-
-
+cheering3(v=c("a","b","a","c"), e=c(a=1,b=2,c=3), help=c(1.8,1.111,1), "b")
 
 }
 
