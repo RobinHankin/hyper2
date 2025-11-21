@@ -13,7 +13,7 @@ Description: A suite of routines for the hyperdirichlet distribution
 License: GPL (>= 2)
 LazyData: yes
 Depends: R (>= 4.1.0)
-Suggests: knitr, markdown, rmarkdown, testthat, bookdown, rticles, covr, ape, phangorn
+Suggests: knitr, markdown, rmarkdown, testthat, bookdown, rticles, covr, ape, phangorn, Ternary
 VignetteBuilder: knitr
 Imports: Rcpp (>= 1.0-7), partitions, disordR (>= 0.0-9), alabama, calibrator, Rdpack, magrittr, cubature, methods, frab
 LinkingTo: Rcpp
