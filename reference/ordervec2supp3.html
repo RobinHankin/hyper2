@@ -84,14 +84,14 @@ statistics in the context of hyper3 likelihood functions.  Compare
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">num3</span><span class="op">(</span><span class="va">v</span>,helped<span class="op">=</span><span class="cn">NULL</span>,lambda<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu">den3</span><span class="op">(</span><span class="va">v</span>,helped<span class="op">=</span><span class="cn">NULL</span>,lambda<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">num3</span><span class="op">(</span><span class="va">v</span>, helped<span class="op">=</span><span class="cn">NULL</span>, lambda<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu">den3</span><span class="op">(</span><span class="va">v</span>, helped<span class="op">=</span><span class="cn">NULL</span>, lambda<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu">char2nv</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="fu">ordervec2supp3</span><span class="op">(</span><span class="va">v</span>,nonfinishers<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span></span>
-<span><span class="fu">ordervec2supp3a</span><span class="op">(</span><span class="va">v</span>,nonfinishers<span class="op">=</span><span class="cn">NULL</span>,helped<span class="op">=</span><span class="cn">NULL</span>,lambda<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu">rankvec_likelihood3</span><span class="op">(</span><span class="va">v</span>,nonfinishers<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">ordervec2supp3</span><span class="op">(</span><span class="va">v</span>, nonfinishers<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">ordervec2supp3a</span><span class="op">(</span><span class="va">v</span>, nonfinishers<span class="op">=</span><span class="cn">NULL</span>, helped<span class="op">=</span><span class="cn">NULL</span>, lambda<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu">rankvec_likelihood3</span><span class="op">(</span><span class="va">v</span>, nonfinishers<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="fu">ordertable2supp3</span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
-<span><span class="fu">cheering3</span><span class="op">(</span><span class="va">v</span>,<span class="va">e</span>,<span class="va">help</span>,nonfinishers<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">cheering3</span><span class="op">(</span><span class="va">v</span>, <span class="va">e</span>, <span class="va">help</span>, nonfinishers<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="fu">args2ordervec</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -113,7 +113,7 @@ statistics in the context of hyper3 likelihood functions.  Compare
   <dt id="arg-helped">helped<a class="anchor" aria-label="anchor" href="#arg-helped"></a></dt>
 <dd><p>vector of entities being helped</p></dd>
 
-  <dt id="arg-e-help-lambda">e,help,lambda<a class="anchor" aria-label="anchor" href="#arg-e-help-lambda"></a></dt>
+  <dt id="arg-e-help-lambda">e, help,lambda<a class="anchor" aria-label="anchor" href="#arg-e-help-lambda"></a></dt>
 <dd><p>Parameters controlling non-independence with
     <code>e</code> a named integer vector specifying equivalence classes of
     the competitors: names correspond to the competitors, values to
@@ -142,14 +142,14 @@ statistics in the context of hyper3 likelihood functions.  Compare
   Plackett-Luce support function in the form of a <code>hyper3</code> object.
   It can take the output of <code>args2ordervec()</code> or <code><a href="rhyper3.html">rrace3()</a></code>.
   For example:</p>
-<p><code>ordervec2supp3(c("a","b"),nonfinishers=c("a","b"))</code></p>
+<p><code>ordervec2supp3(c("a","b"), nonfinishers=c("a","b"))</code></p>
 <p>corresponds to a race between two twins of strength <code>a</code> and two
   twins of strength <code>b</code>, with only one of each pair finishing;
   <code>a</code> comes first and <code>b</code> comes second; symbolically</p>
 <p>$$a\succ b\succ\left\lbrace a,b\right\rbrace\longrightarrow
     \mathcal{L}(a,b\left|a+b=1\right.)=\frac{a}{2a+2b}\cdot\frac{b}{a+2b}$$</p>
 <p>Further,</p>
-<p><code>ordervec2supp3(c("a","b"),c("a","b","c"))</code></p>
+<p><code>ordervec2supp3(c("a","b"), c("a","b","c"))</code></p>
 <p>corresponds to adding a singleton competitor of strength <code>c</code> who
   did not finish:</p>
 <p>$$a\succ b\succ\left\lbrace a,b,c\right\rbrace\longrightarrow
@@ -198,7 +198,7 @@ statistics in the context of hyper3 likelihood functions.  Compare
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">ordervec2supp3</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"c"</span>,<span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ordervec2supp3</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^3 * (a=1, b=1, c=1)^-1 * (a=1, b=1, c=2)^-1 * (a=1, b=2,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> c=2)^-1 * (a=2, b=2, c=2)^-1 * (a=3, b=2, c=2)^-1 * (b=1)^2 * (b=1,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> c=1)^-1 * (c=1)^1)</span>
@@ -206,7 +206,7 @@ statistics in the context of hyper3 likelihood functions.  Compare
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^2 * (a=1, b=3)^-1 * (a=1, b=3, c=1, d=1)^-1 * (a=1, b=3,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> d=1)^-1 * (a=2, b=3, c=1, d=1)^-1 * (a=2, b=4, c=1, d=1)^-1 * (a=2,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> b=4, c=2, d=1)^-1 * (b=1)^3 * (b=2)^-1 * (b=3)^-1 * (c=1)^2 * (d=1)^1)</span>
-<span class="r-in"><span><span class="fu">ordervec2supp3</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span>,nonfinishers<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span><span class="op">)</span>  <span class="co"># a &gt; b &gt;&gt; {a,b}</span></span></span>
+<span class="r-in"><span><span class="fu">ordervec2supp3</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span>, nonfinishers<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span><span class="op">)</span>  <span class="co"># a &gt; b &gt;&gt; {a,b}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^1 * (a=1, b=2)^-1 * (a=2, b=2)^-1 * (b=1)^1)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
@@ -228,7 +228,7 @@ statistics in the context of hyper3 likelihood functions.  Compare
 <span class="r-in"><span><span class="co">## considered: that of (acd) and that of (bf), which we will take to be</span></span></span>
 <span class="r-in"><span><span class="co">## 1.88 and 1.1111 respectively:</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">cheering3</span><span class="op">(</span>v<span class="op">=</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,e<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,c<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,d<span class="op">=</span><span class="fl">1</span>,e<span class="op">=</span><span class="fl">2</span><span class="op">)</span>,help<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.88</span>,<span class="fl">1.1111</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cheering3</span><span class="op">(</span>v<span class="op">=</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, e<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,c<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,d<span class="op">=</span><span class="fl">1</span>,e<span class="op">=</span><span class="fl">2</span><span class="op">)</span>, help<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.88</span>,<span class="fl">1.1111</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^1 * (a=1, b=1, c=1, d=1, e=1, f=1)^-1 * (b=1)^1 * (b=1,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> c=1.88, d=1.88, e=1, f=1)^-1 * (c=1.88)^1 * (c=1.88, d=1.88, e=1.1111,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> f=1)^-1 * (d=1.88)^1 * (d=1.88, e=1.1111, f=1)^-1 * (e=1.1111)^1 *</span>
@@ -236,12 +236,11 @@ statistics in the context of hyper3 likelihood functions.  Compare
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Another race: four competitors, including two clones of "a", and two</span></span></span>
 <span class="r-in"><span><span class="co">## singletons "b" and "c".  Here "a" helps his clone at 1.88; and "b"</span></span></span>
 <span class="r-in"><span><span class="co">## and "c" help one another at 1.111:</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">cheering3</span><span class="op">(</span>v<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"a"</span>,<span class="st">"c"</span><span class="op">)</span>,e<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">2</span><span class="op">)</span>,help<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.8</span>,<span class="fl">1.111</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cheering3</span><span class="op">(</span>v<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"a"</span>,<span class="st">"c"</span><span class="op">)</span>, e<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">2</span><span class="op">)</span>, help<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.8</span>,<span class="fl">1.111</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^1 * (a=1.8)^1 * (a=1.8, b=1, c=1)^-1 * (a=1.8, c=1.111)^-1 *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (a=2, b=1, c=1)^-1 * (b=1)^1)</span>
 <span class="r-in"><span></span></span>
@@ -249,7 +248,7 @@ statistics in the context of hyper3 likelihood functions.  Compare
 <span class="r-in"><span><span class="co">## Same race as above but this time there are two clones of "b", one of</span></span></span>
 <span class="r-in"><span><span class="co">## whom did not finish:</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">cheering3</span><span class="op">(</span>v<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"a"</span>,<span class="st">"c"</span><span class="op">)</span>,e<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">2</span><span class="op">)</span>,help<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.8</span>,<span class="fl">1.111</span><span class="op">)</span>,<span class="st">"b"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cheering3</span><span class="op">(</span>v<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"a"</span>,<span class="st">"c"</span><span class="op">)</span>, e<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">2</span><span class="op">)</span>, help<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.8</span>,<span class="fl">1.111</span><span class="op">)</span>, <span class="st">"b"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^1 * (a=1.8)^1 * (a=1.8, b=1.111, c=1.111)^-1 * (a=1.8, b=2,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> c=1)^-1 * (a=2, b=2, c=1)^-1 * (b=1)^1 * (b=1.111, c=1.111)^-1 *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (c=1.111)^1)</span>
@@ -258,11 +257,9 @@ statistics in the context of hyper3 likelihood functions.  Compare
 <span class="r-in"><span><span class="co">## Most common case would be that the clones help each other but noone</span></span></span>
 <span class="r-in"><span><span class="co">## else:</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">cheering3</span><span class="op">(</span>v<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"a"</span>,<span class="st">"c"</span><span class="op">)</span>,e<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">3</span><span class="op">)</span>,help<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.8</span>,<span class="fl">1.111</span>,<span class="fl">1</span><span class="op">)</span>,<span class="st">"b"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cheering3</span><span class="op">(</span>v<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"a"</span>,<span class="st">"c"</span><span class="op">)</span>, e<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">3</span><span class="op">)</span>, help<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.8</span>,<span class="fl">1.111</span>,<span class="fl">1</span><span class="op">)</span>, <span class="st">"b"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^1 * (a=1.8)^1 * (a=1.8, b=1.111, c=1)^-1 * (a=1.8, b=2,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> c=1)^-1 * (a=2, b=2, c=1)^-1 * (b=1)^1 * (b=1.111, c=1)^-1 * (c=1)^1)</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
