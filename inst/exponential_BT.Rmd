@@ -458,16 +458,25 @@ for(i in seq_len(nrow(II))){
 }
 ```
     
-```{r}
+```{r plottoycontour}
 x_try
 length(support)
 support <- support-max(support)
 support <- pmax(support, -10)
 support  <- matrix(support,length(r_try),length(x_try))
-contour(r_try, x_try, support, xlab="r", ylab="x", levels = -c(1,(1:5)*2), lwd=c(1,3,1,1,1,1))
-abline(v=1:9, lwd=0.3, col='gray')
-abline(v = r_true)
-abline(v = 1:9, col = 'gray', lty = 3, lwd = 0.3)
+wanted <- x_try >= 0.5
+worker <- function(...){
+contour(r_try, x_try[wanted], support[,wanted], xlab="r", ylab="x", levels = -c(1,(1:5)*2), lwd=c(1,3,1,1,1,1))
+points(r_true,x_true,pch=16,col='red',cex=2)
+jj <- support[,wanted]
+maxplace <- which(jj==max(jj), arr.ind=TRUE)
+points(r_try[maxplace[1]], x_try[wanted][maxplace[2]], pch=16, col='blue', cex=2)
+}
+worker()
+pdf(file="toyexample.pdf")
+worker()
+dev.off()
+
 filled.contour(r_try, x_try, support, xlab = "r", ylab = "x")
 ```
 
@@ -675,7 +684,19 @@ alllike/max(alllike)
 S <- log(alllike)
 S <- S-max(S)
 S <- pmax(S,-15)
-contour(S,levels = -(0:6)*2, lwd=c(1,4,1,1,1,1,1))
+contour(a_try, x_try, S, levels = -(0:6)*1, lwd=c(1,4,1,1,1,1,1))
+
+worker <- function(...){
+    wanted <- a_try < 0.5
+    contour(a_try[wanted], x_try, S[wanted,], levels = -(0:6)*2, lwd=c(1,4,1,1,1,1,1))
+    jj <- S[wanted,]
+    m <- which(jj == max(jj), arr.ind=TRUE)
+    points(a_try[wanted][m[1]], x_try[m[2]], pch=16, cex=2, col='red')
+}
+worker()
+pdf(file="formula1.pdf")
+worker()
+dev.off()
 filled.contour(S)
 ```
 

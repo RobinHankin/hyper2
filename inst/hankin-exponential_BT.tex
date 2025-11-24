@@ -127,7 +127,7 @@ $$
 
 After simplification:
 
-\begin{equation}
+\begin{equation}\label{aftersim}
   \mathcal{L}(x,r)=
   \begin{cases}
     \frac{x^1}{x^1+x^2+x^3}\left(\frac{x^2}{x^1+x^3} + \frac{x^3}{x^1+x^2}\right)\qquad r=1\\
@@ -163,7 +163,7 @@ if the focal competitor comes third we have
 &{}&\quad + \plackett{3}{2}{1}{4}\nonumber\\
 &{}&\quad + \plackett{3}{4}{1}{2}\nonumber\\
 &{}&\quad + \plackett{4}{2}{1}{3}\nonumber\\
-&{}&\quad + \plackett{4}{3}{1}{2}
+&{}&\quad + \plackett{4}{3}{1}{2}\label{requalfour}
 \end{eqnarray}
 
 %\begin{eqnarray}
@@ -177,8 +177,7 @@ if the focal competitor comes third we have
 %&{}&\quad + \pl{4}{3}{2}{1}
 %\end{eqnarray}
 
-and so on; see figure~\ref{1234third}.
-
+and so on; see figure~\ref{1234third}. 
 
 \begin{figure}[t]
   \begin{centering}
@@ -199,17 +198,156 @@ and so on; see figure~\ref{1234third}.
 \end{centering}
 \end{figure}
 
+\section{The case of unknown $r$}
+
+
+Although figure~\ref{1234third} shows a perfectly respectable
+log-likelihood function, in practice we often do not know the value of
+$r$, and need a joint likelihood function for $(r,x)$.  It is
+convenient to normalize $r$ and use $s=r/n$ for consistency between
+different values of $n$, and to treat $s$ as a continuous variable.
+The only reasonable way to calulate such a likelihood function appears
+to be numerical; fortunately this is straightforward.
+
+We leverage the {\tt hyper2} R package~\cite{hankin2017_rnw} which
+includes extensive numerical functionality to simulate Plackett-Luce
+situations, and in this case function {\tt rrace()} simulates a race
+between competitors of known Plackett-Luce strengths.  To obtain a
+likelihood function for a specific value of $(x,s)$ at a particular
+observed rank $r$, we run repeated {\em in-silico} races between
+competitors of Plackett-Luce strengths $x^1,x^2,\ldots x^n$, and
+observe the frequency with which competitor $\lceil ns\rceil$ places
+$r$.  For example, consider $x=0.1, r=3$.  We might simulate this as
+follows:
+
+\label{rsession}
+\begin{verbatim}
+n <- 9  # number of competitors
+s <- 4  # observation: focal competitor places fourth
+
+v <- seq_len(n)
+rrank(15, p=0.1^v, as.character(v))
+#> A ranktable:
+#>       c1 c2 c3 c4 c5 c6 c7 c8 c9
+#>  [1,] 2  1  4  3  5  6  7  8  9 
+#>  [2,] 1  2  3  5  4  6  7  9  8 
+#>  [3,] 1  2  3  4  5  6  7  8  9 
+#>  [4,] 1  2  3  4  5  6  7  8  9 
+#>  [5,] 1  2  4  3  5  6  7  9  8 
+#>  [6,] 1  2  3  4  5  6  7  8  9 
+#>  [7,] 1  3  2  4  5  6  7  8  9 
+#>  [8,] 1  2  3  4  5  7  6  8  9 
+#>  [9,] 3  1  2  5  4  9  6  7  8 
+#> [10,] 1  2  3  4  5  6  7  8  9 
+#> [11,] 1  2  3  4  5  6  7  8  9 
+#> [12,] 1  2  3  5  4  6  7  9  8 
+#> [13,] 1  3  2  4  5  6  7  8  9
+#> [14,] 1  2  3  4  5  7  6  8  9 
+#> [15,] 1  2  5  4  4  6  8  7  9 
+\end{verbatim}
+
+Above we see 15 independent Plackett-Luce races; for example the first
+one indicates that competitor 2 came first, 1 came second, 4 came
+third, and so on.  Looking at the fourth column [headed \verb+c4+,
+  ``came fourth''], we see that
+
+\begin{equation}
+  \mathcal{L}(0.1,3)\propto 1,\qquad
+  \mathcal{L}(0.1,4)\propto 11,\qquad
+  \mathcal{L}(0.1,5)\propto 3
+\end{equation}
+
+The maximum likelihood estimate for $s$ would therefore be $4/9\simeq
+0.44$, conditional on $x=0.1$.  To estimate $x$ we would need repeated
+observations, and here we note that small values of $x$ lead to
+underdispersed results.
+
+To validate the suggested likelihood method, we set $x=0.85$ and
+$r=3$, that is, competitor $i$ has strength $\propto 0.85^i,
+1\leqslant i\leqslant 9$; the focal competitor has the third strongest
+Plackett-Luce strength of $0.85^3\simeq 0.61$.  The results of running
+{\tt rrace()} 100 times with $n=9$ are given in
+table~\ref{results100insilico}.
+
+\begin{table}
+  \centering
+  \begin{tabular}{llllllllll}
+    place & 1  & 2  &  3 &  4 &  5 &  6 &  7 & 8 &  9  \\
+    count & 14 & 13 & 18 & 12 & 13 &  9 & 11 & 8 &  2
+  \end{tabular}
+  \caption{Results of repeated \label{results100insilico}
+    Plackett-Luce racing with $x=0.85, r=3$; thus the focal competitor
+    is the third strongest.  We see that the focal competitor placed
+    first 14 times, second 13 times, and so on}
+\end{table}
+
+Now, we can run repeated simulations like those on page~\pageref{rsession}, but
+with $n=10^4$ trials; as support we use $x$ running from 0.1 to 1 and
+$r=1,2,\ldots 9$: figure~\ref{toyexample}.  We see reasonable
+agreement between the true values of $x$ and $r$ and the estimates.
+Note the odd shape of the contours and the non-independence of the
+parameters.
+
+\begin{figure}[t]
+  \begin{centering}
+\includegraphics[width=4in]{toyexample}  % toyexample.pdf produced by exponential_BT.Rmd
+\caption{Contours of log-likelihood for $x$ and $r$.  Red point shows
+  true values of parameters, blue dot shows maximum likelihood\label{toyexample}
+  estimate}
+\end{centering}
+\end{figure}
+
+
+
+\section{Formula 1}
+
+Formula 1 racing is an important and prestigious motor sport
+\citep{codling2017,jenkins2010}.  In a typical season, $\sim 20$
+competitors race at $\sim 20$ venues and here we consider the 2023
+season, using Lewis Hamilton as the focal competitor.  His results are
+shown in table~\ref{lewishamilton}; Qatar and the US are disregarded
+as he did not finish.
+
+\begin{table}
+  \centering
+  \begin{tabular}{lllllllll}
+venue & BHR & SAU & AUS & AZE & MIA & MON & ESP & CAN\\
+place & 5   & 5   & 2   & 6   & 6   & 4   & 2   & 3  \\ \\
+venue & AUT & GBR & HUN & BEL & NED & ITA & SIN & JPN\\ 
+place & 8   & 3   & 4   & 4   & 6   & 6   & 3   & 5  \\ \\
+venue & MXC & SAP & LVG & ABU \\
+place & 2   & 8   & 7   & 9
+\end{tabular}
+  \caption{Lewis Hamilton's results for the 2023 season. \label{lewishamilton}
+    We see that he finished fifth in Bahrain, fifth in Saudi Arabia, second in Austria, and so on}
+\end{table}
+
+Again using numerical simulation, amounting to repeated evaluation of
+generalised version of equations \ref{aftersim} and \ref{requalfour}
+(this time with $b=10^4$ trials per point), we obtain
+figure~\ref{formula1}.  From this, we see that $r$ is less than about
+0.25 and $x$ is between about 0.4 and 0.8.  Recall that, in this
+model, $x=0.5$ implies that the Plackett-Luce strength of each
+competitor is about twice that of the next.
+
+\begin{figure}[t]
+  \begin{centering}
+\includegraphics[width=4in]{formula1}  % formula1.pdf produced by exponential_BT.Rmd
+\caption{Contours of log-likelihood functions \label{formula1}.  Red circle shows
+  maximum likelihood estimate}
+\end{centering}
+\end{figure}
+
+
 \section{Conclusions and further work}
 
-Here a simplification of the Plackett--Luce likelihood functions for
+Here a simplification of the Plackett-Luce likelihood functions for
 order statistics was proposed, some simple properties obtained, and
 inference problems from three disciplines given.  The results seem to
 be difficult to obtain any other way.  The assumptions furnish a
 reasonable, intuitive, and computationally tractable likelihood
 function with wide applicability.  Further work might include the
 analysis of more than one focal competitor.
-
-
 
 
 %\bibliographystyle{plainat}
