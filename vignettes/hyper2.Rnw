@@ -98,8 +98,6 @@ optimization, Bradley-Terry}
 
 
 
-\section{Introduction}
-
 <<set_seed_chunk,echo=FALSE,print=FALSE>>=
 library("hyper2")
 set.seed(0)
