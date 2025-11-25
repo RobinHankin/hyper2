@@ -36,4 +36,7 @@ resides in the \code{data/} directory.
 \examples{
 data(pentathlon)
 pie(pentathlon_maxp)
+
+as.ranktable(pentathlon_table)
+suppfun(as.ranktable(pentathlon_table))
 }
