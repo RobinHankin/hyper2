@@ -15,6 +15,11 @@ library("magrittr")
 set.seed(0)
 ```
 
+<font size="1">
+(takes maybe two or three hours to run without cache; each
+<tt>parkrunlikefunobs</tt> chunk takes maybe thirty minutes).
+</font>
+
 Basic idea is to have $n$ competitors with BT strengths $\beta, \beta
 x,\ldots \beta x^{n-1}$ with $x\in[0,1]$.  The unit sum constraint
 gives $\beta=\frac{1-x}{1-x^n}$ but this usually cancels out.  One of
