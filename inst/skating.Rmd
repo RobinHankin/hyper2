@@ -35,9 +35,9 @@ skating_table <- ordertable(read.table("skating.txt", header=TRUE))
 skating_table
 ```
 
-Object `skating_table` is an order table.  It is structured so that
+Object `skating_table` is an _order table_.  It is structured so that
 each competitor is a row, and each judge is a column.  One good thing
-to do is to present the dataset as an order table;
+to do is to present the dataset as a _rank table_:
 
 ```{r,coercetoranktable}
 as.ranktable(skating_table)
