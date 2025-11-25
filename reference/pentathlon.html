@@ -122,6 +122,41 @@ resides in the <code>data/</code> directory.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pentathlon</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pie.html" class="external-link">pie</a></span><span class="op">(</span><span class="va">pentathlon_maxp</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="pentathlon-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ranktable.html">as.ranktable</a></span><span class="op">(</span><span class="va">pentathlon_table</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A ranktable:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          c1            c2            c3         c4       c5           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> shooting Meliakh       Michalik      Cerkovskis Capalini Moiseev      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fencing  Moiseev       Zadneprovskis Cerkovskis Michalik Walther      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> swimming Moiseev       Capalini      Walther    Meliakh  Zadneprovskis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> riding   Meliakh       Michalik      Capalini   Walther  Zadneprovskis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> running  Zadneprovskis Cerkovskis    Walther    Capalini Moiseev      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          c6            c7        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> shooting Zadneprovskis Walther   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fencing  Capalini      Meliakh   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> swimming Michalik      Cerkovskis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> riding   Moiseev       Cerkovskis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> running  Meliakh       Michalik  </span>
+<span class="r-in"><span><span class="fu"><a href="suppfun.html">suppfun</a></span><span class="op">(</span><span class="fu"><a href="ranktable.html">as.ranktable</a></span><span class="op">(</span><span class="va">pentathlon_table</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log(Capalini^5 * (Capalini + Cerkovskis + Meliakh + Michalik + Moiseev</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Walther)^-1 * (Capalini + Cerkovskis + Meliakh + Michalik + Moiseev +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Walther + Zadneprovskis)^-5 * (Capalini + Cerkovskis + Meliakh +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Michalik + Walther)^-1 * (Capalini + Cerkovskis + Meliakh + Michalik +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Walther + Zadneprovskis)^-2 * (Capalini + Cerkovskis + Michalik +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Moiseev + Walther + Zadneprovskis)^-2 * (Capalini + Cerkovskis +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Moiseev + Walther + Zadneprovskis)^-2 * (Capalini + Meliakh)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Capalini + Meliakh + Michalik + Moiseev)^-1 * (Capalini + Meliakh +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Michalik + Moiseev + Walther)^-1 * (Capalini + Meliakh + Michalik +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Walther)^-1 * (Capalini + Meliakh + Walther)^-1 * (Capalini + Moiseev +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Walther + Zadneprovskis)^-1 * Cerkovskis^3 * (Cerkovskis + Meliakh +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Michalik + Walther + Zadneprovskis)^-1 * (Cerkovskis + Meliakh +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Michalik + Zadneprovskis)^-1 * (Cerkovskis + Michalik)^-1 * (Cerkovskis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Michalik + Zadneprovskis)^-1 * (Cerkovskis + Moiseev)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Cerkovskis + Moiseev + Walther + Zadneprovskis)^-1 * (Cerkovskis +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Moiseev + Zadneprovskis)^-1 * Meliakh^4 * (Meliakh + Michalik)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Meliakh + Michalik + Moiseev)^-1 * Michalik^4 * Moiseev^5 * (Moiseev +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Walther + Zadneprovskis)^-1 * Walther^4 * (Walther + Zadneprovskis)^-1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Zadneprovskis^5)</span>
 </code></pre></div>
     </div>
   </div>
