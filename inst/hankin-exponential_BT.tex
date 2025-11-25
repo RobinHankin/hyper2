@@ -93,7 +93,7 @@ for this observation will be proportional to
 \noindent where the strengths are normalised so $\sum p_i=1$.
 However, estimation of the strengths is somewhat difficult if $n$ is
 even moderately large: even with as few as 20 competitors following
-Zipf's law~\citep{zipf1949} [a typical assumption for Bradley--Terry
+Zipf's law~\citep{zipf1949} [a typical assumption for Bradley-Terry
   strengths] and say 20 independent complete rank observations,
 \cite{hankin2017_rmd} shows that maximum likelihood strengths
 identify the correct ranking with a probability of essentially zero.
@@ -101,22 +101,77 @@ The situation is worse in cases such as formula 1 motor racing
 considered below, which requires us to consider ${\mathcal O}(100)$
 competitors.
 
+In many situations, we are not interested in the $n-1$-dimensional
+simplex of BT strengths, viz $\left\lbrace(p_1,\ldots,p_n)\colon
+p_i\geqslant 0,\sum p_i=1\right\rbrace$, but instead wish to make
+inferences about one particular entity.  For example, we might be
+interested in whether Mercedes's apparent decline in performance in
+the 2023-4 season could be due to chance.  Further examples are given
+in previous analysis by the same author \citep{hankin2010,
+  hankin2017_rmd, hankin2020, hankin2023_formula1points}.  In these
+cases, we are interested in one of the competitors and assess a number
+of hypotheses about that competitor; the strengths of the others are
+nuisance parameters.  We designate this entity as the {\em focal
+ competitor}.
+
+If we have $n$ competitors, optimizing the Bradley--Terry model over
+$n-1$ degrees of freedom is, as noted above, a formidable task even
+for moderate $n$; this suggests that some form of dimension-reducing
+parametrization might be useful.  One option might be to assign the
+focal competitor a BT strength proportional to $a\in [0,1]$ and
+$b=1-a$ to each of $n-1$ competitors; the normalization constant would
+be $n+(n-1)a$.  However, this option does not seem to be
+realistic~\citep{kuenzer2025}.
+
+The next natural suggestion would be to have $n$ competitors with
+strengths $\beta, \beta x,\ldots \beta x^{n-1}$ with $0 < x\leqslant
+1$.  The unit sum constraint gives $\beta=\frac{1-x}{1-x^n}$ but this
+constant of proportionality cancels out in Bradley-Terry likelihoods.
+The focal competitor has strength $\beta x^{r}$ for some (unknown) $r$
+with $1\leqslant r\leqslant n$.  Thus $r=1$ means that the focal
+competitor is the strongest among the $n$, $r=2$ means he is the
+second, and so on.
+
+\subsection{Theoretical results}
+
+A Plackett-Luce observation is of the form $p_{(1)}\succ
+p_{(2)}\succ\cdots\succ p_{(n)}$, where $p_{(i)}$ denotes the
+competitor in place $i $ for $1\leqslant i\leqslant n$.  If competitor
+$j$ has strength $\beta x^{j}$, then the probability of observing
+$p_1\succ p_2\succ\cdots\succ p_n$ will be, according to
+equation~\ref{plackettluce},
+
+\begin{equation}
+f(x)=\frac{1}{1+\cdots+x^{n-1}}\cdot
+\frac{1}{1+\cdots+x^{n-2}}\cdots
+\frac{1}{1+x^{2}}\cdot\frac{1}{1+x}=
+\frac{1}{[n]_x!}
+\end{equation}
+
+(here $[n]_x!$ is the $q$-factorial).  We see that
+$f(1)=\frac{1}{n!}$, $f'(x)>0$ and $f(0)=1$; so small $x$ corresponds
+to a high probability of observing the ``natural order'' in which
+competitor $j$ places $j$-th, $1\leqslant j\leqslant n$.  Further, we
+observe that $f(x)=1-(n-1)x + {\mathcal O}(x^2)$.  It is interesting
+to note that the probability of observing the reverse order, that is
+$p_n\succ p_{n-1}\succ\cdots\succ p_1$, is $f(1/x)$ for $x>0$.
+
 \subsection{Some simple cases}
 
 We consider the smallest non-trivial cases $n=3$ and $n=4$.  For $n=3$
 we have Plackett-Luce strengths $\alpha x,\alpha x^2,\alpha x^3$ [the
-  extra factor of $x$ allows us to identify the $r$ in ``$\alpha x^r$''
-  with the rank of the competitor, the best being rank 1].  Suppose
-the focal competitor came first, the likelihood function would be
+  extra factor of $x$ allows us to identify the $r$ in ``$\alpha
+  x^r$'' with the nominal rank of the competitor, the best being rank
+  1].  Suppose the focal competitor came first, the likelihood
+function would be
 
 \begin{equation}
-  \mathcal{L}(x,r)=\frac{x^{r-1}}{1+x+x^2}\qquad r=1,2,3
+  \mathcal{L}(x,r)=\frac{x^{r-1}}{1+x+x^2}\qquad r=1,2,3.
 \end{equation}
 
 If the focal competitor came second we would have two Plackett-Luce
 probabilities to add, corresponding to different order statistics.
-$\alpha x^i$ or $\alpha x^j$ coming first where $i,j\neq r$.  For
-example, if $r=1$ we would have two finishing orders that are
+For example, if $r=1$ we would have two finishing orders that are
 consistent with the observation: $2\succ 1\succ 3$ and $3\succ 1\succ
 2$.  These are disjoint so the likelihood will be proportional to
 
@@ -209,7 +264,7 @@ different values of $n$, and to treat $s$ as a continuous variable.
 The only reasonable way to calulate such a likelihood function appears
 to be numerical; fortunately this is straightforward.
 
-We leverage the {\tt hyper2} R package~\cite{hankin2017_rnw} which
+We leverage the {\tt hyper2} R package~\citep{hankin2017_rmd} which
 includes extensive numerical functionality to simulate Plackett-Luce
 situations, and in this case function {\tt rrace()} simulates a race
 between competitors of known Plackett-Luce strengths.  To obtain a
@@ -246,10 +301,12 @@ rrank(15, p=0.1^v, as.character(v))
 #> [15,] 1  2  5  4  4  6  8  7  9 
 \end{verbatim}
 
-Above we see 15 independent Plackett-Luce races; for example the first
-one indicates that competitor 2 came first, 1 came second, 4 came
-third, and so on.  Looking at the fourth column [headed \verb+c4+,
-  ``came fourth''], we see that
+Above we see a bespoke {\tt hyper2} object, of class {\tt ranktable},
+designed to display rank data for use with Bradley-Terry likelihoods.
+We see 15 independent Plackett-Luce races; for example the first one
+indicates that competitor 2 came first, 1 came second, 4 came third,
+and so on.  Looking at the fourth column [headed \verb+c4+, ``came
+  fourth''], we see that
 
 \begin{equation}
   \mathcal{L}(0.1,3)\propto 1,\qquad
@@ -260,7 +317,8 @@ third, and so on.  Looking at the fourth column [headed \verb+c4+,
 The maximum likelihood estimate for $s$ would therefore be $4/9\simeq
 0.44$, conditional on $x=0.1$.  To estimate $x$ we would need repeated
 observations, and here we note that small values of $x$ lead to
-underdispersed results.
+underdispersed results, for the focal competitor would come $r$-th
+with probability $\geqslant x^1+x^2+\ldots x^r$
 
 To validate the suggested likelihood method, we set $x=0.85$ and
 $r=3$, that is, competitor $i$ has strength $\propto 0.85^i,
