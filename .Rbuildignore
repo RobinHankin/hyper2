@@ -27,8 +27,8 @@ CITATION.cff
 ^inst/jester_files$
 ^inst/notthewinner_cache$
 ^inst/notthewinner_files$
-^inst/skating_analysis_cache$
-^inst/skating_analysis_files$
+^inst/skating_cache$
+^inst/skating_files$
 ^inst/skeleton2033.txt$
 ^inst/skeleton.Rmd$
 ^inst/f1points_cache$
