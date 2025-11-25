@@ -22,7 +22,7 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 
 
 To cite the `hyper2` package in publications, please use
-@hankin2017_rmd).  This document analyses Bradley-Terry strengths of
+@hankin2017_rmd.  This document analyses Bradley-Terry strengths of
 the competitors in the Ladies' Figure Skating at the 2002 Winter
 Olympics.  In the package, dataframe `skating_table` is copied from
 Lock and Lock (see skating.Rd for more details).  It also creates file
