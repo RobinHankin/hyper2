@@ -18,7 +18,7 @@ Sushi preference dataset.
   \item Object \code{sushi_table} is a database of sushi preferences;
   each row is a judge and the rows are rank vectors of the different
   sushi types.
-  \item Object \code{sushi} is a likelihood function at the estimated
+  \item Object \code{sushi} is a \code{hyper3} likelihood function at the estimated
   value of lambda
   \item Object \code{sushi_maxp} is the maximum likelihood estimate for
   the Bradley-Terry strengths of the sushis, at the estimate for lambda.
