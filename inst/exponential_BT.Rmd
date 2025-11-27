@@ -706,3 +706,51 @@ filled.contour(S)
 ```
 
 
+
+# Skating
+
+```{r, startskating, cache=TRUE}
+sk <- skating
+pnames(sk) <- names(sort(skating_maxp, decreasing=TRUE))
+maxp(sk)
+```
+
+```{r moreskating, cache=TRUE}
+skater_strengths <- function(x){
+    p <- BT(23, x)
+    names(p) <- pnames(sk)
+    return(p)
+}
+skater_strengths(0.5)
+```
+
+
+```{r doskating, cache=TRUE}
+gvec <- seq(from=0.5, by=0.01, to=0.65)
+f <- function(g){loglik(skater_strengths(g), sk)}
+L <- sapply(gvec, f)
+L <- L-max(L)
+```
+
+```{r}
+plot(gvec,L,type="b")
+abline(h = c(0,-2))
+grid()
+```
+
+
+```{r testskating, cache=TRUE}
+skater_strengths(0.57)
+skating_test <- knownp.test(sk, skater_strengths(0.57))
+skating_test
+```
+
+```{r}
+xn <- skating_test$null_estimate
+xa <- skating_test$alternative_estimate
+xn <- log10(xn)
+xa <- log10(xa)
+par(pty="s")
+plot(xn,xa,xlim=c(-6,0),ylim=c(-6,0))
+abline(0,1)
+```
