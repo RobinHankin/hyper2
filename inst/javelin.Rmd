@@ -81,7 +81,6 @@ pie(m1)
 pie(m2)
 dotchart(m1,pch=16)
 dotchart(m2,pch=16)
-abline(0,1)
 ordertransplot(m1,m2)
 ```
 
@@ -89,8 +88,6 @@ ordertransplot(m1,m2)
 equalp.test(javelin1)
 equalp.test(javelin2)
 ```
-
-
 
 
 ### Package dataset {-}
