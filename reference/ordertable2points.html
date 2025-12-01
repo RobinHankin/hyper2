@@ -120,7 +120,7 @@ Given an order table and a schedule of points, calculate the points
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">18</span>, <span class="fl">15</span>, <span class="fl">12</span>, <span class="fl">10</span>, <span class="fl">8</span>, <span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="as.ordertable.html">as.ordertable</a></span><span class="op">(</span><span class="va">F1_table_2017</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="ordertable.html">as.ordertable</a></span><span class="op">(</span><span class="va">F1_table_2017</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ordertable2points</span><span class="op">(</span><span class="va">o</span>,<span class="va">points</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Hamilton     Vettel     Bottas  Raikkonen  Ricciardo Verstappen      Perez </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        363        317        305        205        200        168        100 </span>

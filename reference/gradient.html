@@ -205,7 +205,7 @@ does not return exact zeros at the evaluate.</p>
 <span class="r-in"><span><span class="va">deltaLn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">delta</span><span class="op">*</span><span class="fu">gradient</span><span class="op">(</span><span class="va">chess</span>,<span class="va">p</span> <span class="op">+</span> <span class="va">delta</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>   <span class="co"># numeric</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">deltaL</span> <span class="op">-</span> <span class="va">deltaLn</span>  <span class="co"># should be small [zero to first order]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.152247e-12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3.490898e-14</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu">hessian</span><span class="op">(</span><span class="va">icons</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">is_ok_hessian</span><span class="op">(</span><span class="va">H</span><span class="op">)</span></span></span>

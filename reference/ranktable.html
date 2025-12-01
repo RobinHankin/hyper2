@@ -149,6 +149,32 @@ interpretation of the internal structure of <code>ranktable</code> objects.</p>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">15</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">xrank</span> <span class="op">&lt;-</span> <span class="fu"><a href="rrank.html">rrank</a></span><span class="op">(</span><span class="fl">12</span>, <span class="va">p</span>, rnames<span class="op">=</span><span class="va">month.abb</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">pentathlon_table</span>  <span class="co"># an ordertable</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> An ordertable:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               shooting fencing swimming riding running</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Moiseev              5       1        1      6       5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Zadneprovskis        6       2        5      5       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Capalini             4       6        2      3       4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cerkovskis           3       3        7      7       2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Meliakh              1       7        4      1       6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Michalik             2       4        6      2       7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Walther              7       5        3      4       3</span>
+<span class="r-in"><span><span class="fu">as.ranktable</span><span class="op">(</span><span class="va">pentathlon_table</span><span class="op">)</span> <span class="co"># coerce to a ranktable</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A ranktable:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          c1            c2            c3         c4       c5           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> shooting Meliakh       Michalik      Cerkovskis Capalini Moiseev      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fencing  Moiseev       Zadneprovskis Cerkovskis Michalik Walther      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> swimming Moiseev       Capalini      Walther    Meliakh  Zadneprovskis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> riding   Meliakh       Michalik      Capalini   Walther  Zadneprovskis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> running  Zadneprovskis Cerkovskis    Walther    Capalini Moiseev      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          c6            c7        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> shooting Zadneprovskis Walther   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fencing  Capalini      Meliakh   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> swimming Michalik      Cerkovskis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> riding   Moiseev       Cerkovskis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> running  Meliakh       Michalik  </span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
