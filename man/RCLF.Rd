@@ -13,7 +13,7 @@
 \description{
 
   These objects refer to results from football matches among four
-  Scottish clubs: Rangers, Celtic, Livinston, Falkirk.  A detailed
+  Scottish clubs: Rangers, Celtic, Livingston, Falkirk.  A detailed
   analysis is presented in \code{inst/home_advantage.Rmd}, which creates
   the objects documented here from scratch.
 
