@@ -17,8 +17,8 @@ Numerical techniques for calculating the normalizing constant for the hyperdiric
 B(H, disallowed=NULL, give=FALSE, ...)
 probability(H, disallowed=NULL, ...)
 mgf(H, powers, ...) 
-dhyper2(ip,H,...)
-dhyper2_e(e,H,include.Jacobian=TRUE)
+dhyper2(ip, H, ...)
+dhyper2_e(e, H, include.Jacobian=TRUE)
 mean_hyper2(H, normalize=TRUE, ...)
 Jacobian(e)
 e_to_p(e)
@@ -96,8 +96,12 @@ p_to_e(p)
 
 \note{
 
-The adapt package is no longer available on CRAN; from 1.4-3, the
-package uses \code{adaptIntegrate} of the cubature package.
+Vignette \code{integration} gives some further discussion and examples.
+  
+The \pkg{adapt} package is no longer available on CRAN; from 1.4-3, the
+\pkg{hyper2} package uses \code{adaptIntegrate()} of the
+\CRANpkg{cubature} package.
+
 }
 
 \seealso{\code{\link{loglik}}}
