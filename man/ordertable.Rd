@@ -3,8 +3,21 @@
 \alias{order_table}
 \alias{print.ordertable}
 \alias{[.ordertable}
+\alias{as.ordertable}
 \title{Order tables}
-\description{Order tables}
+\description{Manipulate, print and coerce to and from \code{ordertable} form}
+\usage{
+as.ordertable(w)
+ordertable(x)
+}
+\arguments{
+
+  \item{w}{In \code{as.ordertable()}, a generalized ordertable, a
+    wikitable}
+  \item{x}{In \code{ordertable()}, a matrix with rows corresponding to
+    competitors and columns to judges}
+}
+
 \details{
 
 The package makes extensive use of order tables and these are discussed
@@ -67,11 +80,12 @@ discussion on the difference between rank and order is given in
 
 Many of the order tables in the package include entries that correspond
 to some variation on \dQuote{did not finish}.  Consider the \link{volvo}
-dataset:
+dataset, an ordertable:
 
 \preformatted{
 > volvo_table
-           leg1 leg2 leg3 leg4 leg5 leg6 leg7 leg8 leg9
+An ordertable:  
+              leg1 leg2 leg3 leg4 leg5 leg6 leg7 leg8 leg9
 AbuDhabi      1    3    2    2    1    2    5    3    5
 Brunel        3    1    5    5    4    3    1    5    2
 Dongfeng      2    2    1    3  DNF    1    4    7    4
@@ -95,21 +109,30 @@ To coerce a table like the Volvo dataset shown above into an order table
 [that is, replace \code{DNS} with zeros, and also force nonzero entries
 to be contiguous], use \code{as.ordertable()}.
 
+Given an ordertable such as \code{F1_table_2017} which is a
+\dQuote{wikitable} object, function \code{as.ordertable()} returns a
+nicified version in which entries such as \code{DNS} are replaced with
+zeros.  Finishing competitors are assigned numbers \eqn{1-n} with no
+gaps; the function can be used to extract a subset of competitors.
+Function \code{ordertable2supp()} offers similar functionality but
+returns a \code{hyper2} object directly.
+
 There is an experimental extraction method which extracts certain rows
 of an ordertable; this is used in \code{inst/skating.Rmd}.
-
-
 
 }
 \author{Robin K. S Hankin}
 \seealso{
-  \code{\link{ordertable2supp}},\code{\link{rrank}},
-  \code{\link{ranktable}},\code{\link{as.ordertable}}
+  \code{\link{ordertable2supp}},
+  \code{\link{rrank}},
+  \code{\link{ranktable}}
 }
 \examples{
 
 ordertable_to_ranktable(soling_table)
 suppfun(soling_table) == soling  # should be TRUE
 
+as.ordertable(F1_table_2017)
+ordertable2supp(as.ordertable(F1_table_2017[1:9,]))
 
 }
