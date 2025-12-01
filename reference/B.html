@@ -81,8 +81,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">B</span><span class="op">(</span><span class="va">H</span>, disallowed<span class="op">=</span><span class="cn">NULL</span>, give<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">probability</span><span class="op">(</span><span class="va">H</span>, disallowed<span class="op">=</span><span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">mgf</span><span class="op">(</span><span class="va">H</span>, <span class="va">powers</span>, <span class="va">...</span><span class="op">)</span> </span>
-<span><span class="fu">dhyper2</span><span class="op">(</span><span class="va">ip</span>,<span class="va">H</span>,<span class="va">...</span><span class="op">)</span></span>
-<span><span class="fu">dhyper2_e</span><span class="op">(</span><span class="va">e</span>,<span class="va">H</span>,include.Jacobian<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">dhyper2</span><span class="op">(</span><span class="va">ip</span>, <span class="va">H</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">dhyper2_e</span><span class="op">(</span><span class="va">e</span>, <span class="va">H</span>, include.Jacobian<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">mean_hyper2</span><span class="op">(</span><span class="va">H</span>, normalize<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">Jacobian</span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span><span class="fu">e_to_p</span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
@@ -177,8 +177,10 @@
     <h2>Note</h2>
 
 
-<p>The adapt package is no longer available on CRAN; from 1.4-3, the
-package uses <code>adaptIntegrate</code> of the cubature package.</p>
+<p>Vignette <code>integration</code> gives some further discussion and examples.</p>
+<p>The <span class="pkg">adapt</span> package is no longer available on CRAN; from 1.4-3, the
+<span class="pkg">hyper2</span> package uses <code>adaptIntegrate()</code> of the
+<a href="https://CRAN.R-project.org/package=cubature" class="external-link"><span class="pkg">cubature</span></a> package.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
