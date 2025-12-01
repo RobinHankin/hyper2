@@ -61,5 +61,9 @@ interpretation of the internal structure of \code{ranktable} objects.
 p <- (5:1)/15
 names(p) <- letters[1:5]
 xrank <- rrank(12, p, rnames=month.abb)
+
+pentathlon_table  # an ordertable
+as.ranktable(pentathlon_table) # coerce to a ranktable
+
 }
 
