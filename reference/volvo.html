@@ -119,6 +119,18 @@ Retrieved 22:21, February 28, 2020.
 <span class="r-plt img"><img src="volvo-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># equalp.test(volvo)   # takes ~10 seconds to run</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ordertable.html">as.ordertable</a></span><span class="op">(</span><span class="va">volvo_table</span><span class="op">)</span> <span class="co"># DNF and DNS -&gt; 0</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> An ordertable:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            leg1 leg2 leg3 leg4 leg5 leg6 leg7 leg8 leg9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AbuDhabi      1    3    2    2    1    2    5    3    5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Brunel        3    1    5    5    4    3    1    5    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dongfeng      2    2    1    3    0    1    4    7    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MAPFRE        7    4    4    1    2    4    2    4    3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Alvimedica    5    5    3    4    3    5    3    6    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCA           6    6    6    6    5    6    6    1    7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vestas        4    0    0    0    0    0    0    2    6</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># convert table to a support function:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="suppfun.html">suppfun</a></span><span class="op">(</span><span class="va">volvo_table</span>, noscore <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DNF"</span>, <span class="st">"DNS"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log(AbuDhabi^9 * (AbuDhabi + Alvimedica + Brunel + Dongfeng +</span>
