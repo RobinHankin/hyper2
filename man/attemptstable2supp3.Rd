@@ -6,7 +6,7 @@
 description here
 }
 \usage{
-attemptstable2supp3(a, decreasing, give.supp=TRUE, dnf.last=TRUE)
+attemptstable2supp3(a, decreasing=TRUE, give.supp=TRUE, dnf.last=TRUE)
 }
 \arguments{
   \item{a}{Data frame, see details}
