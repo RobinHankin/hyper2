@@ -37,6 +37,9 @@ Retrieved 22:21, February 28, 2020.
 pie(volvo_maxp)
 # equalp.test(volvo)   # takes ~10 seconds to run
 
+
+as.ordertable(volvo_table) # DNF and DNS -> 0
+
 # convert table to a support function:
 suppfun(volvo_table, noscore = c("DNF", "DNS"))
 
