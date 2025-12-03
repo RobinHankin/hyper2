@@ -132,7 +132,7 @@ not significant.  Is the ghost real?
 
 
 ```{r specificptesthere,cache=TRUE}
-specificp.test(tennis_ghost,"G",0.0001)  # nonzero value needed to avoid triggering known R bug
+specificp.gt.test(tennis_ghost,"G",0)  
 ```
 
 so we can infer that the ghost is indeed real as we reject $H_0\colon
