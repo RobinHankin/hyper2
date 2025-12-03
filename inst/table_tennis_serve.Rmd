@@ -301,7 +301,7 @@ Following lines create `table_tennis.rda`, residing in the `data/`
 directory of the package.
 
 ```{r,label=savetabletennisdataset}
-save(table_tennis,file="table_tennis.rda")
+save(table_tennis, table_tennis_maxp, file="table_tennis.rda")
 ```
 
 ### References {-}
