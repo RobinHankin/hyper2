@@ -40,6 +40,10 @@ resides in the \code{data/} directory.
 }
 \seealso{\code{\link{attemptstable2supp3}}}
 \examples{
+
+attemptstable2supp3(javelin_table)
+
+
 pie(javelin1_maxp)
 }
 
