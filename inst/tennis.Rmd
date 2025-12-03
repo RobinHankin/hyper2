@@ -179,37 +179,85 @@ $$
 
 
 
-```{r printH}
-H3 <- as.hyper3(H)
-H3
+```{r defineadd12vs34}
 
-## 1&2 vs 3&4;  scoreline 9-2 (again), with lambda=1.2
-
-f <- function(lambda){
-  H3[c(p1=lambda,p2=lambda)] %<>% inc(9)
-  H3[c(p3=1,p2=1)] %<>% dec(2)
-  H3[c(p1=lambda,p2=lambda,p3=1,p2=1)] %<>% dec(11)
-  return(H3)
+## 1&2 vs 3&4;  scoreline 9-2 (again)
+add12vs34 <- function(lambda){
+    H3 <- hyper3()
+    H3[c(p1=lambda,p2=lambda)] %<>% inc(9)
+    H3[c(p3=1,p2=1)] %<>% inc(2)
+    H3[c(p1=lambda,p2=lambda,p3=1,p2=1)] %<>% dec(11)
+    return(H3 + as.hyper3(H))
 }
-f(1.1443345)
-f(1.888888)
+```
+
+```{r useadd12vs34, cache=TRUE}
+add12vs34(1.88)
+maxp(add12vs34(2.0), give=TRUE)$value
+maxp(add12vs34(2.1), give=TRUE)$value
+```
+
+```{r defineprofilelikelihood12vs34}
+L <- function(lambda){maxp(add12vs34(lambda), give=TRUE)$value}
+```
+
+```{r useprofilelikelihood12vs34, cache=TRUE}
+lam <- exp(seq(from=log(0.9), to=log(60), len=20))
+support <- sapply(lam, L)
 ```
 
 
-maximize:
+```{r optimize12v34, cache=TRUE}
+o <- optimize(L, interval=c(exp(1.5),exp(2.5)), maximum=TRUE)
+o
+lambda_max <- o$maximum
+```
 
-```{r,maxH3,cache=TRUE}
-tennis_H3_maxp <- maxp(H3)
-tennis_H3_maxp
+```{r plotproflike}
+support <- support - max(support)
+plot(log(lam), support,
+     pch=16, type="b",
+     xlab=expression(log(lambda)), ylab="log-Likelihood"
+     )
+abline(h=c(0,-2))
+abline(v=c(0,log(lambda_max)), lty=2)
+```
+
+```{r maxtennis3, cache=TRUE}
+tennis_hyper3_maxp <- maxp(add12vs34(lambda_max))
 ```
 
 Compare the `hyper2` evaluates:
 
-```{r}
+```{r, showallmax}
 tennis_maxp
 tennis_ghost_maxp
+tennis_hyper3_maxp
 ```
 
+Visuals:
+
+```{r plotallmax}
+x1 <- tennis_maxp
+x2 <- tennis_ghost_maxp[-1]
+x2 <- x2/sum(x2)
+x3 <- tennis_hyper3_maxp
+x1
+x2
+x3
+```
+
+Above, observe how x2 and x3 are identical: evidently, in this case,
+`hyper2` formalism is formally identical to `hyper3` formalism.
+Visually:
+
+
+```{r showall}
+par(pty="s")
+l <- c(0.15,0.3)
+plot(x1, x2, asp=1, xlim=l, ylim=l, pch=16)
+abline(0,1)
+```
 
 
 ### Package dataset {-}
@@ -217,7 +265,7 @@ tennis_ghost_maxp
 Following lines create `tennis.rda`, residing in the `data/` directory of the package.
 
 ```{r,label=saveghosttennisdataset}
-save(tennis,tennis_maxp,tennis_ghost, tennis_ghost_maxp,file="tennis.rda")
+save(tennis, tennis_maxp, tennis_ghost, tennis_ghost_maxp, file="tennis.rda")
 ```
 
 
