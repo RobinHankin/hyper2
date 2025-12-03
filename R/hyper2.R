@@ -754,10 +754,9 @@ rorder_single <- function(p){
   ggrl(H,winners,losers)
 }
 
-
 `goodbad` <- function(winners,losers){
     stopifnot(!any(winners %in% losers))
-    ggrl(hyper2(pnames=c(winners,losers),winners,losers))
+    ggrl(hyper2(pnames=c(winners, losers)), winners, losers)
 }
 
 `elimination` <- function(all_players){

@@ -60,7 +60,9 @@ race(v,nonfinishers)
   better than those of another.  Thus
   \code{goodbad(letters[1:3],letters[4:5])} corresponds to the
   observation that \code{d} and \code{e} were put into an elimination
-  trial (and \code{abc} were not).
+  trial (and \code{a,b,c} were not).  Note that this is \emph{not} the
+  same as \dQuote{competitors \code{a,b,c} had a competition against
+  competitors \code{c,d} and \code{a,b,c} won}.
   
   Function \code{elimination()} gives a likelihood function for situations
   where the \emph{weakest} player is identified at each stage and
