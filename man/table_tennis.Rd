@@ -36,6 +36,9 @@ discussion and technical documentation and creates file
 
 \examples{
 data(table_tennis)
-dotchart(maxp(table_tennis))
+dotchart(table_tennis_maxp)
+
+specificp.gt.test(table_tennis, "S", 0)
+
 }
 \keyword{datasets}
