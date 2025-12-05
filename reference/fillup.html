@@ -86,7 +86,7 @@ Function indep() is the inverse: it removes the final element
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fillup</span><span class="op">(</span><span class="va">x</span>,H<span class="op">=</span><span class="cn">NULL</span>,total<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fillup</span><span class="op">(</span><span class="va">x</span>, H<span class="op">=</span><span class="cn">NULL</span>, total<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu">indep</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -122,16 +122,16 @@ Function indep() is the inverse: it removes the final element
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">fillup</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">fillup</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5000000 0.3333333 0.1666667</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">indep</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">indep</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5000000 0.3333333</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">fillup</span><span class="op">(</span><span class="fu">indep</span><span class="op">(</span><span class="va">icons_maxp</span><span class="op">)</span><span class="op">)</span>  </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         NB          L         PB        THC         OA            </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.25230411 0.17364433 0.22458188 0.17011281 0.11068604 0.06867083 </span>
-<span class="r-in"><span><span class="fu">fillup</span><span class="op">(</span><span class="fu">indep</span><span class="op">(</span><span class="va">icons_maxp</span><span class="op">)</span>,<span class="va">icons</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">fillup</span><span class="op">(</span><span class="fu">indep</span><span class="op">(</span><span class="va">icons_maxp</span><span class="op">)</span>, <span class="va">icons</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         NB          L         PB        THC         OA       WAIS </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.25230411 0.17364433 0.22458188 0.17011281 0.11068604 0.06867083 </span>
 <span class="r-in"><span></span></span>
