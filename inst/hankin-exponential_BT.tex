@@ -132,7 +132,7 @@ with $1\leqslant r\leqslant n$.  Thus $r=1$ means that the focal
 competitor is the strongest among the $n$, $r=2$ means he is the
 second, and so on.
 
-\subsection{Theoretical results}
+\section{Theoretical results}
 
 A Plackett-Luce observation is of the form $p_{(1)}\succ
 p_{(2)}\succ\cdots\succ p_{(n)}$, where $p_{(i)}$ denotes the
@@ -371,7 +371,44 @@ odd shape of the contours and the non-independence of the parameters.
 
 
 
-\section{Formula 1}
+\section{Case study: parkrun}
+
+``Parkrun'' is a distributed community initiative that organises
+weekly timed 5 km runs/walks in parks worldwide~\citep{hindley2020}.
+A typical event will have 200 participants but for the purposes of
+this study, we will consider only male competitors aged 55 and over, a
+demographic to which the author considers himself to belong.
+Table~\ref{parkruntable} shows 7 completed parkruns.  From the first
+pair of numbers we see that 43 runners from our demographic attended
+that particular parkrun, of whom the author placed 33.
+
+\begin{table}[t]
+  \centering
+  \caption{Parkrun results}
+\label{parkruntable}
+\begin{tabular}{cccccccc}\\
+rank   & 33 & 35 & 35 & 37 & 32 & 30 & 37\\
+runners& 43 & 49 & 59 & 51 & 56 & 55 & 58
+\end{tabular}
+\end{table}
+
+
+Using numerical simulation, in this case repeated evaluation of
+equation \ref{aftersim} and a generalized version of equation
+\ref{requalfour}, with $b=5\times 10^4$ trials per point, we obtain
+figure~\ref{doesnotexist}.  From this, we see that $s$ is less than
+about XXXXXX and $x$ is between about SXXXXASDFASDFADF and WWWWW.
+SDDFDSF
+
+
+
+Recall that, in this model, $x=0.5$ implies that the Plackett-Luce
+strength of each competitor is twice that of the next; and if
+$x=0.25$, we can expect
+
+
+
+\section{Case study: Formula 1}
 
 Formula 1 racing is an important and prestigious motor sport
 \citep{codling2017,jenkins2010}.  In a typical season, ${\sim} 20$
@@ -400,16 +437,18 @@ generalised version of equations \ref{aftersim} and \ref{requalfour}
 figure~\ref{formula1}.  From this, we see that $s$ is less than about
 0.25 and $x$ is between about 0.4 and 0.8.  Recall that, in this
 model, $x=0.5$ implies that the Plackett-Luce strength of each
-competitor is about twice that of the next.
+competitor is twice that of the next; and if $x=0.25$, we can expect
+Hamilton to be better than a randomly chosen competitor with
+probability $1-0.25=0.75$.
 
 \begin{figure}[t]
   \begin{centering}
 \includegraphics[width=4in]{formula1}  % formula1.pdf produced by exponential_BT.Rmd
-\caption{Contours of log-likelihood functions \label{formula1}.  Red circle shows
-  maximum likelihood estimate}
+\caption{Contours of log-likelihood function for Lewis Hamilton's
+  Formula One performance over the 2023 season. \label{formula1} Red
+  circle shows maximum likelihood estimate}
 \end{centering}
 \end{figure}
-
 
 \section{Conclusions and further work}
 
@@ -424,7 +463,5 @@ analysis of more than one focal competitor.
 
 %\bibliographystyle{plainat}
 \bibliography{simplified.bib}
-
-
 
 \end{document}
