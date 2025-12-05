@@ -996,7 +996,7 @@ rorder_single <- function(p){
 }
 
 `pwa` <- function(H,pwa,chameleon='S'){  
-
+    stopifnot(is.hyper2(H))
     stopifnot(pwa %in% pnames(H))
     stopifnot(!(chameleon %in% pnames(H)))  # ... check that the chameleon isn't already a competitor, and
   

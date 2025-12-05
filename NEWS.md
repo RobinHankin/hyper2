@@ -1,6 +1,9 @@
 # hyper2 3.2-1
 
 * multinom()
+* pwa3()
+* bugfixes
+* improved vignettes
 
 # hyper2 3.2
 

@@ -724,3 +724,14 @@ stop("not yet written")
     return(out)
 }
 
+"pwa3" <- function(H3, pwa, lambda){
+    stopifnot(pwa %in% pnames(H3))
+    stopifnot(length(pwa) == 1)
+    H3 <- as.hyper3(H3)
+    B <- elements(brackets(H3))
+    W <- elements(weights(H3))
+    for (i in seq_along(B)) {
+        W[[i]][B[[i]] %in% pwa] <- lambda
+    }
+    return(hyper3_bw(B, W, powers(H3), pnames(H3)))
+}

@@ -1,5 +1,6 @@
 \name{pwa}
 \alias{pwa}
+\alias{pwa3}
 \alias{chameleon}
 \alias{extra_strength}
 \alias{additional_strength}
@@ -16,15 +17,20 @@ position, playing white in chess, or playing soccer at one's home
 ground.  Function \code{pwa()} (\dQuote{player with advantage}) returns
 a modified \code{hyper2} object with the additional strength represented
 as a reified entity.
-
 }
-\usage{pwa(H, pwa, chameleon = "S")}
+\usage{
+pwa(H, pwa, chameleon = "S")
+pwa3(H3, pwa, lambda)
+}
+
 \arguments{
   \item{H}{A hyper2 object}
+  \item{H3}{A hyper3 object}
   \item{pwa}{A list of the players with the supposed advantage; may be
     character in the case of a named hyper2 object, or an integer
     vector}
   \item{chameleon}{String representing the advantage}
+  \item{lambda}{Value of person with advantage}
 }
 
 \details{
@@ -40,6 +46,8 @@ seem to instantiate any simple situation.
 Nice examples of \code{pwa()} are given in \file{inst/cook.Rmd} and
 \file{inst/universities.Rmd}.
 
+Function \code{pwa()} is the \code{hyper3} equivalent, still under
+development.
 
 }
 \value{Returns an object of class \code{hyper2}.}
@@ -64,6 +72,7 @@ summary(formula1 |> pwa("Hamilton","pole"))
 
 H <- ordervec2supp(c(a = 2, b = 3, c = 1, d = 5, e = 4))
 pwa(H,'a')
+pwa3(H, 'a', 1.888)
 
 ## Four races between a,b,c,d:
 H1 <- ordervec2supp(c(a = 1, b = 3, c = 4, d = 2))
