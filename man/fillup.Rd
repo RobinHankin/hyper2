@@ -12,7 +12,7 @@
   
 }
 \usage{
-fillup(x,H=NULL,total=1)
+fillup(x, H=NULL, total=1)
 indep(x)
 }
 \arguments{
@@ -31,11 +31,11 @@ indep(x)
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{equalp}},\code{\link{gradient}}}
 \examples{
-fillup(c(1/2,1/3))
+fillup(c(1/2, 1/3))
 
-indep(c(1/2,1/3,1/6))
+indep(c(1/2, 1/3, 1/6))
 
 fillup(indep(icons_maxp))  
-fillup(indep(icons_maxp),icons)
+fillup(indep(icons_maxp), icons)
 
 }
