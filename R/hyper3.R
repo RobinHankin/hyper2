@@ -71,7 +71,7 @@
 }
 
 setGeneric("weights",function(object, ...){standardGeneric("weights")})
-`weights.hyper3` <- function(object, ...){object$weights}
+`weights.hyper3` <- function(object, ...){disord(object$weights, h=hashcal(object))}
 
 `hyper3_to_hyper2` <- function(x){
     if(any(c(weights(x),recursive=TRUE) != 1)){
