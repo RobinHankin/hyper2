@@ -15,28 +15,46 @@ library("hyper2")
 pwa3
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017_rmd.
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  Here we analyse some simple Plackett-Luce
+observations, using `hyper3` likelihood functions.
+
+
+Our observations are a total of six order statistics for four
+competitors `a,b,c,d`.  These competitors race three times under
+Plackett-Luce probabilities.  They then race three times, but with
+competitor `b` having some advantage (steroids?), parametrized by his
+Plackett-Luce strength being $\lambda b$.
+
+Our object of inference is $\lambda$; the Plackett-Luce strengths
+`a,b,c,d` are nuisance parameters.
 
 
 ```{r definelamf}
 lam <- function(lambda){
+
   race_nohelp <-
-    race(letters[c(1,2,4,3)]) + 
-    race(letters[c(3,1,2,4)]) +
-    race(letters[c(2,4,1,3)])
+    race(c("b","a","d","c")) + 
+    race(c("c","b","a","d")) + 
+    race(c("b","d","a","c")) 
     
   race_help <- 
-    race(letters[c(2,3,1,4)]) |> pwa3("b", lambda) + 
-    race(letters[c(1,3,4,2)]) |> pwa3("b", lambda) +
-    race(letters[c(3,2,1,4)]) |> pwa3("b", lambda)
+    race(c("a","c","d","b")) |> pwa3("b", lambda) + 
+    race(c("c","d","b","a")) |> pwa3("b", lambda) + 
+    race(c("d","c","a","b")) |> pwa3("b", lambda)
   
   maxp(as.hyper3(race_nohelp) + race_help, give=TRUE)$value
 }
 ```
 
+Above we see that in the unaided case (the first three races), `b`
+does quite well, coming first twice and second once.  In the aided
+case, `b` does much worse, coming either third or fourth.  Evidently,
+the "help" actually hinders `b` and we suspect that $\lambda<1$.
+
 
 ```{r calclamf, cache=TRUE}
-l <- exp(seq(from=log(0.02), to=log(8), len=17))
+l <- exp(seq(from=log(0.0002), to=log(2), len=7))
 like <- sapply(l,lam)
 ```
 
@@ -51,8 +69,8 @@ optimal_sol
 
 ```{r lamfminus2, cache=TRUE}
 f <- function(l){lam(l) - optimal_sol$objective + 2}
-lower <- uniroot(f, interval = c(0.01, 1))
-upper <- uniroot(f, interval = c(1, 10))
+lower <- uniroot(f, interval = c(exp(-8), exp(-7)))
+upper <- uniroot(f, interval = c(exp(-2), exp( 0)))
 ```
 
 ```{r showroots}
@@ -61,10 +79,13 @@ upper
 ```
 
 
-
-```{r plotlamf}
+```{r plotlamf, echo=TRUE,fig.cap="Log-likelihood function for lambda"}
 plot(log(l), like - optimal_sol$objective, type='b')
-abline(h=c(0, -2))
+abline(h = c(0, -2))
 abline(v = log(optimal_sol$maximum))
-segments(x0 = log(c(lower$root, upper$root)), y0 = -2.25, y1 = -1.75)
+abline(v = 0)
+segments(x0 = log(c(lower$root, upper$root)), y0 = -2.25, y1 = -1.75, col='gray')
 ```
+
+Figure \@ref(fig:plotlamf) shows
+
