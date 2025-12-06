@@ -1,0 +1,70 @@
+---
+title: "Person with advantage functionality for `hyper3` objects: `pwa3()`"
+output: bookdown::html_document2
+author: "Robin K. S. Hankin"
+link-citations: true
+bibliography: hyper2.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+```
+
+```{r}
+pwa3
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
+
+
+```{r definelamf}
+lam <- function(lambda){
+  race_nohelp <-
+    race(letters[c(1,2,4,3)]) + 
+    race(letters[c(3,1,2,4)]) +
+    race(letters[c(2,4,1,3)])
+    
+  race_help <- 
+    race(letters[c(2,3,1,4)]) |> pwa3("b", lambda) + 
+    race(letters[c(1,3,4,2)]) |> pwa3("b", lambda) +
+    race(letters[c(3,2,1,4)]) |> pwa3("b", lambda)
+  
+  maxp(as.hyper3(race_nohelp) + race_help, give=TRUE)$value
+}
+```
+
+
+```{r calclamf, cache=TRUE}
+l <- exp(seq(from=log(0.02), to=log(8), len=17))
+like <- sapply(l,lam)
+```
+
+
+```{r optimizelamf, cache=TRUE}
+optimal_sol <- optimize(lam, c(0.01, 3), maximum=TRUE)
+```
+
+```{r showoptimlam}
+optimal_sol
+```
+
+```{r lamfminus2, cache=TRUE}
+f <- function(l){lam(l) - optimal_sol$objective + 2}
+lower <- uniroot(f, interval = c(0.01, 1))
+upper <- uniroot(f, interval = c(1, 10))
+```
+
+```{r showroots}
+lower
+upper
+```
+
+
+
+```{r plotlamf}
+plot(log(l), like - optimal_sol$objective, type='b')
+abline(h=c(0, -2))
+abline(v = log(optimal_sol$maximum))
+segments(x0 = log(c(lower$root, upper$root)), y0 = -2.25, y1 = -1.75)
+```

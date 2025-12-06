@@ -17,6 +17,9 @@ position, playing white in chess, or playing soccer at one's home
 ground.  Function \code{pwa()} (\dQuote{player with advantage}) returns
 a modified \code{hyper2} object with the additional strength represented
 as a reified entity.
+
+See \code{inst/pwa3.Rmd} for further discussion of \code{pwa3()}.
+
 }
 \usage{
 pwa(H, pwa, chameleon = "S")
