@@ -11,6 +11,15 @@ knitr::opts_chunk$set(echo = TRUE)
 library("hyper2")
 ```
 
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+
+<font size="1"> (takes about five minutes to run without cache)
+</font>
+
+
 ```{r}
 pwa3
 pwa3_single
@@ -79,9 +88,9 @@ plot(log(l), like - optimal_sol$objective,
 	     type='b', pch=16,
 	     xlab = expression(log(lambda)),
 	     ylab = "log-likelihood")
-abline(h = c(0, -2))
+abline(h = c(0, -2), col='gray')
 abline(v = log(optimal_sol$maximum))
-abline(v = 0)
+abline(v = 0, lty=2)
 segments(x0 = log(c(lower$root, upper$root)), y0 = -2.25, y1 = -1.75, col='gray')
 ```
 
@@ -96,3 +105,77 @@ $\exp(`r round(log(upper$root),2)`)\simeq `r round(upper$root,2)`$
 thereby excluding the null of $\lambda=1$
 which has a support of about `r round(lam(1)-optimal_sol$objective,2)`.
 
+
+
+# Another example {-}
+
+In this case, competitor `a` receives help $\lambda$ or $\lambda^n$ if
+he gets $n$ sets of help.  Below, in function `lam2()` we see that, in
+general, the more help `a` gets, the better he does.  See how a
+negative power corresponds to some sort of hindrance or penalty, and a
+zero power (of course) corresponds to no help at all.
+
+```{r lam2def}
+lam2 <- function(lam){
+
+
+  race_help <- 
+    race(c("d","c","a","b")) |> pwa3(a = lam^0 ) +
+    race(c("c","b","d","a")) |> pwa3(a = lam^-3) + 
+    race(c("c","b","d","a")) |> pwa3(a = lam^-2) + 
+    race(c("c","b","a","d")) |> pwa3(a = lam^-1) + 
+    race(c("a","c","b","d")) |> pwa3(a = lam   ) + 
+    race(c("a","c","b","d")) |> pwa3(a = lam^3 ) +
+    race(c("a","b","d","c")) |> pwa3(a = lam   ) +
+    race(c("c","a","d","b")) |> pwa3(a = lam^2 )
+
+    maxp(race_help, give=TRUE)$value
+}
+```
+
+```{r calclam2f, cache=TRUE}
+l <- exp(seq(from=log(0.8), to=log(19.1), len=11))
+like2 <- sapply(l,lam2)
+```
+
+```{r}
+plot(log(l),like2-max(like2),type="b",pch=16)
+abline(h=c(0,-2), col='gray')
+abline(v=0, lty=2)
+```
+
+# Another other example {-}
+
+In this example we see help being given to two competitors at the same
+time.
+
+
+```{r lam3def}
+
+myr <- function(a1,a2,a3,a4,a5){race(letters[c(a1,a2,a3,a4,a5)])}
+
+lam3 <- function(l){
+  race_help <- 
+    myr(3,1,2,4,5) |> pwa3(a=l, b=l) + 
+    myr(2,3,1,4,5) |> pwa3(a=l, b=l) + 
+    myr(3,1,5,4,2) |> pwa3(a=1, b=1) +   # no help!
+    myr(4,2,5,3,1) |> pwa3(a=1, b=1) +   # no help!
+    myr(3,1,2,4,5) |> pwa3(a=l, b=l)
+
+    maxp(race_help, give=TRUE)$value
+}
+```
+
+```{r calclam3, cache=TRUE}
+l <- exp(seq(from=log(0.5), to=log(84.1), len=13))
+like3 <- sapply(l,lam3)
+```
+
+```{r plotlam3}
+plot(log(l),like3-max(like3), type="b", pch=16)
+abline(h=c(0,-2), col='gray')
+abline(v=0, lty=2)
+```
+
+
+### References {-}
