@@ -1,6 +1,7 @@
 \name{pwa}
 \alias{pwa}
 \alias{pwa3}
+\alias{pwa3_single}
 \alias{chameleon}
 \alias{extra_strength}
 \alias{additional_strength}
@@ -18,12 +19,18 @@ ground.  Function \code{pwa()} (\dQuote{player with advantage}) returns
 a modified \code{hyper2} object with the additional strength represented
 as a reified entity.
 
-See \code{inst/pwa3.Rmd} for further discussion of \code{pwa3()}.
+Function \code{pwa3()} is the \code{hyper3} equivalent; it modifies the
+weight of specified players.  Function \code{pwa3_single()} is a
+lower-level helper function that takes a single player name and its
+lambda value as second and third arguments.  The named argument
+mechanism is the same as that of \code{subs()} in the \CRANpkg{mvp}
+package.
 
 }
 \usage{
 pwa(H, pwa, chameleon = "S")
-pwa3(H3, pwa, lambda)
+pwa3_single(H3, pwa, lambda)
+pwa3(H3, ...)
 }
 
 \arguments{
@@ -34,26 +41,24 @@ pwa3(H3, pwa, lambda)
     vector}
   \item{chameleon}{String representing the advantage}
   \item{lambda}{Value of person with advantage}
+  \item{...}{Further named arguments; see details}
 }
 
 \details{
 
-Given an object of class \code{hyper2} and a competitor \code{a}, we
-replace every occurrence of \code{a} with \code{a+S}, with \code{S}
-representing the extra strength conferred.
-
-However, the function also takes a vector of competitors.  If there is
+Given \code{H} of class \code{hyper2} and a competitor \code{a},
+\code{pwa(H,"a")} replaces every occurrence of \code{a} in \code{H} with
+\code{a+S}, with \code{S} representing the extra strength conferred.
+However, \code{a} may be a vector of competitors.  If \code{a} includes
 more than one competitor, the resulting likelihood function does not
-seem to instantiate any simple situation.  
+seem to instantiate any simple situation.
 
 Nice examples of \code{pwa()} are given in \file{inst/cook.Rmd} and
-\file{inst/universities.Rmd}.
-
-Function \code{pwa()} is the \code{hyper3} equivalent, still under
-development.
+\file{inst/universities.Rmd}, and some discussion of \code{pwa3()} is
+given in \code{inst/pwa3.Rmd}.
 
 }
-\value{Returns an object of class \code{hyper2}.}
+\value{Returns an object of class \code{hyper2} or \code{hyper3}.}
 \author{Robin K. S. Hankin}
 \note{
 
@@ -75,7 +80,9 @@ summary(formula1 |> pwa("Hamilton","pole"))
 
 H <- ordervec2supp(c(a = 2, b = 3, c = 1, d = 5, e = 4))
 pwa(H,'a')
-pwa3(H, 'a', 1.888)
+pwa3_single(H, "a", 1.888)
+
+pwa3(H, b=1.8, c=0.7)
 
 ## Four races between a,b,c,d:
 H1 <- ordervec2supp(c(a = 1, b = 3, c = 4, d = 2))

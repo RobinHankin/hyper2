@@ -13,6 +13,7 @@ library("hyper2")
 
 ```{r}
 pwa3
+pwa3_single
 ```
 
 To cite the `hyper2` package in publications, please use
@@ -39,9 +40,9 @@ lam <- function(lambda){
     race(c("b","d","a","c")) 
     
   race_help <- 
-    race(c("a","c","d","b")) |> pwa3("b", lambda) + 
-    race(c("c","d","b","a")) |> pwa3("b", lambda) + 
-    race(c("d","c","a","b")) |> pwa3("b", lambda)
+    race(c("a","c","d","b")) |> pwa3(b = lambda) + 
+    race(c("c","d","b","a")) |> pwa3(b = lambda) + 
+    race(c("d","c","a","b")) |> pwa3(b = lambda)
   
   maxp(as.hyper3(race_nohelp) + race_help, give=TRUE)$value
 }
@@ -54,7 +55,7 @@ the "help" actually hinders `b` and we suspect that $\lambda<1$.
 
 
 ```{r calclamf, cache=TRUE}
-l <- exp(seq(from=log(0.0002), to=log(2), len=7))
+l <- exp(seq(from=log(0.0002), to=log(2), len=17))
 like <- sapply(l,lam)
 ```
 
@@ -73,19 +74,25 @@ lower <- uniroot(f, interval = c(exp(-8), exp(-7)))
 upper <- uniroot(f, interval = c(exp(-2), exp( 0)))
 ```
 
-```{r showroots}
-lower
-upper
-```
-
-
 ```{r plotlamf, echo=TRUE,fig.cap="Log-likelihood function for lambda"}
-plot(log(l), like - optimal_sol$objective, type='b')
+plot(log(l), like - optimal_sol$objective,
+	     type='b', pch=16,
+	     xlab = expression(log(lambda)),
+	     ylab = "log-likelihood")
 abline(h = c(0, -2))
 abline(v = log(optimal_sol$maximum))
 abline(v = 0)
 segments(x0 = log(c(lower$root, upper$root)), y0 = -2.25, y1 = -1.75, col='gray')
 ```
 
-Figure \@ref(fig:plotlamf) shows
+Figure \@ref(fig:plotlamf) shows a log-likelihood function for
+$\log\lambda$.  We see that the evaluate is about
+$\lambda=\exp(`r round(log(optimal_sol$maximum),2)`)\simeq
+`r round(optimal_sol$maximum,3)`$.  Further, the support interval
+runs from about
+$\exp(`r round(log(lower$root),2)`)\simeq `r round(lower$root,6)`$
+to about
+$\exp(`r round(log(upper$root),2)`)\simeq `r round(upper$root,2)`$
+thereby excluding the null of $\lambda=1$
+which has a support of about `r round(lam(1)-optimal_sol$objective,2)`.
 
