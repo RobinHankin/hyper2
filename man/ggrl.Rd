@@ -20,10 +20,10 @@ statistics
 \usage{
 ggrl(H, ...)
 general_grouped_rank_likelihood(H, ...)
-goodbad(winners,losers)
+goodbad(winners, losers)
 elimination(all_players)
-rankvec_likelihood(v,nonfinishers)
-race(v,nonfinishers)
+rankvec_likelihood(v, nonfinishers)
+race(v, nonfinishers)
 }
 
 \arguments{
@@ -57,12 +57,15 @@ race(v,nonfinishers)
   Function \code{goodbad()} is a convenience function for \code{ggrl()}
   in which a bunch of contestants is judged.  It returns a likelihood
   function for the observation that the members of one subset were
-  better than those of another.  Thus
-  \code{goodbad(letters[1:3],letters[4:5])} corresponds to the
-  observation that \code{d} and \code{e} were put into an elimination
-  trial (and \code{a,b,c} were not).  Note that this is \emph{not} the
-  same as \dQuote{competitors \code{a,b,c} had a competition against
-  competitors \code{c,d} and \code{a,b,c} won}.
+  better than those of another.  Thus \code{goodbad(letters[1:3],
+  letters[4:5])} corresponds to the observation that \code{d} and
+  \code{e} were put into a Masterchef-style elimination trial (and
+  \code{a,b,c} were not).  The probability of this is the sum of 12
+  Plackett-Luce probabilities, one for each order statistic preserving
+  the fact that \code{a,b,c} were in the top 3 and \code{d,e} in the
+  bottom 2.  Note that this is \emph{not} the same as
+  \dQuote{competitors \code{a,b,c} had a competition against competitors
+  \code{c,d} and \code{a,b,c} won}.
   
   Function \code{elimination()} gives a likelihood function for situations
   where the \emph{weakest} player is identified at each stage and
