@@ -177,5 +177,60 @@ abline(h=c(0,-2), col='gray')
 abline(v=0, lty=2)
 ```
 
+# Yet another example {-}
+
+Here we consider help in turn to each of five competitors.  From the
+function below, if someone gets help they generally do quite well.
+
+```{r lam4def}
+
+myr <- function(a1,a2,a3,a4,a5){race(letters[c(a1,a2,a3,a4,a5)])}
+
+lam4 <- function(x, givelike=FALSE){
+    race_help <- 
+        myr(3,1,2,4,5) |> pwa3(a=x) +
+        myr(2,3,1,4,5) |> pwa3(b=x) +
+        myr(3,1,5,4,2) |> pwa3(c=x) +
+        myr(4,2,5,3,1) |> pwa3(d=x) +
+        myr(3,5,2,4,1) |> pwa3(e=x)
+    if(givelike){
+        return(race_help)
+    } else {
+        return(maxp(race_help, give=TRUE)$value)
+    }
+}
+```
+
+```{r calclam4, cache=TRUE}
+l <- exp(seq(from= -0.5, to=log(250), len=15))
+like4 <- sapply(l,lam4)
+```
+
+```{r optimizelamf4, cache=TRUE}
+optimal_sol4 <- optimize(lam4, exp(2:3), maximum=TRUE)
+```
+
+It makes sense to consider our likelihood function at the estimate for
+$\lambda$:
+
+
+```{r maxp4}
+H <- lam4(optimal_sol4$maximum, givelike=TRUE)
+H
+summary(H)
+maxp(H)
+```
+
+Above we see that the evaluate is very high for `c` having a BT
+strength of about 0.6.  This is consistent with our observations for
+twice we see `c` winning [that is, coming first] without any help.
+
+
+```{r plotlam4}
+plot(log(l),like4-max(like4), type="b", pch=16)
+abline(h=c(0,-2), col='gray')
+abline(v=0, lty=2)
+abline(v = log(optimal_sol4$maximum))
+```
 
 ### References {-}
