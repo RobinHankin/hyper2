@@ -20,11 +20,13 @@ a modified \code{hyper2} object with the additional strength represented
 as a reified entity.
 
 Function \code{pwa3()} is the \code{hyper3} equivalent; it modifies the
-weight of specified players.  Function \code{pwa3_single()} is a
-lower-level helper function that takes a single player name and its
-lambda value as second and third arguments.  The named argument
-mechanism is the same as that of \code{subs()} in the \CRANpkg{mvp}
-package.
+weight of specified players.  The named argument mechanism
+[e.g. \code{pwa3(H, e=1.2, f=3.4)}] is the same as that of \code{subs()}
+in the \CRANpkg{mvp} package.  If there is exactly one ellipsis
+argument, and it is a named vector, the elements are interpreted as
+name/value pairs, so \code{pwa3(H, c(e=1.2, f=3.4))} works.  Function
+\code{pwa3_single()} is a lower-level helper function that takes a
+single player name and its lambda value as second and third arguments.
 
 }
 \usage{

@@ -738,6 +738,12 @@ stop("not yet written")
 
 "pwa3" <- function(H3, ...){
     l <- list(...)
+    if(length(l) == 1){
+        x <- l[[1]]
+        if(is.vector(x) && (!is.list(x)) && is.numeric(x) && (!is.null(names(x)))){
+            l <- as.list(l[[1]])
+        }
+    }
     for(i in seq_along(l)){
         H3 <- pwa3_single(H3, names(l[i]), l[[i]])
     }
