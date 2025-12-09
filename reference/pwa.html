@@ -9,11 +9,13 @@ ground.  Function pwa() (&amp;#8220;player with advantage&amp;#8221;) returns
 a modified hyper2 object with the additional strength represented
 as a reified entity.
 Function pwa3() is the hyper3 equivalent; it modifies the
-weight of specified players.  Function pwa3_single() is a
-lower-level helper function that takes a single player name and its
-lambda value as second and third arguments.  The named argument
-mechanism is the same as that of subs() in the mvp
-package."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+weight of specified players.  The named argument mechanism
+[e.g. pwa3(H, e=1.2, f=3.4)] is the same as that of subs()
+in the mvp package.  If there is exactly one ellipsis
+argument, and it is a named vector, the elements are interpreted as
+name/value pairs, so pwa3(H, c(e=1.2, f=3.4)) works.  Function
+pwa3_single() is a lower-level helper function that takes a
+single player name and its lambda value as second and third arguments."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -98,11 +100,13 @@ ground.  Function <code>pwa()</code> (“player with advantage”) returns
 a modified <code>hyper2</code> object with the additional strength represented
 as a reified entity.</p>
 <p>Function <code>pwa3()</code> is the <code>hyper3</code> equivalent; it modifies the
-weight of specified players.  Function <code>pwa3_single()</code> is a
-lower-level helper function that takes a single player name and its
-lambda value as second and third arguments.  The named argument
-mechanism is the same as that of <code>subs()</code> in the <a href="https://CRAN.R-project.org/package=mvp" class="external-link"><span class="pkg">mvp</span></a>
-package.</p>
+weight of specified players.  The named argument mechanism
+[e.g. <code>pwa3(H, e=1.2, f=3.4)</code>] is the same as that of <code>subs()</code>
+in the <a href="https://CRAN.R-project.org/package=mvp" class="external-link"><span class="pkg">mvp</span></a> package.  If there is exactly one ellipsis
+argument, and it is a named vector, the elements are interpreted as
+name/value pairs, so <code>pwa3(H, c(e=1.2, f=3.4))</code> works.  Function
+<code>pwa3_single()</code> is a lower-level helper function that takes a
+single player name and its lambda value as second and third arguments.</p>
     </div>
 
     <div id="ref-usage">

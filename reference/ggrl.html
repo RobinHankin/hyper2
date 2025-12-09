@@ -82,10 +82,10 @@ statistics</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ggrl</span><span class="op">(</span><span class="va">H</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">general_grouped_rank_likelihood</span><span class="op">(</span><span class="va">H</span>, <span class="va">...</span><span class="op">)</span></span>
-<span><span class="fu">goodbad</span><span class="op">(</span><span class="va">winners</span>,<span class="va">losers</span><span class="op">)</span></span>
+<span><span class="fu">goodbad</span><span class="op">(</span><span class="va">winners</span>, <span class="va">losers</span><span class="op">)</span></span>
 <span><span class="fu">elimination</span><span class="op">(</span><span class="va">all_players</span><span class="op">)</span></span>
-<span><span class="fu">rankvec_likelihood</span><span class="op">(</span><span class="va">v</span>,<span class="va">nonfinishers</span><span class="op">)</span></span>
-<span><span class="fu">race</span><span class="op">(</span><span class="va">v</span>,<span class="va">nonfinishers</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">rankvec_likelihood</span><span class="op">(</span><span class="va">v</span>, <span class="va">nonfinishers</span><span class="op">)</span></span>
+<span><span class="fu">race</span><span class="op">(</span><span class="va">v</span>, <span class="va">nonfinishers</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -130,12 +130,15 @@ statistics</p>
 <p>Function <code>goodbad()</code> is a convenience function for <code>ggrl()</code>
   in which a bunch of contestants is judged.  It returns a likelihood
   function for the observation that the members of one subset were
-  better than those of another.  Thus
-  <code>goodbad(letters[1:3],letters[4:5])</code> corresponds to the
-  observation that <code>d</code> and <code>e</code> were put into an elimination
-  trial (and <code>a,b,c</code> were not).  Note that this is <em>not</em> the
-  same as “competitors <code>a,b,c</code> had a competition against
-  competitors <code>c,d</code> and <code>a,b,c</code> won”.</p>
+  better than those of another.  Thus <code>goodbad(letters[1:3],
+  letters[4:5])</code> corresponds to the observation that <code>d</code> and
+  <code>e</code> were put into a Masterchef-style elimination trial (and
+  <code>a,b,c</code> were not).  The probability of this is the sum of 12
+  Plackett-Luce probabilities, one for each order statistic preserving
+  the fact that <code>a,b,c</code> were in the top 3 and <code>d,e</code> in the
+  bottom 2.  Note that this is <em>not</em> the same as
+  “competitors <code>a,b,c</code> had a competition against competitors
+  <code>c,d</code> and <code>a,b,c</code> won”.</p>
 <p>Function <code>elimination()</code> gives a likelihood function for situations
   where the <em>weakest</em> player is identified at each stage and
   subsequently eliminated from the competition.  It is intended for
