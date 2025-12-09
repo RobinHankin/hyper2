@@ -214,7 +214,14 @@ It makes sense to consider our likelihood function at the estimate for
 $\lambda$:
 
 
-```{r maxp4}
+```{r plotlam4}
+plot(log(l),like4-max(like4), type="b", pch=16)
+abline(h=c(0,-2), col='gray')
+abline(v=0, lty=2)
+abline(v = log(optimal_sol4$maximum))
+```
+
+```{r maxp4,cache=TRUE}
 H <- lam4(optimal_sol4$maximum, givelike=TRUE)
 H
 summary(H)
@@ -224,13 +231,73 @@ maxp(H)
 Above we see that the evaluate is very high for `c` having a BT
 strength of about 0.6.  This is consistent with our observations for
 twice we see `c` winning [that is, coming first] without any help.
+Is there statistical evidence to support this assertion?
+
+The simplest approach would be to consider the likelihood function at
+$\hat{\lambda}\simeq 16.705$:
+
+```{r stat4, cache=TRUE}
+f <- function(o){samep.test(H, c(o, "c"))$statistic}
+stat4 <- c(a=f("a"), b=f("b"), d=f("d"), e=f("e"))
+```
+
+```{r}
+stat4
+```
+
+Above we see that there is no strong evidence for `c` being the
+strongest, on the grounds that we are unable to reject $H_0\colon
+p_b=p_c$ [the support difference is about 0.74, short of the two-units
+of support criterion required for rejection], at least with
+$\lambda=16.705$.
+
+# Another further idea {-}
+
+Now we have a model for the starting grid in formula 1.   In the
+following function we specify the finishing order and also the
+starting grid order.
 
 
-```{r plotlam4}
-plot(log(l),like4-max(like4), type="b", pch=16)
-abline(h=c(0,-2), col='gray')
-abline(v=0, lty=2)
-abline(v = log(optimal_sol4$maximum))
+```{r lam5}
+
+tolam <- function(lam,o){setNames(lam^(seq_along(o)-1),o)}
+
+lam5 <- function(lam, givelike=FALSE){
+    race_help <- 
+        race(c("a","b","d","c","e")) |> pwa3(tolam(lam, c("a","b","c","d","e"))) +
+        race(c("a","c","b","d","e")) |> pwa3(tolam(lam, c("c","b","a","d","e"))) +
+        race(c("a","d","c","b","e")) |> pwa3(tolam(lam, c("a","c","b","d","e"))) +
+        race(c("e","c","b","a","d")) |> pwa3(tolam(lam, c("a","c","b","e","d"))) +
+        race(c("b","c","e","a","d")) |> pwa3(tolam(lam, c("c","b","e","d","a"))) +
+        race(c("a","d","c","b","e")) |> pwa3(tolam(lam, c("a","b","c","d","e")))
+
+    if(givelike){
+        return(race_help)
+    } else {
+        return(maxp(race_help, give=TRUE)$value)
+    }
+}
+```
+
+
+```{r lam5calculator, cache=TRUE}
+l <- exp(seq(from= -2, to=log(1.5), len=15))
+like5 <- sapply(l,lam5)
+optimal_sol5 <- optimize(lam5, exp(c(-1,0)), maximum=TRUE)
+```
+
+```{r lamfminus5, cache=TRUE}
+f <- function(l){lam5(l) - optimal_sol5$objective + 2}
+lower <- uniroot(f, interval = c(exp(-1.5), exp(-1.0)))
+upper <- uniroot(f, interval = c(exp(-0.5), exp(+0.5)))
+```
+
+```{r plotlamf5, echo=TRUE, fig.cap="Log-likelihood function for lambda, the pole position measure"}
+plot(log(l), like5 - max(like5), type='b', pch=16)
+abline(h = c(0, -2), col='gray')
+abline(v = log(optimal_sol5$maximum))
+abline(v = 0, lty=2)
+segments(x0 = log(c(lower$root, upper$root)), y0 = -2.5, y1 = -1.5, col='red')
 ```
 
 ### References {-}
