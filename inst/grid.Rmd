@@ -1,0 +1,102 @@
+---
+title: "The starting grid in Formula 1: 2025"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: hyper2.bib  # copy from vignettes/
+
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+options("digits" = 5)
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
+
+```{r}
+x <- readLines("grid_2025.txt")
+```
+
+```{r}
+drivers <- function(i){strsplit(x[i], " ")[[1]][-1]}
+venue   <- function(i){strsplit(x[i], " ")[[1]][ 1]}
+drivers(11)
+allvenues <- sapply(1:24,venue)
+alldrivers <- NULL
+for(i in 1:24){alldrivers <- c(alldrivers,drivers(i))}
+alldrivers <- sort(unique(alldrivers))
+M <- matrix(0,nrow=24, ncol=length(alldrivers))
+colnames(M) <- alldrivers
+rownames(M) <- allvenues
+for(i in 1:24){M[i,] <- alldrivers %in%  drivers(i)    }
+M
+rowSums(M)
+colSums(M)   
+```
+
+
+Above we see that Colapinto and Doohan were the only drivers that did
+not compete at every venue.  We will have to remove these two drivers
+from the data:
+
+```{r}
+grid_order <- list()
+unwanted <- c("Colapinto", "Doohan")
+for(i in 1:24){
+    jj <- drivers(i)
+    grid_order[[i]] <- jj[!(jj %in% unwanted)]
+}
+grid_order
+```
+
+We are going to use the 2025 finishing dataset:
+
+```{r, read2025, cache=TRUE}
+a <- read.table("~/rstudio/hyper2/inst/formula1_2025.txt")
+a <- a[1:19,-ncol(a)]   # remove Colapinto and Doohan; and the points
+```
+
+
+We need to iterate through each venue, and use `pwa3()` to modify the
+likelihood function for each one.  Then add the log-likelihoods for
+each venue together.
+
+```{r f1griddef}
+
+geometric <- function(lambda, x){setNames(lambda^(seq_along(x)-1),x)}
+
+f1grid <- function(lambda){
+
+    H <- list()
+    for(i in 1:24){
+        vec <- as.numeric(a[,1])
+        vec[is.na(vec)] <- 0
+        jj <- setNames(vec, rownames(a))
+        H[[i]] <- ordervec2supp(jj) |> pwa3(geometric(lambda,grid_order[[i]]))
+    }
+    out <- hyper3()
+    for(i in 1:24){
+        out <- out + H[[i]]
+    }
+    return(out)
+}
+```
+
+
+```{r calcpoll, cache=TRUE}
+jj <- f1grid(0.5)
+```
+
+```{r maxcalc, cache=TRUE}
+mH <- maxp(jj)
+```
+
+```{r}
+mH
+```
