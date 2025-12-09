@@ -300,4 +300,14 @@ abline(v = 0, lty=2)
 segments(x0 = log(c(lower$root, upper$root)), y0 = -2.5, y1 = -1.5, col='red')
 ```
 
+```{r maxlikeatlam5, cache=TRUE}
+H <- lam5(optimal_sol5$maximum, givelike=TRUE)
+mP <- maxp(H)
+```
+
+```{r}
+mP
+```
+
+
 ### References {-}
