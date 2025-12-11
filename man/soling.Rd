@@ -46,6 +46,8 @@ directory.
 \examples{
 data(soling)
 ordertable_to_ranktable(soling_table)
+
+\dontrun{soling == suppfun(ordertable_to_ranktable(soling_table))}
 pie(soling_maxp)
 }
 
