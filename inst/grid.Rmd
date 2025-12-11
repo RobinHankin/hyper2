@@ -90,13 +90,39 @@ f1grid <- function(lambda){
 
 
 ```{r calcpoll, cache=TRUE}
-jj <- f1grid(0.5)
+supptime  <- system.time(jj <- f1grid(0.5))
 ```
 
 ```{r maxcalc, cache=TRUE}
-mH <- maxp(jj)
+maxtime <- system.time(mH <- maxp(jj))
 ```
 
 ```{r}
+supptime
+maxtime
 mH
+pie(mH)
+```
+
+```{r domore, cache=TRUE}
+o <- function(lambda){maxp(f1grid(lambda), give=TRUE)$value}
+timeo1 <- system.time(l1 <- o(1.01))
+timeo2 <- system.time(l2 <- o(1.02))
+```
+
+```{r}
+timeo1
+timeo2
+l1
+l2
+```
+
+```{r domanyL, cache=TRUE}
+lam <- seq(from=0.9, to=1, len=17)
+L <- sapply(lam, o)
+```
+
+
+```{r plotmanyL}
+plot(lam, L - max(L), pch=16, type="b")
 ```
