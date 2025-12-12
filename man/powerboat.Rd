@@ -47,8 +47,12 @@ Championship. In \emph{Wikipedia, The Free Encyclopedia}.  Retrieved
 }
 \seealso{\code{\link{ordertable2supp}}}
 \examples{
+suppfun(powerboat_table)
 pie(powerboat_maxp)
 
+#    equalp.test(powerboat)
+#    samep.test(powerboat, c("Torrente", "Stark"))  
+ 
 }
 
 
