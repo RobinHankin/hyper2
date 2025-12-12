@@ -122,9 +122,187 @@ Championship. In <em>Wikipedia, The Free Encyclopedia</em>.  Retrieved
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pie.html" class="external-link">pie</a></span><span class="op">(</span><span class="va">powerboat_maxp</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="suppfun.html">suppfun</a></span><span class="op">(</span><span class="va">powerboat_table</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log(AlHameli^5 * (AlHameli + Andersson + Benavente + Bjerknaes +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cantando + Carella + Chiappe + Deguisne + Edin + Marszalek + Morin +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stark + Stromoy +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> T_AlQamzi + Torrente + Trask)^-7 * (AlHameli + Andersson + Benavente +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bjerknaes + Cantando + Carella + Chiappe + Deguisne + Edin + Marszalek</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Morin + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stark +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stromoy + T_AlQamzi + Trask)^-3 * (AlHameli + Andersson + Benavente +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bjerknaes + Cantando + Carella + Chiappe + Deguisne + Edin + Marszalek</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Morin + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stark +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stromoy + Torrente + Trask)^-1 * (AlHameli + Andersson + Benavente +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bjerknaes + Cantando + Carella + Chiappe + Deguisne + Edin + Marszalek</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Morin + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stark +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stromoy + Trask)^-2 * (AlHameli + Andersson + Benavente + Bjerknaes +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cantando + Carella + Chiappe + Deguisne + Edin + Marszalek + Morin +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stark + T_AlQamzi +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trask)^-1 * (AlHameli + Andersson + Benavente + Bjerknaes + Cantando +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Carella + Chiappe + Deguisne + Edin + Marszalek + Morin + R_AlQamzi +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Roms + Schuft + Selio + Sookbuangbon + Stromoy + T_AlQamzi + Torrente +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trask)^-3 * (AlHameli + Andersson + Benavente + Bjerknaes + Cantando +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Carella + Chiappe + Deguisne + Edin + Marszalek + Morin + R_AlQamzi +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Roms + Schuft + Selio + Sookbuangbon + Stromoy + Torrente + Trask)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (AlHameli + Andersson + Benavente + Bjerknaes + Cantando + Carella +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chiappe + Deguisne + Edin + Marszalek + Morin + R_AlQamzi + Roms +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Schuft + Selio + Sookbuangbon + Stromoy + Trask)^-2 * (AlHameli +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Andersson + Benavente + Bjerknaes + Cantando + Carella + Chiappe +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deguisne + Edin + Marszalek + Morin + R_AlQamzi + Roms + Schuft + Selio</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Sookbuangbon + T_AlQamzi + Trask)^-1 * (AlHameli + Andersson +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Benavente + Bjerknaes + Cantando + Carella + Chiappe + Deguisne + Edin</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Marszalek + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stark</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Stromoy + Torrente + Trask)^-1 * (AlHameli + Andersson + Benavente +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bjerknaes + Cantando + Carella + Chiappe + Deguisne + Edin + Marszalek</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + T_AlQamzi +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trask)^-1 * (AlHameli + Andersson + Benavente + Bjerknaes + Cantando +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Carella + Chiappe + Deguisne + Edin + Marszalek + R_AlQamzi + Roms +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Schuft + Sookbuangbon + Stark + Stromoy + Torrente + Trask)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (AlHameli + Andersson + Benavente + Bjerknaes + Cantando + Carella +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chiappe + Deguisne + Edin + Marszalek + R_AlQamzi + Roms + Schuft +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Stark + Torrente + Trask)^-1 * (AlHameli + Andersson +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Benavente + Bjerknaes + Cantando + Carella + Chiappe + Deguisne +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Marszalek + Morin + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stromoy + Trask)^-1 * (AlHameli + Andersson + Benavente + Bjerknaes +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cantando + Carella + Chiappe + Deguisne + Marszalek + R_AlQamzi + Roms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Schuft + Selio + Sookbuangbon + Stromoy + Trask)^-1 * (AlHameli +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Andersson + Benavente + Bjerknaes + Cantando + Carella + Deguisne +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Edin + Marszalek + Morin + R_AlQamzi + Roms + Schuft + Selio +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Stark + Stromoy + Trask)^-1 * (AlHameli + Andersson +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Benavente + Bjerknaes + Cantando + Carella + Deguisne + Edin +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Marszalek + Morin + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stromoy + T_AlQamzi + Torrente + Trask)^-1 * (AlHameli + Andersson +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Benavente + Bjerknaes + Cantando + Carella + Deguisne + Edin +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Marszalek + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stromoy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + T_AlQamzi + Torrente + Trask)^-1 * (AlHameli + Andersson + Benavente</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Bjerknaes + Cantando + Carella + Deguisne + Edin + Marszalek +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stromoy + Torrente +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trask)^-1 * (AlHameli + Andersson + Benavente + Bjerknaes + Cantando +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Carella + Deguisne + Edin + Marszalek + R_AlQamzi + Roms + Schuft +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Stromoy + Torrente)^-1 * (AlHameli + Andersson +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Benavente + Bjerknaes + Cantando + Carella + Deguisne + Edin +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Marszalek + R_AlQamzi + Roms + Schuft + Sookbuangbon + Stromoy +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Torrente + Trask)^-1 * (AlHameli + Andersson + Benavente + Bjerknaes +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cantando + Carella + Deguisne + Edin + Marszalek + R_AlQamzi + Roms +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Schuft + Sookbuangbon + Torrente)^-1 * (AlHameli + Andersson +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Benavente + Bjerknaes + Cantando + Deguisne + Edin + Marszalek + Morin</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stark + Stromoy +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trask)^-1 * (AlHameli + Andersson + Benavente + Bjerknaes + Cantando +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deguisne + Edin + Marszalek + R_AlQamzi + Roms + Schuft + Selio +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Stark + Stromoy + Trask)^-1 * (AlHameli + Andersson +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Benavente + Bjerknaes + Carella + Chiappe + Deguisne + Edin + Marszalek</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + T_AlQamzi +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trask)^-1 * (AlHameli + Andersson + Benavente + Bjerknaes + Carella +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chiappe + Deguisne + Edin + Marszalek + R_AlQamzi + Roms + Schuft +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Stark + Torrente + Trask)^-1 * (AlHameli + Andersson +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Benavente + Bjerknaes + Carella + Chiappe + Deguisne + Edin + Marszalek</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + R_AlQamzi + Roms + Schuft + Sookbuangbon + Stark + Trask)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (AlHameli + Andersson + Benavente + Bjerknaes + Carella + Chiappe +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deguisne + Edin + R_AlQamzi + Roms + Schuft + Sookbuangbon + Stark +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trask)^-1 * (AlHameli + Andersson + Benavente + Bjerknaes + Carella +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chiappe + Deguisne + Marszalek + R_AlQamzi + Roms + Schuft + Selio +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + T_AlQamzi + Trask)^-1 * (AlHameli + Andersson +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Benavente + Bjerknaes + Carella + Chiappe + Deguisne + Marszalek +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R_AlQamzi + Schuft + Selio + Sookbuangbon + T_AlQamzi + Trask)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (AlHameli + Andersson + Benavente + Bjerknaes + Carella + Deguisne +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Edin + R_AlQamzi + Roms + Schuft + Sookbuangbon + Stark + Trask)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (AlHameli + Andersson + Benavente + Bjerknaes + Carella + Edin +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R_AlQamzi + Roms + Schuft + Sookbuangbon + Stark + Trask)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (AlHameli + Andersson + Benavente + Bjerknaes + Carella + Edin +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R_AlQamzi + Schuft + Sookbuangbon + Stark + Trask)^-1 * (AlHameli +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Andersson + Bjerknaes + Carella + Edin + R_AlQamzi + Schuft +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Stark + Trask)^-1 * (AlHameli + Benavente + Bjerknaes +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cantando + Carella + Chiappe + Deguisne + Edin + Marszalek + Morin +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stromoy + T_AlQamzi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Torrente + Trask)^-1 * (AlHameli + Benavente + Bjerknaes + Cantando +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Carella + Chiappe + Deguisne + Edin + Marszalek + Morin + R_AlQamzi +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Roms + Schuft + Selio + Sookbuangbon + Stromoy + T_AlQamzi + Trask)^-1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * (AlHameli + Benavente + Bjerknaes + Cantando + Carella + Chiappe +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deguisne + Edin + Marszalek + Morin + R_AlQamzi + Roms + Schuft + Selio</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Sookbuangbon + Stromoy + Trask)^-1 * (AlHameli + Benavente +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bjerknaes + Cantando + Carella + Chiappe + Deguisne + Edin + Marszalek</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Morin + R_AlQamzi + Roms + Schuft + Sookbuangbon + Stromoy +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> T_AlQamzi + Trask)^-1 * (AlHameli + Benavente + Bjerknaes + Cantando +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Carella + Chiappe + Deguisne + Marszalek + Morin + R_AlQamzi + Roms +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Schuft + Sookbuangbon + Stromoy + T_AlQamzi + Trask)^-1 * (AlHameli +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Benavente + Bjerknaes + Cantando + Carella + Chiappe + Deguisne +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Marszalek + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stromoy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Trask)^-1 * (AlHameli + Benavente + Bjerknaes + Cantando + Carella +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chiappe + Deguisne + Marszalek + R_AlQamzi + Roms + Schuft + Selio +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Trask)^-1 * (AlHameli + Benavente + Bjerknaes + Cantando</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Carella + Chiappe + Deguisne + R_AlQamzi + Roms + Schuft + Selio +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Trask)^-1 * (AlHameli + Benavente + Bjerknaes + Cantando</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Carella + Deguisne + Edin + Marszalek + Morin + R_AlQamzi + Roms +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Schuft + Selio + Sookbuangbon + Stromoy + Trask)^-1 * (AlHameli +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Benavente + Bjerknaes + Cantando + Carella + Deguisne + Marszalek +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Morin + R_AlQamzi + Roms + Schuft + Sookbuangbon + Stromoy + T_AlQamzi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Trask)^-1 * (AlHameli + Benavente + Bjerknaes + Cantando + Carella +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deguisne + Marszalek + Morin + R_AlQamzi + Schuft + Sookbuangbon +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stromoy + T_AlQamzi)^-1 * (AlHameli + Benavente + Bjerknaes + Cantando</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Carella + Deguisne + Marszalek + Morin + R_AlQamzi + Schuft +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Stromoy + T_AlQamzi + Trask)^-1 * (AlHameli + Benavente</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Bjerknaes + Cantando + Carella + Marszalek + Morin + R_AlQamzi +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Schuft + Sookbuangbon + Stromoy + T_AlQamzi)^-1 * (AlHameli + Benavente</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Bjerknaes + Carella + Marszalek + Morin + R_AlQamzi + Schuft +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Stromoy + T_AlQamzi)^-1 * Andersson^3 * (Andersson +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Benavente + Bjerknaes + Cantando + Carella + Deguisne + Edin +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Marszalek + R_AlQamzi + Roms + Schuft + Sookbuangbon + Torrente)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Andersson + Benavente + Bjerknaes + Cantando + Carella + Edin +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Marszalek + R_AlQamzi + Roms + Schuft + Sookbuangbon + Torrente)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Andersson + Benavente + Bjerknaes + Cantando + Deguisne + Edin +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Marszalek + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stark +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stromoy + Trask)^-1 * (Andersson + Benavente + Bjerknaes + Carella +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chiappe + Deguisne + Marszalek + R_AlQamzi + Schuft + Selio +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + T_AlQamzi + Trask)^-1 * (Andersson + Benavente +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bjerknaes + Carella + Chiappe + Deguisne + Marszalek + R_AlQamzi +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selio + Sookbuangbon + T_AlQamzi + Trask)^-1 * (Andersson + Bjerknaes +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cantando + Carella + Edin + Marszalek + R_AlQamzi + Roms + Schuft +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Torrente)^-1 * (Andersson + Bjerknaes + Cantando +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deguisne + Edin + Marszalek + R_AlQamzi + Roms + Schuft + Selio +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Stark + Stromoy + Trask)^-1 * (Andersson + Bjerknaes +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deguisne + Edin + Marszalek + R_AlQamzi + Roms + Schuft + Selio +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Stark + Stromoy + Trask)^-1 * (Andersson + Bjerknaes +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deguisne + Marszalek + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Stark + Stromoy + Trask)^-1 * (Andersson + Bjerknaes + Deguisne +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Marszalek + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stromoy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Trask)^-1 * (Andersson + Bjerknaes + Deguisne + R_AlQamzi + Roms +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Schuft + Selio + Sookbuangbon + Stromoy + Trask)^-1 * (Andersson +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bjerknaes + R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Stromoy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Trask)^-1 * (Andersson + Bjerknaes + Roms + Schuft + Selio +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Stromoy)^-1 * (Andersson + Bjerknaes + Roms + Schuft +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selio + Sookbuangbon + Stromoy + Trask)^-1 * Benavente^4 * (Benavente +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bjerknaes + Cantando + Carella + Chiappe + Deguisne + R_AlQamzi + Roms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Schuft + Selio + Sookbuangbon + Trask)^-1 * (Benavente + Bjerknaes +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cantando + Carella + Chiappe + R_AlQamzi + Roms + Schuft + Selio +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Trask)^-1 * (Benavente + Bjerknaes + Cantando + Carella</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Deguisne + Edin + Marszalek + Morin + R_AlQamzi + Roms + Schuft +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selio + Sookbuangbon + Stromoy + Trask)^-1 * (Benavente + Bjerknaes +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cantando + Carella + Deguisne + Edin + Marszalek + R_AlQamzi + Roms +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Schuft + Selio + Sookbuangbon + Stromoy + Trask)^-1 * (Benavente +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bjerknaes + Cantando + Carella + Deguisne + Edin + Marszalek +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Trask)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Benavente + Bjerknaes + Cantando + Carella + Deguisne + Marszalek +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Trask)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Benavente + Bjerknaes + Cantando + Carella + Deguisne + R_AlQamzi +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Roms + Schuft + Selio + Sookbuangbon + Trask)^-1 * (Benavente +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bjerknaes + Cantando + Carella + R_AlQamzi + Roms + Schuft + Selio +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sookbuangbon + Trask)^-1 * (Benavente + Bjerknaes + Cantando + Carella</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + R_AlQamzi + Schuft + Selio + Sookbuangbon + Trask)^-1 * Bjerknaes^2 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Bjerknaes + Cantando + Carella + Chiappe + R_AlQamzi + Roms + Schuft +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selio + Sookbuangbon)^-1 * (Bjerknaes + Cantando + Carella + Chiappe +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R_AlQamzi + Roms + Schuft + Selio + Sookbuangbon + Trask)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cantando^5 * (Cantando + Carella + Chiappe + R_AlQamzi + Roms + Schuft</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Selio + Sookbuangbon)^-1 * Carella * (Carella + Chiappe + R_AlQamzi +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Roms + Schuft + Selio + Sookbuangbon)^-1 * Chiappe^6 * Deguisne^6 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Edin^5 * Marszalek^4 * Morin^6 * R_AlQamzi * Roms^4 * Schuft^4 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selio^3 * Sookbuangbon^2 * Stark^6 * Stromoy^5 * T_AlQamzi^5 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Torrente^6 * Trask^4)</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pie.html" class="external-link">pie</a></span><span class="op">(</span><span class="va">powerboat_maxp</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="powerboat-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#    equalp.test(powerboat)</span></span></span>
+<span class="r-in"><span><span class="co">#    samep.test(powerboat, c("Torrente", "Stark"))  </span></span></span>
+<span class="r-in"><span> </span></span>
 </code></pre></div>
     </div>
   </div>
