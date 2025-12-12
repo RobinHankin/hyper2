@@ -75,7 +75,7 @@ f1grid <- function(lambda){
 
     H <- list()
     for(i in 1:24){
-        vec <- as.numeric(a[,1])
+        suppressWarnings(vec <- as.numeric(a[,1]))
         vec[is.na(vec)] <- 0
         jj <- setNames(vec, rownames(a))
         H[[i]] <- ordervec2supp(jj) |> pwa3(geometric(lambda,grid_order[[i]]))
@@ -89,15 +89,15 @@ f1grid <- function(lambda){
 ```
 
 
-```{r calcpoll, cache=TRUE}
+```{r calcpolltime, cache=TRUE}
 supptime  <- system.time(jj <- f1grid(0.5))
 ```
 
-```{r maxcalc, cache=TRUE}
+```{r maxcalctime, cache=TRUE}
 maxtime <- system.time(mH <- maxp(jj))
 ```
 
-```{r}
+```{r showresultstime}
 supptime
 maxtime
 mH
@@ -117,12 +117,17 @@ l1
 l2
 ```
 
-```{r domanyL, cache=TRUE}
+```{r domanyLikes, cache=TRUE}
 lam <- seq(from=0.9, to=1, len=17)
 L <- sapply(lam, o)
 ```
 
 
-```{r plotmanyL}
+```{r plotF1lamf, echo=TRUE, fig.cap="Log-likelihood function for lambda, the pole position measure"}
 plot(lam, L - max(L), pch=16, type="b")
 ```
+
+Figure \@ref(fig:plotF1lamf) shows a log-likelihood function for
+$\lambda$.  It is very irregular, indicating that the optimization
+routine is having difficulty finding a global maximum for all values
+of $\lambda$.
