@@ -25,6 +25,16 @@ technical documentation and creates file \code{surfing.rda} which
 resides in the \code{data/} directory.
 
 }
+\references{
+
+T. C. Driver and R. K. S. Hankin 2023.  \dQuote{Analysis of competitive
+surfing tournaments with generalized {B}radley-{T}erry likelihoods},
+\emph{Journal of Sports Analytics}, 9:133--140.
+\doi{10.3233/JSA-220596}
+
+}
+
+  
 \author{Robin K. S. Hankin}
 \examples{
 dotchart(surfing_maxp)
