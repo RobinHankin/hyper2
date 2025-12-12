@@ -2,6 +2,7 @@
 title: "Ladies' figure skating in the 2002 Winter Olympics"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
+link-citations: true
 bibliography: hyper2.bib
 ---
 
@@ -25,9 +26,9 @@ To cite the `hyper2` package in publications, please use
 @hankin2017_rmd.  This document analyses Bradley-Terry strengths of
 the competitors in the Ladies' Figure Skating at the 2002 Winter
 Olympics.  In the package, dataframe `skating_table` is copied from
-Lock and Lock (see skating.Rd for more details).  It also creates file
-`data/skating.rda` which contains R objects `skating`,
-`skating_table`, and `skating_maxp`.
+Lock and Lock -@lock2003.  It also creates file `data/skating.rda`
+which contains R objects `skating`, `skating_table`, and
+`skating_maxp`.
 
 ```{r,showskating}
 set.seed(0)
