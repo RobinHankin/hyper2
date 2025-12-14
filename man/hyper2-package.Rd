@@ -18,6 +18,10 @@ The DESCRIPTION file:
   package.  The software is designed for the analysis of order
   statistics and team games.
 
+  There are several vignettes that come with the package: see
+  \href{https://robinhankin.github.io/hyper2/}{the io readme} (under
+  \sQuote{articles}), or listed by \code{vignette(package = "hyper2")}.
+
   The hex sticker features the \dQuote{draw monster}, a concept
   introduced in Hankin (2020) as a reified entity, representing the
   winner of a drawn chess game.  The character was visualized and
