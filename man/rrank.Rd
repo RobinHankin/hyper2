@@ -105,7 +105,7 @@ Note that function \code{rrank()} returns an object of class
 confusing.  Further details are given at \code{ranktable.Rd}.
 
 You can coerce a rank table to an ordertable with
-\code{as.ordertable()}}.
+\code{as.ordertable()}.
 
 Function \code{rrank_single()} is a low-level helper function:
 
