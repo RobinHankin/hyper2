@@ -59,6 +59,13 @@ placings (`c1` is supposed to be read "came first", `c2` "came second"
 etc).  Looking at the fifth column (`c5`) we see that `J1` and `J2`
 placed `e` and `b` fifth respectively.
 
+We can coerce back to an ordertable:
+
+```{r coerceback}
+as.ordertable(RT)
+```
+
+
 ### Volvo ocean racing dataset {-}
 
 (See `volvo.Rd` for more details).

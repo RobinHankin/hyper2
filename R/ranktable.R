@@ -13,7 +13,10 @@
 }
 
 `ranktable_to_ordertable` <- function(xrank){
-    stop("not yet implemented.\nIt is harder than it looks.\nI'll get round to it one day.\nProbably.")
+    out <- apply(xrank, 1, order)
+    rownames(out) <- sort(unique(as.vector(xrank)))
+    colnames(out) <- rownames(xrank)
+    return(as.ordertable(out))
 }
 
 `ordertable_to_ranktable` <- function(xorder){

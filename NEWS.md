@@ -4,6 +4,7 @@
 * pwa3()
 * bugfixes
 * improved vignettes
+* ranktable_to_ordertable()
 
 # hyper2 3.2
 

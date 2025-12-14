@@ -4,7 +4,7 @@ test_that("ranktable tests", {
     expect_output(print(x))
     expect_output(print(summary(x)))
 
-    expect_error(ranktable_to_ordertable(x))
+    expect_true(all(as.ranktable(as.ordertable(x)) == x))
 
     expect_silent(ordertable_to_ranktable(pentathlon_table))
 

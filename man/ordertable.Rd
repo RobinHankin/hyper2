@@ -135,4 +135,8 @@ suppfun(soling_table) == soling  # should be TRUE
 as.ordertable(F1_table_2017)
 ordertable2supp(as.ordertable(F1_table_2017[1:9,]))
 
+x <- rrank()
+as.ordertable(x)
+
+
 }

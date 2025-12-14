@@ -104,6 +104,9 @@ Note that function \code{rrank()} returns an object of class
 \dQuote{\code{rrank}}, which has its own print method.  This can be
 confusing.  Further details are given at \code{ranktable.Rd}.
 
+You can coerce a rank table to an ordertable with
+\code{as.ordertable()}}.
+
 Function \code{rrank_single()} is a low-level helper function:
 
 \preformatted{
@@ -149,6 +152,10 @@ rrank_single(zipf(9))
 
 ptrue <- (4:1)/10
 names(ptrue) <- letters[1:4]
+
+rrank()
+as.ordertable(rrank())
+
 rrank(10,p=ptrue)
 
 H <- suppfun(rrank(10,p=ptrue))
