@@ -36,6 +36,23 @@ skating_table <- ordertable(read.table("skating.txt", header=TRUE))
 skating_table
 ```
 
+(we note in passing that the Plackett-Luce strengths of every
+competitors is strictly positive.  We can see this by observing that:
+
+\begin{alignat*}{4}
+\textbf{luka}
+&\succ_3\mbox{kopak}      &&\succ_1\mbox{babiakova} &&\succ_3\mbox{giunchi}   &&\succ_1\mbox{hegel}      \\
+&\succ_3\mbox{soldatova}  &&\succ_6\mbox{gusmeroli} && \succ_2\mbox{meier}    &&\succ_3\mbox{hubert}     \\
+&\succ_4\mbox{onda}       &&\succ_1\mbox{kiashenko} &&\succ_3\mbox{fontana}   &&\succ_2\mbox{maniachenko}\\
+&\succ_3\mbox{volchkova}  &&\succ_2\mbox{kettunen}  &&\succ_2\mbox{sebestyen} &&\succ_4\mbox{robinson}   \\
+&\succ_3\mbox{butyrskaya} &&\succ_2\mbox{suguri}    &&\succ_1\mbox{cohen}     &&\succ_2\mbox{kwan}       \\
+&\succ_1\mbox{slutskaya}  &&\succ_2\mbox{hughes}  \\
+&\succ_1\textbf{luka}
+\end{alignat*}
+
+and if any competitor has zero BT strength, at least one of the above
+successors is false with probability one).
+
 Object `skating_table` is an _order table_.  It is structured so that
 each competitor is a row, and each judge is a column.  One good thing
 to do is to present the dataset as a _rank table_:
