@@ -160,18 +160,17 @@ be interpreted as an ordertable or a ranktable, and return an error.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Walther + Zadneprovskis)^-1 * Walther^4 * (Walther + Zadneprovskis)^-1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Zadneprovskis^5)</span>
 <span class="r-in"><span><span class="fu">suppfun</span><span class="op">(</span><span class="fu"><a href="rrank.html">rrank</a></span><span class="op">(</span><span class="fl">10</span>, p <span class="op">=</span> <span class="op">(</span><span class="fl">7</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">28</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log(a^10 * (a + b + c + d + e + f + g)^-10 * (a + b + c + d + e + g)^-2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * (a + b + c + d + f + g)^-1 * (a + b + c + e + g)^-1 * (a + b + d + e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + f + g)^-2 * (a + b + d + e + g)^-1 * (a + b + d + f + g)^-1 * (a + b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + d + g)^-1 * (a + c + d)^-1 * (a + c + d + e + f + g)^-2 * (a + c + d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + f + g)^-1 * (a + c + d + g)^-1 * (a + c + e)^-1 * (a + c + e + f)^-1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * (a + c + e + f + g)^-1 * (a + d + e + f + g)^-2 * (a + d + e + g)^-1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * (a + d + g)^-1 * (a + e + g)^-1 * b^10 * (b + c + d + e + f + g)^-3 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (b + c + d + f + g)^-1 * (b + c + e + g)^-1 * (b + c + f + g)^-1 * (b +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d + f + g)^-1 * (b + f + g)^-1 * c^9 * (c + d)^-1 * (c + d + e + f +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> g)^-2 * (c + e)^-1 * (c + e + g)^-1 * (c + f)^-1 * (c + f + g)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d^10 * (d + e + f + g)^-3 * (d + e + g)^-1 * (d + f + g)^-1 * (d +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> g)^-2 * e^9 * (e + f + g)^-1 * (e + g)^-3 * f^8 * (f + g)^-2 * g^4)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log(a^9 * (a + b + c + d + e + f)^-1 * (a + b + c + d + e + f + g)^-10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * (a + b + c + d + e + g)^-1 * (a + b + c + e + f)^-1 * (a + b + d + e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + f + g)^-2 * (a + b + d + e + g)^-1 * (a + c + d + e + f + g)^-1 * (a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + c + e + f)^-1 * (a + c + f)^-1 * (a + d + e + f + g)^-2 * (a + d + e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + g)^-1 * (a + d + g)^-1 * (a + f)^-1 * (a + g)^-1 * b^10 * (b + c + d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + e + f + g)^-5 * (b + c + e + f + g)^-3 * (b + c + f + g)^-1 * (b + d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + e + f + g)^-2 * (b + d + e + g)^-1 * (b + e)^-1 * (b + e + f + g)^-2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * (b + e + g)^-1 * c^10 * (c + d + e + f + g)^-1 * (c + f + g)^-1 * (c</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + g)^-1 * d^10 * (d + e + f)^-2 * (d + e + f + g)^-4 * (d + e + g)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> e^9 * (e + f)^-2 * (e + f + g)^-3 * (e + g)^-1 * f^6 * (f + g)^-3 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> g^6)</span>
 <span class="r-in"><span><span class="fu">suppfun</span><span class="op">(</span><span class="va">letters</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( a * (a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> + q + r + s + t + u + v + w + x + y + z)^-1 * b * (b + c + d + e + f +</span>
