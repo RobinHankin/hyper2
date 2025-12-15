@@ -6,6 +6,13 @@ test_that("ranktable tests", {
 
     expect_true(all(as.ranktable(as.ordertable(x)) == x))
 
+
+    a <- skating_table
+    o <- as.ordertable(unclass(a)[order(rownames(a)),])
+    expect_true(all(as.ordertable(as.ranktable(o)) == o))
+    
+
+
     expect_silent(ordertable_to_ranktable(pentathlon_table))
 
     x <- cbind(c(a=3, b=1, c=2), 1:3)
