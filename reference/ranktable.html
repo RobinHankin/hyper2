@@ -114,9 +114,18 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>Function <code>ranktable_to_ordertable()</code> is trivial;
-<code>ordertable_to_ranktable()</code> less so.  The prototype for order
-tables would be <code>skating_table</code>.</p>
+
+
+<p>Function <code>ranktable_to_ordertable()</code> uses <code><a href="https://rdrr.io/r/base/order.html" class="external-link">order()</a></code> to
+  convert a ranktable object to an ordertable. Note that the rows of of
+  the resulting ordertable will be in alphabetic order.  The prototype
+  for order tables would be <code>skating_table</code>; to convert to
+  ranktable form and back to ordertable, use:</p>
+<p></p><div class="sourceCode"><pre><code><span><span class="fu"><a href="../reference/ranktable.html">ranktable_to_ordertable</a></span><span class="op">(</span><span class="fu"><a href="../reference/ranktable.html">ordertable_to_ranktable</a></span><span class="op">(</span><span class="va">skating_table</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+
+<p>or</p>
+<p></p><div class="sourceCode"><pre><code><span><span class="fu"><a href="../reference/ordertable.html">as.ordertable</a></span><span class="op">(</span><span class="fu"><a href="../reference/ranktable.html">as.ranktable</a></span><span class="op">(</span><span class="va">skating_table</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+
 <p>Function <code>ordertable_to_ranktable(x)</code> checks for each column being
 a permutation of <code>seq_len(nrow(x))</code> and, if not, it stops.  In
 particular, <acronym>DNF</acronym> entries are out of scope.  To convert order
