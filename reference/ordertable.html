@@ -365,6 +365,8 @@ of an ordertable; this is used in <code>inst/skating.Rmd</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> babiakova   22 20 19 19 20 21 19 22 22</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> kopac       21 22 23 18 22 22 22 21 21</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> luca        23 23 21 23 23 23 23 23 23</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## just the first three competitors:</span></span></span>
 <span class="r-in"><span><span class="va">skating_table</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> An ordertable:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           J1 J2 J3 J4 J5 J6 J7 J8 J9</span>
@@ -377,9 +379,21 @@ of an ordertable; this is used in <code>inst/skating.Rmd</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> slutskaya  3  1  1  1  4  1  2  3  2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> kwan       2  3  2  2  2  3  3  2  3</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## above, look at hughes under J2 for both extraction methods</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="suppfun.html">suppfun</a></span><span class="op">(</span><span class="va">skating_table</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log(hughes^6 * (hughes + kwan)^-4 * (hughes + kwan + slutskaya)^-9 *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> kwan^6 * (kwan + slutskaya)^-5 * slutskaya^6)</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## just J1 and J2,  first five competitors:</span></span></span>
+<span class="r-in"><span><span class="va">skating_table</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> An ordertable:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           J1 J2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hughes     1  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> slutskaya  3  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> kwan       2  3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cohen      5  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> suguri     4  5</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
