@@ -138,5 +138,10 @@ ordertable2supp(as.ordertable(F1_table_2017[1:9,]))
 x <- rrank()
 as.ordertable(x)
 
+skating_table
+skating_table[1:3,]
+unclass(skating_table)[1:3,]
+
+suppfun(skating_table[1:3,])
 
 }

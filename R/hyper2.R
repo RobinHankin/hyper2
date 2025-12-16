@@ -1281,4 +1281,6 @@ rorder_single <- function(p){
     }
 }
 
-`[.ordertable` <- function(x, ...){ ordertable(apply(unclass(x)[...,], 2, rank)) }
+`[.ordertable` <- function(x, i, j, ..., drop = FALSE) {
+   as.ordertable(NextMethod("[", drop = drop))
+}

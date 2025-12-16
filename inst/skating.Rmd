@@ -275,11 +275,38 @@ methods in the large, but differences in detail.  For example, the
 official ordering is hughes first, then slutskaya second, then kwan
 third; likelihood winner is slutskya, followed by hughes and then
 kwan.  We can gain some understanding of this result by looking at the
-raw judging results for the three medallists:
+raw judging results for the three medallists.
+
+
+# Extraction methods for ordertables
+
+The entire ordertable is given here again for convenience:
+
+```{r,tableagain}
+skating_table
+```
+
+Suppose we are interested only in `hughes`, `slutskaya`, and `kwan`;
+we thus focus on the first three lines of `skating_table`.  If we were
+to consider the entries of the first three lines, see how `hughes`
+came fourth according to `J2`.  This cannot be converted to a
+ranktable because the judges' observations are not sequential.  Each
+column should be a permutation of $\left\lbrace 1,2,3\right\rbrace$.
+To do this, we use the extraction method:
+
 
 ```{r,threemedallists}
-skating_table[1:3]
+skating_table[1:3,]
 ```
+
+Above we see just the order for these three competitors.  This may be
+converted to a ranktable, or indeed a likelihood function:
+
+```{r,threemedallistsstuff}
+as.ranktable(skating_table[1:3,])
+suppfun(skating_table[1:3,])
+```
+
 
 and then calculating a table of the results:
 
@@ -310,7 +337,7 @@ Now we consider only the top seven competitors (that is, the top seven
 according to Judge 1).
 
 ```{r justtop7}
-(o <- skating_table[1:7])
+(o <- skating_table[1:7,])
 ```
 
 
