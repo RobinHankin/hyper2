@@ -139,9 +139,16 @@ x <- rrank()
 as.ordertable(x)
 
 skating_table
+
+## just the first three competitors:
 skating_table[1:3,]
 unclass(skating_table)[1:3,]
 
+## above, look at hughes under J2 for both extraction methods
+
 suppfun(skating_table[1:3,])
+
+## just J1 and J2,  first five competitors:
+skating_table[1:5,1:2]
 
 }
