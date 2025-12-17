@@ -38,6 +38,14 @@ technical documentation, and creates file \code{javelin.rda} which
 resides in the \code{data/} directory.
 
 }
+\author{Robin K. S. Hankin}
+\note{
+
+The format for Olympic javelin results is common to six of the field
+events: long jump, triple jump, shot put, discus throw, hammer throw,
+and javelin.  High jump and long jump have a different format.
+
+  }
 \seealso{\code{\link{attemptstable2supp3}}}
 \examples{
 
