@@ -10,36 +10,10 @@
 \title{Pairwise comparisons}
 \description{
 
-  Function \code{pairwise()} takes a matrix of pairwise comparisons and
-  returns a \code{hyper2} likelihood function.  Function
-  \code{zermelo()} implements a standard iterative procedure for
-  maximization of pairwise Bradley-Terry likelihoods (such as those
-  produced by function \code{pairwise()}).
+  Convenience functions to generate likelihoods for pairwise
+  comparisons.
 
-  Function \code{home_away()} takes two matrices, one for home wins and
-  one for away wins.  It returns a \code{hyper2} support function that
-  includes a home advantage ghost.  Function \code{home_away3()} is the
-  same, but returns a \code{hyper3} object.  A complex matrix is
-  interpreted as real parts being the home wins and imaginary parts away
-  wins.
 
-  Function \code{home_away_table()} takes a dataframe of results (each
-  row being a single match) and returns a table amenable to analysis by
-  \code{home_away()} or \code{home_away3()}.  If \code{give} takes its
-  default value of \code{FALSE}, draws are discarded and a complex
-  matrix of wins and losses is returned.  Files
-  \code{inst/monster_vs_lambda.Rmd} and \code{inst/home_advantage.Rmd}
-  show some use-cases.  Argument \code{teams} is a character vector that
-  specifies the teams to be tabulated (useful if one wishes to change
-  the default ordering of the teams).
-
-  Function \code{white_draw3()} returns a \code{hyper3} likelihood
-  function for pairwise comparisons, one of whom has a home team-type
-  advantage (white player in the case of chess).  It is designed to
-  work with an array of dimensions \eqn{n\times n\times 3}{n*n*3},
-  where \eqn{n} is the number of players.  It is used in
-  \code{inst/kka.Rmd} to create \code{chess3} likelihood function.
-      
 }
 \usage{
 pairwise(M)
@@ -73,12 +47,41 @@ white_draw3(A,lambda,D)
     of football teams.  See details}
 }
 \details{
-  In function \code{zermelo()}, the diagonal is disregarded.
+
+  Function \code{pairwise()} takes a matrix of pairwise comparisons and
+  returns a \code{hyper2} likelihood function.  Function
+  \code{zermelo()} implements a standard iterative procedure for
+  maximization of pairwise Bradley-Terry likelihoods (such as those
+  produced by function \code{pairwise()}).  In function
+  \code{zermelo()}, the diagonal is disregarded.
+
+  Function \code{home_away()} takes two matrices, one for home wins and
+  one for away wins.  It returns a \code{hyper2} support function that
+  includes a home advantage ghost.  Function \code{home_away3()} is the
+  same, but returns a \code{hyper3} object.  A complex matrix is
+  interpreted as real parts being the home wins and imaginary parts away
+  wins.
+
+  Function \code{home_away_table()} takes a dataframe of results (each
+  row being a single match) and returns a table amenable to analysis by
+  \code{home_away()} or \code{home_away3()}.  If \code{give} takes its
+  default value of \code{FALSE}, draws are discarded and a complex
+  matrix of wins and losses is returned.  Files
+  \code{inst/monster_vs_lambda.Rmd} and \code{inst/home_advantage.Rmd}
+  show some use-cases.  Argument \code{teams} is a character vector that
+  specifies the teams to be tabulated (useful if one wishes to change
+  the default ordering of the teams).
+
+  Function \code{white_draw3()} returns a \code{hyper3} likelihood
+  function for pairwise comparisons, one of whom has a home team-type
+  advantage (white player in the case of chess).  It is designed to
+  work with an array of dimensions \eqn{n\times n\times 3}{n*n*3},
+  where \eqn{n} is the number of players.  It is used in
+  \code{inst/kka.Rmd} to create \code{chess3} likelihood function.
 
   If \code{home_games_won} is complex, then the real parts of the
   entries are interpreted as home games won, and the imaginary parts as
   away games won.
-  
 }
 \references{
   \itemize{
