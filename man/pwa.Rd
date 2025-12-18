@@ -11,23 +11,10 @@
 \title{Player with advantage}
 \description{
 
-Commonly, when considering competitive situations we suspect that one
-player has an advantage of some type which we would like to quantify in
-terms of an additional strength.  Examples might include racing at pole
-position, playing white in chess, or playing soccer at one's home
-ground.  Function \code{pwa()} (\dQuote{player with advantage}) returns
-a modified \code{hyper2} object with the additional strength represented
-as a reified entity.
-
-Function \code{pwa3()} is the \code{hyper3} equivalent; it modifies the
-weight of specified players.  The named argument mechanism
-[e.g. \code{pwa3(H, e=1.2, f=3.4)}] is the same as that of \code{subs()}
-in the \CRANpkg{mvp} package.  If there is exactly one ellipsis
-argument, and it is a named vector, the elements are interpreted as
-name/value pairs, so \code{pwa3(H, c(e=1.2, f=3.4))} works.  Function
-\code{pwa3_single()} is a lower-level helper function that takes a
-single player name and its lambda value as second and third arguments.
-
+Confer additional BT strength on specified players, either by
+introducing a reified entity (\code{hyper2}) or an increased weight
+(\code{hyper3}).
+  
 }
 \usage{
 pwa(H, pwa, chameleon = "S")
@@ -48,12 +35,34 @@ pwa3(H3, ...)
 
 \details{
 
+Commonly, when considering competitive situations we suspect that one
+player has an advantage of some type which we would like to quantify in
+terms of an additional strength.  Examples might include racing at pole
+position, playing white in chess, or playing soccer at one's home
+ground.  
+
+Function \code{pwa()} (\dQuote{player with advantage}) returns a
+modified \code{hyper2} object with the additional strength represented
+as a reified entity.
+
 Given \code{H} of class \code{hyper2} and a competitor \code{a},
-\code{pwa(H,"a")} replaces every occurrence of \code{a} in \code{H} with
-\code{a+S}, with \code{S} representing the extra strength conferred.
-However, \code{a} may be a vector of competitors.  If \code{a} includes
-more than one competitor, the resulting likelihood function does not
-seem to instantiate any simple situation.
+\code{pwa(H, "a")} replaces every occurrence of \code{a} in \code{H}
+with \code{a+S}, with \code{S} representing the extra strength
+conferred.
+
+Argument \code{a} may be a vector of competitors: each bracket
+containing any member of \code{a} has \code{S} added to it.  If \code{a}
+includes more than one competitor, the resulting likelihood function
+does not seem to instantiate any simple situation.
+
+Function \code{pwa3()} is the \code{hyper3} equivalent; it modifies the
+weight of specified players.  The named argument mechanism
+[e.g. \code{pwa3(H, e=1.2, f=3.4)}] is the same as that of \code{subs()}
+in the \CRANpkg{mvp} package.  If there is exactly one ellipsis
+argument, and it is a named vector, the elements are interpreted as
+name/value pairs, so \code{pwa3(H, c(e=1.2, f=3.4))} works.  Function
+\code{pwa3_single()} is a lower-level helper function that takes a
+single player name and its lambda value as second and third arguments.
 
 Nice examples of \code{pwa()} are given in \file{inst/cook.Rmd} and
 \file{inst/universities.Rmd}, and some discussion of \code{pwa3()} is
