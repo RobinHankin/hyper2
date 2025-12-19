@@ -23,8 +23,7 @@ Function \code{attemptstable2supp3()} is intended for use on attempts
 tables like \code{javelin_table}.
 
 File \code{inst/javelin.Rmd} shows a use-case for
-\code{attemptstable2supp3().
-
+\code{attemptstable2supp3().}
 }
 
 \value{Returns a \code{hyper3} object}
