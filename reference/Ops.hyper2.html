@@ -3,12 +3,7 @@
 
 Allows arithmetic operators &amp;#8220;+&amp;#8221;, &amp;#8220;*&amp;#8221; and
   comparison operators &amp;#8220;==&amp;#8221; and &amp;#8220;!=&amp;#8221;, to be
-  used for hyper2 objects.
-Specifically, H1 + H2 implements addition of two log-likelihood
-  functions, corresponding to incorporation of additional independent
-  observational data; and n*H1 implements H1+H1+...+H1,
-  corresponding to repeated independent observations of the same data.
-There are no unary operations for this class."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+  used for hyper2 objects."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -88,34 +83,29 @@ There are no unary operations for this class."><!-- mathjax --><script src="http
 <p>Allows arithmetic operators “<code>+</code>”, “<code>*</code>” and
   comparison operators “<code>==</code>” and “<code>!=</code>”, to be
   used for hyper2 objects.</p>
-<p>Specifically, <code>H1 + H2</code> implements addition of two log-likelihood
-  functions, corresponding to incorporation of additional independent
-  observational data; and <code>n*H1</code> implements <code>H1+H1+...+H1</code>,
-  corresponding to repeated independent observations of the same data.</p>
-<p>There are no unary operations for this class.</p>
     </div>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'hyper2'</span></span>
 <span><span class="fu">Ops</span><span class="op">(</span><span class="va">e1</span>, e2 <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for class 'hyper2'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">...</span>,na.rm<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu">hyper2_add</span><span class="op">(</span><span class="va">e1</span>,<span class="va">e2</span><span class="op">)</span></span>
-<span><span class="fu">hyper2_sum_numeric</span><span class="op">(</span><span class="va">H</span>,<span class="va">r</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, na.rm<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">hyper2_add</span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span><span class="op">)</span></span>
+<span><span class="fu">hyper2_sum_numeric</span><span class="op">(</span><span class="va">H</span>, <span class="va">r</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <p></p>
-<dl><dt id="arg-e-e-">e1,e2<a class="anchor" aria-label="anchor" href="#arg-e-e-"></a></dt>
+<dl><dt id="arg-e-e-">e1, e2<a class="anchor" aria-label="anchor" href="#arg-e-e-"></a></dt>
 <dd><p>Objects of class <code>hyper2</code>, here interpreted as
     hyperdirichlet distributions</p></dd>
 
-  <dt id="arg-x-na-rm">x,...,na.rm<a class="anchor" aria-label="anchor" href="#arg-x-na-rm"></a></dt>
+  <dt id="arg-x-na-rm">x, ..., na.rm<a class="anchor" aria-label="anchor" href="#arg-x-na-rm"></a></dt>
 <dd><p>In the <code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code> method, objects to be summed;
     <code>na.rm</code> is currently ignored</p></dd>
 
-  <dt id="arg-h-r">H,r<a class="anchor" aria-label="anchor" href="#arg-h-r"></a></dt>
+  <dt id="arg-h-r">H, r<a class="anchor" aria-label="anchor" href="#arg-h-r"></a></dt>
 <dd><p>In function <code>hyper2_sum_numeric()</code>, object <code>H</code> is
     a <code>hyper2</code> object and <code>r</code> is a length-one real vector (a
     number)</p></dd>
@@ -132,10 +122,13 @@ There are no unary operations for this class."><!-- mathjax --><script src="http
   objects are better thought of as support functions than likelihood
   functions; this is reflected in the print method which explicitly
   wraps the likelihood function in a “<code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>”.</p>
-<p>Idiom <code>H1-H1</code> returns <code>H1 + (-1)*H2</code>, useful for investigating
-  the difference between likelihood functions arising from two different
-  observations, or different probability models.  An example is given in
-  <code>inst/soling.Rmd</code>.</p>
+<p>Scalar multiplication is defined: <code>n*H1</code> returns
+  <code>H1+H1+...+H1</code>, corresponding to <code>n</code> repeated independent
+  observations of the same data.</p>
+<p>Idiom <code>H1-H1</code> returns <code>H1 + (-1)*H2</code>, useful for
+  investigating the difference between likelihood functions arising from
+  two different observations, or different probability models.  An
+  example is given in <code>inst/soling.Rmd</code>.</p>
 <p>Testing for equality is not straightforward for two implementation
   reasons.  Firstly, the object itself is stored internally as a
   <code>stl</code> <code>map</code>, which does not store keys in any particular
@@ -147,7 +140,8 @@ There are no unary operations for this class."><!-- mathjax --><script src="http
   <code>icons["L"] &lt;- icons["L"] + 3</code> and <code>icons["L"] %&lt;&gt;%inc(3)</code>
   work (without this, one has to type <code>icons["L"] &lt;-
   powers(icons["L"]) + 3</code>, which sucks).</p>
-<p>Raising a <code>hyper2</code> object to a power returns an error.</p>
+<p>Raising a <code>hyper2</code> object to a power returns an error.  There are
+  no unary operations for this class.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -168,7 +162,7 @@ There are no unary operations for this class."><!-- mathjax --><script src="http
 <span class="r-out co"><span class="r-pr">#&gt;</span> * (Karpov + Kasparov)^-5 * (Karpov + Topalov)^-18 * Kasparov^2 *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Topalov^30)</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="maxp.html">maxp</a></span><span class="op">(</span><span class="va">chess</span><span class="op">+</span><span class="va">chess2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="maxp.html">maxp</a></span><span class="op">(</span><span class="va">chess</span> <span class="op">+</span> <span class="va">chess2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Anand    Karpov  Kasparov   Topalov </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.2909338 0.2185857 0.1456525 0.3448280 </span>
 <span class="r-in"><span></span></span>
