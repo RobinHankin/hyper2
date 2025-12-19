@@ -22,16 +22,16 @@
 }
 \usage{
 \method{Ops}{hyper2}(e1, e2 = NULL)
-\method{sum}{hyper2}(x,...,na.rm=FALSE)
-hyper2_add(e1,e2)
-hyper2_sum_numeric(H,r)
+\method{sum}{hyper2}(x, ..., na.rm=FALSE)
+hyper2_add(e1, e2)
+hyper2_sum_numeric(H, r)
 }
 \arguments{
-  \item{e1,e2}{Objects of class \code{hyper2}, here interpreted as
+  \item{e1, e2}{Objects of class \code{hyper2}, here interpreted as
     hyperdirichlet distributions}
-  \item{x,...,na.rm}{In the \code{sum()} method, objects to be summed;
+  \item{x, ..., na.rm}{In the \code{sum()} method, objects to be summed;
     \code{na.rm} is currently ignored}
-  \item{H,r}{In function \code{hyper2_sum_numeric()}, object \code{H} is
+  \item{H, r}{In function \code{hyper2_sum_numeric()}, object \code{H} is
     a \code{hyper2} object and \code{r} is a length-one real vector (a
     number)}
 }
@@ -78,7 +78,7 @@ chess2 <- hyper2(list("Kasparov","Karpov",c("Kasparov","Karpov")),c(2,3,-5))
 
 chess + chess2
 
-maxp(chess+chess2)
+maxp(chess + chess2)
 
 
 }
