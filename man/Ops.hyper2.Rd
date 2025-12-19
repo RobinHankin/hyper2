@@ -11,14 +11,6 @@
   Allows arithmetic operators \dQuote{\code{+}}, \dQuote{\code{*}} and
   comparison operators \dQuote{\code{==}} and \dQuote{\code{!=}}, to be
   used for hyper2 objects.
-
-  Specifically, \code{H1 + H2} implements addition of two log-likelihood
-  functions, corresponding to incorporation of additional independent
-  observational data; and \code{n*H1} implements \code{H1+H1+...+H1},
-  corresponding to repeated independent observations of the same data.
-
-  There are no unary operations for this class.
-
 }
 \usage{
 \method{Ops}{hyper2}(e1, e2 = NULL)
@@ -45,11 +37,15 @@ hyper2_sum_numeric(H, r)
   functions; this is reflected in the print method which explicitly
   wraps the likelihood function in a \dQuote{\code{log()}}.
 
-  Idiom \code{H1-H1} returns \code{H1 + (-1)*H2}, useful for investigating
-  the difference between likelihood functions arising from two different
-  observations, or different probability models.  An example is given in
-  \code{inst/soling.Rmd}.
-    
+  Scalar multiplication is defined: \code{n*H1} returns
+  \code{H1+H1+...+H1}, corresponding to \code{n} repeated independent
+  observations of the same data.
+
+  Idiom \code{H1-H1} returns \code{H1 + (-1)*H2}, useful for
+  investigating the difference between likelihood functions arising from
+  two different observations, or different probability models.  An
+  example is given in \code{inst/soling.Rmd}.
+      
   Testing for equality is not straightforward for two implementation
   reasons.  Firstly, the object itself is stored internally as a
   \code{stl} \code{map}, which does not store keys in any particular
@@ -63,8 +59,8 @@ hyper2_sum_numeric(H, r)
   work (without this, one has to type \code{icons["L"] <-
   powers(icons["L"]) + 3}, which sucks).
 
-  Raising a \code{hyper2} object to a power returns an error.
-
+  Raising a \code{hyper2} object to a power returns an error.  There are
+  no unary operations for this class.
 }
 \value{
 Returns a \code{hyper2} object or a Boolean.

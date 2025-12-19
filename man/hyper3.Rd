@@ -26,6 +26,27 @@
 Objects of class \code{hyper3} are a generalization of \code{hyper2} objects
 that allow the brackets to contain weighted probabilities.
 
+}
+\usage{
+hyper3(B = list(), W = list(), powers = 0, pnames)
+hyper3_bw(B = list(), W = list(), powers = 0, pnames)
+hyper3_nv(L=list(),powers=0,pnames)
+hyper3_m(M,p,stripzeros=TRUE)
+}
+\arguments{
+  \item{B}{A list of brackets}
+  \item{W}{A list of weights}
+  \item{L}{A list of named vectors}
+  \item{powers}{Numeric vector of powers}
+  \item{pnames}{Character vector of player names}
+  \item{M}{Matrix of weights, column names being player names}
+  \item{p}{Vector of powers, length equal to \code{ncol(M)}}
+  \item{stripzeros}{Boolean with default \code{TRUE} meaning to silently
+    remove all-zero rows of \code{M}}
+}
+\details{
+
+
 As a motivating example, suppose two players with Bradley-Terry
 strengths \eqn{p_1,p_2} play chess where we quantify the first-mover
 advantage with a term \eqn{\lambda}{omitted}.  Suppose \eqn{p_1} plays
@@ -71,26 +92,6 @@ where we understand that \eqn{p_n=1-\sum_{i=1}^{n-1}p_i}{omitted};
 many of the weights might be zero.  We see that the weights
 \eqn{w_{ij}}{w_ij} may be arranged as a matrix and this form is taken
 by function \code{hyper3_m()}.
-
-}
-\usage{
-hyper3(B = list(), W = list(), powers = 0, pnames)
-hyper3_bw(B = list(), W = list(), powers = 0, pnames)
-hyper3_nv(L=list(),powers=0,pnames)
-hyper3_m(M,p,stripzeros=TRUE)
-}
-\arguments{
-  \item{B}{A list of brackets}
-  \item{W}{A list of weights}
-  \item{L}{A list of named vectors}
-  \item{powers}{Numeric vector of powers}
-  \item{pnames}{Character vector of player names}
-  \item{M}{Matrix of weights, column names being player names}
-  \item{p}{Vector of powers, length equal to \code{ncol(M)}}
-  \item{stripzeros}{Boolean with default \code{TRUE} meaning to silently
-    remove all-zero rows of \code{M}}
-}
-\details{
 
   \itemize{
 

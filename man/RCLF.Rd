@@ -11,7 +11,12 @@
 \docType{data}
 \title{Dataset from four Scottish football clubs}
 \description{
+Datasets for match results for four Scottish clubs: Rangers, Celtic,
+  Livingston, Falkirk.
+  }
 
+\usage{data(RCLF)}
+\details{
   These objects refer to results from football matches among four
   Scottish clubs: Rangers, Celtic, Livingston, Falkirk.  A detailed
   analysis is presented in \code{inst/home_advantage.Rmd}, which creates
@@ -27,10 +32,6 @@
     \code{RCLF3_lambda_max} for the value of \eqn{\lambda}.
     \item Object \code{RCLF3_maxp} is its evaluate at the MLE for
     lambda}
-  }
-
-\usage{data(RCLF)}
-\details{
 The objects are created by \code{inst/home_advantage.Rmd}.
 }
 \source{

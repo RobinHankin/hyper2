@@ -13,11 +13,6 @@
   comparison operators \dQuote{\code{==}} and \dQuote{\code{!=}}, to be
   used for \code{hyper3} objects.
 
-  Specifically, \code{H1 + H2} implements addition of two log-likelihood
-  functions, corresponding to incorporation of additional independent
-  observational data; and \code{n*H1} implements \code{H1+H1+...+H1},
-  corresponding to repeated independent observations of the same data.
-
 }
 \usage{
 \method{Ops}{hyper3}(e1, e2 = NULL)

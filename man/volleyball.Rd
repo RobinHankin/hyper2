@@ -10,16 +10,13 @@
 \title{Results from the NOCS volleyball league}
 \description{
   
-Results from the \acronym{NOCS} volleyball league.  Object
-\code{volleyball_table} is a matrix in which each column corresponds to
-a player and each row corresponds to a volleyball set; \code{volleyball}
-is the corresponding likelihood function in the form of a \code{hyper2}
-distribution.
+Results from the \acronym{NOCS} volleyball league.
 
 }
 \usage{data(volleyball)}
 
 \details{
+
 A volleyball \dfn{set} is a Bernoulli trial between two disjoint subsets of
 the players.  The two subsets are denoted (after the game) as the
 \dQuote{winners} and the \dQuote{losers}: these are denoted by \code{1}
@@ -34,6 +31,11 @@ Thus the first line reads of \code{volleyball_results} reads:
 showing that the teams were \code{p1}, \code{p4} and \code{p8} against
 \code{p2}, \code{p5} and \code{p6}; players \code{p3}, \code{p7} and
 \code{p9} did not play.
+
+Object \code{volleyball_table} is a matrix in which each column
+corresponds to a player and each row corresponds to a volleyball set;
+\code{volleyball} is the corresponding likelihood function in the form
+of a \code{hyper2} distribution.
 
 These datasets illustrate the fact that such Bernoulli trials are only
 weakly informative.  

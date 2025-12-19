@@ -7,9 +7,9 @@
 \title{Translate order tables to support functions}
 \description{
 
-Function \code{ordertable2supp()} is discouraged: use [\code{S3} generic]
-\code{suppfun()} instead.
-
+  Translate order statistics to support functions using Plackett-Luce
+  likelihoods.
+  
 }
 \usage{
 ordertable2supp(x, noscore, incomplete=TRUE)
@@ -39,6 +39,9 @@ sports.  Prepared text versions are available in the package in the
 \code{inst/} directory, for example \code{inst/motoGP_2019.txt}.  Use
 \code{read.table()} to create a data frame which can be interpreted by
 \code{ordertable2supp()}.
+
+Function \code{ordertable2supp()} in day-to-day use is discouraged: use
+[\code{S3} generic] \code{suppfun()} instead.
 
 Function \code{ordervec2supp()} takes an order vector \code{d} and
 returns the corresponding Plackett-Luce loglikelihood function as a

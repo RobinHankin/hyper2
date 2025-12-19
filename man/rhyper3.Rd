@@ -11,16 +11,6 @@
   They return \dQuote{get you going} examples of \code{hyper3} objects.
   The defaults are simple but non-trivial and have straightforward
   interpretations.
-
-  The defaults are
-
-  \preformatted{
-
- pn: c(a=2,   b=4,   c=2,   d=1  )  # numbers (two "a"s, four "b"s etc)
- ps: c(a=0.3, b=0.1, c=0.2, d=0.4)  # strengths
-}
-
-  
 }
 \usage{
 rwinner3(pn = c(a=2, b=4, c=2, d=1), ps = c(a=0.3, b=0.1, c=0.2, d=0.4))
@@ -66,13 +56,17 @@ rhyper3(n=5, s=4, type='race', ...)
 
    \item Function \code{rhyper3()} returns an even more complicated
    \code{hyper3} object corresponding to repeated races and pairwise
-   comparisons.
-}
+   comparisons.  The defaults are
 
+  \preformatted{
+
+   pn: c(a=2,   b=4,   c=2,   d=1  )  # numbers (two "a"s, four "b"s etc)
+   ps: c(a=0.3, b=0.1, c=0.2, d=0.4)  # strengths
+   }
+}
   Argument \code{n} generally specifies the number of distinct types of
   players.  Files \code{inst/mann_whitney_wilcoxon.Rmd} and
   \code{inst/javelin.Rmd} show some use-cases for these functions.
-
 }
 \author{Robin K. S. Hankin}
 \note{
