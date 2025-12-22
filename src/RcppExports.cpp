@@ -78,16 +78,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // assigner
-List assigner(const List& L, const NumericVector& p, const List& L2, const NumericVector& value);
-RcppExport SEXP _hyper2_assigner(SEXP LSEXP, SEXP pSEXP, SEXP L2SEXP, SEXP valueSEXP) {
+List assigner(const List& L, const NumericVector& powers, const List& L2, const NumericVector& value);
+RcppExport SEXP _hyper2_assigner(SEXP LSEXP, SEXP powersSEXP, SEXP L2SEXP, SEXP valueSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const List& >::type L(LSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type powers(powersSEXP);
     Rcpp::traits::input_parameter< const List& >::type L2(L2SEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type value(valueSEXP);
-    rcpp_result_gen = Rcpp::wrap(assigner(L, p, L2, value));
+    rcpp_result_gen = Rcpp::wrap(assigner(L, powers, L2, value));
     return rcpp_result_gen;
 END_RCPP
 }

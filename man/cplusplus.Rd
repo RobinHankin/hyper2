@@ -33,19 +33,19 @@ Various low-level wrappers to \proglang{C} functions, courtesy of Rcpp
 \usage{
 overwrite(L1, powers1, L2, powers2)
 accessor(L,powers,Lwanted)
-assigner(L,p,L2,value)
-addL(L1,p1,L2,p2)
-identityL(L,p)
+assigner(L, powers, L2, value)
+addL(L1, powers1, L2, powers2)
+identityL(L,powers)
 evaluate(L, powers, probs, pnames)
 differentiate(L, powers, probs, pnames, n)
 differentiate_n(L, powers, probs, pnames, n)
 }
 
 \arguments{
-  \item{L,L1,L2,Lwanted}{
+  \item{L, L1, L2, Lwanted}{
     Lists with character vector elements, used to specify the brackets of
     the hyperdirichlet distribution}
-  \item{p,p1,p2,powers,powers1,powers2}{
+  \item{powers, powers1, powers2}{
     A numeric vector specifying the powers to which the brackets are raised
   }
   \item{value}{RHS in assignment, a numeric vector}

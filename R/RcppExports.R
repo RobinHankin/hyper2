@@ -21,8 +21,8 @@ overwrite <- function(L1, powers1, L2, powers2) {
     .Call(`_hyper2_overwrite`, L1, powers1, L2, powers2)
 }
 
-assigner <- function(L, p, L2, value) {
-    .Call(`_hyper2_assigner`, L, p, L2, value)
+assigner <- function(L, powers, L2, value) {
+    .Call(`_hyper2_assigner`, L, powers, L2, value)
 }
 
 evaluate <- function(L, powers, probs, pnames) {

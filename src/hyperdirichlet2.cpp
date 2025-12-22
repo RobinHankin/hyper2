@@ -166,11 +166,11 @@ List overwrite(  // H1[] <- H2
 
 //[[Rcpp::export]]
 List assigner(  // H[L] <- v
-            const List &L, const NumericVector &p,
+            const List &L, const NumericVector &powers,
             const List &L2,
             const NumericVector &value
               ){
-    hyper2 h=prepareL(L,p);
+    hyper2 h=prepareL(L,powers);
     bracket b;
     hyper2::const_iterator it;
     const unsigned int n=L2.size();
