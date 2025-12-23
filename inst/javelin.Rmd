@@ -19,8 +19,8 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 Here we analyse results from the men's javelin, 2020 Summer Olympics.
 
-```{r,label=loadjavelinandconvert}
-javelin_table <- read.table("javelin.txt",header=TRUE)
+```{r, label=loadjavelinandconvert}
+javelin_table <- as.attemptstable(read.table("javelin.txt", header=TRUE))
 a <- javelin_table # saves typing
 javelin_table
 ```
@@ -28,11 +28,11 @@ javelin_table
 Above, we see that Chopra threw 87.03m on his first throw, 87.58m on
 his second, and so on.  Vadlejch threw 83.98m on his first throw, etc.
 We may convert this to a named vector with elements being the throw
-distances, and names being the competitors, using
-`attemptstable2supp3()`:
+distances, and names being the competitors:
 
-```{r,label=converttosupp3,cache=TRUE}
-javelin_vector <- attemptstable2supp3(a,decreasing=TRUE,give.supp=FALSE)
+
+```{r, label=converttosupp3, cache=TRUE}
+javelin_vector <- as.vector(javelin_table)
 javelin_vector
 o <- javelin_vector # saves typing
 ```
@@ -44,30 +44,29 @@ is easy to plot the data in visual form:
 
 ```{r, label=plotjav}
 n <- length(levels(as.factor(names(o))))
-plot(o,pch=16,col=rainbow(n)[as.factor(names(o))])
-legend("topright",pch=16,col=rainbow(n),legend=levels(as.factor(names(o))))
+plot(o, pch=16, col=rainbow(n)[as.factor(names(o))])
+legend("topright", pch=16, col=rainbow(n), legend=levels(as.factor(names(o))))
 ```
 
-Now convert the attempts table to a `hyper3` object, again using
-function `attemptstable2supp3()` but this time pass `give.supp=TRUE`.
-However, note that there are two reasonable interpretations: firstly,
-we simply ignore no-throws [in the package docs, these are sometimes
-referred to as "DNF", or "Did not finish", following Formula 1
-terminology]:
+Now convert the attempts table to a `hyper3` object, using function
+\code{suppfun()}.  However, note that there are two reasonable
+interpretations: firstly, we simply ignore no-throws [in the package
+docs, these are sometimes referred to as "DNF", or "Did not finish",
+following Formula 1 terminology] and to do this we pass
+`dnf.last=FALSE`:
 
-```{r,label=dothething2,cache=TRUE}    	   
-javelin1 <- ordervec2supp3(v=names(o)[!is.na(o)])
+```{r, label=dothething2, cache=TRUE}
+javelin1 <- suppfun(javelin_table, dnf.last=FALSE)
 H1 <- javelin1 # saves typing
 javelin1_maxp  <- maxp(H1)
 m1 <- javelin1_maxp
 ```
 
 Secondly, we may treat no-throws as being inferior to any actual
-measured throw.  To do this it is easiest to pass `give.supp=TRUE` to
-`attemptstable2supp3()`:
+measured throw.  We specify `dnf.last=TRUE`:
 
 ```{r,label=dothething1,cache=TRUE}    	   
-javelin2 <- attemptstable2supp3(a,decreasing=TRUE,give.supp=TRUE)
+javelin2 <- suppfun(javelin_table, dnf.last=TRUE)
 H2 <- javelin2 # saves typing
 javelin2_maxp <- maxp(H2)
 m2 <- javelin2_maxp
@@ -75,16 +74,16 @@ m2 <- javelin2_maxp
 
 Investigation:
 
-```{r,plotm}
-rbind(one=m1,two=m2)
+```{r, label=plotm}
+rbind(one=m1, two=m2)
 pie(m1)
 pie(m2)
-dotchart(m1,pch=16)
-dotchart(m2,pch=16)
-ordertransplot(m1,m2)
+dotchart(m1, pch=16)
+dotchart(m2, pch=16)
+ordertransplot(m1, m2)
 ```
 
-```{r,dothetests,cache=TRUE}
+```{r, dothetests, cache=TRUE}
 equalp.test(javelin1)
 equalp.test(javelin2)
 ```
@@ -96,9 +95,8 @@ Following lines create `javelin.rda`, residing in the `data/`
 directory of the package.
 
 ```{r,label=savejavelindataset}
-save(javelin1,javelin2,javelin_table,javelin_vector,javelin1_maxp,javelin2_maxp,  file="javelin.rda")
+save(javelin1, javelin2, javelin_table, javelin_vector, javelin1_maxp, javelin2_maxp, file="javelin.rda")
 ```
-
 
 
 ## References {-}

@@ -4,20 +4,21 @@
 \alias{suppfun.ranktable}
 \alias{suppfun.character}
 \alias{suppfun.numeric}
+\alias{suppfun.attemptstable}
 \title{
 Convert various datasets to support functions.
 }
 \description{
 
-Function \code{suppfun()} is an S3 generic that returns a support
-function, dispatching on the class of its primary argument.  
-
+Function \code{suppfun()} is an \proglang{S3} generic that returns a
+support function, dispatching on the class of its primary argument.
   
 }
 \usage{
 \method{suppfun}{ordertable}(x, ...)
 \method{suppfun}{ranktable}(x, times, ...)
 \method{suppfun}{character}(x, nonfinishers, ...)
+\method{suppfun}{attemptstable}(x, ...)
 suppfun(x, ...)
 }
 \arguments{
@@ -37,7 +38,8 @@ going to switch out use of \code{ordertable2supp()} in favour of
 \code{suppfun()} in the docs.
 
 If given a data frame, \code{suppfun()} will not guess whether it is to
-be interpreted as an ordertable or a ranktable, and return an error.
+be interpreted as an ordertable or a ranktable or an ordertable, and
+return an error.
 
 }
 \value{
