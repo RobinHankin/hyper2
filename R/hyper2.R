@@ -1,8 +1,8 @@
 `hyper2` <-  function(L=list(), d=0, pnames){
   if(length(d) == 1){d <- rep(d,length(L))}
   if(missing(pnames)){pnames <- sort(unique(c(L,recursive=TRUE)))}
-  stopifnot(is_valid_hyper2(L,d,pnames))
-  out <- identityL(L,d)
+  stopifnot(is_valid_hyper2(L, d, pnames))
+  out <- identityL(L, d)
   out$pnames <- pnames
   class(out) <- 'hyper2'  # This is the only class assignment in the package
   return(out)
@@ -25,12 +25,12 @@ setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
   } else {
     out <- H$powers
   }
-  return(disord(out,h=hashcal(H)))
+  return(disord(out, h=hashcal(H)))
 }
 
-`powers<-.hyper2` <- function(H,value){
-    stopifnot(consistent(powers(H),value))
-    hyper2(elements(brackets(H)),elements(value))
+`powers<-.hyper2` <- function(H, value){
+    stopifnot(consistent(powers(H), value))
+    hyper2(elements(brackets(H)), elements(value))
 }
 
 `pnames.hyper2` <- function(H){ H$pnames }
@@ -38,9 +38,9 @@ setGeneric("pnames"  ,function(x){standardGeneric("pnames"  )})
 ## accessor methods end
 
 ## Following function is the only setter method in the package
-setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
-`pnames<-` <- function(x,value){UseMethod("pnames<-")}
-`pnames<-.hyper2` <- function(x,value){hyper2(elements(brackets(x)),elements(powers(x)),pnames=value)}
+setGeneric("pnames<-",function(x, value){standardGeneric("pnames<-")})
+`pnames<-` <- function(x, value){UseMethod("pnames<-")}
+`pnames<-.hyper2` <- function(x, value){hyper2(elements(brackets(x)), elements(powers(x)), pnames=value)}
 
 ## setter methods end
 
@@ -56,10 +56,10 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   stopifnot(is.vector(d))
   stopifnot(is.numeric(d))
   stopifnot(length(L) == length(d))
-  stopifnot(all(unique(c(L,recursive=TRUE)) %in% pnames))
+  stopifnot(all(unique(c(L, recursive=TRUE)) %in% pnames))
 
   ## catch hyper2(list(c("a","a")),1):
-  stopifnot(all(unlist(lapply(L,function(l){all(table(l)==1)})))) 
+  stopifnot(all(unlist(lapply(L, function(l){all(table(l) == 1)})))) 
   return(TRUE)
 }
 
@@ -75,7 +75,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
 }
 
-`as.hyper2` <- function(L,d,pnames){
+`as.hyper2` <- function(L, d, pnames){
     if(is.matrix(L)){
         L <- as.list(as.data.frame(t(L)))
     } else if(is.hyper3(L)){
@@ -85,18 +85,18 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     } else {
         stop("first argument must be a list or a matrix")
     }
-    return(hyper2(L,d,pnames))
+    return(hyper2(L, d, pnames))
 }
 
 `.print.helper` <- function(cv){  # Character vector
   if(length(cv) == 1){return(cv)}
-  out <- paste("(",cv[1],sep="")
-  for(i in seq_along(cv)[-1]){ out <- paste(out," + ",cv[i],sep="") }
-  out <- paste(out,")",sep="")
+  out <- paste("(", cv[1], sep="")
+  for(i in seq_along(cv)[-1]){ out <- paste(out, " + ", cv[i], sep="") }
+  out <- paste(out, ")", sep="")
   return(out)
 }
   
-`print.hyper2` <- function(x,...){
+`print.hyper2` <- function(x, ...){
   if(!isFALSE(getOption("give_warning_on_nonzero_power_sum"))){
       if(sum(powers(x)) != 0){
           warning("powers have nonzero sum")
@@ -105,7 +105,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   b <- elements(brackets(x))
   powers <- elements(powers(x))
   if(length(b) == 0){  # not is.null(b)
-      out <- paste(.print.helper(pnames(x)),"^0",sep="")
+      out <- paste(.print.helper(pnames(x)), "^0", sep="")
   }
   out <- "log("
   for(i in seq_along(b)){
@@ -128,7 +128,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(invisible(x))
 }
 
-`hyper2_add` <- function(e1,e2){
+`hyper2_add` <- function(e1, e2){
   b1 <- elements(brackets(e1))
   b2 <- elements(brackets(e2))
   p1 <- elements(powers(e1))
@@ -142,21 +142,21 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   } else if(all(n1 %in% n2)){
       jj <- n2
   } else {
-      jj <- sort(unique(c(b1,b2,recursive=TRUE)))
+      jj <- sort(unique(c(b1, b2, recursive=TRUE)))
   }
   
-  return(hyper2(out[[1]],out[[2]],pnames=jj))
+  return(hyper2(out[[1]], out[[2]], pnames=jj))
 }
 
-`loglik` <- function(p,H,log=TRUE){
+`loglik` <- function(p, H, log=TRUE){
   if(is.matrix(p)){
-    return(apply(p,1,function(o){loglik_single(p=o,H, log=log)}))
+    return(apply(p, 1, function(o){loglik_single(p=o, H, log=log)}))
   } else {
-    return(loglik_single(p,H,log=log))
+    return(loglik_single(p, H, log=log))
   }
 }
 
-`loglik_single` <- function(p,H,log=TRUE){
+`loglik_single` <- function(p, H, log=TRUE){
   stopifnot(sum(powers(H)) == 0)
   stopifnot(all(p >= 0))
   if(length(p) == size(H)-1){
@@ -165,8 +165,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   } else if(length(p) == size(H)){
     if(is.null(names(p))){stop("p==size(H), p must be a named vector")}
     stopifnot(abs(sum(p)-1) < 1e-6)  # small numerical tolerance
-    p <- ordertrans(p,H)  # no warning given if names not in correct order...
-    stopifnot(identical(names(p),pnames(H))) #...but they must match up
+    p <- ordertrans(p, H)  # no warning given if names not in correct order...
+    stopifnot(identical(names(p), pnames(H))) #...but they must match up
     probs <- p
   } else {
     stop("length(p) must be either size(H) or size(H)-1")
@@ -174,7 +174,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   if(is.hyper2(H)){
       out <- evaluate(brackets(H), powers(H), probs=probs, pnames=pnames(H))
   } else if(is.hyper3(H)){
-      out <- evaluate3(brackets(H), weights(H),powers(H), probs=probs, pnames=pnames(H))
+      out <- evaluate3(brackets(H), weights(H), powers(H), probs=probs, pnames=pnames(H))
   } else {
       stop("H must be a hyper2 or hyper3 object")
   }
@@ -186,24 +186,24 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
 }
 
-`hyper2_equal` <- function(e1,e2){
+`hyper2_equal` <- function(e1, e2){
   equality(
-      brackets(e1),powers(e1),
-      brackets(e2),powers(e2)
+      brackets(e1), powers(e1),
+      brackets(e2), powers(e2)
   )
 }
 
 `hyper2_sum_numeric` <- function(H,r){
   pH <- powers(H)
   if(length(pH) == 1){
-    return(pH+r)
+    return(pH + r)
   } else {
     stop('H + r is only defined if length(powers(H))==1 because the order of the powers is undefined')
   }
 }
 
-`hyper2_prod` <- function(H,n){
-    powers(H) <- powers(H)*n
+`hyper2_prod` <- function(H, n){
+    powers(H) <- powers(H) * n
     return(H)
 }
 
@@ -212,8 +212,8 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 {
   f <- function(...){stop("odd---neither argument has class hyper2?")}
   unary <- nargs() == 1
-  lclass <- inherits(e1,"hyper2")
-  rclass <- !unary && inherits(e2,"hyper2")
+  lclass <- inherits(e1, "hyper2")
+  rclass <- !unary && inherits(e2, "hyper2")
   
   if(unary){
     stop("unary operator '", .Generic, "' is not implemented for hyper2 objects")
@@ -225,9 +225,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   
   if(lclass && rclass){  
     if (.Generic == "+"){
-      return(hyper2_add(e1,e2))
+      return(hyper2_add(e1, e2))
     } else if (.Generic == "-"){
-      return(hyper2_add(e1,hyper2_prod(e2,-1)))
+      return(hyper2_add(e1, hyper2_prod(e2, -1)))
     } else if (.Generic == "==") {
       return(hyper2_equal(e1, e2))
     } else if (.Generic == "!=") {
@@ -238,34 +238,34 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   } else {  # one of lclass,rclass
     if (.Generic == "*"){    # H * n
       if(lclass && !rclass){
-        return(hyper2_prod(e1,e2))
+        return(hyper2_prod(e1, e2))
       } else if (!lclass && rclass){
-        return(hyper2_prod(e2,e1))
+        return(hyper2_prod(e2, e1))
       } else {
         stop("method not defined for hyper2")
       }
     } else if (.Generic == "+"){  # H + x
       if(lclass && !rclass){
-        return(hyper2_sum_numeric(e1,e2))
+        return(hyper2_sum_numeric(e1, e2))
       } else if (!lclass && rclass){
-        return(hyper2_sum_numeric(e2,e1))
+        return(hyper2_sum_numeric(e2, e1))
       } else {
         stop("this cannot happen")
       }
     } else if (.Generic == "-"){
       if(lclass && !rclass){
-        return(hyper2_sum_numeric(e1,-e2))
+        return(hyper2_sum_numeric(e1, -e2))
       } else if (!lclass && rclass){
-        return(hyper2_sum_numeric(e2,-e1))
+        return(hyper2_sum_numeric(e2, -e1))
       } else {
         stop("this cannot happen")
       }
     }
   }
 }
-`character_to_number` <- function(char,pnames){ # char = c("a","b","D")
+`character_to_number` <- function(char, pnames){ # char = c("a","b","D")
     stopifnot(all(char %in% pnames))
-    unlist(apply(outer(char,pnames, "=="),1,which))
+    unlist(apply(outer(char, pnames, "=="), 1, which))
     }
 
 `char2num` <- character_to_number
@@ -275,24 +275,24 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     first <- dots[[1]]
 
     if(nargs() > 2){  # something like H[3,4]
-      wanted <- list(c(dots,recursive=TRUE))
+      wanted <- list(c(dots, recursive=TRUE))
     } else if(is.list(first)){
       wanted <- dots[[1]]
     } else if(is.matrix(first)){
         wanted <- as.list(as.data.frame(t(first)))
     } else if(is.disord(first)){
-        return(hyper2(elements(brackets(x)[first]),elements(powers(x)[first])))
+        return(hyper2(elements(brackets(x)[first]), elements(powers(x)[first])))
     } else if(is.vector(first)){
       wanted <- list(first)
     } else {
       wanted <- dots
     }
 
-    out <- accessor(x[[1]],x[[2]],wanted)
-    return(hyper2(out[[1]],out[[2]],pnames=pnames(x)))
+    out <- accessor(x[[1]], x[[2]], wanted)
+    return(hyper2(out[[1]], out[[2]], pnames=pnames(x)))
 }
 
-`assign_lowlevel`<- function(x,index,value){ #H[index] <- value
+`assign_lowlevel`<- function(x, index, value){ #H[index] <- value
     stopifnot(class(x) == 'hyper2')
     
     if(is.list(index)){
@@ -310,10 +310,10 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     if(length(value) == 1){
         value <- rep(value, length(index))
     }
-    return(assigner(brackets(x),powers(x),index,value))
+    return(assigner(brackets(x), powers(x), index,value))
 }
 
-`overwrite_lowlevel` <- function(x,value){
+`overwrite_lowlevel` <- function(x, value){
   stopifnot(class(x)     == 'hyper2')
   stopifnot(class(value) == 'hyper2')
 
@@ -324,24 +324,24 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     if(inherits(value,"weight")){
         out <- setweight(as.hyper3(x),index,value)
     } else if(missing(index)){  # A[] <- B
-        jj <- overwrite_lowlevel(x,value)
+        jj <- overwrite_lowlevel(x, value)
         if(all(pnames(value) %in% pnames(x))){
-            out <- hyper2(jj[[1]],jj[[2]],pnames=pnames(x))
+            out <- hyper2(jj[[1]], jj[[2]], pnames=pnames(x))
         } else {
-            out <- hyper2(jj[[1]],jj[[2]])
+            out <- hyper2(jj[[1]], jj[[2]])
         }
     } else { # index supplied
-        jj <- assign_lowlevel(x,index,value)
+        jj <- assign_lowlevel(x, index, value)
         if(all(c(index,recursive=TRUE) %in% pnames(x))){
-            out <- hyper2(jj[[1]],jj[[2]],pnames=pnames(x)) # do not change pnames
+            out <- hyper2(jj[[1]], jj[[2]], pnames=pnames(x)) # do not change pnames
         } else { # index introduces a new pname
-            out <- hyper2(jj[[1]],jj[[2]])
+            out <- hyper2(jj[[1]], jj[[2]])
         }
     }
     return(out)
 }
 
-`gradient` <- function(H,probs=indep(maxp(H))){
+`gradient` <- function(H, probs=indep(maxp(H))){
     if(length(probs) == size(H)){
         jj <- probs
     } else if(length(probs) == size(H)-1){
@@ -363,36 +363,36 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   return(out)
 }
 
-`hessian` <- function(H, probs=indep(maxp(H)),border=TRUE){
+`hessian` <- function(H, probs=indep(maxp(H)), border=TRUE){
     n <- size(H)
     stopifnot(length(probs) == n-1)
-    out <- hessian_lowlevel(brackets(H),powers(H),fillup(probs),pnames(H),n)$block_hessian_components
-    out <- matrix(out[seq_len((n-1)^2)],n-1,n-1)
+    out <- hessian_lowlevel(brackets(H), powers(H), fillup(probs), pnames(H), n)$block_hessian_components
+    out <- matrix(out[seq_len((n-1)^2)], n-1, n-1)
     if(isFALSE(border)){return(out)}
     jj <- gradient(H,probs=probs)
-    out <- cbind(rbind(out,jj),c(jj,0))
+    out <- cbind(rbind(out,jj), c(jj,0))
     rownames(out) <- pnames(H)
     colnames(out) <- pnames(H)
     return(out)
 }
 
-`is_ok_hessian` <- function(M,give=TRUE){
+`is_ok_hessian` <- function(M, give=TRUE){
     stopifnot(is.matrix(M))
     stopifnot(nrow(M) == ncol(M))
     n <- nrow(M)
-    M <- M[n:1,n:1]
-    s <- seq(from=3,to=n)
+    M <- M[n:1, n:1]
+    s <- seq(from=3, to=n)
     alt <- (s%%2) == 1  # T,F,T,F,T...
-    jj <- sapply(s,function(n){det(M[seq_len(n),seq_len(n)])})
+    jj <- sapply(s, function(n){det(M[seq_len(n), seq_len(n)])})
     if(give){return(jj)} else {return(all((jj>0) == alt))}
 }
 
-`fillup` <- function(x,H=NULL,total=1){
+`fillup` <- function(x, H=NULL, total=1){
   if(is.matrix(x)){
-    out <- cbind(x,total-rowSums(x))
+    out <- cbind(x, total-rowSums(x))
     if(!is.null(H)){colnames(out) <- pnames(H)}
   } else {  # assumed to be a vector
-    out <- c(x,total-sum(x))
+    out <- c(x, total-sum(x))
     if(!is.null(H)){names(out) <- pnames(H)}
   }
   return(out)
@@ -400,7 +400,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 
 `indep` <- function(x){
    if(is.matrix(x)){
-     return(x[,-ncol(x)])
+     return(x[, -ncol(x)])
   } else {  # assumed to be a vector
     return(x[-length(x)])
   }
@@ -409,11 +409,11 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
 `maxp` <- function(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, n=1, show=FALSE, justlikes=FALSE, ...){
     if(isTRUE(getOption("use_alabama"))){ms <- maxp_single2} else {ms <- maxp_single}
     best_so_far <- -Inf # best (i.e. highest) likelihood found to date
-    likes <- rep(NA,n)
+    likes <- rep(NA, n)
     if(is.null(startp)){ startp <- indep(equalp(H)) }
     if(length(startp) == size(H)){startp <- indep(startp)}
     for(i in seq_len(n)){
-        if(i>1){startp <- startp+runif(size(H)-1,max=SMALL/size(H))}
+        if(i>1){startp <- startp+runif(size(H)-1, max=SMALL/size(H))}
         jj <- ms(H, startp=startp, give=TRUE, fcm=fcm, fcv=fcv, SMALL=SMALL, ...)
         likes[i] <- jj$value
         if(show){cat(paste(i,"; ", best_so_far, "  " , jj$value,"\n", sep=""))}
@@ -426,9 +426,9 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
     if(isTRUE(give)){
         return(c(out,likes=list(likes),evaluate=list(fillup(out$par,H))))
     } else if(isFALSE(give)){
-        return(fillup(out$par,H))
+        return(fillup(out$par, H))
     } else {
-        return(list(fillup(out$par,H),"Log-likelihood" = out$value))
+        return(list(fillup(out$par, H),"Log-likelihood" = out$value))
     }
 }  # maxp() closes
 
@@ -554,10 +554,10 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
         }
     }  # i loop closes, stop searching
     if(give){
-        return(c(out,likes=list(likes)))
+        return(c(out, likes=list(likes)))
     } else {
         out <- fillup(out$par)
-        if(!identical(pnames(H),NA)){names(out) <- pnames(H)}
+        if(!identical(pnames(H), NA)){names(out) <- pnames(H)}
         return(out)
     }
 }
@@ -635,7 +635,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   }
 }
 
-`head.hyper2` <- function(x,...){ x[head(elements(brackets(x)),...)] }
+`head.hyper2` <- function(x, ...){ x[head(elements(brackets(x)), ...)] }
 
 `rankvec_likelihood` <- function(v, nonfinishers = NULL){
   stopifnot(all(table(v)==1))
@@ -643,7 +643,7 @@ setGeneric("pnames<-",function(x,value){standardGeneric("pnames<-")})
   v <- rev(v)   # first-placed competitor is the first element of v
   for(i in seq_along(v)){
       out[v[i]] <- out[v[i]] + 1  #  out[v[i]] %<>% inc
-      still_running <- c(v[seq_len(i)],nonfinishers)
+      still_running <- c(v[seq_len(i)], nonfinishers)
       out[still_running] <- out[still_running] - 1
   }
   return(out)
