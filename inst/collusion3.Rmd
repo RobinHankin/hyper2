@@ -50,9 +50,9 @@ probability model.
 # Longer story
 
 
-```{r,label=loadjavelinandconvert}
-cur_matches <- read.table("stockholm1962_matches.txt",header=FALSE)
-colnames(cur_matches) <- c("white","black","result")
+```{r, label=loadandconvert}
+cur_matches <- read.table("stockholm1962_matches.txt", header=FALSE)
+colnames(cur_matches) <- c("white", "black", "result")
 head(cur_matches)
 nrow(cur_matches)
 ```
@@ -100,8 +100,8 @@ f <- function(lambda,D){
       
 Now use it
 
-```{r,try11and1888,cache=TRUE}
-H3 <- f(1.1,1.888)
+```{r, try11and1888, cache=TRUE}
+H3 <- f(1.1, 1.888)
 ```
 
 ```{r,showH3}
@@ -109,23 +109,23 @@ H3
 summary(H3)
 ```
 
-```{r,testH3,cache=TRUE}
+```{r, testH3, cache=TRUE}
 equalp.test(H3,n=1)
 ```
 
 
-```{r,comparelikelihoods,cache=TRUE}
-m1121 <- maxp(f(1.1,2.1),n=1,give=TRUE)
-m1123 <- maxp(f(1.1,2.3),n=1,give=TRUE)
+```{r, comparelikelihoods, cache=TRUE}
+m1121 <- maxp(f(1.1,2.1), n=1, give=TRUE)
+m1123 <- maxp(f(1.1,2.3), n=1, give=TRUE)
 ```
 
-```{r,showmaxpwithlam}
+```{r, showmaxpwithlam}
 pie(m1121$par)
 ```
 
 A break here.
 
-```{r,label=defineprofilelike,cache=FALSE}
+```{r, label=defineprofilelike, cache=FALSE}
 profl <- function(v){
     lambda <- v[1]
     D <- v[2]
@@ -137,17 +137,16 @@ profl <- function(v){
 Now apply `profl()`:
 
 
-```{r,calcproflike,cache=TRUE}
+```{r, calcproflike, cache=TRUE}
 profl(c(1.1,2.1))
-#profl(c(1.2,2.1))
 ```
 
-```{r,calcmanyproflike,cache=TRUE} 
+```{r, calcmanyproflike, cache=TRUE} 
 np <- 4
-lambda <- seq(from=0.1,to=1.5,len=np)
-D <- seq(from=0.1,to=0.4,len=np)
-jj <- as.matrix(expand.grid(lambda,D))
-LL <- apply(jj,1,profl)
+lambda <- seq(from=0.1, to=1.5, len=np)
+D <- seq(from=0.1, to=0.4, len=np)
+jj <- as.matrix(expand.grid(lambda, D))
+LL <- apply(jj, 1, profl)
 LL
 ```
 
