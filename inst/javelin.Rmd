@@ -38,9 +38,10 @@ o <- javelin_vector # saves typing
 ```
 
 Above we see that Chopra threw the longest and second-longest throws
-of 87.58m and 87.03 respectively; Vadlejch threw the third-longest
-throw of 86.67m, and so on.  `NA` entries correspond to no-throws.  It
-is easy to plot the data in visual form:
+of 87.58 and 87.03 respectively (all measurements are in meters);
+Vadlejch threw the third-longest throw of 86.67, and so on.  `NA`
+entries correspond to no-throws.  It is easy to plot the data in
+visual form:
 
 ```{r, label=plotjav}
 n <- length(levels(as.factor(names(o))))
