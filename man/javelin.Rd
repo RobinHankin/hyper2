@@ -11,17 +11,18 @@
 \title{Javelin dataset}
 \description{
 
-  Results from the men's javelin, 2020 Summer Olympics.
+  An \code{attemptstable} object showin results from the men's javelin,
+  2020 Summer Olympics.
   
 }
 \usage{data(javelin)}
 \details{
 
   \itemize{
-    \item \code{javelin_table}, a dataframe in the form of an
-    \dQuote{attempts table}, detailing the throw distances of eight
-    competitors (diacritics have been removed) for each of six throws
-    \item \code{javelin1} and \code{javelin2} Support functions
+    \item \code{javelin_table}, an \code{attemptstable} object detailing
+    the throw distances of eight competitors (diacritics have been
+    removed) for each of six throws
+    \item \code{javelin1} and \code{javelin2}, support functions
     corresponding to the weighted Plackett-Luce likelihood.  The suffix
     \dQuote{1} means that no-throws are counted as losing attempts;
     suffix \dQuote{2} means that no-throws are ignored.
@@ -50,7 +51,6 @@ and javelin.  High jump and long jump have a different format.
 \examples{
 
 attemptstable2supp3(javelin_table)
-
 
 pie(javelin1_maxp)
 }
