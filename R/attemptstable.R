@@ -7,6 +7,7 @@
 `print.attemptstable` <- function(x, ...){
     cat("An attemptstable:\n")
     class(x) <- "data.frame"
+    x[is.na(x)] <- "X"
     print(x)
 }
 
