@@ -25,10 +25,11 @@ a <- javelin_table # saves typing
 javelin_table
 ```
 
-Above, we see that Chopra threw 87.03m on his first throw, 87.58m on
-his second, and so on.  Vadlejch threw 83.98m on his first throw, etc.
-We may convert this to a named vector with elements being the throw
-distances, and names being the competitors:
+Above, we see that Chopra threw 87.03 on his first throw, 87.58 on his
+second, and so on (all measurements are in meters).  Vadlejch threw
+83.98 on his first throw, etc.  We may convert this to a named vector
+with elements being the throw distances, and names being the
+competitors:
 
 
 ```{r, label=converttosupp3, cache=TRUE}
@@ -38,7 +39,7 @@ o <- javelin_vector # saves typing
 ```
 
 Above we see that Chopra threw the longest and second-longest throws
-of 87.58 and 87.03 respectively (all measurements are in meters);
+of 87.58 and 87.03 respectively;
 Vadlejch threw the third-longest throw of 86.67, and so on.  `NA`
 entries correspond to no-throws.  It is easy to plot the data in
 visual form:
@@ -88,6 +89,29 @@ ordertransplot(m1, m2)
 equalp.test(javelin1)
 equalp.test(javelin2)
 ```
+
+# Discussion: maximum throw vs Bradley-Terry philosophy
+
+The competition is won by the player who has the longest throw: the
+sufficient statistic would be the maximum of the six attempts.
+Bradley-Terry cannot handle this if different players have different
+variance: short throws are disregarded.
+
+As an example, suppose two throwers have normally distributed
+distances; thrower A has a smaller mean distance than thrower B but a
+larger variance.  Numerically:
+
+```{r}
+set.seed(0)
+thrower_A <- round(rnorm(6, 80.2, 2.6), 2)
+thrower_B <- round(rnorm(6, 80.3, 1.3), 2)
+D <- as.attemptstable(as.data.frame(rbind(thrower_A, thrower_B)))
+D
+apply(D, 1, max)
+```
+
+Above we see that thrower A wins, despite having a smaller mean
+distance.
 
 
 ### Package dataset {-}
