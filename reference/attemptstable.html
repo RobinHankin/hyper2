@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hyper2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2-2</span>
       </span>
     </div>
 
@@ -123,10 +123,15 @@ Etelatalo  78.43  76.59  83.28  79.20  79.99  83.05
 </code></pre></div>
 
 
-<p>Translate an <code>attemptstable</code> object to a <code>hyper3</code> support
-function with <code><a href="suppfun.html">suppfun()</a></code>; function <code>attemptstable2supp3()</code> is
+<p>The print method, by default, bolds the best attempt by each competitor.
+This does not work in Rmarkdown documents; to suppress it, set option
+`bold_personal_best` to `FALSE`:</p>
+<p>“`
+options("bold_personal_best" = FALSE)
+“`</p>
+<p>To translate an <code>attemptstable</code> object to a <code>hyper3</code> support
+function, use <code><a href="suppfun.html">suppfun()</a></code>; function <code>attemptstable2supp3()</code> is
 a low-level helper function.</p>
-
 <p>File <code>inst/javelin.Rmd</code> shows a use-case for
 <code>attemptstable2supp3().</code></p>
     </div>
@@ -150,9 +155,9 @@ a low-level helper function.</p>
 <span class="r-in"><span><span class="va">jj</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> An attemptstable:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          throw1 throw2 throw3 throw4 throw5 throw6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chopra    87.03  87.58  76.79      X      X  84.24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vadlejch  83.98      X      X  82.86  86.67      X</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vesely    79.73   80.3  85.44      X  84.98      X</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chopra    87.03  <span style="font-weight: bold;">87.58</span>  76.79      X      X  84.24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vadlejch  83.98      X      X  82.86  <span style="font-weight: bold;">86.67</span>      X</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vesely    79.73  80.30  <span style="font-weight: bold;">85.44</span>      X  84.98      X</span>
 <span class="r-in"><span><span class="fu">attemptstable2supp3</span><span class="op">(</span><span class="va">jj</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (Chopra=1)^4 * (Chopra=3, Vadlejch=3, Vesely=2)^-1 * (Chopra=3,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Vadlejch=3, Vesely=3)^-1 * (Chopra=3, Vadlejch=3, Vesely=4)^-1 *</span>
