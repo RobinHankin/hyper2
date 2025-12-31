@@ -40,10 +40,17 @@ Etelatalo  78.43  76.59  83.28  79.20  79.99  83.05
 }
 
 
-Translate an \code{attemptstable} object to a \code{hyper3} support
-function with \code{suppfun()}; function \code{attemptstable2supp3()} is
-a low-level helper function.
+The print method, by default, bolds the best attempt by each competitor.
+This does not work in Rmarkdown documents; to suppress it, set option
+`bold_personal_best` to `FALSE`:
 
+```
+options("bold_personal_best" = FALSE)
+```
+
+To translate an \code{attemptstable} object to a \code{hyper3} support
+function, use \code{suppfun()}; function \code{attemptstable2supp3()} is
+a low-level helper function.
 
 File \code{inst/javelin.Rmd} shows a use-case for
 \code{attemptstable2supp3().}

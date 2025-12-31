@@ -22,14 +22,18 @@ Here we analyse results from the men's javelin, 2020 Summer Olympics.
 ```{r, label=loadjavelinandconvert}
 javelin_table <- as.attemptstable(read.table("javelin.txt", header=TRUE))
 a <- javelin_table # saves typing
+options("bold_personal_best" = FALSE)
 javelin_table
 ```
 
 Above, we see that Chopra threw 87.03 on his first throw, 87.58 on his
 second, and so on (all measurements are in meters).  Vadlejch threw
-83.98 on his first throw, etc.  We may convert this to a named vector
-with elements being the throw distances, and names being the
-competitors:
+83.98 on his first throw, etc.  Print option `bold_personal_best`
+controls whether the personal (row-wise) best attempt is printed in
+bold.  This does not work in rmarkdown documents but does work on the
+terminal and Rstudio console.  We may convert `javelin_table` to a
+named vector with elements being the throw distances, and names being
+the competitors:
 
 
 ```{r, label=converttosupp3, cache=TRUE}

@@ -1,3 +1,7 @@
+# hyper2 3.2-2
+
+* attemptstable functionality
+
 # hyper2 3.2-1
 
 * multinom()
