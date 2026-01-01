@@ -1,4 +1,5 @@
 \name{attemptstable}
+\alias{attemptstable}
 \alias{as.attemptstable}
 \alias{attemptstable2supp}
 \alias{attemptstable2supp3}
@@ -42,11 +43,9 @@ Etelatalo  78.43  76.59  83.28  79.20  79.99  83.05
 
 The print method, by default, bolds the best attempt by each competitor.
 This does not work in Rmarkdown documents; to suppress it, set option
-`bold_personal_best` to `FALSE`:
+\code{bold_personal_best} to \code{FALSE}:
 
-```
-options("bold_personal_best" = FALSE)
-```
+\preformatted{options("bold_personal_best" = FALSE)}
 
 To translate an \code{attemptstable} object to a \code{hyper3} support
 function, use \code{suppfun()}; function \code{attemptstable2supp3()} is

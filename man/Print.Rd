@@ -45,8 +45,12 @@ because observations are typically multinomial; a warning indicates
 nonzero sum of powers, which should prompt us to check the coding.
 Vignette \code{zeropower} gives a discussion of this issue.
 
+The print method for \code{attemptstable} objects is given at
+\code{attemptstable.Rd}.
+
 }
 \author{Robin K. S. Hankin}
+\seealso{\code{\link{attemptstable}}}
 \note{
   Sometimes the use of \code{pnv()} can be confusing, as distinct
   brackets can appear to be identical, as per the example.  See how the
