@@ -44,7 +44,10 @@ resides in the \code{data/} directory.
 
 The format for Olympic javelin results is common to six of the field
 events: long jump, triple jump, shot put, discus throw, hammer throw,
-and javelin.  High jump and long jump have a different format.
+and javelin (high jump and long jump have a different format).  The
+\code{inst/} directory on github includes some other datasets such as
+\code{olympics_2020_womens_shotput.txt} in the same form as
+\code{inst/javelin.txt}.
 
   }
 \seealso{\code{\link{attemptstable2supp3}}}

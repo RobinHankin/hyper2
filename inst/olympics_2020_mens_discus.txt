@@ -1,0 +1,10 @@
+	         throw1  throw2  throw3  throw4  throw5  throw6 
+ Stahl		 63.72	 68.90	 65.16	 66.10	 67.03	 64.58 
+ Pettersson 	 61.39	 66.58	 NA	 66.24	 67.39	 65.39 
+ Weisshaidinger  62.92	 66.65	 67.07	 66.86	 NA	 NA 
+ Denny 		 65.76 	 65.53	 65.94	 65.00	 66.06	 67.02 
+ Ceh 		 NA	 62.95	 NA	 66.05	 NA	 66.37 
+ Gudzius 	 64.05	 NA	 63.82	 64.11	 62.81	 NA 
+ Ortega 	 61.06	 63.51	 NA	 64.08	 63.87	 NA 
+ Mattis		 61.18	 63.88	 63.14	 NA	 62.39	 NA
+ 

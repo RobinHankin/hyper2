@@ -33,15 +33,15 @@ Chopra     87.03  87.58  76.79      X      X  84.24
 Vadlejch   83.98      X      X  82.86  86.67      X
 Vesely     79.73  80.30  85.44      X  84.98      X
 Weber      85.30  77.90  78.00  83.10  85.15  75.72
-Nadeem     82.40      P  84.62  82.91  81.98      X
+Nadeem     82.40      X  84.62  82.91  81.98      X
 Katkavets  82.49  81.03  83.71  79.24      X      X
 Mardare    81.16  81.73  82.84  81.90  83.30  81.09
 Etelatalo  78.43  76.59  83.28  79.20  79.99  83.05
-> 
 }
 
-
-The print method, by default, bolds the best attempt by each competitor.
+No-throws are stored internally as \code{NA} entries [see, e.g., file
+\code{inst/javelin.txt}], but they are displayed as an \code{X}.  The
+print method, by default, emboldens the best attempt by each competitor.
 This does not work in Rmarkdown documents; to suppress it, set option
 \code{bold_personal_best} to \code{FALSE}:
 

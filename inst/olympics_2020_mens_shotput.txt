@@ -1,0 +1,9 @@
+		throw1	throw2	throw3	throw4	throw5	throw6
+Crouser		22.83	22.93	22.86	22.74	22.54	23.30
+Kovacs	 	22.19	20.95	21.95	22.65	22.29	22.60
+Walsh	 	21.09	22.17	NA	21.37	22.18	22.47
+Romani	 	21.88	21.22	20.96	NA	NA	20.70
+Weir	 	20.85	20.25	20.68	21.40	21.41	NA
+Blignaut	20.29	NA	21.00	20.96	20.46	NA
+Sinancevic	20.89	NA	NA	20.44	NA	NA
+Hassan	 	20.51	20.73	NA	NA	20.63	20.73

@@ -1,6 +1,7 @@
 # hyper2 3.2-2
 
 * attemptstable functionality
+* more track and field datasets
 
 # hyper2 3.2-1
 

@@ -1,0 +1,9 @@
+	  throw1  throw2  throw3  throw4  throw5  throw6
+Lijiao 	  19.95	  NA	  19.98   19.80   20.53   20.58 
+Saunders  19.65	  NA	  19.62   19.49   19.79   NA 
+Adams 	  18.62	  19.49	  19.62   NA      NA      18.76 
+Dongmo 	  19.29	  18.95	  19.17   19.57   19.45   19.45 
+Jiayuan   18.11	  19.14	  18.74   NA      NA      18.26 
+Wesche 	  17.45	  18.42	  18.98   18.18   18.50   18.47 
+Roos 	  17.99	  18.02	  18.91   NA      18.72   18.76 
+Gambetta  18.37	  18.04	  18.88   NA      18.48   18.38 
