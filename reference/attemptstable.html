@@ -115,20 +115,19 @@ Chopra     87.03  87.58  76.79      X      X  84.24
 Vadlejch   83.98      X      X  82.86  86.67      X
 Vesely     79.73  80.30  85.44      X  84.98      X
 Weber      85.30  77.90  78.00  83.10  85.15  75.72
-Nadeem     82.40      P  84.62  82.91  81.98      X
+Nadeem     82.40      X  84.62  82.91  81.98      X
 Katkavets  82.49  81.03  83.71  79.24      X      X
 Mardare    81.16  81.73  82.84  81.90  83.30  81.09
 Etelatalo  78.43  76.59  83.28  79.20  79.99  83.05
-&gt;
 </code></pre></div>
 
-
-<p>The print method, by default, bolds the best attempt by each competitor.
+<p>No-throws are stored internally as <code>NA</code> entries [see, e.g., file
+<code>inst/javelin.txt</code>], but they are displayed as an <code>X</code>.  The
+print method, by default, emboldens the best attempt by each competitor.
 This does not work in Rmarkdown documents; to suppress it, set option
-`bold_personal_best` to `FALSE`:</p>
-<p>“`
-options("bold_personal_best" = FALSE)
-“`</p>
+<code>bold_personal_best</code> to <code>FALSE</code>:</p>
+<div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"bold_personal_best"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+
 <p>To translate an <code>attemptstable</code> object to a <code>hyper3</code> support
 function, use <code><a href="suppfun.html">suppfun()</a></code>; function <code>attemptstable2supp3()</code> is
 a low-level helper function.</p>
