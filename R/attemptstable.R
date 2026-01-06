@@ -15,7 +15,9 @@
         jj <- strsplit(string, " ")[[1]][-1]
         suppressWarnings(p <- as.numeric(jj[nchar(jj) > 0]))
         if(!isFALSE(getOption("bold_personal_best"))){
-            string <- rowfiddle(string, which.max(p))
+            if(any(!is.na(p))){
+                string <- rowfiddle(string, which.max(p))
+            }
         }
         cat(string)
         cat("\n")
