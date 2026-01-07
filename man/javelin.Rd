@@ -1,10 +1,8 @@
 \name{javelin}
 \alias{javelin}
-\alias{javelin1}
 \alias{javelin2}
 \alias{javelin_vector}
 \alias{javelin_maxp}
-\alias{javelin1_maxp}
 \alias{javelin2_maxp}
 \alias{javelin_table}
 \docType{data}
@@ -24,9 +22,9 @@
     removed) for each of six throws
     \item \code{javelin1} and \code{javelin2}, support functions
     corresponding to the weighted Plackett-Luce likelihood.  The suffix
-    \dQuote{1} means that no-throws are counted as losing attempts;
-    suffix \dQuote{2} means that no-throws are ignored.
-    \item \code{javelin1_maxp} and \code{javelin2_maxp} are the
+    \dQuote{2} means that no-throws are counted as losing attempts;
+    otherwise, no-throws are ignored.
+    \item \code{javelin_maxp} and \code{javelin2_maxp} are the
     corresponding maximum likelihood estimates for the players'
     strengths
     \item{javelin_vector} is a named vector with elements being the
@@ -55,6 +53,7 @@ and javelin (high jump and long jump have a different format).  The
 
 attemptstable2supp3(javelin_table)
 
-pie(javelin1_maxp)
+pie(javelin_maxp)
+
 }
 

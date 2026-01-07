@@ -62,35 +62,37 @@ following Formula 1 terminology] and to do this we pass
 `dnf.last=FALSE`:
 
 ```{r, label=dothething2, cache=TRUE}
-javelin1 <- suppfun(javelin_table, dnf.last=FALSE)
-H1 <- javelin1 # saves typing
-javelin1_maxp  <- maxp(H1)
-m1 <- javelin1_maxp
+javelin <- suppfun(javelin_table, dnf.last=FALSE)
+javelin_maxp  <- maxp(javelin)
+javelin_maxp
 ```
 
 Secondly, we may treat no-throws as being inferior to any actual
-measured throw.  We specify `dnf.last=TRUE`:
+measured throw.  I don't think this is realistic: noone cares about
+no-throws and certainly any model in which a thrower with five
+no-throws and one excellent throw is given a small strength is
+defective.  However, there are some circumstances in which this might
+be reasonable [Formula 1 being one example] and this is implemented by
+specifying `dnf.last=TRUE`:
 
 ```{r,label=dothething1,cache=TRUE}    	   
 javelin2 <- suppfun(javelin_table, dnf.last=TRUE)
-H2 <- javelin2 # saves typing
-javelin2_maxp <- maxp(H2)
-m2 <- javelin2_maxp
+javelin2_maxp <- maxp(javelin2)
 ```
 
 Investigation:
 
 ```{r, label=plotm}
-rbind(one=m1, two=m2)
-pie(m1)
-pie(m2)
-dotchart(m1, pch=16)
-dotchart(m2, pch=16)
-ordertransplot(m1, m2)
+rbind(javelin_maxp, javelin2_maxp)
+pie(javelin_maxp)
+pie(javelin2_maxp)
+dotchart(javelin_maxp, pch=16)
+dotchart(javelin2_maxp, pch=16)
+ordertransplot(javelin_maxp, javelin2_maxp)
 ```
 
 ```{r, dothetests, cache=TRUE}
-equalp.test(javelin1)
+equalp.test(javelin)
 equalp.test(javelin2)
 ```
 
@@ -118,13 +120,32 @@ Above we see that thrower A wins, despite having a smaller mean
 distance.
 
 
+# Some thoughts on quantifying Chopra's dominance
+
+Chopra won the competition by virtue of his longest throw of 87.58
+being longer than anyone else's throw.  Observe that his Bradley-Terry
+strength is small:
+
+```{r plotjav2, cache=TRUE}
+(M <- maxp(javelin))
+```
+
+By that criterion, Mardare wins, but not significantly:
+
+```{r testmardare, cache=TRUE}
+specificp.test(javelin2, "Mardare", 1/8)
+```
+
+It seems that Mardare's consistent performance gives him BT strength,
+but not a long longest throw.  How to modify BT to account for this?
+	
 ### Package dataset {-}
 
 Following lines create `javelin.rda`, residing in the `data/`
 directory of the package.
 
 ```{r,label=savejavelindataset}
-save(javelin1, javelin2, javelin_table, javelin_vector, javelin1_maxp, javelin2_maxp, file="javelin.rda")
+save(javelin, javelin2, javelin_table, javelin_vector, javelin_maxp, javelin2_maxp, file="javelin.rda")
 ```
 
 
