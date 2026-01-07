@@ -96,9 +96,9 @@ An attemptstable object showin results from the men's javelin,
     removed) for each of six throws</p></li>
 <li><p><code>javelin1</code> and <code>javelin2</code>, support functions
     corresponding to the weighted Plackett-Luce likelihood.  The suffix
-    “1” means that no-throws are counted as losing attempts;
-    suffix “2” means that no-throws are ignored.</p></li>
-<li><p><code>javelin1_maxp</code> and <code>javelin2_maxp</code> are the
+    “2” means that no-throws are counted as losing attempts;
+    otherwise, no-throws are ignored.</p></li>
+<li><p><code>javelin_maxp</code> and <code>javelin2_maxp</code> are the
     corresponding maximum likelihood estimates for the players'
     strengths</p></li>
 <li><p>javelin_vector is a named vector with elements being the
@@ -185,8 +185,9 @@ and javelin (high jump and long jump have a different format).  The
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Katkavets=1)^4 * (Mardare=1)^6 * (Nadeem=1)^4 * (Vadlejch=1)^3 *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Vesely=1)^4 * (Weber=1)^6)</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pie.html" class="external-link">pie</a></span><span class="op">(</span><span class="va">javelin1_maxp</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pie.html" class="external-link">pie</a></span><span class="op">(</span><span class="va">javelin_maxp</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="javelin-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
