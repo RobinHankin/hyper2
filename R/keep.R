@@ -17,17 +17,17 @@
   for(i in seq_along(H)){
     b <- bH[[i]]
     jj <- b[b %in% wanted]   # the meat
-    if(length(jj)>0){
+    if(length(jj) > 0){
       bracketout <- c(bracketout, list(jj))
       powerout <- c(powerout, pH[i])
     }
   }
-  hyper2(L=bracketout,d=powerout,pnames=p)
+  hyper2(L=bracketout, d=powerout, pnames=p)
 }
 
 `discard_flawed` <- function(H, unwanted){
     p <- pnames(H)
     stopifnot(is.character(unwanted))
     stopifnot(all(unwanted %in% p))
-    return(keep_flawed(H,wanted=p[!(p %in% unwanted)]))
+    return(keep_flawed(H, wanted=p[!(p %in% unwanted)]))
 }
