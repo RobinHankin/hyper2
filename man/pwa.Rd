@@ -96,17 +96,16 @@ pwa3_single(H, "a", 1.888)
 pwa3(H, b=1.8, c=0.7)
 
 ## Four races between a,b,c,d:
-H1 <- ordervec2supp(c(a = 1, b = 3, c = 4, d = 2))
-H2 <- ordervec2supp(c(a = 0, b = 1, c = 3, d = 2))
-H3 <- ordervec2supp(c(a = 4, b = 2, c = 1, d = 3))
-H4 <- ordervec2supp(c(a = 3, b = 4, c = 1, d = 2))
+H1 <- ordervec2supp(c(a = 1, b = 3, c = 4, d = 2))  # a: 1st, b: 3rd, c: 4th, d: 2nd
+H2 <- ordervec2supp(c(a = 0, b = 1, c = 3, d = 2))  # a: DNF, b: 1st, c: 3rd, d: 2nd
+H3 <- ordervec2supp(c(a = 4, b = 2, c = 1, d = 3))  # a: 4th, b: 2nd, c: 1st, d: 3rd
+H4 <- ordervec2supp(c(a = 3, b = 4, c = 1, d = 2))  # a: 3rd, b: 4th, c: 1st, d: 2nd
 
 ## Now it is revealed that a,b,c had some advantage in races 1,2,3
 ## respectively.  Is there evidence that this advantage exists?
 
 \dontrun{  # takes ~10 seconds, too long for here
-specificp.test(pwa(H1,'a') + pwa(H2,'b') + pwa(H3,'c') + H4,"S")
+specificp.gt.test(pwa(H1,'a') + pwa(H2,'b') + pwa(H3,'c') + H4, "S", 0)
 }
-
 
 }
