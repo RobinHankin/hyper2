@@ -4,7 +4,7 @@
     b <- elements(brackets(H))
     p <- elements(powers(H))
     stopifnot(!(to %in% c(b,recursive=TRUE)))
-    hyper2(lapply(b,function(x){x[x == from] <- to ; return(x)}), p)
+    hyper2(lapply(b, function(x){x[x == from] <- to ; return(x)}), p)
 }
 
 `psubs` <- function(H, from, to){

@@ -33,11 +33,11 @@ rowfiddle <- function(v, n){  # takes a string, eg v="Vesely     79.73   80.3  8
       end_position <- sum(jj$lengths[seq_len(n*2 + 1)])
 
     paste(
-        substr(v,1,start_position),
+        substr(v, 1, start_position),
         bold_start,
-        substr(v,start_position+1, end_position),
+        substr(v, start_position+1, end_position),
         bold_end,
-        substr(v,end_position+1, nchar(v)),
+        substr(v, end_position+1, nchar(v)),
         sep = ""
     )
 }

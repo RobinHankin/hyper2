@@ -1,4 +1,6 @@
 venue    date       run place runners time
+stirling 31/01/2026 254 253 319 35:00
+stirling 24/01/2026 253 302 333 38:12
 stirling 22/11/2025 244 237 263 36:28
 stirling 15/11/2025 243 224 257 36:33
 stirling 18/10/2025 239 230 290 34:33
