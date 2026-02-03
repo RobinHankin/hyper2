@@ -12,8 +12,8 @@ A likelihood function corresponding to the match outcomes listed below.
 }
 \details{
 
-There are four players, A, B, and C, who
-play singles table tennis matches with the following results:
+There are four players, A, B, and C, who play singles table tennis
+matches with the following results:
 
 \itemize{
   \item A vs B, A serves, 5-1

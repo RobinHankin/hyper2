@@ -24,9 +24,9 @@ dirichlet(powers, alpha)
 dirichlet3(powers, lambda=NULL)
 GD(alpha, beta, beta0=0)
 GD_wong(alpha, beta)
-rdirichlet(n,H)
+rdirichlet(n, H)
 is.dirichlet(H)
-rp_unif(n,H)
+rp_unif(n, H)
 multinom(x)
 }
 \arguments{

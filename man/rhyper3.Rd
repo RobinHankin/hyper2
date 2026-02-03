@@ -22,7 +22,7 @@ rhyper3(n=5, s=4, type='race', ...)
 \arguments{
   \item{pn}{A named integer vector showing numbers of each type of player}
   \item{ps}{A named vector showing strengths of each type of player}
-  \item{n,size,races,s,type}{Arguments specifying the complexity 
+  \item{n, size, races, s, type}{Arguments specifying the complexity 
     of the random \code{hyper3} object returned.  See details}
   \item{lambda}{Parameter}
   \item{...}{Further arguments passed to \code{rracehyper3()} or
@@ -86,6 +86,6 @@ rhyper3()
 rpair3()
 ordervec2supp3(rrace3())
 
-table(replicate(100,which(rrace3(pn=c(a=1,b=10),ps=c(a=0.9,b=0.1))=='a')))
+table(replicate(100, which(rrace3(pn=c(a=1,b=10),ps=c(a=0.9,b=0.1)) == 'a')))
 
 }
