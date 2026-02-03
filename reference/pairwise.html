@@ -89,7 +89,7 @@ Convenience functions to generate likelihoods for pairwise
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pairwise</span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
-<span><span class="fu">zermelo</span><span class="op">(</span><span class="va">M</span>, maxit <span class="op">=</span> <span class="fl">100</span>, <span class="va">start</span>, tol <span class="op">=</span> <span class="fl">1e-10</span>, give <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">zermelo</span><span class="op">(</span><span class="va">M</span>, maxit <span class="op">=</span> <span class="fl">100</span>, <span class="va">start</span>, tol <span class="op">=</span> <span class="fl">0</span>, give <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu">home_away</span><span class="op">(</span><span class="va">home_games_won</span>, <span class="va">away_games_won</span><span class="op">)</span></span>
 <span><span class="fu">home_away3</span><span class="op">(</span><span class="va">home_games_won</span>, <span class="va">away_games_won</span>,<span class="va">lambda</span><span class="op">)</span></span>
 <span><span class="fu">home_away_table</span><span class="op">(</span><span class="va">a</span>, give<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">teams</span><span class="op">)</span></span>
@@ -146,11 +146,7 @@ Convenience functions to generate likelihoods for pairwise
 
 
 <p>Function <code>pairwise()</code> takes a matrix of pairwise comparisons and
-  returns a <code>hyper2</code> likelihood function.  Function
-  <code>zermelo()</code> implements a standard iterative procedure for
-  maximization of pairwise Bradley-Terry likelihoods (such as those
-  produced by function <code>pairwise()</code>).  In function
-  <code>zermelo()</code>, the diagonal is disregarded.</p>
+  returns a <code>hyper2</code> likelihood function.</p>
 <p>Function <code>home_away()</code> takes two matrices, one for home wins and
   one for away wins.  It returns a <code>hyper2</code> support function that
   includes a home advantage ghost.  Function <code>home_away3()</code> is the
@@ -175,6 +171,16 @@ Convenience functions to generate likelihoods for pairwise
 <p>If <code>home_games_won</code> is complex, then the real parts of the
   entries are interpreted as home games won, and the imaginary parts as
   away games won.</p>
+
+<p>Function <code>zermelo()</code> implements a standard iterative procedure
+  for maximization of pairwise Bradley-Terry likelihoods (such as those
+  produced by function <code>pairwise()</code>).  It takes a matrix of
+  pairwise comparisons; the diagonal is disregarded.  The process keeps
+  going until the difference between successive estimates does not
+  exceed argumet <code>tol</code>; note that <code>tol=0</code> is acceptable.  If
+  <code>give=TRUE</code>, a matrix with rows corresponding to successive
+  approximations is returned; if so, argument <code>maxit</code> corresponds
+  to the maximum number of rows.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -239,7 +245,7 @@ number 1, pages 384–406</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Connors^15 * (Connors + Courier)^-7 * Courier^4)</span>
 <span class="r-in"><span><span class="fu">zermelo</span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Agassi     Becker       Borg    Connors    Courier </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.30345344 0.11650669 0.44416163 0.10115551 0.03472273 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.30345344 0.11650669 0.44416162 0.10115551 0.03472273 </span>
 <span class="r-in"><span><span class="co"># maxp(pairwise(M))  # should be identical (takes ~10s to run)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">M2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">19</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">17</span>,<span class="fl">11</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">16</span><span class="op">+</span><span class="fl">5i</span>,<span class="cn">NA</span>,<span class="fl">12</span><span class="op">+</span><span class="fl">4i</span>,<span class="fl">12</span><span class="op">+</span><span class="fl">6i</span>,<span class="fl">12</span><span class="op">+</span><span class="fl">2i</span>,<span class="fl">19</span><span class="op">+</span><span class="fl">10i</span>,</span></span>
