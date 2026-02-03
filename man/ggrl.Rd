@@ -46,7 +46,7 @@ race(v, nonfinishers)
 
   These functions are designed to return likelihood functions, in the
   form of lists of \code{hyper2()} objects, for typical order statistics
-  such as the results of rowing heats or MasterChef ments.
+  such as the results of rowing heats or MasterChef tournaments.
 
   Direct use of \code{rankvec_likelihood()} is discouraged: use
   \code{suppfun()} instead, for example \code{suppfun(letters)}.
