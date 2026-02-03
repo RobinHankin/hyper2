@@ -46,7 +46,8 @@ rp(n, H, startp = NULL, fcm = NULL, fcv = NULL, SMALL = 1e-06, l=loglik, fillup=
 }
 \seealso{\code{\link{maxp}},\code{\link{loglik}},\code{\link{dirichlet}},\code{\link{rhyper2}}}
 \examples{
-rp(10,icons)
-
-plot(loglik(rp(30,icons),icons),type='b')
+x <- rp(50, icons)  # try more than 50
+matplot(x, type = "l")
+matplot(t(x), type = "l")
+plot(loglik(x, icons), type='b')
 }
