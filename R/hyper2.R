@@ -1184,7 +1184,7 @@ rorder_single <- function(p){
         pnew[is.nan(pnew)] <- 0
         pnew <- pnew/sum(pnew)  # normalize
         if(give){pout[i+1,] <- pnew}
-        if(all(abs(p-pnew)<tol)){break}else{p <- pnew}  # maybe finish early
+        if(all(abs(p-pnew) <= tol)){break}else{p <- pnew}  # maybe finish early
     }
     if(give){
         return(pout[seq_len(i+1),])
