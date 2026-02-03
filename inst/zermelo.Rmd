@@ -96,10 +96,41 @@ plot(zipf(n),log(abs(zipf(n)-pZ)/zipf(n)),pch=16,col='black',log='x')
 Now we can have a bit of fun with Zermelo:
 
 ```{r funwithzermelo}
-o <- zermelo(M,give=TRUE)
+o <- zermelo(M, maxit=1000, give=TRUE)
+dim(o)
 head(o)
-l <- apply(o,1,loglik,H)
+```
+
+Above we see rows of `o` being successive approximations to the
+maximum likelihood estimate for the BT strengths of the players.  The
+process stops after 149 rows.  Looking at the bottom of the matrix
+gives us the evaluate:
+
+```{r showevaluate}
+tail(o)
+```
+
+```{r graphiczerm}
+matplot(o, type = "l")
+```
+
+Above we see how each estimate is a convergent sequence.
+Alternatively:
+
+```{r altgraph}
+matplot(t(o), type = "l")
+```
+
+Above we see each multivariate estimate as a line.  The horizontal
+line is the starting point (the top line of the matrix).  We may see
+the performance of successive estimates:
+
+```{r morefunzerm}
+l <- apply(o, 1, loglik, H)
 plot(log(abs(l-max(l))))
 ```
+
+The graph above would suggest that stopping after about 75 iterations
+would be sufficient.
 
 # References

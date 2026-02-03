@@ -1165,7 +1165,7 @@ rorder_single <- function(p){
   }
 }
 
-`zermelo` <- function(M, maxit=100, start, tol=1e-10, give=FALSE){
+`zermelo` <- function(M, maxit=100, start, tol=0, give=FALSE){
     diag(M) <- 0  # usual convention is NA on the diagonal
     rM <- rowSums(M)  # only need to calculate this once
     M <- M + t(M)
@@ -1175,11 +1175,11 @@ rorder_single <- function(p){
         p <- start
     }
     if(give){
-        pout <- matrix(0, maxit+1, ncol(M))
+        pout <- matrix(0, maxit, ncol(M))
         colnames(pout) <- colnames(M)
         pout[1,] <- p
     }
-    for(i in seq_len(maxit)){
+    for(i in seq_len(maxit-1)){
         pnew <- rM/colSums(M/outer(p, p, `+`))  # the meat
         pnew[is.nan(pnew)] <- 0
         pnew <- pnew/sum(pnew)  # normalize

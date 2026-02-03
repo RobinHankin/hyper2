@@ -17,7 +17,7 @@
 }
 \usage{
 pairwise(M)
-zermelo(M, maxit = 100, start, tol = 1e-10, give = FALSE)
+zermelo(M, maxit = 100, start, tol = 0, give = FALSE)
 home_away(home_games_won, away_games_won)
 home_away3(home_games_won, away_games_won,lambda)
 home_away_table(a, give=FALSE, teams)
@@ -49,11 +49,7 @@ white_draw3(A,lambda,D)
 \details{
 
   Function \code{pairwise()} takes a matrix of pairwise comparisons and
-  returns a \code{hyper2} likelihood function.  Function
-  \code{zermelo()} implements a standard iterative procedure for
-  maximization of pairwise Bradley-Terry likelihoods (such as those
-  produced by function \code{pairwise()}).  In function
-  \code{zermelo()}, the diagonal is disregarded.
+  returns a \code{hyper2} likelihood function.  
 
   Function \code{home_away()} takes two matrices, one for home wins and
   one for away wins.  It returns a \code{hyper2} support function that
@@ -82,6 +78,17 @@ white_draw3(A,lambda,D)
   If \code{home_games_won} is complex, then the real parts of the
   entries are interpreted as home games won, and the imaginary parts as
   away games won.
+
+
+  Function \code{zermelo()} implements a standard iterative procedure
+  for maximization of pairwise Bradley-Terry likelihoods (such as those
+  produced by function \code{pairwise()}).  It takes a matrix of
+  pairwise comparisons; the diagonal is disregarded.  The process keeps
+  going until the difference between successive estimates does not
+  exceed argumet \code{tol}; note that \code{tol=0} is acceptable.  If
+  \code{give=TRUE}, a matrix with rows corresponding to successive
+  approximations is returned; if so, argument \code{maxit} corresponds
+  to the maximum number of rows.
 }
 \references{
   \itemize{
