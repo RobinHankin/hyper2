@@ -1165,26 +1165,26 @@ rorder_single <- function(p){
   }
 }
 
-`zermelo` <- function(M,maxit=100,start,tol=1e-10,give=FALSE){
+`zermelo` <- function(M, maxit=100, start, tol=1e-10, give=FALSE){
     diag(M) <- 0  # usual convention is NA on the diagonal
     rM <- rowSums(M)  # only need to calculate this once
-    M <- M+t(M)
+    M <- M + t(M)
     if(missing(start)){
-        p <- rep(1/nrow(M),nrow(M))  # starting point for iteration
+        p <- rep(1/nrow(M), nrow(M))  # starting point for iteration
     } else {
         p <- start
     }
     if(give){
-        pout <- matrix(0,maxit+1,ncol(M))
+        pout <- matrix(0, maxit+1, ncol(M))
         colnames(pout) <- colnames(M)
         pout[1,] <- p
     }
     for(i in seq_len(maxit)){
-        pnew <- rM/colSums(M/outer(p,p,`+`))  # the meat
+        pnew <- rM/colSums(M/outer(p, p, `+`))  # the meat
         pnew[is.nan(pnew)] <- 0
         pnew <- pnew/sum(pnew)  # normalize
         if(give){pout[i+1,] <- pnew}
-        if(all(abs(p-pnew) <= tol)){break}else{p <- pnew}  # maybe finish early
+        if(all(abs(p-pnew) <= tol)){break} else {p <- pnew}  # maybe finish early
     }
     if(give){
         return(pout[seq_len(i+1),])
@@ -1196,14 +1196,14 @@ rorder_single <- function(p){
 `pairwise` <- function(M){
     diag(M) <- 0
     if(is.null(rownames(M))){
-        rownames(M) <- paste("p",seq_len(nrow(M)),sep="_")
+        rownames(M) <- paste("p", seq_len(nrow(M)), sep="_")
         colnames(M) <- rownames(M)
     }
     out <- dirichlet(rowSums(M))
     out[rownames(M)] <- 0
     jj <- M + t(M)
-    index <- which(upper.tri(M),arr.ind=TRUE)
-    return(out - hyper2(apply(index,1,function(x){rownames(M)[x]},simplify=FALSE),jj[index]))
+    index <- which(upper.tri(M), arr.ind=TRUE)
+    return(out - hyper2(apply(index, 1, function(x){rownames(M)[x]}, simplify=FALSE), jj[index]))
 }
 
 `home_away` <- function (home_games_won, away_games_won){
