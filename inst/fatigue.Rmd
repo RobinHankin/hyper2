@@ -28,6 +28,9 @@ plot(sort(unique(a$day)),type='b',pch=c(1,1,16))
 tail(a)
 ```
 
+Above we see that the schedule was to have play on three consecutive
+days followed by a one- or two- day break.
+
 ```{r,label=define_H,cache=TRUE}
 players <-  unique(sort(c(a$white,a$black)))
 
@@ -156,7 +159,7 @@ unlist(a[2,])
     
   if(black_player %in% yesterdays_black_players){  # he played black yesterday...
     if(b[which(white_player==b[,3]),4] !="1/2-1/2"){  # ... and didn't draw...
-      out["black_player_fatigued"] <- TRUE # ... the white player is fatigued
+      out["black_player_fatigued"] <- TRUE # ... the black player is fatigued
     }
   }
 
