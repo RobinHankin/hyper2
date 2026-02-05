@@ -80,8 +80,8 @@ order.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ordertrans</span><span class="op">(</span><span class="va">x</span>,<span class="va">players</span><span class="op">)</span></span>
-<span><span class="fu">ordertransplot</span><span class="op">(</span><span class="va">ox</span>,<span class="va">oy</span>,<span class="va">plotlims</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ordertrans</span><span class="op">(</span><span class="va">x</span>, <span class="va">players</span><span class="op">)</span></span>
+<span><span class="fu">ordertransplot</span><span class="op">(</span><span class="va">ox</span>, <span class="va">oy</span>, <span class="va">plotlims</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,7 +94,7 @@ order.</p>
 <dd><p>A character vector specifying the order in which the
     players will be listed; if missing, use <code>sort(names(x))</code></p></dd>
 
-  <dt id="arg-ox-oy">ox,oy<a class="anchor" aria-label="anchor" href="#arg-ox-oy"></a></dt>
+  <dt id="arg-ox-oy">ox, oy<a class="anchor" aria-label="anchor" href="#arg-ox-oy"></a></dt>
 <dd><p>Rank vectors</p></dd>
 
   <dt id="arg-plotlims">plotlims<a class="anchor" aria-label="anchor" href="#arg-plotlims"></a></dt>
@@ -197,11 +197,11 @@ functions.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>e<span class="op">=</span><span class="fl">4L</span>,a<span class="op">=</span><span class="fl">7L</span>,c<span class="op">=</span><span class="fl">6L</span>,b<span class="op">=</span><span class="fl">1L</span>,f<span class="op">=</span><span class="fl">2L</span>,g<span class="op">=</span><span class="fl">3L</span>,h<span class="op">=</span><span class="fl">5L</span>,i<span class="op">=</span><span class="fl">8L</span>,d<span class="op">=</span><span class="fl">9L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>e<span class="op">=</span><span class="fl">4L</span>, a<span class="op">=</span><span class="fl">7L</span>, c<span class="op">=</span><span class="fl">6L</span>, b<span class="op">=</span><span class="fl">1L</span>, f<span class="op">=</span><span class="fl">2L</span>, g<span class="op">=</span><span class="fl">3L</span>, h<span class="op">=</span><span class="fl">5L</span>, i<span class="op">=</span><span class="fl">8L</span>, d<span class="op">=</span><span class="fl">9L</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> e a c b f g h i d </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 7 6 1 2 3 5 8 9 </span>
-<span class="r-in"><span><span class="fu">ordertrans</span><span class="op">(</span><span class="va">x</span>,<span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ordertrans</span><span class="op">(</span><span class="va">x</span>, <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a b c d e f g h i </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7 1 6 9 4 2 3 5 8 </span>
 <span class="r-in"><span></span></span>
@@ -226,7 +226,7 @@ functions.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   sebestyen   slutskaya   soldatova      suguri   volchkova </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           8           3          19           4          10 </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">ordertrans</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">icons_maxp</span><span class="op">)</span>,<span class="va">icons</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ordertrans</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">icons_maxp</span><span class="op">)</span>, <span class="va">icons</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         NB          L         PB        THC         OA       WAIS </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.25230411 0.17364433 0.22458188 0.17011281 0.11068604 0.06867083 </span>
 <span class="r-in"><span></span></span>
@@ -236,7 +236,7 @@ functions.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">volvo_table</span><span class="op">)</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>  <span class="co"># ranks race 1</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">volvo_table</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">ordertransplot</span><span class="op">(</span><span class="va">rL</span>,<span class="va">r1</span>,xlab<span class="op">=</span><span class="st">"likelihood rank, all races"</span>,ylab<span class="op">=</span><span class="st">"rank, race 1"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ordertransplot</span><span class="op">(</span><span class="va">rL</span>, <span class="va">r1</span>, xlab<span class="op">=</span><span class="st">"likelihood rank, all races"</span>, ylab<span class="op">=</span><span class="st">"rank, race 1"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ordertrans-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

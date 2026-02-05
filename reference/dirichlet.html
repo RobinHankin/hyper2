@@ -93,11 +93,11 @@ generalized Dirichlet distribution due to Connor and Mosimann</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <p></p>
-<dl><dt id="arg-powers-x">powers,x<a class="anchor" aria-label="anchor" href="#arg-powers-x"></a></dt>
+<dl><dt id="arg-powers-x">powers, x<a class="anchor" aria-label="anchor" href="#arg-powers-x"></a></dt>
 <dd><p>In functions <code>dirichlet()</code> and <code>multinom()</code>,
     a (named) vector of powers</p></dd>
 
-  <dt id="arg-alpha-beta">alpha,beta<a class="anchor" aria-label="anchor" href="#arg-alpha-beta"></a></dt>
+  <dt id="arg-alpha-beta">alpha, beta<a class="anchor" aria-label="anchor" href="#arg-alpha-beta"></a></dt>
 <dd><p>A vector of parameters for the Dirichlet or
     generalized Dirichlet distribution</p></dd>
 
@@ -188,21 +188,21 @@ generalized Dirichlet distribution due to Connor and Mosimann</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu">dirichlet</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu">dirichlet</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>c<span class="op">=</span><span class="fl">3</span>,d<span class="op">=</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu">dirichlet</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>, b<span class="op">=</span><span class="fl">2</span>, c<span class="op">=</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu">dirichlet</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>c<span class="op">=</span><span class="fl">3</span>, d<span class="op">=</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x1</span><span class="op">+</span><span class="va">x2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( a * (a + b + c)^-6 * b^2 * c^6 * (c + d)^-7 * d^4)</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">multinom</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">2</span>,a<span class="op">=</span><span class="fl">3</span>,b<span class="op">=</span><span class="fl">3</span>,x<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>  <span class="co"># NB repeated 'x'</span></span></span>
+<span class="r-in"><span><span class="fu">multinom</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">2</span>, a<span class="op">=</span><span class="fl">3</span>, b<span class="op">=</span><span class="fl">3</span>, x<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>  <span class="co"># NB repeated 'x'</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log(a^3 * (a + b + x)^-9 * b^3 * x^3)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="fl">40</span>,<span class="fl">2.2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>,<span class="fl">40</span>,replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">multinom</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log(a^21 * (a + b + c + d)^-102 * b^26 * c^27 * d^28)</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu">dirichlet</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">3</span>,d<span class="op">=</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">rdirichlet</span><span class="op">(</span><span class="fl">10</span>,<span class="va">H</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu">dirichlet</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>, b<span class="op">=</span><span class="fl">2</span>, c<span class="op">=</span><span class="fl">3</span>, d<span class="op">=</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">rdirichlet</span><span class="op">(</span><span class="fl">10</span>, <span class="va">H</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                a         b          c         d</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.01489053 0.2773005 0.17545514 0.5323539</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.16490358 0.4473492 0.21954889 0.1681984</span>
@@ -214,13 +214,13 @@ generalized Dirichlet distribution due to Connor and Mosimann</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.14609874 0.1888472 0.25023030 0.4148238</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.07240817 0.4974437 0.08988788 0.3402603</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.24799704 0.3797639 0.25643394 0.1158052</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="fu">rdirichlet</span><span class="op">(</span><span class="fl">1e4</span>,<span class="va">H</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="fu">rdirichlet</span><span class="op">(</span><span class="fl">1e4</span>, <span class="va">H</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         a         b         c         d </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.1443673 0.2119955 0.2860204 0.3576168 </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">dirichlet3</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>fish<span class="op">=</span><span class="fl">3</span>,chips<span class="op">=</span><span class="fl">2</span><span class="op">)</span>,lambda<span class="op">=</span><span class="fl">1.8</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">dirichlet3</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>fish<span class="op">=</span><span class="fl">3</span>, chips<span class="op">=</span><span class="fl">2</span><span class="op">)</span>, lambda<span class="op">=</span><span class="fl">1.8</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (chips=1)^2 * (chips=1, fish=1.8)^-5 * (fish=1.8)^3)</span>
-<span class="r-in"><span><span class="fu">dirichlet3</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">6</span>,y<span class="op">=</span><span class="fl">5</span>,z<span class="op">=</span><span class="fl">2</span><span class="op">)</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">dirichlet3</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">6</span>, y<span class="op">=</span><span class="fl">5</span>, z<span class="op">=</span><span class="fl">2</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (x=1)^6 * (x=1, y=2, z=3)^-13 * (y=2)^5 * (z=3)^2)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
