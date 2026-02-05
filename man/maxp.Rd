@@ -10,7 +10,13 @@
 \alias{equalprobs}
 \title{Maximum likelihood estimation}
 \description{
-  Find the maximum likelihood estimate for p, also equal probabilities}
+  Find the maximum likelihood estimate for p, also equal probabilities.
+
+  TLDR summary: if \code{H} is a \code{hyper2} or \code{hyper3}
+  likelihood function, \code{maxp(H)} will find the maximum likelihood
+  estimate for the BT strengths.  Canonical example: \code{maxp(icons)}.
+
+}
 \usage{
 maxp(H, startp=NULL, give=FALSE, fcm=NULL, fcv=NULL, SMALL=1e-6, n=1,
    show=FALSE, justlikes=FALSE, ...)
