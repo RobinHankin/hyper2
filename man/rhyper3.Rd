@@ -7,10 +7,11 @@
 \title{Random hyper3 objects}
 \description{
 
-  Various random hyper3 objects, in the context of the race metaphor.
-  They return \dQuote{get you going} examples of \code{hyper3} objects.
-  The defaults are simple but non-trivial and have straightforward
-  interpretations.
+  Various random \code{hyper3} objects, in the context of the race
+  metaphor.  They return \dQuote{get you going} examples of
+  \code{hyper3} objects.  The defaults are simple but non-trivial and
+  have straightforward interpretations.
+
 }
 \usage{
 rwinner3(pn = c(a=2, b=4, c=2, d=1), ps = c(a=0.3, b=0.1, c=0.2, d=0.4))
