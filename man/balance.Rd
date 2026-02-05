@@ -28,12 +28,14 @@ balance(H)
 
 (the first line ensures that \code{H[pnames(H)]} is over-written
 correctly by the second).  Package vignette \code{zeropower} discusses
-the zero power sum condition.
+the zero power sum condition: in particular, note that \code{loglik()}
+throws an error if its likelihood function does not satisfy the
+zero-sum-power condition.
   
 }
 \value{Returns a balanced \code{hyper2} object}
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{print.hyper2}}}
+\seealso{\code{\link{print.hyper2}}, \code{\link{balance}}}
 \examples{
 
 
