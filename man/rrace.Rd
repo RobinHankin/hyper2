@@ -27,6 +27,8 @@ rrace(o)
 
 suppfun(rrace(o))
 
+table(replicate(100,rrace(o)[1]))  # should be about 40% "a"
+
 as.ranktable(t(replicate(10, rrace(o)))) # same as rrank(10,o)
 
 }
