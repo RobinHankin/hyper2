@@ -1,5 +1,5 @@
 # https://www.chessgames.com/perl/chesscollection?cid=1013919
-# use read.table("interzonal1973_petropolis.txt",header=TRUE,skip=2)
+# use read.table("interzonal1973_petropolis.txt",header=TRUE,skip=2); used in "fatigue.Rmd"
 round day month white black result moves
  1 23 July Biyiasas  Kagan  1-0 40 
  1 23 July Hort  Geller 1/2-1/2 16 
