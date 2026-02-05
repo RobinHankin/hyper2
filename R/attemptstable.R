@@ -25,8 +25,6 @@
 }
 
 rowfiddle <- function(v, n){  # takes a string, eg v="Vesely     79.73   80.3  85.44      X  84.98      X"
-    bold_start <- "\033[1m"
-    bold_end   <- "\033[22m"
 
     jj <- rle(strsplit(v, "")[[1]] == " ")
     start_position <- sum(jj$lengths[seq_len(n*2    )])
@@ -34,9 +32,7 @@ rowfiddle <- function(v, n){  # takes a string, eg v="Vesely     79.73   80.3  8
 
     paste(
         substr(v, 1, start_position),
-        bold_start,
-        substr(v, start_position+1, end_position),
-        bold_end,
+        crayon::bold(substr(v, start_position+1, end_position)),
         substr(v, end_position+1, nchar(v)),
         sep = ""
     )

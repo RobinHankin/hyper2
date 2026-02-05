@@ -18,7 +18,7 @@ Suggests: abind, ape, bookdown, covr, igraph, knitr, markdown,
           rmarkdown, rticles, stringr, Ternary, testthat
 VignetteBuilder: knitr
 Imports: alabama, calibrator, cubature, disordR (>= 0.0-9), frab,
-         magrittr, methods, partitions, Rcpp (>= 1.0-7), Rdpack
+         magrittr, methods, partitions, Rcpp (>= 1.0-7), Rdpack, crayon
 LinkingTo: Rcpp
 URL: https://github.com/RobinHankin/hyper2, https://robinhankin.github.io/hyper2/
 BugReports: https://github.com/RobinHankin/hyper2/issues
