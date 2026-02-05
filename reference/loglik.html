@@ -156,6 +156,9 @@
 
 <p>(the above applies for <code>H</code> a <code>hyper2</code> or <code>hyper3</code>
   object).</p>
+<p><code>loglik(p, H)</code> will throw an error if <code>H</code> does satisfy the
+  zero-sum power requirement; see <code><a href="balance.html">?balance</a></code> and the
+  <code>zeropower</code> package vignette.</p>
 <p>Empty brackets are interpreted consistently: that is, zero whatever
   the probability vector (although the print method is not perfect).</p>
 <p></p>
@@ -166,7 +169,7 @@
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="maxp.html">maxp</a></code></p></div>
+    <div class="dont-index"><p><code><a href="maxp.html">maxp</a></code>, <code><a href="balance.html">balance</a></code></p></div>
     </div>
 
     <div id="ref-examples">

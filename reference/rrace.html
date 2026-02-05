@@ -118,19 +118,24 @@ until the final element is the last to cross the finishing line.</p>
 <span class="r-in"><span><span class="fu"><a href="suppfun.html">suppfun</a></span><span class="op">(</span><span class="fu">rrace</span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( a * (a + b + c + d)^-1 * b * (b + c + d)^-1 * c * (c + d)^-1)</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">100</span>,<span class="fu">rrace</span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>  <span class="co"># should be about 40% "a"</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  a  b  c  d </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36 33 22  9 </span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ranktable.html">as.ranktable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fu">rrace</span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># same as rrank(10,o)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A ranktable:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       c1 c2 c3 c4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] c  b  a  d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] a  c  d  b </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] d  b  a  c </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] b  a  c  d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] c  b  a  d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] d  b  a  c </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] c  a  b  d </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] d  a  b  c </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] d  b  c  a </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] b  a  d  c </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] c  d  b  a </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] b  c  a  d </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] b  a  c  d </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] d  a  b  c </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] a  d  b  c </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] a  c  d  b </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] a  c  b  d </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] d  b  a  c </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] a  d  b  c </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] d  a  b  c </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
