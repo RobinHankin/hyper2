@@ -18,7 +18,7 @@ for \eqn{p}, as given by \code{maxp()}.
 }
 \usage{
 gradient(H, probs=indep(maxp(H)))
-hessian(H,probs=indep(maxp(H)),border=TRUE)
+hessian(H, probs=indep(maxp(H)), border=TRUE)
 hessian_lowlevel(L, powers, probs, pnames,n) 
 is_ok_hessian(M, give=TRUE)
 }
@@ -110,11 +110,11 @@ does not return exact zeros at the evaluate.
 \examples{
 
 data(chess)
-p <- c(1/2,1/3)
+p <- c(1/2, 1/3)
 delta <- rnorm(2)/1e5  # delta needs to be quite small
 
 deltaL  <- loglik(p+delta,chess) - loglik(p,chess)
-deltaLn <- sum(delta*gradient(chess,p + delta/2))   # numeric
+deltaLn <- sum(delta*gradient(chess, p + delta/2))   # numeric
 
 deltaL - deltaLn  # should be small [zero to first order]
 

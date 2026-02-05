@@ -24,14 +24,11 @@
 H <- hyper2(pnames=letters)
 H["a"] <- 1
 H["b"] <- 2
-H[c("a","b")] <- -3
+H[c("a", "b")] <- -3
 
 pnames(H)
 pnames(tidy(H))
 
 H == tidy(H)  # should be TRUE
-
-
-
 }
 

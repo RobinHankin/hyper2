@@ -30,9 +30,9 @@ rp_unif(n, H)
 multinom(x)
 }
 \arguments{
-  \item{powers,x}{In functions \code{dirichlet()} and \code{multinom()},
+  \item{powers, x}{In functions \code{dirichlet()} and \code{multinom()},
     a (named) vector of powers}
-  \item{alpha,beta}{A vector of parameters for the Dirichlet or
+  \item{alpha, beta}{A vector of parameters for the Dirichlet or
     generalized Dirichlet distribution}
   \item{beta0}{In function \code{GD()}, an arbitrary parameter}
   \item{H}{Object of class \code{hyper2}}
@@ -113,23 +113,25 @@ multinom(x)
 
 }
 
-\seealso{\code{\link{hyper2}},\code{\link{rp}}} \examples{
+\seealso{\code{\link{hyper2}},\code{\link{rp}}}
 
-x1 <- dirichlet(c(a=1,b=2,c=3))
-x2 <- dirichlet(c(c=3,d=4))
+\examples{
+
+x1 <- dirichlet(c(a=1, b=2, c=3))
+x2 <- dirichlet(c(c=3, d=4))
 
 x1+x2
 
-multinom(c(x=2,a=3,b=3,x=1))  # NB repeated 'x'
+multinom(c(x=2, a=3, b=3, x=1))  # NB repeated 'x'
 
 x <- setNames(rpois(40,2.2), sample(letters[1:4],40,replace=TRUE))
 multinom(x)
 
-H <- dirichlet(c(a=1,b=2,c=3,d=4))
-rdirichlet(10,H)
-colMeans(rdirichlet(1e4,H))
+H <- dirichlet(c(a=1, b=2, c=3, d=4))
+rdirichlet(10, H)
+colMeans(rdirichlet(1e4, H))
 
-dirichlet3(c(fish=3,chips=2),lambda=1.8)
-dirichlet3(c(x=6,y=5,z=2),1:3)
+dirichlet3(c(fish=3, chips=2), lambda=1.8)
+dirichlet3(c(x=6, y=5, z=2), 1:3)
 
 }
