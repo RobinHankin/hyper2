@@ -101,7 +101,7 @@ Function \code{specificp.gt.test()} includes quite a bit of messing
 about to ensure that frequently-used idiom like
 \code{specificp.gt.test(icons,"NB",0)} works as expected, testing a null
 of \code{p_NB=0} (observe that \code{specificp.ne.test(icons,"NB",0)}
-and \code{specificp.gt.test(icons,"NB",0)} will (correctly) throw an
+will (correctly) throw an
 error).  In the case of testing a strength's being zero, the support
 function is often quite badly-behaved near the constraint [think tossing
 a coin with probability \eqn{p} twice, observing one head and one tail,
