@@ -34,9 +34,9 @@ days followed by a one- or two- day break.
 ```{r,label=define_H,cache=TRUE}
 players <-  unique(sort(c(a$white,a$black)))
 
-wm <- "wm" 
-dm <- "dm"
-rm <- "rm"
+wm <- "wm"  # white monster
+dm <- "dm"  # draw monster
+rm <- "rm"  # rest monster
 
 tab <- matrix(0,length(players),3)
 colnames(tab) <- c("won","lost","drawn")
@@ -121,7 +121,7 @@ o
 Now focus on pairs of successive rounds: 1,2; 4,5; 7,8; 10,11; 13,14; 16,17
 
 
-```{r justsuccessive}
+```{r justsuccessive, cache=TRUE}
 unlist(a[2,])
 `fatigued` <- function(i){
   x <- unlist(a[i,])
@@ -241,6 +241,22 @@ pnames(Hf)
 Hf_maxp
 pie(Hf_maxp)
 ```
+
+Above we see the estimates of the strengths of the three monsters:
+`dm`, the draw monster has strength about $0.096$; `rm`, the rest
+monster, has strength $1.5\times 10^{-6}$, and `wm`, the white
+monster, has strength about $0.02$.  Noting that the draw monster
+cannot possibly have zero strength, and that the rest monster has a
+very small estimated strength, the only null worth testing is
+$H_0\colon\mathtt{wm}=0$:
+
+
+```{r testwm0, cache=TRUE}
+specificp.gt.test(Hf, "wm", 0)
+```
+
+Above we see that $H_0\colon\mathtt{wm}=0$ may be rejected with a
+$p$-value of about $3\times 10^{-11}$.
 
 
 ```{r maketable}
