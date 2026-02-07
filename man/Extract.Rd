@@ -36,13 +36,14 @@ overwrite_lowlevel(x,value)
  \code{disordR} protocol is used.
 
  If the index argument is missing, viz \code{H1[] <- H2}, this is a
- special case.  Argument \code{H1} must be a \code{hyper2} object, and
+ special case.  Argument \code{H2} must be a \code{hyper2} object, and
  the idiom effectively executes \code{H1[brackets(H2)] <- powers(H2)},
- but more efficiently (note that this operation is well-defined even
- though the order of the brackets is arbitrary).  This special case is
- included in the package because it has a very natural \code{C++}
- expression [function \code{overwrite()} in the \code{src/} directory]
- that was too neat to omit.
+ but more efficiently; note that this operation is well-defined even
+ though (because of \CRANpkg{disordR} discipline) the order of the
+ brackets is arbitrary.  This special case is included in the package
+ because it has a very natural \code{C++} expression [function
+ \code{overwrite()} in the \code{src/} directory] that was too neat to
+ omit.
 
  Altering (incrementing or decrementing) the power of a single bracket
  is possible using idiom like \code{H[x] <- H[x] + 1}; this is
