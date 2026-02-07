@@ -9,7 +9,7 @@
 \title{Javelin dataset}
 \description{
 
-  An \code{attemptstable} object showin results from the men's javelin,
+  An \code{attemptstable} object showing results from the men's javelin,
   2020 Summer Olympics.
   
 }
