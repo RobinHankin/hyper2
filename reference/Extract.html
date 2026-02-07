@@ -112,13 +112,14 @@
  specifies the brackets whose powers are to be overwritten; standard
  <code>disordR</code> protocol is used.</p>
 <p>If the index argument is missing, viz <code>H1[] &lt;- H2</code>, this is a
- special case.  Argument <code>H1</code> must be a <code>hyper2</code> object, and
+ special case.  Argument <code>H2</code> must be a <code>hyper2</code> object, and
  the idiom effectively executes <code>H1[brackets(H2)] &lt;- powers(H2)</code>,
- but more efficiently (note that this operation is well-defined even
- though the order of the brackets is arbitrary).  This special case is
- included in the package because it has a very natural <code>C++</code>
- expression [function <code><a href="cplusplus.html">overwrite()</a></code> in the <code>src/</code> directory]
- that was too neat to omit.</p>
+ but more efficiently; note that this operation is well-defined even
+ though (because of <a href="https://CRAN.R-project.org/package=disordR" class="external-link"><span class="pkg">disordR</span></a> discipline) the order of the
+ brackets is arbitrary.  This special case is included in the package
+ because it has a very natural <code>C++</code> expression [function
+ <code><a href="cplusplus.html">overwrite()</a></code> in the <code>src/</code> directory] that was too neat to
+ omit.</p>
 <p>Altering (incrementing or decrementing) the power of a single bracket
  is possible using idiom like <code>H[x] &lt;- H[x] + 1</code>; this is
  documented at <code>Ops.hyper2</code>, specifically
