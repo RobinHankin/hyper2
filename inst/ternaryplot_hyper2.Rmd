@@ -29,95 +29,72 @@ suppressPackageStartupMessages(library("Ternary"))
 suppressPackageStartupMessages(library("hyper2"))
 ```
 
-# The `chess` dataset (`hyper2`)
 
-Now generate a synthetic dataset.  Here we will sample from the
-posterior of a uniform prior with a likelihood function specified by
-the `chess` object (this takes quite a long time):
+# Ternary plots for a likelihood function.
 
-```{r generatedata, cache=TRUE}
-set.seed(0)
-xx <- rp(1000,chess)
+
+Suppose we have a race between 4 `a`s, 2 `b`s and 2 `c`s.  The
+finishing order was:
+
+
+$$
+a\succ a\succ a\succ a
+\succ b\succ c
+\succ a
+\succ c\succ b
+$$.
+
+So it is clear that `a` is likely to be the strongest; it is not
+immediately clear whether one would expect `b` or `c` to be stronger,
+although both are substantially weaker than `a`.  Indeed:
+
+```{r race3hyper3}
+made_up_race <- c("a", "a", "a", "b", "c", "a", "c", "b", "c")
+H_mu <- ordervec2supp3(made_up_race)
+maxp(H_mu)
 ```
 
-Using the `TernaryPlot()` and `TernaryPoints()` functions is straightforward:
-```{r plotdata, fig.cap="Ternary plot of estimated Plackett-Luce strengths of three chess players, using synthetic data"}
-jj <- pnames(chess)
-TernaryPlot(atip=jj[1],btip=jj[2],ctip=jj[3])
-TernaryPoints(xx,cex=0.5)
-TernaryPoints(chess_maxp,pch=16,col="red")
-```
+So it turns out that the MLE has `b` almost twice the strength of `c`.
+[there is actually more difference between `b` and `c` than I would
+expect from the observation].  Let's plot a ternary plot:
 
-In figure \@ref(fig:plotdata) we see black circles being samples from
-the posterior and the red point is the maximum likelihood estimate for
-the three players' strengths.  We can adapt this technique to
-higher-dimensional `hyper2` objects.
+```{r}
+ternary_contourplot <- function(H){
+    stopifnot(size(H) == 3)
 
+    FunctionToContour <- function (a, b, c) {
+      M <- cbind(a, b, c)
+      M[] <- pmax(M, 0)
+      M <- sweep(M, 1, rowSums(M),"/")
+      colnames(M) <- pnames(H)
+      out <- loglik(M, H)
+      out[is.infinite(out)] <- NA
+      out <- out - max(out,na.rm = TRUE)
+      out <- pmax(out, -20, na.rm = TRUE)
+      return(out)
+   }
 
-```{r plotternarychess}
-FunctionToContour <- function (a, b, c) {
-    M <- cbind(a, b, c)
-    colnames(M) <- c("Topalov", "Anand", "Karpov")
-    M[] <- pmax(M,0)
-    M <- sweep(M,1,rowSums(M),"/")
-    out <- loglik(M, chess)
-    out[is.infinite(out)] <- NA
-    out <- out - max(out,na.rm = TRUE)
-    out <- pmax(out, -20, na.rm = TRUE)
-    return(out)
+   originalPar <- par(mar = rep(0, 4))
+   jj <- pnames(H)
+   TernaryPlot(atip = jj[1], btip = jj[2], ctip = jj[3])
+   values <- TernaryPointValues(FunctionToContour, resolution = 24L)
+   ColourTernary(
+     values,
+     legend = signif(seq(max(values), min(values), length.out = 4), 2),
+     bty = "n"
+   )
+   TernaryContour(FunctionToContour, resolution = 72L, nlevels=10)
 }
-
-originalPar <- par(mar = rep(0, 4))
-TernaryPlot(alab = "Topalov", blab = "Anand", clab = "Karpov")
-values <- TernaryPointValues(FunctionToContour, resolution = 24L)
-ColourTernary(
-  values,
-  legend = signif(seq(max(values), min(values), length.out = 4), 2),
-  bty = "n"
-)
-TernaryContour(FunctionToContour, resolution = 72L, nlevels=10)
 ```
 
-
-
-# The `icons` dataset (`hyper2`)
-
-Consider the `icons` likelihood function:
-
-```{r showicons}
-icons
+```{r plotmadeup, cache=TRUE}
+ternary_contourplot(H_mu)
 ```
 
+Above we see that the orientation and labelling of the ternary plot is
+indeed consistent: `a` is clearly the strongest, followed by `b`,
+followed by `c`.
 
-We can sample from this object and plot it in different ways:
-
-
-```{r samplefromicons,cache=TRUE}
-n <- 10000
-x <- rp(n,icons)
-x[sample(n,5),]
-```
-
-
-```{r iconsmatplot, fig.cap="Metropolis-Hastings random sampling of the `icons` dataset: the six Bradley-Terry strengths of each icon"}
-matplot(x,type="l",lty=1)
-legend("topright",col=1:6,lty=1,legend=pnames(icons))
-```
-
-```{r selectjustbigones, fig.cap='Ternary plot of the icons dataset, showing Norfolk Broads ("NB", top), Polar Bears ("PB", lower right), and everything else ("other", lower left).  Small black dots show MLEs of synthetic (Metropolis-Hastings) datasets; large red dot shows MLE for the original dataset'}
-wanted <- c(1,3) # NB,PB
-xx <- cbind(x[, wanted], fillup=rowSums(x[, -wanted]))
-TernaryPlot(atip="NB", btip="PB", ctip="other")
-TernaryPoints(xx, cex=0.5, pch=16)
-jj <- icons_maxp[wanted]
-TernaryPoints(c(jj,1-sum(jj)), pch=16, col="red")
-```
-
-Figures \@ref(fig:iconsmatplot) and \@ref(fig:selectjustbigones) show
-different aspects of the BT strengths of the six icons of the `icons`
-dataset.  Note that figure \@ref(fig:selectjustbigones) is potentially
-misleading: due to the sequential correlation of MH sampling, repeated
-observations are overplotted and thus under-represented.
 
 # Synthetic race data (`hyper3`)
 
@@ -159,3 +136,86 @@ strengths as black dots, and the true value of the strengths
 (viz. `c(a=0.3,b=0.5,c=0.2)`) in red.  The estimates cluster around the true value.  It might be interesting to assess whether the estimates 
 estimates are Dirichlet and, if so, what parameters the distribution
 possesses.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# The `chess` dataset (`hyper2`)
+
+Now generate a synthetic dataset.  Here we will sample from the
+posterior of a uniform prior with a likelihood function specified by
+the `chess` object (this takes quite a long time):
+
+```{r generatedata, cache=TRUE}
+set.seed(0)
+xx <- rp(1000,chess)
+```
+
+Using the `TernaryPlot()` and `TernaryPoints()` functions is straightforward:
+```{r plotdata, fig.cap="Ternary plot of estimated Plackett-Luce strengths of three chess players, using synthetic data"}
+jj <- pnames(chess)
+TernaryPlot(atip=jj[1],btip=jj[2],ctip=jj[3])
+TernaryPoints(xx,cex=0.5)
+TernaryPoints(chess_maxp,pch=16,col="red")
+```
+
+In figure \@ref(fig:plotdata) we see black circles being samples from
+the posterior and the red point is the maximum likelihood estimate for
+the three players' strengths.  We can adapt this technique to
+higher-dimensional `hyper2` objects.
+
+
+```{r, label=tcpchess, cache=TRUE}
+ternary_contourplot(chess)
+```
+
+
+# The `icons` dataset (`hyper2`)
+
+Consider the `icons` likelihood function:
+
+```{r showicons}
+icons
+```
+
+
+We can sample from this object and plot it in different ways:
+
+
+```{r samplefromicons,cache=TRUE}
+n <- 10000
+x <- rp(n,icons)
+x[sample(n,5),]
+```
+
+
+```{r iconsmatplot, fig.cap="Metropolis-Hastings random sampling of the `icons` dataset: the six Bradley-Terry strengths of each icon"}
+matplot(x,type="l",lty=1)
+legend("topright",col=1:6,lty=1,legend=pnames(icons))
+```
+
+```{r selectjustbigones, fig.cap='Ternary plot of the icons dataset, showing Norfolk Broads ("NB", top), Polar Bears ("PB", lower right), and everything else ("other", lower left).  Small black dots show MLEs of synthetic (Metropolis-Hastings) datasets; large red dot shows MLE for the original dataset'}
+wanted <- c(1,3) # NB,PB
+xx <- cbind(x[, wanted], fillup=rowSums(x[, -wanted]))
+TernaryPlot(atip="NB", btip="PB", ctip="other")
+TernaryPoints(xx, cex=0.5, pch=16)
+jj <- icons_maxp[wanted]
+TernaryPoints(c(jj,1-sum(jj)), pch=16, col="red")
+```
+
+Figures \@ref(fig:iconsmatplot) and \@ref(fig:selectjustbigones) show
+different aspects of the BT strengths of the six icons of the `icons`
+dataset.  Note that figure \@ref(fig:selectjustbigones) is potentially
+misleading: due to the sequential correlation of MH sampling, repeated
+observations are overplotted and thus under-represented.
+
