@@ -30,8 +30,8 @@ that allow the brackets to contain weighted probabilities.
 \usage{
 hyper3(B = list(), W = list(), powers = 0, pnames)
 hyper3_bw(B = list(), W = list(), powers = 0, pnames)
-hyper3_nv(L=list(),powers=0,pnames)
-hyper3_m(M,p,stripzeros=TRUE)
+hyper3_nv(L=list(), powers=0, pnames)
+hyper3_m(M, p, stripzeros=TRUE)
 }
 \arguments{
   \item{B}{A list of brackets}
@@ -157,14 +157,14 @@ methods for \code{hyper3} objects.
 \examples{
 
 
-hyper3(B=list("a",c("a","b"),"b"),W=list(1.2,c(1.2,1),1),powers=c(3,4,-7))
-hyper3(list(c(a=1.2),c(b=1),c(a=1.2,b=1)),powers=c(3,4,-7))
+hyper3(B=list("a",c("a","b"),"b"), W=list(1.2,c(1.2,1),1), powers=c(3,4,-7))
+hyper3(list(c(a=1.2), c(b=1), c(a=1.2, b=1)), powers=c(3,4,-7))
 ## Above two objects should be identical.
 
 ## Third method, send a matrix:
-M <- matrix(rpois(15,3),5,3)
+M <- matrix(rpois(15,3), 5, 3)
 colnames(M) <- letters[1:3]
-hyper3(M,c(2,3,-1,-5,1))   # second argument interpreted as powers
+hyper3(M, c(2, 3, -1, -5, 1))   # second argument interpreted as powers
 
 
 
@@ -175,16 +175,16 @@ a <- hyper3()  # default creation method [empty object]
 
 a[c(p1=1.3)] <- 5
 a[c(p2=1  )] <- 2
-a[c(p1=1.3,p2=1)] <- -7
+a[c(p1=1.3, p2=1)] <- -7
 a
 
 chess3  # representative simple hyper3 object
 
 H1 <- rankvec_likelihood(letters[sample(6)])
 H2 <- rankvec_likelihood(letters[sample(6)])
-H1["a"] <- as.weight(1.2)         # "a" has some disadvantage in H1
-H1[c("b","c")] <- as.weight(2:3)  # "b" and "c" have some advantage in H1
-H2[c("c","d")] <- as.weight(1.5)  # "c" and "d" have some advantage in H2
+H1["a"] <- as.weight(1.2)          # "a" has some disadvantage in H1
+H1[c("b", "c")] <- as.weight(2:3)  # "b" and "c" have some advantage in H1
+H2[c("c", "d")] <- as.weight(1.5)  # "c" and "d" have some advantage in H2
 H1+H2
 
 }
