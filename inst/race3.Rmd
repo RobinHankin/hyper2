@@ -3,6 +3,7 @@ title: "Races with hyper3 objects"
 author: "R. K. S. Hankin"
 output: bookdown::html_document2
 bibliography: hyper2.bib
+link-citations: yes
 ---
 
 
