@@ -16,7 +16,7 @@
 Dirichlet distribution and generalizations
 }
 \description{
-The Dirichlet distribution in likelihood (for p) form, including the
+The Dirichlet distribution in likelihood (for \eqn{p}) form, including the
 generalized Dirichlet distribution due to Connor and Mosimann
 }
 \usage{
@@ -40,7 +40,12 @@ multinom(x)
   \item{n}{Number of observations}
 }
 \details{
-  These functions are really convenience functions.
+
+  The \dfn{Dirichlet distribution} of order \eqn{K\geqslant 2}{omitted}
+  with parameters \eqn{\alpha_1,\ldots,\alpha_K>0}{omitted} has a
+  probability density function \eqn{\propto\prod_{i=1}^K
+  p_i^{\alpha_{i}-1}}{omitted} where \eqn{p_i\geqslant 0}{omitted} and
+  \eqn{\sum p_i=1}{omitted}.
 
   Function \code{rdirichlet()} returns random samples drawn from a
   Dirichlet distribution using the gamma distribution.  If second
