@@ -10,13 +10,14 @@
 Extract or replace parts of a hyper2 object
 }
 \description{
-Extract or replace parts of a hyper2 object
+Extract or replace parts of a \code{hyper2} object, in accordance with
+\CRANpkg{disordR} discipline.
 }
 \usage{
 \method{[}{hyper2}(x, \dots)
 \method{[}{hyper2}(x, index, \dots) <- value
-assign_lowlevel(x,index,value)
-overwrite_lowlevel(x,value)
+assign_lowlevel(x, index, value)
+overwrite_lowlevel(x, value)
 
 }
 \arguments{
