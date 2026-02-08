@@ -14,17 +14,15 @@
 \description{Voting patterns from Eurovision 2009}
 \usage{data(eurovision)}
 \format{
-A \code{hyper2} object that gives a likelihood
-function.
+A \code{hyper2} object that gives a likelihood function.
 }
 \details{
 
-Object \code{eurovision} is a \code{hyper2} object that gives a
-likelihood function for the skills of the 18 competitor countries in
-semi-final 1 of the 2009 Eurovision Song contest.  Object
-\code{eurovision_table} gives the original dataset and
-\code{eurovision_maxp} the evaluate of the competitors' Plackett-Luce
-strengths.
+Object \code{eurovision} is a \code{hyper2} likelihood function for the
+skills of the 18 competitor countries in semi-final 1 of the 2009
+Eurovision Song contest.  Object \code{eurovision_table} gives the
+original dataset and \code{eurovision_maxp} the evaluate of the
+competitors' Plackett-Luce strengths.
 
 The motivation for choosing this particular dataset is that Pat Altham
 (Statistical Laboratory, Cambridge) considered it with a view to
@@ -51,7 +49,5 @@ resides in the \code{data/} directory.
 \examples{
 data(eurovision)
 dotchart(eurovision_maxp)
-
-
 
 }
