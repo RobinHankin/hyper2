@@ -238,7 +238,7 @@ matplot(x,type="l",lty=1)
 legend("topright",col=1:6,lty=1,legend=pnames(icons))
 ```
 
-```{r selectjustbigones, fig.cap='Ternary plot of the icons dataset, showing Norfolk Broads ("NB", top), Polar Bears ("PB", lower right), and everything else ("other", lower left).  Small black dots show MLEs of synthetic (Metropolis-Hastings) datasets; large red dot shows MLE for the original dataset'}
+```{r selectjustbigones, fig.cap="Ternary plot of the icons dataset, showing Norfolk Broads (NB, top), Polar Bears (PB, lower right), and everything else (other, lower left).  Small black dots show MLEs of synthetic (Metropolis-Hastings) datasets; large red dot shows MLE for the original dataset"}
 wanted <- c(1,3) # NB,PB
 xx <- cbind(x[, wanted], fillup=rowSums(x[, -wanted]))
 TernaryPlot(atip="NB", btip="PB", ctip="other")
