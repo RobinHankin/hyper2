@@ -20,7 +20,7 @@ discard_flawed(H, unwanted)
 \arguments{
   \item{H}{A \code{hyper2} object}
   \item{x}{An order table}
-  \item{wanted,unwanted}{Players to keep or discard.  May be character
+  \item{wanted, unwanted}{Players to keep or discard.  May be character
     or integer or logical}
   \item{...}{Further arguments passed to
     \code{wikitable_to_ranktable()}, notably \code{points}}
@@ -55,12 +55,12 @@ discard_flawed(H, unwanted)
 \examples{
 
 maxp(icons)
-discard_flawed(icons,c("OA","WAIS"))
+discard_flawed(icons, c("OA", "WAIS"))
 
 \dontrun{# (takes too long)
 data("skating")
 maxp(skating)[1:4]      # numbers work, keep the first four skaters
-maxp(keep_flawed(skating,pnames(skating)[1:4])) # differs!
+maxp(keep_flawed(skating, pnames(skating)[1:4])) # differs!
 }
 
 
