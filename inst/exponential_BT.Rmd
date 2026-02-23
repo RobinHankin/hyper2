@@ -554,18 +554,21 @@ max(S_pure) + max(S_applied) - max(S_all)
 pchisq(max(S_pure) + max(S_applied) - max(S_all),df=2,lower.tail=FALSE)
 ```
 
-
 # Parkrun
 
 In the following chunks, each execution of
 `single_like_fun(...,N=1000)` takes  about 5 minutes
 
 ```{r sethowmany}
-howmany <- 1000
+howmany <- 10000
+competitors <- c(43, 49, 59, 51, 56, 55, 58)
+set.seed(0)
+rank <- c(37, 39, 50, 43, 46, 41, 45)
+plot(rank/competitors)
 ```
 
 ```{r parkrunlikefunobs1, cache = TRUE}
-print(system.time(parkrun01 <- single_like_fun(259, 177/259, N = howmany, a_try, x_try)))
+print(system.time(parkrun01 <- single_like_fun(competitors[1], rank[1]/competitors[1], N = howmany, a_try, x_try)))
 ```
 
 ```{r}
@@ -573,7 +576,7 @@ parkrun01
 ```
 
 ```{r parkrunlikefunobs2, cache = TRUE}
- print(system.time(parkrun02 <- single_like_fun(305, 222/305, N = howmany, a_try, x_try)))
+print(system.time(parkrun02 <- single_like_fun(competitors[2], rank[2]/competitors[2], N = howmany, a_try, x_try)))
 ```
 
 ```{r}
@@ -581,7 +584,7 @@ parkrun02
 ```
 
 ```{r parkrunlikefunobs3, cache = TRUE}
-print(system.time(parkrun03 <- single_like_fun(297, 206/297, N = howmany, a_try, x_try)))
+print(system.time(parkrun03 <- single_like_fun(competitors[3], rank[3]/competitors[3], N = howmany, a_try, x_try)))
 ```
 
 ```{r}
@@ -589,7 +592,7 @@ parkrun03
 ```
 
 ```{r parkrunlikefunobs4, cache = TRUE}
-print(system.time(parkrun04 <- single_like_fun(241, 142/241, N = howmany, a_try, x_try)))
+print(system.time(parkrun04 <- single_like_fun(competitors[4], rank[4]/competitors[4], N = howmany, a_try, x_try)))
 ```
 
 ```{r}
@@ -597,7 +600,7 @@ parkrun04
 ```
 
 ```{r parkrunlikefunobs5, cache = TRUE}
-print(system.time(parkrun05 <- single_like_fun(179, 118/179, N = howmany, a_try, x_try)))
+print(system.time(parkrun05 <- single_like_fun(competitors[5], rank[5]/competitors[5], N = howmany, a_try, x_try)))
 ```
 
 ```{r}
@@ -605,7 +608,7 @@ parkrun05
 ```
  
 ```{r parkrunlikefunobs6, cache = TRUE}
-print(system.time(parkrun06 <- single_like_fun(338, 224/338, N = howmany, a_try, x_try)))
+print(system.time(parkrun06 <- single_like_fun(competitors[6], rank[6]/competitors[6], N = howmany, a_try, x_try)))
 ```
 
 ```{r}
@@ -613,7 +616,7 @@ parkrun06
 ```
 
 ```{r parkrunlikefunobs7, cache = TRUE}
-print(system.time(parkrun07 <- single_like_fun(203, 128/203, N = howmany, a_try, x_try)))
+print(system.time(parkrun07 <- single_like_fun(competitors[7], rank[7]/competitors[7], N = howmany, a_try, x_try)))
 ```
 
 ```{r}
@@ -636,8 +639,34 @@ sum(parkrun07)
 ```{r}
 contour(a_try,x_try,parkrun05)
 contour(a_try,x_try,parkrun06)
-parkrun01*parkrun02*parkrun03*parkrun04*parkrun05*parkrun06*parkrun07
+(p <- parkrun01*parkrun02*parkrun03*parkrun04*parkrun05*parkrun06*parkrun07)
+contour(a_try, x_try, p)
+LL <- log(p)
+LL <- LL - max(LL)
+LL
+contour(a_try, x_try, LL, levels=c(0,-1,-2,-4,-6))
+filled.contour(a_try, x_try, LL)
 ```
+
+
+```{r}
+pdash <-
+     (parkrun01+1) * 
+     (parkrun02+1) * 
+     (parkrun03+1) * 
+     (parkrun04+1) * 
+     (parkrun05+1) * 
+     (parkrun06+1) * 
+    (parkrun07+1)
+pdash
+LLd <- log(pdash)
+(LLd <- LLd - max(LLd))
+contour(a_try, x_try, LLd, levels=c(0,-1,-2,-4,-6))
+wanted_a <- (a_try) > 0.6
+contour(a_try[wanted_a], x_try, LLd[wanted_a,], levels = rev(c(0,-1,-2,-4,-6)))
+filled.contour(a_try[wanted_a], x_try, LLd[wanted_a,], levels = rev(c(0,-1,-2,-4,-6)))
+```
+
 
 
 
