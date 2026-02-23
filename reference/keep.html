@@ -94,7 +94,7 @@
   <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>An order table</p></dd>
 
-  <dt id="arg-wanted-unwanted">wanted,unwanted<a class="anchor" aria-label="anchor" href="#arg-wanted-unwanted"></a></dt>
+  <dt id="arg-wanted-unwanted">wanted, unwanted<a class="anchor" aria-label="anchor" href="#arg-wanted-unwanted"></a></dt>
 <dd><p>Players to keep or discard.  May be character
     or integer or logical</p></dd>
 
@@ -140,7 +140,7 @@
 <span class="r-in"><span><span class="fu"><a href="maxp.html">maxp</a></span><span class="op">(</span><span class="va">icons</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         NB          L         PB        THC         OA       WAIS </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.25230411 0.17364433 0.22458188 0.17011281 0.11068604 0.06867083 </span>
-<span class="r-in"><span><span class="fu">discard_flawed</span><span class="op">(</span><span class="va">icons</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OA"</span>,<span class="st">"WAIS"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">discard_flawed</span><span class="op">(</span><span class="va">icons</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OA"</span>, <span class="st">"WAIS"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>powers have nonzero sum</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log(L^24 * (L + NB)^-9 * (L + NB + THC)^-35 * (L + PB)^-18 * (L + PB +</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> THC)^-27 * NB^32 * (NB + PB)^-8 * (NB + PB + THC)^-36 * PB^30 * THC^24)</span>
@@ -150,7 +150,7 @@
 <span class="r-in"><span><span class="fu"><a href="maxp.html">maxp</a></span><span class="op">(</span><span class="va">skating</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>      <span class="co"># numbers work, keep the first four skaters</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    babiakova   butyrskaya        cohen      fontana </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3.528153e-06 1.071112e-02 7.494685e-02 8.014398e-04 </span>
-<span class="r-in"><span><span class="fu"><a href="maxp.html">maxp</a></span><span class="op">(</span><span class="fu">keep_flawed</span><span class="op">(</span><span class="va">skating</span>,<span class="fu"><a href="hyper2.html">pnames</a></span><span class="op">(</span><span class="va">skating</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="co"># differs!</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="maxp.html">maxp</a></span><span class="op">(</span><span class="fu">keep_flawed</span><span class="op">(</span><span class="va">skating</span>, <span class="fu"><a href="hyper2.html">pnames</a></span><span class="op">(</span><span class="va">skating</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="co"># differs!</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Error in loglik_single(p, H, log = log) : sum(powers(H)) == 0 is not TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> known R bug (bugzilla ID 17703; wmmin not finite).  Kludge:  maxp_single() will try  a slightly different start point</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Error in loglik_single(p, H, log = log) : sum(powers(H)) == 0 is not TRUE</span>
