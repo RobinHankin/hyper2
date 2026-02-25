@@ -12,8 +12,8 @@
 \description{
 
 Confer additional BT strength on specified players, either by
-introducing a reified entity (\code{hyper2}) or an increased weight
-(\code{hyper3}).
+introducing a reified entity (\code{pwa()} for \code{hyper2} objects) or
+an increased weight (\code{pwa3()} for \code{hyper3} objects).
   
 }
 \usage{
@@ -28,7 +28,8 @@ pwa3(H3, ...)
   \item{pwa}{A list of the players with the supposed advantage; may be
     character in the case of a named hyper2 object, or an integer
     vector}
-  \item{chameleon}{String representing the advantage}
+  \item{chameleon}{String representing the advantage, defaulting to
+  \dQuote{\code{S}}, for support or strength}
   \item{lambda}{Value of person with advantage}
   \item{...}{Further named arguments; see details}
 }
@@ -90,7 +91,7 @@ markdown files in the \file{inst/} directory.
 summary(formula1 |> pwa("Hamilton","pole"))
 
 H <- ordervec2supp(c(a = 2, b = 3, c = 1, d = 5, e = 4))
-pwa(H,'a')
+pwa(H, 'a')
 pwa3_single(H, "a", 1.888)
 
 pwa3(H, b=1.8, c=0.7)
