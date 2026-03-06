@@ -382,10 +382,20 @@ odd shape of the contours and the non-independence of the parameters.
 weekly timed 5 km runs/walks in parks worldwide~\citep{hindley2020}.
 A typical event will have 200 participants but for the purposes of
 this study, we will consider only male competitors aged 55 and over, a
-demographic to which the author considers himself to belong.
-Table~\ref{parkruntable} shows 7 completed parkruns.  From the first
-pair of numbers we see that 43 runners from our demographic attended
-that particular parkrun, of whom the author placed 37.
+demographic to which the author considers himself to belong
+Table~\ref{parkruntable} shows 7 completed parkruns which took place
+at Stirling.  From the first pair of numbers we see that 43 runners
+from our demographic attended that particular parkrun, of whom the
+author placed 37.
+
+Note that the identities of the non-focal competitors will in general
+change from run to run.  Some people will never run when it is
+raining; elite athletes will occasionally visit Stirling, and so on.
+Thus in this situation there is no identifable strongest competitor:
+all we can say is that the strongest competitor (whoever that is) will
+beat the second strongest competitor (whoever {\em that} is) with
+probability $\frac{x}{1+x}$.
+
 
 \begin{table}[t]
   \centering
@@ -455,8 +465,6 @@ predicts, for example, the placing distribution for mid-range
 competitors.  Taking $i=10$ as an example, 
 
 
-
-\verb{plot(table(replicate(100000,which(rrace(setNames(0.75^i,letters[1:20])) == "j"))))}
 
 \begin{figure}[t]
   \begin{centering}
