@@ -42,6 +42,10 @@ jobs:
         with:
           upload-snapshots: true
           build_args: 'c("--compact-vignettes=both")'
+	  install_args: '--install-tests'
+	  check_args: '--as-cran'
+	  env: TINYTeX_AUTO_INSTALL: true
+
 
       - uses: actions/upload-artifact@v4
         if: failure()
