@@ -35,7 +35,7 @@ jobs:
 
       - uses: r-lib/actions/setup-tinytex@v2
 
-      - run: tlmgr install dsfont
+      - run: tlmgr install doublestroke
 
       - uses: r-lib/actions/check-r-package@v2
         with:
