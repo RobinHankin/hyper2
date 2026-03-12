@@ -35,6 +35,8 @@ jobs:
 
       - uses: r-lib/actions/setup-tinytex@v2
 
+      - run: tlmgr install dsfont
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
