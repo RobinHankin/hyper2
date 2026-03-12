@@ -36,7 +36,7 @@ jobs:
       - uses: r-lib/actions/setup-tinytex@v2
 
       - run: tlmgr update --self
-      - run: tlmgr install doublestroke bbm
+      - run: Rscript -e 'tinytex::tlmgr_install(c("bbm","doublestroke","subfig","wrapfig","grfext","cm-super"))'
 
       - uses: r-lib/actions/check-r-package@v2
         with:
