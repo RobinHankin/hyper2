@@ -54,7 +54,7 @@ dotchart(skating_maxp)
 as.ranktable(skating_table)
 suppfun(as.ranktable(skating_table))
 
-rL <- sort(skating_maxp,decreasing=TRUE)
+rL <- sort(skating_maxp, decreasing=TRUE)
 rL[] <- seq_along(rL)
 rO <- seq_len(nrow(skating_table))
 names(rO) <- rownames(skating_table)
