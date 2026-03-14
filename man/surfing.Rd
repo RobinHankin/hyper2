@@ -31,7 +31,6 @@ T. C. Driver and R. K. S. Hankin 2023.  \dQuote{Analysis of competitive
 surfing tournaments with generalized {B}radley-{T}erry likelihoods},
 \emph{Journal of Sports Analytics}, 9:133--140.
 \doi{10.3233/JSA-220596}
-
 }
 
   
