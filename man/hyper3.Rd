@@ -157,7 +157,7 @@ methods for \code{hyper3} objects.
 \examples{
 
 
-hyper3(B=list("a",c("a","b"),"b"), W=list(1.2,c(1.2,1),1), powers=c(3,4,-7))
+hyper3(B=list("a", c("a","b"),"b"), W=list(1.2,c(1.2,1),1), powers=c(3,4,-7))
 hyper3(list(c(a=1.2), c(b=1), c(a=1.2, b=1)), powers=c(3,4,-7))
 ## Above two objects should be identical.
 
