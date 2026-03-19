@@ -69,7 +69,7 @@ Function \code{ordertrans()} also works in the context of \code{hyper3}
 objects:
 
 \preformatted{
-x <- c(d=2,a=3,b=1,a=4)
+x <- c(d=2, a=3, b=1, a=4)
 x
 d a b a 
 2 3 1 4 
