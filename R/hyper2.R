@@ -1206,7 +1206,7 @@ rorder_single <- function(p){
     return(out - hyper2(apply(index, 1, function(x){rownames(M)[x]}, simplify=FALSE), jj[index]))
 }
 
-`home_away` <- function (home_games_won, away_games_won){
+`home_away` <- function (home_games_won, away_games_won, monster="home"){
     if (is.complex(home_games_won)) {
         away_games_won <- Im(home_games_won)
         home_games_won <- Re(home_games_won)
@@ -1216,7 +1216,7 @@ rorder_single <- function(p){
     stopifnot(identical(teams, colnames(home_games_won)))
     stopifnot(identical(teams, rownames(away_games_won)))
     stopifnot(identical(teams, colnames(away_games_won)))
-    teams <- c(teams, "home")
+    teams <- c(teams, monster)
     H <- hyper2(pnames = teams)
     for (i in seq_len(nrow(home_games_won))) {
         for (j in seq_len(ncol(home_games_won))) {
@@ -1228,9 +1228,9 @@ rorder_single <- function(p){
 		away_wins <- away_games_won[i,j] 
                 no_of_matches <- home_wins + away_wins 
 		
-                H[c(home_team,           "home")] %<>% inc(home_wins)
- 		H[c(          away_team        )] %<>% inc(away_wins) 
-                H[c(home_team,away_team, "home")] %<>% dec(no_of_matches)
+                H[c(home_team,           monster)] %<>% inc(home_wins)
+                H[c(          away_team         )] %<>% inc(away_wins) 
+                H[c(home_team,away_team, monster)] %<>% dec(no_of_matches)
             }
         }
     }

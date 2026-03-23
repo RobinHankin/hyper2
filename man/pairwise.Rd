@@ -18,7 +18,7 @@
 \usage{
 pairwise(M)
 zermelo(M, maxit = 100, start, tol = 0, give = FALSE)
-home_away(home_games_won, away_games_won)
+home_away(home_games_won, away_games_won, monster="home")
 home_away3(home_games_won, away_games_won,lambda)
 home_away_table(a, give=FALSE, teams)
 white_draw3(A,lambda,D)
@@ -34,6 +34,8 @@ white_draw3(A,lambda,D)
     iterations; in \code{home_away_table()} governs output form}
   \item{home_games_won, away_games_won}{Matrices showing home games won
     and away games won}
+  \item{monster}{The monster, with default \code{home} representing
+    the home ground advantage}
   \item{lambda}{The home ground advantage
     (or white advantage in chess)}
   \item{D}{Weight of draw}
@@ -48,8 +50,10 @@ white_draw3(A,lambda,D)
 }
 \details{
 
-  Function \code{pairwise()} takes a matrix of pairwise comparisons and
-  returns a \code{hyper2} likelihood function.  
+  Function \code{pairwise(M)} takes a \code{M}, a matrix of pairwise
+  comparisons and returns a \code{hyper2} likelihood function.  If there
+  are only two competitors, so \code{M} is 2-by-2, it might be better to
+  use \code{dirichlet()} or \code{race()} with 2 players.
 
   Function \code{home_away()} takes two matrices, one for home wins and
   one for away wins.  It returns a \code{hyper2} support function that
@@ -78,7 +82,6 @@ white_draw3(A,lambda,D)
   If \code{home_games_won} is complex, then the real parts of the
   entries are interpreted as home games won, and the imaginary parts as
   away games won.
-
 
   Function \code{zermelo()} implements a standard iterative procedure
   for maximization of pairwise Bradley-Terry likelihoods (such as those
@@ -141,6 +144,7 @@ NA,12+4i,11+2i,16+2i,11+7i,NA),4,4)
 teams <- LETTERS[1:4]
 dimnames(M2) <- list("@home" = teams,"@away"=teams)
 home_away(M2)
+home_away(M2, monster = NULL) # nullify the home ground monster
 # home_away3(M2,lambda=1.2)  # works but takes too long (~3s)
 home_away3(M2[1:3,1:3],lambda=1.2) 
 
