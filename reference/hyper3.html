@@ -197,6 +197,11 @@ by function <code>hyper3_m()</code>.</p>
     “<code>H["a"] &lt;- as.weight(3)</code>” will set the weight of every
     occurrence of player <code>a</code> to 3.  If <code>H</code> is a <code>hyper2</code>
     object, it will be coerced to <code>hyper3</code>.</p></li>
+<li><p>Function <code>pnames&lt;-()</code> operates as expected on
+    <code>hyper3</code> objects: use <code>pnames(H3) &lt;- new_pnames</code> to add
+    players.  This idiom can only add players, so <code>new_pnames</code> must
+    be a superset of <code>pnames(H3)</code>; also note that the order of the
+    players cannot be changed in this way.</p></li>
 </ul></div>
     <div id="value">
     <h2>Value</h2>
@@ -211,7 +216,7 @@ by function <code>hyper3_m()</code>.</p>
     <p>Functionality for <code>hyper3</code> objects is generally indicated by adding
 a “<code>3</code>” to function names, e.g. <code><a href="gradient.html">gradient()</a></code> goes to
 <code>gradient3()</code>.</p>
-<p>Vignette <code>hyper3\_creation</code> discusses the different creation
+<p>Vignette <code>hyper3_creation</code> discusses the different creation
 methods for <code>hyper3</code> objects.</p>
     </div>
     <div id="see-also">
@@ -263,7 +268,7 @@ methods for <code>hyper3</code> objects.</p>
 <span class="r-in"><span><span class="va">H1</span><span class="op">[</span><span class="st">"a"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">as.weight</span><span class="op">(</span><span class="fl">1.2</span><span class="op">)</span>          <span class="co"># "a" has some disadvantage in H1</span></span></span>
 <span class="r-in"><span><span class="va">H1</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">as.weight</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>  <span class="co"># "b" and "c" have some advantage in H1</span></span></span>
 <span class="r-in"><span><span class="va">H2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"d"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">as.weight</span><span class="op">(</span><span class="fl">1.5</span><span class="op">)</span>  <span class="co"># "c" and "d" have some advantage in H2</span></span></span>
-<span class="r-in"><span><span class="va">H1</span><span class="op">+</span><span class="va">H2</span></span></span>
+<span class="r-in"><span><span class="va">H1</span> <span class="op">+</span> <span class="va">H2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^1 * (a=1, b=1, c=1.5, d=1.5, e=1, f=1)^-1 * (a=1.2)^1 *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (a=1.2, b=2, c=3, d=1, e=1, f=1)^-1 * (a=1.2, b=2, d=1, e=1, f=1)^-1 *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (b=1)^1 * (b=1, c=1.5, d=1.5, e=1, f=1)^-1 * (b=2)^1 * (b=2, d=1, e=1,</span>
