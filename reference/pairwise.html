@@ -90,7 +90,7 @@ Convenience functions to generate likelihoods for pairwise
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pairwise</span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
 <span><span class="fu">zermelo</span><span class="op">(</span><span class="va">M</span>, maxit <span class="op">=</span> <span class="fl">100</span>, <span class="va">start</span>, tol <span class="op">=</span> <span class="fl">0</span>, give <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu">home_away</span><span class="op">(</span><span class="va">home_games_won</span>, <span class="va">away_games_won</span><span class="op">)</span></span>
+<span><span class="fu">home_away</span><span class="op">(</span><span class="va">home_games_won</span>, <span class="va">away_games_won</span>, monster<span class="op">=</span><span class="st">"home"</span><span class="op">)</span></span>
 <span><span class="fu">home_away3</span><span class="op">(</span><span class="va">home_games_won</span>, <span class="va">away_games_won</span>,<span class="va">lambda</span><span class="op">)</span></span>
 <span><span class="fu">home_away_table</span><span class="op">(</span><span class="va">a</span>, give<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">teams</span><span class="op">)</span></span>
 <span><span class="fu">white_draw3</span><span class="op">(</span><span class="va">A</span>,<span class="va">lambda</span>,<span class="va">D</span><span class="op">)</span></span></code></pre></div>
@@ -121,6 +121,10 @@ Convenience functions to generate likelihoods for pairwise
 <dd><p>Matrices showing home games won
     and away games won</p></dd>
 
+  <dt id="arg-monster">monster<a class="anchor" aria-label="anchor" href="#arg-monster"></a></dt>
+<dd><p>The monster, with default <code>home</code> representing
+    the home ground advantage</p></dd>
+
   <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
 <dd><p>The home ground advantage
     (or white advantage in chess)</p></dd>
@@ -145,8 +149,10 @@ Convenience functions to generate likelihoods for pairwise
     <h2>Details</h2>
 
 
-<p>Function <code>pairwise()</code> takes a matrix of pairwise comparisons and
-  returns a <code>hyper2</code> likelihood function.</p>
+<p>Function <code>pairwise(M)</code> takes a <code>M</code>, a matrix of pairwise
+  comparisons and returns a <code>hyper2</code> likelihood function.  If there
+  are only two competitors, so <code>M</code> is 2-by-2, it might be better to
+  use <code><a href="dirichlet.html">dirichlet()</a></code> or <code><a href="ggrl.html">race()</a></code> with 2 players.</p>
 <p>Function <code>home_away()</code> takes two matrices, one for home wins and
   one for away wins.  It returns a <code>hyper2</code> support function that
   includes a home advantage ghost.  Function <code>home_away3()</code> is the
@@ -171,7 +177,6 @@ Convenience functions to generate likelihoods for pairwise
 <p>If <code>home_games_won</code> is complex, then the real parts of the
   entries are interpreted as home games won, and the imaginary parts as
   away games won.</p>
-
 <p>Function <code>zermelo()</code> implements a standard iterative procedure
   for maximization of pairwise Bradley-Terry likelihoods (such as those
   produced by function <code>pairwise()</code>).  It takes a matrix of
@@ -257,6 +262,9 @@ number 1, pages 384–406</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * (A + home)^39 * B^15 * (B + C + home)^-45 * (B + D + home)^-36 * (B +</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> home)^54 * C^16 * (C + D + home)^-34 * (C + home)^40 * D^11 * (D +</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> home)^35)</span>
+<span class="r-in"><span><span class="fu">home_away</span><span class="op">(</span><span class="va">M2</span>, monster <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="co"># nullify the home ground monster</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log(A^43 * (A + B)^-42 * (A + C)^-31 * (A + D)^-26 * B^69 * (B + C)^-45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * (B + D)^-36 * C^56 * (C + D)^-34 * D^46)</span>
 <span class="r-in"><span><span class="co"># home_away3(M2,lambda=1.2)  # works but takes too long (~3s)</span></span></span>
 <span class="r-in"><span><span class="fu">home_away3</span><span class="op">(</span><span class="va">M2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,lambda<span class="op">=</span><span class="fl">1.2</span><span class="op">)</span> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (A=1)^2 * (A=1, B=1.2)^-21 * (A=1, C=1.2)^-17 * (A=1.2)^28 *</span>
