@@ -10,5 +10,10 @@ test_that("Miscellaneous hyper3 tests", {
 
     expect_error(hyper3_bw(list(c("a","b"),c("a","b","d")),list(c(1,4),c(1,-3,4)),c(1,-1),letters[1:5]))
 
-    
+    H <- ordervec2supp3(c("a","b"), nonfinishers=c("a","b"))
+    expect_error(pnames(H) <- "a")
+    expect_error(pnames(H) <- "b")
+    expect_error(pnames(H) <- "p1")
+    expect_silent(pnames(H) <- letters)
+      
 } )

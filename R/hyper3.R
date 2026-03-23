@@ -16,7 +16,12 @@
     stopifnot(all(unlist(lapply(B, length)) == unlist(lapply(W, length))))
 
     if(length(powers) == 1){powers <- rep(powers, length(B))}
-    if(missing(pnames)){pnames <- sort(unique(c(B, recursive=TRUE)))}
+    jj <- sort(unique(c(elements(B), recursive=TRUE)))
+    if(missing(pnames)){
+        pnames <- jj
+    } else {  # pnames not missing; must be complete
+        stopifnot(all(jj %in% pnames))
+    }
     out <- identityL3(B, W, powers)  # the meat
     out$pnames <- pnames
     class(out) <- c('hyper3', 'hyper2')  # this is the only place class hyper3  is set

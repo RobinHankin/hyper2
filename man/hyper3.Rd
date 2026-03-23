@@ -137,6 +137,12 @@ by function \code{hyper3_m()}.
     occurrence of player \code{a} to 3.  If \code{H} is a \code{hyper2}
     object, it will be coerced to \code{hyper3}.
 
+    \item Function \code{pnames<-()} operates as expected on
+    \code{hyper3} objects: use \code{pnames(H3) <- new_pnames} to add
+    players.  This idiom can only add players, so \code{new_pnames} must
+    be a superset of \code{pnames(H3)}; also note that the order of the
+    players cannot be changed in this way.
+
   }
 }
 \value{
@@ -148,7 +154,7 @@ Functionality for \code{hyper3} objects is generally indicated by adding
 a \dQuote{\code{3}} to function names, e.g. \code{gradient()} goes to
 \code{gradient3()}.
 
-Vignette \code{hyper3\_creation} discusses the different creation
+Vignette \code{hyper3_creation} discusses the different creation
 methods for \code{hyper3} objects.
 
 }
@@ -185,7 +191,7 @@ H2 <- rankvec_likelihood(letters[sample(6)])
 H1["a"] <- as.weight(1.2)          # "a" has some disadvantage in H1
 H1[c("b", "c")] <- as.weight(2:3)  # "b" and "c" have some advantage in H1
 H2[c("c", "d")] <- as.weight(1.5)  # "c" and "d" have some advantage in H2
-H1+H2
+H1 + H2
 
 }
 
