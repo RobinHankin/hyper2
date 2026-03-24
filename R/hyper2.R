@@ -881,16 +881,16 @@ rorder_single <- function(p){
     return(out)
 }
 
-`inc` <- function(H,val=1){ H %<>% add(val)}   # increment
-`dec` <- function(H,val=1){ H %<>% subtract(val)}   # decrement
+`inc` <- function(H, val=1){ H %<>% add(val)}   # increment
+`dec` <- function(H, val=1){ H %<>% subtract(val)}   # decrement
 
-`trial` <- function(winners,players,val=1){
+`trial` <- function(winners, players, val=1){
     stopifnot(all(winners %in% players))
     H <- hyper2()
     H[winners] %<>% add(val)
     H[players] %<>% subtract(val)
     return(H)
-}   
+}
 
 `rhyper2` <- function(n=8, s=5,  pairs=TRUE, teams=TRUE, race=TRUE, pnames=letters){
   n <- n - n%%2  # Force 'n' to be even
