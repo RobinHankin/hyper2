@@ -85,8 +85,7 @@ Frankly they don't do anything that magrittr:add() and
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">inc</span><span class="op">(</span><span class="va">H</span>, val <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu">dec</span><span class="op">(</span><span class="va">H</span>, val <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu">trial</span><span class="op">(</span><span class="va">winners</span>,<span class="va">players</span>,val<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">dec</span><span class="op">(</span><span class="va">H</span>, val <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -141,7 +140,7 @@ but other values can  be supplied:</p>
 <span><span class="va">H</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span><span class="op">]</span> <span class="op">%&lt;&gt;%</span> <span class="fu"><a href="../reference/increment.html">inc</a></span><span class="op">(</span><span class="va">H</span><span class="op">[</span><span class="st">"a"</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 
 
-<p>The convenience function <code>trial()</code> takes this one step further and
+<p>The convenience function <code><a href="pick.html">trial()</a></code> takes this one step further and
 increments the ‘winning team’ and decrements the bracket
 containing all players.  The winners are expected to be players.</p>
 <div class="sourceCode"><pre><code>
@@ -149,14 +148,14 @@ containing all players.  The winners are expected to be players.</p>
 &gt; (a + b) * (a + b + c)^-1
 </code></pre></div>
 
-<p>Using <code>trial()</code> in this way ensures that the powers sum to zero.</p>
+<p>Using <code><a href="pick.html">trial()</a></code> in this way ensures that the powers sum to zero.</p>
 
 <div class="sourceCode"><pre><code><span></span>
-<span>  <span class="va">H</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/increment.html">trial</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">H</span> <span class="op">%&lt;&gt;%</span> <span class="fu"><a href="../reference/increment.html">inc</a></span><span class="op">(</span><span class="fu"><a href="../reference/increment.html">trial</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">H</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pick.html">trial</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">H</span> <span class="op">%&lt;&gt;%</span> <span class="fu"><a href="../reference/increment.html">inc</a></span><span class="op">(</span><span class="fu"><a href="../reference/pick.html">trial</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">H</span></span></code></pre></div>
 
-<p>The <code>inc</code> and <code>dec</code> operators and the <code>trial()</code>
+<p>The <code>inc</code> and <code>dec</code> operators and the <code><a href="pick.html">trial()</a></code>
 function are used in <code>inst/kka.Rmd</code>.</p>
     </div>
     <div id="author">
@@ -173,10 +172,10 @@ function are used in <code>inst/kka.Rmd</code>.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">trial</span><span class="op">(</span><span class="st">"a"</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pick.html">trial</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( a * (a + b)^-1)</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">chess</span> <span class="op">&lt;-</span> <span class="va">chess</span> <span class="op">+</span> <span class="fu">trial</span><span class="op">(</span><span class="st">"Topalov"</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Topalov"</span>,<span class="st">"Anand"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">chess</span> <span class="op">&lt;-</span> <span class="va">chess</span> <span class="op">+</span> <span class="fu"><a href="pick.html">trial</a></span><span class="op">(</span><span class="st">"Topalov"</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Topalov"</span>,<span class="st">"Anand"</span><span class="op">)</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </div>
