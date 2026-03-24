@@ -9,19 +9,16 @@
 \alias{white_draw3}
 \title{Pairwise comparisons}
 \description{
-
   Convenience functions to generate likelihoods for pairwise
   comparisons.
-
-
 }
 \usage{
 pairwise(M)
 zermelo(M, maxit = 100, start, tol = 0, give = FALSE)
 home_away(home_games_won, away_games_won, monster="home")
-home_away3(home_games_won, away_games_won,lambda)
+home_away3(home_games_won, away_games_won, lambda)
 home_away_table(a, give=FALSE, teams)
-white_draw3(A,lambda,D)
+white_draw3(A, lambda, D)
 }
 \arguments{
   \item{M}{Matrix of pairwise comparison results}
@@ -53,14 +50,16 @@ white_draw3(A,lambda,D)
   Function \code{pairwise(M)} takes a \code{M}, a matrix of pairwise
   comparisons and returns a \code{hyper2} likelihood function.  If there
   are only two competitors, so \code{M} is 2-by-2, it might be better to
-  use \code{dirichlet()} or \code{race()} with 2 players.
+  use \code{dirichlet()} or \code{race()} with 2 players, or
+  \code{trial()}.
 
   Function \code{home_away()} takes two matrices, one for home wins and
   one for away wins.  It returns a \code{hyper2} support function that
-  includes a home advantage ghost.  Function \code{home_away3()} is the
-  same, but returns a \code{hyper3} object.  A complex matrix is
-  interpreted as real parts being the home wins and imaginary parts away
-  wins.
+  includes a home advantage monster [or indeed any systematic
+  advantage].  Set the monster to \code{NULL} if the home advantage is
+  not present.  Function \code{home_away3()} is the same, but returns a
+  \code{hyper3} object.  A complex matrix is interpreted as real parts
+  being the home wins and imaginary parts away wins.
 
   Function \code{home_away_table()} takes a dataframe of results (each
   row being a single match) and returns a table amenable to analysis by

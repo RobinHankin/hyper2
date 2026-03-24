@@ -892,6 +892,23 @@ rorder_single <- function(p){
     return(H)
 }
 
+`pick` <-  function(winners, allplayers){
+    stopifnot(all(winners %in% allplayers))
+    hyper2(L = list(winners, allplayers), d=c(1,-1))
+}
+
+`pass` <-  function(losers,  allplayers){
+    stopifnot(all(losers %in% allplayers))
+    hyper2(L = list(setdiff(allplayers, losers), allplayers), d=c(1,-1))
+}
+
+`beats` <- function(winners, losers){
+    stopifnot(length(intersect(winners, losers)) == 0)
+    hyper2(L = list(winners, c(winners, losers)), d=c(1,-1))
+}
+
+`loses` <- function(losers, winners){ beats(winners,losers) }
+
 `rhyper2` <- function(n=8, s=5,  pairs=TRUE, teams=TRUE, race=TRUE, pnames=letters){
   n <- n - n%%2  # Force 'n' to be even
   H <- hyper2()

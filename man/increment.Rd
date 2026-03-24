@@ -1,7 +1,6 @@
 \name{increment}
 \alias{increment}
 \alias{decrement}
-\alias{trial}
 \alias{inc}
 \alias{dec}
 \title{Increment and decrement operators}
@@ -16,7 +15,6 @@
 \usage{
 inc(H, val = 1)
 dec(H, val = 1)
-trial(winners,players,val=1)
 }
 \arguments{
   \item{H}{A hyper2 object}
