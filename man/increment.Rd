@@ -80,6 +80,8 @@ a default value of 1 (which is surprisingly useful)).
 H["a"] %<>% inc
 H[c("a","x")] %<>% dec
 H
-cd
+
+## Better: H %<>% inc(beats("a","x"))
+
 
 }
