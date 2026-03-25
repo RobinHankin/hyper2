@@ -59,10 +59,10 @@ hyper2_sum_numeric(H, r)
   work (without this, one has to type \code{icons["L"] <-
   powers(icons["L"]) + 3}, which sucks).
 
-  Currently, this operation returns an error if the powers have length
-  exceeding one, so \dQuote{\code{icons[list("NB","L")] + 5}} fails.  In
-  the future, I might return a \code{disord} object instead [so errors
-  would be flagged as \CRANpkg{disordR} discipline violations].
+  Formerly, this operation returned an error if the powers have length
+  exceeding one, so \dQuote{\code{icons[list("NB","L")] + 5}} failed.
+  But now, this returns a \code{disord} object instead [so errors are
+  flagged as \CRANpkg{disordR} discipline violations].
 
   Raising a \code{hyper2} object to a power returns an error.  There are
   no unary operations for this class.

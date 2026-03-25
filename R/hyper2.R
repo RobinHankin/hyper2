@@ -193,13 +193,8 @@ setGeneric("pnames<-",function(x, value){standardGeneric("pnames<-")})
   )
 }
 
-`hyper2_sum_numeric` <- function(H,r){
-  pH <- powers(H)
-  if(length(pH) == 1){
-    return(pH + r)
-  } else {
-    stop('H + r is only defined if length(powers(H))==1 because the order of the powers is undefined')
-  }
+`hyper2_sum_numeric` <- function(H, r){
+    disord(powers(H), h=hashcal(H)) + r
 }
 
 `hyper2_prod` <- function(H, n){

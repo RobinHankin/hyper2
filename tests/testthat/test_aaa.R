@@ -19,10 +19,11 @@ checker1 <- function(x){
     expect_error(x/x)
     expect_error(x^x)
   
-    if(length(x)>1){expect_error(x+1)}
-    if(length(x)>1){expect_error(x-1)}
-    if(length(x)>1){expect_error(1+x)}
-    if(length(x)>1){expect_error(1-x)}
+
+    if(length(x) > 1){expect_true(is.disord(x+1))}
+    if(length(x) > 1){expect_true(is.disord(x-1))}
+    if(length(x) > 1){expect_true(is.disord(1+x))}
+    if(length(x) > 1){expect_true(is.disord(1-x))}
 
     expect_true(x == x, info=x)
 
