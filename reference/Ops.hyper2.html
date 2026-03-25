@@ -140,10 +140,10 @@ Allows arithmetic operators &amp;#8220;+&amp;#8221;, &amp;#8220;*&amp;#8221; and
   <code>icons["L"] &lt;- icons["L"] + 3</code> and <code>icons["L"] %&lt;&gt;%inc(3)</code>
   work (without this, one has to type <code>icons["L"] &lt;-
   powers(icons["L"]) + 3</code>, which sucks).</p>
-<p>Currently, this operation returns an error if the powers have length
-  exceeding one, so “<code>icons[list("NB","L")] + 5</code>” fails.  In
-  the future, I might return a <code>disord</code> object instead [so errors
-  would be flagged as <a href="https://CRAN.R-project.org/package=disordR" class="external-link"><span class="pkg">disordR</span></a> discipline violations].</p>
+<p>Formerly, this operation returned an error if the powers have length
+  exceeding one, so “<code>icons[list("NB","L")] + 5</code>” failed.
+  But now, this returns a <code>disord</code> object instead [so errors are
+  flagged as <a href="https://CRAN.R-project.org/package=disordR" class="external-link"><span class="pkg">disordR</span></a> discipline violations].</p>
 <p>Raising a <code>hyper2</code> object to a power returns an error.  There are
   no unary operations for this class.</p>
     </div>
