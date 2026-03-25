@@ -6,11 +6,7 @@
 \title{Increment and decrement operators}
 \description{
   Syntactic sugar for incrementing and decrementing likelihood functions.
-
-  Frankly they don't do anything that \code{magrittr:add()} and
-  \code{magrittr:subtract()} don't (except have a default value of 1
-  (which is surprisingly useful).
-  
+  Useful for constructs such as \code{H[c("a", "b")] \%<>\% inc()}.
 }
 \usage{
 inc(H, val = 1)
@@ -18,8 +14,6 @@ dec(H, val = 1)
 }
 \arguments{
   \item{H}{A hyper2 object}
-  \item{winners, players}{Numeric or character vectors specifying the
-    winning team and the losing team}
   \item{val}{Numeric}
 }
 \details{
@@ -28,8 +22,8 @@ A very frequent operation is to increment a single term in a
 \code{hyper2} object.  If
 
 \preformatted{
-> H <- hyper2(list("a",c("a","b"),"c",c("a","b","c")),c(1:3,-6))
-> H
+>  H <- hyper2(list("a", c("a","b"), "c", c("a","b","c")), c(1:3,-6))
+>  H
 log( a * (a + b + c)^-6 * b^2 * c^3)
 }
 
@@ -61,46 +55,31 @@ but other values can  be supplied:
 H[c("a","b")] \%<>\% inc(3)
 }
 
-
 Or even 
 
 \preformatted{
 H[c("a","b")] \%<>\% inc(H["a"])
 }
 
+The deprecated convenience function \code{trial()} uses this idiom; see
+\code{pick.Rd}.  Using \code{trial()} in this way ensures that the
+powers sum to zero (unlike \code{inc()} and \code{dec()}.
 
-The convenience function \code{trial()} takes this one step further and
-increments the \sQuote{winning team} and decrements the bracket
-containing all players.  The winners are expected to be players.
+The \code{inc} and \code{dec} operators and the \code{pick()} function
+are used in \code{inst/kka.Rmd}.
 
-\preformatted{
-> trial(c("a","b"),c("a","b","c"))
-> (a + b) * (a + b + c)^-1
-}
-
-Using \code{trial()} in this way ensures that the powers sum to zero.
-
-
-\preformatted{
-  H <- trial(c("a","b"),c("a","b","c"))
-  H \%<>\% inc(trial("a",c("a","b")))
-  H
-}
-
-The \code{inc} and \code{dec} operators and the \code{trial()}
-function are used in \code{inst/kka.Rmd}.
+Frankly \code{inc()} and \code{dec()} don't do anything that
+\code{magrittr:add()} and \code{magrittr:subtract()} don't (except have
+a default value of 1 (which is surprisingly useful)).
 
 }
 \author{Robin K. S. Hankin}
 \examples{
-data(chess)
 
-## Now suppose we observe an additional match, in which Topalov beats
-## Anand.  To incorporate this observation into the LF:
+(H <- hyper2(list("a",c("a","b"),c("a","b","c")),c(1,1,-2)))
+H["a"] %<>% inc
+H[c("a","x")] %<>% dec
+H
+cd
 
-
-
-trial("a",c("a","b"))
-
-chess <- chess + trial("Topalov",c("Topalov","Anand"))
 }
