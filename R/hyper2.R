@@ -326,6 +326,7 @@ setGeneric("pnames<-",function(x, value){standardGeneric("pnames<-")})
             out <- hyper2(jj[[1]], jj[[2]])
         }
     } else { # index supplied
+        stopifnot(consistent(index, value))
         jj <- assign_lowlevel(x, index, value)
         if(all(c(index,recursive=TRUE) %in% pnames(x))){
             out <- hyper2(jj[[1]], jj[[2]], pnames=pnames(x)) # do not change pnames
