@@ -46,11 +46,11 @@ overwrite_lowlevel(x, value)
  \code{overwrite()} in the \code{src/} directory] that was too neat to
  omit.
 
- Altering (incrementing or decrementing) the power of a single bracket
+ Altering (incrementing or decrementing) the power of specified brackets
  is possible using idiom like \code{H[x] <- H[x] + 1}; this is
- documented at \code{Ops.hyper2}, specifically
+ documented at \code{\link{Ops.hyper2}}, specifically
  \code{hyper2_sum_numeric()} and a discussion is given at
- \code{increment.Rd}.
+ \code{\link{increment}}.
  
  Functions \code{assign_lowlevel()} and \code{overwrite_lowlevel()} are
  low-level helper functions and not really intended for the end-user.

@@ -53,16 +53,20 @@ hyper2_sum_numeric(H, r)
   brackets.  A set does not include information about the order of its
   elements; neither does it admit repeated elements.  See examples.
 
+  A \code{hyper2} object may be added to a numeric vector under some
+  circumstances.  If \code{H} is a \code{hyper2} object and \code{n} a
+  numeric vector, then \dQuote{\code{H+n}} returns a \code{disord}
+  object corresponding to \code{powers(H) + n}, if this is allowed.
   Function \code{hyper2_sum_numeric()} is defined so that idiom like
-  \code{icons["L"] + 5} works as expected.  This means that
   \code{icons["L"] <- icons["L"] + 3} and \code{icons["L"] \%<>\%inc(3)}
-  work (without this, one has to type \code{icons["L"] <-
+  work as expected (without this, one has to type \code{icons["L"] <-
   powers(icons["L"]) + 3}, which sucks).
 
   Formerly, this operation returned an error if the powers have length
   exceeding one, so \dQuote{\code{icons[list("NB","L")] + 5}} failed.
-  But now, this returns a \code{disord} object instead [so errors are
-  flagged as \CRANpkg{disordR} discipline violations].
+  But because the sum is now defined to be a \code{disord} object,
+  errors are flagged, correctly, as \CRANpkg{disordR} discipline
+  violations.
 
   Raising a \code{hyper2} object to a power returns an error.  There are
   no unary operations for this class.
