@@ -4,6 +4,7 @@
 * more track and field datasets
 * Functionality to alter and/or nullify the monster in home_away()
 * pick/pass/beats/loses
+* more overloading of "+"
 
 # hyper2 3.2-1
 
