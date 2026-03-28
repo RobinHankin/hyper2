@@ -119,9 +119,9 @@ A consistent suite of functions that give likelihood functions for a
 \(A=\left\lbrace a_1,\ldots, a_n\right\rbrace\) and
 \(B=\left\lbrace b_1,\ldots, b_m\right\rbrace\).</p>
 <p>If \(A\) wins the likelihood function will be
-\(\frac{a_1+\ldots+a_n}{a_1+\ldots+a_n+b_1+\ldots+b_m}\) and if
+\(\frac{a_1+\cdots+a_n}{a_1+\ldots+a_n+b_1+\ldots+b_m}\) and if
 \(B\) wins the likelihood function will be
-\(\frac{b_1+\ldots+b_m}{a_1+\ldots+a_n+b_1+\ldots+b_m}\).</p>
+\(\frac{b_1+\cdots+b_m}{a_1+\ldots+a_n+b_1+\ldots+b_m}\).</p>
 <p>We can represent a win for \(A\) with either <code>pick(A, c(A,B))</code> or
 <code>beats(A,B)</code>; or <code>pass(B, c(A,B))</code> or <code>loses(B,A)</code></p>
 <p>Function <code>trial()</code> will be deprecated soon. It is an inefficient
