@@ -50,8 +50,8 @@ white_draw3(A, lambda, D)
   Function \code{pairwise(M)} takes a \code{M}, a matrix of pairwise
   comparisons and returns a \code{hyper2} likelihood function.  If there
   are only two competitors, so \code{M} is 2-by-2, it might be better to
-  use \code{dirichlet()} or \code{race()} with 2 players, or
-  \code{trial()}.
+  use \code{dirichlet()} or \code{race()} with 2 players, or one of 
+  the \code{pick()} quartet.
 
   Function \code{home_away()} takes two matrices, one for home wins and
   one for away wins.  It returns a \code{hyper2} support function that
