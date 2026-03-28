@@ -1,0 +1,84 @@
+---
+title: "The `rego` dataset"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: hyper2.bib
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+options("width" = 100)
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  Here we consider the `rego` dataset drawn from the
+European Union, as analysed in the `rSRD` package:
+
+```{r readiconstable}
+jj  <- as.matrix(read.table("rego.txt",header=TRUE))[1:16,]
+jj[1:4, 1:6]
+```
+
+[Row 17 refers to summary statistics defined by Sziklai et al, not
+used here].  Above each row is an issue and each column an author.
+Entries are the number of times each issue is mentioned by each
+author.
+
+```{r putinorder, cache=TRUE}
+rego_table <- as.ordertable(apply(jj, 2, rank, ties.method="first"))
+rego_table[1:4,1:6]
+rego <- suppfun(rego_table)
+rego_maxp <- maxp(rego)
+```
+
+```{r showit}
+rego_maxp
+plot(rego_maxp)
+plot(log(rego_maxp))
+plot(sort(log(rego_maxp)))
+pie(rego_maxp)
+dotchart(rego_maxp, pch=16)
+dotchart(log(rego_maxp), pch=16)
+```
+
+
+```{r defcol, cache=TRUE}
+getcol <- function(i){
+  ordervec2supp(setNames(c(rego_table[,i]),rownames(rego_table)))
+}
+getcol(1)
+loglik(rego_maxp, getcol(1))
+loglik(rego_maxp, getcol(2))
+loglik(rego_maxp, getcol(3))
+```  
+
+```{r manydefcol, cache=TRUE}
+L <- sapply(seq_len(ncol(rego_table)),
+    function(i){loglik(rego_maxp, getcol(i))}
+    )
+```
+
+
+```{r plotmanydefcol}
+plot(L-max(L))
+```
+
+
+
+### Package dataset {-}
+
+Following lines create `icons.rda`, residing in the `data/` directory of the package.
+
+```{r, label=saveregodataset}
+save(rego, rego_maxp, rego_table, file="rego.rda")
+```
+
+## References {-}
