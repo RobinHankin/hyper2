@@ -50,6 +50,10 @@ dotchart(log(rego_maxp), pch=16)
 ```
 
 
+OK now, conditional on `rego_maxp`, I will calculate the probability
+[actually, log-likelihood] of observing each of the judges' order
+statistics:
+
 ```{r defcol, cache=TRUE}
 getcol <- function(i){
   ordervec2supp(setNames(c(rego_table[,i]),rownames(rego_table)))
@@ -60,6 +64,11 @@ loglik(rego_maxp, getcol(2))
 loglik(rego_maxp, getcol(3))
 ```  
 
+We can see that the probability [actually, log-likelihood] of
+obtaining the observations of Botenga, Bompard, and Ernst are slightly
+different from one another.  We can calculate this for all the
+politicians in one vectorized expression:
+
 ```{r manydefcol, cache=TRUE}
 L <- sapply(seq_len(ncol(rego_table)),
     function(i){loglik(rego_maxp, getcol(i))}
@@ -67,8 +76,16 @@ L <- sapply(seq_len(ncol(rego_table)),
 ```
 
 
+And plot them:
+
 ```{r plotmanydefcol}
-plot(L-max(L))
+L <- L - max(L)
+plot(L, pch=16)
+grid()
+n <- ncol(rego_table)
+mypos <- rep(2,n)
+mypos[1] <- 4
+text(seq_len(n), L, colnames(rego_table), pos=mypos, col="gray")
 ```
 
 
