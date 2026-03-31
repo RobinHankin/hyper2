@@ -649,10 +649,6 @@ filled.contour(a_try, x_try, LL)
 ```
 
 
-```{r showevaluate}
-a_try[8]
-x_try[5]
-```
 
 
 ```{r}
@@ -746,6 +742,35 @@ f()
 pdf(file="parkrunlikelihood.pdf")
 f()
 dev.off()
+```
+
+```{r showevaluate}
+a_try[8]
+x_try[5]
+```
+
+```{r simulate57runners, cache=TRUE}
+ax <- BT(57, 0.7) # strength of field
+round(0.77 * 57)  # this is my identification
+rrace(ax)
+which(rrace(ax) == "p44")
+which(rrace(ax) == "p44")
+which(rrace(ax) == "p44")
+which(rrace(ax) == "p44")
+system.time(mypos100000 <- replicate(100000,which(rrace(ax) == "p44")))
+```
+
+```{r label=tableplotter}
+tableplotter <- function(...){
+    plot(table(mypos100000),
+         xlab = "my position", ylab = "frequency"
+         )
+}
+tableplotter()
+pdf(file = "parkruntable.pdf")
+tableplotter()
+dev.off()
+sum(mypos100000 <= 38)
 ```
 
 ## Formula 1
