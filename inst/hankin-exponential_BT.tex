@@ -410,7 +410,7 @@ runners& 43 & 49 & 59 & 51 & 56 & 55 & 58
 Using numerical simulation, in this case repeated evaluation of
 equation \ref{aftersim} and a generalized version of equation
 \ref{requalfour}, with $5\times 10^4$ trials per point, we obtain
-figure~\ref{parkrunlikelihood}.  From this, we see that $r$ is likely
+figure~\ref{parkrunlikelihood}.  From this, we see that $s$ is likely
 to lie in the range $0.75-0.8$, and $x$ is between about $0.5-0.8$.
 Recall that, in this model, $x=0.5$ implies that the Plackett-Luce
 strength of each competitor is twice that of the next; the maximum
@@ -431,7 +431,7 @@ in $37^\mathrm{th}$ place, in an age-appropriate field of 57.  Is this
 result consistent with previous performances, or is it evidence for an
 increased fitness level?  Figure~\ref{parkruntable} shows the placing
 of the focal competitor, conditional on the estimated values of
-$r=0.77, x=0.7$ for $10^5$ simulated parkruns with $57$ competitors.
+$s=0.77, x=0.7$ for $10^5$ simulated parkruns with $57$ competitors.
 The one-sided $p$-value would be $0.071\pm 0.001$ and we conclude that
 there is no reason to reject our null.
 
@@ -449,9 +449,9 @@ there is no reason to reject our null.
 Formula 1 racing is an important and prestigious motor sport
 \citep{codling2017,jenkins2010}.  In a typical season, ${\sim} 20$
 competitors race at ${\sim} 20$ venues and here we consider the 2023
-season, using Lewis Hamilton as the focal competitor.  His results are
-shown in table~\ref{lewishamilton}; Qatar and the US are disregarded
-as he did not finish.
+season (20 competitors) using Lewis Hamilton as the focal competitor.
+His results are shown in table~\ref{lewishamilton}; Qatar and the US
+are disregarded as he did not finish.
 
 \begin{table}
   \centering
@@ -463,24 +463,10 @@ place & 8   & 3   & 4   & 4   & 6   & 6   & 3   & 5  \\ \\
 venue & MXC & SAP & LVG & ABU \\
 place & 2   & 8   & 7   & 9
 \end{tabular}
-  \caption{Lewis Hamilton's results for the 2023 season. \label{lewishamilton}
-    We see that he finished fifth in Bahrain, fifth in Saudi Arabia, second in Austria, and so on}
+  \caption{Lewis Hamilton's results for the 2023
+    season. \label{lewishamilton} We see that he finished fifth in
+    Bahrain, fifth in Saudi Arabia, second in Austria, and so on}
 \end{table}
-
-Again using numerical simulation, amounting to repeated evaluation of
-generalised version of equations \ref{aftersim} and \ref{requalfour}
-(this time with $10^4$ trials per point), we obtain
-figure~\ref{formula1}.  From this, we see that $s$ is about
-0.25 and $x$ is between about 0.4 and 0.8.  Recall that, in this
-model, $x=0.5$ implies that the Plackett-Luce strength of each
-competitor is twice that of the next; and if $x=0.25$, we can expect
-Hamilton to beat than the second-best competitor with probability
-$1-0.25=0.75$.  The resulting probability model [viz, Bradley Terry
-  with strengths $\propto 0.75^i, i\in\left\lbrace
-  1,\ldots,n\right\rbrace$] is rich in inferential capability.  It
-predicts, for example, the placing distribution for mid-range
-competitors.  Taking $i=10$ as an example, 
-
 
 
 \begin{figure}[t]
@@ -491,6 +477,27 @@ competitors.  Taking $i=10$ as an example,
   circle shows maximum likelihood estimate}
 \end{centering}
 \end{figure}
+
+Again using numerical simulation, amounting to repeated evaluation of
+equations \ref{aftersim} and \ref{requalfour} (this time with $10^4$
+trials per point), we obtain figure~\ref{formula1}.  From this, we see
+that $r$ is about 0.25 and $x$ is between about 0.4 and 0.8.  Recall
+that, in this model, $x=0.5$ implies that the Plackett-Luce strength
+of each competitor is twice that of the next; and if $x=0.25$, we can
+expect Hamilton to beat than the second-best competitor with
+probability $1-0.25=0.75$.  The resulting probability model [viz,
+  Bradley Terry with strengths $\propto 0.75^i, i\in\left\lbrace
+  1,\ldots,n\right\rbrace$; Hamilton with strength $\propto 0.75^5\sim
+  0.237$] is succinct and powerful.  For example, using numerical
+sampling with $10^5$ trials, we see that Hamilton's expected placing
+is about 5.8.  Further, the number of points scored is an important
+statistic describing competitors'
+performance~\cite{hankin2023_formula1points}.  Using
+$(25,18,15,12,10,8,6,4,2,1,1)$ [that is, 25 points for first place, 18
+  for second, and so on] we can esitmate that Hamilton's expected
+points would be about 9.6 per race, potentially valuable information.
+
+
 
 \section{Conclusions and further work}
 

@@ -898,7 +898,24 @@ plot(xv,Lv,type='b')
 
 
 
+```{r simulatehamilton, cache=TRUE}
+n <- 20 # number of racers
+ax <- BT(n, 0.75) # strength of field
+round(n * 0.25)  # this is Hamilton's identification
+rrace(ax)
+which(rrace(ax) == "p 5")
+which(rrace(ax) == "p 5")
+system.time(hampos100000 <- replicate(100000,which(rrace(ax) == "p 5")))
+```
 
+```{r}
+plot(table(hampos100000))
+mean(hampos100000)
+points <- c(25,18,15,12,10,8,6,4,2,1,1,rep(0,100))
+p <- points[hampos100000]
+mean(p)
+sd(p)
+```
 
 
 
