@@ -649,6 +649,12 @@ filled.contour(a_try, x_try, LL)
 ```
 
 
+```{r showevaluate}
+a_try[8]
+x_try[5]
+```
+
+
 ```{r}
 pdash <-
      (parkrun01+1) * 
