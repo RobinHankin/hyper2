@@ -9,7 +9,7 @@
 %% almost as usual
 \author{Robin K. S. Hankin\,\orcidlink{0000-0001-5982-0415}\\
   University of Stirling\\ Scotland}
-\title{A Simplified Plackett-Luce Likelihood Function for Rank Orders}
+\title{A Parametrized Plackett-Luce Likelihood Function for Rank Orders}
 
 %% for pretty printing and a nice hypersummary also set:
 \Plainauthor{Robin K. S. Hankin} %% comma-separated
@@ -23,7 +23,7 @@ Here a new simplification of the Plackett--Luce likelihood functions
 for order statistics is proposed.  We consider a field of $n$ entities
 that are ordered in some way [the preferred example is competitors in
   a running race, ordered by time of crossing the finishing line].  We
-assign Plackett--Luce strengths $\alpha x,\alpha x^2\ldots,\alpha x^n$
+assign Plackett--Luce strengths $\alpha x,\alpha x^2,\ldots,\alpha x^n$
 where $0\leqslant x\leqslant 1$ is a common ratio and $\alpha$ a
 normalising constant.  One entity is of particular interest to us: the
 ``focal entity'', or focal competitor whose strength is $\alpha x^r$
@@ -438,7 +438,8 @@ there is no reason to reject our null.
 \begin{figure}[t]
   \begin{centering}
 \includegraphics[width=4in]{parkruntable}  % parkruntable.pdf produced by exponential_BT.Rmd
-\caption{Results \label{parkruntable} of simulated parkrun}
+\caption{Results \label{parkruntable} of $10^5$ simulated parkruns
+  with 57 competitors; placing of focal competitor}
 \end{centering}
 \end{figure}
 
@@ -481,23 +482,21 @@ place & 2   & 8   & 7   & 9
 Again using numerical simulation, amounting to repeated evaluation of
 equations \ref{aftersim} and \ref{requalfour} (this time with $10^4$
 trials per point), we obtain figure~\ref{formula1}.  From this, we see
-that $r$ is about 0.25 and $x$ is between about 0.4 and 0.8.  Recall
+that $r$ is about 0.23 and $x$ is between about 0.4 and 0.8.  Recall
 that, in this model, $x=0.5$ implies that the Plackett-Luce strength
-of each competitor is twice that of the next; and if $x=0.25$, we can
-expect Hamilton to beat than the second-best competitor with
-probability $1-0.25=0.75$.  The resulting probability model [viz,
-  Bradley Terry with strengths $\propto 0.75^i, i\in\left\lbrace
-  1,\ldots,n\right\rbrace$; Hamilton with strength $\propto 0.75^5\sim
-  0.237$] is succinct and powerful.  For example, using numerical
+of each competitor is twice that of the next; and if $x=0.6$, we can
+expect Hamilton to beat the next-best competitor with probability
+$\frac{1}{1+0.6}=0.625$.  The resulting probability model [viz,
+  Bradley Terry with strengths $\propto 0.6^i, i\in\left\lbrace
+  1,\ldots,n\right\rbrace$; Hamilton with strength $\propto 0.6^5\sim
+  0.078$] is succinct and powerful.  For example, using numerical
 sampling with $10^5$ trials, we see that Hamilton's expected placing
-is about 5.8.  Further, the number of points scored is an important
+is about 5.34.  Further, the number of points scored is an important
 statistic describing competitors'
-performance~\cite{hankin2023_formula1points}.  Using
+performance~\citep{hankin2023_formula1points}.  Using
 $(25,18,15,12,10,8,6,4,2,1,1)$ [that is, 25 points for first place, 18
-  for second, and so on] we can esitmate that Hamilton's expected
-points would be about 9.6 per race, potentially valuable information.
-
-
+  for second, and so on] we can estimate that Hamilton's expected
+points would be about 10.1 per race, potentially valuable information.
 
 \section{Conclusions and further work}
 

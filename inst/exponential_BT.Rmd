@@ -763,7 +763,7 @@ system.time(mypos100000 <- replicate(100000,which(rrace(ax) == "p44")))
 ```{r label=tableplotter}
 tableplotter <- function(...){
     plot(table(mypos100000),
-         xlab = "my position", ylab = "frequency"
+         xlab = "focal competitor rank", ylab = "frequency"
          )
 }
 tableplotter()
@@ -900,8 +900,8 @@ plot(xv,Lv,type='b')
 
 ```{r simulatehamilton, cache=TRUE}
 n <- 20 # number of racers
-ax <- BT(n, 0.75) # strength of field
-round(n * 0.25)  # this is Hamilton's identification
+ax <- BT(n, 0.66) # strength of field
+round(n * 0.23)  # this is Hamilton's identification
 rrace(ax)
 which(rrace(ax) == "p 5")
 which(rrace(ax) == "p 5")
