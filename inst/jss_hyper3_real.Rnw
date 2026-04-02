@@ -350,28 +350,46 @@ maximizing equation~\ref{rangers_vs_celtic}: $\widehat{p_{\mbox{\tiny
 =\frac{\sqrt{81\cdot 46}}{\sqrt{81\cdot 46}+\sqrt{42\cdot 76}}\simeq
 0.5193$, and $\widehat{\lambda}=\frac{\sqrt{76\cdot 81}}{\sqrt{46\cdot
     42}}\simeq 1.785$.
-
+%
 \section{Score draws}
 
 About 22\% of matches in Table~\ref{oldfirm} end in a draw and
 \pkg{hyper2} formalism may be used to assess this.  Consider the
-likelihood function described in Table~\ref{windrawloss}; this is not
-easily represented as a generalized linear model using the techniques
-of~\citet{turner2020}.  Related likelihood functions for drawn matches
-were considered using the reified entity technique
+likelihood function described in Table~\ref{windrawloss}.  This
+presents a modification of the reified entity technique
 of~\citet{hankin2020_jss} in which a drawn match was considered to be
 won by a fictitious entity (a ``draw monster'') who possessed his own
 BT strength.  However, the likelihood function of
-table~\ref{windrawloss} has a number of desirable features not
-present in the reified entity approach of~\citet{hankin2020_jss}.
-Firstly, if we consider two players of identical strengths and nullify
-the home ground effect (that is, $\lambda=1$) then the probability of
-a draw is $\frac{2D}{2+2D}$; the odds of a draw is simply $D$,
-regardless of team strength.  Secondly, considering only won (that is,
-not score-drawn) games, the probability of a home win is
-$\frac{\lambda}{1+\lambda}$, that is, the odds of a home win is simply
-$\lambda$, independently of the player strength. Such arguments give
-direct operational significance to $\lambda$ and $D$.
+Table~\ref{windrawloss} has a number of desirable features not present
+in the reified entity parametrization.  Specifically,
+Table~\ref{windrawloss} relating to players of identical strengths,
+and the
+
+
+\paragraph{Identical strengths}
+If we consider two players of identical strengths $p_i=p_j=p$ and
+nullify the home ground effect (perhaps both teams play away), then
+the reified entity probability for a draw is $D/(2p+D)$: the
+probability of a draw is a function of both $D$ and $p$; clearly
+undesirable.  Compare Table~\ref{windrawloss}, in which the
+probability of a draw is $\frac{2D}{2+2D}$; the odds of a draw is
+simply $D$, regardless of common team strength $p$.
+
+\paragraph{Won games only}
+Again with $p_i=p_j=p$, now considering only won (that is, not
+score-drawn) games, the probability of a home win is
+$\frac{\lambda}{1+\lambda}$: the odds of a home win is simply
+$\lambda$, independently of the Bradley-Terry strength.
+
+\paragraph{One dominating team} Now consider the case where $p_j=0$.
+The old probability of drawing was $\frac{D}{D+p_i}$, again not
+independent of the teams's strengths.  Compare Table~\ref{windrawloss}
+in which the draw probability is $\frac{\lambda}{\lambda+D}$ for a
+home draw.
+
+
+Such arguments give direct operational significance to $\lambda$ and
+$D$.
 
 \begin{table}[t!]
 \centering
@@ -389,8 +407,30 @@ direct operational significance to $\lambda$ and $D$.
   $\frac{p_j}{\lambda p_i + D(p_i+p_j) + p_j}$            &
   $\frac{\lambda p_j}{p_i + D(p_i + p_j) + \lambda p_j}$  \\
 \end{tabular}
-\caption{Probabilities of a win, draw, loss for the two teams under a
-  two-parameter multiplicative Bradley-Terry model\label{windrawloss}}
+\caption{Probabilities \label{windrawloss} of a win, draw, loss for
+  two teams under a multiplicative Bradley-Terry model.  Observe that
+  columns sum to one.  We see Bradley-Terry strengths $p_i$ and $p_j$
+  for the two teams in isolation [considering non-drawn matches only];
+  a home ground advantage of $\lambda$; and $D$, a propensity to draw}
+\end{table}
+\begin{table}[t!]
+\centering
+\begin{tabular}{l|c|c}\\&
+{$i$ plays at home} &
+{$i$ plays away} \\
+  \hline
+  $\Prob{(\mbox{$i$ wins})}$                             &
+  $\frac{H+p_i}{p_i + p_j + H + D}$  &
+  $\frac{  XXXXXXXXXXXXXXXXXXXXXXXXXxxxxp_i}{p_i + p_j + H + D}$  &
+  $\Prob{(\mbox{draw})}$                                 &
+  $\frac{D(p_i + p_j)}{\lambda p_i+D(p_i+p_j) + p_j}$     &
+  $\frac{D(p_i + p_j)}{p_i + D(p_i+p_j) + \lambda p_j}$   \\
+  $\Prob{(\mbox{$i$ loses})}$                            &
+  $\frac{p_j}{\lambda p_i + D(p_i+p_j) + p_j}$            &
+  $\frac{\lambda p_j}{p_i + D(p_i + p_j) + \lambda p_j}$  \\
+\end{tabular}
+\caption{Probabilities \label{windrawloss_reified} of a win, draw, loss for
+  two teams under a reified Bradley-Terry model.  Observe that XXXXXXXXXX}
 \end{table}
 %
 We are now in a position to consider the entirety of
