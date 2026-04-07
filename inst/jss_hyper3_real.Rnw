@@ -128,8 +128,8 @@ to competitor~$i$ using a multiplicative factor $\lambda$.  Then
 $\Prob(\mbox{$i$ wins})=\frac{\lambda p_i}{p_1+\cdots+\lambda
   p_i+\cdots+p_n}$.  Examples of such enhancements include the
 home-ground advantage in football and rugby, or playing white in
-chess~\citep{hankin2020_jss}.  Note that $\lambda < 1$ would correspond to
-a decrease in competitive ability.
+chess~\citep{hankin2020_jss,hankin2020}.  Note that $\lambda < 1$
+would correspond to a decrease in competitive ability.
 
 Further, one might follow~\cite{hankin2017_rnw_jss} and consider teams of
 players.  In doubles tennis, for example, $\left\lbrace
@@ -162,28 +162,30 @@ this class of multiplicative factors with new \proglang{S3} class
 \class{hyper3} and associated methods.
 
 The most general likelihood function for Bradley-Terry strengths
-$p_i\geqslant 0, \sum p_j=1$, would be proportional to
+$p_i\geqslant 0, \sum p_j=1$, for a sequence of pairwise comparisons
+would be proportional to
 %
 \begin{equation}\label{mostgeneral}
   \prod_{i=1}^N
   \left(
   \frac{
-    \prod_{j\in S_i}\lambda_{ij}p_j
+    \prod_{j\in W_i}\lambda_{ij}p_j
   }{
-    \prod_{j\in S_i\cup\overline{S_i}}\lambda_{ij}p_j
+    \prod_{j\in S_i}\lambda_{ij}p_j
   }
   \right)^{w_i}
 \end{equation}
 %
 where playing set $S_i$ is a subset of the competitors $\left\lbrace
-1, \ldots, n\right\rbrace$ and the $\lambda_{ij}\geqslant 0$ are
-multiplicative factors that account for ephemeral or temporary changes
-in competitive ability.  The data $w_1,\ldots w_N$ correspond to the
-number of ``wins'' for playing set $S_i$ as per $w_{12},w_{34}$ in
-Equation~\ref{like1234}.  In practice, almost all the $\lambda_{ij}$
-are zero.  To fix ideas, consider the data presented in
-Table~\ref{oldfirm}.  Ignoring draws for the moment, we have a
-likelihood proportional to
+1, \ldots, n\right\rbrace$ and $W_i\subseteq S_i$ is the winning set
+of players on the winning side of pairwise comparison $i$.  Here the
+$\lambda_{ij}\geqslant 0$ are multiplicative factors that account for
+ephemeral or temporary changes in competitive ability.  The data
+$w_1,\ldots w_N$ correspond to the number of ``wins'' for playing set
+$S_i$ as per $w_{12},w_{34}$ in Equation~\ref{like1234}.  In practice,
+almost all the $\lambda_{ij}$ are zero.  To fix ideas, consider the
+data presented in Table~\ref{oldfirm}.  Ignoring draws for the moment,
+we have a likelihood proportional to
 %
 \begin{table}[t!]
 \centering
@@ -369,23 +371,25 @@ and the
 \paragraph{Identical strengths}
 If we consider two players of identical strengths $p_i=p_j=p$ and
 nullify the home ground effect (perhaps both teams play away), then
-the reified entity probability for a draw is $D/(2p+D)$: the
-probability of a draw is a function of both $D$ and $p$; clearly
-undesirable.  Compare Table~\ref{windrawloss}, in which the
-probability of a draw is $\frac{2D}{2+2D}$; the odds of a draw is
-simply $D$, regardless of common team strength $p$.
+the reified entity probability for a draw is $D/(2p+D)$, a function of
+both $D$ and $p$; clearly undesirable.  Compare the multiplicative
+formulation, in which the probability of a draw is $\frac{2D}{2+2D}$;
+the odds of a draw is simply $D$, regardless of common team strength
+$p$.
 
 \paragraph{Won games only}
 Again with $p_i=p_j=p$, now considering only won (that is, not
-score-drawn) games, the probability of a home win is
-$\frac{\lambda}{1+\lambda}$: the odds of a home win is simply
-$\lambda$, independently of the Bradley-Terry strength.
+score-drawn) games, the probability of a home win under the
+multiplicative model is $\frac{\lambda}{1+\lambda}$: the odds of a
+home win is simply $\lambda$, independently of the Bradley-Terry
+strength.  This is a succinct probability model with clear
+interpretation.  Compare reified Bradley-Terry, with probability
+$\frac{p+H}{2p+H}$, making interpretation of $H$ problematic.
 
-\paragraph{One dominating team} Now consider the case where $p_j=0$.
-The old probability of drawing was $\frac{D}{D+p_i}$, again not
-independent of the teams's strengths.  Compare Table~\ref{windrawloss}
-in which the draw probability is $\frac{\lambda}{\lambda+D}$ for a
-home draw.
+\paragraph{One dominating team} Now consider the case where $p_i=p, p_j=0$.
+The multiplicative model gives the probability of a draw as
+$\frac{D}{\lambda + D}$; compare the reified model's $\frac{D}{D+p}$,
+again not independent of the team's strengths.
 
 
 Such arguments give direct operational significance to $\lambda$ and
@@ -393,44 +397,38 @@ $D$.
 
 \begin{table}[t!]
 \centering
-\begin{tabular}{l|c|c}\\&
+\begin{tabular}{l|cc|cc}
+  & \multicolumn{2}{c}{Multiplicative BT}
+  & \multicolumn{2}{c}{Reified BT}
+  \\&
+{$i$ plays at home} &
+{$i$ plays away}    &
 {$i$ plays at home} &
 {$i$ plays away} \\
   \hline
-  $\Prob{(\mbox{$i$ wins})}$                             &
+  $\Prob{(\mbox{$i$ wins})}$                              &
   $\frac{\lambda p_i}{\lambda p_i + D(p_i + p_j) + p_j}$  &
-  $\frac{p_i}{p_i + D(p_i + p_j) + p_j}$          \\
-  $\Prob{(\mbox{draw})}$                                 &
+  $\frac{p_i}{p_i + D(p_i + p_j) + p_j}$                  &
+  $\frac{p_i+H}{p_i+p_j+D+H}$                             &
+  $\frac{p_i  }{p_i+p_j+D+H}$                             \\
+  $\Prob{(\mbox{draw})}$                                  &
   $\frac{D(p_i + p_j)}{\lambda p_i+D(p_i+p_j) + p_j}$     &
-  $\frac{D(p_i + p_j)}{p_i + D(p_i+p_j) + \lambda p_j}$   \\
-  $\Prob{(\mbox{$i$ loses})}$                            &
+  $\frac{D(p_i + p_j)}{p_i + D(p_i+p_j) + \lambda p_j}$   &
+  $\frac{D    }{p_i+p_j+D+H}$                             &
+  $\frac{D    }{p_i+p_j+D+H}$                             \\
+  $\Prob{(\mbox{$i$ loses})}$                             &
   $\frac{p_j}{\lambda p_i + D(p_i+p_j) + p_j}$            &
-  $\frac{\lambda p_j}{p_i + D(p_i + p_j) + \lambda p_j}$  \\
+  $\frac{\lambda p_j}{p_i + D(p_i + p_j) + \lambda p_j}$  &
+  $\frac{p_j  }{p_i+p_j+D+H}$                             &
+  $\frac{p_j+H}{p_i+p_j+D+H}$                             \\
 \end{tabular}
 \caption{Probabilities \label{windrawloss} of a win, draw, loss for
-  two teams under a multiplicative Bradley-Terry model.  Observe that
+  two teams under the proposed multiplicative Bradley-Terry model, and
+  the reified Bradley-Terry model of~\citet{hankin2020}.  Observe that
   columns sum to one.  We see Bradley-Terry strengths $p_i$ and $p_j$
   for the two teams in isolation [considering non-drawn matches only];
-  a home ground advantage of $\lambda$; and $D$, a propensity to draw}
-\end{table}
-\begin{table}[t!]
-\centering
-\begin{tabular}{l|c|c}\\&
-{$i$ plays at home} &
-{$i$ plays away} \\
-  \hline
-  $\Prob{(\mbox{$i$ wins})}$                             &
-  $\frac{H+p_i}{p_i + p_j + H + D}$  &
-  $\frac{  XXXXXXXXXXXXXXXXXXXXXXXXXxxxxp_i}{p_i + p_j + H + D}$  &
-  $\Prob{(\mbox{draw})}$                                 &
-  $\frac{D(p_i + p_j)}{\lambda p_i+D(p_i+p_j) + p_j}$     &
-  $\frac{D(p_i + p_j)}{p_i + D(p_i+p_j) + \lambda p_j}$   \\
-  $\Prob{(\mbox{$i$ loses})}$                            &
-  $\frac{p_j}{\lambda p_i + D(p_i+p_j) + p_j}$            &
-  $\frac{\lambda p_j}{p_i + D(p_i + p_j) + \lambda p_j}$  \\
-\end{tabular}
-\caption{Probabilities \label{windrawloss_reified} of a win, draw, loss for
-  two teams under a reified Bradley-Terry model.  Observe that XXXXXXXXXX}
+  a home ground advantage of $\lambda$ or $H$; and $D$, a propensity
+  to draw}
 \end{table}
 %
 We are now in a position to consider the entirety of
