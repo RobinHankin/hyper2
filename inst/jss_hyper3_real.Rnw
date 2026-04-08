@@ -371,11 +371,11 @@ and the
 \paragraph{Identical strengths}
 If we consider two players of identical strengths $p_i=p_j=p$ and
 nullify the home ground effect (perhaps both teams play away), then
-the reified entity probability for a draw is $D/(2p+D)$, a function of
-both $D$ and $p$; clearly undesirable.  Compare the multiplicative
-formulation, in which the probability of a draw is $\frac{2D}{2+2D}$;
-the odds of a draw is simply $D$, regardless of common team strength
-$p$.
+the reified entity probability for a draw is
+$\mathfrak{D}/(2p+\mathfrak{D})$, a function of both $\mathfrak{D}$
+and $p$; clearly undesirable.  Compare the multiplicative formulation,
+in which the probability of a draw is $\frac{D}{1+D}$: the odds of a
+draw is simply $D$, regardless of common team strength $p$.
 
 \paragraph{Won games only}
 Again with $p_i=p_j=p$, now considering only won (that is, not
@@ -384,16 +384,15 @@ multiplicative model is $\frac{\lambda}{1+\lambda}$: the odds of a
 home win is simply $\lambda$, independently of the Bradley-Terry
 strength.  This is a succinct probability model with clear
 interpretation.  Compare reified Bradley-Terry, with probability
-$\frac{p+H}{2p+H}$, making interpretation of $H$ problematic.
+$\frac{p+\mathfrak{H}}{2p+\mathfrak{H}}$, making interpretation of
+$\mathfrak{H}$ problematic.
 
 \paragraph{One dominating team} Now consider the case where $p_i=p, p_j=0$.
-The multiplicative model gives the probability of a draw as
-$\frac{D}{\lambda + D}$; compare the reified model's $\frac{D}{D+p}$,
-again not independent of the team's strengths.
-
-
-Such arguments give direct operational significance to $\lambda$ and
-$D$.
+The multiplicative model gives the probability of a home draw as
+$\frac{D}{\lambda + D}$ and an away draw as $\frac{D}{1+D}$; compare
+the reified model's $\frac{\mathfrak{D}}{p +
+  \mathfrak{D}+\mathfrak{H}}$, again not independent of the team's
+strengths.
 
 \begin{table}[t!]
 \centering
@@ -406,37 +405,38 @@ $D$.
 {$i$ plays at home} &
 {$i$ plays away} \\
   \hline
-  $\Prob{(\mbox{$i$ wins})}$                              &
-  $\frac{\lambda p_i}{\lambda p_i + D(p_i + p_j) + p_j}$  &
-  $\frac{p_i}{p_i + D(p_i + p_j) + p_j}$                  &
-  $\frac{p_i+H}{p_i+p_j+D+H}$                             &
-  $\frac{p_i  }{p_i+p_j+D+H}$                             \\
-  $\Prob{(\mbox{draw})}$                                  &
-  $\frac{D(p_i + p_j)}{\lambda p_i+D(p_i+p_j) + p_j}$     &
-  $\frac{D(p_i + p_j)}{p_i + D(p_i+p_j) + \lambda p_j}$   &
-  $\frac{D    }{p_i+p_j+D+H}$                             &
-  $\frac{D    }{p_i+p_j+D+H}$                             \\
-  $\Prob{(\mbox{$i$ loses})}$                             &
-  $\frac{p_j}{\lambda p_i + D(p_i+p_j) + p_j}$            &
-  $\frac{\lambda p_j}{p_i + D(p_i + p_j) + \lambda p_j}$  &
-  $\frac{p_j  }{p_i+p_j+D+H}$                             &
-  $\frac{p_j+H}{p_i+p_j+D+H}$                             \\
+  $\Prob{(\mbox{$i$ wins})}$                                   &
+  $\frac{\lambda p_i}{\lambda p_i + D(p_i + p_j) + p_j}$       &
+  $\frac{p_i}{p_i + D(p_i + p_j) + p_j}$                       &
+  $\frac{p_i+\mathfrak{H}}{p_i+p_j+\mathfrak{D}+\mathfrak{H}}$ &
+  $\frac{p_i  }{p_i+p_j+\mathfrak{D}+\mathfrak{H}}$            \\
+  $\Prob{(\mbox{draw})}$                                       &
+  $\frac{D(p_i + p_j)}{\lambda p_i+D(p_i+p_j) + p_j}$          &
+  $\frac{D(p_i + p_j)}{p_i + D(p_i+p_j) + \lambda p_j}$        &
+  $\frac{\mathfrak{D}    }{p_i+p_j+\mathfrak{D}+\mathfrak{H}}$ &
+  $\frac{\mathfrak{D}    }{p_i+p_j+\mathfrak{D}+\mathfrak{H}}$ \\
+  $\Prob{(\mbox{$i$ loses})}$                                  &
+  $\frac{p_j}{\lambda p_i + D(p_i+p_j) + p_j}$                 &
+  $\frac{\lambda p_j}{p_i + D(p_i + p_j) + \lambda p_j}$       &
+  $\frac{p_j  }{p_i+p_j+\mathfrak{D}+\mathfrak{H}}$            &
+  $\frac{p_j+H}{p_i+p_j+\mathfrak{D}+\mathfrak{H}}$            \\
 \end{tabular}
 \caption{Probabilities \label{windrawloss} of a win, draw, loss for
   two teams under the proposed multiplicative Bradley-Terry model, and
   the reified Bradley-Terry model of~\citet{hankin2020}.  Observe that
   columns sum to one.  We see Bradley-Terry strengths $p_i$ and $p_j$
-  for the two teams in isolation [considering non-drawn matches only];
-  a home ground advantage of $\lambda$ or $H$; and $D$, a propensity
-  to draw}
+  for the two teams; a home ground advantage of $\lambda$
+  (multiplicative) or $\mathfrak{H}$ (reified); and a propensity to
+  draw $D$ (multiplicative) or $\mathfrak{D}$ (reified)}
 \end{table}
 %
-We are now in a position to consider the entirety of
-Table~\ref{oldfirm}.  Bespoke package function
-\fct{home\_draw\_away3} converts data in the form of
-Table~\ref{oldfirm} to a \code{hyper3} likelihood function following
-Table~\ref{windrawloss}; it takes numerical values for the home
-advantage $\lambda$ and proclivity to draw $D$:
+Such arguments give direct operational significance to $\lambda$ and
+$D$.  We are now in a position to consider the entirety of
+Table~\ref{oldfirm}.  Bespoke package function \fct{home\_draw\_away3}
+converts data in the form of Table~\ref{oldfirm} to a \code{hyper3}
+likelihood function following Table~\ref{windrawloss}; it takes
+numerical values for the home advantage $\lambda$ and proclivity to
+draw $D$:
 %
 <<eg_RCLF3_lf, cache = TRUE>>=
 home_draw_away3(RCLF3_table, lambda = 1.7, D = 0.3)
