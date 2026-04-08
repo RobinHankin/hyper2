@@ -56,17 +56,25 @@ howmany <- 23  # set to a smaller value to save time
 
 %% - \Abstract{} almost as usual
 \Abstract{
+
   A generalization of the Bradley-Terry model is presented in which
   strengths may be modified using a multiplicative factor $\lambda$;
-  Generally, ordinary Bradley-Terry is recovered if $\lambda=1$.  This
-  approach offers multiple advantages over other generalizations such
-  as reified Bradley-Terry.  It becomes possible to represent
-  non-independence of successive observations in Plackett-Luce
-  likelihood functions which allows a parametrization of the ``red
-  bus, blue bus'' problem in preference analysis.  I present examples
-  drawn from the fields of food preference and the esport {\em
-    Counterstrike}.
-}
+  generally, ordinary Bradley-Terry is recovered if $\lambda=1$.  The
+  $\lambda$ factor is well-suited to represent temporary or ephemeral
+  modifications to Bradley-Terry strength such as the home-ground
+  advantage, or the effects of fatigue.  The multiplicative approach
+  offers several advantages over reified Bradley-Terry, which uses
+  additive terms (``monsters'') to represent enhanced strengths.
+  Computational support for this approach is given in new
+  functionality of the established \pkg{hyper2} \proglang{R} package:
+  multiplicative factors are handled in a bespoke \proglang{S3} class
+  \class{hyper3}.  I present numerical methods that make
+  likelihood-based inferences about the $\lambda$.  Multiplicative
+  factors admit non-independence of successive observations in
+  Plackett-Luce likelihood functions, which allows a parametrization
+  of the ``red bus, blue bus'' problem in preference analysis.  I
+  present examples drawn from the fields of food preference and the
+  esport {\em Counterstrike}.  }
 
 %% - \Keywords{} with LaTeX markup, at least one required
 %% - \Plainkeywords{} without LaTeX markup (if necessary)
@@ -128,7 +136,7 @@ to competitor~$i$ using a multiplicative factor $\lambda$.  Then
 $\Prob(\mbox{$i$ wins})=\frac{\lambda p_i}{p_1+\cdots+\lambda
   p_i+\cdots+p_n}$.  Examples of such enhancements include the
 home-ground advantage in football and rugby, or playing white in
-chess~\citep{hankin2020_jss,hankin2020}.  Note that $\lambda < 1$
+chess~\citep{hankin2020_jss}.  Note that $\lambda < 1$
 would correspond to a decrease in competitive ability.
 
 Further, one might follow~\cite{hankin2017_rnw_jss} and consider teams of
@@ -155,11 +163,11 @@ where $w_{12}$ and $w_{34}$ are the number of wins by each team
 respectively.  Then $\lambda$ would represent the effectiveness of
 $p_1$'s special technique, and $\mu$ the enhancement afforded to $p_4$
 by the drug; values $>1$ would correspond to a positive effect.  In
-this paper I generalize the \pkg{hyper2} R
+this paper I generalize the \pkg{hyper2} \proglang{R}
 package~\citep{hankin2017_rnw_jss}, available on
-CRAN~\citep{rcore2025}, for Bradley-Terry likelihoods to accommodate
-this class of multiplicative factors with new \proglang{S3} class
-\class{hyper3} and associated methods.
+CRAN~\citep{rcore2025_jss}, to accommodate this class of
+multiplicative factors with new \proglang{S3} class \class{hyper3} and
+associated methods.
 
 The most general likelihood function for Bradley-Terry strengths
 $p_i\geqslant 0, \sum p_j=1$, for a sequence of pairwise comparisons
@@ -181,8 +189,8 @@ where playing set $S_i$ is a subset of the competitors $\left\lbrace
 of players on the winning side of pairwise comparison $i$.  Here the
 $\lambda_{ij}\geqslant 0$ are multiplicative factors that account for
 ephemeral or temporary changes in competitive ability.  The data
-$w_1,\ldots w_N$ correspond to the number of ``wins'' for playing set
-$S_i$ as per $w_{12},w_{34}$ in Equation~\ref{like1234}.  In practice,
+$w_1,\ldots w_N$ correspond to the number of ``wins'' for winning set
+$W_i$ as per $w_{12},w_{34}$ in Equation~\ref{like1234}.  In practice,
 almost all the $\lambda_{ij}$ are zero.  To fix ideas, consider the
 data presented in Table~\ref{oldfirm}.  Ignoring draws for the moment,
 we have a likelihood proportional to
@@ -254,12 +262,13 @@ numbers.  The \class{hyper3} class enforces \pkg{disordR}
 discipline~\citep{hankin2022_disordR_jss}.
 
 \subsection{The package in use}
-Creating a likelihood function for this dataset is straightforward.
-As an illustration of package idiom, we will consider the restriction
-of equation~\ref{firstfewRCFL} to just Rangers vs Celtic matches, and
-ignore score draws:
+Using package idiom to create a likelihood function for this dataset
+is straightforward.  As an illustration, we will consider the
+restriction of equation~\ref{firstfewRCFL} to just Rangers vs Celtic
+matches, and ignore score draws:
 
 \begin{equation}\label{rangers_vs_celtic}
+  \mathcal{L}(p_R,p_C;\lambda)=
   \left(\frac{\lambda p_R}{\lambda p_R +         p_C}\right)^{81}\cdot
   \left(\frac{        p_R}{\lambda p_R +         p_C}\right)^{42}\cdot
   \left(\frac{\lambda p_C}{        p_R + \lambda p_C}\right)^{76}\cdot
@@ -277,7 +286,6 @@ oldfirm <- function(lambda){
     H[c(Rangers = lambda            )] %<>%      add(81     )
     H[c(                  Celtic = 1)] %<>%      add(     42)
     H[c(Rangers = lambda, Celtic = 1)] %<>% subtract(81 + 42)
-
     H[c(Celtic = lambda             )] %<>%      add(     76)
     H[c(                 Rangers = 1)] %<>%      add(46     )
     H[c(Celtic = lambda, Rangers = 1)] %<>% subtract(46 + 76)
@@ -310,8 +318,9 @@ logLike <- sapply(lam, f)
 %
 Thus \fct{f} returns the support at the evaluate, conditional on a
 supplied value of $\lambda$.  We may use this to create a profile
-likelihood curve (Figure~\ref{profilesupportlambda}), or to find the
-maximum likelihood estimate for $\lambda$:
+likelihood curve (Figure~\ref{profilesupportlambda}) from which we see
+strong evidence that $\lambda>1$, and find the maximum likelihood
+estimate for $\lambda$:
 
 \begin{figure}[htbp]
   \begin{center}
@@ -332,7 +341,6 @@ abline(h = c(0, -2), col = 'gray')
   $\chi^2_1$ distribution}
 \end{center}
 \end{figure}
-
 
 <<optimoldfirm, cache=TRUE>>=
 (lambda_max <-  optimize(f, c(1.5, 2.0), maximum = TRUE)$maximum)
@@ -356,17 +364,17 @@ maximizing equation~\ref{rangers_vs_celtic}: $\widehat{p_{\mbox{\tiny
 \section{Score draws}
 
 About 22\% of matches in Table~\ref{oldfirm} end in a draw and
-\pkg{hyper2} formalism may be used to assess this.  Consider the
-likelihood function described in Table~\ref{windrawloss}.  This
-presents a modification of the reified entity technique
-of~\citet{hankin2020_jss} in which a drawn match was considered to be
-won by a fictitious entity (a ``draw monster'') who possessed his own
-BT strength.  However, the likelihood function of
-Table~\ref{windrawloss} has a number of desirable features not present
-in the reified entity parametrization.  Specifically,
-Table~\ref{windrawloss} relating to players of identical strengths,
-and the
-
+\pkg{hyper2} formalism may be used to infer draw probabilities.
+Consider the likelihood functions described in
+Table~\ref{windrawloss}.  We see two likelihood functions: on the
+left, a natural multiplicative Bradley-Terry function, and on the
+right, the likelihood function of~\citet{hankin2020_jss} in which a
+drawn match was considered to be won by a fictitious entity (a ``draw
+monster'') who possessed his own BT strength $\mathfrak{D}$ and a
+``home ground monster'' with strength $\mathfrak{H}$ representing the
+home ground advantage.  However, the multiplicative likelihood
+function of Table~\ref{windrawloss} has a number of desirable features
+not present in the reified entity parametrization, detailed  below.
 
 \paragraph{Identical strengths}
 If we consider two players of identical strengths $p_i=p_j=p$ and
@@ -387,10 +395,10 @@ interpretation.  Compare reified Bradley-Terry, with probability
 $\frac{p+\mathfrak{H}}{2p+\mathfrak{H}}$, making interpretation of
 $\mathfrak{H}$ problematic.
 
-\paragraph{One dominating team} Now consider the case where $p_i=p, p_j=0$.
-The multiplicative model gives the probability of a home draw as
-$\frac{D}{\lambda + D}$ and an away draw as $\frac{D}{1+D}$; compare
-the reified model's $\frac{\mathfrak{D}}{p +
+\paragraph{One dominating team} Now consider the case where $p_i=p>0$
+and $p_j=0$.  The multiplicative model gives the probability of a home
+draw as $\frac{D}{\lambda + D}$ and an away draw as $\frac{D}{1+D}$;
+compare the reified model's $\frac{\mathfrak{D}}{p +
   \mathfrak{D}+\mathfrak{H}}$, again not independent of the team's
 strengths.
 
@@ -423,7 +431,7 @@ strengths.
 \end{tabular}
 \caption{Probabilities \label{windrawloss} of a win, draw, loss for
   two teams under the proposed multiplicative Bradley-Terry model, and
-  the reified Bradley-Terry model of~\citet{hankin2020}.  Observe that
+  the reified Bradley-Terry model of~\citet{hankin2020_jss}.  Observe that
   columns sum to one.  We see Bradley-Terry strengths $p_i$ and $p_j$
   for the two teams; a home ground advantage of $\lambda$
   (multiplicative) or $\mathfrak{H}$ (reified); and a propensity to
@@ -431,12 +439,12 @@ strengths.
 \end{table}
 %
 Such arguments give direct operational significance to $\lambda$ and
-$D$.  We are now in a position to consider the entirety of
-Table~\ref{oldfirm}.  Bespoke package function \fct{home\_draw\_away3}
-converts data in the form of Table~\ref{oldfirm} to a \code{hyper3}
-likelihood function following Table~\ref{windrawloss}; it takes
-numerical values for the home advantage $\lambda$ and proclivity to
-draw $D$:
+$D$, when considered in isolation from BT strengths.  We are now in a
+position to consider the entirety of Table~\ref{oldfirm}.  Bespoke
+package function \fct{home\_draw\_away3} converts data in the form of
+Table~\ref{oldfirm} to a \code{hyper3} likelihood function following
+Table~\ref{windrawloss}; it takes numerical values for the home
+advantage $\lambda$ and proclivity to draw $D$:
 %
 <<eg_RCLF3_lf, cache = TRUE>>=
 home_draw_away3(RCLF3_table, lambda = 1.7, D = 0.3)
@@ -825,7 +833,7 @@ The probability model of Figure~\ref{tikzabcde} is applied, in a
 simple one-parameter form, to two datasets: one a set of preferences
 of different types of sushi, and one in the field of esports.  First,
 however, we discuss a synthetic example showing how generalizing
-Placket-Luce to admit non-independence of successive arrivals can be
+Plackett-Luce to admit non-independence of successive arrivals can be
 applied to an apparently different situation.
 
 \subsection{Red bus, blue bus}
@@ -1056,7 +1064,7 @@ segments(x0 = log(sushi_upper    ), y0 = -2.2, y1 = -1.8, col = 'blue')
 \newcommand{\skad}{{\sc Skadoodle}}
 \newcommand{\rush}{{\sc RUSH}}
 \newcommand{\tarik}{{\sc tarik}}
-\newcommand{\stew}{{\sc Stewie2K}}
+\newcommand{\stew}{{\sc Stewie2k}}
 
 {\em Counter Strike: Global Offensive (CS:GO)} is a multiplayer
 first-person shooter game in which two teams of five compete in an
@@ -1175,9 +1183,9 @@ loop---which tends to magnify differences in death statistic.
 Bradley-Terry strengths $p_1,\ldots,p_n$, $p_i\geqslant 0$, $\sum
 p_i=1$ are generalized with non-negative multiplicative $\lambda$-
 factors that represent temporary or ephemeral changes in competitive
-strength.  The \pkg{hyper2} R package implements the resulting
-likelihood functions using \proglang{S3} class {\tt hyper3}, and
-furnishes a wide range of functionality geared towards assessing
+strength.  The \pkg{hyper2} \proglang{R} package implements the
+resulting likelihood functions using \proglang{S3} class {\tt hyper3},
+and furnishes a wide range of functionality geared towards assessing
 meaningful nulls using likelihood methods.
 
 The standard Plackett-Luce likelihood function
