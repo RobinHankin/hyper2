@@ -67,6 +67,7 @@ CITATION.cff
 ^inst/monster.jpg$
 ^inst/monster_blue.png$
 ^inst/monster_blue.xcf$
+^inst/cheering.Rmd$
 ^inst/chess.bib$
 ^inst/chess.txt$
 ^inst/collusion_chess_draws.Rnw$
@@ -163,6 +164,7 @@ CITATION.cff
 ^inst/pentathlon.txt$
 ^inst/powerboat.Rmd$
 ^inst/powerboat.txt$
+^inst/pwa3.Rmd$
 ^inst/read.me$
 ^inst/red_bus_blue_bus.Rmd$
 ^inst/retain.Rmd$
@@ -203,11 +205,15 @@ CITATION.cff
 ^inst/pudding.Rmd
 ^inst/pudding_cache$
 ^inst/draws.txt
+^inst/hankin-exponential_BT.tex$
+^inst/exponential_BT.Rmd$
 ^inst/hunter.Rmd
 ^inst/setpartitions_hyper2.Rmd$
 ^inst/timesData.csv$
 ^inst/jss_hyper3.Rnw$
 ^inst/jss_hyper3.Rmd$
+^inst/jss_hyper3_real.R$
+^inst/jss_hyper3_real.Rnw$
 ^inst/javelin.Rmd$
 ^inst/jss_4832_minorcomments_rebuttal.tex$
 ^inst/carcinoma.txt$
@@ -283,6 +289,7 @@ CITATION.cff
 ^inst/salad.Rmd$
 ^inst/simplified_likelihood.Rmd$
 ^inst/skeleton2022.txt$
+^inst/sushi.txt$
 ^inst/ternaryplot_hyper2.Rmd$
 ^inst/three_runners_plackett_luce.Rmd$
 ^inst/very_simplified_likelihood.Rmd$
