@@ -88,11 +88,31 @@ mypos[1] <- 4
 text(seq_len(n), L, colnames(rego_table), pos=mypos, col="gray")
 ```
 
+Above we see that Kaljurand is a bit of an outlier.  Conditional on
+the evaluate, his is (by far) the least likely order statistic.
+
+We may go slightly further and use the _other_ politicians:
+
+```{r defineothers}
+fothers <- function(i){ # column i
+  maxp_others <- maxp(suppfun(rego_table[,-i]))
+  return(loglik(maxp_others, getcol(i)))
+} 
+
+
+```{r useothers, cache=TRUE}
+Lothers <- sapply(seq_len(ncol(rego_table)), fothers)
+```
+
+```{r}
+plot(Lothers)
+```
 
 
 ### Package dataset {-}
 
-Following lines create `icons.rda`, residing in the `data/` directory of the package.
+Following lines create `rego.rda`, residing in the `data/` directory
+of the package.
 
 ```{r, label=saveregodataset}
 save(rego, rego_maxp, rego_table, file="rego.rda")
