@@ -313,3 +313,6 @@ CITATION.cff
 ^CODE_OF_CONDUCT.md$
 ^CONTRIBUTING.md$
 ^codemeta\.json$
+^site$
+^inst/site$
+^inst/build_site.R$
