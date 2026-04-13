@@ -18,6 +18,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      RSTUDIO_PANDOC: /opt/hostedtoolcache/pandoc
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
