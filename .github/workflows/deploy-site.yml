@@ -46,7 +46,7 @@ jobs:
 
       - name: Build site
         run: |
-          Rscript inst/build_site.R
+          R -q -e "Sys.setenv(RSTUDIO_PANDOC = dirname(Sys.which('pandoc'))); source('inst/build_site.R')"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
