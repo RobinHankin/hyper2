@@ -1,0 +1,12 @@
+The 2022 Eurovision Jury Semi Final scandal was unprecedented: for the
+first time ever, multiple juries in one year had their scores
+nullified on the grounds of suspected collusion.  The accused juries,
+six in total, consistently denied any wrongdoing and lamented the lack
+of transparency in the reasoning behind removing the scores.  To date,
+no open formal statistical analysis is available on the resulting
+data.
+
+Here, we use reified Bradley-Terry models to assess the scandal and
+find strong statistical evidence of irregular voting patterns within
+the six disqualified juries.  We quantify the strength of evidence and
+suggest robust methods for detecting irregularities in future.
