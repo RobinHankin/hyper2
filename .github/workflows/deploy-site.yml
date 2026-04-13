@@ -41,11 +41,17 @@ jobs:
       - name: Install system deps (if needed)
         run: |
           sudo apt-get update
+          sudo apt-get install -y libmagick++-dev
 
       - name: Install R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          needs: none
+          extra-packages: |
+            local::.
+            rmarkdown
+            digest
+            tikzDevice
+            magick
 
       - name: Build site
         run: |
