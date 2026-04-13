@@ -316,3 +316,4 @@ CITATION.cff
 ^site$
 ^inst/site$
 ^inst/build_site.R$
+^inst/significance_synopsis.txt$
