@@ -844,15 +844,22 @@ for the same phenomenon by \cite{tverskey1972_jss}.  The canonical
 problem is as follows.  A commuter has a choice of going to work by
 different transport methods.  Here, we can assume that he has possibly
 strong---but unknown---views on different forms of transport which
-might incorporate a random component.  If considering whether to use a
-car or a bus, the colour of the bus is of no importance to him.  Such
-preferences are problematic for Bradley-Terry: If our subject is
-indifferent between cars and buses, then $p_{C} = p_{RB}$.  If he is
-also indifferent to colour of bus, so $p_{RB}=p_{BB}$, the following
-paradox occurs.  Bradley-Terry strengths must be equal so $p_{C} =
-p_{RB} = p_{BB}=\frac{1}{3}$.  Thus $\Prob(C| \left\lbrace
-C,RB\right\rbrace)=\frac{1}{2}$.  Now we introduce a blue bus as an
-option.  Any realistic choice model will have $\Prob(C | \left\lbrace
+might incorporate a random component; we represent the probabilities
+using BT strengths $p_C, p_{RB}, p_{BB}$ (for car and red/blue bus
+respectively).  Our respondent states that the colour of the bus is of
+no importance to him.
+
+If our respondent is considering whether to use a car or a blue bus
+[we say that the {\em choice set} is $\left\lbrace p_C,
+  p_{BB}\right\rbrace$], and our respondent chooses car with
+probability one-half, $\Prob(C | \left\lbrace
+C,BB\right\rbrace)=\frac{1}{2}$, we may infer that $p_C=p_{BB}$.  We
+now present a red bus with strength $p_{RB}$; his stated indifference
+to bus color gives us $\Prob(RB|\left\lbrace
+RB,BB\right\rbrace)=\frac{1}{2}$, so we infer that $p_{RB}=p_{BB}$,
+and thus $p_{C}=p_{BB}=p_{RB}$.
+
+However, any realistic choice model will have $\Prob(C | \left\lbrace
 C,RB,BB\right\rbrace)=\frac{1}{2}$ but Bradley-Terry gives us
 $\frac{1}{3}$.  Various solutions to this problem have been proposed.
 \cite{tverskey1972_jss}, for example, presents an approach involving
