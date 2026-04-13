@@ -31,7 +31,10 @@ jobs:
       - name: Setup Pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
-
+      - name: Tell R where pandoc is 
+        run: |
+          echo "RSTUDIO_PANDOC=$(dirname $(which pandoc))" >> $GITHUB_ENV
+      
       - name: Install system deps (if needed)
         run: |
           sudo apt-get update
