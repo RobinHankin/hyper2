@@ -24,6 +24,16 @@ rmd_files <- list.files(
   full.names = TRUE
 )
 
+rmd_files <- rmd_files[-grep("f1points", rmd_files)]  # f1points.Rmd takes too long
+rmd_files <- rmd_files[-grep("formula1", rmd_files)]  # formula1.Rmd takes too long
+rmd_files <- rmd_files[-grep("skeleton", rmd_files)]  # skeleton.Rmd takes too long
+rmd_files <- rmd_files[-grep("advantage", rmd_files)]  # home_advantage.Rmd takes too long
+rmd_files <- rmd_files[-grep("race3", rmd_files)]  # race3.Rmd takes too long
+rmd_files <- rmd_files[-grep("scissors", rmd_files)]  # rock_paper_scissors.Rmd takes too long
+rmd_files <- rmd_files[-grep("monster_vs", rmd_files)]  # monster_vs_lambda.Rmd takes too long
+rmd_files <- rmd_files[-grep("exponential", rmd_files)]  # exponential_BT.Rmd takes too long
+rmd_files <- rmd_files[-grep("global", rmd_files)]  # global_liveability_ranking.Rmd takes too long
+
 message("Found ", length(rmd_files), " Rmd files")
 
 html_files <- character()
