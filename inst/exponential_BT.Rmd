@@ -842,7 +842,7 @@ filled.contour(S)
 
 
 ```{r readandcutout}
-a <- read.table("~/rstudio/hyper2/inst/formula1_2023.txt")
+a <- read.table("formula1_2023.txt")
 a <- a[,-ncol(a)]
 rownames(a)
 ```
