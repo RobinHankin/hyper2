@@ -391,7 +391,7 @@ from
 `https://github.com/arnaudbenard/university-ranking/blob/master/timesData.csv`.
 
 ```{r, label=readtableandcalc,cache=TRUE}
-a <- read.table("timesData.csv",sep=",", header=TRUE)
+a <- read.table("timesData.txt", sep=",", header=TRUE)
 wanted <- c("California Institute of Technology", "Harvard University",
 "Massachusetts Institute of Technology", "Princeton University",
 "Stanford University", "University of Cambridge", "University of Oxford")
