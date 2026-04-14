@@ -58,7 +58,7 @@ grid_order
 We are going to use the 2025 finishing dataset:
 
 ```{r, read2025, cache=TRUE}
-a <- read.table("~/rstudio/hyper2/inst/formula1_2025.txt")
+a <- read.table("formula1_2025.txt")
 a <- a[1:19,-ncol(a)]   # remove Colapinto and Doohan; and the points
 ```
 
