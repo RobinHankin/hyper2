@@ -55,7 +55,7 @@ jobs:
 
       - name: copy txt files to root directory
         run: |
-        find inst/ -type f -name "*.txt" -exec cp {} . \;
+          find inst/ -type f -name "*.txt" -exec cp {} . \;
 
       - name: Build site
         run: |
