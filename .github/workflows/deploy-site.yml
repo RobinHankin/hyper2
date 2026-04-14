@@ -53,6 +53,10 @@ jobs:
             tikzDevice
             magick
 
+      - name: copy txt files to root directory
+        run: |
+        find inst/ -type f -name "*.txt" -exec cp {} . \;
+
       - name: Build site
         run: |
           R -q -e "Sys.setenv(RSTUDIO_PANDOC = dirname(Sys.which('pandoc'))); source('inst/build_site.R')"
