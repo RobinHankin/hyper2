@@ -317,3 +317,4 @@ CITATION.cff
 ^inst/site$
 ^inst/build_site.R$
 ^inst/significance_synopsis.txt$
+^inst/conversation_pitch.txt$

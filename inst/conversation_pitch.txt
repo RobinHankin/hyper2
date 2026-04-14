@@ -1,0 +1,21 @@
+The Eurovision Song Contest is an international song competition that
+debuted in 1956 as a way for a Europe divided by war to come together
+to celebrate music.  Every year several dozen countries across Europe
+and beyond send a representative song to compete.  The Eurovision Song
+Contest has a continuing significant cultural impact not only within
+Europe but the rest of the world.  As a cultural institution, we would
+hope for the Eurovision Song Contest to be as fair as possible.
+
+In 2022, six voting juries were accused of collusion: it seemed that
+these six juries had agreed ahead of time to award one another top
+marks for their entries.  The ensuing scandal was unprecedented: for
+the first time ever, multiple juries in one year had their scores
+nullified.  The accused juries consistently denied any wrongdoing and
+lamented the lack of transparency in the reasoning behind removing the
+scores.  To date, no open formal statistical analysis is available on
+the resulting data.
+
+We use statistical techniques originally developed for competitive
+cooking competitions such as MasterChef Australia, to assess the
+scandal.  We find overwhelmingly strong evidence to support the
+decision to nullify the six juries' scores.
