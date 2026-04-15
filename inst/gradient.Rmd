@@ -6,11 +6,13 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library("hyper2",quietly=TRUE)
+gradient <- get("gradient", asNamespace("hyper2"))  # avoids github workflow clash with pracma::gradient()
 set.seed(0)
 ```
 
 We will numerically verify the `gradientn()` function for two `hyper2`
 objects.  
+
 
 ## Chess dataset
 

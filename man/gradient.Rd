@@ -107,6 +107,10 @@ does not return exact zeros at the evaluate.
 }
 
 \author{Robin K. S. Hankin}
+
+\note{
+  There is a \code{NAMESPACE} clash with \code{pracma::gradient()}.
+}
 \examples{
 
 data(chess)
