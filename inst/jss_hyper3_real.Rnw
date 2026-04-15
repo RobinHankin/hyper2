@@ -857,21 +857,20 @@ C,BB\right\rbrace)=\frac{1}{2}$, we may infer that $p_C=p_{BB}$.  We
 now present a red bus with strength $p_{RB}$; his stated indifference
 to bus color gives us $\Prob(RB|\left\lbrace
 RB,BB\right\rbrace)=\frac{1}{2}$, so we infer that $p_{RB}=p_{BB}$,
-and thus $p_{C}=p_{BB}=p_{RB}$.
+and thus $p_{C}=p_{BB}=p_{RB}$.  Any realistic choice model will have
+$\Prob(C | \left\lbrace C,RB,BB\right\rbrace)=\frac{1}{2}$ but
+Bradley-Terry gives us $\frac{1}{3}$.
 
-However, any realistic choice model will have $\Prob(C | \left\lbrace
-C,RB,BB\right\rbrace)=\frac{1}{2}$ but Bradley-Terry gives us
-$\frac{1}{3}$.  Various solutions to this problem have been proposed.
+Various solutions to this problem have been proposed.
 \cite{tverskey1972_jss}, for example, presents an approach involving
 overlapping ``aspects'' of the choice set; \cite{mcfadden1980}
-suggests using a generalized extreme-value model.
-
-Here I suggest an alternative in the form of a one-parameter
-generalization of Plackett-Luce likelihood functions for ranking
-options, using the multiplicative generalization to Bradley-Terry
-strengths presented above.  As a synthetic example, we specify options
-RB and BB for red bus and blue bus together with options C, T and W
-for car, train, and walking.
+suggests using a generalized extreme-value model.  Here I suggest an
+alternative in the form of a one-parameter generalization of
+Plackett-Luce likelihood functions for ranking options, using the
+multiplicative generalization to Bradley-Terry strengths presented
+above.  As a synthetic example, we specify options RB and BB for red
+bus and blue bus together with options C, T and W for car, train, and
+walking.
 
 Specifically, it seems reasonable to assume that if we ask our
 respondent to rank his options, it is highly probable that he will put
