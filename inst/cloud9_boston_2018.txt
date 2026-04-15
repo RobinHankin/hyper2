@@ -1,6 +1,6 @@
 date		opponent   map	       result	deathorder
 "28/01/2018"	FaZe	   inferno     W 	"Skadoodle, RUSH, tarik, autimatic, Stewie2K"
-"28/01/2018"	Faze	   overpass    W	"RUSH, Stewie2K, Skadoodle, tarik, autimatic"
+"28/01/2018"	FaZe	   overpass    W	"RUSH, Stewie2K, Skadoodle, tarik, autimatic"
 "28/01/2018"	FaZe	   mirage      L	"Skadoodle, RUSH, autimatic, Stewie2K, tarik" 
 "28/01/2018"	SK	   inferno     W	"Stewie2K, autimatic, tarik, RUSH, Skadoodle"
 "28/01/2018"	SK	   cobblestone L	"Skadoodle, Stewie2K, autimatic, tarik, RUSH"
