@@ -46,13 +46,13 @@ jobs:
       - name: Install R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          pak-version: none
           extra-packages: |
             local::.
             rmarkdown
             digest
             tikzDevice
             magick
+          needs: none
 
       - name: copy txt files to root directory
         run: |
