@@ -482,8 +482,10 @@ maxp(home_draw_away3(RCLF3_table, lambda = maxv[1], D = maxv[2]))
 Such estimates have rich predictive power.  For example, if Rangers
 were to play Celtic with both teams away [thus nullifying the home
   ground advantage: $\lambda=1$ in Table~\ref{windrawloss}], the
-probability of win/draw/loss for Rangers would be
-$\left(\frac{p_R}{(1+D)(p_R+p_C)};\frac{D}{1+D};\frac{p_C}{(1+D)(p_R+p_C)}\right)$,
+probability of
+$\left\lbrace\mbox{win};\mbox{draw};\mbox{loss}\right\rbrace$ for
+Rangers would be
+$\left\lbrace\frac{p_R}{(1+D)(p_R+p_C)};\frac{D}{1+D};\frac{p_C}{(1+D)(p_R+p_C)}\right\rbrace$,
 estimated at $(0.39;0.27;0.34)$.
 %
 <<makecontourdata, echo = FALSE, cache = TRUE>>=
@@ -520,7 +522,7 @@ example, we may test the hypothesis that $\lambda=1$ [corresponding to
   the left hand side of Figure~\ref{contourlambdaD}] for which the
 support is about \Sexpr{round(f(maxv)-jj$objective,2)}, far
 exceeding the two units of support per degree of freedom
-criteron~\citep{edwards1992}.  Alternatively, we can observe that this
+criterion~\citep{edwards1992}.  Alternatively, we can observe that this
 lies in the tail region of its asymptotic null $\chi^2_2$ distribution
 with a $p$~value of about \Sexpr{signif(pchisq(f(maxv)-jj$objective,lower.tail=FALSE,df=2),digits=2)}.
 
@@ -975,6 +977,9 @@ would be modelled by having $\lambda<1$.  Implementation in
 \code{sushi\_table}, part of the \pkg{hyper2} package:
 %
 <<showsushitable>>=
+<<echo = FALSE>>=
+rownames(sushi_table) <- rep("", 50)
+<<echo = TRUE>>=
 noquote(head(sushi_table))
 @
 %
@@ -1040,7 +1045,7 @@ $\Sexpr{round(sushisupport,2)}$ units of support.  Alternatively, we
 may observe that this lies in the tail region of its asymptotic
 $\chi^2_1$ distribution with a $p$~value of about
 $\Sexpr{round(pchisq(2*sushisupport,df=1,lower.tail=FALSE),4)}$.  We can
-therefore be reasonably sure that tuna sushi are somehow analagous to
+therefore be reasonably sure that tuna sushi are somehow analogous to
 red and blue buses, in the sense that all three tuna items tend to
 occupy closely separated places in judges' preference ranks.
 
@@ -1093,9 +1098,12 @@ for both individual ability and also both teams' tactical execution.
 Here I analyse the order statistic for number of deaths of each of the
 five {\em Cloud9} players.
 %
-<<echo = FALSE>>=
+<<display_boston2018_dataset, echo = FALSE>>=
 a <- read.table("cloud9_boston_2018.txt", header = TRUE)[,-1]
 rownames(a) <- NULL
+<<echo = TRUE, eval = FALSE>>=
+head(cloud9_boston_2018)
+<<echo = FALSE, eval = TRUE>>=
 print(head(a,4), row.names=FALSE)
 @
 %
@@ -1112,7 +1120,7 @@ high-variance play.
 
 Given that these two players offer equally attractive and accessible
 targets to the opposing team, it is possible that some tactical
-situations might result in a systematic preference for targetting
+situations might result in a systematic preference for targeting
 \skad, and some a preference for killing \stew.  If this is so, the
 deaths will be overdispersed and one would have a red bus-blue bus
 situation, but with $\lambda<1$.
@@ -1205,12 +1213,12 @@ $\lambda$- factors may be used to implement many different
 non-independence schemes.
 
 Further work might include an individualised multiplicative draw
-factor, giving rise to likelihood functions such as
-$\frac{p_1^{w_1};(\lambda_1p_1+\lambda_2p_2)^{d_{12}};
-  p_2^{w_2}}{\left(p_1(1+\lambda_1)+p_2(1+\lambda_2)\right)^{w_1+d_{12}+w_2}}$.
-One might also consider multiplicative factors for the strengths of
-{\em reified} entities.  These modifications would be directly
-representable with existing {\tt hyper3} idiom.
+factor, giving rise to likelihood functions such as $\frac{\lambda_i
+  p_i;D_i p_i + D_j p_j; \lambda_j p_j}{\lambda_i p_i + D_i p_i + D_j
+  p_j + \lambda_j p_j}$.  One might also consider multiplicative
+factors for the strengths of {\em reified} entities.  These
+modifications would be directly representable with existing {\tt
+  hyper3} idiom.
 
 \bibliography{hyper2}
 \end{document}
