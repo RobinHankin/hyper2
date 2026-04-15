@@ -825,9 +825,10 @@ graph (cyclic or acyclic) instead of equivalence classes.  Or perhaps
 the effect might have a finite lifetime: if $a$ places
 $n^\mathrm{th}$, then the cheering effect is active only for
 competitors placing $(n+r)^\mathrm{th}$ or above, for some fixed $r$.
-There is no reason that $\lambda$ could not be less than one, which
-would indicate that some competitors inhibit, rather than help,
-others.
+And of course one might conceptualise still-running competitors
+supporting one another.  There is no reason that $\lambda$ could not
+be less than one, which would indicate that some competitors inhibit,
+rather than help, others.
 
 The probability model of Figure~\ref{tikzabcde} is applied, in a
 simple one-parameter form, to two datasets: one a set of preferences
@@ -1093,8 +1094,9 @@ Here I analyse the order statistic for number of deaths of each of the
 five {\em Cloud9} players.
 %
 <<echo = FALSE>>=
-a <- read.table("cloud9_boston_2018.txt", header = TRUE)
-a[, -1]
+a <- read.table("cloud9_boston_2018.txt", header = TRUE)[,-1]
+rownames(a) <- NULL
+print(head(a,4), row.names=FALSE)
 @
 %
 From the first line we see that {\em Cloud9} played {\em FaZe Clan} on
