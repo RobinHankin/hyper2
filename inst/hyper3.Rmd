@@ -220,7 +220,7 @@ equalp.test(a)
 No evidence agains the null of equal strengths. Further:
 
 ```{r,label=showgradissmall}
-gradient(a,ma)  # should be small at the evaluate
+hyper2::gradient(a,ma)  # should be small at the evaluate
 ```
 
 
