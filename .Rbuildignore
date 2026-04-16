@@ -317,3 +317,15 @@ CITATION.cff
 ^inst/site$
 ^inst/build_site.R$
 ^inst/significance_synopsis.txt$
+^inst/cloud9_boston_2018.txt$
+^inst/formula1_2025.txt$
+^inst/grid_2025.txt$
+^inst/grid.Rmd$
+^inst/oecd.txt$
+^inst/olympics_2020_mens_discus.txt$
+^inst/olympics_2020_mens_shotput.txt$
+^inst/olympics_2020_womens_shotput.txt$
+^inst/rego.Rmd$
+^inst/rego.txt$
+^inst/sushi.Rmd$
+^inst/timesData.txt$
