@@ -5,6 +5,9 @@
 * Functionality to alter and/or nullify the monster in home_away()
 * pick/pass/beats/loses
 * more overloading of "+"
+* bugfixes
+* improvements to documentation
+
 
 # hyper2 3.2-1
 
