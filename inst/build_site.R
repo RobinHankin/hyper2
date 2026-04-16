@@ -34,6 +34,9 @@ rmd_files <- rmd_files[-grep("monster_vs", rmd_files)]  # monster_vs_lambda.Rmd 
 rmd_files <- rmd_files[-grep("exponential", rmd_files)]  # exponential_BT.Rmd takes too long
 rmd_files <- rmd_files[-grep("global", rmd_files)]  # global_liveability_ranking.Rmd takes too long
 rmd_files <- rmd_files[-grep("notthewinner", rmd_files)]  # notthewinner.Rmd has some weird issue where it works fine locally but not on the workflow.
+rmd_files <- rmd_files[-grep("simplified", rmd_files)]  # simplified_likelihood.Rmd has an unresolved theoretical issue, better to ignore this
+rmd_files <- rmd_files[-grep("sushi", rmd_files)]  # sushi.Rd takes too long
+rmd_files <- rmd_files[-grep("ternary", rmd_files)]  # ternaryplot.Rmd and ternaryplot_hyper2.Rmd take too long
 
 message("Found ", length(rmd_files), " Rmd files")
 for(f in rmd_files){message(f)}
