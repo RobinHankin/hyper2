@@ -120,7 +120,7 @@ print(system.time(parkrun04 <- single_like_fun(51, 37/51, N = howmany, a_try, x_
 parkrun04
 ```
 
-```{r parkrunlikefunobs4, cache = TRUE}
+```{r parkrunlikefunobs5, cache = TRUE}
 print(system.time(parkrun05 <- single_like_fun(56, 32/56, N = howmany, a_try, x_try)))
 ```
 
