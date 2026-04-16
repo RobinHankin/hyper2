@@ -128,16 +128,16 @@ print(system.time(parkrun05 <- single_like_fun(56, 32/56, N = howmany, a_try, x_
 parkrun05
 ```
 
-```{r parkrunlikefunobs4, cache = TRUE}
-print(system.time(parkrun04 <- single_like_fun(55, 30/55, N = howmany, a_try, x_try)))
+```{r parkrunlikefunobs6, cache = TRUE}
+print(system.time(parkrun06 <- single_like_fun(55, 30/55, N = howmany, a_try, x_try)))
 ```
 
 ```{r}
 parkrun06
 ```
 
-```{r parkrunlikefunobs4, cache = TRUE}
-print(system.time(parkrun04 <- single_like_fun(58, 37/58, N = howmany, a_try, x_try)))
+```{r parkrunlikefunobs7, cache = TRUE}
+print(system.time(parkrun07 <- single_like_fun(58, 37/58, N = howmany, a_try, x_try)))
 ```
 
 ```{r}
