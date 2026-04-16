@@ -36,7 +36,9 @@ rmd_files <- rmd_files[-grep("global", rmd_files)]  # global_liveability_ranking
 rmd_files <- rmd_files[-grep("notthewinner", rmd_files)]  # notthewinner.Rmd has some weird issue where it works fine locally but not on the workflow.
 rmd_files <- rmd_files[-grep("simplified", rmd_files)]  # simplified_likelihood.Rmd has an unresolved theoretical issue, better to ignore this
 rmd_files <- rmd_files[-grep("sushi", rmd_files)]  # sushi.Rd takes too long
+rmd_files <- rmd_files[-grep("surfing", rmd_files)]  # surfing.Rd has some weird bug
 rmd_files <- rmd_files[-grep("ternary", rmd_files)]  # ternaryplot.Rmd and ternaryplot_hyper2.Rmd take too long
+rmd_files <- rmd_files[-grep("vsl", rmd_files)]  # the vsl sequence takes too long
 
 message("Found ", length(rmd_files), " Rmd files")
 for(f in rmd_files){message(f)}
