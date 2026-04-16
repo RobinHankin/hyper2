@@ -36,6 +36,7 @@ rmd_files <- rmd_files[-grep("global", rmd_files)]  # global_liveability_ranking
 rmd_files <- rmd_files[-grep("notthewinner", rmd_files)]  # notthewinner.Rmd has some weird issue where it works fine locally but not on the workflow.
 
 message("Found ", length(rmd_files), " Rmd files")
+for(f in rmd_files){message(f)}
 
 html_files <- character()
 
