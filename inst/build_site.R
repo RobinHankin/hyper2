@@ -13,7 +13,7 @@ inst_dir <- dirname(this_file)
 root <- normalizePath(file.path(inst_dir, ".."), winslash = "/")
 
 inst_root <- file.path(root, "inst")
-site_dir <- file.path(root, "site")
+site_dir <- file.path(inst_root, "site")
 
 if (!dir.exists(site_dir)) dir.create(site_dir, recursive = TRUE)
 
