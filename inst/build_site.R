@@ -39,6 +39,11 @@ rmd_files <- rmd_files[-grep("sushi", rmd_files)]  # sushi.Rd takes too long
 rmd_files <- rmd_files[-grep("surfing", rmd_files)]  # surfing.Rd has some weird bug
 rmd_files <- rmd_files[-grep("ternary", rmd_files)]  # ternaryplot.Rmd and ternaryplot_hyper2.Rmd take too long
 rmd_files <- rmd_files[-grep("vsl", rmd_files)]  # the vsl sequence takes too long
+rmd_files <- rmd_files[-grep("parkrun", rmd_files)]  # takes too long
+rmd_files <- rmd_files[-grep("podium", rmd_files)]  # takes too long
+rmd_files <- rmd_files[-grep("tennis", rmd_files)]  # some weird bug, runs locally
+rmd_files <- rmd_files[-grep("volleyball", rmd_files)]  # some weird bug, runs locally
+rmd_files <- rmd_files[-grep("zermelo", rmd_files)]  # some weird bug, runs locally
 
 message("Found ", length(rmd_files), " Rmd files")
 for(f in rmd_files){message(f)}
