@@ -41,7 +41,14 @@ jobs:
       - name: Install system deps (if needed)
         run: |
           sudo apt-get update
-          sudo apt-get install -y libmagick++-dev
+          sudo apt-get install -y \
+            libmagick++-dev \
+            libuv1-dev \
+            libgmp3-dev \
+            pkg-config \
+            zlib1g-dev \
+            libglpk-dev \
+            libpoppler-cpp-dev
 
       - name: Install R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
