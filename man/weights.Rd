@@ -8,8 +8,8 @@
 \title{Getting and setting the weights of symbols in \code{hyper3} objects}
 \description{
 
-Objects of class \code{hyper3} brackets contain weighted probabilities;
-functionality here gets and sets the weights.
+Brackets of \code{hyper3} objects contain weighted probabilities; the
+functionality documented here gets and sets the weights.
 
 }
 \usage{
@@ -61,19 +61,8 @@ coerced to \code{hyper3}.
 Generally return or deal with \code{hyper3} objects
 }
 \author{Robin K. S. Hankin}
-\note{
-Functionality for \code{hyper3} objects is generally indicated by adding
-a \dQuote{\code{3}} to function names, e.g. \code{gradient()} goes to
-\code{gradient3()}.
-
-Vignette \code{hyper3_creation} discusses the different creation
-methods for \code{hyper3} objects.
-
-}
 \seealso{\code{\link{hyper2}}}
-
 \examples{
-
 
 H <- hyper3_nv(list(c(a=1.2), c(b=1), c(a=1.2,b=1,c=1)), powers=c(3,4,-7))
 H
