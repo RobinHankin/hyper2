@@ -78,7 +78,7 @@ equalp.test(H1)
 ```
 
 The null estimate agrees to six places of decimals with that
-presented by @turner2020_nomarkup:
+presented by @turner2020_rmd:
 
 ```{r usepladmm, cache=TRUE}
 standardPL_PlackettLuce <- PlackettLuce(salad, npseudo = 0)
