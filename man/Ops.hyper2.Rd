@@ -1,6 +1,7 @@
 \name{Ops.hyper2}
 \alias{Ops.hyper2}
 \alias{Ops}
+\alias{hyper2_sum_hyper2}
 \alias{hyper2_add}
 \alias{hyper2_prod}
 \alias{hyper2_sum_numeric}
@@ -15,7 +16,7 @@
 \usage{
 \method{Ops}{hyper2}(e1, e2 = NULL)
 \method{sum}{hyper2}(x, ..., na.rm=FALSE)
-hyper2_add(e1, e2)
+hyper2_sum_hyper2(e1, e2)
 hyper2_sum_numeric(H, r)
 }
 \arguments{

@@ -128,7 +128,7 @@ setGeneric("pnames<-",function(x, value){standardGeneric("pnames<-")})
   return(invisible(x))
 }
 
-`hyper2_add` <- function(e1, e2){
+`hyper2_sum_hyper2` <- function(e1, e2){
   b1 <- elements(brackets(e1))
   b2 <- elements(brackets(e2))
   p1 <- elements(powers(e1))
@@ -220,9 +220,9 @@ setGeneric("pnames<-",function(x, value){standardGeneric("pnames<-")})
   
   if(lclass && rclass){  
     if (.Generic == "+"){
-      return(hyper2_add(e1, e2))
+      return(hyper2_sum_hyper2(e1, e2))
     } else if (.Generic == "-"){
-      return(hyper2_add(e1, hyper2_prod(e2, -1)))
+      return(hyper2_sum_hyper2(e1, hyper2_prod(e2, -1)))
     } else if (.Generic == "==") {
       return(hyper2_equal(e1, e2))
     } else if (.Generic == "!=") {
@@ -625,9 +625,9 @@ setGeneric("pnames<-",function(x, value){standardGeneric("pnames<-")})
   if(nargs()==1){
     return(x)
   } else if (nargs()==2){
-    return(hyper2_add(x, ...))
+    return(hyper2_sum_hyper2(x, ...))
   } else {
-    return(hyper2_add(x, Recall(...)))
+    return(hyper2_sum_hyper2(x, Recall(...)))
   }
 }
 
