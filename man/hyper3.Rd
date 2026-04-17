@@ -16,10 +16,6 @@
 \alias{overwrite_lowlevel3}
 \alias{powers<-.hyper3}
 \alias{pnames<-.hyper3}
-\alias{weights}
-\alias{weights.hyper3}
-\alias{setweight}
-\alias{as.weight}
 \title{Weighted probability vectors: \code{hyper3} objects}
 \description{
 
@@ -130,12 +126,7 @@ by function \code{hyper3_m()}.
     to the brackets and their weights.
 
     \item Function \code{setweight()} alters the weight of every
-    occurrence of a set of players.  It is vectorised, so
-    \code{setweight(H,c("a","b"),88:89)} sets the weight of \code{a} to
-    88 and \code{b} to 89.  Replacement methods are defined, so
-    \dQuote{\code{H["a"] <- as.weight(3)}} will set the weight of every
-    occurrence of player \code{a} to 3.  If \code{H} is a \code{hyper2}
-    object, it will be coerced to \code{hyper3}.
+    occurrence of a set of players, documented at \code{weights.Rd}. 
 
     \item Function \code{pnames<-()} operates as expected on
     \code{hyper3} objects: use \code{pnames(H3) <- new_pnames} to add
@@ -158,8 +149,7 @@ Vignette \code{hyper3_creation} discusses the different creation
 methods for \code{hyper3} objects.
 
 }
-\seealso{\code{\link{hyper2}}}
-
+\seealso{\code{\link{hyper2}}, \code{\link{weights}}}
 \examples{
 
 

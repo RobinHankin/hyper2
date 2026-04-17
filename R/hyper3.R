@@ -693,6 +693,11 @@ stop("not yet written")
     return(x)
 }
 
+`swait` <- function(x, ...){
+    jj <- list(...)
+    return(setweight(x, names(jj), unname(unlist(jj))))
+}
+
 `dirichlet3` <- function(powers, lambda=NULL){
     if(is.null(names(powers))){
         stop("dirichlet3d() requires powers to be a _named_ vector")
