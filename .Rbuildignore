@@ -327,5 +327,6 @@ CITATION.cff
 ^inst/wct_table2019.txt$
 ^inst/wikipedia_refdesk.txt$
 ^inst/wikipedia.txt$
+^inst/wow.Rmd$
 ^inst/zermelo.Rmd$
 ^inst/zurich1953_candidates.txt$

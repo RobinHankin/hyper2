@@ -1,0 +1,35 @@
+---
+title: "Curation of delight: a list of micro-epiphanies"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: hyper2.bib
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+options("digits" = 5)
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  This vignette showcases package idiom that I find
+cool.
+
+### `setweight()` plays nicely with `beats()` et seq: {-}
+
+```{r}
+beats("a","b") |> setweight("a", 1.888)
+```
+
+(of course, it would be even cooler to say `beats("a","b") |>
+setweight(a=1.888)`)
+
+
+### References {-}
+
+
