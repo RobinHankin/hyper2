@@ -26,8 +26,12 @@ cool.
 beats("a","b") |> setweight("a", 1.888)
 ```
 
-(of course, it would be even cooler to say `beats("a","b") |>
-setweight(a=1.888)`)
+As of fixing issue 231, we can use `swait()`:
+
+```{r}
+beats("a","b") |> swait(a=0.9)
+```
+
 
 
 ### References {-}
