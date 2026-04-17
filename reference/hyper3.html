@@ -190,13 +190,8 @@ by function <code>hyper3_m()</code>.</p>
 <li><p>Function <code>as.namedvectorlist()</code> takes a <code>hyper3</code>
     object and returns a disoRdered list of named vectors corresponding
     to the brackets and their weights.</p></li>
-<li><p>Function <code>setweight()</code> alters the weight of every
-    occurrence of a set of players.  It is vectorised, so
-    <code>setweight(H,c("a","b"),88:89)</code> sets the weight of <code>a</code> to
-    88 and <code>b</code> to 89.  Replacement methods are defined, so
-    “<code>H["a"] &lt;- as.weight(3)</code>” will set the weight of every
-    occurrence of player <code>a</code> to 3.  If <code>H</code> is a <code>hyper2</code>
-    object, it will be coerced to <code>hyper3</code>.</p></li>
+<li><p>Function <code><a href="weights.html">setweight()</a></code> alters the weight of every
+    occurrence of a set of players, documented at <code>weights.Rd</code>.</p></li>
 <li><p>Function <code>pnames&lt;-()</code> operates as expected on
     <code>hyper3</code> objects: use <code>pnames(H3) &lt;- new_pnames</code> to add
     players.  This idiom can only add players, so <code>new_pnames</code> must
@@ -221,7 +216,7 @@ methods for <code>hyper3</code> objects.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="hyper2.html">hyper2</a></code></p></div>
+    <div class="dont-index"><p><code><a href="hyper2.html">hyper2</a></code>, <code><a href="weights.html">weights</a></code></p></div>
     </div>
 
     <div id="ref-examples">
@@ -265,9 +260,9 @@ methods for <code>hyper3</code> objects.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">H1</span> <span class="op">&lt;-</span> <span class="fu"><a href="ggrl.html">rankvec_likelihood</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">H2</span> <span class="op">&lt;-</span> <span class="fu"><a href="ggrl.html">rankvec_likelihood</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">H1</span><span class="op">[</span><span class="st">"a"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">as.weight</span><span class="op">(</span><span class="fl">1.2</span><span class="op">)</span>          <span class="co"># "a" has some disadvantage in H1</span></span></span>
-<span class="r-in"><span><span class="va">H1</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">as.weight</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>  <span class="co"># "b" and "c" have some advantage in H1</span></span></span>
-<span class="r-in"><span><span class="va">H2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"d"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">as.weight</span><span class="op">(</span><span class="fl">1.5</span><span class="op">)</span>  <span class="co"># "c" and "d" have some advantage in H2</span></span></span>
+<span class="r-in"><span><span class="va">H1</span><span class="op">[</span><span class="st">"a"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="weights.html">as.weight</a></span><span class="op">(</span><span class="fl">1.2</span><span class="op">)</span>          <span class="co"># "a" has some disadvantage in H1</span></span></span>
+<span class="r-in"><span><span class="va">H1</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="weights.html">as.weight</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>  <span class="co"># "b" and "c" have some advantage in H1</span></span></span>
+<span class="r-in"><span><span class="va">H2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"d"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="weights.html">as.weight</a></span><span class="op">(</span><span class="fl">1.5</span><span class="op">)</span>  <span class="co"># "c" and "d" have some advantage in H2</span></span></span>
 <span class="r-in"><span><span class="va">H1</span> <span class="op">+</span> <span class="va">H2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^1 * (a=1, b=1, c=1.5, d=1.5, e=1, f=1)^-1 * (a=1.2)^1 *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (a=1.2, b=2, c=3, d=1, e=1, f=1)^-1 * (a=1.2, b=2, d=1, e=1, f=1)^-1 *</span>
