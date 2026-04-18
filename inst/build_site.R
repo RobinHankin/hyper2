@@ -45,8 +45,6 @@ rmd_files <- rmd_files[-grep("tennis", rmd_files)]  # some weird bug, runs local
 rmd_files <- rmd_files[-grep("volleyball", rmd_files)]  # some weird bug, runs locally
 rmd_files <- rmd_files[-grep("volvo", rmd_files)]  # some weird bug, runs locally
 rmd_files <- rmd_files[-grep("zermelo", rmd_files)]  # some weird bug, runs locally
-rmd_files <- rmd_files[-grep("eurovision", rmd_files)]  # takes too long
-rmd_files <- rmd_files[-grep("collusion", rmd_files)]  # takes too long
 
 message("Found ", length(rmd_files), " Rmd files")
 for(f in rmd_files){message(f)}
