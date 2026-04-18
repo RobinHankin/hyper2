@@ -29,9 +29,7 @@ directory.
 \references{
 \url{https://en.wikipedia.org/wiki/2018_World_Karate_Championships}
 }
-
 \note{
-
 Table \code{karate_table} misses uninformative matches, that is,
 competitions with 0-0 results.
 
