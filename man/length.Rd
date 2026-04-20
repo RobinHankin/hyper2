@@ -5,12 +5,8 @@
 \description{
 Length method for hyper2 objects, being the number of different brackets
 in the expression}
-\usage{
-\method{length}{hyper2}(x)
-}
-\arguments{
-  \item{x}{hyper2 object}
-}
+\usage{\method{length}{hyper2}(x)}
+\arguments{\item{x}{hyper2 object}}
 \author{Robin K. S. Hankin}
 \examples{
 
