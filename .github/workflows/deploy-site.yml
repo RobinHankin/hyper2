@@ -65,6 +65,14 @@ jobs:
         run: |
           find inst/ -type f -name "*.txt" -exec cp {} . \;
 
+      - name: Restore Website Hash Cache
+        uses: actions/cache@v3
+        with:
+          path: inst/site
+          key: ${{ runner.os }}-site-${{ hashFiles('inst/*.Rmd') }}
+          restore-keys: |
+            ${{ runner.os }}-site-
+
       - name: Build site
         run: |
           R -q -e "Sys.setenv(RSTUDIO_PANDOC = dirname(Sys.which('pandoc'))); source('inst/build_site.R')"
