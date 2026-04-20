@@ -15,6 +15,15 @@ root <- normalizePath(file.path(inst_dir, ".."), winslash = "/")
 inst_root <- file.path(root, "inst")
 site_dir <- file.path(inst_root, "site")
 
+logo_source <- file.path(root, "man", "figures", "hyper2.png")
+logo_dest <- file.path(site_dir, "hyper2.png")
+file.copy(logo_source, logo_dest, overwrite = TRUE)
+
+# Copy it if it exists
+if (file.exists(logo_source)) {
+  file.copy(logo_source, logo_dest, overwrite = TRUE)
+}
+
 if (!dir.exists(site_dir)) dir.create(site_dir, recursive = TRUE)
 
 rmd_files <- list.files(
@@ -95,16 +104,37 @@ links <- paste0(
   collapse = "\n"
 )
 
+
 index_html <- paste0(
   "<!DOCTYPE html>
 <html>
 <head>
 <meta charset='utf-8'>
 <title>Hyper2 catalogue</title>
+<style>
+  body { font-family: sans-serif; margin: 40px; line-height: 1.5; }
+  .header-container { 
+    display: flex; 
+    justify-content: space-between; /* This is the 'magic' for left/right split */
+    align-items: center; 
+    margin-bottom: 20px; 
+    border-bottom: 1px solid #eee; 
+    padding-bottom: 10px;
+  }
+  .logo { width: 160px; height: auto; } 
+  h1 { margin: 0; }
+</style>
 </head>
 <body>
-<h1>Hyper2 Rmd catalogue</h1>
-<p>Automatically generated from inst/*.Rmd files.</p>
+
+<div class='header-container'>
+  <div>
+    <h1>Hyper2 Rmd catalogue</h1>
+    <p style='margin: 0;'>Automatically generated from <code>inst/*.Rmd</code> files.</p>
+  </div>
+  <img src='hyper2.png' alt='Hyper2 Logo' class='logo'>
+</div>
+
 <ul>
 ",
   links,
@@ -113,6 +143,7 @@ index_html <- paste0(
 </body>
 </html>"
 )
+
 
 writeLines(index_html, index_file)
 
