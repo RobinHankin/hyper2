@@ -15,13 +15,23 @@ root <- normalizePath(file.path(inst_dir, ".."), winslash = "/")
 inst_root <- file.path(root, "inst")
 site_dir <- file.path(inst_root, "site")
 
+
 logo_source <- file.path(root, "man", "figures", "hyper2.png")
 logo_dest <- file.path(site_dir, "hyper2.png")
-file.copy(logo_source, logo_dest, overwrite = TRUE)
 
-# Copy it if it exists
+message("Attempting to copy logo...")
+message("Source: ", logo_source)
+message("Dest: ", logo_dest)
+
 if (file.exists(logo_source)) {
-  file.copy(logo_source, logo_dest, overwrite = TRUE)
+  success <- file.copy(logo_source, logo_dest, overwrite = TRUE)
+  if(success) {
+    message("SUCCESS: Logo copied.")
+  } else {
+    message("FAILURE: file.copy returned FALSE.")
+  }
+} else {
+  message("FAILURE: Source logo file NOT FOUND at ", logo_source)
 }
 
 if (!dir.exists(site_dir)) dir.create(site_dir, recursive = TRUE)
