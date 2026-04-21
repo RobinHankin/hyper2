@@ -18,24 +18,28 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-<font size="1"> (takes about an hour to run without cache)
+<font size="1"> (takes about ten minutes run without cache)
 </font>
 
-*This analysis is essentially without value, see the
-very end for why*
+Here I use the concept of _dominated set_ to simplify a Plackett-Luce
+likelihood function.
 
+*This analysis is essentially without value, see the very end for why*
 
 To cite the `hyper2` package in publications, please use
 @hankin2017_rmd.  [The global liveability
 ranking](https://en.wikipedia.org/wiki/Global_Liveability_Ranking)
-shows the nicest places to live.
+shows the nicest places to live.  Here I apply Plackett-Luce
+likelihoods but use flawed logic to eliminate poorly-ranked cities.
 
+The dataset comprises seven observations covering years 2015-2022.
+Each year, ten or eleven cities are ranked in order of liveability,
+according to a number of criteria such as prevalence of crime,
+healthcare, education, and infrastructure.
 
 ```{r showglrtable}
 (glr <- readLines("global_liveability_ranking.txt"))
 ```
-
-First we will turn it into a `hyper2` object:
 
 
 ```{r readglrtable}
@@ -50,6 +54,8 @@ non-positive-definite at the evaluate).
 o %<>%  lapply(function(x){x[!(x %in% c("Hamburg","Helsinki","Brisbane"))]})
 o
 ```
+
+Now, turn it into a `hyper2` object:
 
 
 ```{r,turnintohyper2,cache=TRUE}
@@ -68,7 +74,7 @@ equalp.test(H)
 ```
 
 ```{r,calculatemoreinfo,cache=TRUE}
-jjm <- maxp(H,n=1,give=TRUE,hessian=TRUE)
+jjm <- maxp(H, n=1, give=TRUE, hessian=TRUE)
 ```
 
 ```{r}
@@ -84,9 +90,6 @@ positive].  Also, the evaluate is robust, as indicated by
 ```{r,doconsis,cache=TRUE}
 consistency(H)
 ```
-
-
-
 
 Now we tether some of the cities together:
 
@@ -110,23 +113,23 @@ Now create a `hyper3` object:
 ```{r,createhyper3func}
 ML <- function(h){
    H3 <- hyper3()
-   for(r in o){ H3 <- H3 + cheering3(r,e=list2nv(elastic),help=rep(h,10))}
+   for(r in o){ H3 <- H3 + cheering3(r, e=list2nv(elastic), help=rep(h,10))}
    return(H3)
 }
-f <- function(h){maxp(ML(h),give=TRUE,n=1)$likes}
+f <- function(h){maxp(ML(h), give=TRUE, n=1)$likes}
 ```
 
 And plot a profile likelihood
 
 ```{r,plliveable,cache=TRUE}
-l <- seq(from=1,to=5,len=10)
-L <- sapply(l,f)
+l <- seq(from=1, to=5, len=10)
+L <- sapply(l, f)
 ```
 
 and plot it:
 
 ```{r}
-plot(log(l),L-max(L),type='b')
+plot(log(l), L-max(L), type='b')
 ```
 
 
@@ -179,17 +182,18 @@ We need to replace each city with its country:
 elastic
 (jj <- list2nv(elastic,FALSE))
 o_countries <- lapply(o, function(x){jj[names(jj) %in% x]})
-(o_countries <- lapply(o_countries,as.vector))
+(o_countries <- lapply(o_countries, as.vector))
 ```
 
-We see that NZ and Australia are dominated so we should remove them:
+We see that NZ and Australia are a dominated set [that is, they come
+last in every race], so we should remove them:
 
 ```{r}
-(o_countries <- lapply(o_countries,function(x){x[!(x %in% c("NZ","Australia","Japan"))]}))
+(o_countries <- lapply(o_countries, function(x){x[!(x %in% c("NZ","Australia","Japan"))]}))
 ```
 
-But hang on, if we continue to remove dominated countries we
-eventually remove every country that is not Austria.  So that was a big
-fat waste of time.
+The next dominated set to remove would be Canada, Germany,
+Netherlands; and then Switzerland.  This leaves us with Austria.  So
+that was a big fat waste of time.
 
-## References {-]
+## References {-}
