@@ -14,7 +14,8 @@
 
   TLDR summary: if \code{H} is a \code{hyper2} or \code{hyper3}
   likelihood function, \code{maxp(H)} will find the maximum likelihood
-  estimate for the BT strengths.  Canonical example: \code{maxp(icons)}.
+  estimate for the \acronym{BT} strengths.  Canonical example:
+  \code{maxp(icons)}.
 
 }
 \usage{
