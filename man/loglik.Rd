@@ -66,7 +66,8 @@ like_series(p,L,log=TRUE)
 
   But if given a vector of length \code{n-1} [e.g. the value of
   \code{indep()}], then the names are ignored and the entries are
-  interpreted as the BT strengths of \code{pnames(H)[seq_len(n-1)]}:
+  interpreted as the \acronym{BT} strengths of
+  \code{pnames(H)[seq_len(n-1)]}:
 
   \preformatted{
   > loglik(c(0.7,0.2),chess)

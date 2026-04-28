@@ -415,7 +415,7 @@ strengths.
   \hline
   $\Prob{(\mbox{$i$ wins})}$                                   &
   $\frac{\lambda p_i}{\lambda p_i + D(p_i + p_j) + p_j}$       &
-  $\frac{p_i}{p_i + D(p_i + p_j) + p_j}$                       &
+  $\frac{p_i}{p_i + D(p_i + p_j) + \lambda p_j}$               &
   $\frac{p_i+\mathfrak{H}}{p_i+p_j+\mathfrak{D}+\mathfrak{H}}$ &
   $\frac{p_i  }{p_i+p_j+\mathfrak{D}+\mathfrak{H}}$            \\
   $\Prob{(\mbox{draw})}$                                       &
