@@ -11,6 +11,7 @@ on:
   workflow_dispatch:
 
 env:
+  PKG_IGNORE_DEPS: "TreeDist"
   R_MAKEVARS_USER: ~/.R/Makevars
   PKG_CPPFLAGS: "-mcmodel=medium"
   CFLAGS: "-mcmodel=medium"
