@@ -11,7 +11,7 @@
 \title{Player with advantage}
 \description{
 
-Confer additional BT strength on specified players, either by
+Confer additional \acronym{BT} strength on specified players, either by
 introducing a reified entity (\code{pwa()} for \code{hyper2} objects) or
 an increased weight (\code{pwa3()} for \code{hyper3} objects).
   
