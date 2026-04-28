@@ -15,5 +15,6 @@ env:
   CFLAGS: "-mcmodel=medium"
   CXXFLAGS: "-mcmodel=medium"
 
+jobs:
   check:
     uses: robinhankin/workflow/.github/workflows/R-CMD-check.yaml@master
