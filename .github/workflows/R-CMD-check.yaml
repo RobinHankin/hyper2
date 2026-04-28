@@ -10,15 +10,10 @@ on:
     branches: [ master]
   workflow_dispatch:
 
+env:
+  PKG_CPPFLAGS: "-mcmodel=medium"
+  CFLAGS: "-mcmodel=medium"
+  CXXFLAGS: "-mcmodel=medium"
 
-jobs:
-  check:
-    env:
-      PKG_CPPFLAGS: "-mcmodel=medium"
-      CFLAGS: "-mcmodel=medium"
-      CXXFLAGS: "-mcmodel=medium"
-    uses: robinhankin/workflow/.github/workflows/R-CMD-check.yaml@master
-
-jobs:
   check:
     uses: robinhankin/workflow/.github/workflows/R-CMD-check.yaml@master
