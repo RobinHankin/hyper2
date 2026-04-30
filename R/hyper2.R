@@ -1010,8 +1010,12 @@ rorder_single <- function(p){
 
 `pwa` <- function(H,pwa,chameleon='S'){  
     stopifnot(is.hyper2(H))
-    stopifnot(pwa %in% pnames(H))
-    stopifnot(!(chameleon %in% pnames(H)))  # ... check that the chameleon isn't already a competitor, and
+    if(any(pwa %notin% pnames(H))){
+        stop(gettextf("Argument pwa must be a member of pnames (%s).  Value of pwa: %s", paste(pnames(H), collapse = ", "),pwa))
+    }
+    if(chameleon %in% pnames(H)){
+        stop(gettextf("Argument chameleon must not be a member of pnames (%s).  Value of chameleon: %s", paste(pnames(H), collapse = ", "),pwa))
+        }
   
     B <- elements(brackets(H))
     ## overwrite B in place:
