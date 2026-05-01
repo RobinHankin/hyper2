@@ -158,13 +158,19 @@ setGeneric("pnames<-",function(x, value){standardGeneric("pnames<-")})
 
 `loglik_single` <- function(p, H, log=TRUE){
   stopifnot(sum(powers(H)) == 0)
-  stopifnot(all(p >= 0))
+  if(any(p<0)){
+      stop(gettextf("All elements of p must be non-negative.  Value of p: %s", paste(p, collapse=", ")))
+  }
   if(length(p) == size(H)-1){
-    stopifnot(sum(p) <= 1)
+    if(sum(p) > 1){
+        stop(gettextf("length(p) == size(H)-1; elements of p must sum to <= 1. sum(p) = %s", sum(p)))
+    }
     probs <- fillup(p)
   } else if(length(p) == size(H)){
-    if(is.null(names(p))){stop("p==size(H), p must be a named vector")}
-    stopifnot(abs(sum(p)-1) < 1e-6)  # small numerical tolerance
+    if(is.null(names(p))){stop("If length(p) == size(H), then p must be a named vector")}
+    if(abs(sum(p)-1) > 1e-6){ # small numerical tolerance
+        stop(gettextf("length(p) == size(H); elements of p must sum to 1. sum(p) = %s", sum(p)))
+    }
     p <- ordertrans(p, H)  # no warning given if names not in correct order...
     stopifnot(identical(names(p), pnames(H))) #...but they must match up
     probs <- p
