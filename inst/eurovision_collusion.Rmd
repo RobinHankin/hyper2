@@ -1,0 +1,146 @@
+---
+title: "Eurovision Song Contest: collusion 2022"
+output: bookdown::html_document2
+author: "R. K. S. Hankin"
+bibliography: hyper2.bib
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+abbreviated <- TRUE  # change to FALSE for full names
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  The file `eurovision2022_jury_pre_null.txt`,
+used below, refers to the jury vote for the 2022 Eurovision Song
+contest, pre-nullification.
+
+
+First we specify the matrix as appearing in the Wikipedia page:
+
+```{r, specifymatrix}
+eurovision_table <- as.matrix(read.table("eurovision2022_juryvote_pre_null.txt",sep=","))
+excluded <- c(2, 8, 11, 14,15,16)
+
+contestants <- c(
+"AU", # Australia        1
+"AZ", # Azerbaijan       2
+"BE", # Belgijm          3
+"CY", # Cyprus           4
+"CZ", # Czech republic   5
+"EE", # Estonia          6
+"FI", # Finland          7
+"GE", # Georgia          8 
+"IE", # Ireland          9 
+"IL", # Israel          10 
+"ME", # Montenegro      11
+"MK", # North Macedonia 12
+"MT", # Malta           13 
+"PL", # Poland          14 
+"RO", # Romania         15
+"SM", # San Marino      16
+"RS", # Serbia          17
+"SE"  # Sweden          18
+)
+removed <- contestants[excluded]
+non_competitors <- c("DE","ES","UK") # Germany, Spain, UK
+juries <- c(contestants, non_competitors)
+dimnames(eurovision_table) <- list(contestants=contestants, juries=juries)
+eurovision_table
+(points <- sort(unique(c(eurovision_table)),decreasing=TRUE))
+preference <- eurovision_table*0  
+for(i in seq_along(points)){ preference[eurovision_table == points[i]] <- i }
+preference
+```
+
+
+```{r, morestuff,cache=TRUE}
+H_excluded <- hyper2()
+H_included <- hyper2()
+```
+
+        
+```{r makeH, cache=TRUE}
+for(i in excluded){
+    d <- preference[,i,drop=TRUE]
+    d[d==11] <- 0
+    newH <- suppfun(d[!is.na(d)])
+    H_excluded <- H_excluded + newH
+} # i loop closes
+
+for(i in seq_along(ncol(preference))){
+    if(i %notin% excluded){
+        d <- preference[,i,drop=TRUE]
+        d[d==11] <- 0
+        newH <- suppfun(d[!is.na(d)])
+        H_excluded <- H_excluded + newH
+    }
+} # i loop closes
+```
+
+
+```{r findans, cache=TRUE}
+H_excluded <- H_excluded |>
+    pwa("AZ", "a_az") |> pwa("GE", "a_GE") |>
+    pwa("ME", "a_ME") |> pwa("PL", "a_PL") |>
+    pwa("RO", "a_RO") |> pwa("SM", "a_SM")
+```
+
+```{r maxx, cache=TRUE}
+H <- H_excluded + H_included
+```
+
+```{r defineprofilelikelihood}
+pnames(H_excluded)
+
+S_likelihood <- function(S, give=FALSE){
+
+
+    make_strengths <- function(x){  # x is independent
+        stopifnot(length(x) == 17)
+        jj <- c(rep(S,6), x)
+        setNames(c(jj, 1-sum(jj)),  # sum = 1
+                 pnames(H_excluded))
+        
+    }
+    
+    objective <- function(x){ return(loglik(make_strengths(x), H)) }
+    
+    x_start <- rep(0.01, 17)
+    
+    n <- 17
+    SMALL <- 1e-5
+    UI <- rbind(diag(nrow = n), -1)
+    CI <- c(rep(SMALL, n), -1 + SMALL)
+    CI[18] <- 6*S - 1
+    
+    jj <- constrOptim(theta = x_start, f = objective, grad = NULL, ui = UI, ci = CI)
+
+    if(give){
+        return(jj)
+    } else {
+        return(jj$value)
+    }
+}    
+
+```
+
+```{r, label=calculateprofilelike, cache=TRUE}
+
+jj6 <- S_likelihood(0.06)
+jj7 <- S_likelihood(0.07)
+```
+
+```{r}
+jj6
+jj7
+pchisq(2*(jj7-jj6),df=1, lower.tail=FALSE)
+```

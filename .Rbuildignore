@@ -330,3 +330,5 @@ CITATION.cff
 ^inst/wow.Rmd$
 ^inst/zermelo.Rmd$
 ^inst/zurich1953_candidates.txt$
+^inst/eurovision_2022_jury_pre_null.txt$
+^inst/eurovision_collusion.Rmd$
