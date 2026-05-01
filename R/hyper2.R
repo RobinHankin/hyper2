@@ -1031,6 +1031,16 @@ rorder_single <- function(p){
     return(hyper2(B,elements(powers(H))))
 }
 
+`advantage` <- function(H, ...){
+    sb <- list(...)
+    v <- names(sb)
+    out <- H
+    for (i in seq_along(sb)) {
+        out <- pwa(out, v[i], sb[[i]])
+    }
+    return(out)
+}
+
 `wikitable_to_ranktable`  <- function(wikitable, strict=FALSE){
   f <- function(x){  # deal with DNF etc and zero
     suppressWarnings(out <- as.numeric(as.vector(x)))

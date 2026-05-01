@@ -1,6 +1,7 @@
 \name{pwa}
 \alias{pwa}
 \alias{pwa3}
+\alias{advantage}
 \alias{pwa3_single}
 \alias{chameleon}
 \alias{extra_strength}
@@ -18,6 +19,7 @@ an increased weight (\code{pwa3()} for \code{hyper3} objects).
 }
 \usage{
 pwa(H, pwa, chameleon = "S")
+advantage(H, ...)
 pwa3_single(H3, pwa, lambda)
 pwa3(H3, ...)
 }
@@ -50,6 +52,9 @@ Given \code{H} of class \code{hyper2} and a competitor \code{a},
 \code{pwa(H, "a")} replaces every occurrence of \code{a} in \code{H}
 with \code{a+S}, with \code{S} representing the extra strength
 conferred.
+
+Experimental function \code{advantage()} allows one to use idiom such as
+\code{advantage(H, a="steroids")}, which is sometimes more convenient.
 
 Argument \code{a} may be a vector of competitors: each bracket
 containing any member of \code{a} has \code{S} added to it.  If \code{a}

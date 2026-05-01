@@ -33,6 +33,20 @@ beats("a","b") |> swait(a=0.9)
 ```
 
 
+### `advantage()`
+
+
+
+
+Function `pwa()` is nice but a bit cumbersome.  Look:
+
+```{r}
+(H <- suppfun(letters[1:5]))
+H |> advantage(c="steroids")
+```
+
+Nice, eh?
+
 
 ### References {-}
 

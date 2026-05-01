@@ -1,3 +1,9 @@
+# hyper2 3.2-3
+
+* advantage()
+
+
+
 # hyper2 3.2-2
 
 * attemptstable functionality
