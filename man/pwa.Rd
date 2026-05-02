@@ -3,6 +3,9 @@
 \alias{pwa3}
 \alias{advantage}
 \alias{pwa3_single}
+\alias{pwa23}
+\alias{pwa23_single}
+\alias{pwa23_multiple}
 \alias{chameleon}
 \alias{extra_strength}
 \alias{additional_strength}
@@ -18,10 +21,13 @@ an increased weight (\code{pwa3()} for \code{hyper3} objects).
   
 }
 \usage{
-pwa(H, pwa, chameleon = "S")
+pwa(H, pwa, chameleon = "S", hyper3=FALSE)
 advantage(H, ...)
 pwa3_single(H3, pwa, lambda)
 pwa3(H3, ...)
+pwa23_single(H, pwa, chameleon="S")
+pwa23_multiple(H, pwa, chameleon="S")
+pwa23(H, ...)
 }
 
 \arguments{
@@ -33,6 +39,10 @@ pwa3(H3, ...)
   \item{chameleon}{String representing the advantage, defaulting to
   \dQuote{\code{S}}, for support or strength}
   \item{lambda}{Value of person with advantage}
+  \item{hyper3}{In function \code{pwa()}, Boolean with \code{TRUE}
+    meaning to coerce to \code{hyper3} form and apply \code{pwa23()},
+    and default \code{FALSE} meaning to return an error if a
+    \code{hyper3} object would be returned}
   \item{...}{Further named arguments; see details}
 }
 
@@ -69,6 +79,17 @@ argument, and it is a named vector, the elements are interpreted as
 name/value pairs, so \code{pwa3(H, c(e=1.2, f=3.4))} works.  Function
 \code{pwa3_single()} is a lower-level helper function that takes a
 single player name and its lambda value as second and third arguments.
+
+Functions in the \code{pwa23()} series coerce their first argument to a
+\code{hyper3()} object.  They allow multiple entities to have multiple
+reified help, so for example we may say
+\code{pwa23(suppfun(letters[1:5]), b="cheat", b="steroids",
+c="steroids", d="cheat")}.  For giving multiple players the same
+advantage [or to give a single player multiple advantages], use
+\code{pwa23_multiple()}, for example
+\code{pwa23_multiple(suppfun(letters[1:5]), letters[2:4], "steroids")};
+the recycling is inherited from \code{paste()}.  Note that if the player
+with advantage does not exist, no change is made to \code{H}.
 
 Nice examples of \code{pwa()} are given in \file{inst/cook.Rmd} and
 \file{inst/universities.Rmd}, and some discussion of \code{pwa3()} is

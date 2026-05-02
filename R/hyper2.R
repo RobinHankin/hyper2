@@ -1014,9 +1014,10 @@ rorder_single <- function(p){
   return(H)
 }
 
-`pwa` <- function(H,pwa,chameleon='S', hyper3=FALSE){
+`pwa` <- function(H, pwa, chameleon='S', hyper3=FALSE){
     if(hyper3){return(pwa23(H, pwa, chameleon='S'))}
     stopifnot(is.hyper2(H))
+    if(length(pwa) > 1){stop("argument pwa must be of length 1")}
     if(any(pwa %notin% pnames(H))){
         stop(gettextf(
             "Argument pwa (%s) must be a member of pnames (%s).",

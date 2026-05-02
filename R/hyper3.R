@@ -736,3 +736,32 @@ stop("not yet written")
     }
     return(H3)
 }
+
+
+"pwa23_single" <- function(H, pwa, chameleon="S"){ # takes H a hyper2 (or hyper3), returns a hyper3
+    H <- as.hyper3(H)
+    nvl <- elements(as.namedvectorlist(H))
+    for(i in seq_along(nvl)){
+        if(pwa %in% names(nvl[[i]])){nvl[[i]] <- frab::as.namedvector(as.frab(nvl[[i]]) + frab::as.frab(setNames(1, chameleon)))}
+    }
+    hyper3_nv(L=nvl, powers=elements(powers(H)), pnames=c(pnames(H),chameleon))
+}
+
+"pwa23_multiple" <- function(H, pwa, chameleon="S"){
+    H <- as.hyper3(H)
+    L <- strsplit(paste(pwa, chameleon), " ")
+    for(i in seq_along(L)){
+        jj <- L[[i]]
+        H <- pwa23_single(H, pwa=jj[1], chameleon=jj[2])
+    }
+    return(H)
+}
+
+"pwa23" <- function(H, ...){
+    H <- as.hyper3(H)
+    l <- list(...)
+    for(i in seq_along(l)){
+        H <- pwa23_single(H, names(l[i]), l[[i]])
+    }
+    return(H)
+}
