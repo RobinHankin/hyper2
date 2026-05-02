@@ -744,7 +744,7 @@ stop("not yet written")
     for(i in seq_along(nvl)){
         if(pwa %in% names(nvl[[i]])){nvl[[i]] <- frab::as.namedvector(as.frab(nvl[[i]]) + frab::as.frab(setNames(1, chameleon)))}
     }
-    hyper3_nv(L=nvl, powers=elements(powers(H)), pnames=c(pnames(H),chameleon))
+    hyper3_nv(L=nvl, powers=elements(powers(H)), pnames=unique(c(pnames(H),chameleon)))
 }
 
 "pwa23_multiple" <- function(H, pwa, chameleon="S"){
