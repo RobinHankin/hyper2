@@ -100,15 +100,9 @@ setGeneric("weights", function(object, ...){standardGeneric("weights")})
 }
 
 `as.namedvectorlist` <- function(H3){
-    out <- list()
     b <- disordR::elements(brackets(H3))
     w <- disordR::elements(weights(H3))
-    for(i in seq_along(H3)){
-        jj <- w[[i]]
-        names(jj) <- b[[i]]
-        out[[i]] <- jj
-    }
-    return(disord(out, h=hashcal(H3)))
+    disord(Map(setNames, w, b), h=hashcal(H3))
 }
 
 `print.hyper3` <- function(x, ...){
