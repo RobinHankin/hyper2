@@ -18,7 +18,7 @@ hyper2 prepareL(const List &L, const NumericVector &d){
             H[b] += d[i];  // the meat
         } // else do nothing, a zero power 
     } // i loop closes
-    return(H);
+    return H;
 }
 
 psub preparepmap(const NumericVector &probs, const CharacterVector &pnames){
@@ -27,7 +27,7 @@ psub preparepmap(const NumericVector &probs, const CharacterVector &pnames){
     for(int i=0; i<probs.length() ; i++){
         out[(string) pnames[i]] = probs[i];
     }
-    return(out);
+    return out;
 }
 
 List makebrackets(const hyper2 H){  // takes a hyper2, returns the brackets
@@ -37,7 +37,7 @@ List makebrackets(const hyper2 H){  // takes a hyper2, returns the brackets
     for(ih=H.begin(); ih != H.end(); ++ih){
         out.push_back(ih->first);
     }
-    return(out);
+    return out;
 }
 
 NumericVector makepowers(const hyper2 &H){  // takes a hyper2, returns powers
@@ -48,7 +48,7 @@ NumericVector makepowers(const hyper2 &H){  // takes a hyper2, returns powers
     for(it=H.begin(); it != H.end(); ++it){
         out(i++) = it->second;   // initialize-and-fill is more efficient than  out.push_back(it->second)
     }
-    return(out);
+    return out;
 }
 
 List retval(const hyper2 &H){  // used to return a list to R
@@ -77,13 +77,13 @@ List addL(
             const bracket b = it->first;
             h1[b] += h2[b];  
         }
-        return(retval(h1));
+        return retval(h1);
     } else {  // L2 is bigger
         for (it=h1.begin(); it != h1.end(); ++it){
             const bracket b = it->first;
             h2[b] += h1[b];  
         }
-        return(retval(h2));
+        return retval(h2);
     }
 }
 

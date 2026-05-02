@@ -10,7 +10,7 @@ weightedplayervector makeweightedplayervector3(const CharacterVector &players, c
             out[(string) players[i]] += weights[i];
         }
     }
-    return(out);
+    return out;
 }
 
 hyper3 prepareL3(const List &L, const List &W, const NumericVector &d){
@@ -27,7 +27,7 @@ hyper3 prepareL3(const List &L, const List &W, const NumericVector &d){
             H[(weightedplayervector) makeweightedplayervector3(players, weights)] += d[i];
         } // else do nothing, a zero power 
     } // i loop closes
-    return(H);
+    return H;
 }
 
 playerstrengths preparepmap3(const NumericVector &probs, const CharacterVector &pnames){// hamilton=0.7,vettel=0.2,button=0.1
@@ -36,7 +36,7 @@ playerstrengths preparepmap3(const NumericVector &probs, const CharacterVector &
     for(size_t i=0; i < (size_t) probs.length() ; i++){
         out[(string) pnames[i]] = probs[i];
     }
-    return(out);
+    return out;
 }
 
 List makebrackets3(const hyper3 &H){// Returns a list of players, eg list('a',c('a','b'),c('a','xt'))
@@ -51,7 +51,7 @@ List makebrackets3(const hyper3 &H){// Returns a list of players, eg list('a',c(
         }
         out.push_back(t);
     }
-    return(out);
+    return out;
 }
 
 List makeweights3(const hyper3 &H){// Returns a list of weights, eg list(1,1:2,2.2)
@@ -68,7 +68,7 @@ List makeweights3(const hyper3 &H){// Returns a list of weights, eg list(1,1:2,2
         }
         out.push_back(t);
      }
-     return(out);
+     return out;
  }
  
 NumericVector makepowers3(const hyper3 &H){
@@ -78,7 +78,7 @@ NumericVector makepowers3(const hyper3 &H){
     for(auto it=H.begin(); it != H.end(); ++it){
         out(i++) = it->second;
     }
-    return(out);
+    return out;
 }
 
 List retval3(const hyper3 &H){  // used to return a list to R
@@ -109,13 +109,13 @@ List addL3(
             const weightedplayervector n = it->first;
             h1[n] += h2[n];  // the meat
         }
-        return(retval3(h1));
+        return retval3(h1);
     } else {  // L2 is bigger
         for (auto it=h1.begin(); it != h1.end(); ++it){
             const weightedplayervector n = it->first;
             h2[n] += h1[n];  
         }
-        return(retval3(h2));
+        return retval3(h2);
     }
 }
 
