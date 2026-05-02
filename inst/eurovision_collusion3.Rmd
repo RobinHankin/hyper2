@@ -1,0 +1,108 @@
+---
+title: "Eurovision Song Contest: collusion 2022 USING HYPER3"
+output: bookdown::html_document2
+author: "R. K. S. Hankin"
+bibliography: hyper2.bib
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("magrittr")
+options("digits" = 5)
+abbreviated <- TRUE  # change to FALSE for full names
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+<font size="1"> (takes a "long time" to run without cache; the time is spent in chunk `calculateprofilelike`)
+</font>
+
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  The file `eurovision2022_jury_pre_null.txt`, used
+below, refers to the jury vote for the 2022 Eurovision Song contest,
+pre-nullification; data supplied by Riley Uttley.
+First we specify the matrix as appearing in the Wikipedia page:
+
+```{r, specifymatrix}
+eurovision_table <- as.matrix(read.table("eurovision2022_jury_pre_null.txt",sep=","))
+excluded <- c(2, 8, 11, 14,15,16)
+
+contestants <- c(
+"AU", # Australia        1
+"AZ", # Azerbaijan       2
+"BE", # Belgijm          3
+"CY", # Cyprus           4
+"CZ", # Czech republic   5
+"EE", # Estonia          6
+"FI", # Finland          7
+"GE", # Georgia          8 
+"IE", # Ireland          9 
+"IL", # Israel          10 
+"ME", # Montenegro      11
+"MK", # North Macedonia 12
+"MT", # Malta           13 
+"PL", # Poland          14 
+"RO", # Romania         15
+"SM", # San Marino      16
+"RS", # Serbia          17
+"SE"  # Sweden          18
+)
+removed <- contestants[excluded]
+non_competitors <- c("DE","ES","UK") # Germany, Spain, UK
+juries <- c(contestants, non_competitors)
+dimnames(eurovision_table) <- list(contestants=contestants, juries=juries)
+eurovision_table
+(points <- sort(unique(c(eurovision_table)),decreasing=TRUE))
+preference <- eurovision_table*0  
+for(i in seq_along(points)){ preference[eurovision_table == points[i]] <- i }
+preference
+```
+
+
+```{r, morestuff,cache=TRUE}
+H_excluded <- hyper2()
+H_included <- hyper2()
+```
+        
+```{r makeH, cache=TRUE}
+for(i in excluded){
+    d <- preference[,i,drop=TRUE]
+    d[d==11] <- 0
+    newH <- suppfun(d[!is.na(d)])
+    H_excluded <- H_excluded + newH
+} # i loop closes
+
+for(i in seq_along(ncol(preference))){
+    if(i %notin% excluded){
+        d <- preference[,i,drop=TRUE]
+        d[d==11] <- 0
+        newH <- suppfun(d[!is.na(d)])
+        H_included <- H_included + newH
+    }
+} # i loop closes
+```
+
+
+```{r findans, cache=TRUE}
+pnames(H_included)
+pnames(H_excluded)
+H_excluded <- H_excluded |> pwa23_multiple(contestants[excluded], "collusion")
+pnames(H_excluded)
+```
+
+```{r calcH, cache=TRUE}
+H <- H_excluded + as.hyper3(H_included)
+```
+
+
+```{r maxH, cache=TRUE}
+pnames(H)
+pnames(H_excluded)
+pnames(H_included)
+```
+
