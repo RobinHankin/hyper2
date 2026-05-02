@@ -1014,13 +1014,18 @@ rorder_single <- function(p){
   return(H)
 }
 
-`pwa` <- function(H,pwa,chameleon='S'){  
+`pwa` <- function(H,pwa,chameleon='S', hyper3=FALSE){
+    if(hyper3){return(pwa23(H, pwa, chameleon='S'))}
     stopifnot(is.hyper2(H))
     if(any(pwa %notin% pnames(H))){
-        stop(gettextf("Argument pwa must be a member of pnames (%s).  Value of pwa: %s", paste(pnames(H), collapse = ", "),pwa))
+        stop(gettextf(
+            "Argument pwa (%s) must be a member of pnames (%s).",
+            pwa, paste(pnames(H), collapse = ", ")))
     }
     if(chameleon %in% pnames(H)){
-        stop(gettextf("Argument chameleon must not be a member of pnames (%s).  Value of chameleon: %s", paste(pnames(H), collapse = ", "),pwa))
+        stop(gettextf(
+            "Argument chameleon (%s) must not be a member of pnames (%s)",
+            chameleon, paste(pnames(H), collapse = ", ")))
         }
   
     B <- elements(brackets(H))
