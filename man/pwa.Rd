@@ -66,10 +66,8 @@ conferred.
 Experimental function \code{advantage()} allows one to use idiom such as
 \code{advantage(H, a="steroids")}, which is sometimes more convenient.
 
-Argument \code{a} may be a vector of competitors: each bracket
-containing any member of \code{a} has \code{S} added to it.  If \code{a}
-includes more than one competitor, the resulting likelihood function
-does not seem to instantiate any simple situation.
+Argument \code{a} must be of length 1.  To give more than one competitor
+an advantage, use \code{pwa23()}.
 
 Function \code{pwa3()} is the \code{hyper3} equivalent; it modifies the
 weight of specified players.  The named argument mechanism
