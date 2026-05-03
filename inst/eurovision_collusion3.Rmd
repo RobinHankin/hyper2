@@ -52,6 +52,7 @@ contestants <- c(
 "RS", # Serbia          17
 "SE"  # Sweden          18
 )
+
 removed <- contestants[excluded]
 non_competitors <- c("DE","ES","UK") # Germany, Spain, UK
 juries <- c(contestants, non_competitors)
@@ -77,11 +78,13 @@ for(i in excluded){
     H_excluded <- H_excluded + newH
 } # i loop closes
 
-for(i in seq_along(ncol(preference))){
+for(i in seq_len(ncol(preference))){
     if(i %notin% excluded){
         d <- preference[,i,drop=TRUE]
         d[d==11] <- 0
-        newH <- suppfun(d[!is.na(d)])
+	d <- d[!is.na(d)]
+	print(d)
+        newH <- suppfun(d)
         H_included <- H_included + newH
     }
 } # i loop closes
@@ -101,8 +104,23 @@ H <- H_excluded + as.hyper3(H_included)
 
 
 ```{r maxH, cache=TRUE}
-pnames(H)
-pnames(H_excluded)
-pnames(H_included)
+mH_all <- maxp(H)
 ```
 
+
+```{r maxHincluded, cache=TRUE}
+mH_included <- maxp(H_included)
+```
+
+```{r dotest, cache=TRUE}
+result <- specificp.gt.test(H, "collusion",0)
+```
+
+```{r}
+result
+```
+
+```{r}
+H_excluded
+summary(H_excluded)
+```
