@@ -36,8 +36,6 @@ beats("a","b") |> swait(a=0.9)
 ### `advantage()`
 
 
-
-
 Function `pwa()` is nice but a bit cumbersome.  Look:
 
 ```{r}
@@ -47,6 +45,25 @@ H |> advantage(c="steroids")
 
 Nice, eh?
 
+
+The above is good for a single competitor with a single advantage.  We
+would need `hyper3` objects if more than one competitor had the same
+advantage:
+
+```{r}
+suppfun(letters[1:4]) |> pwa23(a='cheat', b='cheat', a='steroids')
+```
+
+Above we see
+
+$$
+\frac{a}{a+b+c+d}\cdot
+\frac{b}{  b+c+d}\cdot
+\frac{c}{    c+d}\longrightarrow
+\frac{a+\text{cheat}+\text{steroids}}{a+b+c+d+2\text{cheat}+\text{steroids}}\cdot
+\frac{b+\text{cheat}}{  b+c+d+\text{cheat}}\cdot
+\frac{c}{    c+d}
+$$
 
 ### References {-}
 
