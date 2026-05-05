@@ -5,6 +5,7 @@
 \packageTitle{hyper2}
 }
 \description{
+  \if{html}{\figure{hyper2.png}{options: style='float: right' alt='logo' width='120'}}
 \packageDescription{hyper2}
 }
 \details{
