@@ -53,9 +53,6 @@ contestants <- c(
 "SE"  # Sweden          18
 )
 
-
-
->>>>>>> refs/remotes/origin/master
 (points <- sort(unique(c(eurovision_table)),decreasing=TRUE))
 preference <- eurovision_table*0  
 for(i in seq_along(points)){ preference[eurovision_table == points[i]] <- i }
@@ -85,7 +82,6 @@ for(i in seq_len(ncol(preference))){
         d <- preference[,i,drop=TRUE]
         d[d==11] <- 0
         d <- d[!is.na(d)]
-        print(d)
         newH <- suppfun(d)
         H_included <- H_included + newH
     }
@@ -116,20 +112,6 @@ H_excluded <- H_excluded |> pwa23_multiple(contestants[excluded], "collusion")
 H <- H_excluded + as.hyper3(H_included)
 ```
 
-
-```{r testcollusionzero, cache=TRUE}
-ans <- specificp.gt.test(H, "collusion", 0)
-```
-
-```{r showans}
-ans
->>>>>>> refs/remotes/origin/master
-```
-
-
-```{r maxHincluded, cache=TRUE}
-mH_included <- maxp(H_included)
-```
 
 ```{r dotest, cache=TRUE}
 result <- specificp.gt.test(H, "collusion",0)
