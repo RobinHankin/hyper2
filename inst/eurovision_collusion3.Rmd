@@ -29,39 +29,41 @@ pre-nullification; data supplied by Riley Uttley.
 First we specify the matrix as appearing in the Wikipedia page:
 
 ```{r, specifymatrix}
-eurovision_table <- as.matrix(read.table("eurovision2022_jury_pre_null.txt",sep=","))
-excluded <- c(2, 8, 11, 14,15,16)
+eurovision_table <- as.matrix(read.table("eurovision2022_jury_pre_null.txt", header = TRUE))
+excluded <- c(2, 8, 12, 14,15,16)
 
 contestants <- c(
 "AU", # Australia        1
-"AZ", # Azerbaijan       2
+"AZ", # Azerbaijan       2 excluded
 "BE", # Belgijm          3
 "CY", # Cyprus           4
 "CZ", # Czech republic   5
 "EE", # Estonia          6
 "FI", # Finland          7
-"GE", # Georgia          8 
+"GE", # Georgia          8 excluded
 "IE", # Ireland          9 
 "IL", # Israel          10 
-"ME", # Montenegro      11
-"MK", # North Macedonia 12
-"MT", # Malta           13 
-"PL", # Poland          14 
-"RO", # Romania         15
-"SM", # San Marino      16
+"MT", # Malta           11 
+"ME", # Montenegro      12 excluded 
+"MK", # North Macedonia 13
+"PL", # Poland          14 excluded
+"RO", # Romania         15 excluded
+"SM", # San Marino      16 excluded
 "RS", # Serbia          17
 "SE"  # Sweden          18
 )
 
-removed <- contestants[excluded]
-non_competitors <- c("DE","ES","UK") # Germany, Spain, UK
-juries <- c(contestants, non_competitors)
-dimnames(eurovision_table) <- list(contestants=contestants, juries=juries)
-eurovision_table
+
+
+>>>>>>> refs/remotes/origin/master
 (points <- sort(unique(c(eurovision_table)),decreasing=TRUE))
 preference <- eurovision_table*0  
 for(i in seq_along(points)){ preference[eurovision_table == points[i]] <- i }
 preference
+```
+
+```{r}
+contestants[excluded]
 ```
 
 
@@ -82,20 +84,32 @@ for(i in seq_len(ncol(preference))){
     if(i %notin% excluded){
         d <- preference[,i,drop=TRUE]
         d[d==11] <- 0
-	d <- d[!is.na(d)]
-	print(d)
+        d <- d[!is.na(d)]
+        print(d)
         newH <- suppfun(d)
         H_included <- H_included + newH
     }
 } # i loop closes
 ```
 
+```{r}
+H_excluded
+```
+
+```{r findmaxboth, cache=TRUE}
+mHex <- maxp(H_excluded)
+mHin <- maxp(H_included)
+```
+
+```{r plotboth}
+dotchart(mHex)
+dotchart(mHin)
+```
+
+
 
 ```{r findans, cache=TRUE}
-pnames(H_included)
-pnames(H_excluded)
 H_excluded <- H_excluded |> pwa23_multiple(contestants[excluded], "collusion")
-pnames(H_excluded)
 ```
 
 ```{r calcH, cache=TRUE}
@@ -103,8 +117,13 @@ H <- H_excluded + as.hyper3(H_included)
 ```
 
 
-```{r maxH, cache=TRUE}
-mH_all <- maxp(H)
+```{r testcollusionzero, cache=TRUE}
+ans <- specificp.gt.test(H, "collusion", 0)
+```
+
+```{r showans}
+ans
+>>>>>>> refs/remotes/origin/master
 ```
 
 
