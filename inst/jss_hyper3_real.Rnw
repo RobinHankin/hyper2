@@ -31,7 +31,7 @@ engine='R', tidy=FALSE
 )
 @
 
-<<preliminaries, echo=FALSE, results='hide'>>=
+<<preliminaries, echo=FALSE, results=hide>>=
 options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
 library("hyper2")
 library("magrittr")
