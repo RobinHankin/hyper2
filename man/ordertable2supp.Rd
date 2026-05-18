@@ -12,7 +12,7 @@
   
 }
 \usage{
-ordertable2supp(x, noscore, incomplete=TRUE)
+ordertable2supp(x, noscore, noninformative, incomplete=TRUE)
 ordervec2supp(d)
 }
 \arguments{
@@ -25,10 +25,18 @@ ordervec2supp(d)
     not place} irregardless].  The default \code{TRUE} allows for gaps.
     This is useful if we are considering the first few lines of an
     ordertable because there might be missing ranks.}
-  \item{noscore}{Character vector giving the abbreviations
-    for a non-finishing status such as \dQuote{did not finish}
-    or \dQuote{disqualified}.  A missing argument is interpreted as 
-    \code{c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")}}
+
+  \item{noscore}{Character vector giving the abbreviations for a
+    non-finishing status such as \dQuote{did not finish} or
+    \dQuote{disqualified}.  A missing argument is interpreted as
+    \code{c("Ret", "WD", "DNS", "DSQ", "DNP", "NC", "DNQ", "EX",
+      "Sick")}.  A non-finishing status is equivalent to coming (joint)
+    last}
+  \item{noninformative}{As for \code{noscore}, a character vector giving
+    abbreviations for noninformative statuses.  For example, in the 2025
+    MotoGP world championship, Marc Marquez declined to compete in the
+    last four races on the grounds that he already had enough points to
+    guarantee victory}
 }
 \details{
 

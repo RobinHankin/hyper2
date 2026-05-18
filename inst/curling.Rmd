@@ -89,6 +89,11 @@ grid()
 
 The two likelihood systems have very different evaluates.
 
+## Note
+
+We can implement this using the `uninformative` argument of `ordertable2supp()`
+
+
 ### Package dataset {-}
 
 Following lines create `curling.rda`, residing in the `data/` directory of the package.

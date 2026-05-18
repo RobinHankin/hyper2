@@ -968,17 +968,21 @@ rorder_single <- function(p){
     return(out)
 }
 
-`ordertable2supp` <- function(x, noscore, incomplete=TRUE){
+`ordertable2supp` <- function(x, noscore, noninformative, incomplete=TRUE){
     if(missing(noscore)){
         noscore <- c("Ret", "WD", "DNS", "DSQ", "DNP", "NC", "DNQ", "EX", "Sick")
+    }
+    if(missing(noninformative)){
+        noninformative <- c("dead", "won")
     }
     venues <- colnames(x)
 
     ## Now create a numeric matrix, fmat.  Two steps: first, count
-    ## any no-score as zero:
+    ## any no-score as zero (and noninformative scores as -1):
   
     jj <- apply(x,2,function(y){
         if(any(y %in% noscore)){y[y%in%noscore] <- 0}
+        if(any(y %in% noninformative)){y[y %in% noninformative] <- -1}
         return(y)
     })
     
@@ -994,6 +998,7 @@ rorder_single <- function(p){
     for(i in seq_len(nrow(fmat))){
         o <- fmat[i,,drop=TRUE]
         if(incomplete){ o[o>0] <- rank(o[o>0]) }
+        o <- o[o >= 0] # remove uninformative observations
         out %<>% add(ordervec2supp(o))
     } # i loop closes
     return(out)
