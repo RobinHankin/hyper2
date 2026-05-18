@@ -89,13 +89,15 @@ grid()
 
 The two likelihood systems have very different evaluates.
 
-
 ### Package dataset {-}
 
 Following lines create `curling.rda`, residing in the `data/` directory of the package.
 
-```{r,label=savecurlingdataset}
-save(curling_table,curling1,curling2,curling1_maxp,curling2_maxp,file="curling.rda")
+```{r, label=savecurlingdataset}
+save(
+curling_table, curling1, curling2, curling1_maxp, curling2_maxp,
+file="curling.rda"
+)
 ```
 
 ### References {-}
