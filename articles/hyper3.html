@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hyper2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2-2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2-3</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@ the probability that
 beats
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>
 is
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>i</mi></msub><mi>/</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mi>i</mi></msub><mo>+</mo><msub><mi>p</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">p_i/(p_i+p_j)</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>i</mi></msub><mi>/</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>p</mi><mi>i</mi></msub><mo>+</mo><msub><mi>p</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">p_i/(p_i+p_j)</annotation></semantics></math>.
 It is conventional to normalise so that the total strength is unity, and
 to identify a competitor with his strength. Given an order statistic,
 say
@@ -161,7 +161,7 @@ datasets.</p>
 <p>However, the majority of software is written in the R computer
 language <span class="citation">(<a href="#ref-rcore2023"> Core Team
 2023</a>)</span>, which includes extensive functionality for working
-with such likelihood functions: <span class="citation">Turner et al. (<a href="#ref-turner2020">2020</a>)</span> discuss several implementations
+with such likelihood functions: <span class="citation"><span class="nocase">Turner et al.</span> (<a href="#ref-turner2020">2020</a>)</span> discuss several implementations
 from a computational perspective. The <code>BradleyTerry</code> package
 <span class="citation">(<a href="#ref-firth2005">Firth 2005</a>)</span>
 considers pairwise comparisons using <code>glm</code> but cannot deal
@@ -170,10 +170,10 @@ package <span class="citation">(<a href="#ref-turner2012">Turner and
 Firth 2012</a>)</span> implements a flexible user interface and wider
 range of models to be fitted to pairwise comparison datasets,
 specifically simple random effects. The <code>PlackettLuce</code>
-package <span class="citation">(<a href="#ref-turner2020">Turner et al.
-2020</a>)</span> generalizes this to likelihood functions of the form of
-the Plackett-Luce equation above, and applies the Poisson transformation
-of <span class="citation">Baker (<a href="#ref-baker1994">1994</a>)</span> to express the problem as a
+package <span class="citation">(<a href="#ref-turner2020"><span class="nocase">Turner et al.</span> 2020</a>)</span> generalizes this to
+likelihood functions of the form of the Plackett-Luce equation above,
+and applies the Poisson transformation of <span class="citation">Baker
+(<a href="#ref-baker1994">1994</a>)</span> to express the problem as a
 log-linear model. The <code>hyper2</code> package, in contrast, gives a
 consistent language interface to create and manipulate likelihood
 functions over the simplex
@@ -181,7 +181,7 @@ functions over the simplex
 p_i=1\right.\right\rbrace</annotation></semantics></math>. A further
 extension in the package generalizes this likelihood function to
 functions of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐩</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">{\mathbf
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐩</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">{\mathbf
 p}=(p_1,\ldots,p_n)</annotation></semantics></math> with</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℒ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐩</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><munder><mo>∏</mo><mrow><mi>s</mi><mo>∈</mo><mi>𝒪</mi></mrow></munder><msup><mrow><mo stretchy="true" form="prefix">(</mo><munder><mo>∑</mo><mrow><mi>i</mi><mo>∈</mo><mi>s</mi></mrow></munder><msub><mi>p</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><msub><mi>n</mi><mi>s</mi></msub></msup><mspace width="2.0em"></mspace><mtext mathvariant="normal">Hyperdirichlet likelihood</mtext></mrow><annotation encoding="application/x-tex">\begin{equation}\label{hyper2likelihood}
 \mathcal{L}\left(\mathbf{p}\right)=
@@ -204,17 +204,17 @@ thereby admitting a wide range of non-standard nulls such as order
 statistics on the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>i</mi></msub><annotation encoding="application/x-tex">p_i</annotation></semantics></math><span class="citation">(<a href="#ref-hankin2017_rmd">Hankin
 2017</a>)</span>. It becomes possible to analyse a wider range of
-likelihood functions than standard Plackett-Luce <span class="citation">(<a href="#ref-turner2020">Turner et al.
-2020</a>)</span>. For example, results involving incomplete order
-statistics or teams are tractable. Further, the introduction of reified
-entities (monsters) allows one to consider draws <span class="citation">(<a href="#ref-hankin2010">Hankin 2010</a>)</span>,
-noncompetitive tactics such as collusion <span class="citation">(<a href="#ref-hankin2020">Hankin 2020</a>)</span>, and the phenomenon of
-team cohesion wherein the team becomes stronger than the sum of its
-parts <span class="citation">(<a href="#ref-hankin2010">Hankin
-2010</a>)</span>. Recent versions of the package include experimental
-functionality <code><a href="../reference/ordervec2supp3.html">cheering()</a></code> to investigate the relaxing of the
-assumption of conditional independence of the forward-ranking
-process.</p>
+likelihood functions than standard Plackett-Luce <span class="citation">(<a href="#ref-turner2020"><span class="nocase">Turner
+et al.</span> 2020</a>)</span>. For example, results involving
+incomplete order statistics or teams are tractable. Further, the
+introduction of reified entities (monsters) allows one to consider draws
+<span class="citation">(<a href="#ref-hankin2010">Hankin
+2010</a>)</span>, noncompetitive tactics such as collusion <span class="citation">(<a href="#ref-hankin2020">Hankin 2020</a>)</span>, and
+the phenomenon of team cohesion wherein the team becomes stronger than
+the sum of its parts <span class="citation">(<a href="#ref-hankin2010">Hankin 2010</a>)</span>. Recent versions of the
+package include experimental functionality <code><a href="../reference/ordervec2supp3.html">cheering()</a></code> to
+investigate the relaxing of the assumption of conditional independence
+of the forward-ranking process.</p>
 <p>Here I present a different generalization. Consider a race in which
 there are six runners 1-6 but we happen to know that three of the
 runners (1,2,3) are clones of strength
@@ -422,16 +422,16 @@ The Plackett-Luce likelihood function would be</p>
 <p>and in this case we know that
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>+</mo><mi>b</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">a+b=1</annotation></semantics></math>
 so this is equal to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℒ</mi><mo>=</mo><mi>ℒ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>1</mn><mo>+</mo><mi>a</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\mathcal{L}=\mathcal{L}(a)=\frac{a(1-a)}{1+a}</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℒ</mi><mo>=</mo><mi>ℒ</mi><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mn>1</mn><mo>+</mo><mi>a</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\mathcal{L}=\mathcal{L}(a)=\frac{a(1-a)}{1+a}</annotation></semantics></math>.
 The score would be given by</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>d</mi><mi>ℒ</mi></mrow><mrow><mi>d</mi><mi>a</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mn>2</mn><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mfrac><mo>=</mo><mfrac><mrow><mn>1</mn><mo>−</mo><mn>2</mn><mi>a</mi><mo>−</mo><msup><mi>a</mi><mn>2</mn></msup></mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}\label{aba_mle}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>d</mi><mi>ℒ</mi></mrow><mrow><mi>d</mi><mi>a</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mn>2</mn><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>1</mn><mo>−</mo><mn>2</mn><mi>a</mi><mo>−</mo><msup><mi>a</mi><mn>2</mn></msup></mrow><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}\label{aba_mle}
 \frac{d\mathcal{L}}{da}=\frac{(1+a)(1-2a)-a(1-a)}{(1+a)^2}=
 \frac{1-2a-a^2}{(1+a)^2}
 \end{equation}</annotation></semantics></math></p>
 <p>and this will be zero at
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mn>2</mn></msqrt><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sqrt{2}-1</annotation></semantics></math>;
 we also note that
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>ℒ</mi><mi>/</mi><mi>d</mi><msup><mi>a</mi><mn>2</mn></msup><mo>=</mo><mo>−</mo><mn>4</mn><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo>−</mo><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">d^2\mathcal{L}/da^2=-4(1+a)^{-3}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>ℒ</mi><mi>/</mi><mi>d</mi><msup><mi>a</mi><mn>2</mn></msup><mo>=</mo><mi>−</mi><mn>4</mn><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><msup><mo stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">d^2\mathcal{L}/da^2=-4(1+a)^{-3}</annotation></semantics></math>,
 manifestly strictly negative for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>a</mi><mo>≤</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">0\leq a\leq 1</annotation></semantics></math>:
 the root is a maximum.</p>
@@ -440,22 +440,22 @@ the root is a maximum.</p>
 <pre><code><span><span class="co">##         a         b </span></span>
 <span><span class="co">## 0.4142108 0.5857892</span></span></code></pre>
 <p>Above, we see close agreement with the theoretical value of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msqrt><mn>2</mn></msqrt><mo>−</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>−</mo><msqrt><mn>2</mn></msqrt><mo stretchy="true" form="postfix">)</mo></mrow><mo>≃</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.414</mn><mo>,</mo><mn>0.586</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(\sqrt{2}-1,2-\sqrt{2})\simeq (0.414,0.586)</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><msqrt><mn>2</mn></msqrt><mo>−</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>−</mo><msqrt><mn>2</mn></msqrt><mo stretchy="false" form="postfix">)</mo><mo>≃</mo><mo stretchy="false" form="prefix">(</mo><mn>0.414</mn><mo>,</mo><mn>0.586</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\sqrt{2}-1,2-\sqrt{2})\simeq (0.414,0.586)</annotation></semantics></math>.
 Observe that the maximum likelihood estimate for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>
 is strictly less than 0.5, even though the finishing order is symmetric.
 Using
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℒ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>1</mn><mo>+</mo><mi>a</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\mathcal{L}(a)=\frac{a(1-a)}{1+a}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℒ</mi><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mn>1</mn><mo>+</mo><mi>a</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\mathcal{L}(a)=\frac{a(1-a)}{1+a}</annotation></semantics></math>,
 we can show that
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>log</mo><mi>ℒ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mover><mi>a</mi><mo accent="true">̂</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>log</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>3</mn><mo>−</mo><mn>2</mn><msqrt><mn>2</mn></msqrt><mo stretchy="true" form="postfix">)</mo></mrow><mo>≃</mo><mo>−</mo><mn>1.76</mn></mrow><annotation encoding="application/x-tex">\log\mathcal{L}(\hat{a})=\log\left(3-2\sqrt{2}\right)\simeq -1.76</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mi>ℒ</mi><mo stretchy="false" form="prefix">(</mo><mover><mi>a</mi><mo accent="true">̂</mo></mover><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>3</mn><mo>−</mo><mn>2</mn><msqrt><mn>2</mn></msqrt><mo stretchy="true" form="postfix">)</mo></mrow><mo>≃</mo><mi>−</mi><mn>1.76</mn></mrow><annotation encoding="application/x-tex">\log\mathcal{L}(\hat{a})=\log\left(3-2\sqrt{2}\right)\simeq -1.76</annotation></semantics></math>,
 where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>a</mi><mo accent="true">̂</mo></mover><mo>=</mo><msqrt><mn>2</mn></msqrt><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\hat{a}=\sqrt{2}-1</annotation></semantics></math>
 is the maximum likelihood estimate for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>.
 Defining
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒮</mi><mo>=</mo><mo>log</mo><mi>ℒ</mi></mrow><annotation encoding="application/x-tex">\mathcal{S}=\log\mathcal{L}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒮</mi><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mi>ℒ</mi></mrow><annotation encoding="application/x-tex">\mathcal{S}=\log\mathcal{L}</annotation></semantics></math>
 as the support [log-likelihood] we have</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒮</mi><mo>=</mo><mi>𝒮</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>log</mo><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>1</mn><mo>+</mo><mi>a</mi></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mo>log</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>3</mn><mo>−</mo><mn>2</mn><msqrt><mn>2</mn></msqrt><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{equation}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒮</mi><mo>=</mo><mi>𝒮</mi><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mn>1</mn><mo>+</mo><mi>a</mi></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>3</mn><mo>−</mo><mn>2</mn><msqrt><mn>2</mn></msqrt><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{equation}
 \mathcal{S}=\mathcal{S}(a)=\log\left(\frac{a(1-a)}{1+a}\right)-\log\left(3-2\sqrt{2}\right)
 \end{equation}</annotation></semantics></math></p>
 <p>as a standard support function which has a maximum value of zero when
@@ -497,11 +497,11 @@ interval for
 With an
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>-units
 of support criterion the analytical solution to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒮</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>−</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">\mathcal{S}(p)=-n</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒮</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>−</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">\mathcal{S}(p)=-n</annotation></semantics></math>
 is given by defining
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>=</mo><mo>log</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>3</mn><mo>−</mo><mn>2</mn><msqrt><mn>2</mn></msqrt><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">X=\log(3-2\sqrt{2})-n</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mn>3</mn><mo>−</mo><mn>2</mn><msqrt><mn>2</mn></msqrt><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">X=\log(3-2\sqrt{2})-n</annotation></semantics></math>
 and solving
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">p(1-p)/(1+p)=X</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">p(1-p)/(1+p)=X</annotation></semantics></math>,
 or
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mo>±</mo></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>X</mi><mo>±</mo><msqrt><mrow><mn>1</mn><mo>+</mo><mn>4</mn><mi>X</mi><mo>+</mo><msup><mi>X</mi><mn>2</mn></msup></mrow></msqrt><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">p_\pm=\left(1-X\pm\sqrt{1+4X+X^2}\right)/2</annotation></semantics></math>,
 the two roots being the lower and upper limits of the credible interval;
@@ -532,7 +532,7 @@ with probability
 (ii),
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>≻</mo><mi>b</mi><mo>≻</mo><mi>a</mi></mrow><annotation encoding="application/x-tex">a\succ b\succ a</annotation></semantics></math>,
 with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mn>2</mn><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mfrac><annotation encoding="application/x-tex">\frac{2a(1-a)}{(1+a)}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mn>2</mn><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><annotation encoding="application/x-tex">\frac{2a(1-a)}{(1+a)}</annotation></semantics></math>,
 (iii),
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>≻</mo><mi>a</mi><mo>≻</mo><mi>a</mi></mrow><annotation encoding="application/x-tex">b\succ a\succ a</annotation></semantics></math>
 at
@@ -540,7 +540,7 @@ at
 Likelihood functions for these order statistics are given in the figure
 below. It can be shown that the Fisher information for such observations
 is</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℐ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>2</mn><mfrac><mrow><mn>1</mn><mo>+</mo><mi>a</mi><mo>+</mo><msup><mi>a</mi><mn>2</mn></msup></mrow><mrow><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℐ</mi><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>2</mn><mfrac><mrow><mn>1</mn><mo>+</mo><mi>a</mi><mo>+</mo><msup><mi>a</mi><mn>2</mn></msup></mrow><mrow><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>a</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
 \mathcal{I}(a)=2\frac{1+a+a^2}{a(1-a)(1+a)^2}
 \end{equation}</annotation></semantics></math></p>
 <p>which has a minimum of about
@@ -588,8 +588,8 @@ b&gt;a&gt;a. Horizontal dotted line represents two units of support
 <h3 id="nonfinishers">Nonfinishers<a class="anchor" aria-label="anchor" href="#nonfinishers"></a>
 </h3>
 <p>If we allow non-finishers—that is, a subset of competitors who are
-beaten by all the ranked competitors (<span class="citation">(<a href="#ref-turner2020">Turner et al. 2020</a>)</span> call this a
-<em>top
+beaten by all the ranked competitors (<span class="citation">(<a href="#ref-turner2020"><span class="nocase">Turner et al.</span>
+2020</a>)</span> call this a <em>top
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
 ranking</em>), there is another nontrivial order statistic, viz
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>≻</mo><mi>b</mi><mo>≻</mo><mrow><mo stretchy="true" form="prefix">{</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">a\succ b\succ\left\lbrace a,b\right\rbrace</annotation></semantics></math>
@@ -602,7 +602,7 @@ came second, and one of each of
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math>
 failed to finish]. Now</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℒ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mi>a</mi><mrow><mn>2</mn><mi>a</mi><mo>+</mo><mn>2</mn><mi>b</mi></mrow></mfrac><mo>⋅</mo><mfrac><mi>b</mi><mrow><mi>a</mi><mo>+</mo><mn>2</mn><mi>b</mi></mrow></mfrac><mo>∝</mo><mfrac><mrow><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>2</mn><mo>−</mo><mi>a</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℒ</mi><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mi>a</mi><mrow><mn>2</mn><mi>a</mi><mo>+</mo><mn>2</mn><mi>b</mi></mrow></mfrac><mo>⋅</mo><mfrac><mi>b</mi><mrow><mi>a</mi><mo>+</mo><mn>2</mn><mi>b</mi></mrow></mfrac><mo>∝</mo><mfrac><mrow><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mn>2</mn><mo>−</mo><mi>a</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
 \mathcal{L}(a)=
 \frac{a}{2a+2b}\cdot
 \frac{b}{ a+2b}\propto\frac{a(1-a)}{2-a}
@@ -636,8 +636,8 @@ statistic of the type considered above, the Mann-Whitney-Wilcoxon test
 <span class="citation">(<a href="#ref-mann1947">Mann and Whitney 1947,
 wilcoxon1945</a>)</span> assesses a null of identity of underlying
 distributions <span class="citation">(<a href="#ref-ahmad1996">Ahmad
-1996</a>)</span>. Consider the chorioamnion dataset <span class="citation">(<a href="#ref-hollander2013">Hollander, Wolfe, and
-Chicken 2013</a>)</span>, used in <code>wilcox.test.Rd</code>:</p>
+1996</a>)</span>. Consider the chorioamnion dataset <span class="citation">(<a href="#ref-hollander2013">Hollander et al.
+2013</a>)</span>, used in <code>wilcox.test.Rd</code>:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.83</span>, <span class="fl">1.89</span>, <span class="fl">1.04</span>, <span class="fl">1.45</span>, <span class="fl">1.38</span>, <span class="fl">1.91</span>, <span class="fl">1.64</span>, <span class="fl">0.73</span>, <span class="fl">1.46</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.15</span>, <span class="fl">0.88</span>, <span class="fl">0.90</span>, <span class="fl">0.74</span>, <span class="fl">1.21</span><span class="op">)</span></span></code></pre></div>
@@ -804,7 +804,7 @@ lines; thus the null is not rejected
 </p>
 </div>
 <p>We see that the credible range for
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>log</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mtext mathvariant="normal">Vad</mtext></msub><mi>/</mi><msub><mi>p</mi><mtext mathvariant="normal">Ves</mtext></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\log\left(p_{\mbox{Vad}}/
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mtext mathvariant="normal">Vad</mtext></msub><mi>/</mi><msub><mi>p</mi><mtext mathvariant="normal">Ves</mtext></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\log\left(p_{\mbox{Vad}}/
 p_{\mbox{Ves}}\right)</annotation></semantics></math> includes zero and
 we have no strong evidence for these athletes having different
 (Bradley-Terry) strengths.</p>
@@ -965,7 +965,7 @@ techniques <span class="citation">(<a href="#ref-hankin2020">Hankin
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-ahmad1996" class="csl-entry">
 Ahmad, I. A. 1996. <span>“A Class of
 <span>M</span>ann-Whitney-<span>W</span>ilcoxon Type Statistics.”</span>
@@ -984,8 +984,8 @@ Codling, S. 2017. <em>Speed Read <span>F1</span></em>. Motorbooks.
 </div>
 <div id="ref-rcore2023" class="csl-entry">
 Core Team. 2023. <em>: A Language and Environment for Statistical
-Computing</em>. Vienna, Austria: <span>Foundation</span> for
-<span>Statistical</span> <span>Computing</span>. <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a>.
+Computing</em>. <span>Foundation</span> for <span>Statistical</span>
+<span>Computing</span>. <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a>.
 </div>
 <div id="ref-edwards1972" class="csl-entry">
 Edwards, A. W. F. 1972. <em>Likelihood</em>. John Hopkins University
@@ -1002,24 +1002,24 @@ Distribution.”</span> <em>Journal of Statistical Software</em> 33 (11):
 1–18. <a href="https://doi.org/10.18637/jss.v033.i11" class="external-link">https://doi.org/10.18637/jss.v033.i11</a>.
 </div>
 <div id="ref-hankin2017_rmd" class="csl-entry">
-———. 2017. <span>“Partial Rank Data with the
+Hankin, R. K. S. 2017. <span>“Partial Rank Data with the
 <span><code>hyper2</code></span> Package: Likelihood Functions for
 Generalized <span>B</span>radley-<span>T</span>erry Models.”</span>
 <em>The R Journal</em> 9 (2): 429–39.
 </div>
 <div id="ref-hankin2020" class="csl-entry">
-———. 2020. <span>“A Generalization of the
+Hankin, R. K. S. 2020. <span>“A Generalization of the
 <span>B</span>radley-<span>T</span>erry Model for Draws in Chess with an
 Application to Collusion.”</span> <em>Journal of Economic Behavior and
 Organization</em> 180: 325–33.
 </div>
 <div id="ref-hankin2022" class="csl-entry">
-———. 2022. <em>: Non-Ordered Vectors</em>. <a href="https://github.com/RobinHankin/disordR" class="external-link">https://github.com/RobinHankin/disordR</a>.
+Hankin, R. K. S. 2022. <em>: Non-Ordered Vectors</em>. <a href="https://github.com/RobinHankin/disordR" class="external-link">https://github.com/RobinHankin/disordR</a>.
 </div>
 <div id="ref-hankin2024_hyper3" class="csl-entry">
-———. 2024. <span>“Generalized <span>P</span>lackett-<span>L</span>uce
-Likelihoods.”</span> <em>Journal of Statistical Software</em> 109 (8).
-<a href="https://doi.org/10.18637/jss.v109.i08" class="external-link">https://doi.org/10.18637/jss.v109.i08</a>.
+Hankin, R. K. S. 2024. <span>“Generalized
+<span>P</span>lackett-<span>L</span>uce Likelihoods.”</span> <em>Journal
+of Statistical Software</em> 109 (8). <a href="https://doi.org/10.18637/jss.v109.i08" class="external-link">https://doi.org/10.18637/jss.v109.i08</a>.
 </div>
 <div id="ref-hollander2013" class="csl-entry">
 Hollander, M., D. A. Wolfe, and E. Chicken. 2013. <em>Nonparametric
@@ -1060,9 +1060,9 @@ Package.”</span> <em>Journal of Statistical Software</em> 48 (9): 1–21.
 <a href="https://doi.org/10.18637/jss.v048.i09" class="external-link">https://doi.org/10.18637/jss.v048.i09</a>.
 </div>
 <div id="ref-turner2020" class="csl-entry">
-Turner, H. L., Jacob van Etten, David Firth, and Ioannis Kosmidis. 2020.
-<span>“Modelling Rankings in : The Package.”</span> <em>Computational
-Statistics</em> 35: 1027–57. <a href="https://doi.org/10.1007/s00180-020-00959-3" class="external-link">https://doi.org/10.1007/s00180-020-00959-3</a>.
+<span class="nocase">Turner, H. L., Jacob van Etten, David Firth, and
+Ioannis Kosmidis</span>. 2020. <span>“Modelling Rankings in : The
+Package.”</span> <em>Computational Statistics</em> 35: 1027–57. <a href="https://doi.org/10.1007/s00180-020-00959-3" class="external-link">https://doi.org/10.1007/s00180-020-00959-3</a>.
 </div>
 </div>
 </div>

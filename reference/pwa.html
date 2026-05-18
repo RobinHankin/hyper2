@@ -21,7 +21,7 @@ an increased weight (pwa3() for hyper3 objects)."><!-- mathjax --><script src="h
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hyper2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2-2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2-3</span>
       </span>
     </div>
 
@@ -80,15 +80,19 @@ an increased weight (pwa3() for hyper3 objects)."><!-- mathjax --><script src="h
     <div class="ref-description">
 
 
-<p>Confer additional BT strength on specified players, either by
+<p>Confer additional <acronym>BT</acronym> strength on specified players, either by
 introducing a reified entity (<code>pwa()</code> for <code>hyper2</code> objects) or
 an increased weight (<code>pwa3()</code> for <code>hyper3</code> objects).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pwa</span><span class="op">(</span><span class="va">H</span>, <span class="va">pwa</span>, chameleon <span class="op">=</span> <span class="st">"S"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pwa</span><span class="op">(</span><span class="va">H</span>, <span class="va">pwa</span>, chameleon <span class="op">=</span> <span class="st">"S"</span>, hyper3<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">advantage</span><span class="op">(</span><span class="va">H</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">pwa3_single</span><span class="op">(</span><span class="va">H3</span>, <span class="va">pwa</span>, <span class="va">lambda</span><span class="op">)</span></span>
-<span><span class="fu">pwa3</span><span class="op">(</span><span class="va">H3</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pwa3</span><span class="op">(</span><span class="va">H3</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">pwa23_single</span><span class="op">(</span><span class="va">H</span>, <span class="va">pwa</span>, chameleon<span class="op">=</span><span class="st">"S"</span><span class="op">)</span></span>
+<span><span class="fu">pwa23_multiple</span><span class="op">(</span><span class="va">H</span>, <span class="va">pwa</span>, chameleon<span class="op">=</span><span class="st">"S"</span><span class="op">)</span></span>
+<span><span class="fu">pwa23</span><span class="op">(</span><span class="va">H</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -112,6 +116,12 @@ an increased weight (<code>pwa3()</code> for <code>hyper3</code> objects).</p>
   <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
 <dd><p>Value of person with advantage</p></dd>
 
+  <dt id="arg-hyper-">hyper3<a class="anchor" aria-label="anchor" href="#arg-hyper-"></a></dt>
+<dd><p>In function <code>pwa()</code>, Boolean with <code>TRUE</code>
+    meaning to coerce to <code>hyper3</code> form and apply <code>pwa23()</code>,
+    and default <code>FALSE</code> meaning to return an error if a
+    <code>hyper3</code> object would be returned</p></dd>
+
   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Further named arguments; see details</p></dd>
 
@@ -132,10 +142,10 @@ as a reified entity.</p>
 <code>pwa(H, "a")</code> replaces every occurrence of <code>a</code> in <code>H</code>
 with <code>a+S</code>, with <code>S</code> representing the extra strength
 conferred.</p>
-<p>Argument <code>a</code> may be a vector of competitors: each bracket
-containing any member of <code>a</code> has <code>S</code> added to it.  If <code>a</code>
-includes more than one competitor, the resulting likelihood function
-does not seem to instantiate any simple situation.</p>
+<p>Experimental function <code>advantage()</code> allows one to use idiom such as
+<code>advantage(H, a="steroids")</code>, which is sometimes more convenient.</p>
+<p>Argument <code>a</code> must be of length 1.  To give more than one competitor
+an advantage, use <code>pwa23()</code>.</p>
 <p>Function <code>pwa3()</code> is the <code>hyper3</code> equivalent; it modifies the
 weight of specified players.  The named argument mechanism
 [e.g. <code>pwa3(H, e=1.2, f=3.4)</code>] is the same as that of <code>subs()</code>
@@ -144,6 +154,16 @@ argument, and it is a named vector, the elements are interpreted as
 name/value pairs, so <code>pwa3(H, c(e=1.2, f=3.4))</code> works.  Function
 <code>pwa3_single()</code> is a lower-level helper function that takes a
 single player name and its lambda value as second and third arguments.</p>
+<p>Functions in the <code>pwa23()</code> series coerce their first argument to a
+<code><a href="hyper3.html">hyper3()</a></code> object.  They allow multiple entities to have multiple
+reified help, so for example we may say
+<code>pwa23(suppfun(letters[1:5]), b="cheat", b="steroids",
+c="steroids", d="cheat")</code>.  For giving multiple players the same
+advantage [or to give a single player multiple advantages], use
+<code>pwa23_multiple()</code>, for example
+<code>pwa23_multiple(suppfun(letters[1:5]), letters[2:4], "steroids")</code>;
+the recycling is inherited from <code><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste()</a></code>.  Note that if the player
+with advantage does not exist, no change is made to <code>H</code>.</p>
 <p>Nice examples of <code>pwa()</code> are given in <code class="file">inst/cook.Rmd</code> and
 <code class="file">inst/universities.Rmd</code>, and some discussion of <code>pwa3()</code> is
 given in <code>inst/pwa3.Rmd</code>.</p>

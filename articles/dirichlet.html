@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hyper2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2-2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2-3</span>
       </span>
     </div>
 
@@ -128,9 +128,9 @@ Hankin</h4>
 satisfying
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∑</mo><msub><mi>p</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sum p_i=1</annotation></semantics></math>
 follow a <em>Dirichlet distribution</em>, and write
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒟</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal{D}(p_1,\ldots,p_n)</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒟</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{D}(p_1,\ldots,p_n)</annotation></semantics></math>,
 if their density function is</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mn>1</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>α</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>⋯</mi><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msubsup><mi>p</mi><mi>i</mi><mrow><msub><mi>α</mi><mi>i</mi></msub><mo>−</mo><mn>1</mn></mrow></msubsup></mrow><annotation encoding="application/x-tex">\begin{equation}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi mathvariant="normal">Γ</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>α</mi><mn>1</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>α</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi mathvariant="normal">Γ</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>α</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mi>⋯</mi><mi mathvariant="normal">Γ</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>α</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msubsup><mi>p</mi><mi>i</mi><mrow><msub><mi>α</mi><mi>i</mi></msub><mo>−</mo><mn>1</mn></mrow></msubsup></mrow><annotation encoding="application/x-tex">\begin{equation}
 \frac{\Gamma(\alpha_1+\cdots +\alpha_n)}{\Gamma(\alpha_1)\cdots\Gamma(\alpha_n)}
 \prod_{i=1}^n p_i^{\alpha_i-1}
 \end{equation}</annotation></semantics></math></p>
@@ -138,11 +138,11 @@ if their density function is</p>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>i</mi></msub><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\alpha_i&gt;0</annotation></semantics></math>.
 It is interesting in the current context because it is conjugate to the
 multinomial distribution; specifically, given a Dirichlet prior
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒟</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>α</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal{D}(\alpha_1,\ldots,\alpha_n)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒟</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>α</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>α</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{D}(\alpha_1,\ldots,\alpha_n)</annotation></semantics></math>
 and likelihood function
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℒ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>∝</mo><msubsup><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup><msubsup><mi>p</mi><mi>i</mi><msub><mi>α</mi><mi>i</mi></msub></msubsup></mrow><annotation encoding="application/x-tex">\mathcal{L}(p_1,\ldots,p_n)\propto\prod_{i=1}^n p_i^{\alpha_i}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℒ</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>p</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>∝</mo><msubsup><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup><msubsup><mi>p</mi><mi>i</mi><msub><mi>α</mi><mi>i</mi></msub></msubsup></mrow><annotation encoding="application/x-tex">\mathcal{L}(p_1,\ldots,p_n)\propto\prod_{i=1}^n p_i^{\alpha_i}</annotation></semantics></math>
 then the posterior is
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒟</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>α</mi><mi>n</mi></msub><mo>+</mo><msub><mi>a</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal{D}(\alpha_1+a_1,\ldots,\alpha_n+a_n)</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒟</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>α</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>α</mi><mi>n</mi></msub><mo>+</mo><msub><mi>a</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{D}(\alpha_1+a_1,\ldots,\alpha_n+a_n)</annotation></semantics></math>.</p>
 <p>In the context of the <code>hyper2</code> package, function
 <code><a href="../reference/dirichlet.html">dirichlet()</a></code> presents some peculiarities, discussed
 here.</p>
@@ -268,7 +268,7 @@ is,
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-hankin2017_rmd" class="csl-entry">
 Hankin, R. K. S. 2017. <span>“Partial Rank Data with the
 <span><code>hyper2</code></span> Package: Likelihood Functions for
