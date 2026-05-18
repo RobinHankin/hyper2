@@ -29,7 +29,7 @@ pre-nullification; data supplied by Riley Uttley.
 First we specify the matrix as appearing in the Wikipedia page:
 
 ```{r, specifymatrix}
-eurovision_table <- as.matrix(read.table("eurovision2022_jury_pre_null.txt",sep=","))
+eurovision_table <- as.matrix(read.table("eurovision2022_jury_pre_null.txt"))
 excluded <- c(2, 8, 11, 14,15,16)
 
 contestants <- c(
