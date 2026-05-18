@@ -84,7 +84,7 @@ Translate order statistics to support functions using Plackett-Luce
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ordertable2supp</span><span class="op">(</span><span class="va">x</span>, <span class="va">noscore</span>, incomplete<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ordertable2supp</span><span class="op">(</span><span class="va">x</span>, <span class="va">noscore</span>, <span class="va">noninformative</span>, incomplete<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/hyper2/man/ordertable2supp.html" class="external-link">ordervec2supp</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -106,11 +106,21 @@ Translate order statistics to support functions using Plackett-Luce
     This is useful if we are considering the first few lines of an
     ordertable because there might be missing ranks.</p></dd>
 
+
   <dt id="arg-noscore">noscore<a class="anchor" aria-label="anchor" href="#arg-noscore"></a></dt>
-<dd><p>Character vector giving the abbreviations
-    for a non-finishing status such as “did not finish”
-    or “disqualified”.  A missing argument is interpreted as
-    <code>c("Ret", "WD", "DNS", "DSQ", "DNP", "NC")</code></p></dd>
+<dd><p>Character vector giving the abbreviations for a
+    non-finishing status such as “did not finish” or
+    “disqualified”.  A missing argument is interpreted as
+    <code>c("Ret", "WD", "DNS", "DSQ", "DNP", "NC", "DNQ", "EX",
+      "Sick")</code>.  A non-finishing status is equivalent to coming (joint)
+    last</p></dd>
+
+  <dt id="arg-noninformative">noninformative<a class="anchor" aria-label="anchor" href="#arg-noninformative"></a></dt>
+<dd><p>As for <code>noscore</code>, a character vector giving
+    abbreviations for noninformative statuses.  For example, in the 2025
+    MotoGP world championship, Marc Marquez declined to compete in the
+    last four races on the grounds that he already had enough points to
+    guarantee victory</p></dd>
 
 </dl></div>
     <div id="details">
