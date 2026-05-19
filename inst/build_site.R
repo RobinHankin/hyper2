@@ -44,7 +44,8 @@ rmd_files <- list.files(
   full.names = TRUE
 )
 
-rmd_files <- rmd_files[-grep("f1points", rmd_files)]  # f1points.Rmd takes too long
+rmd_files <- rmd_files[-grep("f1points", rmd_files)]  # f1points.Rmd reads rda files, does not work remotely
+rmd_files <- rmd_files[-grep("kka", rmd_files)]  # kka.Rmd works locally, not on the cloud
 rmd_files <- rmd_files[-grep("formula1", rmd_files)]  # formula1.Rmd takes too long
 rmd_files <- rmd_files[-grep("skeleton", rmd_files)]  # skeleton.Rmd takes too long
 # rmd_files <- rmd_files[-grep("advantage", rmd_files)]  # home_advantage.Rmd takes too long
