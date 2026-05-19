@@ -10,25 +10,7 @@ on:
     branches: [ master]
   workflow_dispatch:
 
-env:
-  R_MAKEVARS_USER: ~/.R/Makevars
-  PKG_CPPFLAGS: "-mcmodel=medium"
-  CFLAGS: "-mcmodel=medium"
-  CXXFLAGS: "-mcmodel=medium"
-
 jobs:
   check:
     uses: robinhankin/workflow/.github/workflows/R-CMD-check.yaml@master
-      extra-steps: |
-        - name: Set compiler flags for large objects
-          run: |
-            mkdir -p ~/.R
-            cat <<EOF > ~/.R/Makevars
-            CFLAGS=-mcmodel=medium
-            CXXFLAGS=-mcmodel=medium
-            CXX11FLAGS=-mcmodel=medium
-            CXX14FLAGS=-mcmodel=medium
-            CXX17FLAGS=-mcmodel=medium
-            FFLAGS=-mcmodel=medium
-            FCFLAGS=-mcmodel=medium
-            EOF
+
