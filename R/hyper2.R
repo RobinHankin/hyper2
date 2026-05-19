@@ -1023,6 +1023,8 @@ rorder_single <- function(p){
     if(hyper3){return(pwa23(H, pwa, chameleon='S'))}
     stopifnot(is.hyper2(H))
     if(length(pwa) > 1){stop("argument pwa must be of length 1")}
+
+    `%notin%` <- Negate(`%in%`)  # Remove this for R >= 4.6-0
     if(any(pwa %notin% pnames(H))){
         stop(gettextf(
             "Argument pwa (%s) must be a member of pnames (%s).",

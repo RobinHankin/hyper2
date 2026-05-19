@@ -18,7 +18,7 @@ abbreviated <- TRUE  # change to FALSE for full names
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-<font size="1"> (takes a "long time" to run without cache; the time is spent in chunk `calculateprofilelike`)
+<font size="1"> (takes five minute to run without cache; the time is spent in chunk `dotest`)
 </font>
 
 
@@ -65,15 +65,22 @@ contestants[excluded]
 
 
 ```{r, morestuff,cache=TRUE}
-H_excluded <- hyper2()
+H_excluded <- hyper3()
 H_included <- hyper2()
 ```
         
+```{r define_notin}
+text <- "remove this for R >= 4.6-0"
+print(text)
+`%notin%` <- Negate(`%in%`)
+```
+
 ```{r makeH, cache=TRUE}
 for(i in excluded){
     d <- preference[,i,drop=TRUE]
     d[d==11] <- 0
     newH <- suppfun(d[!is.na(d)])
+    newH <- newH |> pwa23_multiple(contestants[excluded], "collusion")
     H_excluded <- H_excluded + newH
 } # i loop closes
 
@@ -102,17 +109,9 @@ dotchart(mHex)
 dotchart(mHin)
 ```
 
-
-
-```{r findans, cache=TRUE}
-H_excluded <- H_excluded |> pwa23_multiple(contestants[excluded], "collusion")
-```
-
 ```{r calcH, cache=TRUE}
 H <- H_excluded + as.hyper3(H_included)
 ```
-
-
 ```{r dotest, cache=TRUE}
 result <- specificp.gt.test(H, "collusion",0)
 ```
@@ -124,4 +123,5 @@ result
 ```{r}
 H_excluded
 summary(H_excluded)
+summary(H)
 ```

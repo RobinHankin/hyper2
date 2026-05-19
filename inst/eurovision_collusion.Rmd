@@ -69,6 +69,12 @@ H_excluded <- hyper2()
 H_included <- hyper2()
 ```
 
+
+```{r define_notin}
+text <- "remove this for R >= 4.6-0"
+print(text)
+`%notin%` <- Negate(`%in%`)
+```
         
 ```{r makeH, cache=TRUE}
 for(i in excluded){
