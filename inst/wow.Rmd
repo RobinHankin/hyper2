@@ -65,6 +65,31 @@ $$
 \frac{c}{    c+d}
 $$
 
+## Distributivity of `pwa23()`
+
+I have been wondering whether `pwa23()` is linear in the sense that it
+commutes past addition:
+
+
+```{r}
+H1 <- suppfun(letters[c(1,2,3,4,5)])
+H2 <- suppfun(letters[c(3,2,1,4,5)])
+
+bad <- letters[2:4]
+
+Ha <- (H1 |> pwa23_multiple(bad)) + (H2 |> pwa23_multiple(bad))
+Hb <- (H1+H2) |> pwa23_multiple(bad)
+```
+
+We can see that `Ha` is `f(H1) + f(H2)` and `Hb` is `f(H1+H2)`.  Are
+they the same?
+
+```{r}
+Ha == Hb
+```
+
+
+
 ### References {-}
 
 
