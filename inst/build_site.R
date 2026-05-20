@@ -44,29 +44,29 @@ rmd_files <- list.files(
   full.names = TRUE
 )
 
-rmd_files <- rmd_files[-grep("loser", rmd_files)]  # loser.Rmd works locally, not on cloud [stupid vmmin bug, fixed(?) in R-4.6-0]
-rmd_files <- rmd_files[-grep("f1points", rmd_files)]  # f1points.Rmd reads rda files, does not work remotely
-rmd_files <- rmd_files[-grep("kka", rmd_files)]  # kka.Rmd works locally, not on the cloud
-rmd_files <- rmd_files[-grep("formula1", rmd_files)]  # formula1.Rmd takes too long
-rmd_files <- rmd_files[-grep("skeleton", rmd_files)]  # skeleton.Rmd takes too long
+  rmd_files <- rmd_files[-grep("loser", rmd_files)]  # loser.Rmd works locally, not on cloud [stupid vmmin bug, fixed(?) in R-4.6-0]
+  rmd_files <- rmd_files[-grep("f1points", rmd_files)]  # f1points.Rmd reads rda files, does not work remotely
+  rmd_files <- rmd_files[-grep("kka", rmd_files)]  # kka.Rmd works locally, not on the cloud
+  rmd_files <- rmd_files[-grep("formula1", rmd_files)]  # formula1.Rmd takes too long
+  rmd_files <- rmd_files[-grep("skeleton", rmd_files)]  # skeleton.Rmd takes too long
 # rmd_files <- rmd_files[-grep("advantage", rmd_files)]  # home_advantage.Rmd takes too long
-rmd_files <- rmd_files[-grep("race3", rmd_files)]  # race3.Rmd takes too long
-rmd_files <- rmd_files[-grep("scissors", rmd_files)]  # rock_paper_scissors.Rmd takes too long
-rmd_files <- rmd_files[-grep("monster_vs", rmd_files)]  # monster_vs_lambda.Rmd takes too long
-rmd_files <- rmd_files[-grep("exponential", rmd_files)]  # exponential_BT.Rmd takes too long
+  rmd_files <- rmd_files[-grep("race3", rmd_files)]  # race3.Rmd takes too long
+  rmd_files <- rmd_files[-grep("scissors", rmd_files)]  # rock_paper_scissors_monster.Rmd takes too long
+  rmd_files <- rmd_files[-grep("monster_vs", rmd_files)]  # monster_vs_lambda.Rmd takes too long
+  rmd_files <- rmd_files[-grep("exponential", rmd_files)]  # exponential_BT.Rmd takes too long
 # rmd_files <- rmd_files[-grep("global", rmd_files)]  # global_liveability_ranking.Rmd takes too long
-rmd_files <- rmd_files[-grep("notthewinner", rmd_files)]  # notthewinner.Rmd has some weird issue where it works fine locally but not on the workflow.
-rmd_files <- rmd_files[-grep("simplified", rmd_files)]  # simplified_likelihood.Rmd has an unresolved theoretical issue, better to ignore this
-rmd_files <- rmd_files[-grep("sushi", rmd_files)]  # sushi.Rd takes too long
-rmd_files <- rmd_files[-grep("surfing", rmd_files)]  # surfing.Rd has some weird bug
-rmd_files <- rmd_files[-grep("ternary", rmd_files)]  # ternaryplot.Rmd and ternaryplot_hyper2.Rmd take too long
-rmd_files <- rmd_files[-grep("vsl", rmd_files)]  # the vsl sequence takes too long
-rmd_files <- rmd_files[-grep("parkrun", rmd_files)]  # takes too long
-rmd_files <- rmd_files[-grep("podium", rmd_files)]  # takes too long
-rmd_files <- rmd_files[-grep("tennis", rmd_files)]  # some weird bug, runs locally
-rmd_files <- rmd_files[-grep("volleyball", rmd_files)]  # some weird bug, runs locally
-rmd_files <- rmd_files[-grep("volvo", rmd_files)]  # some weird bug, runs locally
-rmd_files <- rmd_files[-grep("zermelo", rmd_files)]  # some weird bug, runs locally
+  rmd_files <- rmd_files[-grep("notthewinner", rmd_files)]  # notthewinner.Rmd has some weird issue where it works fine locally but not on the workflow.
+  rmd_files <- rmd_files[-grep("simplified", rmd_files)]  # simplified_likelihood.Rmd has an unresolved theoretical issue, better to ignore this
+  rmd_files <- rmd_files[-grep("sushi", rmd_files)]  # sushi.Rd takes too long
+  rmd_files <- rmd_files[-grep("surfing", rmd_files)]  # surfing.Rd has some weird bug
+  rmd_files <- rmd_files[-grep("ternary", rmd_files)]  # ternaryplot.Rmd and ternaryplot_hyper2.Rmd take too long
+  rmd_files <- rmd_files[-grep("vsl", rmd_files)]  # the vsl sequence takes too long
+  rmd_files <- rmd_files[-grep("parkrun", rmd_files)]  # takes too long
+  rmd_files <- rmd_files[-grep("podium", rmd_files)]  # takes too long
+  rmd_files <- rmd_files[-grep("tennis", rmd_files)]  # some weird bug, runs locally
+  rmd_files <- rmd_files[-grep("volleyball", rmd_files)]  # some weird bug, runs locally
+  rmd_files <- rmd_files[-grep("volvo", rmd_files)]  # some weird bug, runs locally
+  rmd_files <- rmd_files[-grep("zermelo", rmd_files)]  # some weird bug, runs locally
 
 message("Found ", length(rmd_files), " Rmd files")
 for(f in rmd_files){message(f)}
