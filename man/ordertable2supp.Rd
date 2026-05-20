@@ -108,6 +108,8 @@ is obsolete in the name paradigm.  A short vignette applying
 dataset of the \CRANpkg{prefmod} package [and further analysed in the
 \CRANpkg{PlackettLuce} package] is presented at \code{inst/salad.Rmd}.
 
+The \code{noninformative} argument is discussed at
+\code{inst/curling.Rmd} and \code{inst/noninformative.Rmd}.
 
 }
 
@@ -137,7 +139,7 @@ suppfun(ordertable(x), incomplete=FALSE)           # use this instead
 ordertable2supp(x[1:4,])   
 
 
-## The "uninformative" argument [defaulting to c("dead", "won")] means
+## The "noninformative" argument [defaulting to c("dead", "won")] means
 ## to disregard that competitor:
 
 x1 <- data.frame(x=c("won",1:3), row.names=letters[1:4])

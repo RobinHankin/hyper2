@@ -91,7 +91,23 @@ The two likelihood systems have very different evaluates.
 
 ## Note
 
-We can implement this using the `uninformative` argument of `ordertable2supp()`
+We can implement this using the `uninformative` argument of
+`ordertable2supp()` First, we infer from non-competing that the team
+came last:
+
+```{r firstnoncom}
+o <- curling_table
+o[is.na(o)] <- "won"
+o
+```
+
+Now
+
+```{r firstnoncomR}
+ordertable2supp(o) == curling2
+```
+
+
 
 
 ### Package dataset {-}

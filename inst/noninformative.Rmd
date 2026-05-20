@@ -1,0 +1,122 @@
+---
+title: "Noninformative entries in an ordertable"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: hyper2.bib
+---
+
+```{r setup, include=FALSE}
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+options("digits" = 5)
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  This vignette shows some features of the
+`uninformative` argument of function `ordertable2supp()`.
+
+```{r simplekickoff_define_o}
+(o <- data.frame(x=c("DSQ",1:3), row.names=letters[1:4]))
+```
+
+Above we see a perfectly reasonable order table, in which competitor
+`a` has a `DSQ` ["disqualified"] result.  This means that `a`
+effectively came last and the order statistic would be $b\succ c\succ
+d\succ a$.  The Plackett-Luce likelihood function would be
+
+$$
+\frac{b}{a+b+c+d}\cdot
+\frac{c}{a+  c+d}\cdot
+\frac{d}{a+    d}\cdot
+\frac{a}{a      }
+$$
+
+In R:
+
+```{r simplekickofflike}
+ordertable2supp(o)
+```
+
+Now we imagine that competitor `a` did not compete for some reason
+unrelated to his Bradley-Terry strength.  He might be ill; he might
+have accumulated enough points to be certain of victory and declined
+to compete [fearing injury]; or decided (or was forced) not to compete
+for some other reason in which we are not interested.  We indicate
+this using the `noninformative` argument of `ordertable2supp()`, for
+which a `NULL` argument is `c("dead", "won")`:
+
+```{r simplenoninform_define_o}
+(o <- data.frame(x=c("won",1:3), row.names=letters[1:4]))
+```
+
+The PL likelihood function would then be:
+
+$$
+\frac{b}{b+c+d}\cdot
+\frac{c}{  c+d}\cdot
+\frac{d}{    d}
+$$
+
+Above, see how the likelihood function is uninformative about `a`: we
+are making no inferences about his strength from the fact that he did
+not compete.  We might combine these two phenomena in a single
+dataset.  Suppose `a` had already won, and `c` was disqualified:
+
+```{r bothexamples}
+(o <- data.frame(x=c("won",1,"DSQ",2), row.names=letters[1:4]))
+```
+
+$$
+\frac{b}{b+c+d}\cdot
+\frac{d}{  c+d}\cdot
+\frac{c}{  c  }
+$$
+
+See how `c` is on the denominator of the first two terms, but `a` is
+absent.
+
+```{r bothR}
+ordertable2supp(o)
+```
+
+We can have more than one competitor in each class:
+
+
+```{r multiplecase}
+jj <- 1:7
+jj[2:3] <- "dead"
+jj[6:7] <- "DSQ"
+(o <- data.frame(x=jj, row.names=letters[1:7]))
+```
+
+PL likelihood function would be
+
+$$
+\frac{a}{a+d+e+f+g}\cdot
+\frac{d}{  d+e+f+g}\cdot
+\frac{e}{    e+f+g}
+$$
+
+```{r multcaser}
+ordertable2supp(o)
+```
+
+
+## Case studies
+
+The `curling` dataset, documented at `inst/curling.Rmd` and
+`curling.Rd`, gives a nice use-case for this functionality.
+
+The best use-case would be the 2025 MotoGP World Championship.  Marc
+Marquez declined to compete in the last four races of the season due
+to his having accumulated sufficient points to guarantee victory.  We
+can make no inferences about his BT strength from these final four
+races.
+
+
+## References {-}
