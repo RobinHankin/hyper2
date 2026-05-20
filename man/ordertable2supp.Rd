@@ -140,12 +140,12 @@ ordertable2supp(x[1:4,])
 ## The "uninformative" argument [defaulting to c("dead", "won")] means
 ## to disregard that competitor:
 
-x1 <- data.frame(x=c("won",1:3),row.names=letters[1:4])
+x1 <- data.frame(x=c("won",1:3), row.names=letters[1:4])
 ordertable2supp(x1)
 
 ## Compare
-x1 <- data.frame(x=c("DNS",1:3),row.names=letters[1:4])
-ordertable2supp(x1)
+x2 <- data.frame(x=c("DNS",1:3), row.names=letters[1:4])
+ordertable2supp(x2)
 
 
 ## Function ordervec2supp() is lower-level, used for order vectors:
