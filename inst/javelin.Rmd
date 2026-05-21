@@ -139,6 +139,56 @@ specificp.test(javelin2, "Mardare", 1/8)
 It seems that Mardare's consistent performance gives him BT strength,
 but not a long longest throw.  How to modify BT to account for this?
 	
+
+## Some thoughts on quantifying the longest throw
+
+
+In general, consider a random variable $X$ with PDF $f(x)$ and CDF
+$F(x)$.  Write $x_{(n)} = \max(X_1,\ldots,X_n)$ for the maximum of $n$
+observations.  In the case where the $X_i$ are independent and
+distributed the same as $X$, we have that the CDF of $x_{(n)}$ is
+$F(x)^n$ and the PDF is $f(x)F(x)^{n-1}$.
+
+Consider, similarly, random variable $y$ with PDF $g(y)$ and CDF
+$G(y)$, with the maximum $y_{(m)}$ of $m$ independent observations
+having CDF $G(y)^m$.  We ask some simple questions.  Firstly, what is
+the probability $P$ that $x_{(n)}$ exceeds $y_{(m)}$?  If $X,Y$ are
+independent we have
+
+\begin{eqnarray}
+P
+&=&
+\int_{x=-\infty}^{x=+\infty} 
+\int_{y=-\infty}^{y=x} 
+[F(x)^n]'[G(y)^m]'dy\,dx\\
+&=& 
+\int_{x=-\infty}^{x=+\infty} 
+[F(x)^n]'
+\left[
+\int_{y=-\infty}^{y=x} 
+[G(y)^m]'\,dy\right]\,dx\\
+&=& 
+\int_{x=-\infty}^{x=+\infty} 
+[F(x)^n]'G(x)^m\,dx\\
+\end{eqnarray}
+
+In the special case of $F(x)=G(x)$ we have
+
+\begin{eqnarray}
+P&=&
+\int_{x=-\infty}^{x=+\infty} 
+[F(x)^n]'F(x)^m\,dx\\&=&
+\int_{x=-\infty}^{x=+\infty} 
+nf(x)F(x)^{m+n}\,dx\\&=&
+\frac{n}{n+m}\int_{x=-\infty}^{x=+\infty} [F(x)]^{n+m}\,dx\\&=&
+\frac{n}{n+m}
+\end{eqnarray}
+
+(Above, two the "trick" is to realise that $G(x)^m\frac{d}{dx}F(x)^n$
+ is easily integrated over the whole real line, in this case giving
+ $(n+m)^{-1}$).
+
+
 ### Package dataset {-}
 
 Following lines create `javelin.rda`, residing in the `data/`
