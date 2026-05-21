@@ -184,7 +184,7 @@ nf(x)F(x)^{m+n}\,dx\\&=&
 \frac{n}{n+m}
 \end{eqnarray}
 
-(Above, two the "trick" is to realise that $G(x)^m\frac{d}{dx}F(x)^n$
+(Above, the "trick" is to realise that $G(x)^m\frac{d}{dx}F(x)^n$
  is easily integrated over the whole real line, in this case giving
  $(n+m)^{-1}$).
 
