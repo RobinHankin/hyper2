@@ -180,7 +180,7 @@ P&=&
 [F(x)^n]'F(x)^m\,dx\\&=&
 \int_{x=-\infty}^{x=+\infty} 
 nf(x)F(x)^{m+n}\,dx\\&=&
-\frac{n}{n+m}\int_{x=-\infty}^{x=+\infty} [F(x)]^{n+m}\,dx\\&=&
+\frac{n}{n+m}\int_{x=-\infty}^{x=+\infty} [F(x)^{n+m}]'\,dx\\&=&
 \frac{n}{n+m}
 \end{eqnarray}
 
