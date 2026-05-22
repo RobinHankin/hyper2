@@ -186,9 +186,9 @@ nf(x)F(x)^{m+n}\,dx\\&=&
 
 (Above, the "trick" is to realise that if $F(x)=G(x)$, then the
 integrand $n[F(x)^n]'F(x)^m$ is easily integrated over the whole real
-line, being equal to
-$n\frac{[F(x)^{n+m}]'}{n+m}\,dx=\frac{n}{n+m}$.  There
-does not seem to be any straightforward way to generalize this trick.
+line, being equal to $n\frac{[F(x)^{n+m}]'}{n+m}$, giving
+$\frac{n}{n+m}$.  There does not seem to be any straightforward way to
+generalize this trick.
 
 ### Package dataset {-}
 
