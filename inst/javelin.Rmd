@@ -59,24 +59,24 @@ Now convert the attempts table to a `hyper3` object, using function
 interpretations: firstly, we simply ignore no-throws [in the package
 docs, these are sometimes referred to as "DNF", or "Did not finish",
 following Formula 1 terminology] and to do this we pass
-`dnf.last=FALSE`:
+`nothrow_loses=TRUE`:
 
 ```{r, label=dothething2, cache=TRUE}
-javelin <- suppfun(javelin_table, dnf.last=FALSE)
+javelin <- suppfun(javelin_table, nothrow_loses=TRUE)
 javelin_maxp  <- maxp(javelin)
 javelin_maxp
 ```
 
 Secondly, we may treat no-throws as being inferior to any actual
-measured throw.  I don't think this is realistic: noone cares about
+measured throw.  I don't think this is realistic: no-one cares about
 no-throws and certainly any model in which a thrower with five
 no-throws and one excellent throw is given a small strength is
 defective.  However, there are some circumstances in which this might
 be reasonable [Formula 1 being one example] and this is implemented by
-specifying `dnf.last=TRUE`:
+specifying `nothrow_loses=TRUE`:
 
 ```{r,label=dothething1,cache=TRUE}    	   
-javelin2 <- suppfun(javelin_table, dnf.last=TRUE)
+javelin2 <- suppfun(javelin_table, nothrow_loses=TRUE)
 javelin2_maxp <- maxp(javelin2)
 ```
 

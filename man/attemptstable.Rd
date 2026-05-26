@@ -8,7 +8,7 @@
 Attempts tables
 }
 \usage{
-attemptstable2supp3(x, decreasing=TRUE, give.supp=TRUE, dnf.last=TRUE)
+attemptstable2supp3(x, decreasing=TRUE, give.supp=TRUE, nothrow_loses=TRUE)
 }
 \arguments{
   \item{x}{Data frame, see details}
@@ -16,7 +16,7 @@ attemptstable2supp3(x, decreasing=TRUE, give.supp=TRUE, dnf.last=TRUE)
       score wins [e.g. javelin distances] and \code{FALSE} meaning that the
       lowest score wins [e.g. times for a race]}
   \item{give.supp}{Boolean, return the support function or the order statistic}
-  \item{dnf.last}{Boolean, should NA entries count as coming last (TRUE)
+  \item{nothrow_loses}{Boolean, should NA entries count as coming last (TRUE)
 or  be ignored (FALSE)}
 }
 \details{
@@ -56,6 +56,19 @@ File \code{inst/javelin.Rmd} shows a use-case for
 }
 
 \value{Returns a \code{hyper3} object}
+\note{
+
+Compare argument \code{nothrow_loses} with argument \code{uninformative} of
+function \code{ordertable2supp()}.
+
+Argument \code{nothrow_loses} is Boolean, with default \code{TRUE}
+meaning to interpret \code{NA} (no-throw) entries as losing attempts, or
+alternatively to view as though they never happened and are thus
+uninformative.  In contrast, argument \code{uninformative} of function
+\code{ordertable2supp()} gives a list of entry types that are
+interpreted as uninformative [the other entry types meaning \dQuote{came
+last}].
+}
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{ordertable2supp}},\code{\link{javelin}}}
 \examples{
