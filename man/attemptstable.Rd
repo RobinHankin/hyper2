@@ -3,12 +3,14 @@
 \alias{as.attemptstable}
 \alias{attemptstable2supp}
 \alias{attemptstable2supp3}
+\alias{rattemptstable}
 \title{Translate attempts tables to hyper3 support functions}
 \description{
 Attempts tables
 }
 \usage{
 attemptstable2supp3(x, decreasing=TRUE, give.supp=TRUE, nothrow_loses=FALSE)
+rattemptstable(ncompetitors=8, nthrows=6, prob=0.23)
 }
 \arguments{
   \item{x}{Data frame, see details}
@@ -18,6 +20,7 @@ attemptstable2supp3(x, decreasing=TRUE, give.supp=TRUE, nothrow_loses=FALSE)
   \item{give.supp}{Boolean, return the support function or the order statistic}
   \item{nothrow_loses}{Boolean, should NA entries count as coming last (TRUE)
     or be ignored (FALSE)}
+  \item{ncompetitors, nthrows, prob}{Parameters for \code{rattemptstable()}}
 }
 \details{
 
@@ -53,8 +56,11 @@ a low-level helper function.
 
 File \code{inst/javelin.Rmd} shows a use-case for
 \code{attemptstable2supp3().}
-}
 
+Function \code{rattemptstable()} produces a random \code{attemptstable}
+object.  The defaults give a table of the same size and same total
+number of no-throws as \code{javelin_table}.
+}
 \value{Returns a \code{hyper3} object}
 \note{
 

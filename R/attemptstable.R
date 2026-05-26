@@ -62,4 +62,14 @@ as.vector.attemptstable <- function(x, mode){
     }
 }
 
-
+`rattemptstable` <- function(ncompetitors=8, nthrows=6, prob=0.23){   
+    n <- ncompetitors*nthrows
+    out <- matrix(round(runif(n),3), ncol=nthrows)
+    out[sample(seq_len(n), round(n*prob), replace=FALSE)] <- -Inf
+    m <- apply(out, 1, max, na.rm=TRUE)
+    out <- out[order(-m),]
+    out[is.infinite(out)] <- NA
+    rownames(out) <- letters[seq_len(ncompetitors)]
+    colnames(out) <- paste("throw", seq_len(nthrows), sep="")
+    return(as.attemptstable(out))
+}
