@@ -78,7 +78,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">attemptstable2supp3</span><span class="op">(</span><span class="va">x</span>, decreasing<span class="op">=</span><span class="cn">TRUE</span>, give.supp<span class="op">=</span><span class="cn">TRUE</span>, dnf.last<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">attemptstable2supp3</span><span class="op">(</span><span class="va">x</span>, decreasing<span class="op">=</span><span class="cn">TRUE</span>, give.supp<span class="op">=</span><span class="cn">TRUE</span>, nothrow_loses<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -95,9 +95,9 @@
   <dt id="arg-give-supp">give.supp<a class="anchor" aria-label="anchor" href="#arg-give-supp"></a></dt>
 <dd><p>Boolean, return the support function or the order statistic</p></dd>
 
-  <dt id="arg-dnf-last">dnf.last<a class="anchor" aria-label="anchor" href="#arg-dnf-last"></a></dt>
+  <dt id="arg-nothrow-loses">nothrow_loses<a class="anchor" aria-label="anchor" href="#arg-nothrow-loses"></a></dt>
 <dd><p>Boolean, should NA entries count as coming last (TRUE)
-or  be ignored (FALSE)</p></dd>
+    or be ignored (FALSE)</p></dd>
 
 </dl></div>
     <div id="details">
@@ -138,6 +138,20 @@ a low-level helper function.</p>
     <h2>Value</h2>
     <p>Returns a <code>hyper3</code> object</p>
     </div>
+    <div id="note">
+    <h2>Note</h2>
+
+
+<p>Compare argument <code>nothrow_loses</code> with argument <code>uninformative</code> of
+function <code><a href="ordertable2supp.html">ordertable2supp()</a></code>.</p>
+<p>Argument <code>nothrow_loses</code> is Boolean, with default <code>TRUE</code>
+meaning to interpret <code>NA</code> (no-throw) entries as losing attempts, or
+alternatively to view as though they never happened and are thus
+uninformative.  In contrast, argument <code>uninformative</code> of function
+<code><a href="ordertable2supp.html">ordertable2supp()</a></code> gives a list of entry types that are
+interpreted as uninformative [the other entry types meaning “came
+last”].</p>
+    </div>
     <div id="author">
     <h2>Author</h2>
     <p>Robin K. S. Hankin</p>
@@ -158,13 +172,12 @@ a low-level helper function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Vadlejch  83.98      X      X  82.86  <span style="font-weight: bold;">86.67</span>      X</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Vesely    79.73  80.30  <span style="font-weight: bold;">85.44</span>      X  84.98      X</span>
 <span class="r-in"><span><span class="fu">attemptstable2supp3</span><span class="op">(</span><span class="va">jj</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log( (Chopra=1)^4 * (Chopra=3, Vadlejch=3, Vesely=2)^-1 * (Chopra=3,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vadlejch=3, Vesely=3)^-1 * (Chopra=3, Vadlejch=3, Vesely=4)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Chopra=3, Vadlejch=4, Vesely=4)^-1 * (Chopra=3, Vadlejch=5,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vesely=4)^-1 * (Chopra=4, Vadlejch=5, Vesely=4)^-1 * (Chopra=4,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vadlejch=5, Vesely=5)^-1 * (Chopra=4, Vadlejch=5, Vesely=6)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Chopra=4, Vadlejch=6, Vesely=6)^-1 * (Chopra=5, Vadlejch=6,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vesely=6)^-1 * (Chopra=6, Vadlejch=6, Vesely=6)^-1 * (Vadlejch=1)^3 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log( (Chopra=1)^3 * (Chopra=1, Vadlejch=1, Vesely=2)^-1 * (Chopra=1,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vadlejch=2, Vesely=2)^-1 * (Chopra=1, Vesely=1)^-1 * (Chopra=1,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vesely=2)^-1 * (Chopra=2, Vadlejch=2, Vesely=2)^-1 * (Chopra=2,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vadlejch=2, Vesely=3)^-1 * (Chopra=2, Vadlejch=2, Vesely=4)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Chopra=2, Vadlejch=3, Vesely=4)^-1 * (Chopra=3, Vadlejch=3,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vesely=4)^-1 * (Chopra=4, Vadlejch=3, Vesely=4)^-1 * (Vadlejch=1)^3 *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Vesely=1)^4)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
