@@ -78,7 +78,8 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">attemptstable2supp3</span><span class="op">(</span><span class="va">x</span>, decreasing<span class="op">=</span><span class="cn">TRUE</span>, give.supp<span class="op">=</span><span class="cn">TRUE</span>, nothrow_loses<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">attemptstable2supp3</span><span class="op">(</span><span class="va">x</span>, decreasing<span class="op">=</span><span class="cn">TRUE</span>, give.supp<span class="op">=</span><span class="cn">TRUE</span>, nothrow_loses<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">rattemptstable</span><span class="op">(</span>ncompetitors<span class="op">=</span><span class="fl">8</span>, nthrows<span class="op">=</span><span class="fl">6</span>, prob<span class="op">=</span><span class="fl">0.23</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -98,6 +99,9 @@
   <dt id="arg-nothrow-loses">nothrow_loses<a class="anchor" aria-label="anchor" href="#arg-nothrow-loses"></a></dt>
 <dd><p>Boolean, should NA entries count as coming last (TRUE)
     or be ignored (FALSE)</p></dd>
+
+  <dt id="arg-ncompetitors-nthrows-prob">ncompetitors, nthrows, prob<a class="anchor" aria-label="anchor" href="#arg-ncompetitors-nthrows-prob"></a></dt>
+<dd><p>Parameters for <code>rattemptstable()</code></p></dd>
 
 </dl></div>
     <div id="details">
@@ -133,6 +137,9 @@ function, use <code><a href="suppfun.html">suppfun()</a></code>; function <code>
 a low-level helper function.</p>
 <p>File <code>inst/javelin.Rmd</code> shows a use-case for
 <code>attemptstable2supp3().</code></p>
+<p>Function <code>rattemptstable()</code> produces a random <code>attemptstable</code>
+object.  The defaults give a table of the same size and same total
+number of no-throws as <code>javelin_table</code>.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
