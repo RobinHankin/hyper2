@@ -8,7 +8,7 @@
 Attempts tables
 }
 \usage{
-attemptstable2supp3(x, decreasing=TRUE, give.supp=TRUE, nothrow_loses=TRUE)
+attemptstable2supp3(x, decreasing=TRUE, give.supp=TRUE, nothrow_loses=FALSE)
 }
 \arguments{
   \item{x}{Data frame, see details}
@@ -17,7 +17,7 @@ attemptstable2supp3(x, decreasing=TRUE, give.supp=TRUE, nothrow_loses=TRUE)
       lowest score wins [e.g. times for a race]}
   \item{give.supp}{Boolean, return the support function or the order statistic}
   \item{nothrow_loses}{Boolean, should NA entries count as coming last (TRUE)
-or  be ignored (FALSE)}
+    or be ignored (FALSE)}
 }
 \details{
 
