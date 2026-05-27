@@ -73,7 +73,7 @@ alternatively to view as though they never happened and are thus
 uninformative.  In contrast, argument \code{uninformative} of function
 \code{ordertable2supp()} gives a list of entry types that are
 interpreted as uninformative [the other entry types meaning \dQuote{came
-last}].
+last}].   A simple example is given in \code{inst/javelin.Rmd}.
 }
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{ordertable2supp}},\code{\link{javelin}}}
