@@ -43,7 +43,7 @@ rowfiddle <- function(v, n){  # takes a string, eg v="Vesely     79.73   80.3  8
 }
 
 as.vector.attemptstable <- function(x, mode){
-    setNames(c(x,recursive=TRUE), rep(rownames(x),ncol(x)))
+    sort(setNames(c(x,recursive=TRUE), rep(rownames(x),ncol(x))), decreasing=TRUE)
 }
 
 `attemptstable2supp3` <- function(x, decreasing=TRUE, give.supp=TRUE, nothrow_loses=FALSE){
