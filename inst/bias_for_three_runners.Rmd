@@ -1,0 +1,108 @@
+---
+title: "Exponential Bradley-Terry: bias for MLE with three runners"
+author: "R. K. S. Hankin"
+output: bookdown::html_document2
+bibliography: hyper2.bib
+---
+
+```{r setup, include=FALSE}
+set.seed(1)
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("knitr")
+```
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use @hankin2017_rmd.
+
+Document `hankin-exponential_BT.tex` refers.
+
+```{r, label=showthree, echo=FALSE, out.width = "100%"}
+knitr::include_graphics("123all.png")  # file 123all.png created from
+                                       # 123all.pdf, which is produced
+                                       # by exponential_BT.Rmd
+```
+
+So what we are going to do is to find out the sampling distribution
+for the maximum likelihood estimator, conditional on
+$r_\mbox{true}=1,2,3$.  Recall that the BT strengths for the three
+competitors are $x^1,x^2,x^3$, and we use standard Plackett-Luce
+likelihoods for the order statistics.
+
+# First up: $r_\mbox{true}=1$.
+
+\begin{eqnarray}
+P(r_\mbox{obs}=1)
+&=& P(1\succ 2\succ 3) + P(1\succ 3\succ 2)\\
+&=&\frac{x^1}{x^1+x^2+x^3}\\
+&{}&\\
+P(r_\mbox{obs}=2) &=& P(2\succ 1\succ 3) + P(3\succ 1\succ 2)\\
+&=& \frac{x^2}{x^1+x^2+x^3}\cdot\frac{x^1}{x^1+x^3} +
+    \frac{x^3}{x^1+x^2+x^3}\cdot\frac{x^1}{x^2+x^3}\\
+&=& \frac{1}{1+x}+\frac{1}{1+x^2}-\frac{2}{1+x+x^2}\\
+&{}&\\
+P(r_\mbox{obs}=3) &=& P(2\succ 3\succ 1) + P(3\succ 2\succ 1)\\
+&=& \frac{x^2}{x^1+x^2+x^3}\cdot\frac{x^3}{x^1+x^3} +
+    \frac{x^3}{x^1+x^2+x^3}\cdot\frac{x^2}{x^1+x^3}\\ 
+&=& 1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}
+\end{eqnarray}
+
+So we can see that $P(r_\mbox{obs}=1) + P(r_\mbox{obs}=2) +
+P(r_\mbox{obs}=3)=1$.
+
+
+# Second: $_\mbox{true}=2$.
+
+\begin{eqnarray}
+P(r_\mbox{obs}=1)
+&=& P(2\succ 1\succ 3) + P(2\succ 3\succ 1)\\
+&=&\frac{x^2}{x^1+x^2+x^3}\\
+&=&\frac{1}{1+x+x^2}\\
+&{}&\\
+P(r_\mbox{obs}=2) &=& P(1\succ 2\succ 3) + P(3\succ 2\succ 1)\\
+&=& \frac{x^1}{x^1+x^2+x^3}\cdot\frac{x^2}{x^2+x^3} +
+    \frac{x^3}{x^1+x^2+x^3}\cdot\frac{x^2}{x^1+x^2}\\
+&=& 1-\frac{2x}{1+x+x^2}\\
+&{}&\\
+P(r_\mbox{obs}=3) &=& P(1\succ 3\succ 2) + P(3\succ 1\succ 2)\\
+&=& \frac{x^1}{x^1+x^2+x^3}\cdot\frac{x^3}{x^2+x^3} +
+    \frac{x^3}{x^1+x^2+x^3}\cdot\frac{x^1}{x^1+x^3}\\ 
+&=&\frac{1}{1+x+x^2}
+\end{eqnarray}
+
+again $P(r_\mbox{obs}=1) + P(r_\mbox{obs}=2) + P(r_\mbox{obs}=3)=1$.
+
+
+
+# Lastly: $_\mbox{true}=3$.
+
+\begin{eqnarray}
+P(r_\mbox{obs}=1)
+&=& P(3\succ 2\succ 1) + P(3\succ 1\succ 2)\\
+&=&\frac{x^3}{x^1+x^2+x^3}\\
+&=&\frac{x^2}{1+x+x^2}\\
+&{}&\\
+P(r_\mbox{obs}=2) &=& P(1\succ 3\succ 2) + P(2\succ 3\succ 1)\\
+&=& \frac{x^1}{x^1+x^2+x^3}\cdot\frac{x^3}{x^2+x^3} +
+    \frac{x^2}{x^1+x^2+x^3}\cdot\frac{x^3}{x^1+x^3}\\
+&=& \frac{x+2x^3+x^4}{(1+x)(1+x^2)(1+x+x^2)}
+&{}&\\
+P(r_\mbox{obs}=3) &=& P(1\succ 2\succ 3) + P(2\succ 1\succ 3)\\
+&=& \frac{x^1}{x^1+x^2+x^3}\cdot\frac{x^2}{x^1+x^3} +
+    \frac{x^2}{x^1+x^2+x^3}\cdot\frac{x^1}{x^1+x^3}\\ 
+&=& \frac{1+x+2x^2}{(1+x)(1+x^2)(1+x+x^2)}
+\end{eqnarray}
+
+again $P(r_\mbox{obs}=1) + P(r_\mbox{obs}=2) + P(r_\mbox{obs}=3)=1$
+(although this is harder to see).
+
+
+## Summarising
+
+
+
+## References {-}
+
