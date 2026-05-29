@@ -14,7 +14,7 @@ CITATION.cff
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^site$
-
+^inst/123all.png$
 ^inst/build_site.R$
 ^inst/carcinoma.Rmd$
 ^inst/carcinoma.txt$
