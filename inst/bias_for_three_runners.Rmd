@@ -149,7 +149,7 @@ r_\mbox{obs}=3\longrightarrow\hat{r}=3\,\mbox{with probability $p_3$}\\
 \end{cases}
 $$
 
-So
+### Bias for $r_\mbox{true}=1$:
 
 \begin{eqnarray}
 r_\mbox{true} &=& 1
@@ -162,34 +162,72 @@ r_\mbox{true} &=& 1
 &\longrightarrow& 1\qquad\mbox{as $x\longrightarrow 0$}
 \end{eqnarray}
 
-and 
+### MSE for $r_\mbox{true}=1$:
+
+\begin{eqnarray}
+r_\mbox{true} &=& 1
+\longrightarrow\\
+\mathbb{E}(\hat{r}-r_\mbox{true})^2 &=& 
+(1-1)^2\times\left(\frac{1}{1+x+x^2}   \right)  +
+(2-1)^2\times\left(\frac{1}{1+x}+\frac{1}{1+x^2}-\frac{2}{1+x+x^2}\right)  + 
+(3-1)^2\times\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)\\
+&=&
+\left(\frac{1}{1+x}+\frac{1}{1+x^2}-\frac{2}{1+x+x^2}\right)  + 
+4\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)\\
+&=& 4-\frac{3}{1+x}-\frac{3}{1+x^2}+\frac{2}{1+x+x^2}\\
+&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$}
+\end{eqnarray}
+
+## Now $r_\mbox{true}=2$:
+
+### Bias for $r_\mbox{true}=2$:
 
 \begin{eqnarray}
 r_\mbox{true} &=& 2
 \longrightarrow\\
 \mathbb{E}(\hat{r}) &=& 
-1\times\left(\frac{x}{1+x+x^2}   \right)  +
-2\times\left(1-\frac{2x}{1+x+x^2}\right)  + 
-3\times\left(\frac{x}{1+x+x^2}   \right)\\
+1\times\left(\frac{x}{1+x+x^2}                        \right)  +
+2\times\left(1-\frac{2x}{1+x+x^2}                     \right)  + 
+3\times\left(\frac{x}{1+x+x^2}                        \right)\\ 
 &=& 2 (!)
 \end{eqnarray}
 
-Further
+### MSE for $r_\mbox{true}=2$:
 
+\begin{eqnarray}
+r_\mbox{true} &=& 2
+\longrightarrow\\
+\mathbb{E}(\hat{r}-r_\mbox{true})^2 &=& 
+(1-2)^2\times\left(\frac{x}{1+x+x^2}   \right)  +
+(2-2)^2\times\left(1-\frac{2x}{1+x+x^2}\right)  + 
+(3-2)^2\times\left(\frac{x}{1+x+x^2}\right)\\
+&=&
+\left(\frac{x}{1+x+x^2}\right)  + 
+\left(\frac{x}{1+x+x^2}\right)\\
+&=& \frac{2x}{1+x+x^2}\\
+&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$}
+\end{eqnarray}
+
+
+## Now $r_\mbox{true}=3$:
+
+### Bias for $r_\mbox{true}=3$:
 
 \begin{eqnarray}
 r_\mbox{true} &=& 3
 \longrightarrow\\
 \mathbb{E}(\hat{r}) &=& 
-1\times\left(\frac{x^2}{1+x+x^2}                      \right)  +
-2\times\left(\frac{x+2x^3+x^4}{(1+x)(1+x^2)(1+x+x^2)} \right)  + 
-3\times\left(\frac{1+x+2x^2  }{(1+x)(1+x^2)(1+x+x^2)} \right)\\ 
-&=& 1+\frac{1}{1+x}+\frac{1}{1+x^2}\\
-&\longrightarrow& 3\qquad\mbox{as $x\longrightarrow 0$}
+1\times\left(\frac{x^2}{1+x+x^2}                        \right)  +
+2\times\left(\frac{x+2x^3+x^4}{(1+x)(1+x^2)(1+x+x^2)}   \right)  + 
+3\times\left(\frac{1+x+2x^2  }{(1+x)(1+x^2)(1+x+x^2)}   \right)\\
+&=& XXXX
 \end{eqnarray}
 
 
-So the **bias** $B$ is:
+
+
+
+Summarising, the **bias** $B$ is:
 
 \begin{eqnarray}
 r_\mbox{true} &=& 1\longrightarrow B=2-\frac{1}{1+x}-\frac{1}{1+x^2}\\

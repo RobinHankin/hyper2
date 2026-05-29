@@ -15,6 +15,7 @@ CITATION.cff
 ^\.Rproj\.user$
 ^site$
 ^inst/123all.png$
+^inst/bias_for_three_runners.Rmd$
 ^inst/build_site.R$
 ^inst/carcinoma.Rmd$
 ^inst/carcinoma.txt$
