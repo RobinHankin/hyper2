@@ -416,7 +416,61 @@ r_\text{true} &=& 3\longrightarrow MSE = 4\left(1-\frac{1}{1+x} - \frac{1}{1+x^2
 
 
 
+# Plots
 
+```{r}
+x <- seq(from=1,to=0.01,len=100)
+B1good  <- function(x){2 - 1/(1+x) - 1/(1+x^2)}
+B2good  <- function(x){x*0}
+B3good  <- function(x){1/(1+x) + 1/(1+x^2) - 2}
+
+B1bad <- function(x){2 - 2/(1+x) - 2/(1+x^2)+ 2/(1+x+x^2)}
+B2bad <- function(x){x*0}
+B3bad <- function(x){2/(1+x) + 2/(1+x^2) - 2*(1+x)/(1+x+x^2) - 2}
+
+M1good  <- function(x){4 - 3/(1+x) - 3/(1+x^2) + 2/(1+x+x^2)}
+M2good  <- function(x){2*x/(1+x+x^2)}
+M3good  <- function(x){4 - 1/(1+x) -1/(1+x^2) - 2*(1+x)/(1+x+x^2)}
+
+M1bad <- function(x){4*(1- 1/(1+x) - 1/(1+x^2) + 1/(1+x+x^2))}
+M2bad <- function(x){x*0 + 1}
+M3bad <- function(x){4*(1- 1/(1+x) - 1/(1+x^2) + (1+x)/(1+x+x^2))}
+
+cutoff <- sqrt((sqrt(5)-1)/2)
+x <- seq(from=0.1, to=cutoff, len=100)
+
+plot(log(x), B1good(x),type="n", ylim=c(-1.5,1.5),xlim=c(log(0.1), 0))
+abline(v=log(cutoff),col='gray')
+points(log(x), B1good(x), col="black",type="l",lty=1)
+points(log(x), B2good(x), col="red",type="l",lty=1)
+points(log(x), B3good(x), col="blue",type="l",lty=1)
+
+x <- seq(from=cutoff, to=1, len=100)
+
+points(log(x), B1bad(x), col="black",type="l",lty=1)
+points(log(x), B2bad(x), col="red",type="l",lty=1)
+points(log(x), B3bad(x), col="blue",type="l",lty=1)
+
+
+x <- seq(from=0.1, to=cutoff, len=100)
+
+plot(log(x), M1good(x),type="n", ylim=c(0,1.5),xlim=c(log(0.1), 0))
+abline(v=log(cutoff),col='gray')
+
+points(log(x), M1good(x), col="black",type="l",lty=1)
+points(log(x), M2good(x), col="red",type="l",lty=1)
+points(log(x), M3good(x), col="blue",type="l",lty=1)
+
+x <- seq(from=cutoff, to=1, len=100)
+
+points(log(x), M1bad(x), col="black",type="l",lty=1)
+points(log(x), M2bad(x), col="red",type="l",lty=1)
+points(log(x), M3bad(x), col="blue",type="l",lty=1)
+
+
+
+
+```
 
 
 ## Summarising
