@@ -394,6 +394,28 @@ r_\text{true} &=& 3
 &\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}
 \end{eqnarray}
 
+## Summary for $x>\sqrt{(\sqrt{5}-1)/2}$ (bad weirdness)
+
+Summarising, the **bias** $B$ is:
+
+\begin{eqnarray}
+r_\text{true} &=& 1\longrightarrow B=2-\frac{2}{1+x}-\frac{2}{1+x^2}+\frac{2}{1+x+x^2}\\
+r_\text{true} &=& 2\longrightarrow B=0\\
+r_\text{true} &=& 3\longrightarrow B= -2+\frac{2}{1+x}+\frac{2}{1+x^2}-\frac{2(1+x)}{1+x+x^2}
+\end{eqnarray}
+
+The mean square error
+$\operatorname{MSE}(\hat{r})=\mathbb{E}(\hat{r}-r_\text{true})^2$ is
+
+\begin{eqnarray}
+r_\text{true} &=& 1\longrightarrow MSE = 4\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)\\
+r_\text{true} &=& 2\longrightarrow MSE = 1\\
+r_\text{true} &=& 3\longrightarrow MSE = 4\left(1-\frac{1}{1+x} - \frac{1}{1+x^2} +\frac{1+x}{1+x+x^2}\right)\\
+\end{eqnarray}
+
+
+
+
 
 
 
