@@ -1,0 +1,154 @@
+---
+title: "exponential Bradley-Terry: likelihood-based methods on a grid of values"
+author: "robin hankin"
+date: "2025-04-02"
+output: html_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(hyper2)
+library(stringr)
+library("partitions")
+library("magrittr")
+set.seed(0)
+```
+
+<font size="1">
+(takes maybe two or three hours to run without cache; each
+<tt>parkrunlikefunobs</tt> chunk takes maybe thirty minutes).
+</font>
+
+First we define `BT()` which specifies Bradley-Terry strengths $\alpha x^i$:
+
+```{r defineBT}
+BT <- function(n,x){
+    out <- x^(0:(n-1))
+    if(x != 1){
+        out <- out*(1-x)/(1-x^n)
+    } else {
+        out <- out/n
+    }
+    names(out) <- paste0("p",str_pad(1:n,ceiling(log10(n))))
+    out
+}
+BT(4,0.5)
+sum(BT(4,0.5))
+```
+
+We will consider $n=9$, $x=0.5$, $r=4$ and make repeated observations:
+
+
+```{r showtabulate}
+(jj <- BT(9,0.5))
+o <- tabulate(replicate(1e4,which(rrace(jj) == "p4")))
+o
+plot(o,type='h')
+```
+
+
+    
+```{r definegetprob, caasdf=TRUE}
+getprob <- function(n, r, x, N=1e4){
+    jj <- BT(n, x)
+    wanted <- paste0("p", str_pad(r, ceiling(log10(n))))
+    c(r=r, x=x, setNames(tabulate(replicate(N, which(rrace(jj) == wanted)),nbins=n), paste0("p", 1:n)))
+}
+rbind(
+getprob(9,1,0.5,N=100),
+getprob(9,2,0.5,N=100),
+getprob(9,3,0.5,N=100),
+getprob(9,4,0.5,N=100),
+getprob(9,5,0.5,N=100),
+getprob(9,6,0.5,N=100),
+getprob(9,7,0.5,N=100),
+getprob(9,8,0.5,N=100),
+getprob(9,9,0.5,N=100)
+)
+
+rbind(
+getprob(9,1,0.2,N=100),
+getprob(9,2,0.2,N=100),
+getprob(9,3,0.2,N=100),
+getprob(9,4,0.2,N=100),
+getprob(9,5,0.2,N=100),
+getprob(9,6,0.2,N=100),
+getprob(9,7,0.2,N=100),
+getprob(9,8,0.2,N=100),
+getprob(9,9,0.2,N=100)
+)
+rbind(
+getprob(9,1,0.9,N=100),
+getprob(9,2,0.9,N=100),
+getprob(9,3,0.9,N=100),
+getprob(9,4,0.9,N=100),
+getprob(9,5,0.9,N=100),
+getprob(9,6,0.9,N=100),
+getprob(9,7,0.9,N=100),
+getprob(9,8,0.9,N=100),
+getprob(9,9,0.9,N=100)
+)
+```
+
+```{r makeII, cache=TRUE}
+r_try <- 1:9
+x_try <- seq(from = 0.1, to = 1, by = 0.05)
+jj <- as.matrix(expand.grid(r_try, x_try))
+II <- t(apply(jj, 1, function(v){getprob(9, v[1], v[2], N=1e4)}))
+head(II)
+```
+
+
+```{r makesupp, cache=TRUE}
+r_true <- 3
+x_true <- 0.85
+set.seed(0)
+o <- getprob(9, r_true, x_true, 100)  # observations
+o[1:2]
+o[-(1:2)]
+
+support_func <- function(o, v){
+    v <- v[-(1:2)]
+    v <- v/sum(v)
+    dmultinom(o[-(1:2)], prob=v, log=TRUE)
+}
+support <- rep(0,nrow(II))
+for(i in seq_len(nrow(II))){
+    support[i] <- support_func(o, II[i,])
+}
+```
+    
+```{r plottoycontour}
+x_try
+length(support)
+support <- support-max(support)
+support <- pmax(support, -10)
+support  <- matrix(support,length(r_try),length(x_try))
+wanted <- x_try >= 0.5
+worker <- function(...){
+contour(r_try, x_try[wanted], support[,wanted], xlab="r", ylab="x", levels = -c(1,(1:5)*2), lwd=c(1,3,1,1,1,1))
+points(r_true,x_true,pch=16,col='red',cex=2)
+jj <- support[,wanted]
+maxplace <- which(jj==max(jj), arr.ind=TRUE)
+points(r_try[maxplace[1]], x_try[wanted][maxplace[2]], pch=16, col='blue', cex=2)
+}
+worker()
+pdf(file="toyexample.pdf")
+worker()
+dev.off()
+
+filled.contour(r_try, x_try, support, xlab = "r", ylab = "x")
+```
+
+```{r contourLO}
+x_try
+wanted <- 8:18
+LO <- function(p){log(p/(1-p))}
+contour(r_try, LO(x_try[wanted]), support[,wanted], xlab="r", ylab="Log-odds of x", levels = -c(1,(1:5)*2), lwd=c(1,3,1,1,1,1))
+```
+
+```{R showjj}
+jj <- cbind(II[,1:2],c(support))
+jj[jj[,2] == 1,]
+```
