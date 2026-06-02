@@ -174,8 +174,8 @@ What may we infer about $(x,r)$?
 We consider the smallest non-trivial cases $n=3$ and $n=4$.  For $n=3$
 we have Plackett-Luce strengths $\alpha x,\alpha x^2,\alpha x^3$ [the
   extra factor of $x$ allows us to identify the $r$ in ``$\alpha
-  x^r$'' with the nominal rank of the competitor, the best being rank
-  1].  Suppose the focal competitor came first, the likelihood
+  x^r$'' with the nominal rank $r$ of the competitor, the best being
+  rank 1].  Suppose the focal competitor came first, the likelihood
 function would be
 
 \begin{equation}
@@ -186,11 +186,13 @@ If the focal competitor came second we would have two Plackett-Luce
 probabilities to add, corresponding to different order statistics.
 For example, if $r=1$ we would have two finishing orders that are
 consistent with the observation: $2\succ 1\succ 3$ and $3\succ 1\succ
-2$.  These are disjoint so the likelihood will be proportional to
+2$.  These are disjoint so the likelihood will be given by
 
 $$
-\frac{x^2}{x+x^2+x^3}\cdot\frac{x}{x+x^3} + 
-\frac{x^3}{x+x^2+x^3}\cdot\frac{x}{x+x^2}
+\mathcal{L}(r,x)\propto
+\Prob(r_\text{obs}=2\left|r=1,x\right.)=
+\frac{x^2}{x^1+x^2+x^3}\cdot\frac{x^1}{x+x^3} + 
+\frac{x^3}{x^1+x^2+x^3}\cdot\frac{x^1}{x+x^2}
 $$
 
 After simplification:
@@ -209,12 +211,81 @@ After simplification:
 \includegraphics[width=4in]{123all}  % 123all.pdf produced by exponential_BT.Rmd
 \caption{The case $n=3$.  Three log-likelihood
   functions \label{123all}, one for each of the three possible
-  observations of the rank $r$ of the focal competitor, presented as a
-  function of $\left\lbrace 1, 2,3\right\rbrace\times\mathbb{R}^-$.
-  (a), $r=1$; (b), $r=2$; (c), $r=3$}
+  observations of the rank $r_\text{obs}$ of the focal competitor,
+  presented as a function of $\left\lbrace 1,
+  2,3\right\rbrace\times\mathbb{R}^-$.  (a), $r_\text{obs}=1$ [focal
+    competitor came first]; (b), $r_\text{obs}=2$ [focal competitor
+    second]; (c), $r_\text{obs}=3$ [focal competitor third].  The
+  maximum likelihood estimator, $\hat{r}\in\left\lbrace 1,
+  2,3\right\rbrace$ is simply the upper of the three lines at any
+  given $x$.  Observe that in each case,
+  $r_\text{obs}=i\longrightarrow\hat{r}=i$ except for a small region
+  in graph (b); if $x > \sqrt{(\sqrt{5}-1)/2}\simeq 0.786$ we see
+  $r_\text{obs}=2\longrightarrow\hat{r}=1$}
 \end{centering}
 \end{figure}
 
+A graphical summary is given in figure~\ref{123all}, from which we may
+derive some elementary properties of the maximum likelihood estimator
+$\hat{r}$.  Because the likelihood curves for $r=2$ cross at
+$x=\alpha=\sqrt{(\sqrt{5}-1)/2}\simeq 0.786$ we need two distinct
+estimators, one for $x\leqslant\alpha$ and one for $x>\alpha$:
+
+\begin{equation}
+\underbrace{
+  \hat{r}=
+  \begin{cases}
+1, r_\text{obs}=1\\
+2, r_\text{obs}=2\\
+3, r_\text{obs}=3
+\end{cases}
+}_{x\leqslant\alpha}
+\qquad
+\underbrace{
+  \hat{r}=
+  \begin{cases}
+1, r_\text{obs}=1\\
+1, r_\text{obs}=2\\
+3, r_\text{obs}=3
+\end{cases}
+}_{x > \alpha}
+\end{equation}
+
+With this estimator we can calculate bias $B=\mathbb{E}(\hat{r}-r)$
+and mean square error $\mathit{MSE}=\mathbb{E}(\hat{r}-r)^2$,
+equations~\ref{bias} and~\ref{MSE} respectively;
+figure~\ref{bias_MSE}.
+
+
+\begin{figure}[t]
+  \begin{centering}
+\includegraphics[width=4in]{bias_MSE}  % bias_MSE.pdf produced by exponential_BT.Rmd
+\caption{Bias (top)\label{bias_MSE} and MSE (bottom) for the maximum
+  likelihood estimator for $r$}
+\end{centering}
+\end{figure}
+
+\begin{eqnarray}\label{bias}
+B = \begin{cases}
+2-\frac{1}{1+x}-\frac{1}{1+x^2}, & r=1, x\leqslant\alpha\\
+0,                               & r=2, x\leqslant\alpha\\
+\frac{1}{1+x}+\frac{1}{1+x^2}-2, & r=3, x\leqslant\alpha\\
+2-\frac{2}{1+x}-\frac{2}{1+x^2}+\frac{2}{1+x+x^2},       & r=1, x>\alpha\rule{0mm}{10mm}\\
+0,                                                       & r=2, x>\alpha\\
+-2+\frac{2}{1+x}+\frac{2}{1+x^2}-\frac{2(1+x)}{1+x+x^2}, & r=3, x>\alpha
+\end{cases}
+\end{eqnarray}
+
+\begin{eqnarray}\label{MSE}
+\mathit{MSE} = \begin{cases}
+  4-\frac{3}{1+x}-\frac{3}{1+x^2}+\frac{2}{1+x+x^2}                 , &r=1, x\leqslant\alpha\\
+\frac{2x}{1+x+x^2}                                                  , &r=2, x\leqslant\alpha\\
+ 4-\frac{1}{1+x} - \frac{1}{1+x^2} -\frac{2(1+x)}{1+x+x^2}          , &r=3, x\leqslant\alpha\\
+4\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)     , &r=1, x > \alpha\rule{0mm}{10mm}\\
+1                                                                   , &r=2, x > \alpha\\
+4\left(1-\frac{1}{1+x} - \frac{1}{1+x^2} +\frac{1+x}{1+x+x^2}\right), &r=3, x > \alpha\\
+\end{cases}
+\end{eqnarray}
 
 The general case with $n$ competitors is harder as we potentially have
 $(n-1)!$ orderings for each observation.  Taking $n=4$ as an example,
@@ -288,7 +359,7 @@ situations, and in this case function {\tt rrace()} simulates a race
 between competitors of known Plackett-Luce strengths.  To obtain a
 likelihood function for a specific value of $(x,s)$ at a particular
 observed rank $r$, we run repeated {\em in-silico} races between
-competitors of Plackett-Luce strengths $x^1,x^2,\ldots x^n$, and
+competitors of Plackett-Luce strengths $x^1,x^2,\ldots,x^n$, and
 observe the frequency with which competitor $\lceil ns\rceil$ places
 $j$.  For example, consider $x=0.1, j=4$: each competitor has 10 times
 the strength of the next, and the focal competitor placed fourth.  We
@@ -321,11 +392,12 @@ rrank(15, p=0.1^v, as.character(v))
 \end{verbatim}
 
 Above we see a bespoke {\tt hyper2} object, of class {\tt ranktable},
-designed to display rank data for use with Bradley-Terry likelihoods.
-We see 15 independent Plackett-Luce races; for example the first one
-indicates that competitor 2 came first, 1 came second, 4 came third,
-and so on.  Looking at the fourth column [headed \verb+c4+, ``came
-  fourth''], we see that
+designed to display rank data for use with Bradley-Terry likelihoods;
+such objects are used in~\citet{hankin2023_formula1points}.  We see 15
+independent Plackett-Luce races; for example the first one indicates
+that competitor 2 came first, 1 came second, 4 came third, and so on.
+Looking at the fourth column [headed \verb+c4+, ``came fourth''], we
+see that
 
 \begin{equation}
   \mathcal{L}(0.1,3)\propto 1,\qquad
