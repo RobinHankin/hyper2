@@ -228,8 +228,8 @@ After simplification:
 A graphical summary is given in figure~\ref{123all}, from which we may
 derive some elementary properties of the maximum likelihood estimator
 $\hat{r}$.  Because the likelihood curves for $r=2$ cross at
-$x=\alpha=\sqrt{(\sqrt{5}-1)/2}\simeq 0.786$ we need two distinct
-estimators, one for $x\leqslant\alpha$ and one for $x>\alpha$:
+$x=\beta=\sqrt{(\sqrt{5}-1)/2}\simeq 0.786$ we need two distinct
+estimators, one for $x\leqslant\beta$ and one for $x>\beta$:
 
 \begin{equation}
 \underbrace{
@@ -239,7 +239,7 @@ estimators, one for $x\leqslant\alpha$ and one for $x>\alpha$:
 2, r_\text{obs}=2\\
 3, r_\text{obs}=3
 \end{cases}
-}_{x\leqslant\alpha}
+}_{x\leqslant\beta}
 \qquad
 \underbrace{
   \hat{r}=
@@ -248,7 +248,7 @@ estimators, one for $x\leqslant\alpha$ and one for $x>\alpha$:
 1, r_\text{obs}=2\\
 3, r_\text{obs}=3
 \end{cases}
-}_{x > \alpha}
+}_{x > \beta}
 \end{equation}
 
 With this estimator we can calculate bias $B=\mathbb{E}(\hat{r}-r)$
@@ -267,23 +267,23 @@ figure~\ref{bias_MSE}.
 
 \begin{eqnarray}\label{bias}
 B = \begin{cases}
-2-\frac{1}{1+x}-\frac{1}{1+x^2}, & r=1, x\leqslant\alpha\\
-0,                               & r=2, x\leqslant\alpha\\
-\frac{1}{1+x}+\frac{1}{1+x^2}-2, & r=3, x\leqslant\alpha\\
-2-\frac{2}{1+x}-\frac{2}{1+x^2}+\frac{2}{1+x+x^2},       & r=1, x>\alpha\rule{0mm}{10mm}\\
-0,                                                       & r=2, x>\alpha\\
--2+\frac{2}{1+x}+\frac{2}{1+x^2}-\frac{2(1+x)}{1+x+x^2}, & r=3, x>\alpha
+2-\frac{1}{1+x}-\frac{1}{1+x^2}, & r=1, x\leqslant\beta\\
+0,                               & r=2, x\leqslant\beta\\
+\frac{1}{1+x}+\frac{1}{1+x^2}-2, & r=3, x\leqslant\beta\\
+2-\frac{2}{1+x}-\frac{2}{1+x^2}+\frac{2}{1+x+x^2},       & r=1, x>\beta\rule{0mm}{10mm}\\
+0,                                                       & r=2, x>\beta\\
+-2+\frac{2}{1+x}+\frac{2}{1+x^2}-\frac{2(1+x)}{1+x+x^2}, & r=3, x>\beta
 \end{cases}
 \end{eqnarray}
 
 \begin{eqnarray}\label{MSE}
 \mathit{MSE} = \begin{cases}
-  4-\frac{3}{1+x}-\frac{3}{1+x^2}+\frac{2}{1+x+x^2}                 , &r=1, x\leqslant\alpha\\
-\frac{2x}{1+x+x^2}                                                  , &r=2, x\leqslant\alpha\\
- 4-\frac{1}{1+x} - \frac{1}{1+x^2} -\frac{2(1+x)}{1+x+x^2}          , &r=3, x\leqslant\alpha\\
-4\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)     , &r=1, x > \alpha\rule{0mm}{10mm}\\
-1                                                                   , &r=2, x > \alpha\\
-4\left(1-\frac{1}{1+x} - \frac{1}{1+x^2} +\frac{1+x}{1+x+x^2}\right), &r=3, x > \alpha\\
+  4-\frac{3}{1+x}-\frac{3}{1+x^2}+\frac{2}{1+x+x^2}                 , &r=1, x\leqslant\beta\\
+\frac{2x}{1+x+x^2}                                                  , &r=2, x\leqslant\beta\\
+ 4-\frac{1}{1+x} - \frac{1}{1+x^2} -\frac{2(1+x)}{1+x+x^2}          , &r=3, x\leqslant\beta\\
+4\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)     , &r=1, x > \beta\rule{0mm}{10mm}\\
+1                                                                   , &r=2, x > \beta\\
+4\left(1-\frac{1}{1+x} - \frac{1}{1+x^2} +\frac{1+x}{1+x+x^2}\right), &r=3, x > \beta\\
 \end{cases}
 \end{eqnarray}
 
