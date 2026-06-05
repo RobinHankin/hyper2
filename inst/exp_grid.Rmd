@@ -30,7 +30,7 @@ BT <- function(n,x){
     } else {
         out <- out/n
     }
-    names(out) <- paste0("p",str_pad(1:n,ceiling(log10(n))))
+    names(out) <- str_pad(1:n, width=ceiling(log10(n)), pad = "0")
     out
 }
 BT(4,0.5)
@@ -41,71 +41,37 @@ We will consider $n=9$, $x=0.5$, $r=4$ and make repeated observations:
 
 
 ```{r showtabulate}
-(jj <- BT(9,0.5))
-o <- tabulate(replicate(1e4,which(rrace(jj) == "p4")))
-o
-plot(o,type='h')
-```
-
-
-    
-```{r definegetprob, caasdf=TRUE}
-getprob <- function(n, r, x, N=1e4){
-    jj <- BT(n, x)
-    wanted <- paste0("p", str_pad(r, ceiling(log10(n))))
-    c(r=r, x=x, setNames(tabulate(replicate(N, which(rrace(jj) == wanted)),nbins=n), paste0("p", 1:n)))
-}
-```
-
-```{r makeII, cache=TRUE}
-r_try <- 1:9
-x_try <- seq(from = 0.1, to = 1, by = 0.05)
-jj <- as.matrix(expand.grid(r_try, x_try))
-II <- t(apply(jj, 1, function(v){getprob(9, v[1], v[2], N=1e4)}))
-head(II)
-```
-
-```{r showIItail}
-tail(II,3)
-```
-
-Above we see object `II`.  We use this to calculate probabilities of
-the focal competitor placing $i$, conditional on $r$ and $x$.  It
-might have been better to divide columns `pi` through `p9` by `1e4` to
-get probabilities.  To see contours, look at `exponential_BT.Rmd`.
-
-
-```{r makesupp, cache=TRUE}
-make_obs <- function(r_true=3, x_true=0.85, nobs=100){
-
-    set.seed(0)
-    o <- getprob(9, r_true, x_true, obs)  # observations
-    return(o)
+makeracetable <- function(no_of_races,no_of_competitors,x){
+    t(replicate(no_of_races,
+                as.numeric(rrace(BT(no_of_competitors, x)))))
 }
 
+makeracetable(10,5,0.7)
 
-support_func <- function(o, v){
-    v <- v[-(1:2)]
-    v <- v/sum(v)
-    dmultinom(o[-(1:2)], prob=v, log=TRUE)
-}
-support <- rep(0,nrow(II))
-for(i in seq_len(nrow(II))){
-    support[i] <- support_func(o, II[i,])
+
+```
+
+
+```{r, label=definegetonecompetitor}
+get_one_competitor <- function(racetable, competitor){
+    jj <- apply(racetable, 1, function(x){which(x==competitor)})
+    tabulate(jj, ncol(racetable))
 }
 ```
 
 
-Now
+```{r, label=exampleracetable, cache=TRUE}
+X <- makeracetable(1e5,15,0.7)
+get_one_competitor(X,4)
+get_one_competitor(X,12)
 
-```{r}
-X <- cbind(support,II)
-head(X)
-tail(X)
+rbind(
+get_one_competitor(X,1) ,
+get_one_competitor(X,2) ,
+get_one_competitor(X,14),
+get_one_competitor(X,15)
+)
 ```
 
 
-```{r}
-m <- which.max(support)
-X[(m-5):(m+5),]
-```
+
