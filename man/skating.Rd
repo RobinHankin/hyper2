@@ -28,9 +28,9 @@
   \code{suppfun()} requires a rank table [use \code{as.ranktable()} to
   coerce; see the examples].  Object \code{skating_table} is taken from
   Lock and Lock.  It corrects what appears to be an error in which judge
-  5 ranked both Butyrskaya and Kettunen 12; there is no 13.  Using EM, I
-  reckon that Butyrskaya should be ranked twelfth and Kettunen
-  thirteenth.
+  5 ranked both Butyrskaya and Kettunen 12; there is no 13.  Using
+  \acronym{EM}, I reckon that Butyrskaya should be ranked twelfth and
+  Kettunen thirteenth.
 
 }
 \references{
