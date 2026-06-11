@@ -18,7 +18,8 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 
 To cite the `hyper2` package in publications, please use
 @hankin2017_rmd.  This vignette shows some features of the
-`uninformative` argument of function `ordertable2supp()`.
+`uninformative` argument of function `ordertable2supp()` and
+`ordertable2supp3()`.
 
 ```{r simplekickoff_define_o}
 (o <- data.frame(x=c("DSQ",1:3), row.names=letters[1:4]))
@@ -107,10 +108,13 @@ ordertable2supp(o)
 ```
 
 
-## Case studies
-
 The `curling` dataset, documented at `inst/curling.Rmd` and
 `curling.Rd`, gives a nice use-case for this functionality.
+
+## Case studies
+
+Function `ordertable2supp3()` includes a `noninformative` option.  We
+can illustrate its use with a simple case.
 
 The best use-case would be the 2025 MotoGP World Championship.  Marc
 Marquez declined to compete in the last four races of the season due
@@ -118,5 +122,38 @@ to his having accumulated sufficient points to guarantee victory.  We
 can make no inferences about his BT strength from these final four
 races.
 
+A simple table:
+
+```{r definesimpletable,echo=FALSE}
+o <- data.frame(
+    constructor = c("ducati"   , "ducati"   , "aprilia"  , "KTM"   , "ducati", "ducati"),
+    THA = c(1,2,6 ,19,3,10),
+    GBR = c(6,5,4,3,2,1),
+    ARG = c(1,2,NA,8 ,4 ,5),
+    AUS = c("won", 4,3,5,NA,2),
+    MAL = c("won", 1,11,2,NA,6),
+    points = c(33,2,1,3,44,4)
+    
+)
+```
+
+```{r showsimpletable1}
+o
+x1 <- ordertable2supp3(o)
+x1
+```
+
+```{r showsimpletable2}
+x2 <- ordertable2supp3(o, noninformative = "won")
+x2
+```
+
+```{r, calcmax3_both, cache=TRUE}
+maxp(x1)
+maxp(x2)
+```
+
+I will put up the full constructor table for MotoGP when I get round
+to it.
 
 ## References {-}

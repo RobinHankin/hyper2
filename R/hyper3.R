@@ -469,11 +469,13 @@ stop("not yet written")
 ## a <- read.table("constructor_2021.txt",header=TRUE)
 ## constructor(a[,-ncol(a)])  # final column is points
 
-`ordertable2supp3` <- function(a){  
+`ordertable2supp3` <- function(a, noninformative=NULL){
     out <- hyper3()
     n <- a[,1]  # names of constructors
     for(i in seq(from=2, to=ncol(a)-1)){
-        jj <- n[order(suppressWarnings(as.numeric(a[,i])), na.last=TRUE)]
+        onecol <- suppressWarnings(as.numeric(a[,i]))
+        wanted <- !(a[,i] %in% noninformative ) # %notin% not available to workflow
+        jj <- n[wanted][order(onecol[wanted], na.last=TRUE)]
         n_finishers    <- sum(!is.na(jj))
         n_nonfinishers <- sum( is.na(jj))
         if(n_nonfinishers == 0){ # technically not necessary:  "else" clause works for == 0
