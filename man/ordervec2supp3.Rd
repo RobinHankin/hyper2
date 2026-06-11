@@ -25,7 +25,7 @@ char2nv(x)
 ordervec2supp3(v, nonfinishers=NULL)
 ordervec2supp3a(v, nonfinishers=NULL, helped=NULL, lambda=1)
 rankvec_likelihood3(v, nonfinishers=NULL)
-ordertable2supp3(a)
+ordertable2supp3(a, noninformative=NULL)
 cheering3(v, e, help, nonfinishers=NULL)
 args2ordervec(...)
 }
@@ -37,13 +37,16 @@ args2ordervec(...)
     not finish.  See details section and examples}
   \item{a}{An ordertable}
   \item{helped}{vector of entities being helped}
-  \item{e, help,lambda}{Parameters controlling non-independence with
+  \item{e, help, lambda}{Parameters controlling non-independence with
     \code{e} a named integer vector specifying equivalence classes of
     the competitors: names correspond to the competitors, values to
     their equivalence class, and \code{help} a numeric vector with
     entries corresponding to the equivalence classes of \code{e} and
     values the strength of the support}
   \item{x}{A character vector of competitors}
+  \item{noninformative}{Character vector of entries in an ordertable
+    that are interpreted as uninformative.  See
+    \code{inst/noninformative.Rmd}}
   \item{...}{Arguments passed to \code{args2ordervec()}}
 }
 \details{
@@ -92,7 +95,12 @@ args2ordervec(...)
   Function \code{ordertable2supp3()} takes an order table (the canonical
   example is the constructors' formula 1 grand prix results, see
   \code{constructor.Rd} and returns a generalized Plackett-Luce support
-  function in the form of a \code{hyper3} object.
+  function in the form of a \code{hyper3} object.  Argument
+  \code{noninformative} is a character vector of entries that are
+  interpreted as the competitor's placing is not informative about their
+  PL strength for some reason (e.g., they elected not to compete because
+  they had accumulated enough points to guarantee victory.  See
+  \code{inst/noninformative.Rmd}.
 
   Function \code{char2nv()} takes a character vector and returns a named
   vector with entries corresponding to their names' counts.  It is used

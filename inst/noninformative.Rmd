@@ -18,7 +18,8 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 
 To cite the `hyper2` package in publications, please use
 @hankin2017_rmd.  This vignette shows some features of the
-`uninformative` argument of function `ordertable2supp()`.
+`uninformative` argument of function `ordertable2supp()` and
+`ordertable2supp3()`.
 
 ```{r simplekickoff_define_o}
 (o <- data.frame(x=c("DSQ",1:3), row.names=letters[1:4]))
@@ -107,10 +108,63 @@ ordertable2supp(o)
 ```
 
 
-## Case studies
-
 The `curling` dataset, documented at `inst/curling.Rmd` and
 `curling.Rd`, gives a nice use-case for this functionality.
+
+## `hyper3` support functions {-}
+
+Function `ordertable2supp3()` includes a `noninformative` option.  We
+can illustrate its use with a simple case.
+
+```{r singleobs}
+obs <- data.frame(foo = c("a","a","b","a"), place=c("won",2,3,4), points=4:1)
+obs
+```
+
+If "won" means "came last" we would have $a\succ b\succ a\succ a$,
+with PL likelihood function
+
+\begin{equation}
+\propto
+\frac{a}{3a+b}\cdot
+\frac{b}{2a+b}\cdot
+\frac{a}{2a}\cdot
+\frac{a}{a}\propto
+\frac{a}{3a+b}\cdot
+\frac{b}{2a+b}
+\end{equation}
+
+
+```{r showS1}
+S1 <- ordertable2supp3(obs)
+S1
+```
+
+Above we see that `ordertable2supp3()` has returned a more complicated
+function than necessary because it has not cancelled out one of the
+constant terms [here it has cancelled out $\frac{a}{a}$ but not
+$\frac{2}{2a}$].  
+
+Now if we define "won" to be noninformative the order statistic is
+simply $a \succ b\succ a$, with PL likelihood function
+
+\begin{equation}
+\propto
+\frac{a}{2a+b}\cdot
+\frac{b}{a+b}
+\end{equation}
+
+and indeed we see:
+
+```{r showS2}
+S2 <- ordertable2supp3(obs, noninformative = "won")
+S2
+```
+
+```{r calcmax3twice}
+maxp(S1)
+maxp(S2)
+```
 
 The best use-case would be the 2025 MotoGP World Championship.  Marc
 Marquez declined to compete in the last four races of the season due
@@ -118,5 +172,45 @@ to his having accumulated sufficient points to guarantee victory.  We
 can make no inferences about his BT strength from these final four
 races.
 
+
+first we consider a simplified table:
+
+```{r definesimpletable,echo=FALSE}
+o <- data.frame(
+    constructor = c("ducati"   , "ducati"   , "aprilia"  , "KTM"   , "ducati", "ducati"),
+    THA = c(1,2,6,19,3,10),
+    GBR = c(6,5,4,3,2,1),
+    ARG = c(1,2,NA,8 ,4 ,5),
+    AUS = c("won", 4,3,5,NA,2),
+    MAL = c("won", 1,11,2,NA,6),
+    points = c(33,2,1,3,44,4)
+    
+)
+```
+
+```{r showsimpletable1}
+o
+x1 <- ordertable2supp3(o)
+x1
+```
+
+```{r showsimpletable2}
+x2 <- ordertable2supp3(o, noninformative = "won")
+x2
+```
+
+```{r, calcmax3_both, cache=TRUE}
+maxp(x1)
+maxp(x2)
+```
+
+
+Above, see how the evaluate for `ducati` increases when we specify
+that `"won"` is noninformative: if `"won"` is informative, it is
+interpreted as "came last" which decreases estimated performance.
+
+I will put up a full constructor table for MotoGP when I get round to
+it [currently, file `motoGP_2019.txt` does not include the
+constructor].
 
 ## References {-}

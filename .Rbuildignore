@@ -228,6 +228,7 @@ CITATION.cff
 ^inst/notthewinner_cache$
 ^inst/notthewinner_files$
 ^inst/notthewinner.Rmd$
+^inst/noninformative.Rmd$
 ^inst/oecd.txt$
 ^inst/olympiad.txt$
 ^inst/olympic_athletics_100m.txt$
