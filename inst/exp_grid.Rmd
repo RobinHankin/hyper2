@@ -12,7 +12,6 @@ library(hyper2)
 library(stringr)
 library("partitions")
 library("magrittr")
-set.seed(0)
 ```
 
 <font size="1">
@@ -41,7 +40,7 @@ We will consider $n=9$, $x=0.5$, $r=4$ and make repeated observations:
 
 
 ```{r showtabulate}
-makeracetable <- function(no_of_races,no_of_competitors,x){
+makeracetable <- function(no_of_races, no_of_competitors, x){
     t(replicate(no_of_races,
                 as.numeric(rrace(BT(no_of_competitors, x)))))
 }
@@ -61,17 +60,137 @@ get_one_competitor <- function(racetable, competitor){
 
 
 ```{r, label=exampleracetable, cache=TRUE}
-X <- makeracetable(1e5,15,0.7)
+X <- makeracetable(1e4,11,0.7)
 get_one_competitor(X,4)
-get_one_competitor(X,12)
+get_one_competitor(X,11)
 
 rbind(
 get_one_competitor(X,1) ,
 get_one_competitor(X,2) ,
-get_one_competitor(X,14),
-get_one_competitor(X,15)
+get_one_competitor(X,9) ,
+get_one_competitor(X,10)
 )
+
+t(sapply(seq_len(11),function(i){get_one_competitor(X,i)}))
 ```
 
 
+OK now to put above code in to functional form:
 
+```{r funcformdef}
+get_all_competitors <- function(no_of_races, no_of_competitors, x){
+    X <- makeracetable(no_of_races, no_of_competitors, x)
+    out <- t(sapply(seq_len(no_of_competitors),function(i){get_one_competitor(X,i)}))
+    dimnames(out) <- list(
+        true_rank = paste("r_", seq_len(no_of_competitors), sep=""),
+        observed_rank = paste("c_", seq_len(no_of_competitors), sep=""))
+    return(out/no_of_races)
+}
+```
+
+Now use it:
+
+```{r useit, cache=TRUE}
+get_all_competitors(100,6,0.5)
+```
+
+Above, we see from the first line that, out of 100 races, the top
+competitor comes first with (estimated) probability 0.53 second with
+probability 0.25 times, and so on, coming fifth with probability 0.01
+
+```{r useit09, cache=TRUE}
+get_all_competitors(100,6,0.99)
+```
+
+Above, all competitors are about the same.  We see a more uniform
+spread of observations.
+
+
+```{r useit01, cache=TRUE}
+get_all_competitors(100, 6, 0.1)
+```
+
+Above, each competitor is ten times as good as the next one.   We see
+underdispersed results.
+
+So what we need to do now is a "meaningful grid".  This is somewhat
+computationally intensive.
+
+
+```{r definegrid}
+no_of_races <- 1000
+no_of_competitors <- 9
+
+true_x <- seq(from=0.1, by=0.1, to=0.9)
+true_rank <- c(1, 3, 5, 7, 9)
+a <- as.matrix(expand.grid(true_x, true_rank))
+```
+
+First, we combine a whole bunch of X matrices together:
+
+```{r defineallX}
+allX <- function(no_of_competitors, no_of_races, true_x){
+    out <- NULL
+    for(i in seq_along(true_x)){
+        out <- rbind(out,
+                     cbind(
+                         true_x[i],
+                         seq_len(no_of_competitors),
+                         get_all_competitors(no_of_races,  no_of_competitors, true_x[i])
+                     )
+                     )
+    }
+    rownames(out) <- NULL
+    jj <- colnames(out)
+    jj[1:2] <- c("r","n")
+    colnames(out) <- jj
+    return(out)
+}
+```
+
+```{r makeallXjj, cache=TRUE}
+jj <- allX(9, 10000, seq(from=0.1,to=0.9,by=0.1))
+    print("bug here")
+```
+
+```{r}
+head(jj)
+tail(jj)
+```
+
+Now some observations:
+
+
+```{r defmakeobs}
+make_obs <- function(no_of_observations, r_true, x_true){
+    kk <- makeracetable(no_of_observations, r_true, x_true)
+
+    print("bug here")
+    obs <- tabulate(apply(kk,1,function(o){which(o == r_true)}),nbins=no_of_competitors)
+    return(obs)
+}
+```
+
+```{r tableev}
+make_obs(no_of_observations=20, x_true = 0.7, r_true = 6)
+make_obs(no_of_observations=20, x_true = 0.7, r_true = 9)
+make_obs(no_of_observations=20, x_true = 0.1, r_true = 6)
+
+print("bug here")
+maxlike <- function(obs){
+    support <- function(i){dmultinom(obs, prob=jj[i,-(1:2)], log=TRUE)}
+    p <- sapply(seq_len(nrow(jj)), support)
+    jj[which.max(p), 1:2]
+}
+
+n <- 1000
+evaluate <- matrix(NA,n,2)
+r_true <- 5
+x_true <- 0.6
+for(i in seq_len(n)){
+    obs <- make_obs(no_of_observations=80, r_true, x_true)
+print("bug here")
+    evaluate[i,] <- maxlike(obs)
+}
+table(evaluate[,1], evaluate[,2])
+```
