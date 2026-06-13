@@ -1,4 +1,5 @@
 venue    date       run place runners time
+stirling 13/06/2026 273 191 251 33:59
 stirling 06/06/2026 272 225 259 36:21
 stirling 23/05/2026 270 243 291 36:00
 stirling 09/05/2026 268 203 264 35:00
