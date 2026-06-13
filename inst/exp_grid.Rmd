@@ -45,9 +45,7 @@ makeracetable <- function(no_of_races, no_of_competitors, x){
                 as.numeric(rrace(BT(no_of_competitors, x)))))
 }
 
-makeracetable(10,5,0.7)
-
-
+makeracetable(no_of_races=10, no_of_competitors=5, x=0.7)
 ```
 
 
@@ -79,7 +77,7 @@ OK now to put above code in to functional form:
 
 ```{r funcformdef}
 get_all_competitors <- function(no_of_races, no_of_competitors, x){
-    X <- makeracetable(no_of_races, no_of_competitors, x)
+    X <- makeracetable(no_of_races=no_of_races, no_of_competitors=no_of_competitors, x=x)
     out <- t(sapply(seq_len(no_of_competitors),function(i){get_one_competitor(X,i)}))
     dimnames(out) <- list(
         true_rank = paste("r_", seq_len(no_of_competitors), sep=""),
@@ -94,27 +92,25 @@ Now use it:
 get_all_competitors(100,6,0.5)
 ```
 
-Above, we see from the first line that, out of 100 races, the top
-competitor comes first with (estimated) probability 0.53 second with
-probability 0.25 times, and so on, coming fifth with probability 0.01
+Above, we see from the first line that, with a sample of 100 races,
+the top competitor comes first with (estimated) probability about
+0.55, second with probability abot 0.25, and so on, coming fifth with
+probability 0.01
 
 ```{r useit09, cache=TRUE}
-get_all_competitors(100,6,0.99)
+get_all_competitors(100, 6, 0.99)
 ```
 
 Above, all competitors are about the same.  We see a more uniform
 spread of observations.
 
-
 ```{r useit01, cache=TRUE}
 get_all_competitors(100, 6, 0.1)
 ```
 
-Above, each competitor is ten times as good as the next one.   We see
-underdispersed results.
-
-So what we need to do now is a "meaningful grid".  This is somewhat
-computationally intensive.
+Above, each competitor is ten times as good as the next one.  We see
+underdispersed results.  So what we need to do now is a "meaningful
+grid".  This is somewhat computationally intensive.
 
 
 ```{r definegrid}
@@ -122,8 +118,6 @@ no_of_races <- 1000
 no_of_competitors <- 9
 
 true_x <- seq(from=0.1, by=0.1, to=0.9)
-true_rank <- c(1, 3, 5, 7, 9)
-a <- as.matrix(expand.grid(true_x, true_rank))
 ```
 
 First, we combine a whole bunch of X matrices together:
@@ -136,61 +130,82 @@ allX <- function(no_of_competitors, no_of_races, true_x){
                      cbind(
                          true_x[i],
                          seq_len(no_of_competitors),
-                         get_all_competitors(no_of_races,  no_of_competitors, true_x[i])
-                     )
-                     )
+                         get_all_competitors(
+			 no_of_races = no_of_races,
+			 no_of_competitors = no_of_competitors,
+			 true_x[i])
+                     )	 
+                     )	 
     }
     rownames(out) <- NULL
     jj <- colnames(out)
-    jj[1:2] <- c("r","n")
+    jj[1:2] <- c("x","r")
     colnames(out) <- jj
     return(out)
 }
 ```
 
-```{r makeallXjj, cache=TRUE}
-jj <- allX(9, 10000, seq(from=0.1,to=0.9,by=0.1))
-    print("bug here")
+```{r makeallX9, cache=TRUE}
+allX9 <- allX(
+          no_of_competitors = 9,
+          no_of_races = 10000,
+          true_x = seq(from=0.1, to=0.9, by=0.1)
+	  )
 ```
 
 ```{r}
-head(jj)
-tail(jj)
+head(allX9)
+allX9[seq(from=round(nrow(allX9)/2 - 5), to=round(nrow(allX9)/2 + 5)),]
+tail(allX9)
 ```
 
 Now some observations:
 
 
 ```{r defmakeobs}
-make_obs <- function(no_of_observations, r_true, x_true){
-    kk <- makeracetable(no_of_observations, r_true, x_true)
-
-    print("bug here")
-    obs <- tabulate(apply(kk,1,function(o){which(o == r_true)}),nbins=no_of_competitors)
+make_obs <- function(no_of_observations, no_of_competitors, r_true, x_true){
+    kk <- makeracetable(no_of_races = no_of_observations, no_of_competitors = no_of_competitors, x_true = x_true)
+    obs <- tabulate(apply(kk,1,function(o){which(o == r_true)}), nbins=no_of_competitors)
     return(obs)
 }
 ```
 
-```{r tableev}
-make_obs(no_of_observations=20, x_true = 0.7, r_true = 6)
-make_obs(no_of_observations=20, x_true = 0.7, r_true = 9)
-make_obs(no_of_observations=20, x_true = 0.1, r_true = 6)
+```{r tableev, cache=TRUE}
+make_obs(no_of_observations=20, no_of_competitors=9, x_true = 0.7, r_true = 6)
+make_obs(no_of_observations=20, no_of_competitors=9, x_true = 0.7, r_true = 9)
+make_obs(no_of_observations=20, no_of_competitors=9, x_true = 0.1, r_true = 6)
 
-print("bug here")
-maxlike <- function(obs){
-    support <- function(i){dmultinom(obs, prob=jj[i,-(1:2)], log=TRUE)}
-    p <- sapply(seq_len(nrow(jj)), support)
-    jj[which.max(p), 1:2]
-}
 
-n <- 1000
-evaluate <- matrix(NA,n,2)
-r_true <- 5
-x_true <- 0.6
-for(i in seq_len(n)){
-    obs <- make_obs(no_of_observations=80, r_true, x_true)
-print("bug here")
-    evaluate[i,] <- maxlike(obs)
+makemaxliketable <- function(n, nobs, no_of_competitors, allX, r_true, x_true){
+
+  maxlike <- function(obs){
+      support <- function(i){dmultinom(obs, prob=allX[i, -(1:2)], log=TRUE)}
+      p <- sapply(seq_len(nrow(allX)), support)
+      print(allX[which.max(p),])
+      allX[which.max(p), 1:2]
+  }
+
+
+  evaluate <- matrix(NA,n,2)
+  for(i in seq_len(n)){
+      obs <- make_obs(no_of_observations=nobs, no_of_competitors=no_of_competitors, x_true=x_true, r_true=r_true)
+      evaluate[i,] <- maxlike(obs)
+      print("---")
+      print("obs")
+      print(obs)
+      print("---")
+  }
+  return(table(evaluate[,1], evaluate[,2]))
 }
-table(evaluate[,1], evaluate[,2])
+```
+
+```{r executemax1, cache=TRUE}
+#makemaxliketable(100, 10, allX9, r_true = 5, x_true = 0.7)
+#makemaxliketable(100, 20, allX9, r_true = 5, x_true = 0.7)
+```
+
+```{r execu, cache=TRUE}
+makemaxliketable(            n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+#makemaxliketable(100, 20, allX9, r_true = 1, x_true = 0.7)
+#makemaxliketable(100,100, allX9, r_true = 1, x_true = 0.7)
 ```
