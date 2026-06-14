@@ -164,7 +164,7 @@ Now some observations:
 
 ```{r defmakeobs}
 make_obs <- function(no_of_observations, no_of_competitors, r_true, x_true){
-    kk <- makeracetable(no_of_races = no_of_observations, no_of_competitors = no_of_competitors, x_true = x_true)
+    kk <- makeracetable(no_of_races = no_of_observations, no_of_competitors = no_of_competitors, x = x_true)
     obs <- tabulate(apply(kk,1,function(o){which(o == r_true)}), nbins=no_of_competitors)
     return(obs)
 }
@@ -181,7 +181,7 @@ makemaxliketable <- function(n, nobs, no_of_competitors, allX, r_true, x_true){
   maxlike <- function(obs){
       support <- function(i){dmultinom(obs, prob=allX[i, -(1:2)], log=TRUE)}
       p <- sapply(seq_len(nrow(allX)), support)
-      print(allX[which.max(p),])
+#      print(allX[which.max(p),])
       allX[which.max(p), 1:2]
   }
 
@@ -190,22 +190,21 @@ makemaxliketable <- function(n, nobs, no_of_competitors, allX, r_true, x_true){
   for(i in seq_len(n)){
       obs <- make_obs(no_of_observations=nobs, no_of_competitors=no_of_competitors, x_true=x_true, r_true=r_true)
       evaluate[i,] <- maxlike(obs)
-      print("---")
-      print("obs")
-      print(obs)
-      print("---")
+#      print("---")
+#      print("obs")
+#      print(obs)
+#      print("---")
   }
   return(table(evaluate[,1], evaluate[,2]))
 }
 ```
 
-```{r executemax1, cache=TRUE}
-#makemaxliketable(100, 10, allX9, r_true = 5, x_true = 0.7)
-#makemaxliketable(100, 20, allX9, r_true = 5, x_true = 0.7)
+```{r execuA, cache=TRUE}
+makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.2)
 ```
 
-```{r execu, cache=TRUE}
-makemaxliketable(            n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-#makemaxliketable(100, 20, allX9, r_true = 1, x_true = 0.7)
-#makemaxliketable(100,100, allX9, r_true = 1, x_true = 0.7)
+```{r execuB, cache=TRUE}
+makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.7)
+makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.2)
 ```
