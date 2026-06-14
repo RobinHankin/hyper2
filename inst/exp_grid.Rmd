@@ -200,11 +200,19 @@ makemaxliketable <- function(n, nobs, no_of_competitors, allX, r_true, x_true){
 ```
 
 ```{r execuA, cache=TRUE}
-makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
 makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.2)
+makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.5)
+makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.9)
 ```
 
 ```{r execuB, cache=TRUE}
 makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.7)
 makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.2)
+```
+
+```{r execuC, cache=TRUE}
+makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.2)
+makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.5)
+makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.9)
 ```
