@@ -134,8 +134,8 @@ allX <- function(no_of_competitors, no_of_races, true_x){
 			 no_of_races = no_of_races,
 			 no_of_competitors = no_of_competitors,
 			 true_x[i])
-                     )	 
-                     )	 
+                     )
+                     )
     }
     rownames(out) <- NULL
     jj <- colnames(out)
@@ -148,7 +148,7 @@ allX <- function(no_of_competitors, no_of_races, true_x){
 ```{r makeallX9, cache=TRUE}
 allX9 <- allX(
           no_of_competitors = 9,
-          no_of_races = 10000,
+          no_of_races = 50000,
           true_x = seq(from=0.1, to=0.9, by=0.1)
 	  )
 ```
@@ -178,41 +178,131 @@ make_obs(no_of_observations=20, no_of_competitors=9, x_true = 0.1, r_true = 6)
 
 makemaxliketable <- function(n, nobs, no_of_competitors, allX, r_true, x_true){
 
-  maxlike <- function(obs){
-      support <- function(i){dmultinom(obs, prob=allX[i, -(1:2)], log=TRUE)}
-      p <- sapply(seq_len(nrow(allX)), support)
-#      print(allX[which.max(p),])
-      allX[which.max(p), 1:2]
-  }
+    maxlike <- function(obs){
+        support <- function(i){dmultinom(obs, prob=allX[i, -(1:2)], log=TRUE)}
+        p <- sapply(seq_len(nrow(allX)), support)
+        allX[which.max(p), 1:2]
+    }
 
-
-  evaluate <- matrix(NA,n,2)
-  for(i in seq_len(n)){
-      obs <- make_obs(no_of_observations=nobs, no_of_competitors=no_of_competitors, x_true=x_true, r_true=r_true)
-      evaluate[i,] <- maxlike(obs)
-#      print("---")
-#      print("obs")
-#      print(obs)
-#      print("---")
-  }
-  return(table(evaluate[,1], evaluate[,2]))
+    evaluate <- matrix(NA,n,2)
+    for(i in seq_len(n)){
+        obs <- make_obs(no_of_observations=nobs, no_of_competitors=no_of_competitors, x_true=x_true, r_true=r_true)
+        evaluate[i,] <- maxlike(obs)
+    }
+    return(table(x=evaluate[,1], r=evaluate[,2]))
 }
 ```
 
-```{r execuA, cache=TRUE}
-makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.2)
-makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.5)
-makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.9)
+
+```{r label=definemean}
+biasx <- function(liketable, x_true){
+    values <- as.numeric(rownames(liketable))
+    probs <- rowSums(liketable) / sum(liketable) # sum(probs) == 1
+    sum(probs*(values - x_true))
+}
+
+biasr <- function(liketable, r_true){
+    values <- as.numeric(colnames(liketable))
+    probs <- colSums(liketable) / sum(liketable) # sum(probs) == 1
+    sum(probs*(values - r_true))
+
+}
+
+msex <- function(liketable, x_true){
+    values <- as.numeric(rownames(liketable))
+    probs <- rowSums(liketable) / sum(liketable) # sum(probs) == 1
+    sum(probs*(values - x_true)^2)
+}
+
+mser <- function(liketable, r_true){
+    values <- as.numeric(colnames(liketable))
+    probs <- colSums(liketable) / sum(liketable) # sum(probs) == 1
+    sum(probs*(values - r_true)^2)
+}
 ```
+
+```{r label=usebias, cache=TRUE}
+(jj <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.8))
+biasx(jj, x_true = 0.8)
+biasr(jj, r_true = 4)
+msex(jj, x_true = 0.8)
+mser(jj, r_true = 4)
+```
+
+### Vary nothing
+
+
+Just do the same thing a few times to gauge the variability in the system:
+
+```{r varynothing, cache=TRUE}
+jj1 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj2 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj3 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj4 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj5 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj1
+jj2
+rbind(
+c(biasr(jj1, 4), biasx(jj1, 0.7)),
+c(biasr(jj2, 4), biasx(jj2, 0.7)),
+c(biasr(jj3, 4), biasx(jj3, 0.7)),
+c(biasr(jj4, 4), biasx(jj4, 0.7)),
+c(biasr(jj5, 4), biasx(jj5, 0.7))
+)
+```
+
+### Vary `x_true`
+
+```{r execuA, cache=TRUE}
+vxt <- list(
+makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.1),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.2),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.3),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.4),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.5),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.6),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.8),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.9))
+```
+
+
+```{r}
+jj <- rbind(
+c(biasr(vxt[[1]], 4), biasx(vxt[[1]], 0.1), mser(vxt[[1]], 4), msex(vxt[[1]], 0.1)),
+c(biasr(vxt[[2]], 4), biasx(vxt[[2]], 0.2), mser(vxt[[2]], 4), msex(vxt[[2]], 0.2)),
+c(biasr(vxt[[3]], 4), biasx(vxt[[3]], 0.3), mser(vxt[[3]], 4), msex(vxt[[3]], 0.3)),
+c(biasr(vxt[[4]], 4), biasx(vxt[[4]], 0.4), mser(vxt[[4]], 4), msex(vxt[[4]], 0.4)),
+c(biasr(vxt[[5]], 4), biasx(vxt[[5]], 0.5), mser(vxt[[5]], 4), msex(vxt[[5]], 0.5)),
+c(biasr(vxt[[6]], 4), biasx(vxt[[6]], 0.6), mser(vxt[[6]], 4), msex(vxt[[6]], 0.6)),
+c(biasr(vxt[[7]], 4), biasx(vxt[[7]], 0.7), mser(vxt[[7]], 4), msex(vxt[[7]], 0.7)),
+c(biasr(vxt[[8]], 4), biasx(vxt[[8]], 0.8), mser(vxt[[8]], 4), msex(vxt[[8]], 0.8)),
+c(biasr(vxt[[9]], 4), biasx(vxt[[9]], 0.9), mser(vxt[[9]], 4), msex(vxt[[9]], 0.9))
+)
+colnames(jj) <- c("bias(r)","bias(x)", "mse(r)", "mse(x)")
+rownames(jj) <- seq(from=0.1,to=0.9,by=0.1)
+jj
+```
+
+Above we see  that varying `x_true` from 0.2 to 0.9 increases the
+variance of $r_\text{estimated}$
+
+### Vary `r_true`
 
 ```{r execuB, cache=TRUE}
-makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.7)
-makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.2)
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.7)
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 3, x_true = 0.7)
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 5, x_true = 0.7)
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 9, x_true = 0.7)
 ```
 
+### Vary `nobs`
+
+
 ```{r execuC, cache=TRUE}
-makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.2)
-makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.5)
-makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.9)
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+makemaxliketable(n=1000, nobs=30, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+makemaxliketable(n=1000, nobs=80, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
 ```
+
+Above we see that as `nobs` increases, the variance decreases.
