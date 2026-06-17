@@ -312,9 +312,41 @@ worker()
 pdf(file="1234third.pdf")
 worker()
 dev.off()
-
-
 ```
+
+
+```{r fourcompetitors_closeup}
+worker_closeup <- function(...){
+
+o <- 1:4
+
+plot(c(-0.2,0),c(-1.4,-1.36), type='n',
+     xlab="log x", ylab="log-likelihood", main="Focal competitor came third")
+legend("topright",lty=1,col=c("black", "red", "blue", "green"),
+       legend=c("r=1", "r=2", "r=3", "r=4"), bg="white")
+
+x <- seq(from=0.01,to=1,by=0.001)
+
+points(log(x),log(sapply(x,f1)), type="l", col="black")
+points(log(x),log(sapply(x,f2)), type="l", col="red")
+points(log(x),log(sapply(x,f3)), type="l", col="blue")
+points(log(x),log(sapply(x,f4)), type="l", col="green")
+
+jj <- uniroot(f = function(x){sapply(x,f3) - sapply(x,f4)},
+        interval = c(0.2,0.9999))
+abline(v=log(jj$root),col='gray') # r=3 crosses r=4
+
+jj <- uniroot(f = function(x){sapply(x,f2) - sapply(x,f4)},
+        interval = c(0.2,0.9999))
+abline(v=log(jj$root),col='gray') # r=2 crosses r=4
+}
+
+worker_closeup()
+pdf(file="1234third_closeup.pdf")
+worker_closeup()
+dev.off()
+```
+
 
 
 # Try 8 competitors, focal competitor comes third
