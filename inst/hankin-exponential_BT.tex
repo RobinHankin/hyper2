@@ -344,14 +344,14 @@ statistics in which the $r=1$ competitor placed third [corresponding
 
 \section{The case of unknown $r$}
 
-
 Although figure~\ref{1234third} shows a perfectly respectable
 log-likelihood function, in practice we often do not know the value of
 $r$, and need a joint likelihood function for $(r,x)$.  It is
 convenient to normalize $r$ and use $s=r/n$ for consistency between
-different values of $n$, and to treat $s$ as a continuous variable.
-The only reasonable way to calculate such a likelihood function
-appears to be numerical; fortunately this is straightforward.
+different values of $n$, and to treat $s$ as a continuous variable;
+one often wants to know the percentile of the focal entity.  The only
+reasonable way to calculate such a likelihood function appears to be
+numerical; fortunately this is straightforward.
 
 We leverage the {\tt hyper2} R package~\citep{hankin2017_rmd} which
 includes extensive numerical functionality to simulate Plackett-Luce
@@ -394,14 +394,14 @@ rrank(15, p=0.1^v, as.character(v))
 Above we see a bespoke {\tt hyper2} object, of class {\tt ranktable},
 designed to display rank data for use with Bradley-Terry likelihoods;
 such objects are used in~\citet{hankin2023_formula1points}.  We see 15
-independent Plackett-Luce races; for example the first one indicates
-that competitor 2 came first, 1 came second, 4 came third, and so on.
-Looking at the fourth column [headed \verb+c4+, ``came fourth''], we
-see that
+independent Plackett-Luce races; for example the first race (the top
+line) indicates that competitor 2 came first, 1 came second, 4 came
+third, and so on.  Looking at the fourth column [headed \verb+c4+,
+  ``came fourth''] and tabulating, we see that
 
 \begin{equation}
-  \mathcal{L}(0.1,3)\propto 1,\qquad
-  \mathcal{L}(0.1,4)\propto 11,\qquad
+  \mathcal{L}(0.1,3)\propto 2,\qquad
+  \mathcal{L}(0.1,4)\propto 10,\qquad
   \mathcal{L}(0.1,5)\propto 3
 \end{equation}
 
@@ -410,12 +410,12 @@ The maximum likelihood estimate for $s$ would therefore be $4/9\simeq
 observations, and here we note that small values of $x$ lead to
 underdispersed results.
 
-To validate the suggested likelihood method, we set $x=0.85$ and
-$r=3$, that is, competitor $i$ has strength $\propto 0.85^i,
-1\leqslant i\leqslant 9$; the focal competitor has $r=3$, that is, has
-the third strongest Plackett-Luce strength of $0.85^3\simeq 0.61$.
-The results of running {\tt rrace()} 100 times with $n=9$ are given in
-table~\ref{results100insilico}.
+To illustrate the suggested likelihood method we use a single set of
+parameters: $x=0.85$ and $r=3$, that is, competitor $i$ has strength
+$\propto 0.85^i, 1\leqslant i\leqslant 9$; the focal competitor has
+$r=3$, that is, has the third strongest Plackett-Luce strength of
+$0.85^3\simeq 0.61$.  The results of running {\tt rrace()} 100 times
+with $n=9$ are given in table~\ref{results100insilico}.
 
 \begin{table}
   \centering
@@ -430,11 +430,12 @@ table~\ref{results100insilico}.
 \end{table}
 
 Now, we can run repeated simulations as above, but with $n=10^4$
-trials; as support we use $x$ running from 0.1 to 1 and $r=1,2,\ldots,
-9$.  Figure~\ref{toyexample} gives a visual representation of the
-log-likelihood.  We see reasonable agreement between the true values
-of $x$ and $r$, indicated with a red dot, and the estimates.  Note the
-odd shape of the contours and the non-independence of the parameters.
+trials, rather than 15; as support we use $x$ running from 0.1 to 1
+and $r=1,2,\ldots, 9$.  Figure~\ref{toyexample} gives a visual
+representation of the log-likelihood.  We see reasonable agreement
+between the true values of $x$ and $r$, indicated with a red dot, and
+the estimates.  Note the odd shape of the contours and the
+non-independence of the parameters.
 
 \begin{figure}[t]
   \begin{centering}
@@ -445,7 +446,18 @@ odd shape of the contours and the non-independence of the parameters.
 \end{centering}
 \end{figure}
 
-
+For multiple independent observations, a simplification is possible if
+only the maximum likelihood estimate (and not the full likelihood
+function) is needed.  We make repeated observations and tabulate the
+observed rank of the focal competitor.  We observe that the vector
+$C=(c_1,\ldots, c_n)$ of counts is drawn from a multinomial
+distribution with probabilities $p$ which depend on $(x,r)$.  We may
+estimate $p$ for each of an array of tables analogous to
+Table~\ref{results100insilico}, but with $(x,r)$ taking a grid of
+values.  We simply evaluate {\tt dmultinom(C, p, log=TRUE)} where
+${\tt C}$ is our table of observed ranks, and {\tt p} obtained from
+each of our array of Tables, and pick out the one with highest
+probability.
 
 \section{Case study: Parkrun}
 
