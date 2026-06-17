@@ -15,8 +15,7 @@ library("magrittr")
 ```
 
 <font size="1">
-(takes maybe two or three hours to run without cache; each
-<tt>parkrunlikefunobs</tt> chunk takes maybe thirty minutes).
+(takes maybe twenty minutes to run without cach at $N=9$)
 </font>
 
 First we define `N`, the number of competitors.  This is used
