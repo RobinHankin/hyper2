@@ -19,10 +19,20 @@ library("magrittr")
 <tt>parkrunlikefunobs</tt> chunk takes maybe thirty minutes).
 </font>
 
-First we define `BT()` which specifies Bradley-Terry strengths $\alpha x^i$:
+First we define `N`, the number of competitors.  This is used
+consistently in the whole Rmd file, except for the first few bits
+where I hard-code five or 11 competitors for ease of exposition.  In
+principle, the Rmd file should process whatever the value of `N`.
+
+```{r defineN}
+N <- 9  # number of competitors
+```
+
+
+Now we define `BT()` which specifies Bradley-Terry strengths $\alpha x^i$:
 
 ```{r defineBT}
-BT <- function(n,x){
+BT <- function(n, x){
     out <- x^(0:(n-1))
     if(x != 1){
         out <- out*(1-x)/(1-x^n)
@@ -36,7 +46,7 @@ BT(4,0.5)
 sum(BT(4,0.5))
 ```
 
-We will consider $n=9$, $x=0.5$, $r=4$ and make repeated observations:
+We will consider $N=9$, $x=0.5$, $r=4$ and make repeated observations:
 
 
 ```{r showtabulate}
@@ -58,7 +68,7 @@ get_one_competitor <- function(racetable, competitor){
 
 
 ```{r, label=exampleracetable, cache=TRUE}
-X <- makeracetable(1e4,11,0.7)
+X <- makeracetable(1e4,11,0.7)  # using N=11 here
 get_one_competitor(X,4)
 get_one_competitor(X,11)
 
@@ -89,23 +99,23 @@ get_all_competitors <- function(no_of_races, no_of_competitors, x){
 Now use it:
 
 ```{r useit, cache=TRUE}
-get_all_competitors(100,6,0.5)
+get_all_competitors(100, N, 0.5)
 ```
 
 Above, we see from the first line that, with a sample of 100 races,
 the top competitor comes first with (estimated) probability about
-0.55, second with probability abot 0.25, and so on, coming fifth with
-probability 0.01
+0.XXXX, second with probability abot 0.XXX, and so on, coming fifth with
+probability 0.XXXXX
 
 ```{r useit09, cache=TRUE}
-get_all_competitors(100, 6, 0.99)
+get_all_competitors(100, N, 0.99)
 ```
 
 Above, all competitors are about the same.  We see a more uniform
 spread of observations.
 
 ```{r useit01, cache=TRUE}
-get_all_competitors(100, 6, 0.1)
+get_all_competitors(100, N, 0.1)
 ```
 
 Above, each competitor is ten times as good as the next one.  We see
@@ -115,7 +125,7 @@ grid".  This is somewhat computationally intensive.
 
 ```{r definegrid}
 no_of_races <- 1000
-no_of_competitors <- 9
+no_of_competitors <- N
 
 true_x <- seq(from=0.1, by=0.1, to=0.9)
 ```
@@ -147,7 +157,7 @@ allX <- function(no_of_competitors, no_of_races, true_x){
 
 ```{r makeallX9, cache=TRUE}
 allX9 <- allX(
-          no_of_competitors = 9,
+          no_of_competitors = N,
           no_of_races = 50000,
           true_x = seq(from=0.1, to=0.9, by=0.1)
 	  )
@@ -171,9 +181,9 @@ make_obs <- function(no_of_observations, no_of_competitors, r_true, x_true){
 ```
 
 ```{r tableev, cache=TRUE}
-make_obs(no_of_observations=20, no_of_competitors=9, x_true = 0.7, r_true = 6)
-make_obs(no_of_observations=20, no_of_competitors=9, x_true = 0.7, r_true = 9)
-make_obs(no_of_observations=20, no_of_competitors=9, x_true = 0.1, r_true = 6)
+make_obs(no_of_observations=20, no_of_competitors=N, x_true = 0.7, r_true = 6)
+make_obs(no_of_observations=20, no_of_competitors=N, x_true = 0.7, r_true = 9)
+make_obs(no_of_observations=20, no_of_competitors=N, x_true = 0.1, r_true = 6)
 
 
 makemaxliketable <- function(n, nobs, no_of_competitors, allX, r_true, x_true){
@@ -222,7 +232,7 @@ mser <- function(liketable, r_true){
 ```
 
 ```{r label=usebias, cache=TRUE}
-(jj <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.8))
+(jj <- makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.8))
 biasx(jj, x_true = 0.8)
 biasr(jj, r_true = 4)
 msex(jj, x_true = 0.8)
@@ -234,15 +244,15 @@ mser(jj, r_true = 4)
 Just do the same thing a few times to gauge the variability in the system:
 
 ```{r varynothingH, cache=TRUE}
-jj1 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj2 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj3 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj4 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj5 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj6 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj7 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj8 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj9 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj1 <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj2 <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj3 <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj4 <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj5 <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj6 <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj7 <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj8 <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj9 <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
 jj1
 jj2
 
@@ -271,15 +281,15 @@ mean(fish[,2])/sqrt(100)
 
 ```
 ```{r varynothingTH, cache=TRUE}
-jj1 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj2 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj3 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj4 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj5 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj6 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj7 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj8 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-jj9 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj1 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj2 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj3 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj4 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj5 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj6 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj7 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj8 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
+jj9 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
 jj1
 jj2
 
@@ -317,15 +327,15 @@ Above we have that the bias of $r$ has a standard deviation, given
 
 ```{r execuA, cache=TRUE}
 vxt <- list(
-makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.1),
-makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.2),
-makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.3),
-makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.4),
-makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.5),
-makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.6),
-makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7),
-makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.8),
-makemaxliketable(n=4000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.9))
+makemaxliketable(n=4000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.1),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.2),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.3),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.4),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.5),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.6),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.8),
+makemaxliketable(n=4000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.9))
 ```
 
 
@@ -357,15 +367,15 @@ variance of $r_\text{estimated}$
 
 ```{r execuB, cache=TRUE}
 VR <- list(
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.7),
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 2, x_true = 0.7),
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 3, x_true = 0.7),
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7),
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 5, x_true = 0.7),
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 6, x_true = 0.7),
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 7, x_true = 0.7),
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 8, x_true = 0.7),
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 9, x_true = 0.7)
+makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 1, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 2, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 3, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 5, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 6, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 7, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 8, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9, r_true = 9, x_true = 0.7)
 )
 ```
 
@@ -394,11 +404,11 @@ cbind(`bias(x)`=jj[,2], `SE(bias)` = jj[,4]/sqrt(1000))
 
 ```{r execuC, cache=TRUE}
 VN <- list(
-makemaxliketable(n=1000, nobs= 10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7),
-makemaxliketable(n=1000, nobs= 20, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7),
-makemaxliketable(n=1000, nobs= 50, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7),
-makemaxliketable(n=1000, nobs=100, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7),
-makemaxliketable(n=1000, nobs=200, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+makemaxliketable(n=1000, nobs= 10, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7),
+makemaxliketable(n=1000, nobs= 20, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7),
+makemaxliketable(n=1000, nobs= 50, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7),
+makemaxliketable(n=1000, nobs=100, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7),
+makemaxliketable(n=1000, nobs=200, no_of_competitors=N, allX=allX9, r_true = 4, x_true = 0.7)
 )
 ```
 
