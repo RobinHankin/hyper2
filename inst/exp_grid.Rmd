@@ -234,70 +234,83 @@ mser(jj, r_true = 4)
 
 Just do the same thing a few times to gauge the variability in the system:
 
-```{r varynothing, cache=TRUE}
+```{r varynothingH, cache=TRUE}
+jj1 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj2 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj3 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj4 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj5 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj6 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj7 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj8 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj9 <- makemaxliketable(n=100, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj1
+jj2
+
+```{r varynothingbiasmseH, cache=TRUE}
+fish <-
+rbind(
+c(biasr(jj1, 4), mser(jj1, 3.8), biasx(jj1, 0.7), msex(jj1, 0.7)),
+c(biasr(jj2, 4), mser(jj2, 3.8), biasx(jj2, 0.7), msex(jj2, 0.7)),
+c(biasr(jj3, 4), mser(jj3, 3.8), biasx(jj3, 0.7), msex(jj3, 0.7)),
+c(biasr(jj4, 4), mser(jj4, 3.8), biasx(jj4, 0.7), msex(jj4, 0.7)),
+c(biasr(jj5, 4), mser(jj5, 3.8), biasx(jj5, 0.7), msex(jj5, 0.7)),
+c(biasr(jj6, 4), mser(jj6, 3.8), biasx(jj6, 0.7), msex(jj6, 0.7)),
+c(biasr(jj7, 4), mser(jj7, 3.8), biasx(jj7, 0.7), msex(jj7, 0.7)),
+c(biasr(jj8, 4), mser(jj8, 3.8), biasx(jj8, 0.7), msex(jj8, 0.7)),
+c(biasr(jj9, 4), mser(jj9, 3.8), biasx(jj9, 0.7), msex(jj9, 0.7))
+)
+colnames(fish) <- c("bias(r)", "mse(r)", "bias(x)", "mse(x)")
+```
+
+```{r}
+fish
+mean(fish[,1])
+mean(fish[,2])
+sd(fish[,1])
+mean(fish[,2])/sqrt(1000)
+
+```
+```{r varynothingTH, cache=TRUE}
 jj1 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
 jj2 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
 jj3 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
 jj4 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
 jj5 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj6 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj7 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj8 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+jj9 <- makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
 jj1
 jj2
+
+```{r varynothingbiasmseTH, cache=TRUE}
+fish <-
 rbind(
-c(biasr(jj1, 4), biasx(jj1, 0.7)),
-c(biasr(jj2, 4), biasx(jj2, 0.7)),
-c(biasr(jj3, 4), biasx(jj3, 0.7)),
-c(biasr(jj4, 4), biasx(jj4, 0.7)),
-c(biasr(jj5, 4), biasx(jj5, 0.7))
+c(biasr(jj1, 4), mser(jj1, 3.8), biasx(jj1, 0.7), msex(jj1, 0.7)),
+c(biasr(jj2, 4), mser(jj2, 3.8), biasx(jj2, 0.7), msex(jj2, 0.7)),
+c(biasr(jj3, 4), mser(jj3, 3.8), biasx(jj3, 0.7), msex(jj3, 0.7)),
+c(biasr(jj4, 4), mser(jj4, 3.8), biasx(jj4, 0.7), msex(jj4, 0.7)),
+c(biasr(jj5, 4), mser(jj5, 3.8), biasx(jj5, 0.7), msex(jj5, 0.7)),
+c(biasr(jj6, 4), mser(jj6, 3.8), biasx(jj6, 0.7), msex(jj6, 0.7)),
+c(biasr(jj7, 4), mser(jj7, 3.8), biasx(jj7, 0.7), msex(jj7, 0.7)),
+c(biasr(jj8, 4), mser(jj8, 3.8), biasx(jj8, 0.7), msex(jj8, 0.7)),
+c(biasr(jj9, 4), mser(jj9, 3.8), biasx(jj9, 0.7), msex(jj9, 0.7))
 )
+colnames(fish) <- c("bias(r)", "mse(r)", "bias(x)", "mse(x)")
 ```
 
-Now automate this
+```{r}
+fish
+mean(fish[,1])
+mean(fish[,2])
+sd(fish[,1])
+mean(fish[,2])/sqrt(1000)
 
-```{r vary0, cache=TRUE}
-n <- 70
-B <- matrix(NA, n, 4)
-for(i in seq_len(n)){
-    jj <-
-        makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-    B[i,] <-
-        c(biasr(jj, 4), mser(jj, r_true = 4), biasx(jj, 0.7), msex(jj, x_true = 0.7))
-}
-B
-```
-
-```{r plotb}
-colnames(B) <- c("bias(r)", "mse(r)", "bias(x)", "mse(x)")
-plot(B[,c(1,3)])
-plot(B[,c(1,2)])
-plot(B[,c(3,4)])
-```
-
-```{r vary0_1, cache=TRUE}
-n <- 10
-B_1 <- matrix(NA, n, 4)
-for(i in seq_len(n)){
-    jj <-
-        makemaxliketable(n=10000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-    B_1[i,] <-
-        c(biasr(jj, 4), mser(jj, r_true = 4), biasx(jj, 0.7), msex(jj, x_true = 0.7))
-}
-B_1
-```
-
-```{r plotba}
-colnames(B_1) <- c("bias(r)", "mse(r)", "bias(x)", "mse(x)")
-colMeans(B_1)
-plot(B_1[,c(1,3)])
-plot(B_1[,c(1,2)])
-plot(B_1[,c(3,4)])
-```
-
-```{r dostuff}
-colMeans(B_1)
 ```
 
 
-Above we have that the bias is about -0.195 with a standard error 
+Above we have that the bias of $r$ is about XXXX with standard error
 
 
 
