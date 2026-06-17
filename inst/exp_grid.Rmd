@@ -231,7 +231,6 @@ mser(jj, r_true = 4)
 
 ### Vary nothing
 
-
 Just do the same thing a few times to gauge the variability in the system:
 
 ```{r varynothingH, cache=TRUE}
@@ -268,7 +267,7 @@ fish
 mean(fish[,1])
 mean(fish[,2])
 sd(fish[,1])
-mean(fish[,2])/sqrt(1000)
+mean(fish[,2])/sqrt(100)
 
 ```
 ```{r varynothingTH, cache=TRUE}
@@ -309,8 +308,8 @@ mean(fish[,2])/sqrt(1000)
 
 ```
 
-
-Above we have that the bias of $r$ is about XXXX with standard error
+Above we have that the bias of $r$ has a standard deviation, given
+(approximately at least) by the standard error of the mean.
 
 
 
@@ -345,27 +344,80 @@ c(biasr(vxt[[9]], 4), biasx(vxt[[9]], 0.9), mser(vxt[[9]], 4), msex(vxt[[9]], 0.
 colnames(jj) <- c("bias(r)","bias(x)", "mse(r)", "mse(x)")
 rownames(jj) <- seq(from=0.1,to=0.9,by=0.1)
 jj
+matplot(jj,type="b")
+cbind(`bias(r)`=jj[,1], `SE(bias)` = jj[,3]/sqrt(4000))
+cbind(`bias(x)`=jj[,2], `SE(bias)` = jj[,4]/sqrt(4000))
 ```
 
-Above we see  that varying `x_true` from 0.2 to 0.9 increases the
+
+Above we see  that varying `x_true` from 0.1 to 0.9 increases the
 variance of $r_\text{estimated}$
 
 ### Vary `r_true`
 
 ```{r execuB, cache=TRUE}
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.7)
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 3, x_true = 0.7)
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 5, x_true = 0.7)
+VR <- list(
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 1, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 2, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 3, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 5, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 6, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 7, x_true = 0.7),
+makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 8, x_true = 0.7),
 makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 9, x_true = 0.7)
+)
+```
+
+```{r showrvary, cache=TRUE}
+jj <- rbind(
+c(biasr(VR[[1]], 1), biasx(VR[[1]], 0.7), mser(VR[[1]], 1), msex(VR[[1]], 0.7)),
+c(biasr(VR[[2]], 2), biasx(VR[[2]], 0.7), mser(VR[[2]], 2), msex(VR[[2]], 0.7)),
+c(biasr(VR[[3]], 3), biasx(VR[[3]], 0.7), mser(VR[[3]], 3), msex(VR[[3]], 0.7)),
+c(biasr(VR[[4]], 4), biasx(VR[[4]], 0.7), mser(VR[[4]], 4), msex(VR[[4]], 0.7)),
+c(biasr(VR[[5]], 5), biasx(VR[[5]], 0.7), mser(VR[[5]], 5), msex(VR[[5]], 0.7)),
+c(biasr(VR[[6]], 6), biasx(VR[[6]], 0.7), mser(VR[[6]], 6), msex(VR[[6]], 0.7)),
+c(biasr(VR[[7]], 7), biasx(VR[[7]], 0.7), mser(VR[[7]], 7), msex(VR[[7]], 0.7)),
+c(biasr(VR[[8]], 8), biasx(VR[[8]], 0.7), mser(VR[[8]], 8), msex(VR[[8]], 0.7)),
+c(biasr(VR[[9]], 9), biasx(VR[[9]], 0.7), mser(VR[[9]], 9), msex(VR[[9]], 0.7))
+)
+colnames(jj) <- c("bias(r)","bias(x)", "mse(r)", "mse(x)")
+rownames(jj) <- seq(from=0.1,  to=0.9, by=0.1)
+jj
+matplot(jj,type="b")
+cbind(`bias(r)`=jj[,1], `SE(bias)` = jj[,3]/sqrt(1000))
+cbind(`bias(x)`=jj[,2], `SE(bias)` = jj[,4]/sqrt(1000))
 ```
 
 ### Vary `nobs`
 
 
 ```{r execuC, cache=TRUE}
-makemaxliketable(n=1000, nobs=10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-makemaxliketable(n=1000, nobs=30, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
-makemaxliketable(n=1000, nobs=80, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+VN <- list(
+makemaxliketable(n=1000, nobs= 10, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7),
+makemaxliketable(n=1000, nobs= 20, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7),
+makemaxliketable(n=1000, nobs= 50, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7),
+makemaxliketable(n=1000, nobs=100, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7),
+makemaxliketable(n=1000, nobs=200, no_of_competitors=9, allX=allX9, r_true = 4, x_true = 0.7)
+)
 ```
 
-Above we see that as `nobs` increases, the variance decreases.
+
+```{r execvarynobs, cache=TRUE}
+jj <- rbind(
+c(biasr(VN[[1]], 4), biasx(VN[[1]], 0.7), mser(VN[[1]], 4), msex(VN[[1]], 0.7)),
+c(biasr(VN[[2]], 4), biasx(VN[[2]], 0.7), mser(VN[[2]], 4), msex(VN[[2]], 0.7)),
+c(biasr(VN[[3]], 4), biasx(VN[[3]], 0.7), mser(VN[[3]], 4), msex(VN[[3]], 0.7)),
+c(biasr(VN[[4]], 4), biasx(VN[[4]], 0.7), mser(VN[[4]], 4), msex(VN[[4]], 0.7)),
+c(biasr(VN[[5]], 4), biasx(VN[[5]], 0.7), mser(VN[[5]], 4), msex(VN[[5]], 0.7))
+)
+colnames(jj) <- c("bias(r)","bias(x)", "mse(r)", "mse(x)")
+rownames(jj) <- c(10,20,50,100,200)
+jj
+matplot(jj,type="b")
+cbind(`bias(r)`=jj[,1], `SE(bias)` = jj[,3]/sqrt(1000))
+cbind(`bias(x)`=jj[,2], `SE(bias)` = jj[,4]/sqrt(1000))
+```
+
+
+
