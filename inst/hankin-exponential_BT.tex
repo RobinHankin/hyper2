@@ -219,9 +219,9 @@ After simplification:
   maximum likelihood estimator, $\hat{r}\in\left\lbrace 1,
   2,3\right\rbrace$ is simply the upper of the three lines at any
   given $x$.  Observe that in each case,
-  $r_\text{obs}=i\longrightarrow\hat{r}=i$ except for a small region
+  $r_\text{obs}=i\implies\hat{r}=i$ except for a small region
   in graph (b); if $x > \sqrt{(\sqrt{5}-1)/2}\simeq 0.786$ we see
-  $r_\text{obs}=2\longrightarrow\hat{r}=1$}
+  $r_\text{obs}=2\implies\hat{r}=1$}
 \end{centering}
 \end{figure}
 
@@ -458,6 +458,9 @@ values.  We simply evaluate {\tt dmultinom(C, p, log=TRUE)} where
 ${\tt C}$ is our table of observed ranks, and {\tt p} obtained from
 each of our array of Tables, and pick out the one with highest
 probability.
+
+
+
 
 \section{Case study: Parkrun}
 
