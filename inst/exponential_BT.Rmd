@@ -131,6 +131,9 @@ worker_123second()
 dev.off()
 ```
 
+Above, the intersection between the red and black lines is considered
+in `hankin-exponential_BT.Rmd`.
+
 Now the focal competitor comes last:
 
 
@@ -332,6 +335,10 @@ points(log(x),log(sapply(x,f2)), type="l", col="red")
 points(log(x),log(sapply(x,f3)), type="l", col="blue")
 points(log(x),log(sapply(x,f4)), type="l", col="green")
 
+    ## Now find where the red line (r=2) intersects the green line
+    ## (r=4) and also where the green line (r=4) intersects the blue
+    ## line (r=3)
+    
 jj <- uniroot(f = function(x){sapply(x,f3) - sapply(x,f4)},
         interval = c(0.2,0.9999))
 abline(v=log(jj$root),col='gray') # r=3 crosses r=4
