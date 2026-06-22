@@ -1137,6 +1137,11 @@ rorder_single <- function(p){
     print(noquote(unclass(x)))
 }
 
+`aperm.ordertable` <- function(a, perm, ...) {
+  a <- unclass(a)
+  aperm(a, perm, ...)
+}
+
 `as.ordertable` <- function(w){
     if(is.ranktable(w)){return(ranktable_to_ordertable(w))}
     out <-

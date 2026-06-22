@@ -244,6 +244,7 @@ S3method(print,ranktablesummary)
 S3method(print,hyper2test)
 S3method(print,attemptstable)
 S3method(print,ordertable)
+S3method(aperm,ordertable)
 
 S3method("[", hyper2)
 S3method("[<-", hyper2)
