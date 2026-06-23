@@ -276,59 +276,13 @@ of an ordertable; this is used in <code>inst/skating.Rmd</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hartley      0   0  15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Button       0   0   0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Resta        0   0   0</span>
-<span class="r-in"><span><span class="fu"><a href="ordertable2supp.html">ordertable2supp</a></span><span class="op">(</span><span class="fu">as.ordertable</span><span class="op">(</span><span class="va">F1_table_2017</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log(Bottas^19 * (Bottas + Hamilton + Ocon + Perez + Raikkonen +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ricciardo + Sainz + Verstappen)^-5 * (Bottas + Hamilton + Ocon + Perez</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Raikkonen + Ricciardo + Sainz + Verstappen + Vettel)^-20 * (Bottas +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Hamilton + Ocon + Perez + Raikkonen + Ricciardo + Sainz + Vettel)^-2 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Bottas + Hamilton + Ocon + Perez + Raikkonen + Sainz + Verstappen +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vettel)^-1 * (Bottas + Hamilton + Ocon + Perez + Ricciardo + Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Verstappen)^-2 * (Bottas + Hamilton + Ocon + Perez + Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Verstappen)^-1 * (Bottas + Ocon + Perez + Raikkonen + Ricciardo +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sainz)^-1 * (Bottas + Ocon + Perez + Raikkonen + Ricciardo + Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Verstappen)^-6 * (Bottas + Ocon + Perez + Raikkonen + Ricciardo + Sainz</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Verstappen + Vettel)^-9 * (Bottas + Ocon + Perez + Raikkonen +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ricciardo + Sainz + Vettel)^-2 * (Bottas + Ocon + Perez + Raikkonen +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sainz)^-2 * (Bottas + Ocon + Perez + Raikkonen + Sainz + Verstappen)^-2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * (Bottas + Ocon + Perez + Raikkonen + Sainz + Verstappen + Vettel)^-1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * (Bottas + Ocon + Perez + Raikkonen + Sainz + Vettel)^-2 * (Bottas +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ocon + Perez + Ricciardo + Sainz)^-1 * (Bottas + Ocon + Perez +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ricciardo + Sainz + Verstappen)^-1 * (Bottas + Ocon + Perez + Sainz)^-1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * (Bottas + Ocon + Perez + Sainz + Verstappen)^-1 * (Bottas + Ocon +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Raikkonen + Sainz + Verstappen)^-1 * (Bottas + Raikkonen + Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Verstappen)^-1 * Hamilton^20 * (Hamilton + Ocon + Perez)^-1 * (Hamilton</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Ocon + Perez + Raikkonen + Ricciardo + Sainz + Verstappen)^-3 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Hamilton + Ocon + Perez + Raikkonen + Ricciardo + Sainz + Verstappen +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vettel)^-3 * (Hamilton + Ocon + Perez + Raikkonen + Ricciardo + Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vettel)^-1 * (Hamilton + Ocon + Perez + Raikkonen + Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Verstappen)^-2 * (Hamilton + Ocon + Perez + Raikkonen + Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Verstappen + Vettel)^-1 * (Hamilton + Ocon + Perez + Ricciardo +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sainz)^-1 * (Hamilton + Ocon + Perez + Ricciardo + Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Verstappen)^-3 * (Hamilton + Ocon + Perez + Ricciardo + Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vettel)^-1 * (Hamilton + Ocon + Perez + Sainz)^-1 * (Hamilton + Ocon +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Perez + Sainz + Verstappen)^-1 * (Hamilton + Perez + Ricciardo +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sainz)^-1 * (Hamilton + Ricciardo + Sainz)^-1 * Ocon^18 * (Ocon +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Perez)^-2 * (Ocon + Perez + Raikkonen + Ricciardo + Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Verstappen)^-4 * (Ocon + Perez + Raikkonen + Ricciardo + Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Verstappen + Vettel)^-4 * (Ocon + Perez + Raikkonen + Sainz)^-1 * (Ocon</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Perez + Raikkonen + Sainz + Verstappen)^-4 * (Ocon + Perez +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Raikkonen + Sainz + Verstappen + Vettel)^-2 * (Ocon + Perez + Raikkonen</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Sainz + Vettel)^-1 * (Ocon + Perez + Raikkonen + Verstappen +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vettel)^-1 * (Ocon + Perez + Ricciardo)^-1 * (Ocon + Perez + Ricciardo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Sainz)^-6 * (Ocon + Perez + Ricciardo + Sainz + Verstappen)^-6 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Ocon + Perez + Ricciardo + Sainz + Verstappen + Vettel)^-1 * (Ocon +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Perez + Ricciardo + Sainz + Vettel)^-1 * (Ocon + Perez + Sainz)^-3 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Ocon + Perez + Sainz + Verstappen)^-4 * (Ocon + Perez + Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Vettel)^-2 * (Ocon + Raikkonen + Sainz)^-1 * (Ocon + Raikkonen + Sainz</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Verstappen)^-1 * (Ocon + Raikkonen + Verstappen + Vettel)^-1 * (Ocon</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Ricciardo)^-2 * (Ocon + Ricciardo + Sainz)^-3 * (Ocon + Sainz)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Ocon + Sainz + Verstappen)^-2 * Perez^18 * (Perez + Raikkonen + Sainz</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Verstappen)^-1 * (Perez + Raikkonen + Verstappen)^-1 * (Perez +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ricciardo)^-1 * (Perez + Ricciardo + Sainz)^-1 * (Perez + Sainz)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Perez + Sainz + Verstappen)^-2 * (Perez + Sainz + Vettel)^-1 * (Perez</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Verstappen)^-1 * Raikkonen^17 * (Raikkonen + Sainz + Verstappen)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ricciardo^14 * (Ricciardo + Sainz)^-1 * Sainz^11 * (Sainz +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Verstappen)^-1 * Verstappen^13 * Vettel^18)</span>
+<span class="r-in"><span><span class="fu"><a href="ordertable2supp.html">ordertable2supp</a></span><span class="op">(</span><span class="fu">as.ordertable</span><span class="op">(</span><span class="va">F1_table_2017</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log(Bottas^16 * (Bottas + Hamilton)^-2 * (Bottas + Hamilton +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Raikkonen)^-5 * (Bottas + Hamilton + Raikkonen + Vettel)^-20 * (Bottas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Raikkonen)^-6 * (Bottas + Raikkonen + Vettel)^-10 * Hamilton^15 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Hamilton + Raikkonen)^-4 * (Hamilton + Raikkonen + Vettel)^-5 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Hamilton + Vettel)^-1 * Raikkonen^10 * (Raikkonen + Vettel)^-5 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vettel^17)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="rrank.html">rrank</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">as.ordertable</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>

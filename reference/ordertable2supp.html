@@ -458,14 +458,8 @@ dataset of the <a href="https://CRAN.R-project.org/package=prefmod" class="exter
 <span class="r-in"><span><span class="co">## and 'e' did not compete, but in H2, 'd' and 'e' did not finish (and</span></span></span>
 <span class="r-in"><span><span class="co">## notionally came last):</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmax</a></span><span class="op">(</span><span class="va">H1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log(a^3 * (a + b + c)^-1 * (a + b + c + d + e)^-2 * (a + b + d + e)^-1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * b * (b + c)^-1 * (b + c + d + e)^-1 * (b + c + e)^-1 * (b + d + e)^-1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * c^2 * d * (d + e)^-1 * e^2)</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmax</a></span><span class="op">(</span><span class="va">H2</span><span class="op">)</span>   <span class="co"># d,e not finishing affects their estimated strength</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log(a^3 * (a + b + c + d + e)^-3 * (a + b + d + e)^-1 * b^2 * (b + c +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d + e)^-2 * (b + c + e)^-1 * (b + d + e)^-2 * c^2 * d * (d + e)^-1 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> e^2)</span>
+<span class="r-in"><span><span class="co"># pmax(H1)</span></span></span>
+<span class="r-in"><span><span class="co"># pmax(H2)   # d,e not finishing affects their estimated strength</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
