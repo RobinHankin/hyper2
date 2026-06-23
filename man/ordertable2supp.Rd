@@ -168,7 +168,7 @@ H2 <- ordervec2supp(a1) + ordervec2supp(a2) + ordervec2supp(a4)
 ## and 'e' did not compete, but in H2, 'd' and 'e' did not finish (and
 ## notionally came last):
 
-pmax(H1)
-pmax(H2)   # d,e not finishing affects their estimated strength
+# pmax(H1)
+# pmax(H2)   # d,e not finishing affects their estimated strength
 
 }
