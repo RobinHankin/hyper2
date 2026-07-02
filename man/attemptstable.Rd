@@ -17,7 +17,8 @@ rattemptstable(ncompetitors=8, nthrows=6, prob=0.23)
   \item{decreasing}{Boolean, with \code{TRUE} meaning that the highest
       score wins [e.g. javelin distances] and \code{FALSE} meaning that the
       lowest score wins [e.g. times for a race]}
-  \item{give.supp}{Boolean, return the support function or the order statistic}
+  \item{give.supp}{Boolean, with default \code{TRUE} meaning to return
+    the support function and \code{FALSE} the order statistic}
   \item{nothrow_loses}{Boolean, should NA entries count as coming last (TRUE)
     or be ignored (FALSE)}
   \item{ncompetitors, nthrows, prob}{Parameters for \code{rattemptstable()}}
