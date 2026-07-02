@@ -28,7 +28,7 @@ CHECKLIST FOR EACH FILE:
 cat("hyper2 Documentation Audit Results\n=============\n", file = output_file)
 
 # Split files into batches of 5
-batch_size <- 5
+batch_size <- 15
 num_files <- length(rd_files)
 num_batches <-  ceiling(num_files / batch_size)
 
@@ -66,7 +66,7 @@ for (b in 1:num_batches) {
   
   # Brief pause between batches to protect against HTTP 429
   if (b < num_batches) {
-    cat("Pausing for 3 seconds to maintain rate limits...\n")
+    cat("Pausing for 10 seconds to maintain rate limits...\n")
     Sys.sleep(3)
   }
 }
