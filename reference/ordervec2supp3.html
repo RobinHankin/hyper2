@@ -240,7 +240,10 @@ statistics in the context of hyper3 likelihood functions.  Compare
 <span class="r-in"><span><span class="co">## 1.88 and 1.1111 respectively:</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">cheering3</span><span class="op">(</span>v<span class="op">=</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, e<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,c<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,d<span class="op">=</span><span class="fl">1</span>,e<span class="op">=</span><span class="fl">2</span><span class="op">)</span>, help<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.88</span>,<span class="fl">1.1111</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (winner_ec_number %in% finished_ec_number) {    jjn[] &lt;- help[winner_ec_number]}:</span> the condition has length &gt; 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^1 * (a=1, b=1, c=1, d=1, e=1, f=1)^-1 * (b=1)^1 * (b=1,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> c=1.88, d=1.88, e=1, f=1)^-1 * (c=1.88)^1 * (c=1.88, d=1.88, e=1.1111,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> f=1)^-1 * (d=1.88)^1 * (d=1.88, e=1.1111, f=1)^-1 * (e=1.1111)^1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (e=1.1111, f=1)^-1)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
@@ -249,21 +252,25 @@ statistics in the context of hyper3 likelihood functions.  Compare
 <span class="r-in"><span><span class="co">## and "c" help one another at 1.111:</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">cheering3</span><span class="op">(</span>v<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"a"</span>,<span class="st">"c"</span><span class="op">)</span>, e<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">2</span><span class="op">)</span>, help<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.8</span>,<span class="fl">1.111</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (winner_ec_number %in% finished_ec_number) {    jjn[] &lt;- help[winner_ec_number]}:</span> the condition has length &gt; 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^1 * (a=1.8)^1 * (a=1.8, b=1, c=1)^-1 * (a=1.8, c=1.111)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (a=2, b=1, c=1)^-1 * (b=1)^1)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Same race as above but this time there are two clones of "b", one of</span></span></span>
 <span class="r-in"><span><span class="co">## whom did not finish:</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">cheering3</span><span class="op">(</span>v<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"a"</span>,<span class="st">"c"</span><span class="op">)</span>, e<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">2</span><span class="op">)</span>, help<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.8</span>,<span class="fl">1.111</span><span class="op">)</span>, <span class="st">"b"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (winner_ec_number %in% finished_ec_number) {    jjn[] &lt;- help[winner_ec_number]}:</span> the condition has length &gt; 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^1 * (a=1.8)^1 * (a=1.8, b=1.111, c=1.111)^-1 * (a=1.8, b=2,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> c=1)^-1 * (a=2, b=2, c=1)^-1 * (b=1)^1 * (b=1.111, c=1.111)^-1 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (c=1.111)^1)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Most common case would be that the clones help each other but noone</span></span></span>
 <span class="r-in"><span><span class="co">## else:</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">cheering3</span><span class="op">(</span>v<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"a"</span>,<span class="st">"c"</span><span class="op">)</span>, e<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>,b<span class="op">=</span><span class="fl">2</span>,c<span class="op">=</span><span class="fl">3</span><span class="op">)</span>, help<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.8</span>,<span class="fl">1.111</span>,<span class="fl">1</span><span class="op">)</span>, <span class="st">"b"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (winner_ec_number %in% finished_ec_number) {    jjn[] &lt;- help[winner_ec_number]}:</span> the condition has length &gt; 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log( (a=1)^1 * (a=1.8)^1 * (a=1.8, b=1.111, c=1)^-1 * (a=1.8, b=2,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> c=1)^-1 * (a=2, b=2, c=1)^-1 * (b=1)^1 * (b=1.111, c=1)^-1 * (c=1)^1)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
