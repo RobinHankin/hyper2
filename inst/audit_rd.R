@@ -8,17 +8,19 @@ output_file <- "man_pages_audit.txt"
 token <- Sys.getenv("GITHUB_TOKEN")
 if (token == "") stop("GITHUB_TOKEN environment variable is missing.")
 
-R
 system_prompt <- "
 Act as an expert, highly pedantic CRAN package reviewer auditing documentation (.Rd) files for the hyper2 package.
 
+An .Rd file is a formal technical reference manual page, NOT a tutorial, textbook, or introductory guide.
+
+The goal of an .Rd page is to be a concise, precise, and accurate contract describing what a function accepts, what it computes, and what it returns.
+
+
 CONTEXT & AUDIENCE:
-- An .Rd file is a formal technical reference manual page, NOT a tutorial, textbook, or introductory guide.
 - The reader is a competent statistician or data scientist who already understands likelihood functions, Bradley-Terry, Dirichlet distributions, and log-linear models. 
-- The goal of an .Rd page is to be a concise, precise, and accurate contract describing what a function accepts, what it computes, and what it returns.
-- The audience is a competent R user
-- The audience will be at least partly familiar with the package vignettes.
-- The audience might appreciate a pointer to a specific vignette.
+- The reader is a competent R user
+- The reader will be at least partly familiar with the package vignettes.
+- The reader might appreciate a pointer to a specific vignette.
 
 CRITICAL FILTER RULES:
 - DO NOT complain about standard mathematical, statistical, or package-specific terminology being 'unexplained' or 'unmotivated'.  Assume the reader has the prerequisite background.
