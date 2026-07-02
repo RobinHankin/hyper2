@@ -27,8 +27,8 @@ CHECKLIST FOR EACH FILE:
 
 cat("hyper2 Documentation Audit Results\n=============\n", file = output_file)
 
-# Split files into batches of 5
-batch_size <- 15
+# Split files into batches
+batch_size <- 10
 num_files <- length(rd_files)
 num_batches <-  ceiling(num_files / batch_size)
 
@@ -49,6 +49,7 @@ for (b in 1:num_batches) {
   
   # Send API request for this batch
   req <- request("https://models.inference.ai.azure.com/chat/completions")
+  req <- req_retry(req, max_tries = 3, backoff = ~ 15) # Auto-retry on 429
   req <- req_headers(req, Authorization = paste("Bearer", token))
   req <- req_body_json(req, list(
     model = "gpt-4o",
@@ -66,8 +67,8 @@ for (b in 1:num_batches) {
   
   # Brief pause between batches to protect against HTTP 429
   if (b < num_batches) {
-    cat("Pausing for 10 seconds to maintain rate limits...\n")
-    Sys.sleep(3)
+    cat("Pausing for 15 seconds to maintain rate limits...\n")
+    Sys.sleep(15)
   }
 }
 
