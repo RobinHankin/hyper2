@@ -19,7 +19,7 @@ jobs:
       - name: Run Audit Script
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: Rscript tools/audit_rd.R
+        run: Rscript inst/audit_rd.R
 
       - name: Upload Audit Results
         uses: actions/upload-artifact@v4

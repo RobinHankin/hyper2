@@ -334,4 +334,4 @@ CITATION.cff
 ^inst/zurich1953_candidates.txt$
 ^inst/eurovision_2022_jury_pre_null.txt$
 ^inst/eurovision_collusion.Rmd$
-^tools$
+^inst/audit_rd.R$
