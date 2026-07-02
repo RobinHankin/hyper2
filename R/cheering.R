@@ -13,7 +13,7 @@
   stopifnot(all(e==round(e)))
 
   `%notin%` <- Negate(`%in%`)  # Remove this for R >= 4.6-0
-  no_group <- !(v %notin% names(e))
+  no_group <- v %notin% names(e)
   if(any(no_group)){
     jj <- seq(from=max(e)+1,len=sum(no_group))
     names(jj) <- v[no_group]   # a character vector
