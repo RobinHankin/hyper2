@@ -18,44 +18,40 @@ options("digits" = 5)
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-To cite the `hyper2` package in publications, please use @hankin2017_rmd.
-Function `keep_flawed()` can be confusing.  Originally, the package
-included a function `keep()` but this used flawed logic, hence the
-name of its replacement.  Here is a tiny example that should clarify
-things.  We will use a subset of `skating_table`:
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  Many years ago, the `hyper2` package included a
+function called `keep()` but this used flawed logic.  So I renamed it
+`keep_flawed()`.
 
-```{r subsetofskating}
-jj <- unclass(skating_table)[1:3,1:6]
-rownames(jj) <- letters[1:3]
-jj
+Here I set out some examples that should clarify the problems with
+`keep()` (the ordertable used below can be obtained from
+`skating_table[1:3,1:6]` using the bespoke extraction method
+`[.ordertable()`, but that is not what this document is discussing).
+
+
+```{r definea}
+x <-
+    as.ordertable(matrix(
+        c(1,3,2,3,1,2,3,1,2,3,1,2,1,3,2,2,1,3),
+        3,6,  # dimensions
+        dimnames = list(
+            c("a","b","c"),
+            c("J1","J2","J3","J4","J5","J6"))
+    ))
+x
 ```
 
-
-Above, rows of object `jj` correspond to competitors and columns to
-judges.  Object `jj` does not function as a rank table because the
-entries are not sequential (judge `J2`, for example, has no
-second-ranked competitor).
-
-We could convert explicitly:
-
-```{r convexp}
-a <- apply(jj,2,rank)
-a
-```
-
-So each column is a permutation of `123`.  So, for example judge 1
-ranked `a` first, `b` third, and `c` second.  We can coerce to a
-`hyper2` object with `ordertable2supp()`:
+Above, each column of `x` is a permutation of `123`.  So, for example
+judge 1 ranked `a` first, `b` third, and `c` second.  We can coerce to
+a `hyper2` object with `ordertable2supp()`:
 
 ```{r coerceto}
-OT <- ordertable2supp(a)
+OT <- ordertable2supp(x)
 OT
 ```
 
-(function `ordertable2supp()` does this automatically, so
-`ordertable2supp(jj)` would have given the same result).  Now suppose
-we are interested only in the first two competitors, `a` and `b`,
-which are competitors 1 and 2.
+Now suppose we are interested only in the first two competitors, `a`
+and `b`, which are competitors 1 and 2.
 
 ```{r keepflaw}
 keep_flawed(OT, c("a","b"))
