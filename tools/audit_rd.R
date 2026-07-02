@@ -28,7 +28,7 @@ CHECKLIST FOR EACH FILE:
 cat("hyper2 Documentation Audit Results\n=============\n", file = output_file)
 
 # Split files into batches
-batch_size <- 10
+batch_size <- 2
 num_files <- length(rd_files)
 num_batches <-  ceiling(num_files / batch_size)
 
