@@ -5,21 +5,12 @@ library(httr2)
 rd_files <- list.files("man", pattern = "\\.Rd$", full.names = TRUE)
 output_file <- "man_pages_audit.txt"
 
-# Get GitHub token from environment
 token <- Sys.getenv("GITHUB_TOKEN")
 if (token == "") stop("GITHUB_TOKEN environment variable is missing.")
 
-# Assemble the bundle of all documentation files
-bundled_content <- ""
-for (f in rd_files) {
-  rd_content <- paste(readLines(f, warn = FALSE), collapse = "\n")
-  file_block <- paste0("\n---\nFILE_PATH: ", f, "\n```\n", rd_content, "\n```\n---\n")
-  bundled_content <- paste0(bundled_content, file_block)
-}
-
 system_prompt <- "
 Act as a critical, first-time reader of the hyper2 package.
-You will receive a collection of separate documentation (.Rd) files demarcated by FILE_PATH headers.
+You will receive a batch of documentation (.Rd) files demarcated by FILE_PATH headers.
 Analyze EACH file individually using the checklist below. Provide highly concise, bullet-point corrections. 
 Organize your response clearly by file path.
 
@@ -36,20 +27,48 @@ CHECKLIST FOR EACH FILE:
 
 cat("hyper2 Documentation Audit Results\n=============\n", file = output_file)
 
-# Call GitHub's Free Models API (using GPT-4o) with the entire bundle
-req <- request("https://models.inference.ai.azure.com/chat/completions")
-req <- req_headers(req, Authorization = paste("Bearer", token))
-req <- req_body_json(req, list(
-  model = "gpt-4o",
-  messages = list(
-    list(role = "system", content = system_prompt),
-    list(role = "user", content = bundled_content)
-  )
-))
+# Split files into batches of 5
+batch_size <- 5
+num_files <- length(rd_files)
+num_batches <-  ceiling(num_files / batch_size)
 
-cat("Sending bundled documentation to GitHub Models API...\n")
-resp <- req_perform(req)
-result <- resp_body_json(resp)$choices[[1]]$message$content
+for (b in 1:num_batches) {
+  start_idx <- (b - 1) * batch_size + 1
+  end_idx <- min(b * batch_size, num_files)
+  batch_files <- rd_files[start_idx:end_idx]
+  
+  cat(sprintf("Processing batch %d of %d (Files %d to %d)...\n", b, num_batches, start_idx, end_idx))
+  
+  # Assemble content for this batch
+  bundled_content <- ""
+  for (f in batch_files) {
+    rd_content <- paste(readLines(f, warn = FALSE), collapse = "\n")
+    file_block <- paste0("\n---\nFILE_PATH: ", f, "\n```\n", rd_content, "\n```\n---\n")
+    bundled_content <- paste0(bundled_content, file_block)
+  }
+  
+  # Send API request for this batch
+  req <- request("https://models.inference.ai.azure.com/chat/completions")
+  req <- req_headers(req, Authorization = paste("Bearer", token))
+  req <- req_body_json(req, list(
+    model = "gpt-4o",
+    messages = list(
+      list(role = "system", content = system_prompt),
+      list(role = "user", content = bundled_content)
+    )
+  ))
+  
+  resp <- req_perform(req)
+  result <- resp_body_json(resp)$choices[[1]]$message$content
+  
+  cat(result, file = output_file, append = TRUE)
+  cat("\n\n", file = output_file, append = TRUE)
+  
+  # Brief pause between batches to protect against HTTP 429
+  if (b < num_batches) {
+    cat("Pausing for 3 seconds to maintain rate limits...\n")
+    Sys.sleep(3)
+  }
+}
 
-cat(result, file = output_file, append = TRUE)
-cat("\n\nAudit completed successfully.\n", to = "")
+cat("Audit completed successfully.\n")
