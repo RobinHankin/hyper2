@@ -24,8 +24,12 @@ reproduced by \code{maxp(baseball)}.
 \references{
   A. Agresti 2002. \dQuote{Categorical data analysis}.  John Wiley and
   Sons;   p437
-  }
-  \seealso{\code{\link{hyper3}}}
+}
+\seealso{
+  \code{\link{hyper3}}
+
+  \seegithub
+}
 \examples{
 baseball_table
 baseball_table[1:3,1:3] 

@@ -120,7 +120,11 @@ Experimental function \code{pair3()} is now removed as
   1.88)} give identical output.
 
 }
-\seealso{\code{\link{maxp}}}
+\seealso{
+  \code{\link{maxp}}
+
+\seegithub
+}
 \examples{ #Data is the top 5 players from Borozki's table 1
 
 M <- matrix(c(

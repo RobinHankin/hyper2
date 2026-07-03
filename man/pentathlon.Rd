@@ -29,7 +29,11 @@ fifth at shooting.
 [Online; accessed 5-March-2020]
 }
 \note{Many of the competitors' names have diacritics, which I have removed.}
-\seealso{\code{\link{ordertable}}}
+\seealso{
+  \code{\link{ordertable}}
+
+  \seegithub
+}
 \examples{
 data(pentathlon)
 pie(pentathlon_maxp)
