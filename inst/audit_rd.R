@@ -23,7 +23,7 @@ system_prompt <- gsub("\\\\n", "\n", system_prompt)
 cat("hyper2 Documentation Audit Results\n=============\n", file = output_file)
 
 
-batch_size <- 10
+batch_size <- 3
 num_files <- length(rd_files)
 num_batches <- ceiling(num_files / batch_size)
 
