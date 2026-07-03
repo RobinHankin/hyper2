@@ -16,7 +16,7 @@ abbreviated <- TRUE  # change to FALSE for full names
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
-<font size="1"> (takes about an hour to run without cache)
+<font size="1"> (takes about ten minutes to run without cache)
 </font>
 
 ### Abstract {-}
