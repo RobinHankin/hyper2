@@ -335,3 +335,4 @@ CITATION.cff
 ^inst/eurovision_2022_jury_pre_null.txt$
 ^inst/eurovision_collusion.Rmd$
 ^inst/audit_rd.R$
+^inst/system_prompt.txt$
