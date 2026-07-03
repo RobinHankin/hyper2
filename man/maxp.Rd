@@ -136,8 +136,8 @@ equalp(H)
   \code{maxp_lsl()}.
 
   The built-in datasets generally include a pre-calculated result of
-  running \code{maxp()}; thus hyper2 object \code{icons} and
-  \code{icons_maxp} are included in the same \code{.rda} file.
+  running \code{maxp()}; thus, for example, hyper2 object \code{icons}
+  and \code{icons_maxp} are included in the \code{icons.rda} file.
   
   Function \code{maxp()} can trigger a known \R bug (bugzilla id 17703)
   which reports \dQuote{\code{wmmin is not finite}}.  Setting option
