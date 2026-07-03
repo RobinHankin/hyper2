@@ -149,7 +149,12 @@ Vignette \code{hyper3_creation} discusses the different creation
 methods for \code{hyper3} objects.
 
 }
-\seealso{\code{\link{hyper2}}, \code{\link{weights}}}
+\seealso{
+  \code{\link{hyper2}},
+  \code{\link{weights}}
+
+  \seegithub
+}
 \examples{
 
 

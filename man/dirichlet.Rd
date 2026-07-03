@@ -118,7 +118,12 @@ multinom(x)
 
 }
 
-\seealso{\code{\link{hyper2}},\code{\link{rp}}}
+\seealso{
+  \code{\link{hyper2}},
+  \code{\link{rp}}
+
+  \seegithub
+}
 
 \examples{
 

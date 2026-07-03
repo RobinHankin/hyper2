@@ -74,6 +74,7 @@ a default value of 1 (which is surprisingly useful)).
 
 }
 \author{Robin K. S. Hankin}
+\seealso{\seegithub}
 \examples{
 
 (H <- hyper2(list("a",c("a","b"),c("a","b","c")),c(1,1,-2)))

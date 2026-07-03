@@ -64,6 +64,8 @@ interpretation of the internal structure of \code{ranktable} objects.
 \seealso{
   \code{\link{rrank}},
   \code{\link{ordertable2supp}}
+
+  \seegithub
 }
 \examples{
 

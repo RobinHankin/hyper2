@@ -33,7 +33,12 @@ estimator for the Clinicians' \acronym{BT} strengths.
 A. Agresti, 2002.  "Categorical data analysis".  John Wiley and
 Sons. Table 13.1, p542.
  }
-\seealso{\code{\link{race3}},\code{\link{hepatitis}}}
+ \seealso{
+   \code{\link{race3}},
+   \code{\link{hepatitis}}
+
+   \seegithub
+ }
 \examples{
 pie(carcinoma_maxp)
 }

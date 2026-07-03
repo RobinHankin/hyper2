@@ -33,7 +33,11 @@ Table \code{karate_table} misses uninformative matches, that is,
 competitions with 0-0 results.
 
 }
-\seealso{\code{\link{zapweak}}}
+\seealso{
+  \code{\link{zapweak}}
+
+  \seegithub
+}
 \examples{
 summary(karate)
 }

@@ -145,7 +145,12 @@ equalp(H)
   optimization routine.
 
 }
-\seealso{\code{\link{gradient}},\code{\link{fillup}}}
+\seealso{
+  \code{\link{gradient}},
+  \code{\link{fillup}}
+
+  \seegithub
+}
 \examples{
 
 maxp(icons)

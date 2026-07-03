@@ -10,6 +10,7 @@
 \details{Function is  \code{x[head(brackets(x), ...)]}}
 \value{Returns a \code{hyper2} object}
 \author{Robin K. S. Hankin}
+\seealso{\seegithub}
 \examples{
 
 p <- zipf(5)

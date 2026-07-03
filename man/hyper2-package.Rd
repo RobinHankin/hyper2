@@ -31,6 +31,8 @@ The DESCRIPTION file:
   sentiment: he is a dampening presence, a metaphorical wet blanket.
   The drawing conveys this lack of fighting spirit well, capturing the
   essence of an uninspired and anticlimactic outcome.
+
+\seegithub
   
 }
 \author{

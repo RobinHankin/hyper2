@@ -31,6 +31,7 @@ of the corresponding \code{hyper2} functionality.
 }
 \value{Returns a \code{hyper3} object or a Boolean.}
 \author{Robin K. S. Hankin}
+\seealso{\seegithub}
 \examples{
 
 H1 <- hyper3(list(c(a=1.2),c(b=1),c(a=1.2,b=1)),powers=c(3,4,-7))

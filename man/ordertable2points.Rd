@@ -20,7 +20,11 @@ ordertable2points(o, points,totals=TRUE)
 }
 \value{Returns either an order table or a named numeric vector}
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ordertable}}}
+\seealso{
+  \code{\link{ordertable}}
+
+  \seegithub
+}
 \examples{
 
 points <- c(25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0)

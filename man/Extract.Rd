@@ -72,7 +72,12 @@ order, but the elements of \code{val} are stored in a particular order.
 Also see function \code{hyper2_sum_numeric()}.
 
 }
-\seealso{\code{\link{hyper2}},\code{\link{Ops.hyper2}}}
+\seealso{
+    \code{\link{hyper2}},
+    \code{\link{Ops.hyper2}}
+
+    \seegithub
+}
 \examples{
 data(chess)
 

@@ -68,7 +68,11 @@
   \generatedbynolink{inst/kka.Rmd}{kka.rda}
 
 }
-\seealso{\code{\link{chess}}}
+\seealso{
+  \code{\link{chess}}
+
+  \seegithub
+}
 \examples{
 karpov_kasparov_anand
 # pie(maxp(karpov_kasparov_anand))  # takes ~10s

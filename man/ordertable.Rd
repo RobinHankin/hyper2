@@ -126,6 +126,8 @@ of an ordertable; this is used in \code{inst/skating.Rmd}.
   \code{\link{ordertable2supp}},
   \code{\link{rrank}},
   \code{\link{ranktable}}
+
+\seegithub
 }
 \examples{
 

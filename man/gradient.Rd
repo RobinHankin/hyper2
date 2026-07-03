@@ -107,7 +107,7 @@ does not return exact zeros at the evaluate.
 }
 
 \author{Robin K. S. Hankin}
-
+\seealso{\seegithub}
 \note{
   There is a \code{NAMESPACE} clash with \code{pracma::gradient()}.
 }

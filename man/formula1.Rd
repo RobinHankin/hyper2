@@ -102,8 +102,6 @@ There is a large amount of documentation in the \code{inst/} directory
 in the form of Rmd files.
 
 
-
-
 }
 \references{
 
@@ -112,7 +110,12 @@ in the form of Rmd files.
   \url{https://en.wikipedia.org/w/index.php?title=2017_Formula_One_World_Championship&oldid=839923210}
   [Online; accessed 14-May-2018]
   }
-\seealso{\code{\link{ordertable2supp}},\code{\link{constructor}}}
+  \seealso{
+    \code{\link{ordertable2supp}},
+    \code{\link{constructor}}
+
+    \seegithub
+  }
 \examples{
 summary(formula1)
 \dontrun{#Takes too long

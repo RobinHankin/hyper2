@@ -88,7 +88,12 @@ like_series(p,L,log=TRUE)
   
   }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{maxp}}, \code{\link{balance}}}
+\seealso{
+  \code{\link{maxp}},
+  \code{\link{balance}}
+
+  \seegithub
+}
 \examples{
 data(chess)
 loglik(c(1/3,1/3),chess)

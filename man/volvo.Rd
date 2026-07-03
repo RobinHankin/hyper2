@@ -29,7 +29,11 @@ Retrieved 22:21, February 28, 2020.
 \url{https://en.wikipedia.org/w/index.php?title=2014\%E2\%80\%932015_Volvo_Ocean_Race&oldid=914916131},
 
 }
-\seealso{\code{\link{ordertable2supp}}}
+\seealso{
+  \code{\link{ordertable2supp}}
+
+  \seegithub
+}
 \examples{
 pie(volvo_maxp)
 # equalp.test(volvo)   # takes ~10 seconds to run

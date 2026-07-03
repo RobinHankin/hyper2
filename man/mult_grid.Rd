@@ -22,7 +22,11 @@ Function \code{mult_grid()} takes a list of matrices; it is designed for
 use by \code{ggrl()}.
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ggrl}}}
+\seealso{
+  \code{\link{ggrl}}
+
+  \seegithub
+}
 \examples{
 pair_grid(diag(2),diag(3))
 mult_grid(lapply(1:4,diag))

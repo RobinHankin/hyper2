@@ -96,7 +96,13 @@ race(v, nonfinishers)
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{rrank}},\code{\link{ordertable2supp}},\code{\link{race3}}}
+\seealso{
+  \code{\link{rrank}},
+  \code{\link{ordertable2supp}},
+  \code{\link{race3}}
+
+  \seegithub
+}
 \examples{
 
 W <- hyper2(pnames=letters[1:5])

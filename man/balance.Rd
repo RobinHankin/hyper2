@@ -35,7 +35,11 @@ zero-sum-power condition.
 }
 \value{Returns a balanced \code{hyper2} object}
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{print.hyper2}}, \code{\link{balance}}}
+\seealso{
+  \code{\link{print.hyper2}}
+
+  \seegithub
+}
 \examples{
 
 

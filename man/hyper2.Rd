@@ -83,6 +83,8 @@ where \eqn{p_1+\cdots+p_n=1}{p_1+...+p_n=1}.
   \code{\link{loglik}},
   \code{\link{hyper2-package}}
   \code{\link{psubs}}
+
+  \seegithub
 }
 \examples{
 (o <- hyper2(list("a","b","c",c("a","b"),letters[1:3]),c(1:3,-1,-5)))

@@ -43,7 +43,12 @@ Some other analysis is given in files
 \code{inst/curacao1962_threeplayers_rest_monster.Rmd}.
 
 }
-\seealso{\code{\link{chess}},\code{\link{karpov_kasparov_anand}}}
+\seealso{
+  \code{\link{chess}},
+  \code{\link{karpov_kasparov_anand}}
+
+  \seegithub
+}
 \examples{
 pie(interzonal_maxp)
 

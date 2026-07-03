@@ -64,7 +64,11 @@
   }
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{matrix2supp}}}
+\seealso{
+  \code{\link{matrix2supp}}
+
+  \seegithub
+}
 \examples{
 data(icons)
 pie(icons_maxp)

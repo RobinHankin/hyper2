@@ -46,7 +46,7 @@ to Lin et al. (2009)
       of Statistical software}, 28:11
   }
 }
-
+\seealso{\seegithub}
 \examples{
 data(handover)
 maxp(handover)

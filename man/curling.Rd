@@ -48,6 +48,7 @@ Wikipedia, The Free Encyclopedia; 2021 Jan 7, 14:23 UTC [cited 2021 Jan
   }
 }
 \author{Robin K. S. Hankin}
+\seealso{\seegithub}
 \examples{
 data(curling)
 dotchart(curling1_maxp)

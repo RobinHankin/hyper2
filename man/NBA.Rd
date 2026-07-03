@@ -43,7 +43,11 @@ include possession.
 \references{
   \url{https://www.espn.com/nba/playbyplay?gameId=400954514}
 }
-\seealso{\code{\link{volleyball}}}
+\seealso{
+  \code{\link{volleyball}}
+
+  \seegithub
+}
 \examples{
 
 data(NBA)

@@ -35,7 +35,11 @@ with the national votes.
     \item P. M. E. Altham, personal communication
   }
 }
-\seealso{\code{\link{eurodance}}}
+\seealso{
+  \code{\link{eurodance}}
+
+  \seegithub
+}
 \examples{
 data(eurodance)
 dotchart(eurodance_maxp)

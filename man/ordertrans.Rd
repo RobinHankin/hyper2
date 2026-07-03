@@ -99,7 +99,11 @@ functions.
 
   
 }
-\seealso{\code{\link{rrank}}}
+\seealso{
+  \code{\link{rrank}}
+
+  \seegithub
+}
 \examples{
 
 x <- c(e=4L, a=7L, c=6L, b=1L, f=2L, g=3L, h=5L, i=8L, d=9L)

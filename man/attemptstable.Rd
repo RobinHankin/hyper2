@@ -25,7 +25,6 @@ rattemptstable(ncompetitors=8, nthrows=6, prob=0.23)
 }
 \details{
 
-
 An \dfn{attemptstable} object is a data frame with each row being a
 competitor and each column being an attempt.  The canonical example is
 \code{javelin}:
@@ -55,8 +54,9 @@ To translate an \code{attemptstable} object to a \code{hyper3} support
 function, use \code{suppfun()}; function \code{attemptstable2supp3()} is
 a low-level helper function.
 
-File \code{inst/javelin.Rmd} shows a use-case for
-\code{attemptstable2supp3().}
+File \code{inst/javelin.Rmd} (a compiled version may be found
+\href{https://robinhankin.github.io/hyper2/javelin.html}{here}) shows a
+use-case for \code{attemptstable2supp3().}.
 
 Function \code{rattemptstable()} produces a random \code{attemptstable}
 object.  The defaults give a table of the same size and same total
@@ -77,7 +77,12 @@ interpreted as uninformative [the other entry types meaning \dQuote{came
 last}].   A simple example is given in \code{inst/javelin.Rmd}.
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ordertable2supp}},\code{\link{javelin}}}
+\seealso{
+  \code{\link{ordertable2supp}},
+  \code{\link{javelin}}
+
+  \seegithub
+}
 \examples{
 
 jj <- javelin_table[1:3,]

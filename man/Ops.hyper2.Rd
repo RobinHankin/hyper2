@@ -75,9 +75,8 @@ hyper2_sum_numeric(H, r)
 \value{
 Returns a \code{hyper2} object or a Boolean.
 }
-\author{
-Robin K. S. Hankin
-}
+\author{Robin K. S. Hankin}
+\seealso{\seegithub}
 \examples{
 
 chess2 <- hyper2(list("Kasparov","Karpov",c("Kasparov","Karpov")),c(2,3,-5))

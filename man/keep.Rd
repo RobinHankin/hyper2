@@ -51,7 +51,12 @@ discard_flawed(H, unwanted)
   
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ordertable2supp}},\code{\link{tidy}}}
+\seealso{
+  \code{\link{ordertable2supp}},
+  \code{\link{tidy}}
+
+  \seegithub
+}
 \examples{
 
 maxp(icons)

@@ -104,7 +104,11 @@ The \pkg{adapt} package is no longer available on CRAN; from 1.4-3, the
 
 }
 
-\seealso{\code{\link{loglik}}}
+\seealso{
+  \code{\link{loglik}}
+
+  \seegithub
+}
 \examples{
 
 # Two different measures of central tendency:

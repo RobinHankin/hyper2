@@ -46,6 +46,7 @@ return an error.
 Generally, return a support function
 }
 \author{Robin K. S. Hankin}
+\seealso{\seegithub}
 \examples{
 
 suppfun(pentathlon_table)

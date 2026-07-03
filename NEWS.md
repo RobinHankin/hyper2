@@ -1,3 +1,7 @@
+# hyper2 3.2-4
+
+* macros pointing to further resources
+
 # hyper2 3.2-3
 
 * advantage()

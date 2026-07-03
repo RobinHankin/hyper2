@@ -115,7 +115,12 @@ The \code{noninformative} argument is discussed at
 
 \value{Returns a \code{hyper2} object}
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ordertable}},\code{\link{ordertable2supp3}}}
+\seealso{
+  \code{\link{ordertable}},
+  \code{\link{ordertable2supp3}}
+
+  \seegithub
+}
 \examples{
 
 ordertable2supp(soling_table)    # discouraged

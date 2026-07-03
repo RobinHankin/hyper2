@@ -8,6 +8,7 @@ in the expression}
 \usage{\method{length}{hyper2}(x)}
 \arguments{\item{x}{hyper2 object}}
 \author{Robin K. S. Hankin}
+\seealso{\seegithub}
 \examples{
 
 data("oneill")

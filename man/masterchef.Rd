@@ -27,6 +27,8 @@ in an unmanageably large list.  Inclusion is controlled by Boolean
 vector \code{doo}.
  
 The definitive source is the coloured table on the wiki page.
+
+\seegithub
 }
 \references{
 

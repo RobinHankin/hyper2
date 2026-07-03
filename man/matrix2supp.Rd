@@ -43,7 +43,12 @@ Two functions are documented here:
 }
 
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{icons}},\code{\link{volleyball}}}
+\seealso{
+  \code{\link{icons}},
+  \code{\link{volleyball}}
+
+  \seegithub
+}
 \examples{
 
 icons == saffy(icons_table)  # should be TRUE

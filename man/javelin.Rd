@@ -45,7 +45,11 @@ and javelin (high jump and long jump have a different format).  The
 \code{inst/javelin.txt}.
 
   }
-\seealso{\code{\link{attemptstable2supp3}}}
+  \seealso{
+    \code{\link{attemptstable2supp3}}
+
+    \seegithub
+  }
 \examples{
 
 attemptstable2supp3(javelin_table)

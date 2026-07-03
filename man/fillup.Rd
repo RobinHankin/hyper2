@@ -29,7 +29,12 @@ indep(x)
 }
   
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{equalp}},\code{\link{gradient}}}
+\seealso{
+  \code{\link{equalp}},
+  \code{\link{gradient}}
+
+  \seegithub
+}
 \examples{
 fillup(c(1/2, 1/3))
 

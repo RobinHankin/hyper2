@@ -41,7 +41,11 @@ likelihood function \code{eurovision} assumes their independence.
     \item P. M. E. Altham, personal communication
   }
 }
-\seealso{\code{\link{eurodance}}}
+\seealso{
+  \code{\link{eurodance}}
+  
+  \seegithub
+}
 \examples{
 data(eurovision)
 dotchart(eurovision_maxp)
