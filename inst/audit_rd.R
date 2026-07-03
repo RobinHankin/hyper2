@@ -59,7 +59,7 @@ for (b in 1:num_batches) {
   cat("\n\n", file = output_file, append = TRUE)
   
   if (b < num_batches) {
-    Sys.sleep(15) 
+    Sys.sleep(60) 
   }
 }
 
