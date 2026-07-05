@@ -127,6 +127,11 @@ of an ordertable; this is used in \code{inst/skating.Rmd}.
   \code{\link{rrank}},
   \code{\link{ranktable}}
 
+  \usedinonline{
+    \href{https://robinhankin.github.io/hyper2/skating.html}{skating}
+    \href{https://robinhankin.github.io/hyper2/salad.html}{salad}
+  }
+  
 \seegithub
 }
 \examples{

@@ -55,7 +55,11 @@ The corresponding \code{hyper3} likelihood function
   \url{https://en.wikipedia.org/w/index.php?title=2021_Formula_One_World_Championship&oldid=1082745216}
  
   }
-\seealso{\code{\link{formula1}}}
+  \seealso{
+    \code{\link{formula1}}
+
+    \seegithub
+  }
 \examples{
 dotchart(constructor_2021_maxp)
 }

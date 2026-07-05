@@ -54,7 +54,12 @@ weakly informative.  The dataset is used in an example at
   \emph{Journal of Statistical Software}, 33(11), 1-18
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{zipf}}}
+\seealso{
+  \code{\link{zipf}
+  }
+
+  \seegithub
+}
 \examples{
 
 volleyball == volley(volleyball_table)  # should be TRUE

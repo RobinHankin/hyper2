@@ -45,7 +45,14 @@ rp(n, H, startp = NULL, fcm = NULL, fcv = NULL, SMALL = 1e-06, l=loglik, fillup=
   \code{Ternary::ternaryPlot()} with \code{rp()}.
 
 }
-\seealso{\code{\link{maxp}},\code{\link{loglik}},\code{\link{dirichlet}},\code{\link{rhyper2}}}
+\seealso{
+  \code{\link{maxp}},
+  \code{\link{loglik}},
+  \code{\link{dirichlet}},
+  \code{\link{rhyper2}}
+
+  \seegithub
+}
 \examples{
 x <- rp(50, icons)  # try more than 50
 matplot(x, type = "l")

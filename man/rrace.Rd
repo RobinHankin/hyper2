@@ -19,7 +19,12 @@ The first element is the winner, the second the runner-up, and so on,
 until the final element is the last to cross the finishing line.
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{rrace3}},\code{\link{hyper2}}}
+\seealso{
+  \code{\link{rrace3}},
+  \code{\link{hyper2}}
+
+  \seegithub
+}
 \examples{
 
 o <- c(a=0.4, b=0.3, c=0.2, d=0.1)

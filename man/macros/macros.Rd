@@ -19,3 +19,7 @@ some further discussion and technical documentation, and creates file
 \newcommand{\seegithub}{%
 A list of rendered \proglang{HTML} documentation may be found
 \href{https://robinhankin.github.io/hyper2/}{here}.}
+
+\newcommand{\usedinonline}{%
+The commands documented here are used in the following online documentation: #1.%
+}

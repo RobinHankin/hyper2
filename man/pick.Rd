@@ -49,6 +49,7 @@ shortly be changed).
 
 }
 \author{Robin K. S. Hankin}
+\seealso{\seegithub}
 \examples{
 
 pick(letters[1:2], letters[1:5])   # field abcde; ab beats cde

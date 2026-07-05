@@ -38,6 +38,7 @@ The objects are created by \code{inst/home_advantage.Rmd}.
   Data obtained from \code{www.worldfootball.net}
 }
 \author{Robin K. S. Hankin}
+\seealso{\seegithub}
 \examples{
 data(RCLF)
 RCLF3_table

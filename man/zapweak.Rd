@@ -36,7 +36,12 @@ less than \code{minstrength}) using \code{discard_flawed()}.
 
 }
 
-\seealso{\code{\link{discard_flawed}},\code{\link{maxp}}}
+\seealso{
+  \code{\link{discard_flawed}},
+  \code{\link{maxp}}
+
+  \seegithub
+}
 \author{Robin K. S. Hankin}
 \examples{
  zapweak(icons)        # removes noone

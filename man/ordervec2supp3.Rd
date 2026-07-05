@@ -124,7 +124,12 @@ args2ordervec(...)
   vector, not an \emph{order} vector]; it will be renamed
   \code{rankvec_likelihood3()}, eventually.
 }  
-\seealso{\code{\link{ordertable2supp}},\code{\link{ordertrans}}}
+\seealso{
+  \code{\link{ordertable2supp}},
+  \code{\link{ordertrans}}
+
+  \seegithub
+}
 \examples{
 
 
@@ -170,5 +175,3 @@ cheering3(v=c("a","b","a","c"), e=c(a=1,b=2,c=2), help=c(1.8,1.111), "b")
 cheering3(v=c("a","b","a","c"), e=c(a=1,b=2,c=3), help=c(1.8,1.111,1), "b")
 
 }
-
-

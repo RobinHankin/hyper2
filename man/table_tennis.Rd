@@ -38,4 +38,5 @@ dotchart(table_tennis_maxp)
 specificp.gt.test(table_tennis, "S", 0)
 
 }
+\seealso{\seegithub}
 \keyword{datasets}

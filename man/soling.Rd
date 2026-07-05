@@ -40,7 +40,11 @@ respectively.
   (accessed March 23, 2020).
 
   }
-\seealso{\code{\link{ordertable2supp}}}
+  \seealso{
+    \code{\link{ordertable2supp}}
+
+    \seegithub
+  }
 \examples{
 data(soling)
 ordertable_to_ranktable(soling_table)

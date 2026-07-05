@@ -31,7 +31,15 @@ profile_support_single(H, i, p, evaluate=FALSE, ...)
 \value{Returns the support at a particular value of \eqn{p_i}, or the
   evaluate conditional on \eqn{p_i}.}
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{loglik}}}
+\seealso{
+  \code{\link{loglik}}
+
+  \usedinonline{
+    \href{https://robinhankin.github.io/hyper2/home_advantage.html}{home_advantage}
+  }
+  
+  \seegithub
+}
 \examples{
 
 \dontrun{  # takes too long

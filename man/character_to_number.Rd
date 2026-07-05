@@ -33,7 +33,11 @@ function is here because it is used in \code{ggrl()}.
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{suppfun}}}
+\seealso{
+  \code{\link{suppfun}}
+
+  \seegithub
+}
 \examples{
 
  x <- sample(9)

@@ -18,6 +18,7 @@
 
 }
 \author{Robin K. S. Hankin}
+\seealso{\seegithub}
 \examples{
 
 

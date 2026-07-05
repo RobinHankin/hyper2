@@ -19,7 +19,11 @@ Object \code{universities} is a \code{hyper2} support function and
 \generatedby{inst/universities.Rmd}{universities.rda}{https://robinhankin.github.io/hyper2/universities.html}
   
 }
-\seealso{\code{\link{ordertable}}}
+\seealso{
+  \code{\link{ordertable}}
+
+  \seegithub
+}
 \examples{
 
 summary(universities)

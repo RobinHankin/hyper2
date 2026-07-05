@@ -41,7 +41,11 @@ players have a ML strength of zero.
   (accessed December 7, 2016).
   
 }
-\seealso{\code{\link{ggrl}}}
+\seealso{
+  \code{\link{ggrl}}
+
+  \seegithub
+}
 \examples{
 dotchart(rowing_maxp)
 }

@@ -93,7 +93,11 @@ specificp.lt.test(H, i, specificp=1/size(H), ...)
     performed}
   \item{data.name}{a character string giving the name(s) of the data.}
 }
-\seealso{\code{\link{maxp}}}
+\seealso{
+  \code{\link{maxp}}
+
+  \seegithub
+}
 
 \note{
 

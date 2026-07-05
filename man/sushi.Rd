@@ -30,7 +30,7 @@ Sushi preference dataset.
 \generatedbynolink{inst/sushi.Rmd}{sushi.rda}
 
 }
-
+\seealso{\seegithub}
 \examples{
 sushi
 sushi_maxp

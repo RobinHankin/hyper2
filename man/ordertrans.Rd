@@ -95,9 +95,6 @@ functions.
   the names---which can appear in any order---for the competitor you are
   interested in.  I guess \dQuote{generalised order vector} might be a
   better description of the argument.
-
-
-  
 }
 \seealso{
   \code{\link{rrank}}

@@ -59,4 +59,5 @@ out-of-scope calls may cause crashes.
 
 }
 \value{These functions return a named List}
+\seealso{\seegithub}
 \author{Robin K. S. Hankin}

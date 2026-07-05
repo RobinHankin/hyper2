@@ -54,6 +54,7 @@ dataset kindly supplied by Zachary Hankin.
     \item \url{https://en.wikipedia.org/wiki/Cloud9}
   }
 }
+\seealso{\seegithub}
 \examples{
 dotchart(counterstrike_maxp)
 }

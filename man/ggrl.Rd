@@ -102,6 +102,12 @@ race(v, nonfinishers)
   \code{\link{race3}}
 
   \seegithub
+
+  \usedinonline{
+    \href{https://robinhankin.github.io/hyper2/carcinoma.html}{carcinoma}
+    \href{https://robinhankin.github.io/hyper2/hepatitis.html}{hepatitis}
+    \href{https://robinhankin.github.io/hyper2/masterchef.html}{masterchef}
+  }
 }
 \examples{
 

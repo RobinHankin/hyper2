@@ -15,7 +15,11 @@
 Mostly self-explanatory, based on the equivalent in the \code{untb} package.
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{hyper2}}}
+\seealso{
+  \code{\link{hyper2}}
+
+  \seegithub
+}
 \examples{
 summary(icons)
 }

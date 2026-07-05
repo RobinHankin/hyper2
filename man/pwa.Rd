@@ -109,7 +109,15 @@ markdown files in the \file{inst/} directory.
 
 }
 
-\seealso{\code{\link{ordervec2supp}}}
+\seealso{
+  \code{\link{ordervec2supp}}
+
+  \usedinonline{
+    \href{https://robinhankin.github.io/hyper2/pwa3.html}{pwa3}
+   }
+
+  \seegithub
+}
 \examples{
 
 summary(formula1 |> pwa("Hamilton","pole"))

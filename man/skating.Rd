@@ -47,6 +47,7 @@
   it's easy to confuse this with \code{skating}.
 }
 \author{Robin K. S. Hankin}
+\seealso{\seegithub}
 \examples{
 data(skating)
 dotchart(skating_maxp)

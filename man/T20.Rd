@@ -29,6 +29,7 @@
     Auckland University of Technology.
   }
 }
+\seealso{\seegithub}
 \examples{
 summary(T20)
 dotchart(T20_maxp)

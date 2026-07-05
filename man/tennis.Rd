@@ -51,6 +51,7 @@ ghost player.
   \dQuote{A Generalization of the Dirichlet Distribution},
   \emph{Journal of Statistical Software}, 33(11), 1-18
 }
+\seealso{\seegithub}
 \examples{
 summary(tennis)
 

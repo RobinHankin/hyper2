@@ -40,7 +40,6 @@ Topalov, Anand, Karpov.
 
   \generatedby{inst/rock_paper_scissors.Rmd}{chess.rda}{https://robinhankin.github.io/hyper2/rock_paper_scissors_monster.html}
 
-
 File \code{inst/ternaryplot_hyper2.Rmd} gives an example showing the
 \code{chess} likelihood function that uses
 \code{Ternary::ternaryPlot()}.
@@ -52,7 +51,11 @@ File \code{inst/ternaryplot_hyper2.Rmd} gives an example showing the
     \item \url{https://en.chessbase.com/}
   }
 }
-\seealso{\code{\link{karpov_kasparov_anand}}}
+\seealso{
+  \code{\link{karpov_kasparov_anand}}
+
+  \seegithub
+}
 \examples{
 data(chess)
 maxp(chess)

@@ -22,7 +22,12 @@ rhyper2(n = 8, s = 5, pairs = TRUE, teams = TRUE, race = TRUE, pnames)
   random observations.  To return a random probability vector drawn from
   a from a given (normalized) likelihood function, use \code{rp()}.
 }
-\seealso{\code{\link{rp}},\code{\link{rrace}}}
+\seealso{
+  \code{\link{rp}},
+  \code{\link{rrace}}
+
+  \seegithub
+}
 \examples{
 
 rhyper2()

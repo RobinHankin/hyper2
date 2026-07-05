@@ -145,6 +145,8 @@ used in the \CRANpkg{permutations} package for inverting a permutation:
   \code{\link{suppfun}},
   \code{\link{skating}},
   \code{\link{rhyper3}}
+
+  \seegithub
 }
 \examples{
 

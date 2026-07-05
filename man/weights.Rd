@@ -61,7 +61,11 @@ coerced to \code{hyper3}.
 Generally return or deal with \code{hyper3} objects
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{hyper2}}}
+\seealso{
+  \code{\link{hyper2}}
+
+  \seegithub
+}
 \examples{
 
 H <- hyper3_nv(list(c(a=1.2), c(b=1), c(a=1.2,b=1,c=1)), powers=c(3,4,-7))

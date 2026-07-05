@@ -50,7 +50,11 @@ The print method for \code{attemptstable} objects is given at
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{attemptstable}}}
+\seealso{
+  \code{\link{attemptstable}}
+
+  \seegithub
+}
 \note{
   Sometimes the use of \code{pnv()} can be confusing, as distinct
   brackets can appear to be identical, as per the example.  See how the

@@ -123,6 +123,11 @@ Experimental function \code{pair3()} is now removed as
 \seealso{
   \code{\link{maxp}}
 
+  \usedinonline{
+    \href{https://robinhankin.github.io/hyper2/home_advantage.html}{home_advantage}
+  }
+
+  
 \seegithub
 }
 \examples{ #Data is the top 5 players from Borozki's table 1

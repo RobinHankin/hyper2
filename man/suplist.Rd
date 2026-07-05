@@ -104,7 +104,13 @@ as.suplist(L)
 Returns a \code{suplist} object.
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{Ops.hyper2}},\code{\link{Extract}},\code{\link{loglik}}}
+\seealso{
+  \code{\link{Ops.hyper2}},
+  \code{\link{Extract}},
+  \code{\link{loglik}}
+
+  \seegithub
+}
 \examples{
 
 W <- hyper2(pnames=letters[1:5])

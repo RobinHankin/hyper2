@@ -34,6 +34,10 @@ indep(x)
   \code{\link{gradient}}
 
   \seegithub
+
+  \usedinonline{
+    \href{https://robinhankin.github.io/hyper2/gradient.html}{gradient}
+  }
 }
 \examples{
 fillup(c(1/2, 1/3))

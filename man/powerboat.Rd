@@ -42,7 +42,11 @@ Championship. In \emph{Wikipedia, The Free Encyclopedia}.  Retrieved
   Many drivers have names with diacritics, which have been removed from
   the dataframe.
 }
-\seealso{\code{\link{ordertable2supp}}}
+\seealso{
+  \code{\link{ordertable2supp}}
+
+  \seegithub
+}
 \examples{
 suppfun(powerboat_table)
 pie(powerboat_maxp)

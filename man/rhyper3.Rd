@@ -77,7 +77,13 @@ rhyper3(n=5, s=4, type='race', ...)
   there are only 26 players, one for each letter \code{a}-\code{z}.
 }
 
-\seealso{\code{\link{rrank}},\code{\link{ordertable2supp}},\code{\link{ordertrans}}}
+\seealso{
+  \code{\link{rrank}},
+  \code{\link{ordertable2supp}},
+  \code{\link{ordertrans}}
+
+  \seegithub
+}
 \examples{
 
 rracehyper3()

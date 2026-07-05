@@ -31,6 +31,7 @@ a single player and its substitute; it is not intended for direct use.
 
 \value{Returns a hyper2 object}
 \author{Robin K. S. Hankin}
+\seealso{\seegithub}
 \examples{
 
 psubs(icons,c("L","NB"),c("London","Norfolk Broads"))

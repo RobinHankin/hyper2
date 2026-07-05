@@ -37,7 +37,16 @@ consistency(H, plot=TRUE, ...)
   the third being the difference
 }
 \author{Robin K. S. Hankin}
-\seealso{\code{\link{ordertrans}}}
+\seealso{
+  \code{\link{ordertrans}}
+
+  \usedinonline{
+    \href{https://robinhankin.github.io/hyper2/eurodance.html}{eurodance}, 
+    \href{https://robinhankin.github.io/hyper2/eurovision.html}{eurovision},
+  }
+
+  \seegithub
+}
 \examples{
 
 # consistency(icons)
