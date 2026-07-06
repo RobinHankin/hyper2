@@ -376,11 +376,11 @@ $$
 but we may represent this in the following compact form:
 
 $$
-\left(\frac{p_1,p_2,\ldots, p_r}{\sum p_i}\right)^{\left(n_1,\ldots n_r\right)}
+\left(\frac{p_1,p_2,\ldots, p_r}{\sum p_i}\right)^{\left(n_1,\ldots n_r,\right)}
 $$
 
 Or, noting that the sum of the numerators is equal to the common
-denominator, even more compactly as $\left(p_1,p_2,\ldots, p_r\right)^{\left(n_1,\ldots n_r\right)}$.
+denominator, even more compactly as $\left(p_1,\ldots, p_r\right)^{\left(n_1,\ldots,n_r\right)}$.
 
 The previous likelihood function can be represented thus:
 
