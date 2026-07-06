@@ -46,7 +46,7 @@ rmd_files <- list.files(
 
   rmd_files <- rmd_files[-grep("loser", rmd_files)]  # loser.Rmd works locally, not on cloud [stupid vmmin bug, fixed(?) in R-4.6-0]
   rmd_files <- rmd_files[-grep("f1points", rmd_files)]  # f1points.Rmd reads rda files, does not work remotely
-  rmd_files <- rmd_files[-grep("kka", rmd_files)]  # kka.Rmd works locally, not on the cloud
+# rmd_files <- rmd_files[-grep("kka", rmd_files)]  # kka.Rmd works locally, not on the cloud
   rmd_files <- rmd_files[-grep("formula1", rmd_files)]  # formula1.Rmd takes too long
   rmd_files <- rmd_files[-grep("skeleton", rmd_files)]  # skeleton.Rmd takes too long
 # rmd_files <- rmd_files[-grep("advantage", rmd_files)]  # home_advantage.Rmd takes too long
