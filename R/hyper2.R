@@ -114,12 +114,12 @@ setGeneric("pnames<-",function(x, value){standardGeneric("pnames<-")})
     if(pp == 1){
       out <- paste(out, .print.helper(pn))
     } else {
-      out <- paste(out, .print.helper(pn), "^",pp,sep="")
+      out <- paste(out, .print.helper(pn), "^", pp, sep="")
     }
-    if(i < length(b)){out <- paste(out," * ",sep="")}
+    if(i < length(b)){out <- paste(out, " * ", sep="")}
   }
   
-  out <- paste(out,")\n",sep="")
+  out <- paste(out, ")\n", sep="")
   
   for(i in strwrap(out)){
     cat(noquote(i))
@@ -135,7 +135,7 @@ setGeneric("pnames<-",function(x, value){standardGeneric("pnames<-")})
   p2 <- elements(powers(e2))
   n1 <- pnames(e1)
   n2 <- pnames(e2)
-  out <- addL(b1,p1,b2,p2)
+  out <- addL(b1, p1, b2, p2)
   
   if(all(n2 %in% n1)){
       jj <- n1
