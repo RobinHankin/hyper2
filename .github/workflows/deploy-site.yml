@@ -33,11 +33,11 @@ jobs:
 
       - name: setup tinyTex
         uses: r-lib/actions/setup-tinytex@v2
-      
+        
       - name: Tell R where pandoc is 
         run: |
           echo "RSTUDIO_PANDOC=$(dirname $(which pandoc))" >> $GITHUB_ENV
-      
+        
       - name: Install system deps (if needed)
         run: |
           sudo apt-get update
@@ -80,6 +80,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages
           path: inst/site
 
   deploy:
@@ -94,3 +95,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
