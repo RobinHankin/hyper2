@@ -526,9 +526,9 @@ br <- makemat(3)
 bx <- makemat(4)
 mr <- makemat(5)
 mx <- makemat(6)
-filled.contour(r_true_values, x_true_values, br,xlab="r",ylab="x")
-filled.contour(r_true_values, x_true_values, bx,xlab="r",ylab="x")
-filled.contour(r_true_values, x_true_values, mr,xlab="r",ylab="x")
-filled.contour(r_true_values, x_true_values, mx,xlab="r",ylab="x")
+filled.contour(r_true_values, x_true_values, br, xlab="r", ylab="x", main="Bias(r)")
+filled.contour(r_true_values, x_true_values, bx, xlab="r", ylab="x", main="Bias(x)")
+filled.contour(r_true_values, x_true_values, mr, xlab="r", ylab="x", main="MSE(r)" )
+filled.contour(r_true_values, x_true_values, mx, xlab="r", ylab="x", main="MSE(x)" )
 ```
 
