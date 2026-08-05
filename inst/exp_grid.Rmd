@@ -486,3 +486,49 @@ cbind(`bias(x)`=jj[,2], `SE(bias)` = jj[,4]/sqrt(1000))
 
 
 
+# A  meaningful grid.
+
+Will keep $N$ fixed at 9 first.  And vary nobs. 
+
+
+```{r make_meaningful_grid, cache=TRUE}
+r_true_values <- 1:9
+x_true_values <- seq(from=0.1,to=0.9,by=0.1)
+design_matrix <- as.matrix(expand.grid(r_true=r_true_values, x_true = x_true_values))
+out <- matrix(-999,nrow(design_matrix),6)
+for(i in seq_len(nrow(design_matrix))){
+    r_true <- design_matrix[i,1]
+    x_true <- design_matrix[i,2]
+    jj <-
+        makemaxliketable(n=1000, nobs=10, no_of_competitors=N, allX=allX9,
+                         r_true = r_true,
+                         x_true = x_true
+                         )
+    out[i,] <- 
+        c(
+            r_true, x_true,
+            biasr(jj, r_true), biasx(jj, x_true), mser(jj, r_true), msex(jj, x_true)
+        )
+    }
+colnames(out) <- c("r_true","x_true", "bias_r", "bias_x", "MSE_r", "MSE_x")
+```
+
+```{r show_meaningful_grid}
+head(out)
+tail(out)
+makemat <- function(i){
+    m <- matrix(out[,i],length(r_true_values),length(x_true_values))
+    rownames(m) <- r_true_values
+    colnames(m) <- x_true_values
+    return(m)
+}
+br <- makemat(3)
+bx <- makemat(4)
+mr <- makemat(5)
+mx <- makemat(6)
+filled.contour(r_true_values, x_true_values, br,xlab="r",ylab="x")
+filled.contour(r_true_values, x_true_values, bx,xlab="r",ylab="x")
+filled.contour(r_true_values, x_true_values, mr,xlab="r",ylab="x")
+filled.contour(r_true_values, x_true_values, mx,xlab="r",ylab="x")
+```
+
