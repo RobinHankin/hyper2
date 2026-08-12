@@ -347,11 +347,11 @@ statistics in which the $r=1$ competitor placed third [corresponding
 Although figure~\ref{1234third} shows a perfectly respectable
 log-likelihood function, in practice we often do not know the value of
 $r$, and need a joint likelihood function for $(r,x)$.  It is
-convenient to normalize $r$ and use $s=r/n$ for consistency between
-different values of $n$, and to treat $s$ as a continuous variable;
-one often wants to know the percentile of the focal entity.  The only
-reasonable way to calculate such a likelihood function appears to be
-numerical; fortunately this is straightforward.
+convenient to normalize $r$ by writing $s=r/n$, thus allowing direct
+comparison between values of $r$ obtained from different values of
+$n$: one often wants to know the percentile of the focal entity.  The
+only reasonable way to calculate such a likelihood function appears to
+be numerical; fortunately this is straightforward.
 
 We leverage the {\tt hyper2} R package~\citep{hankin2017_rmd} which
 includes extensive numerical functionality to simulate Plackett-Luce
