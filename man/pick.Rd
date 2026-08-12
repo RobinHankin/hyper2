@@ -49,8 +49,15 @@ shortly be changed).
 
 }
 \author{Robin K. S. Hankin}
-\seealso{\seegithub}
+\seealso{
+  \usedinonline{
+    \href{https://robinhankin.github.io/hyper2/kka.html}{kka}
+}
+
+\seegithub
+}
 \examples{
+fillup(c(1/2, 1/3))
 
 pick(letters[1:2], letters[1:5])   # field abcde; ab beats cde
 pass(letters[1:2], letters[1:5])   # field abcde; ab loses to cde

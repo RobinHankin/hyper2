@@ -65,7 +65,7 @@
   \sQuote{classical games} are considered here (rapid and exhibition
   games being ignored).
 
-  \generatedbynolink{inst/kka.Rmd}{kka.rda}
+  \generatedby{inst/kka.Rmd}{kka.rda}{https://robinhankin.github.io/hyper2/kka.html}
 
 }
 \seealso{
