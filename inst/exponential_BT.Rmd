@@ -773,7 +773,7 @@ x_try <- seq(from = 0.2, to = 1, by = 0.1)
 wanted_a <- (a_try) > 0.6
 f <- function(...){
     contour(a_try[wanted_a], x_try,
-            xlab="r", ylab="x",
+            xlab="s", ylab="x",
             LL[wanted_a,], levels = rev(c(0,-1,-2,-4,-6)))
 grid()
 }

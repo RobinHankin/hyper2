@@ -530,5 +530,44 @@ filled.contour(r_true_values, x_true_values, br, xlab="r", ylab="x", main="Bias(
 filled.contour(r_true_values, x_true_values, bx, xlab="r", ylab="x", main="Bias(x)")
 filled.contour(r_true_values, x_true_values, mr, xlab="r", ylab="x", main="MSE(r)" )
 filled.contour(r_true_values, x_true_values, mx, xlab="r", ylab="x", main="MSE(x)" )
+
+f <- function(...){
+    filled.contour(r_true_values, x_true_values, br,
+                   xlab="r", ylab="x",
+                   main="SHOULD BE FOUR SUBPLOTS")
+}
+f()
+
+pdf(file="bias_MSE_grid.pdf")
+f()
+dev.off()
 ```
 
+
+```{r foursubplots}
+library("cowplot")
+f <- function(...){
+cowplot::plot_grid(
+~filled.contour(r_true_values/N, x_true_values, br,
+               xlab = "s", ylab = "x",
+               main = "bias(r)"),
+
+~filled.contour(r_true_values/N, x_true_values, bx,
+               xlab = "s", ylab = "x",
+               main = "bias(x)"),
+
+~filled.contour(r_true_values/N, x_true_values, mr,
+               xlab = "s", ylab = "x",
+               main = "MSE(r)"),
+
+~filled.contour(r_true_values, x_true_values, mx,
+               xlab = "s", ylab = "x",
+               main = "MSE(x)")
+)
+}
+f()
+pdf(file = "bias_MSE_xr.pdf",width=12,height=12)
+f()
+dev.off()
+
+```
