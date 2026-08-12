@@ -518,8 +518,10 @@ competitor is 70\% the strength of the next best one.
 \end{centering}
 \end{figure}
 
-We may go further.  Suppose we observe the focal competitor finishing
-in $37^\mathrm{th}$ place, in an age-appropriate field of 57.  Is this
+We may go further.  Suppose the focal competitor reflects on his
+performance in table \ref{parkrunresultstable} and undergoes some
+fitness training.  On his return, he competes again, finishing in
+$37^\mathrm{th}$ place, in an age-appropriate field of 57.  Is this
 result consistent with previous performances, or is it evidence for an
 increased fitness level?  Figure~\ref{parkruntable} shows the placing
 of the focal competitor, conditional on the estimated values of
@@ -543,8 +545,12 @@ Formula 1 racing is an important and prestigious motor sport
 \citep{codling2017,jenkins2010}.  In a typical season, ${\sim} 20$
 competitors race at ${\sim} 20$ venues and here we consider the 2023
 season (20 competitors) using Lewis Hamilton as the focal competitor.
-His results are shown in table~\ref{lewishamilton}; Qatar and the US
-are disregarded as he did not finish.
+His results are shown\footnote{The Qatar and US Grands Prix are
+disregarded as Hamilton retired and was disqualified respectively.
+The effects of such censoring are currently unclear, since retirement
+and disqualification are not modelled by the focal competitor
+approach, which is conditional on observing a finishing rank.}
+table~\ref{lewishamilton}.
 
 \begin{table}
   \centering
@@ -586,9 +592,10 @@ sampling with $10^5$ trials, we see that Hamilton's expected placing
 is about 5.34.  Further, the number of points scored is an important
 statistic describing competitors'
 performance~\citep{hankin2023_formula1points}.  Using
-$(25,18,15,12,10,8,6,4,2,1,1)$ [that is, 25 points for first place, 18
-  for second, and so on] we can estimate that Hamilton's expected
-points would be about 10.1 per race, potentially valuable information.
+$(25,18,15,12,10,8,6,4,2,1)$ [that is, 25 points for first place, 18
+  for second, and so on; we ignore points for sprint and fastest lap
+  points] we can estimate that Hamilton's expected points would be
+about 10.1 per race, potentially valuable information.
 
 \section{Conclusions and further work}
 
