@@ -440,22 +440,34 @@ cutoff <- sqrt((sqrt(5)-1)/2)
 
 biasplotter <- function(...){
 
-x <- seq(from=0.1, to=cutoff, len=100)
+x <- seq(from=0.1, to=1, len=100)
     plot(log(x), B1good(x), type="n",
          ylim=c(-1.5,1.5),xlim=c(log(0.1), 0),
-         xlab = "log(x)", ylab = "Bias" )
+         xlab = "log(x)", ylab = "Bias",
+         main = "Bias for the three-runner case")
 abline(v=log(cutoff),col='gray')
 points(log(x), B1good(x), col="black",type="l",lty=1)
 points(log(x), B2good(x), col="red",type="l",lty=1)
 points(log(x), B3good(x), col="blue",type="l",lty=1)
 
 x <- seq(from=cutoff, to=1, len=100)
-points(log(x), B1bad(x), col="black",type="l",lty=1)
-points(log(x), B2bad(x), col="red",type="l",lty=1)
-points(log(x), B3bad(x), col="blue",type="l",lty=1)
+points(log(x), B1bad(x), col="black", type="l", lty=2)
+points(log(x), B2bad(x), col="red"  , type="l", lty=2)
+points(log(x), B3bad(x), col="blue" , type="l", lty=2)
+
+    text(-1.1, 0.1, "Naive/MLE")
+    text(-1.1, 0.5, "Naive/MLE")
+    text(-1.1,-0.5, "Naive/MLE")
+
+
+    text(-0.1, 1.07,"Naive")
+    text(-0.1, 0.4, "MLE")
+    text(-0.1,-0.8, "Naive")
+    text(-0.1,-1.4, "MLE")
+
 legend("topleft",
        col = c("black", "red", "blue"),
-       lty = 1,
+       lty = c(1,1,1),
        legend = c("r=1", "r=2", "r=3"))
 }
 
