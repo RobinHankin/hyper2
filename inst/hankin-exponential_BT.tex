@@ -457,9 +457,14 @@ Table~\ref{results100insilico}, but with $(x,r)$ taking a grid of
 values.  We simply evaluate {\tt dmultinom(C, p, log=TRUE)} where
 ${\tt C}$ is our table of observed ranks, and {\tt p} obtained from
 each of our array of Tables, and pick out the one with highest
-probability.
+probability (Figure~\ref{bias_MSE_grid}).
 
-
+\begin{figure}[t]
+  \begin{centering}
+\includegraphics[width=4in]{bias_MSE_grid}  % bias_MSE.pdf produced by exp_grid.Rmd
+\caption{Caption here functions \label{bias_MSE_grid}, end}
+\end{centering}
+\end{figure}
 
 
 \section{Case study: Parkrun}
