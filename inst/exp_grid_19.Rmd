@@ -163,7 +163,7 @@ allX <- function(no_of_competitors, no_of_races, true_x){
 ```{r makeallX19, cache=TRUE}
 allX19 <- allX(
           no_of_competitors = N,
-          no_of_races = 500,
+          no_of_races = 100000,
           true_x = seq(from=0.1, to=0.9, by=0.1)
 	  )
 ```
@@ -500,7 +500,7 @@ for(i in seq_len(nrow(design_matrix))){
     r_true <- design_matrix[i,1]
     x_true <- design_matrix[i,2]
     jj <-
-        makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19,
+        makemaxliketable(n=5000, nobs=10, no_of_competitors=N, allX=allX19,
                          r_true = r_true,
                          x_true = x_true
                          )
