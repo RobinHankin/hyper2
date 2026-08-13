@@ -20,7 +20,7 @@ knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2
 
 To cite the `hyper2` package in publications, please use
 @hankin2017_rmd.  Here we consider the `rego` dataset drawn from the
-European Union, as analysed in the `rSRD` package:
+European Union, as analysed in the `rSRD` package [@staudacher2026]:
 
 ```{r readiconstable}
 jj  <- as.matrix(read.table("rego.txt",header=TRUE))[1:16,]
