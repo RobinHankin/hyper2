@@ -1,0 +1,573 @@
+---
+title: "THIS IS THE SAME AS EXP_GRID.RMD BUT WITH 19 COMPETITORS"
+author: "Robin Hankin"
+date: "2025-04-02"
+output: html_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("hyper2")
+library("stringr")
+library("partitions")
+library("magrittr")
+```
+
+<font size="1">
+(takes maybe twenty minutes to run without cache with $N=9$)
+</font>
+
+First we define `N`, the number of competitors.  This is used
+consistently in the whole Rmd file, except for the first few bits
+where I hard-code five or 11 competitors for ease of exposition.  In
+principle, the Rmd file should process whatever the value of `N`.
+
+```{r defineN}
+N <- 19  # number of competitors
+```
+
+
+Now we define `BT()` which specifies Bradley-Terry strengths $\alpha x^i$:
+
+```{r defineBT}
+BT <- function(n, x){
+    out <- x^(0:(n-1))
+    if(x != 1){
+        out <- out*(1-x)/(1-x^n)
+    } else {
+        out <- out/n
+    }
+    names(out) <- str_pad(1:n, width=ceiling(log10(n)), pad = "0")
+    out
+}
+BT(4,0.5)
+sum(BT(4,0.5))
+```
+
+We will consider $N=9$, $x=0.5$, $r=4$ and make repeated observations:
+
+
+```{r showtabulate}
+makeracetable <- function(no_of_races, no_of_competitors, x){
+    t(replicate(no_of_races,
+                as.numeric(rrace(BT(no_of_competitors, x)))))
+}
+
+makeracetable(no_of_races=10, no_of_competitors=5, x=0.7)
+```
+
+
+```{r, label=definegetonecompetitor}
+get_one_competitor <- function(racetable, competitor){
+    jj <- apply(racetable, 1, function(x){which(x==competitor)})
+    tabulate(jj, ncol(racetable))
+}
+```
+
+
+```{r, label=exampleracetable, cache=TRUE}
+X <- makeracetable(1e2,11,0.7)  # usi
+get_one_competitor(X,4)
+get_one_competitor(X,11)
+
+rbind(
+get_one_competitor(X,1) ,
+get_one_competitor(X,2) ,
+get_one_competitor(X,9) ,
+get_one_competitor(X,10)
+)
+
+t(sapply(seq_len(11),function(i){get_one_competitor(X,i)}))
+```
+
+
+OK now to put above code in to functional form:
+
+```{r funcformdef}
+get_all_competitors <- function(no_of_races, no_of_competitors, x){
+    X <- makeracetable(no_of_races=no_of_races, no_of_competitors=no_of_competitors, x=x)
+    out <- t(sapply(seq_len(no_of_competitors),function(i){get_one_competitor(X,i)}))
+    dimnames(out) <- list(
+        true_rank = paste("r_", seq_len(no_of_competitors), sep=""),
+        observed_rank = paste("c_", seq_len(no_of_competitors), sep=""))
+    return(out/no_of_races)
+}
+```
+
+Now use it:
+
+```{r useit, cache=TRUE}
+get_all_competitors(100, N, 0.5)
+```
+
+Above, we see from the first line that, with a sample of 100 races,
+the top competitor comes first with (estimated) probability about
+0.XXXX, second with probability abot 0.XXX, and so on, coming fifth with
+probability 0.XXXXX
+
+```{r useit09, cache=TRUE}
+get_all_competitors(100, N, 0.99)
+```
+
+Above, wiht $r=0.99$, all competitors have approximately the same true
+BT strength [viz $1,0.99,0.99^2,\ldots, 0.99^9\simeq 0.913$].  We see
+a more uniform spread of observations.  Looking at the top row we see
+that competitor 1 came first (`c1`) and ninth (`c9`) with about the
+same probability.  Now we can use $r=0.1$:
+
+```{r useit01, cache=TRUE}
+get_all_competitors(100, N, 0.1)
+```
+
+Above, each competitor is ten times as good as the next one.  We see
+underdispersed results: competitor $i$ comes $i^\mathrm{th}$ with a
+high probability.
+
+What we need to do now is a "meaningful grid".  This is somewhat
+computationally intensive.
+
+
+```{r definegrid}
+no_of_races <- 100
+no_of_competitors <- N
+
+true_x <- seq(from=0.1, by=0.1, to=0.9)
+```
+
+First, we combine a whole bunch of X matrices together:
+
+```{r defineallX}
+allX <- function(no_of_competitors, no_of_races, true_x){
+    out <- NULL
+    for(i in seq_along(true_x)){
+        out <- rbind(out,
+                     cbind(
+                         true_x[i],
+                         seq_len(no_of_competitors),
+                         get_all_competitors(
+			 no_of_races = no_of_races,
+			 no_of_competitors = no_of_competitors,
+			 true_x[i])
+                     )
+                     )
+    }
+    rownames(out) <- NULL
+    jj <- colnames(out)
+    jj[1:2] <- c("x","r")
+    colnames(out) <- jj
+    return(out)
+}
+```
+
+```{r makeallX19, cache=TRUE}
+allX19 <- allX(
+          no_of_competitors = N,
+          no_of_races = 500,
+          true_x = seq(from=0.1, to=0.9, by=0.1)
+	  )
+```
+
+```{r}
+head(allX19)
+allX19[seq(from=round(nrow(allX19)/2 - 5), to=round(nrow(allX19)/2 + 5)),]
+tail(allX19)
+```
+
+Now some observations:
+
+
+```{r defmakeobs}
+make_obs <- function(no_of_observations, no_of_competitors, r_true, x_true){
+    kk <- makeracetable(no_of_races = no_of_observations, no_of_competitors = no_of_competitors, x = x_true)
+    obs <- tabulate(apply(kk,1,function(o){which(o == r_true)}), nbins=no_of_competitors)
+    return(obs)
+}
+```
+
+```{r use_make_obs, cache=TRUE}
+make_obs(no_of_observations=20, no_of_competitors=N, x_true = 0.7, r_true = 6)
+make_obs(no_of_observations=20, no_of_competitors=N, x_true = 0.7, r_true = 9)
+make_obs(no_of_observations=20, no_of_competitors=N, x_true = 0.1, r_true = 6)
+```
+
+Above, we see vectors of length 9 (because we have $N=9$ competitors,
+argument `no_of_competitors`) with elements adding to 20 (because we
+have 20 races, argument `no_of_observations`).  The next step is to
+extract from such vectors the bias and mean square error)
+
+
+```{r tableev, cache=TRUE}
+makemaxliketable <- function(n, nobs, no_of_competitors, allX, r_true, x_true){
+
+    maxlike <- function(obs){
+        support <- function(i){dmultinom(obs, prob=allX[i, -(1:2)], log=TRUE)}
+        p <- sapply(seq_len(nrow(allX)), support)
+        allX[which.max(p), 1:2]
+    }
+
+    evaluate <- matrix(NA,n,2)
+    for(i in seq_len(n)){
+        obs <- make_obs(no_of_observations=nobs, no_of_competitors=no_of_competitors, x_true=x_true, r_true=r_true)
+        evaluate[i,] <- maxlike(obs)
+    }
+    return(table(x=evaluate[,1], r=evaluate[,2]))
+}
+```
+
+
+```{r label=definemean}
+biasx <- function(liketable, x_true){
+    values <- as.numeric(rownames(liketable))
+    probs <- rowSums(liketable) / sum(liketable) # sum(probs) == 1
+    sum(probs*(values - x_true))
+}
+
+biasr <- function(liketable, r_true){
+    values <- as.numeric(colnames(liketable))
+    probs <- colSums(liketable) / sum(liketable) # sum(probs) == 1
+    sum(probs*(values - r_true))
+
+}
+
+msex <- function(liketable, x_true){
+    values <- as.numeric(rownames(liketable))
+    probs <- rowSums(liketable) / sum(liketable) # sum(probs) == 1
+    sum(probs*(values - x_true)^2)
+}
+
+mser <- function(liketable, r_true){
+    values <- as.numeric(colnames(liketable))
+    probs <- colSums(liketable) / sum(liketable) # sum(probs) == 1
+    sum(probs*(values - r_true)^2)
+}
+```
+
+Now we will illustrate `makemaxliketable()` with some sensible values:
+
+```{r label=usebias1000, cache=TRUE}
+(jj <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.8))
+c(
+bx = biasx(jj, x_true = 0.8),
+br = biasr(jj, r_true = 4),
+Mx = msex(jj, x_true = 0.8),
+Mr = mser(jj, r_true = 4)
+)
+```
+
+```{r label=usebias1000a, cache=TRUE}
+jj <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.8)
+c(
+bx = biasx(jj, x_true = 0.8),
+br = biasr(jj, r_true = 4),
+Mx = msex(jj, x_true = 0.8),
+Mr = mser(jj, r_true = 4)
+)
+```
+
+```{r label=usebias1000b, cache=TRUE}
+jj <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.8)
+c(
+bx = biasx(jj, x_true = 0.8),
+br = biasr(jj, r_true = 4),
+Mx = msex(jj, x_true = 0.8),
+Mr = mser(jj, r_true = 4)
+)
+```
+
+Now try $n=10000$ trials, hopefully a bit more stable:
+
+```{r label=usebias, cache=TRUE}
+jj <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.8)
+c(
+bx = biasx(jj, x_true = 0.8),
+br = biasr(jj, r_true = 4),
+Mx = msex(jj, x_true = 0.8),
+Mr = mser(jj, r_true = 4)
+)
+```
+
+
+```{r label=usebias_repeated, cache=TRUE}
+jj <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.8)
+c(
+bx = biasx(jj, x_true = 0.8),
+br = biasr(jj, r_true = 4),
+Mx = msex(jj, x_true = 0.8),
+Mr = mser(jj, r_true = 4)
+)
+```
+
+```{r label=usebias_repeated2, cache=TRUE}
+jj <- makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.8)
+c(
+bx = biasx(jj, x_true = 0.8),
+br = biasr(jj, r_true = 4),
+Mx = msex(jj, x_true = 0.8),
+Mr = mser(jj, r_true = 4)
+)
+```
+
+
+Above we see a small negative bias in $x$ of about -0.053,
+significantly different from zero], effectively zero bias in $r$, a
+relatively small MSE for $x$ of about 0.021 and a larger MSE for $r$
+of about 2.97.  In this case we have $N=9$ competitors, make 10
+observations [that is, have the 9 competitors run 10 races]; and
+repeat this many times (here $n=10000$) to stabilize the estimates.
+
+We can try upping the observations to 100 and see if that reduces the
+estimation errors:
+
+```{r label=usebias100, cache=TRUE}
+(jj <- makemaxliketable(n=10000, nobs=100, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.8))
+c(
+bx = biasx(jj, x_true = 0.8),
+br = biasr(jj, r_true = 4),
+Mx = msex(jj, x_true = 0.8),
+Mr = mser(jj, r_true = 4)
+)
+```
+
+
+
+
+### Vary nothing
+
+Now I will systemize the above; and again just do the same thing a few
+times to gauge the variability in the system:
+
+
+```{r varynothingTH, cache=TRUE}
+jj1 <- makemaxliketable(n=300, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7)
+jj2 <- makemaxliketable(n=300, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7)
+jj3 <- makemaxliketable(n=300, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7)
+jj4 <- makemaxliketable(n=300, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7)
+jj5 <- makemaxliketable(n=300, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7)
+jj6 <- makemaxliketable(n=300, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7)
+jj7 <- makemaxliketable(n=300, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7)
+jj8 <- makemaxliketable(n=300, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7)
+jj9 <- makemaxliketable(n=300, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7)
+jj1
+
+```{r varynothingbiasmseTH, cache=FALSE}
+fish <- rbind(
+c(biasr(jj1, 4), biasx(jj1, 0.7), mser(jj1, 4), msex(jj1, 0.7)),
+c(biasr(jj2, 4), biasx(jj2, 0.7), mser(jj2, 4), msex(jj2, 0.7)),
+c(biasr(jj3, 4), biasx(jj3, 0.7), mser(jj3, 4), msex(jj3, 0.7)),
+c(biasr(jj4, 4), biasx(jj4, 0.7), mser(jj4, 4), msex(jj4, 0.7)),
+c(biasr(jj5, 4), biasx(jj5, 0.7), mser(jj5, 4), msex(jj5, 0.7)),
+c(biasr(jj6, 4), biasx(jj6, 0.7), mser(jj6, 4), msex(jj6, 0.7)),
+c(biasr(jj7, 4), biasx(jj7, 0.7), mser(jj7, 4), msex(jj7, 0.7)),
+c(biasr(jj8, 4), biasx(jj8, 0.7), mser(jj8, 4), msex(jj8, 0.7)),
+c(biasr(jj9, 4), biasx(jj9, 0.7), mser(jj9, 4), msex(jj9, 0.7))
+)
+colnames(fish) <- c("bias(r)", "bias(x)", "mse(r)", "mse(x)")
+```
+
+```{r}
+fish
+c(mean(fish[,1]), sd(fish[,1])/sqrt(nrow(fish)))
+c(mean(fish[,2]), sd(fish[,2])/sqrt(nrow(fish)))
+c(mean(fish[,3]), sd(fish[,3])/sqrt(nrow(fish)))
+c(mean(fish[,4]), sd(fish[,4])/sqrt(nrow(fish)))
+```
+
+Above we have that the bias of $r$ has a standard deviation, given
+(approximately at least) by the standard error of the mean.
+
+
+
+### Vary `x_true`
+
+```{r execuA, cache=TRUE}
+vxt <- list(
+makemaxliketable(n=400, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.1),
+makemaxliketable(n=400, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.2),
+makemaxliketable(n=400, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.3),
+makemaxliketable(n=400, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.4),
+makemaxliketable(n=400, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.5),
+makemaxliketable(n=400, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.6),
+makemaxliketable(n=400, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7),
+makemaxliketable(n=400, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.8),
+makemaxliketable(n=400, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.9))
+```
+
+
+```{r}
+jj <- rbind(
+c(biasr(vxt[[1]], 4), biasx(vxt[[1]], 0.1), mser(vxt[[1]], 4), msex(vxt[[1]], 0.1)),
+c(biasr(vxt[[2]], 4), biasx(vxt[[2]], 0.2), mser(vxt[[2]], 4), msex(vxt[[2]], 0.2)),
+c(biasr(vxt[[3]], 4), biasx(vxt[[3]], 0.3), mser(vxt[[3]], 4), msex(vxt[[3]], 0.3)),
+c(biasr(vxt[[4]], 4), biasx(vxt[[4]], 0.4), mser(vxt[[4]], 4), msex(vxt[[4]], 0.4)),
+c(biasr(vxt[[5]], 4), biasx(vxt[[5]], 0.5), mser(vxt[[5]], 4), msex(vxt[[5]], 0.5)),
+c(biasr(vxt[[6]], 4), biasx(vxt[[6]], 0.6), mser(vxt[[6]], 4), msex(vxt[[6]], 0.6)),
+c(biasr(vxt[[7]], 4), biasx(vxt[[7]], 0.7), mser(vxt[[7]], 4), msex(vxt[[7]], 0.7)),
+c(biasr(vxt[[8]], 4), biasx(vxt[[8]], 0.8), mser(vxt[[8]], 4), msex(vxt[[8]], 0.8)),
+c(biasr(vxt[[9]], 4), biasx(vxt[[9]], 0.9), mser(vxt[[9]], 4), msex(vxt[[9]], 0.9))
+)
+colnames(jj) <- c("bias(r)","bias(x)", "mse(r)", "mse(x)")
+rownames(jj) <- seq(from=0.1,to=0.9,by=0.1)
+jj
+matplot(jj,type="b")
+cbind(`bias(r)`=jj[,1], `SE(bias)` = jj[,3]/sqrt(4000))
+cbind(`bias(x)`=jj[,2], `SE(bias)` = jj[,4]/sqrt(4000))
+```
+
+
+Above we see  that varying `x_true` from 0.1 to 0.9 increases the
+variance of $r_\text{estimated}$
+
+### Vary `r_true`
+
+```{r execuB, cache=TRUE}
+VR <- list(
+makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 1, x_true = 0.7),
+makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 2, x_true = 0.7),
+makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 3, x_true = 0.7),
+makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7),
+makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 5, x_true = 0.7),
+makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 6, x_true = 0.7),
+makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 7, x_true = 0.7),
+makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 8, x_true = 0.7),
+makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19, r_true = 9, x_true = 0.7)
+)
+```
+
+```{r showrvary, cache=TRUE}
+jj <- rbind(
+c(biasr(VR[[1]], 1), biasx(VR[[1]], 0.7), mser(VR[[1]], 1), msex(VR[[1]], 0.7)),
+c(biasr(VR[[2]], 2), biasx(VR[[2]], 0.7), mser(VR[[2]], 2), msex(VR[[2]], 0.7)),
+c(biasr(VR[[3]], 3), biasx(VR[[3]], 0.7), mser(VR[[3]], 3), msex(VR[[3]], 0.7)),
+c(biasr(VR[[4]], 4), biasx(VR[[4]], 0.7), mser(VR[[4]], 4), msex(VR[[4]], 0.7)),
+c(biasr(VR[[5]], 5), biasx(VR[[5]], 0.7), mser(VR[[5]], 5), msex(VR[[5]], 0.7)),
+c(biasr(VR[[6]], 6), biasx(VR[[6]], 0.7), mser(VR[[6]], 6), msex(VR[[6]], 0.7)),
+c(biasr(VR[[7]], 7), biasx(VR[[7]], 0.7), mser(VR[[7]], 7), msex(VR[[7]], 0.7)),
+c(biasr(VR[[8]], 8), biasx(VR[[8]], 0.7), mser(VR[[8]], 8), msex(VR[[8]], 0.7)),
+c(biasr(VR[[9]], 9), biasx(VR[[9]], 0.7), mser(VR[[9]], 9), msex(VR[[9]], 0.7))
+)
+colnames(jj) <- c("bias(r)","bias(x)", "mse(r)", "mse(x)")
+rownames(jj) <- seq(from=0.1,  to=0.9, by=0.1)
+jj
+matplot(jj,type="b")
+cbind(`bias(r)`=jj[,1], `SE(bias)` = jj[,3]/sqrt(1000))
+cbind(`bias(x)`=jj[,2], `SE(bias)` = jj[,4]/sqrt(1000))
+```
+
+### Vary `nobs`
+
+
+```{r execuC, cache=TRUE}
+VN <- list(
+makemaxliketable(n=100, nobs= 10, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7),
+makemaxliketable(n=100, nobs= 20, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7),
+makemaxliketable(n=100, nobs= 50, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7),
+makemaxliketable(n=100, nobs=100, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7),
+makemaxliketable(n=100, nobs=200, no_of_competitors=N, allX=allX19, r_true = 4, x_true = 0.7)
+)
+```
+
+
+```{r execvarynobs, cache=TRUE}
+jj <- rbind(
+c(biasr(VN[[1]], 4), biasx(VN[[1]], 0.7), mser(VN[[1]], 4), msex(VN[[1]], 0.7)),
+c(biasr(VN[[2]], 4), biasx(VN[[2]], 0.7), mser(VN[[2]], 4), msex(VN[[2]], 0.7)),
+c(biasr(VN[[3]], 4), biasx(VN[[3]], 0.7), mser(VN[[3]], 4), msex(VN[[3]], 0.7)),
+c(biasr(VN[[4]], 4), biasx(VN[[4]], 0.7), mser(VN[[4]], 4), msex(VN[[4]], 0.7)),
+c(biasr(VN[[5]], 4), biasx(VN[[5]], 0.7), mser(VN[[5]], 4), msex(VN[[5]], 0.7))
+)
+colnames(jj) <- c("bias(r)","bias(x)", "mse(r)", "mse(x)")
+rownames(jj) <- c(10,20,50,100,200)
+jj
+matplot(jj,type="b")
+cbind(`bias(r)`=jj[,1], `SE(bias)` = jj[,3]/sqrt(1000))
+cbind(`bias(x)`=jj[,2], `SE(bias)` = jj[,4]/sqrt(1000))
+```
+
+
+
+# A  meaningful grid.
+
+Will keep $N$ fixed at 9 first.  And vary nobs. 
+
+
+```{r make_meaningful_grid, cache=TRUE}
+r_true_values <- 1:9
+x_true_values <- seq(from=0.1,to=0.9,by=0.1)
+design_matrix <- as.matrix(expand.grid(r_true=r_true_values, x_true = x_true_values))
+out <- matrix(-999,nrow(design_matrix),6)
+for(i in seq_len(nrow(design_matrix))){
+    r_true <- design_matrix[i,1]
+    x_true <- design_matrix[i,2]
+    jj <-
+        makemaxliketable(n=100, nobs=10, no_of_competitors=N, allX=allX19,
+                         r_true = r_true,
+                         x_true = x_true
+                         )
+    out[i,] <- 
+        c(
+            r_true, x_true,
+            biasr(jj, r_true), biasx(jj, x_true), mser(jj, r_true), msex(jj, x_true)
+        )
+    }
+colnames(out) <- c("r_true","x_true", "bias_r", "bias_x", "MSE_r", "MSE_x")
+```
+
+```{r show_meaningful_grid}
+head(out)
+tail(out)
+makemat <- function(i){
+    m <- matrix(out[,i],length(r_true_values),length(x_true_values))
+    rownames(m) <- r_true_values
+    colnames(m) <- x_true_values
+    return(m)
+}
+br <- makemat(3)
+bx <- makemat(4)
+mr <- makemat(5)
+mx <- makemat(6)
+filled.contour(r_true_values, x_true_values, br, xlab="r", ylab="x", main="Bias(r)")
+filled.contour(r_true_values, x_true_values, bx, xlab="r", ylab="x", main="Bias(x)")
+filled.contour(r_true_values, x_true_values, mr, xlab="r", ylab="x", main="MSE(r)" )
+filled.contour(r_true_values, x_true_values, mx, xlab="r", ylab="x", main="MSE(x)" )
+
+f <- function(...){
+    filled.contour(r_true_values, x_true_values, br,
+                   xlab="r", ylab="x",
+                   main="SHOULD BE FOUR SUBPLOTS")
+}
+f()
+
+pdf(file="bias_MSE_19.pdf")
+f()
+dev.off()
+```
+
+
+```{r foursubplots}
+library("cowplot")
+f <- function(...){
+cowplot::plot_grid(
+~filled.contour(r_true_values/N, x_true_values, br,
+               xlab = "s", ylab = "x",
+               main = "bias(r)"),
+
+~filled.contour(r_true_values/N, x_true_values, bx,
+               xlab = "s", ylab = "x",
+               main = "bias(x)"),
+
+~filled.contour(r_true_values/N, x_true_values, mr,
+               xlab = "s", ylab = "x",
+               main = "MSE(r)"),
+
+~filled.contour(r_true_values, x_true_values, mx,
+               xlab = "s", ylab = "x",
+               main = "MSE(x)")
+)
+}
+f()
+pdf(file = "bias_MSE_19.pdf",width=12,height=12)
+f()
+dev.off()
+
+```

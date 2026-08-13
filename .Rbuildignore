@@ -336,3 +336,5 @@ CITATION.cff
 ^inst/eurovision_collusion.Rmd$
 ^inst/audit_rd.R$
 ^inst/system_prompt.txt$
+^inst/exp_grid.Rmd$
+^inst/exp_grid_19.Rmd$
