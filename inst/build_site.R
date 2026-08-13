@@ -46,6 +46,7 @@ rmd_files <- list.files(
 
 # rmd_files <- rmd_files[-grep("advantage", rmd_files)]  # home_advantage.Rmd takes too long
   rmd_files <- rmd_files[-grep("exponential", rmd_files)]  # exponential_BT.Rmd takes too long
+  rmd_files <- rmd_files[-grep("exp_grid", rmd_files)]  # exponential_BT.Rmd takes too long
   rmd_files <- rmd_files[-grep("f1points", rmd_files)]  # f1points.Rmd reads rda files, does not work remotely
   rmd_files <- rmd_files[-grep("formula1", rmd_files)]  # formula1.Rmd takes too long
 # rmd_files <- rmd_files[-grep("global", rmd_files)]  # global_liveability_ranking.Rmd takes too long
