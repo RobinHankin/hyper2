@@ -28,15 +28,14 @@ trial(winners, players, val=1)
 }
 \details{
 
-
 Consider a competition between two disjoint sets of players,
 \eqn{A=\left\lbrace a_1,\ldots, a_n\right\rbrace}{omitted} and
 \eqn{B=\left\lbrace b_1,\ldots, b_m\right\rbrace}{omitted}.
 
 If \eqn{A} wins the likelihood function will be
-\eqn{\frac{a_1+\cdots+a_n}{a_1+\ldots+a_n+b_1+\ldots+b_m}} and if
+\eqn{\frac{a_1+\cdots+a_n}{a_1+\cdots+a_n+b_1+\cdots+b_m}} and if
 \eqn{B} wins the likelihood function will be
-\eqn{\frac{b_1+\cdots+b_m}{a_1+\ldots+a_n+b_1+\ldots+b_m}}.
+\eqn{\frac{b_1+\cdots+b_m}{a_1+\cdots+a_n+b_1+\cdots+b_m}}.
 
 We can represent a win for \eqn{A} with either \code{pick(A, c(A,B))} or
 \code{beats(A,B)}; or \code{pass(B, c(A,B))} or \code{loses(B,A)}
