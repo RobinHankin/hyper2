@@ -38,9 +38,9 @@ race(v, nonfinishers)
   and \code{a} third} 
 \item{nonfinishers}{A character vector with entries corresponding to
   competitors who did not finish.  Thus
-  \code{race(c("a","b"),c("p","q"))} means that the field is
-  \code{a,b,c,d}; \code{a} came first, \code{b} came second and \code{c}
-  and \code{d} did not finish}
+  \code{race(c("a","b"),c("c","d"))} means that the field is
+  \code{a,b,c,d}; \code{a} came first, \code{b} came second and \code{p}
+  and \code{q} did not finish}
 }
 \details{
 
