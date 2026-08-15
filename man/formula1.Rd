@@ -40,7 +40,7 @@ being places.  Thus looking at the first row, first column we see that
 Hamilton placed second in Austria.
 
 The package uses files like \code{inst/formula1_2017.txt} as primary
-sources.  These are generally copied from wikipedia, converted into
+sources.  These are generally copied from Wikipedia, converted into
 tab-separated clean seven bit ascii, and tidied up a little.  I have
 removed diacritics from names, so we see \dQuote{\code{Raikkonen}},
 \dQuote{\code{Perez}}, etc.  Also where distinct drivers with the same

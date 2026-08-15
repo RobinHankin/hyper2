@@ -23,7 +23,7 @@
 
   \code{read.table(system.file("powerboat.txt",package="hyper2"))}
 
-  The dataset used here corrects an apparent typo in the wikipedia table
+  The dataset used here corrects an apparent typo in the Wikipedia table
   (see github issue 37).
 
 \generatedby{inst/powerboat.Rmd}{powerboat.rda}{https://robinhankin.github.io/hyper2/powerboat.html}
