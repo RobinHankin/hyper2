@@ -52,8 +52,7 @@ Generally, return a support function
 suppfun(pentathlon_table)
 suppfun(rrank(10, p = (7:1)/28))
 suppfun(letters)
-suppfun(c(c = 2, b = 1, a = 3))
-
-
+suppfun(c(c = 2, b = 1, a = 3))  # 'c': second, 'b': first, 'a': third
+suppfun(letters[1:3]) + suppfun(letters[2:4]) # a > b > c ; b > c > d
 
 }
