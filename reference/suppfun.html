@@ -202,10 +202,11 @@ A list of rendered HTML documentation may be found
 <span class="r-out co"><span class="r-pr">#&gt;</span> z)^-1 * s * (s + t + u + v + w + x + y + z)^-1 * t * (t + u + v + w + x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> + y + z)^-1 * u * (u + v + w + x + y + z)^-1 * v * (v + w + x + y +</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> z)^-1 * w * (w + x + y + z)^-1 * x * (x + y + z)^-1 * y * (y + z)^-1)</span>
-<span class="r-in"><span><span class="fu">suppfun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>c <span class="op">=</span> <span class="fl">2</span>, b <span class="op">=</span> <span class="fl">1</span>, a <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">suppfun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>c <span class="op">=</span> <span class="fl">2</span>, b <span class="op">=</span> <span class="fl">1</span>, a <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span>  <span class="co"># 'c': second, 'b': first, 'a': third</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log((a + b + c)^-1 * (a + c)^-1 * b * c)</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">suppfun</span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fu">suppfun</span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="co"># a &gt; b &gt; c ; b &gt; c &gt; d</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log( a * (a + b + c)^-1 * b^2 * (b + c)^-1 * (b + c + d)^-1 * c * (c +</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> d)^-1)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
