@@ -208,7 +208,6 @@ samep.test(kka_3draws,c("Karpov_draw","Kasparov_draw","Anand_draw"))
 Now allow each player to have distinct white strength.  We create
 `kka_3whites`, again using temporary variable `H` to save typing:
 
-
 ```{r kka3whitedef}
 H <- hyper2()
 
