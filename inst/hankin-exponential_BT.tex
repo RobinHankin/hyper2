@@ -457,13 +457,21 @@ Table~\ref{results100insilico}, but with $(x,r)$ taking a grid of
 values.  We simply evaluate {\tt dmultinom(C, p, log=TRUE)} where
 ${\tt C}$ is our table of observed ranks, and {\tt p} obtained from
 each of our array of Tables, and pick out the one with highest
-probability (Figure~\ref{bias_MSE_xr}).
+probability (Figures~\ref{bias_MSE_xr} and~\ref{bias_MSE_19}).
 
 \begin{figure}[t]
   \begin{centering}
 \includegraphics[width=4in]{bias_MSE_xr}  % bias_MSE.pdf produced by exp_grid.Rmd
 \caption{Bias (top row) and mean square error (bottom row) for
   $\hat{r}$ and $\hat{x}$; 10 observations \label{bias_MSE_xr}}
+\end{centering}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{centering}
+\includegraphics[width=4in]{bias_MSE_19}  % bias_MSE.pdf produced by exp_grid_19.Rmd
+\caption{Bias (top)\label{bias_MSE_19} and MSE (bottom) for the maximum
+  likelihood estimator for $r$: 19 competitors}
 \end{centering}
 \end{figure}
 
