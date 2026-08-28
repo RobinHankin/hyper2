@@ -12,6 +12,7 @@ library("hyper2")
 library("stringr")
 library("partitions")
 library("magrittr")
+library("gridGraphics")
 ```
 
 <font size="1">
