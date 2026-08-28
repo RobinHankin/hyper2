@@ -560,7 +560,7 @@ cowplot::plot_grid(
                xlab = "s", ylab = "x",
                main = "MSE(r)"),
 
-~filled.contour(r_true_values, x_true_values, mx,
+~filled.contour(r_true_values/N, x_true_values, mx,
                xlab = "s", ylab = "x",
                main = "MSE(x)")
 )
