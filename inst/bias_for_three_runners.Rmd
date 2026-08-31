@@ -540,52 +540,81 @@ r_\text{true} &=& 3\longrightarrow MSE = 4-\frac{1}{1+x}-\frac{1}{1+x^2}-2\frac{
 
 # Plots
 
+In the R chunk below, the twelve functions in the `B1good_MLE()`
+series are logically named.  The initial letters `B` and `M` refer to
+bias and Mean square error MSE respectively.  The number, either `1`,
+`2`, or `3`, refers to the observation $r_\text{obs}$; and `good` or
+`bad` refers to either $x<\beta$ (the good case) or $x>\beta$ (the bad
+case).  The `MLE` or `naive` refers to whether the maximum likelihood
+estimator or the naive estimator is used.  Thus `B1good_MLE()` is the
+bias, of the maximum likelihood estimator, when $r_\text{obs}=1$, in
+the good case $x<\beta$; and `M3bad_naive()` is the mean square error
+of the Naive estimator, when $r_\text{obs}=3$, in the bad case
+$x>\beta$.
+
 ```{r}
 x <- seq(from=1,to=0.01,len=100)
-B1good  <- function(x){2 - 1/(1+x) - 1/(1+x^2)}
-B2good  <- function(x){x*0}
-B3good  <- function(x){1/(1+x) + 1/(1+x^2) - 2}
+B1good_MLE  <- function(x){2 - 1/(1+x) - 1/(1+x^2)}
+B2good_MLE  <- function(x){x*0}
+B3good_MLE  <- function(x){1/(1+x) + 1/(1+x^2) - 2}
 
-B1bad <- function(x){2 - 2/(1+x) - 2/(1+x^2)+ 2/(1+x+x^2)}
-B2bad <- function(x){x*0}
-B3bad <- function(x){2/(1+x) + 2/(1+x^2) - 2*(1+x)/(1+x+x^2) - 2}
+B1bad_MLE <- function(x){2 - 2/(1+x) - 2/(1+x^2)+ 2/(1+x+x^2)}
+B2bad_MLE <- function(x){2*x/(1+x+x^2)}
+B3bad_MLE <- function(x){2/(1+x) + 2/(1+x^2) - 2*(1+x)/(1+x+x^2) - 2}
 
-M1good  <- function(x){4 - 3/(1+x) - 3/(1+x^2) + 2/(1+x+x^2)}
-M2good  <- function(x){2*x/(1+x+x^2)}
-M3good  <- function(x){4 - 1/(1+x) -1/(1+x^2) - 2*(1+x)/(1+x+x^2)}
+M1good_MLE  <- function(x){4 - 3/(1+x) - 3/(1+x^2) + 2/(1+x+x^2)}
+M2good_MLE  <- function(x){2*x/(1+x+x^2)}
+M3good_MLE  <- function(x){4 - 1/(1+x) -1/(1+x^2) - 2*(1+x)/(1+x+x^2)}
 
-M1bad <- function(x){4*(1- 1/(1+x) - 1/(1+x^2) + 1/(1+x+x^2))}
-M2bad <- function(x){x*0 + 1}
-M3bad <- function(x){4*(1- 1/(1+x) - 1/(1+x^2) + (1+x)/(1+x+x^2))}
+M1bad_MLE <- function(x){4*(1- 1/(1+x) - 1/(1+x^2) + 1/(1+x+x^2))}
+M2bad_MLE <- function(x){x*0 + 1}
+M3bad_MLE <- function(x){4*(1- 1/(1+x) - 1/(1+x^2) + (1+x)/(1+x+x^2))}
+
+
+B1good_naive <- B1good_MLE
+B2good_naive <- B2good_MLE
+B3good_naive <- B3good_MLE
+
+M1good_naive <- M1good_MLE
+M2good_naive <- M2good_MLE
+M3good_naive <- M3good_MLE
+
+B1bad_naive <- function(x){2 - 1/(1+x) - 1/(1+x^2)}
+B2bad_naive <- function(x){x*0}
+B3bad_naive <- function(x){1/(1+x)+1(1+x^2)-2}
+
+M1bad_naive <- function(x){4 - 3/(1+x) -3/(1+x^2) +2/(1+x+x^2)}
+M2bad_naive <- function(x){2*x/(1+x+x^2)}
+M3bad_naive <- function(x){4 - 1/(1+x) -1/(1+x^2) -2*(1+x)/(1+x+x^2)}
 
 cutoff <- sqrt((sqrt(5)-1)/2)
 
 biasplotter <- function(...){
 
-x <- seq(from=0.1, to=1, len=100)
-    plot(log(x), B1good(x), type="n",
-         ylim=c(-1.5,1.5),xlim=c(log(0.1), 0),
+xgood <- seq(from=0.1, to=cutoff, len=100)
+    plot(log(x), B1good_MLE(x), type="n",
+         ylim=c(-1.5, 1.5),xlim=c(log(0.1), 0),
          xlab = "log(x)", ylab = "Bias",
          main = "Bias for the three-runner case")
 abline(v=log(cutoff),col='gray')
-points(log(x), B1good(x), col="black",type="l",lty=1)
-points(log(x), B2good(x), col="red",type="l",lty=1)
-points(log(x), B3good(x), col="blue",type="l",lty=1)
+points(log(xgood), B1good_MLE(xgood), col="black",type="l",lty=1)
+points(log(xgood), B2good_MLE(xgood), col="red"  ,type="l",lty=1)
+points(log(xgood), B3good_MLE(xgood), col="blue" ,type="l",lty=1)
 
-x <- seq(from=cutoff, to=1, len=100)
-points(log(x), B1bad(x), col="black", type="l", lty=2)
-points(log(x), B2bad(x), col="red"  , type="l", lty=2)
-points(log(x), B3bad(x), col="blue" , type="l", lty=2)
-
-    text(-1.1, 0.1, "Naive/MLE")
-    text(-1.1, 0.5, "Naive/MLE")
-    text(-1.1,-0.5, "Naive/MLE")
+points(log(xgood), B1good_naive(xgood), col="black",type="l",lty=2)
+points(log(xgood), B2good_naive(xgood), col="red"  ,type="l",lty=2)
+points(log(xgood), B3good_naive(xgood), col="blue" ,type="l",lty=2)
 
 
-    text(-0.1, 1.07,"Naive")
-    text(-0.1, 0.4, "MLE")
-    text(-0.1,-0.8, "Naive")
-    text(-0.1,-1.4, "MLE")
+xbad <- seq(from=cutoff, to=1, len=100)
+points(log(xbad), B1bad_MLE(xbad), col="black", type="l", lty=1)
+points(log(xbad), B2bad_MLE(xbad), col="red"  , type="l", lty=1)
+points(log(xbad), B3bad_MLE(xbad), col="blue" , type="l", lty=1)
+
+    text(-1.1, 0.1, "MLE")
+    text(-1.1, 0.5, "MLE")
+    text(-1.1,-0.5, "MLE")
+
 
 legend("topleft",
        col = c("black", "red", "blue"),
@@ -600,20 +629,20 @@ dev.off()
 
 MSEplotter <- function(...){
 x <- seq(from=0.1, to=cutoff, len=100)
-plot(log(x), M1good(x),type="n",
+plot(log(x), M1good_MLE(x),type="n",
      ylim=c(0,3),xlim=c(log(0.1), 0),
      xlab="log(x)", ylab="MSE")
 abline(v=log(cutoff),col='gray')
 
-points(log(x), M1good(x), col="black",type="l",lty=1)
-points(log(x), M2good(x), col="red",type="l",lty=1)
-points(log(x), M3good(x), col="blue",type="l",lty=1)
+points(log(x), M1good_MLE(x), col="black",type="l",lty=1)
+points(log(x), M2good_MLE(x), col="red",type="l",lty=1)
+points(log(x), M3good_MLE(x), col="blue",type="l",lty=1)
 
 x <- seq(from=cutoff, to=1, len=100)
 
-points(log(x), M1bad(x), col="black",type="l",lty=1)
-points(log(x), M2bad(x), col="red",type="l",lty=1)
-points(log(x), M3bad(x), col="blue",type="l",lty=1)
+points(log(x), M1bad_MLE(x), col="black",type="l",lty=1)
+points(log(x), M2bad_MLE(x), col="red",type="l",lty=1)
+points(log(x), M3bad_MLE(x), col="blue",type="l",lty=1)
 
 legend("topleft",
        col = c("black", "red", "blue"),
