@@ -668,13 +668,22 @@ MSEplotter <- function(...){
     
     xbad <- seq(from=cutoff, to=1, len=100)
     
-    points(log(xbad), M1bad_MLE(xbad), col="black",type="l",lty=1)
-    points(log(xbad), M2bad_MLE(xbad), col="red"  ,type="l",lty=1)
-    points(log(xbad), M3bad_MLE(xbad), col="blue" ,type="l",lty=1)
+    points(log(xbad), M1bad_naive(xbad), col="black",type="l",lty=1)
+    points(log(xbad), M2bad_naive(xbad), col="red"  ,type="l",lty=1)
+    points(log(xbad), M3bad_naive(xbad), col="blue" ,type="l",lty=1)
+
+    points(log(xbad), M1bad_MLE(xbad), col="black",type="l",lty=2)
+    points(log(xbad), M2bad_MLE(xbad), col="red"  ,type="l",lty=2)
+    points(log(xbad), M3bad_MLE(xbad), col="blue" ,type="l",lty=2)
     
-    points(log(xbad), M1bad_naive(xbad), col="black",type="l",lty=2)
-    points(log(xbad), M2bad_naive(xbad), col="red"  ,type="l",lty=2)
-    points(log(xbad), M3bad_naive(xbad), col="blue" ,type="l",lty=2)
+    
+    text(-1.1, 1, "MLE/Naive")
+
+    text(-0.1,  2.3, "MLE")
+    text(-0.1,  1.3, "MLE")
+    text(-0.1,  0.9, "MLE")
+
+
     
     legend("topleft",
            col = c("black", "red", "blue"),
@@ -695,12 +704,7 @@ MSEplotter()
 dev.off()
 ```
 
-
 ## Summarising
-
-
-
-
 
 ## References {-}
 
