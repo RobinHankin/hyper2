@@ -189,7 +189,7 @@ r_\text{true} &=& 2
 1\times\left(\frac{x}{1+x+x^2}                        \right)  +
 2\times\left(1-\frac{2x}{1+x+x^2}                     \right)  + 
 3\times\left(\frac{x}{1+x+x^2}                        \right)\\ 
-&=& 2 (!)
+&=& 2 \qquad\mbox{UNBIASED}
 \end{eqnarray}
 
 ### MSE for $r_\text{true}=2$:
@@ -205,7 +205,8 @@ r_\text{true} &=& 2
 \left(\frac{x}{1+x+x^2}\right)  + 
 \left(\frac{x}{1+x+x^2}\right)\\
 &=& \frac{2x}{1+x+x^2}\\
-&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$}
+&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$}\\
+&\longrightarrow&\frac{2}{3}\qquad\mbox{as $x\longrightarrow 1$}
 \end{eqnarray}
 
 
@@ -220,7 +221,9 @@ r_\text{true} &=& 3
 1\times\left(\frac{x^2}{1+x+x^2}                        \right)  +
 2\times\left(\frac{x+2x^3+x^4}{(1+x)(1+x^2)(1+x+x^2)}   \right)  + 
 3\times\left(\frac{1+x+2x^2  }{(1+x)(1+x^2)(1+x+x^2)}   \right)\\
-&=& 1+\frac{1}{1+x} + \frac{1}{1+x^2}
+&=& 1+\frac{1}{1+x} + \frac{1}{1+x^2}\\
+&\longrightarrow &3\qquad\mbox{as $x \longrightarrow 0$}\\
+&\longrightarrow &2\qquad\mbox{as $x \longrightarrow 1$}
 \end{eqnarray}
 
 
@@ -315,10 +318,11 @@ r_\text{true} &=& 1
 \underbrace{3\times\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)}_{r_\text{obs}=\hat{r}=3}\\
 &=& 3-\frac{2}{1+x} - \frac{2}{1+x^2}+\frac{2}{1+x+x^2}\\
 &\longrightarrow& 1\qquad\mbox{as $x\longrightarrow 0$ [but this does
-not matter]}
+not matter]}\\
+&\longrightarrow& \frac{5}{3}\qquad\mbox{as $x\longrightarrow 1$}
 \end{eqnarray}
 
-Above note the 1,1,3.
+Above note the 1,1,3.   
 
 Now the Naive estimator:
 
@@ -330,8 +334,15 @@ r_\text{true} &=& 1
 \underbrace{2\times\left(\frac{1}{1+x}+\frac{1}{1+x^2}-\frac{2}{1+x+x^2}\right)}_{r_\text{obs}=2,
 \hat{r}=2\quad\mbox{NB}}  + 
 \underbrace{3\times\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)}_{r_\text{obs}=\hat{r}=3}\\
-&=& 3-\frac{1}{1+x} - \frac{1}{1+x^2}
+&=& 3-\frac{1}{1+x} - \frac{1}{1+x^2}\\
+&\longrightarrow&2\qquad\mbox{as $x\longrightarrow 1$} 
 \end{eqnarray}
+
+Alternatively, if $x=1$, we have equal strength for all competitors
+and we see that
+$P(r_\text{obs}=1)=P(r_\text{obs}=2)=P(r_\text{obs}=3)=\frac{1}{3}$.
+So $\mathbb{E}(\hat{r})=1\times\frac{1}{3} + 2\times\frac{1}{3} +
+3\times\frac{1}{3}=2$ and the bias is 1.
 
 
 ### MSE for $r_\mathrm{true}=1$:
@@ -347,8 +358,8 @@ r_\text{true} &=& 1
 \underbrace{(3-1)^2\times\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)}_{r_\text{obs}=\hat{r}=3}\\
 &=&
 4\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)\\
-&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but
-this does not matter)}
+&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow& \frac{4}{3}\qquad\mbox{as $x\longrightarrow 1$}\\
 \end{eqnarray}
 
 Now the naive estimator:
@@ -361,8 +372,10 @@ r_\text{true} &=& 1
 \underbrace{(2-1)^2\times\left(\frac{1}{1+x}+\frac{1}{1+x^2}-\frac{2}{1+x+x^2}\right)}_{r_\text{obs}=2,\hat{r}=2}  + 
 \underbrace{(3-1)^2\times\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)}_{r_\text{obs}=\hat{r}=3}\\
 &=&
-4-\frac{3}{1+x}-\frac{3}{1+x^2} +\frac{2}{1+x+x^2}
+4-\frac{3}{1+x}-\frac{3}{1+x^2} +\frac{2}{1+x+x^2}\\
+&\longrightarrow&\frac{5}{3}\qquad\mbox{as $x\longrightarrow 1$}
 \end{eqnarray}
+
 
 ## Now $r_\text{true}=2$:
 
@@ -379,8 +392,8 @@ r_\text{true} &=& 2
 \hat{r}=1\quad\mbox{(sic)}}  + 
 \underbrace{3\times\left(\frac{x}{1+x+x^2} \right)}_{r_\text{obs}=3, \hat{r}=3}\\
 &=& 2 + \frac{2x}{1+x+x^2}\\
-&\longrightarrow& 2\qquad\mbox{as $x\longrightarrow 0$ (but
-this does not matter)}
+&\longrightarrow& 2\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow&\frac{8}{3}\qquad\mbox{as $x\longrightarrow 1$}
 \end{eqnarray}
 
 Now the naive estimator:
@@ -421,7 +434,9 @@ r_\text{true} &=& 2
 \underbrace{(2-2)^2\times\left(1-\frac{2x}{1+x+x^2}\right)  }_{r_\text{obs}=2,
 \hat{r}=2}  + 
 \underbrace{(3-2)^2\times\left(\frac{x}{1+x+x^2}\right)}_{r_\text{obs}=3, \hat{r}=3} \\
-&=& \frac{2x}{1+x+x^2}
+&=& \frac{2x}{1+x+x^2}\\
+&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow& \frac{2}{3}\qquad\mbox{as $x\longrightarrow 0$}\\
 \end{eqnarray}
 
 
@@ -441,7 +456,8 @@ r_\text{true} &=& 3
 \underbrace{3\times\left(\frac{1+x+2x^2  }{(1+x)(1+x^2)(1+x+x^2)}
 \right)}_{r_\text{obs}=3, \hat{r}=3} \\
 &=& 1 + \frac{2}{1+x}+\frac{2}{1+x^2}-\frac{2(1+x)}{1+x+x^2}\\
-&\longrightarrow& 3\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}
+&\longrightarrow& 3\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow&\frac{5}{3}\qquad\mbox{as $x\longrightarrow 1$}
 \end{eqnarray}
 
 Now the Naive estimator:
@@ -455,8 +471,15 @@ r_\text{true} &=& 3
 \hat{r}=2}  + 
 \underbrace{3\times\left(\frac{1+x+2x^2  }{(1+x)(1+x^2)(1+x+x^2)}
 \right)}_{r_\text{obs}=3, \hat{r}=3} \\
-&=& 1 + \frac{1}{1+x} + \frac{1}{1+x^2}
+&=& 1 + \frac{1}{1+x} + \frac{1}{1+x^2}\\
+&\longrightarrow& 3\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow& 2\qquad\mbox{as $x\longrightarrow 1$}\\
 \end{eqnarray}
+
+Alternatively, if $x=1$ we have $\mathbb{E}(\hat{r}) =
+1+\frac{1}{2}+\frac{1}{2}=2$ and the bias is $1$.
+
+
 
 ### MSE for $r_\text{true}=3$:
 
@@ -474,7 +497,8 @@ r_\text{true} &=& 3
 &=&
 \frac{4x^2}{1+x+x^2} + 4\frac{x+2x^3+x^4}{(1+x)(1+x^2)(1+x+x^2)}\\
 &=& 4\left(1-\frac{1}{1+x} - \frac{1}{1+x^2} +\frac{1+x}{1+x+x^2}\right)\\
-&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}
+&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow&\frac{8}{3}\qquad\mbox{as $x\longrightarrow 1$}
 \end{eqnarray}
 
 Now the Naive estimator:
@@ -490,7 +514,9 @@ r_\text{true} &=& 3
 \underbrace{(3-3)^2\times  \left(\frac{1+x+2x^2
 }{(1+x)(1+x^2)(1+x+x^2)}  \right)}_{r_\text{obs}=3, \hat{r}=3} \\
 &=&
-4-\frac{1}{1+x}-\frac{1}{1+x^2}-2\frac{1+x}{1+x+x^2}
+4-\frac{1}{1+x}-\frac{1}{1+x^2}-2\frac{1+x}{1+x+x^2}\\
+&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow&\frac{5}{3}\qquad\mbox{as $x\longrightarrow 1$}\\
 \end{eqnarray}
 
 
