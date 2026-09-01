@@ -570,7 +570,6 @@ M1bad_MLE <- function(x){4*(1- 1/(1+x) - 1/(1+x^2) + 1/(1+x+x^2))}
 M2bad_MLE <- function(x){x*0 + 1}
 M3bad_MLE <- function(x){4*(1- 1/(1+x) - 1/(1+x^2) + (1+x)/(1+x+x^2))}
 
-
 B1good_naive <- B1good_MLE
 B2good_naive <- B2good_MLE
 B3good_naive <- B3good_MLE
@@ -591,35 +590,32 @@ cutoff <- sqrt((sqrt(5)-1)/2)
 
 biasplotter <- function(...){
 
-xgood <- seq(from=0.1, to=cutoff, len=100)
+    xgood <- seq(from=0.1, to=cutoff, len=100)
     plot(log(x), B1good_MLE(x), type="n",
          ylim=c(-1.5, 1.5),xlim=c(log(0.1), 0),
          xlab = "log(x)", ylab = "Bias",
          main = "Bias for the three-runner case")
-abline(v=log(cutoff),col='gray')
-points(log(xgood), B1good_MLE(xgood), col="black",type="l",lty=1)
-points(log(xgood), B2good_MLE(xgood), col="red"  ,type="l",lty=1)
-points(log(xgood), B3good_MLE(xgood), col="blue" ,type="l",lty=1)
-
-points(log(xgood), B1good_naive(xgood), col="black",type="l",lty=2)
-points(log(xgood), B2good_naive(xgood), col="red"  ,type="l",lty=2)
-points(log(xgood), B3good_naive(xgood), col="blue" ,type="l",lty=2)
-
-
-xbad <- seq(from=cutoff, to=1, len=100)
-points(log(xbad), B1bad_MLE(xbad), col="black", type="l", lty=1)
-points(log(xbad), B2bad_MLE(xbad), col="red"  , type="l", lty=1)
-points(log(xbad), B3bad_MLE(xbad), col="blue" , type="l", lty=1)
-
-    text(-1.1, 0.1, "MLE")
-    text(-1.1, 0.5, "MLE")
-    text(-1.1,-0.5, "MLE")
-
-
-legend("topleft",
-       col = c("black", "red", "blue"),
-       lty = c(1,1,1),
-       legend = c("r=1", "r=2", "r=3"))
+    abline(v=log(cutoff),col='gray')
+    points(log(xgood), B1good_MLE(xgood), col="black",type="l",lty=1)
+    points(log(xgood), B2good_MLE(xgood), col="red"  ,type="l",lty=1)
+    points(log(xgood), B3good_MLE(xgood), col="blue" ,type="l",lty=1)
+    
+    text(-1.1, 0.1, "MLE/Naive")
+    text(-1.1, 0.5, "MLE/Naive")
+    text(-1.1,-0.5, "MLE/Naive")
+    
+    
+    xbad <- seq(from=cutoff, to=1, len=100)
+    points(log(xbad), B1bad_MLE(xbad), col="black", type="l", lty=1)
+    points(log(xbad), B2bad_MLE(xbad), col="red"  , type="l", lty=1)
+    points(log(xbad), B3bad_MLE(xbad), col="blue" , type="l", lty=1)
+    
+    
+    
+    legend("topleft",
+           col = c("black", "red", "blue"),
+           lty = c(1,1,1),
+           legend = c("r=1", "r=2", "r=3"))
 }
 
 biasplotter()
