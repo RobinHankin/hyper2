@@ -580,7 +580,7 @@ M3good_naive <- M3good_MLE
 
 B1bad_naive <- function(x){2 - 1/(1+x) - 1/(1+x^2)}
 B2bad_naive <- function(x){x*0}
-B3bad_naive <- function(x){1/(1+x)+1(1+x^2)-2}
+B3bad_naive <- function(x){1/(1+x)+1/(1+x^2)-2}
 
 M1bad_naive <- function(x){4 - 3/(1+x) -3/(1+x^2) +2/(1+x+x^2)}
 M2bad_naive <- function(x){2*x/(1+x+x^2)}
@@ -610,7 +610,10 @@ biasplotter <- function(...){
     points(log(xbad), B2bad_MLE(xbad), col="red"  , type="l", lty=1)
     points(log(xbad), B3bad_MLE(xbad), col="blue" , type="l", lty=1)
     
-    
+    points(log(xbad), B1bad_naive(xbad), col="black", type="l", lty=2)
+    points(log(xbad), B2bad_naive(xbad), col="red"  , type="l", lty=2)
+    points(log(xbad), B3bad_naive(xbad), col="blue" , type="l", lty=2)
+   
     
     legend("topleft",
            col = c("black", "red", "blue"),
@@ -624,27 +627,31 @@ biasplotter()
 dev.off()
 
 MSEplotter <- function(...){
-x <- seq(from=0.1, to=cutoff, len=100)
-plot(log(x), M1good_MLE(x),type="n",
-     ylim=c(0,3),xlim=c(log(0.1), 0),
-     xlab="log(x)", ylab="MSE")
-abline(v=log(cutoff),col='gray')
-
-points(log(x), M1good_MLE(x), col="black",type="l",lty=1)
-points(log(x), M2good_MLE(x), col="red",type="l",lty=1)
-points(log(x), M3good_MLE(x), col="blue",type="l",lty=1)
-
-x <- seq(from=cutoff, to=1, len=100)
-
-points(log(x), M1bad_MLE(x), col="black",type="l",lty=1)
-points(log(x), M2bad_MLE(x), col="red",type="l",lty=1)
-points(log(x), M3bad_MLE(x), col="blue",type="l",lty=1)
-
-legend("topleft",
-       col = c("black", "red", "blue"),
-       lty = 1,
-       legend = c("r=1", "r=2", "r=3"))
-
+    xgood <- seq(from=0.1, to=cutoff, len=100)
+    plot(log(xgood), M1good_MLE(xgood),type="n",
+         ylim=c(0,3),xlim=c(log(0.1), 0),
+         xlab="log(x)", ylab="MSE")
+    abline(v=log(cutoff),col='gray')
+    
+    points(log(xgood), M1good_MLE(xgood), col="black",type="l",lty=1)
+    points(log(xgood), M2good_MLE(xgood), col="red"  ,type="l",lty=1)
+    points(log(xgood), M3good_MLE(xgood), col="blue" ,type="l",lty=1)
+    
+    xbad <- seq(from=cutoff, to=1, len=100)
+    
+    points(log(xbad), M1bad_MLE(xbad), col="black",type="l",lty=1)
+    points(log(xbad), M2bad_MLE(xbad), col="red"  ,type="l",lty=1)
+    points(log(xbad), M3bad_MLE(xbad), col="blue" ,type="l",lty=1)
+    
+    points(log(xbad), M1bad_naive(xbad), col="black",type="l",lty=2)
+    points(log(xbad), M2bad_naive(xbad), col="red"  ,type="l",lty=2)
+    points(log(xbad), M3bad_naive(xbad), col="blue" ,type="l",lty=2)
+    
+    legend("topleft",
+           col = c("black", "red", "blue"),
+           lty = 1,
+           legend = c("r=1", "r=2", "r=3"))
+    
 }
 
 MSEplotter()
