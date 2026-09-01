@@ -548,7 +548,7 @@ dev.off()
 library("cowplot")
 f <- function(...){
 cowplot::plot_grid(
-~filled.contour(r_true_values/N, x_true_values, br,
+~filled.contour(r_true_values/N, x_true_values, br/N,
                xlab = "s", ylab = "x",
                main = "bias(r)"),
 
@@ -556,11 +556,11 @@ cowplot::plot_grid(
                xlab = "s", ylab = "x",
                main = "bias(x)"),
 
-~filled.contour(r_true_values/N, x_true_values, mr,
+~filled.contour(r_true_values/N, x_true_values, mr/N^2,
                xlab = "s", ylab = "x",
                main = "MSE(r)"),
 
-~filled.contour(r_true_values, x_true_values, mx,
+~filled.contour(r_true_values/N, x_true_values, mx,
                xlab = "s", ylab = "x",
                main = "MSE(x)")
 )
@@ -569,5 +569,12 @@ f()
 pdf(file = "bias_MSE_xr.pdf",width=12,height=12)
 f()
 dev.off()
+
+information <- "
+Above, the filled.contour() calls that plot br and mr are divided
+by N and N^2 because we want the mean square error for s, not r.  And
+function mser() gives us the mean square error for r.
+"
+
 
 ```

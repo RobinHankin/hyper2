@@ -88,6 +88,7 @@ CITATION.cff
 ^inst/f1points_Omaker.R$
 ^inst/f1points.Rmd$
 ^inst/fatigue.Rmd$
+^inst/fisher.mma$
 ^inst/five_nations.txt$
 ^inst/formula1_1995.txt$
 ^inst/formula1_1996.txt$

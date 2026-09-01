@@ -189,7 +189,7 @@ r_\text{true} &=& 2
 1\times\left(\frac{x}{1+x+x^2}                        \right)  +
 2\times\left(1-\frac{2x}{1+x+x^2}                     \right)  + 
 3\times\left(\frac{x}{1+x+x^2}                        \right)\\ 
-&=& 2 (!)
+&=& 2 \qquad\mbox{UNBIASED}
 \end{eqnarray}
 
 ### MSE for $r_\text{true}=2$:
@@ -205,7 +205,8 @@ r_\text{true} &=& 2
 \left(\frac{x}{1+x+x^2}\right)  + 
 \left(\frac{x}{1+x+x^2}\right)\\
 &=& \frac{2x}{1+x+x^2}\\
-&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$}
+&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$}\\
+&\longrightarrow&\frac{2}{3}\qquad\mbox{as $x\longrightarrow 1$}
 \end{eqnarray}
 
 
@@ -220,7 +221,9 @@ r_\text{true} &=& 3
 1\times\left(\frac{x^2}{1+x+x^2}                        \right)  +
 2\times\left(\frac{x+2x^3+x^4}{(1+x)(1+x^2)(1+x+x^2)}   \right)  + 
 3\times\left(\frac{1+x+2x^2  }{(1+x)(1+x^2)(1+x+x^2)}   \right)\\
-&=& 1+\frac{1}{1+x} + \frac{1}{1+x^2}
+&=& 1+\frac{1}{1+x} + \frac{1}{1+x^2}\\
+&\longrightarrow &3\qquad\mbox{as $x \longrightarrow 0$}\\
+&\longrightarrow &2\qquad\mbox{as $x \longrightarrow 1$}
 \end{eqnarray}
 
 
@@ -261,7 +264,8 @@ r_\text{true} &=& 3\longrightarrow MSE = 4-\frac{1}{1+x} - \frac{1}{1+x^2} -\fra
 
 # Second case:  $x>\sqrt{(\sqrt{5}-1)/2}$  (bad weirdness)
 
-Here the lines are crossed [with $r_\text{obs}=2$] and so we have
+Here the lines are crossed [with $r_\text{obs}=2$] and so we have, for
+the **maximum likelihood estimator, MLE**:
 
 $r_\text{obs}=1\longrightarrow \hat{r}=1$
 
@@ -293,10 +297,16 @@ r_\text{obs}=3\longrightarrow\hat{r}=3\,\mbox{with probability $p_3$}\\
 \end{cases}
 $$
 
+Now we do the **Naive estimator**: this is just $\hat{r}=r_\text{obs}$
+for $i\in\left\lbrace 1,2,3\right\rbrace$.
+
+
 
 ##   $r_\text{true}=1$:
 
 ### Expectation for  $r_\text{true}=1$:
+
+First we do the MLE:
 
 \begin{eqnarray}
 r_\text{true} &=& 1
@@ -308,12 +318,36 @@ r_\text{true} &=& 1
 \underbrace{3\times\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)}_{r_\text{obs}=\hat{r}=3}\\
 &=& 3-\frac{2}{1+x} - \frac{2}{1+x^2}+\frac{2}{1+x+x^2}\\
 &\longrightarrow& 1\qquad\mbox{as $x\longrightarrow 0$ [but this does
-not matter]}
+not matter]}\\
+&\longrightarrow& \frac{5}{3}\qquad\mbox{as $x\longrightarrow 1$}
 \end{eqnarray}
 
-Above note the 1,1,3
+Above note the 1,1,3.   
+
+Now the Naive estimator:
+
+\begin{eqnarray}
+r_\text{true} &=& 1
+\longrightarrow\\
+\mathbb{E}(\hat{r}) &=& 
+\underbrace{1\times\left(\frac{1}{1+x+x^2}\right)}_{r_\text{obs}=1, \hat{r}=1} + 
+\underbrace{2\times\left(\frac{1}{1+x}+\frac{1}{1+x^2}-\frac{2}{1+x+x^2}\right)}_{r_\text{obs}=2,
+\hat{r}=2\quad\mbox{NB}}  + 
+\underbrace{3\times\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)}_{r_\text{obs}=\hat{r}=3}\\
+&=& 3-\frac{1}{1+x} - \frac{1}{1+x^2}\\
+&\longrightarrow&2\qquad\mbox{as $x\longrightarrow 1$} 
+\end{eqnarray}
+
+Alternatively, if $x=1$, we have equal strength for all competitors
+and we see that
+$P(r_\text{obs}=1)=P(r_\text{obs}=2)=P(r_\text{obs}=3)=\frac{1}{3}$.
+So $\mathbb{E}(\hat{r})=1\times\frac{1}{3} + 2\times\frac{1}{3} +
+3\times\frac{1}{3}=2$ and the bias is 1.
+
 
 ### MSE for $r_\mathrm{true}=1$:
+
+First do the MLE:
 
 \begin{eqnarray}
 r_\text{true} &=& 1
@@ -324,13 +358,30 @@ r_\text{true} &=& 1
 \underbrace{(3-1)^2\times\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)}_{r_\text{obs}=\hat{r}=3}\\
 &=&
 4\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)\\
-&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but
-this does not matter)}
+&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow& \frac{4}{3}\qquad\mbox{as $x\longrightarrow 1$}\\
 \end{eqnarray}
+
+Now the naive estimator:
+
+\begin{eqnarray}
+r_\text{true} &=& 1
+\longrightarrow\\
+\mathbb{E}(\hat{r}-r_\text{true})^2 &=& 
+\underbrace{(1-1)^2\times\left(\frac{1}{1+x+x^2}   \right)}_{r_\text{obs}=\hat{r}=1}  +
+\underbrace{(2-1)^2\times\left(\frac{1}{1+x}+\frac{1}{1+x^2}-\frac{2}{1+x+x^2}\right)}_{r_\text{obs}=2,\hat{r}=2}  + 
+\underbrace{(3-1)^2\times\left(1-\frac{1}{1+x}-\frac{1}{1+x^2}+\frac{1}{1+x+x^2}\right)}_{r_\text{obs}=\hat{r}=3}\\
+&=&
+4-\frac{3}{1+x}-\frac{3}{1+x^2} +\frac{2}{1+x+x^2}\\
+&\longrightarrow&\frac{5}{3}\qquad\mbox{as $x\longrightarrow 1$}
+\end{eqnarray}
+
 
 ## Now $r_\text{true}=2$:
 
 ### Expectation for $r_\text{true}=2$:
+
+First the MLE:
 
 \begin{eqnarray}
 r_\text{true} &=& 2
@@ -341,11 +392,26 @@ r_\text{true} &=& 2
 \hat{r}=1\quad\mbox{(sic)}}  + 
 \underbrace{3\times\left(\frac{x}{1+x+x^2} \right)}_{r_\text{obs}=3, \hat{r}=3}\\
 &=& 2 + \frac{2x}{1+x+x^2}\\
-&\longrightarrow& 2\qquad\mbox{as $x\longrightarrow 0$ (but
-this does not matter)}
+&\longrightarrow& 2\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow&\frac{8}{3}\qquad\mbox{as $x\longrightarrow 1$}
 \end{eqnarray}
 
+Now the naive estimator:
+
+\begin{eqnarray}
+r_\text{true} &=& 2\longrightarrow\\
+\mathbb{E}(\hat{r}) &=& 
+\underbrace{1\times\left(\frac{x}{1+x+x^2} \right)}_{r_\text{obs}=1, \hat{r}=1} + 
+\underbrace{2\times\left(1-\frac{2x}{1+x+x^2}\right)}_{r_\text{obs}=2,
+\hat{r}=2}  + 
+\underbrace{3\times\left(\frac{x}{1+x+x^2} \right)}_{r_\text{obs}=3, \hat{r}=3}\\
+&=& 2\qquad\mbox{UNBIASED!}
+\end{eqnarray}
+
+
 ### MSE for $r_\text{true}=2$:
+
+First the MLE:
 
 \begin{eqnarray}
 r_\text{true} &=& 2
@@ -358,10 +424,27 @@ r_\text{true} &=& 2
 &=& 1
 \end{eqnarray}
 
+Now the Naive estimator
+
+\begin{eqnarray}
+r_\text{true} &=& 2
+\longrightarrow\\
+\mathbb{E}(\hat{r}-r_\text{true})^2 &=& 
+\underbrace{(1-2)^2\times\left(\frac{x}{1+x+x^2}   \right)  }_{r_\text{obs}=1, \hat{r}=1} + 
+\underbrace{(2-2)^2\times\left(1-\frac{2x}{1+x+x^2}\right)  }_{r_\text{obs}=2,
+\hat{r}=2}  + 
+\underbrace{(3-2)^2\times\left(\frac{x}{1+x+x^2}\right)}_{r_\text{obs}=3, \hat{r}=3} \\
+&=& \frac{2x}{1+x+x^2}\\
+&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow& \frac{2}{3}\qquad\mbox{as $x\longrightarrow 0$}\\
+\end{eqnarray}
+
 
 ## Now $r_\text{true}=3$:
 
 ## Expectation for $r_\text{true}=3$:
+
+First the MLE:
 
 \begin{eqnarray}
 r_\text{true} &=& 3
@@ -373,11 +456,34 @@ r_\text{true} &=& 3
 \underbrace{3\times\left(\frac{1+x+2x^2  }{(1+x)(1+x^2)(1+x+x^2)}
 \right)}_{r_\text{obs}=3, \hat{r}=3} \\
 &=& 1 + \frac{2}{1+x}+\frac{2}{1+x^2}-\frac{2(1+x)}{1+x+x^2}\\
-&\longrightarrow& 3\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}
+&\longrightarrow& 3\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow&\frac{5}{3}\qquad\mbox{as $x\longrightarrow 1$}
 \end{eqnarray}
+
+Now the Naive estimator:
+
+\begin{eqnarray}
+r_\text{true} &=& 3
+\longrightarrow\\
+\mathbb{E}(\hat{r}) &=& 
+\underbrace{1\times\left(\frac{x^2}{1+x+x^2}\right)}_{r_\text{obs}=1, \hat{r}=1} + 
+\underbrace{2\times\left(\frac{x+2x^3+x^4}{(1+x)(1+x^2)(1+x+x^2)}   \right)}_{r_\text{obs}=2,
+\hat{r}=2}  + 
+\underbrace{3\times\left(\frac{1+x+2x^2  }{(1+x)(1+x^2)(1+x+x^2)}
+\right)}_{r_\text{obs}=3, \hat{r}=3} \\
+&=& 1 + \frac{1}{1+x} + \frac{1}{1+x^2}\\
+&\longrightarrow& 3\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow& 2\qquad\mbox{as $x\longrightarrow 1$}\\
+\end{eqnarray}
+
+Alternatively, if $x=1$ we have $\mathbb{E}(\hat{r}) =
+1+\frac{1}{2}+\frac{1}{2}=2$ and the bias is $1$.
+
 
 
 ### MSE for $r_\text{true}=3$:
+
+First the MLE:
 
 \begin{eqnarray}
 r_\text{true} &=& 3
@@ -391,16 +497,40 @@ r_\text{true} &=& 3
 &=&
 \frac{4x^2}{1+x+x^2} + 4\frac{x+2x^3+x^4}{(1+x)(1+x^2)(1+x+x^2)}\\
 &=& 4\left(1-\frac{1}{1+x} - \frac{1}{1+x^2} +\frac{1+x}{1+x+x^2}\right)\\
-&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}
+&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow&\frac{8}{3}\qquad\mbox{as $x\longrightarrow 1$}
 \end{eqnarray}
+
+Now the Naive estimator:
+
+
+\begin{eqnarray}
+r_\text{true} &=& 3
+\longrightarrow\\
+\mathbb{E}(\hat{r}-r_\text{true})^2 &=& 
+\underbrace{(1-3)^2\times  \left(\frac{x^2}{1+x+x^2}                       \right)}_{r_\text{obs}=1, \hat{r}=1} + 
+\underbrace{(2-3)^2\times  \left(\frac{x+2x^3+x^4}{(1+x)(1+x^2)(1+x+x^2)}  \right)}_{r_\text{obs}=2,
+\hat{r}=2}  + 
+\underbrace{(3-3)^2\times  \left(\frac{1+x+2x^2
+}{(1+x)(1+x^2)(1+x+x^2)}  \right)}_{r_\text{obs}=3, \hat{r}=3} \\
+&=&
+4-\frac{1}{1+x}-\frac{1}{1+x^2}-2\frac{1+x}{1+x+x^2}\\
+&\longrightarrow& 0\qquad\mbox{as $x\longrightarrow 0$ (but this does not matter)}\\
+&\longrightarrow&\frac{5}{3}\qquad\mbox{as $x\longrightarrow 1$}\\
+\end{eqnarray}
+
 
 ## Summary for $x>\sqrt{(\sqrt{5}-1)/2}$ (bad weirdness)
 
-Summarising, the **bias** $B$ is:
+### Bad weirdness summary, MLE:
+
+
+Summarising, the **bias** $B$, for the MLE (in the bad weirdness case)
+is:
 
 \begin{eqnarray}
 r_\text{true} &=& 1\longrightarrow B=2-\frac{2}{1+x}-\frac{2}{1+x^2}+\frac{2}{1+x+x^2}\\
-r_\text{true} &=& 2\longrightarrow B=0\\
+r_\text{true} &=& 2\longrightarrow B=\frac{2x}{1+x+x^2}\\
 r_\text{true} &=& 3\longrightarrow B= -2+\frac{2}{1+x}+\frac{2}{1+x^2}-\frac{2(1+x)}{1+x+x^2}
 \end{eqnarray}
 
@@ -413,62 +543,111 @@ r_\text{true} &=& 2\longrightarrow MSE = 1\\
 r_\text{true} &=& 3\longrightarrow MSE = 4\left(1-\frac{1}{1+x} - \frac{1}{1+x^2} +\frac{1+x}{1+x+x^2}\right)\\
 \end{eqnarray}
 
+### Bad weirdness summary, Naive estimator:
 
+Summarising, the **bias** $B$, for the Naive estimator (in the bad
+weirdness case), is:
+
+\begin{eqnarray}
+r_\text{true} &=& 1\longrightarrow B = 2-\frac{1}{1+x} - \frac{1}{1+x^2}\\
+r_\text{true} &=& 2\longrightarrow B = 0\\
+r_\text{true} &=& 3\longrightarrow B = -2 + \frac{1}{1+x} + \frac{1}{1+x^2}
+\end{eqnarray}
+
+The mean square error
+$\operatorname{MSE}(\hat{r})=\mathbb{E}(\hat{r}-r_\text{true})^2$ is
+
+\begin{eqnarray}
+r_\text{true} &=& 1\longrightarrow MSE = 4-\frac{3}{1+x}-\frac{3}{1+x^2} +\frac{2}{1+x+x^2}\\
+r_\text{true} &=& 2\longrightarrow MSE = \frac{2x}{1+x+x^2}\\
+r_\text{true} &=& 3\longrightarrow MSE = 4-\frac{1}{1+x}-\frac{1}{1+x^2}-2\frac{1+x}{1+x+x^2}
+\end{eqnarray}
 
 
 # Plots
 
+In the R chunk below, the twelve functions in the `B1good_MLE()`
+series are logically named.  The initial letters `B` and `M` refer to
+bias and Mean square error MSE respectively.  The number, either `1`,
+`2`, or `3`, refers to the observation $r_\text{obs}$; and `good` or
+`bad` refers to either $x<\beta$ (the good case) or $x>\beta$ (the bad
+case).  The `MLE` or `naive` refers to whether the maximum likelihood
+estimator or the naive estimator is used.  Thus `B1good_MLE()` is the
+bias, of the maximum likelihood estimator, when $r_\text{obs}=1$, in
+the good case $x<\beta$; and `M3bad_naive()` is the mean square error
+of the Naive estimator, when $r_\text{obs}=3$, in the bad case
+$x>\beta$.
+
 ```{r}
 x <- seq(from=1,to=0.01,len=100)
-B1good  <- function(x){2 - 1/(1+x) - 1/(1+x^2)}
-B2good  <- function(x){x*0}
-B3good  <- function(x){1/(1+x) + 1/(1+x^2) - 2}
+B1good_MLE  <- function(x){2 - 1/(1+x) - 1/(1+x^2)}
+B2good_MLE  <- function(x){x*0}
+B3good_MLE  <- function(x){1/(1+x) + 1/(1+x^2) - 2}
 
-B1bad <- function(x){2 - 2/(1+x) - 2/(1+x^2)+ 2/(1+x+x^2)}
-B2bad <- function(x){x*0}
-B3bad <- function(x){2/(1+x) + 2/(1+x^2) - 2*(1+x)/(1+x+x^2) - 2}
+B1bad_MLE <- function(x){2 - 2/(1+x) - 2/(1+x^2)+ 2/(1+x+x^2)}
+B2bad_MLE <- function(x){2*x/(1+x+x^2)}
+B3bad_MLE <- function(x){2/(1+x) + 2/(1+x^2) - 2*(1+x)/(1+x+x^2) - 2}
 
-M1good  <- function(x){4 - 3/(1+x) - 3/(1+x^2) + 2/(1+x+x^2)}
-M2good  <- function(x){2*x/(1+x+x^2)}
-M3good  <- function(x){4 - 1/(1+x) -1/(1+x^2) - 2*(1+x)/(1+x+x^2)}
+M1good_MLE  <- function(x){4 - 3/(1+x) - 3/(1+x^2) + 2/(1+x+x^2)}
+M2good_MLE  <- function(x){2*x/(1+x+x^2)}
+M3good_MLE  <- function(x){4 - 1/(1+x) -1/(1+x^2) - 2*(1+x)/(1+x+x^2)}
 
-M1bad <- function(x){4*(1- 1/(1+x) - 1/(1+x^2) + 1/(1+x+x^2))}
-M2bad <- function(x){x*0 + 1}
-M3bad <- function(x){4*(1- 1/(1+x) - 1/(1+x^2) + (1+x)/(1+x+x^2))}
+M1bad_MLE <- function(x){4*(1- 1/(1+x) - 1/(1+x^2) + 1/(1+x+x^2))}
+M2bad_MLE <- function(x){x*0 + 1}
+M3bad_MLE <- function(x){4*(1- 1/(1+x) - 1/(1+x^2) + (1+x)/(1+x+x^2))}
+
+B1good_naive <- B1good_MLE
+B2good_naive <- B2good_MLE
+B3good_naive <- B3good_MLE
+
+M1good_naive <- M1good_MLE
+M2good_naive <- M2good_MLE
+M3good_naive <- M3good_MLE
+
+B1bad_naive <- function(x){2 - 1/(1+x) - 1/(1+x^2)}
+B2bad_naive <- function(x){x*0}
+B3bad_naive <- function(x){1/(1+x)+1/(1+x^2)-2}
+
+M1bad_naive <- function(x){4 - 3/(1+x) -3/(1+x^2) +2/(1+x+x^2)}
+M2bad_naive <- function(x){2*x/(1+x+x^2)}
+M3bad_naive <- function(x){4 - 1/(1+x) -1/(1+x^2) -2*(1+x)/(1+x+x^2)}
 
 cutoff <- sqrt((sqrt(5)-1)/2)
 
 biasplotter <- function(...){
 
-x <- seq(from=0.1, to=1, len=100)
-    plot(log(x), B1good(x), type="n",
-         ylim=c(-1.5,1.5),xlim=c(log(0.1), 0),
+    xgood <- seq(from=0.1, to=cutoff, len=100)
+    plot(log(x), B1good_MLE(x), type="n",
+         ylim=c(-1.5, 1.5),xlim=c(log(0.1), 0),
          xlab = "log(x)", ylab = "Bias",
          main = "Bias for the three-runner case")
-abline(v=log(cutoff),col='gray')
-points(log(x), B1good(x), col="black",type="l",lty=1)
-points(log(x), B2good(x), col="red",type="l",lty=1)
-points(log(x), B3good(x), col="blue",type="l",lty=1)
+    abline(v=log(cutoff),col='gray')
+    points(log(xgood), B1good_MLE(xgood), col="black",type="l",lty=1)
+    points(log(xgood), B2good_MLE(xgood), col="red"  ,type="l",lty=1)
+    points(log(xgood), B3good_MLE(xgood), col="blue" ,type="l",lty=1)
+    
+    text(-1.1, 0.1, "MLE/Naive")
+    text(-1.1, 0.5, "MLE/Naive")
+    text(-1.1,-0.5, "MLE/Naive")
+    
+    xbad <- seq(from=cutoff, to=1, len=100)
 
-x <- seq(from=cutoff, to=1, len=100)
-points(log(x), B1bad(x), col="black", type="l", lty=2)
-points(log(x), B2bad(x), col="red"  , type="l", lty=2)
-points(log(x), B3bad(x), col="blue" , type="l", lty=2)
+    points(log(xbad), B1bad_naive(xbad), col="black", type="l", lty=1)
+    points(log(xbad), B2bad_naive(xbad), col="red"  , type="l", lty=1)
+    points(log(xbad), B3bad_naive(xbad), col="blue" , type="l", lty=1)
 
-    text(-1.1, 0.1, "Naive/MLE")
-    text(-1.1, 0.5, "Naive/MLE")
-    text(-1.1,-0.5, "Naive/MLE")
+    points(log(xbad), B1bad_MLE(xbad), col="black", type="l", lty=2)
+    points(log(xbad), B2bad_MLE(xbad), col="red"  , type="l", lty=2)
+    points(log(xbad), B3bad_MLE(xbad), col="blue" , type="l", lty=2)
 
-
-    text(-0.1, 1.07,"Naive")
-    text(-0.1, 0.4, "MLE")
-    text(-0.1,-0.8, "Naive")
-    text(-0.1,-1.4, "MLE")
-
-legend("topleft",
-       col = c("black", "red", "blue"),
-       lty = c(1,1,1),
-       legend = c("r=1", "r=2", "r=3"))
+    text(-0.1,  0.8, "MLE")
+    text(-0.1,  0.4, "MLE")
+    text(-0.1, -1.4, "MLE")
+    
+    legend("topleft",
+           col = c("black", "red", "blue"),
+           lty = c(1,1,1),
+           legend = c("r=1", "r=2", "r=3"))
 }
 
 biasplotter()
@@ -477,27 +656,40 @@ biasplotter()
 dev.off()
 
 MSEplotter <- function(...){
-x <- seq(from=0.1, to=cutoff, len=100)
-plot(log(x), M1good(x),type="n",
-     ylim=c(0,3),xlim=c(log(0.1), 0),
-     xlab="log(x)", ylab="MSE")
-abline(v=log(cutoff),col='gray')
+    xgood <- seq(from=0.1, to=cutoff, len=100)
+    plot(log(xgood), M1good_MLE(xgood),type="n",
+         ylim=c(0,3),xlim=c(log(0.1), 0),
+         xlab="log(x)", ylab="MSE")
+    abline(v=log(cutoff),col='gray')
+    
+    points(log(xgood), M1good_MLE(xgood), col="black",type="l",lty=1)
+    points(log(xgood), M2good_MLE(xgood), col="red"  ,type="l",lty=1)
+    points(log(xgood), M3good_MLE(xgood), col="blue" ,type="l",lty=1)
+    
+    xbad <- seq(from=cutoff, to=1, len=100)
+    
+    points(log(xbad), M1bad_naive(xbad), col="black",type="l",lty=1)
+    points(log(xbad), M2bad_naive(xbad), col="red"  ,type="l",lty=1)
+    points(log(xbad), M3bad_naive(xbad), col="blue" ,type="l",lty=1)
 
-points(log(x), M1good(x), col="black",type="l",lty=1)
-points(log(x), M2good(x), col="red",type="l",lty=1)
-points(log(x), M3good(x), col="blue",type="l",lty=1)
+    points(log(xbad), M1bad_MLE(xbad), col="black",type="l",lty=2)
+    points(log(xbad), M2bad_MLE(xbad), col="red"  ,type="l",lty=2)
+    points(log(xbad), M3bad_MLE(xbad), col="blue" ,type="l",lty=2)
+    
+    
+    text(-1.1, 1, "MLE/Naive")
 
-x <- seq(from=cutoff, to=1, len=100)
+    text(-0.1,  2.3, "MLE")
+    text(-0.1,  1.3, "MLE")
+    text(-0.1,  0.9, "MLE")
 
-points(log(x), M1bad(x), col="black",type="l",lty=1)
-points(log(x), M2bad(x), col="red",type="l",lty=1)
-points(log(x), M3bad(x), col="blue",type="l",lty=1)
 
-legend("topleft",
-       col = c("black", "red", "blue"),
-       lty = 1,
-       legend = c("r=1", "r=2", "r=3"))
-
+    
+    legend("topleft",
+           col = c("black", "red", "blue"),
+           lty = 1,
+           legend = c("r=1", "r=2", "r=3"))
+    
 }
 
 MSEplotter()
@@ -512,12 +704,7 @@ MSEplotter()
 dev.off()
 ```
 
-
 ## Summarising
-
-
-
-
 
 ## References {-}
 
