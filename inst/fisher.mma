@@ -1,0 +1,92 @@
+This document gives mathematica code to calculate the Expected Fisher
+observation for the three-runner case.  The last bit of the file is R
+code to make Fisher_information.pdf, which is a plot of the Expected
+Fisher information a function of x.
+
+First, r_true = 1:
+
+
+p1 = 1/(1 + x + x^2)
+p2 = 1/(1 + x) + 1/(1 + x^2) - 2/(1 + x + x^2)
+p3 = 1 - 1/(1 + x) - 1/(1 + x^2) + 1/(1 + x + x^2)
+
+t1 = p1*D[Log[p1], {x, 2}] // Together
+t2 = p2*D[Log[p2], {x, 2}] // Together
+t3 = p3*D[Log[p3], {x, 2}] // Together
+
+
+Fobs1 = -(t1+t2+t3) // Together
+
+
+
+
+Second, r_true = 2:
+
+
+
+
+
+p1 = x/(1+x+x^2)
+p2 = 1 - 2*x/(1+x+x^2)
+p3 = x/(1+x+x^2)
+
+t1 = p1*D[Log[p1], {x, 2}] // Together
+t2 = p2*D[Log[p2], {x, 2}] // Together
+t3 = p3*D[Log[p3], {x, 2}] // Together
+
+
+Fobs2 = -(t1+t2+t3) // Together
+
+
+
+Third, r_true = 3:
+
+p1 = x^2/(1+x+x^2)
+p2 = (x + 2*x^3 + x^4)/((1+x)*(1+x^2)*(1+x+x^2))
+p3 = (1+x+2*x^2)/((1+x)*(1+x^2)*(1+x+x^2))
+
+t1 = p1*D[Log[p1], {x, 2}] // Together
+t2 = p2*D[Log[p2], {x, 2}] // Together
+t3 = p3*D[Log[p3], {x, 2}] // Together
+
+
+Fobs3 = -(t1+t2+t3) // Together
+
+
+
+
+
+The above give, in text form:
+
+f1 <- function(x){
+(2 + 13*x + 51*x^2 + 102*x^3 + 182*x^4 + 201*x^5 + 195*x^6 + 127*x^7 + 79*x^8 + 34*x^9 + 18*x^10 + 3*x^11 + x^12)/
+ (x*(1 + x)*(1 + x^2)^2* (1 + x + x^2)^2*(2 + x + x^2)*(1 + 2*x + x^3))
+ }     
+
+f2 <- function(x){
+(2*(1 - 2*x^2 + x^4))/(x*(1 - x + x^2)*(1 + x + x^2)^2)
+}
+
+f3 <- function(x){
+(1 + 3*x + 18*x^2 + 34*x^3 + 79*x^4 + 127*x^5 + 195*x^6 + 201*x^7 + 182*x^8 + 102*x^9 + 51*x^10 + 13*x^11 + 2*x^12)/
+ (x*(1 + x)*(1 + x^2)^2*(1 + x + x^2)^2*(1 + x + 2*x^2)*(1 + 2*x^2 + x^3))
+}
+
+x <- seq(from=0.1,to=0.9,len=500)
+
+fisherinfo <- function(...){
+ plot(x,f2(x),type="n", xlab="x", ylab="Fisher information")
+ points(x,f1(x),type="l",col="black")
+ points(x,f2(x),type="l",col="red")
+ points(x,f3(x),type="l",col="blue")
+
+ legend("topright",
+   lty=1, col=c("black","red","blue"),
+   legend=c("r=1", "r=2", "r=3")
+ )
+}
+
+fisherinfo()
+pdf(file="Fisher_information.pdf")
+fisherinfo()
+dev.off()
