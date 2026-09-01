@@ -604,16 +604,19 @@ biasplotter <- function(...){
     text(-1.1, 0.5, "MLE/Naive")
     text(-1.1,-0.5, "MLE/Naive")
     
-    
     xbad <- seq(from=cutoff, to=1, len=100)
-    points(log(xbad), B1bad_MLE(xbad), col="black", type="l", lty=1)
-    points(log(xbad), B2bad_MLE(xbad), col="red"  , type="l", lty=1)
-    points(log(xbad), B3bad_MLE(xbad), col="blue" , type="l", lty=1)
-    
-    points(log(xbad), B1bad_naive(xbad), col="black", type="l", lty=2)
-    points(log(xbad), B2bad_naive(xbad), col="red"  , type="l", lty=2)
-    points(log(xbad), B3bad_naive(xbad), col="blue" , type="l", lty=2)
-   
+
+    points(log(xbad), B1bad_naive(xbad), col="black", type="l", lty=1)
+    points(log(xbad), B2bad_naive(xbad), col="red"  , type="l", lty=1)
+    points(log(xbad), B3bad_naive(xbad), col="blue" , type="l", lty=1)
+
+    points(log(xbad), B1bad_MLE(xbad), col="black", type="l", lty=2)
+    points(log(xbad), B2bad_MLE(xbad), col="red"  , type="l", lty=2)
+    points(log(xbad), B3bad_MLE(xbad), col="blue" , type="l", lty=2)
+
+    text(-0.1,  0.8, "MLE")
+    text(-0.1,  0.4, "MLE")
+    text(-0.1, -1.4, "MLE")
     
     legend("topleft",
            col = c("black", "red", "blue"),
