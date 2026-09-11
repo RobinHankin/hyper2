@@ -33,17 +33,15 @@ Data for women's Olympic Curling  at the 2002 Winter Olympics.
     evaluates
   }
 
-
 \generatedby{inst/curling.Rmd}{curling.rda}{https://robinhankin.github.io/hyper2/curling.html}
 
 }
 \references{
   \itemize{
     \item
-
-Wikipedia contributors. Curling at the Winter Olympics [Internet].
+Wikipedia contributors.  Curling at the Winter Olympics [Internet].
 Wikipedia, The Free Encyclopedia; 2021 Jan 7, 14:23 UTC [cited 2021 Jan
-21]. Available from:
+21].  Available from:
 \url{https://en.wikipedia.org/w/index.php?title=Curling_at_the_Winter_Olympics&oldid=998891075}
   }
 }
@@ -52,7 +50,6 @@ Wikipedia, The Free Encyclopedia; 2021 Jan 7, 14:23 UTC [cited 2021 Jan
 \examples{
 data(curling)
 dotchart(curling1_maxp)
-
 }
 \keyword{datasets}
 
