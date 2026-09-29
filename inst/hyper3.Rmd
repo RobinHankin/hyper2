@@ -217,7 +217,7 @@ Evidence for different strengths?
 equalp.test(a)
 ```
 
-No evidence agains the null of equal strengths. Further:
+No evidence against the null of equal strengths. Further:
 
 ```{r,label=showgradissmall}
 hyper2::gradient(a,ma)  # should be small at the evaluate
