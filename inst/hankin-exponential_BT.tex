@@ -347,12 +347,12 @@ possible order statistics in which the $r=1$ competitor placed third
 
 Although figure~\ref{1234third} shows a perfectly respectable
 log-likelihood function, in practice we often do not know the value of
-$r$, and need a joint likelihood function for $(r,x)$.  It is
-convenient to normalize $r$ by writing $s=r/n$, thus allowing direct
-comparison between values of $r$ obtained from different values of
-$n$: one often wants to know the percentile of the focal entity.  The
-only reasonable way to calculate such a likelihood function appears to
-be numerical; fortunately this is straightforward.
+$r$, and need a joint likelihood function for $(r,x)$.  For
+visualisation it is convenient to use the normalised rank $s=r/n$.
+Here $s$ is used purely as a rescaled plotting coordinate; like $r$ it
+takes only discrete values.  The only reasonable way to calculate such
+a likelihood function appears to be numerical; fortunately this is
+straightforward.
 
 We leverage the {\tt hyper2} R package~\citep{hankin2017_rmd} which
 includes extensive numerical functionality to simulate Plackett-Luce
