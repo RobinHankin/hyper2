@@ -17,16 +17,23 @@ library("magrittr")
 knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
 ```
 
+<font size="1"> (takes about an hour to run without cache)
+</font>
+
 To cite the `hyper2` package in publications, please use @hankin2017_rmd.
 Here I analyse results from Curacao 1962 using `hyper3` formalism
 using the weighted Draw monster approach outlined in `kka.Rmd`:
 
 $$
-\left(\frac{\lambda p_1, D(p_1+p_2),p_2}{\lambda p_1+D(p_1+p_2)+p_2}\right)^{(a,b,c)}
-\left(\frac{p_1, D(p_1+p_2),\lambda p_2}{p_1+D(p_1+p_2)+\lambda p_2}\right)^{(d,e,f)}
+\left(\lambda p_1; D(p_1+p_2); p_2\right)^{(a,b,c)}\cdot
+\left(p_1; D(p_1+p_2);\lambda p_2\right)^{(d,e,f)}
 $$
 
 \newcommand{\wld}[3]{\mathord{+}#1\,\mathord{=}#2\,\mathord{-}#3}
+
+[this is an experimental notation; the first term is equal to
+$\frac{(\lambda p_1)^a(D(p_1+p_2))^b(p_2)^c}{(\lambda
+p_1+D(p_1+p_2)+p_2)^{a+b+c}}$].
 
 Above, $p_1$ plays $p_2$ a total of $a+b+c+d+e+f$ times; we have
 $a+b+c$ matches with $p_1$ playing white and $p_2$ black, with $a$
