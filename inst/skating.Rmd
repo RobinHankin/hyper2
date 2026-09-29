@@ -36,8 +36,8 @@ skating_table <- ordertable(read.table("skating.txt", header=TRUE))
 skating_table
 ```
 
-(we note in passing that the Plackett-Luce strengths of every
-competitors is strictly positive.  We can see this by observing that:
+(we note in passing that the Plackett-Luce strength of every
+competitor is strictly positive.  We can see this by observing that:
 
 \begin{alignat*}{4}
 \textbf{luka}
