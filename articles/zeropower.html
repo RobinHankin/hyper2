@@ -165,23 +165,30 @@ would prevent the creation of a hyper2 object with unbalanced powers.
 However, this approach is not consistent with the package; consider the
 following situation. Suppose we wish to incorporate a new observation
 into <code>chess</code>, specifically that Anand played Karpov once,
-with Anand winning. We might proceed as follows:</p>
+with Anand winning. This corresponds to multiplying the likelihood
+function by <span class="math inline">$\frac{\small{\text{Anand}}}{\small{\text{Anand}} +
+\small{\text{Karpov}}}$</span>. We might proceed by multiplying by the
+denominator first, and dividing by the denominator afterwards:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chess</span><span class="op">[</span><span class="st">"Anand"</span><span class="op">]</span> <span class="op">%&lt;&gt;%</span> <span class="va">inc</span></span>
-<span><span class="va">chess</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Anand, Karpov"</span><span class="op">)</span><span class="op">]</span> <span class="op">%&lt;&gt;%</span> <span class="fu"><a href="../reference/increment.html">dec</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">chess</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning in print.hyper2(x): powers have nonzero sum</span></span></code></pre>
+<pre><code><span><span class="co">## log(Anand^37 * (Anand + Karpov)^-35 * (Anand + Topalov)^-35 * Karpov^22</span></span>
+<span><span class="co">## * (Karpov + Topalov)^-18 * Topalov^30)</span></span></code></pre>
+<p>Above, we print the value of <code>chess</code> after the increment.
+We see from the warning that <code>chess</code> has a nonzero power sum,
+pending addition of another term. At this point, <code>chess</code> is
+unbalanced: its nonzero power sum is an indicator that it is a temporary
+object.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chess</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Anand, Karpov"</span><span class="op">)</span><span class="op">]</span> <span class="op">%&lt;&gt;%</span> <span class="va">dec</span></span>
+<span><span class="va">chess</span></span></code></pre></div>
 <pre><code><span><span class="co">## log(Anand^37 * (Anand + Karpov)^-35 * (Anand + Topalov)^-35 * Anand,</span></span>
-<span><span class="co">## Karpov^-2 * Karpov^22 * (Karpov + Topalov)^-18 * Topalov^30)</span></span></code></pre>
-<p>However, after the increment, but before the decrement,
-<code>chess</code> has a nonzero power sum, pending addition of another
-term. At this point, <code>chess</code> is unbalanced; its nonzero power
-sum is an indicator that it is a temporary object. That’s OK as long as
-we remember to add the denominator (as carried out in the next line)
-which would mean dividing by <code>(Anand+Karpov)^2</code>, thereby
-restoring the zero power sum. If we forget to do this, the print method
-gives us a warning, and indeed <code><a href="../reference/loglik.html">loglik()</a></code> returns an error,
-which should prompt us to check the coding.</p>
+<span><span class="co">## Karpov^-1 * Karpov^22 * (Karpov + Topalov)^-18 * Topalov^30)</span></span></code></pre>
+<p>Above, we divide by <code>(Anand+Karpov)^1</code>, thereby restoring
+the zero power sum. If we forget to do this, the print method gives us a
+warning, and indeed <code><a href="../reference/loglik.html">loglik()</a></code> returns an error if evaluated
+on <code>chess</code>, which should prompt us to check the coding.</p>
 <div class="section level2">
 <h2 id="the-print-method">The print method<a class="anchor" aria-label="anchor" href="#the-print-method"></a>
 </h2>
@@ -199,7 +206,7 @@ unbalanced likelihood functions are permitted, but only ephemerally.</p>
 <p>Sometimes it is convenient to accommodate the numerator terms all
 together and enforce the zero power sum at the end. This is accomplished
 by <code><a href="../reference/balance.html">balance()</a></code>:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hyper2.html">hyper2</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">H</span><span class="op">[</span><span class="st">'a'</span><span class="op">]</span> <span class="op">%&lt;&gt;%</span> <span class="fu"><a href="../reference/increment.html">inc</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
 <span><span class="va">H</span><span class="op">[</span><span class="st">'b'</span><span class="op">]</span> <span class="op">%&lt;&gt;%</span> <span class="fu"><a href="../reference/increment.html">inc</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
