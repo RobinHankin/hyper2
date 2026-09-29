@@ -98,23 +98,32 @@ prevent the creation of a hyper2 object with unbalanced powers.
 However, this approach is not consistent with the package; consider
 the following situation.  Suppose we wish to incorporate a new
 observation into `chess`, specifically that Anand played Karpov once,
-with Anand winning.  We might proceed as follows:
+with Anand winning.  This corresponds to multiplying the likelihood
+function by $\frac{\small{\text{Anand}}}{\small{\text{Anand}} +
+\small{\text{Karpov}}}$.  We might proceed by multiplying by the
+denominator first, and dividing by the denominator afterwards:
 
-```{r, newinfo}
+```{r, makechessunbalanced}
 chess["Anand"] %<>% inc
-chess[c("Anand, Karpov")] %<>% dec(2)
 chess
 ```
 
-However, after the increment, but before the decrement,
-`chess` has a nonzero power sum, pending addition of another term.  At
-this point, `chess` is unbalanced; its nonzero power sum is an
-indicator that it is a temporary object.  That's OK as long as we
-remember to add the denominator (as carried out in the next line)
-which would mean dividing by `(Anand+Karpov)^2`, thereby restoring the
-zero power sum.  If we forget to do this, the print method gives us a
-warning, and indeed `loglik()` returns an error, which should prompt
-us to check the coding.
+Above, we print the value of `chess` after the increment.  We see from
+the warning that `chess` has a nonzero power sum, pending addition of
+another term.  At this point, `chess` is unbalanced: its nonzero power
+sum is an indicator that it
+is a temporary object.  
+
+
+```{r, makechessbalanced}
+chess[c("Anand, Karpov")] %<>% dec
+chess
+```
+
+Above, we divide by `(Anand+Karpov)^1`, thereby restoring the zero
+power sum.  If we forget to do this, the print method gives us a
+warning, and indeed `loglik()` returns an error if evaluated on
+`chess`, which should prompt us to check the coding.
 
 ## The print method
 
