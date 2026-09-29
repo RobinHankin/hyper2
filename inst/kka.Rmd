@@ -379,7 +379,8 @@ $$
 $$
 
 Or, noting that the sum of the numerators is equal to the common
-denominator, even more compactly as $\left(p_1,\ldots, p_r\right)^{\left(n_1,\ldots,n_r\right)}$.
+denominator, even more compactly as $\left(p_1;\ldots;
+p_r\right)^{\left(n_1,\ldots,n_r\right)}$.
 
 The previous likelihood function can be represented thus:
 
