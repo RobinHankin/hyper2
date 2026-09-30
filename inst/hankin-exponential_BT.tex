@@ -611,12 +611,12 @@ about 10.1 per race, potentially valuable information.
 Estimating the Bradley-Terry strengths of competitors under the
 Plackett-Luce likelihood function is problematic for large numbers of
 competitors because of the large dimensionality of the parameter
-space.  Here I considered the case in which Plackett-Luce observations
-are restricted to a single entity, the {\em focal competitor}; in many
-situations we are either not interested in, or cannot observe, the
-performance of non-focal entities.
+space.  Here I considered the case in which only the rank of a single
+entity, the {\em focal competitor}, is observed; in many situations we
+are either not interested in, or cannot observe, the performance of
+non-focal entities.
 
-Plackett-Luce strengths are parameterized by assigning Bradley-Terry
+Competitive strengths are parameterized by assigning Bradley-Terry
 strengths $\alpha x,\alpha x^2,\ldots,\alpha x^n$ to the competitors;
 here $0 <x\leqslant 1$ is a common ratio and $\alpha$ a normalising
 constant; the focal competitor has strength $\alpha x^r$ for some
@@ -635,10 +635,10 @@ and Formula 1 motor racing.  In neither case is conventional
 Bradley-Terry strength maximization possible, either because the
 numbers of competitors is large, or due to censoring.  For Parkrun, we
 may use repeated observations of the focal competitor's observed rank
-to estimate $r$ and $x$ and thereby construct distributions of the
+to estimate $r$ and $x$, and thereby construct distributions of the
 focal competitor's likely finishing rank in subsequent Parkruns.  For
 Formula 1, the focal competitor is Lewis Hamilton; we may use our
-constructed distribution to estimate the expected points per race.
+constructed distribution to estimate his expected points per race.
 
 The results seem to be difficult to obtain any other way.  The
 assumptions furnish a reasonable, intuitive, and computationally
