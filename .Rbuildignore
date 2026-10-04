@@ -339,3 +339,5 @@ CITATION.cff
 ^inst/system_prompt.txt$
 ^inst/exp_grid.Rmd$
 ^inst/exp_grid_19.Rmd$
+^inst/scottish_premier_league.txt$
+^inst/scottish_premier_league.Rmd$

@@ -1,0 +1,5 @@
+2013 "Celtic" "Motherwell" "Aberdeen" "Dundee United" "Inverness Caledonian Thistle" "St Johnstone" "Ross County" "St Mirren" "Kilmarnock" "Partick Thistle" "Hibernian" "Heart of Midlothian"
+2014 "Celtic" "Aberdeen" "Inverness Caledonian Thistle" "St Johnstone" "Dundee United" "Dundee" "Hamilton Academical" "Partick Thistle" "Ross County" "Kilmarnock" "Motherwell" "St Mirren"
+2015 "Celtic" "Aberdeen" "Heart of Midlothian" "St Johnstone" "Motherwell" "Ross County" "Inverness Caledonian Thistle" "Dundee" "Partick Thistle" "Hamilton Academical" "Kilmarnock" "Dundee United"
+2016 "Celtic" "Aberdeen" "Rangers" "St Johnstone" "Heart of Midlothian" "Partick Thistle" "Ross County" "Kilmarnock" "Motherwell" "Dundee" "Hamilton Academical" "Inverness Caledonian Thistle"
+2017 "Celtic" "Aberdeen" "Rangers" "Hibernian" "Kilmarnock" "Heart of Midlothian" "Motherwell" "St Johnstone" "Dundee" "Hamilton Academical" "Partick Thistle" "Ross County"

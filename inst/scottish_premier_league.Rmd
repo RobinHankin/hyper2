@@ -1,0 +1,30 @@
+---
+title: "Some thoughts on the Scottish Premier League using Plackett-Luce likelihood functions"
+author: "Robin K. S. Hankin"
+output: bookdown::html_document2
+bibliography: hyper2.bib  # copy hyper2.bib from the vignettes/ directory
+---
+
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  
+
+```{r kickoff}
+library("hyper2", quietly=TRUE)
+lines <- readLines("scottish_premier_league.txt")
+orderstat <- lapply(lines, function(z) {as.character(read.table(text=z, header=FALSE)[-1])})
+years <- sapply(lines, function(z) {as.numeric(read.table(text=z, header=FALSE)[1])})
+names(years) <- NULL
+names(orderstat) <- years
+orderstat[[1]]
+orderstat
+L <- hyper2()
+for(i in seq_along(orderstat)){L <- L + race(orderstat[[i]])}
+summary(L)
+```		
+
+### References {-}
