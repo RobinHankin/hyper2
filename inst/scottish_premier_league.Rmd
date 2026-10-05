@@ -21,10 +21,35 @@ years <- sapply(lines, function(z) {as.numeric(read.table(text=z, header=FALSE)[
 names(years) <- NULL
 names(orderstat) <- years
 orderstat[[1]]
-orderstat
 L <- hyper2()
 for(i in seq_along(orderstat)){L <- L + race(orderstat[[i]])}
 summary(L)
 ```		
+
+Find the evaluate:
+
+```{r findmaxscott, cache=TRUE}
+M <- maxp(L)
+```
+
+```{r}
+M
+pie(M)
+```
+
+
+Now profile likelihood for Celtic:
+
+
+```{r proflikeceltic, cache=TRUE}
+p <- seq(from=0.6, to=0.995, len=17)
+s <- profsupp(L, "Celtic", p)
+```
+
+
+```{r plotproflikeceltic}
+plot(p, s, type="b")
+```
+
 
 ### References {-}
