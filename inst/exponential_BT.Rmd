@@ -864,7 +864,7 @@ contour(a_try, x_try, S, levels = -(0:6)*1, lwd=c(1,4,1,1,1,1,1))
 
 worker <- function(...){
     wanted <- a_try < 0.5
-    contour(a_try[wanted], x_try, S[wanted,], levels = -(0:6)*2, lwd=c(1,4,1,1,1,1,1))
+    contour(a_try[wanted], x_try, S[wanted,], levels = -(0:6)*2, lwd=c(1,4,1,1,1,1,1),xlab="s", ylab="x")
     jj <- S[wanted,]
     m <- which(jj == max(jj), arr.ind=TRUE)
     points(a_try[wanted][m[1]], x_try[m[2]], pch=16, cex=2, col='red')
