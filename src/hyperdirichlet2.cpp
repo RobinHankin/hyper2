@@ -6,13 +6,13 @@ hyper2 prepareL(const List &L, const NumericVector &d){
     unsigned int i,j;
     const unsigned n=L.size();
     
-    for(i=0; i<n ; i++){
+    for(i=0 ; i<n ; i++){
         if(d[i] != 0){
             b.clear();
 
             const SEXP jj = L[i];  // jj is temporary
             const Rcpp::CharacterVector names(jj);
-            for(j=0 ; j<(unsigned int) names.size(); j++){
+            for(j=0 ; j<(unsigned int) names.size() ; j++){
                 b.insert((string) names[j]);
             }
             H[b] += d[i];  // the meat
@@ -24,7 +24,7 @@ hyper2 prepareL(const List &L, const NumericVector &d){
 psub preparepmap(const NumericVector &probs, const CharacterVector &pnames){
     psub out;
 
-    for(int i=0; i<probs.length() ; i++){
+    for(int i=0 ; i<probs.length() ; i++){
         out[(string) pnames[i]] = probs[i];
     }
     return out;
@@ -34,7 +34,7 @@ List makebrackets(const hyper2 H){  // takes a hyper2, returns the brackets
     List out;
     hyper2::const_iterator ih;
     
-    for(ih=H.begin(); ih != H.end(); ++ih){
+    for(ih=H.begin() ; ih != H.end() ; ++ih){
         out.push_back(ih->first);
     }
     return out;
@@ -45,7 +45,7 @@ NumericVector makepowers(const hyper2 &H){  // takes a hyper2, returns powers
     unsigned int i=0;
     hyper2::const_iterator it;   // it iterates through a hyper2 object
     
-    for(it=H.begin(); it != H.end(); ++it){
+    for(it=H.begin() ; it != H.end() ; ++it){
         out(i++) = it->second;   // initialize-and-fill is more efficient than  out.push_back(it->second)
     }
     return out;
@@ -73,13 +73,13 @@ List addL(
     hyper2 h2 = prepareL(L2, powers2);
     hyper2::const_iterator it;
     if(L1.size() > L2.size()){ // L1 is bigger, so iterate through L2
-        for (it=h2.begin(); it != h2.end(); ++it){
+        for (it=h2.begin() ; it != h2.end() ; ++it){
             const bracket b = it->first;
             h1[b] += h2[b];  
         }
         return retval(h1);
     } else {  // L2 is bigger
-        for (it=h1.begin(); it != h1.end(); ++it){
+        for (it=h1.begin() ; it != h1.end() ; ++it){
             const bracket b = it->first;
             h2[b] += h1[b];  
         }
@@ -102,7 +102,7 @@ bool equality(  // modelled on spray_equality()
     h1 = prepareL(L1, powers1);
     h2 = prepareL(L2, powers2);
 
-    for (it=h1.begin(); it != h1.end(); ++it){
+    for (it=h1.begin() ; it != h1.end() ; ++it){
             const bracket b = it->first;
             if(h1[b] != h2[b]){
                 return false;
@@ -131,12 +131,12 @@ List accessor(
     const unsigned int n=Lwanted.size();
     unsigned int i,j;
 
-    for(i=0; i<n ; i++){
+    for(i=0 ; i<n ; i++){
             b.clear();
             const SEXP jj = Lwanted[i]; // jj is temporary
             const Rcpp::CharacterVector names(jj);
 
-            for(j=0 ; j<(unsigned int) names.size(); j++){
+            for(j=0 ; j<(unsigned int) names.size() ; j++){
                 b.insert((string) names[j]);
             }
             
@@ -157,7 +157,7 @@ List overwrite(  // H1[] <- H2
     const hyper2 h2=prepareL(L2,powers2);
     hyper2::const_iterator it;
 
-    for(it=h2.begin(); it != h2.end(); ++it){
+    for(it=h2.begin() ; it != h2.end() ; ++it){
         const bracket b = it->first;
         h1[b] = h2.at(b);
     }
@@ -181,7 +181,7 @@ List assigner(  // H[L] <- v
         b.clear();
         const SEXP jj = L2[i];  // jj is temporary
         const Rcpp::CharacterVector iv(jj);
-        for(j=0 ; j<(unsigned int) iv.size(); j++){
+        for(j=0 ; j<(unsigned int) iv.size() ; j++){
             b.insert((string) iv[j]);
         } 
         h[b] = value[i]; // RHS might be zero in which case this entry is deleted from h
@@ -205,10 +205,10 @@ double evaluate(  // returns log-likelihood
     double bracket_total=0;
     bracket::const_iterator ib;
 
-    for (it=h.begin(); it != h.end(); ++it){
+    for (it=h.begin() ; it != h.end() ; ++it){
         const bracket b = it->first;
         bracket_total = 0;
-        for (ib=b.begin(); ib != b.end(); ++ib){
+        for (ib=b.begin() ; ib != b.end() ; ++ib){
             bracket_total += ps[*ib];  //NB off-by-one error not a problem!
         }
         out += log(bracket_total) * (it->second);
@@ -247,7 +247,7 @@ double differentiate_single_independent( // d(log-likelihod)/dp
     assert(i < n);  // sic; strict
 
     out = 0;
-    for (it=h.begin(); it != h.end(); ++it){  // standard hyper2 loop
+    for (it=h.begin() ; it != h.end() ; ++it){  // standard hyper2 loop
         const bracket b = it->first;
 
         no_of_diff_terms = b.count((string) pnames[i]);
@@ -256,7 +256,7 @@ double differentiate_single_independent( // d(log-likelihod)/dp
         if(no_of_diff_terms == no_of_fill_terms){continue;} // bracket has same number (maybe 0!) of diff and fillups
 
         bracket_total = 0;
-        for (ib=b.begin(); ib != b.end(); ++ib){
+        for (ib=b.begin() ; ib != b.end() ; ++ib){
             bracket_total += ps[*ib];  //NB off-by-one error not a problem
         }
 
@@ -289,12 +289,12 @@ double differentiate_single_alln( // d(log-likelihod)/dp
     assert(i > 0); 
     assert(i < n);
     out = 0;
-    for (it=h.begin(); it != h.end(); ++it){  // standard hyper2 loop
+    for (it=h.begin() ; it != h.end() ; ++it){  // standard hyper2 loop
         const bracket b = it->first;
         const int no_of_diff_terms = b.count((string) pnames[i]);
         bracket_total = 0;
         if(no_of_diff_terms > 0){ // bracket has i in it
-            for (ib=b.begin(); ib != b.end(); ++ib){
+            for (ib=b.begin() ; ib != b.end() ; ++ib){
                 bracket_total += ps[*ib]; // Off-by-one error not an issue
             }
             
@@ -319,11 +319,11 @@ double second_derivative( // evaluate terms of the lower-right block of the bord
     double out=0;
     psub ps = preparepmap(probs,pnames);
 
-    for (it=h.begin(); it != h.end(); ++it){  // standard hyper2 loop
+    for (it=h.begin() ; it != h.end() ; ++it){  // standard hyper2 loop
         const bracket b = it->first;
         if( (b.count((string) pnames[i])>0) && (b.count((string) pnames[j])>0) ){
             double bracket_total=0;
-            for (ib=b.begin(); ib != b.end(); ++ib){
+            for (ib=b.begin() ; ib != b.end() ; ++ib){
                 bracket_total += ps[*ib];  // off-by-one not an issue
             }
             out -= (it->second)/(bracket_total*bracket_total);
@@ -347,8 +347,8 @@ List hessian_lowlevel(
     int r=0;
     psub ps = preparepmap(probs,pnames);
     
-    for(int i=0; i<nn-1; i++){
-        for(int j=0; j<nn-1; j++){
+    for(int i=0 ; i<nn-1 ; i++){
+        for(int j=0 ; j<nn-1 ; j++){
             out[r++] = second_derivative(h,i,j,probs,pnames);
         }
     }
@@ -369,7 +369,7 @@ List differentiate(  // returns gradient of log-likelihood
     NumericVector out(nn-1);  
     const hyper2 h=prepareL(L,powers);
 
-    for(i=0; i<nn-1; i++){
+    for(i=0 ; i<nn-1 ; i++){
         out[i] = differentiate_single_independent(h,i,nn,probs,pnames);
     }
         return List::create(Named("grad_comp") =  out);
@@ -389,7 +389,7 @@ List differentiate_n(  // returns gradient of log-likelihood
 
     const hyper2 h=prepareL(L,powers);
 
-    for(i=0; i<nn; i++){  // differs from differentiate()
+    for(i=0 ; i<nn ; i++){  // differs from differentiate()
         out[i] = differentiate_single_alln(h,i,nn,probs,pnames);
     }
         return List::create(Named("grad_comp") =  out);
