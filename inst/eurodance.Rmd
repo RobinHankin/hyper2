@@ -121,4 +121,4 @@ Following lines create `eurodance.rda`, residing in the `data/` directory of the
 save(eurodance_table,eurodance_maxp,eurodance,file="eurodance.rda")
 ```
 
-###R References {-}
+### References {-}

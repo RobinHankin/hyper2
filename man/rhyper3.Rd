@@ -45,8 +45,9 @@ rhyper3(n=5, s=4, type='race', ...)
     still-running players.
 
     \item Function \code{rpair3()} returns a \code{hyper3} object
-    corresponding to repeated pairwise comparisons including a
-    white-player advantage represented by \code{lambda}.
+    corresponding to \code{s} pairwise comparisons among \code{n}
+    players, including a white-player advantage represented by
+    \code{lambda}.
     
    \item Function \code{rrace3()} returns a rank statistic corresponding
    to finishing order for a Plackett-Luce race.  The output can be
