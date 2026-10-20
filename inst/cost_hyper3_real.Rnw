@@ -304,31 +304,20 @@ Above we see package idiom for creating a log-likelihood function.  We
 first create an empty {\tt hyper3} object with an appropriate names
 attribute.  The next three lines, using {\tt magrittr} assignment
 pipes, give the results for Rangers at home, and the next three lines
-give the result for Celtic at home.  It is then easy to create a
-bespoke log-likelihood function for Rangers-Celtic matches:
+give the result for Celtic at home.  It is then easy to evaluate this
+log-likelihood function for $\lambda$ corresponding to
+equation~\ref{rangers_vs_celtic}.  We may make inferences about the
+true value of $\lambda$ using profile support
+(Figure~\ref{profilesupportlambda}) from which we see
+strong evidence that $\lambda>1$, and a value for the maximum likelihood
+estimate for $\lambda$.
 %
-<<useoldfirm, cache = TRUE>>=
-oldfirm(1.88)
-@
-%
-We see a log-likelihood function for all $82+42+76+46=245$
-Rangers-Celtic matches that were not score draws, conditional on
-assumed value $\lambda=1.88$.  This corresponds to
-Equation~\ref{rangers_vs_celtic}.  We may make inferences about the
-true value of $\lambda$ using profile support:
-%
-<<profilelikeoldfirm, cache = TRUE>>=
+<<profilelikeoldfirm, cache = TRUE, echo = FALSE>>=
 f <- function(lambda){maxp(oldfirm(lambda), give = 1)$`Log-likelihood`}
 lam <- seq(from = 0.9, to = 3, len = howmany)
 logLike <- sapply(lam, f)
 @
 %
-Thus function {\tt f} returns the support at the evaluate, conditional on a
-supplied value of $\lambda$.  We may use this to create a profile
-likelihood curve (Figure~\ref{profilesupportlambda}) from which we see
-strong evidence that $\lambda>1$, and find the maximum likelihood
-estimate for $\lambda$:
-
 \begin{figure}[htbp]
   \begin{center}
 <<plotproflikeoldfirm, echo=FALSE, fig=TRUE, pdf=TRUE>>=
@@ -350,14 +339,15 @@ abline(h = c(0, -2), col = 'gray')
 \end{figure}
 
 <<optimoldfirm, cache=TRUE>>=
-(lambda_max <-  optimize(f, c(1.5, 2.0), maximum = TRUE)$maximum)
+lambda_max <-  optimize(f, c(1.5, 2.0), maximum = TRUE)$maximum
+print(lambda_max)
 @
 
 Then using this value we may estimate the Bradley-Terry strengths of
 Rangers and Celtic:
 %
 <<mleoldfirm, cache=TRUE>>=
-maxp(oldfirm(lambda_max))
+print(maxp(oldfirm(lambda_max)))
 @
 %
 These numerical results agree with the theoretical values obtained by
@@ -471,7 +461,7 @@ f <- function(v){
 }
 @
 %
-Thus function{\tt f} gives us a likelihood function for
+Thus function {\tt f()} gives us a likelihood function for
 $\mathbf{v}=(\lambda,D)$.  We may find the evaluate using
 {\tt optim()}:
 %
@@ -506,7 +496,7 @@ LL <- pmax(-20, LL - max(LL))
 
 \begin{figure}[htbp]
   \begin{center}
-<<docontourplot, cache = FALSE, fig=TRUE, pdf=TRUE>>=
+<<docontourplot, cache = FALSE, fig=TRUE, echo=FALSE, pdf=TRUE>>=
 contour(lambda, D, matrix(LL, n, n), levels = -2*(1:9),
         xlab = expression(lambda), ylab = expression(D))
 points(maxv[1], maxv[2], pch = 16, col = 'red')
@@ -927,13 +917,13 @@ given value of $\lambda$ at the evaluate [over permissible Bradley
 support function for $\lambda$, and then maximize it:
 %
 <<label = maxlikesim, cache = TRUE>>=
-(osup <- optimize(o, c(10, 40), maximum = TRUE))
+print(osup <- optimize(o, c(5, 20), maximum = TRUE))
 @ 
 %
 So a likelihood ratio test of the null that $\lambda=1$ would be:
 %
 <<label = LRT_RB, cache = TRUE>>=
-(suppdiff <- osup$objective - o(lambda = 1))
+print(suppdiff <- osup$objective - o(lambda = 1))
 @
 %
 We can thus improve the hypothesis that $\lambda=1$, corresponding to
