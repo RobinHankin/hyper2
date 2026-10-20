@@ -15,8 +15,12 @@
 \usepackage{algorithmicx}%
 \usepackage{algpseudocode}%
 \usepackage{listings}%
+\usepackage{fancyvrb}
+\usepackage{Sweave}
+
 
 %% recommended packages
+\let\orcidlogo\undefined % <--- Add this line here
 \usepackage{orcidlink,thumbpdf,lmodern}
 
 %% another package (only for this demo article)
@@ -25,6 +29,7 @@
 \usepackage{tikz}
 \usepackage{wrapfig}
 
+\providecommand{\Prob}{\operatorname{Prob}}
 
 %%%%%=============================================================================%%%%
 
@@ -48,7 +53,7 @@
 
 \begin{document}
 
-\title[Article Title]{Article Title}
+\title[Generalized Bradley-Terry Models]{Generalized Bradley-Terry Models}
 
 %%=============================================================%%
 %% GivenName	-> \fnm{Joergen W.}
@@ -59,29 +64,41 @@
 %%  \sfx{IV}}\email{iauthor@gmail.com}
 %%=============================================================%%
 
-\author*[1,2]{\fnm{First} \sur{Author}}\email{iauthor@gmail.com}
+\author*[1]{\fnm{Robin K. S. } \sur{Hankin}}\email{hankin.robin@gmail.com}
 
-\author[2,3]{\fnm{Second} \sur{Author}}\email{iiauthor@gmail.com}
-\equalcont{These authors contributed equally to this work.}
-
-\author[1,2]{\fnm{Third} \sur{Author}}\email{iiiauthor@gmail.com}
-\equalcont{These authors contributed equally to this work.}
-
-\affil*[1]{\orgdiv{Department}, \orgname{Organization}, \orgaddress{\street{Street}, \city{City}, \postcode{100190}, \state{State}, \country{Country}}}
-
-\affil[2]{\orgdiv{Department}, \orgname{Organization}, \orgaddress{\street{Street}, \city{City}, \postcode{10587}, \state{State}, \country{Country}}}
-
-\affil[3]{\orgdiv{Department}, \orgname{Organization}, \orgaddress{\street{Street}, \city{City}, \postcode{610101}, \state{State}, \country{Country}}}
+\affil*[1]{\orgdiv{Division of Computing Science and Mathematics, Faculty of Natural Sciences}, \orgname{University of Stirling}, \orgaddress{\postcode{FK9 4LA}, \state{Scotland}, \country{United Kingdom}}}
 
 %%==================================%%
 %% Sample for unstructured abstract %%
 %%==================================%%
 
-\abstract{The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. Authors are advised to check the author instructions for the journal they are submitting to for word limits and if structural elements like subheadings, citations, or equations are permitted.}
+%% new custom commands
+\newcommand\headercell[1]{%
+   \smash[b]{\begin{tabular}[t]{@{}c@{}} #1 \end{tabular}}}
+
+\abstract{
+  A generalization of the Bradley-Terry model is presented in which
+  strengths may be modified using a multiplicative factor $\lambda$;
+  generally, ordinary Bradley-Terry is recovered if $\lambda=1$.  The
+  $\lambda$ factor is well-suited to represent temporary or ephemeral
+  modifications to Bradley-Terry strength such as the home-ground
+  advantage, or the effects of fatigue.  The multiplicative approach
+  offers several advantages over reified Bradley-Terry, which uses
+  additive terms (``monsters'') to represent enhanced strengths.
+  Computational support for this approach is given in new
+  functionality of the established {\tt hyper2} {R} package:
+  multiplicative factors are handled in a bespoke {S3} class
+  {\tt hyper3}.  I present numerical methods that make
+  likelihood-based inferences about the $\lambda$.  Multiplicative
+  factors admit non-independence of successive observations in
+  Plackett-Luce likelihood functions, which allows a parametrization
+  of the ``red bus, blue bus'' problem in preference analysis.  I
+  present examples drawn from the fields of food preference and the
+  esport {\em Counterstrike}.
+}
 
 
-
-\keywords{keyword1, Keyword2, Keyword3, Keyword4}
+\keywords{Bradley-Terry, Plackett-Luce, preference, red bus-blue bus}
 
 %%\pacs[JEL Classification]{D8, H51}
 
@@ -91,67 +108,10 @@
 
 \section{Introduction}\label{sec1}
 
-The Introduction section, of referenced text \cite{bib1} expands on the background of the work (some overlap with the Abstract is acceptable). The introduction should not include subheadings.
-
-Springer Nature does not impose a strict layout as standard however authors are advised to check the individual requirements for the journal they are planning to submit to as there may be journal-level preferences. When preparing your text please also be aware that some stylistic choices are not supported in full text XML (publication version), including coloured font. These will not be replicated in the typeset article if it is accepted. 
-
-\section{Results}\label{sec2}
-
-Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
-
-\section{This is an example for first level head---section head}\label{sec3}
-
-\subsection{This is an example for second level head---subsection head}\label{subsec2}
-
-\subsubsection{This is an example for third level head---subsubsection head}\label{subsubsec2}
-
-Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. 
-
-\section{Equations}\label{sec4}
-
-Equations in \LaTeX\ can either be inline or on-a-line by itself (``display equations''). For
-inline equations use the \verb+$...$+ commands. E.g.: The equation
-$H\psi = E \psi$ is written via the command \verb+$H \psi = E \psi$+.
-
-For display equations (with auto generated equation numbers)
-one can use the equation or align environments:
-\begin{equation}
-\|\tilde{X}(k)\|^2 \leq\frac{\sum\limits_{i=1}^{p}\left\|\tilde{Y}_i(k)\right\|^2+\sum\limits_{j=1}^{q}\left\|\tilde{Z}_j(k)\right\|^2 }{p+q}.\label{eq1}
-\end{equation}
-where,
-\begin{align}
-D_\mu &=  \partial_\mu - ig \frac{\lambda^a}{2} A^a_\mu \nonumber \\
-F^a_{\mu\nu} &= \partial_\mu A^a_\nu - \partial_\nu A^a_\mu + g f^{abc} A^b_\mu A^a_\nu \label{eq2}
-\end{align}
-Notice the use of \verb+\nonumber+ in the align environment at the end
-of each line, except the last, so as not to produce equation numbers on
-lines where no equation numbers are required. The \verb+\label{}+ command
-should only be used at the last line of an align environment where
-\verb+\nonumber+ is not used.
-\begin{equation}
-Y_\infty = \left( \frac{m}{\textrm{GeV}} \right)^{-3}
-    \left[ 1 + \frac{3 \ln(m/\textrm{GeV})}{15}
-    + \frac{\ln(c_2/5)}{15} \right]
-\end{equation}
-The class file also supports the use of \verb+\mathbb{}+, \verb+\mathscr{}+ and
-\verb+\mathcal{}+ commands. As such \verb+\mathbb{R}+, \verb+\mathscr{R}+
-and \verb+\mathcal{R}+ produces $\mathbb{R}$, $\mathscr{R}$ and $\mathcal{R}$
-respectively (refer Subsubsection~\ref{subsubsec2}).
-
-
-%% -- LaTeX packages and custom commands ---------------------------------------
-
-
-%% new custom commands
-\newcommand{\class}[1]{`\code{#1}'}
-\newcommand{\fct}[1]{\code{#1()}}
-\newcommand\headercell[1]{%
-   \smash[b]{\begin{tabular}[t]{@{}c@{}} #1 \end{tabular}}}
-
 %% For Sweave-based articles about R packages:
 %% need no \usepackage{Sweave}
 
-<<include=FALSE>>=
+<<include=FALSE, echo=FALSE>>=
 library(knitr)
 opts_chunk$set(
 engine='R', tidy=FALSE
@@ -162,92 +122,12 @@ engine='R', tidy=FALSE
 options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
 library("hyper2")
 library("magrittr")
-howmany <- 23  # set to a smaller value to save time
+howmany <- 3  # set to a smaller value to save time
 @
-
-
-%% -- Article metainformation (author, title, ...) -----------------------------
-
-%% - \author{} with primary affiliation (and optionally ORCID link)
-%% - \Plainauthor{} without affiliations
-%% - Separate authors by \And or \AND (in \author) or by comma (in \Plainauthor).
-%% - \AND starts a new line, \And does not.
-\author{Robin K. S. Hankin~\orcidlink{0000-0001-5982-0415}\\University of Stirling}
-\Plainauthor{Robin K. S Hankin}
-
-%% - \title{} in title case
-%% - \Plaintitle{} without LaTeX markup (if any)
-%% - \Shorttitle{} with LaTeX markup (if any), used as running title
-
-\title{Generalized Bradley-Terry models}
-
-%% - \Abstract{} almost as usual
-\Abstract{
-
-  A generalization of the Bradley-Terry model is presented in which
-  strengths may be modified using a multiplicative factor $\lambda$;
-  generally, ordinary Bradley-Terry is recovered if $\lambda=1$.  The
-  $\lambda$ factor is well-suited to represent temporary or ephemeral
-  modifications to Bradley-Terry strength such as the home-ground
-  advantage, or the effects of fatigue.  The multiplicative approach
-  offers several advantages over reified Bradley-Terry, which uses
-  additive terms (``monsters'') to represent enhanced strengths.
-  Computational support for this approach is given in new
-  functionality of the established \pkg{hyper2} \proglang{R} package:
-  multiplicative factors are handled in a bespoke \proglang{S3} class
-  \class{hyper3}.  I present numerical methods that make
-  likelihood-based inferences about the $\lambda$.  Multiplicative
-  factors admit non-independence of successive observations in
-  Plackett-Luce likelihood functions, which allows a parametrization
-  of the ``red bus, blue bus'' problem in preference analysis.  I
-  present examples drawn from the fields of food preference and the
-  esport {\em Counterstrike}.  }
-
-%% - \Keywords{} with LaTeX markup, at least one required
-%% - \Plainkeywords{} without LaTeX markup (if necessary)
-%% - Should be comma-separated and in sentence case.
-\Keywords{JSS, style guide, comma-separated, not capitalized, \proglang{R}}
-\Plainkeywords{JSS, style guide, comma-separated, not capitalized, R}
-\Keywords{Plackett-Luce, Bradley-Terry, \proglang{R}}
-\Plainkeywords{Plackett-Luce, Bradley-Terry, R}
-
-
-%% - \Address{} of at least one author
-%% - May contain multiple affiliations for each author
-%%   (in extra lines, separated by \emph{and}\\).
-%% - May contain multiple authors for the same affiliation
-%%   (in the same first line, separated by comma).
-\Address{
-  Robin K. S. Hankin\\
-  University of Stirling\\
-  E-mail: \email{hankin.robin@gmail.com}
-}
-
-\begin{document}
-
-
-%% -- Introduction -------------------------------------------------------------
-
-%% - In principle "as usual".
-%% - But should typically have some discussion of both _software_ and _methods_.
-%% - Use \proglang{}, \pkg{}, and \code{} markup throughout the manuscript.
-%% - If such markup is in (sub)section titles, a plain text version has to be
-%%   added as well.
-%% - All software mentioned should be properly \cite-d.
-%% - All abbreviations should be introduced.
-%% - Unless the expansions of abbreviations are proper names (like "Journal
-%%   of Statistical Software" above) they should be in sentence case (like
-%%   "generalized linear models" below).
-
-\section{Introduction}
-\begin{wrapfigure}{r}{0.1\textwidth}
-    \centering
-    \includegraphics[width=0.1\textwidth]{hyper2.png}\\
-\end{wrapfigure}
 
 The Bradley-Terry model for datasets involving paired comparisons has
 wide uptake in the {R} community [see, for example,
-\citet{turner2012,turner2020} and references therein].  The canonical
+\citet{turner2012_nomarkup,turner2020_rmd} and references therein].  The canonical
 case is to consider~$n$ players who compete against one another in
 pairs; the basic inference problem is to estimate
 numbers~$\left({p_1,\ldots,p_n}\right)$, $p_i\geqslant 0$, $\sum
@@ -256,17 +136,17 @@ Information about the~$p_i$ may be obtained from the results of paired
 comparisons between the players.
 
 One generalization of the Bradley-Terry model is due
-to~\citet{luce1959_jss}, in which the probability of competitor~$i$
+to~\citet{luce1959}, in which the probability of competitor~$i$
 winning in a field of~$j=1,\ldots, n$ is $\frac{p_i}{p_1+\cdots
   +p_n}$.  It is then natural to quantify some ephemeral enhancement
 to competitor~$i$ using a multiplicative factor $\lambda$.  Then
 $\Prob(\mbox{$i$ wins})=\frac{\lambda p_i}{p_1+\cdots+\lambda
   p_i+\cdots+p_n}$.  Examples of such enhancements include the
 home-ground advantage in football and rugby, or playing white in
-chess~\citep{hankin2020_jss}.  Note that $\lambda < 1$
+chess~\citep{hankin2020}.  Note that $\lambda < 1$
 would correspond to a decrease in competitive ability.
 
-Further, one might follow~\cite{hankin2017_rnw_jss} and consider teams of
+Further, one might follow~\cite{hankin2017_nomarkup} and consider teams of
 players.  In doubles tennis, for example, $\left\lbrace
 p_1,p_2\right\rbrace$ might play $\left\lbrace p_3,p_4\right\rbrace$
 and win with probability
@@ -290,10 +170,10 @@ where $w_{12}$ and $w_{34}$ are the number of wins by each team
 respectively.  Then $\lambda$ would represent the effectiveness of
 $p_1$'s special technique, and $\mu$ the enhancement afforded to $p_4$
 by the drug; values $>1$ would correspond to a positive effect.  In
-this paper I generalize the \pkg{hyper2} \proglang{R}
-package~\citep{hankin2017_rnw_jss}, available on
-CRAN~\citep{rcore2025_jss}, to accommodate this class of
-multiplicative factors with new \proglang{S3} class \class{hyper3} and
+this paper I generalize the {\tt hyper2} {R}
+package~\citep{hankin2017_nomarkup}, available on
+CRAN~\citep{rcore2025}, to accommodate this class of
+multiplicative factors with new {S3} class {\tt hyper3} and
 associated methods.
 
 The most general likelihood function for Bradley-Terry strengths
@@ -335,9 +215,9 @@ we have a likelihood proportional to
    Falkirk      &   17 &    17  &    NA   &       6\\
    Livingston   &    2 &     2  &     3   &      NA\\
 \end{tabular}
-\\
-\rule{0mm}{16mm}
-\\
+
+\vspace{1em}
+
 \begin{tabular}{@{} *{5}{c} @{}}
 \headercell{\small{Plays at home,}\\ \small{draws}} &
 \multicolumn{4}{c@{}}{\small{Plays away, draws}}\\
@@ -349,9 +229,9 @@ we have a likelihood proportional to
    Falkirk     &       12  &   19 &     NA   &       4\\
    Livingston  &       4   &   4  &     4    &      NA\\
    \end{tabular}
-\\
-\rule{0mm}{16mm}
-\\
+
+\vspace{1em}
+
 \begin{tabular}{@{} *{5}{c} @{}}
 \headercell{\small{Plays at home,}\\ \small{loses}} &
 \multicolumn{4}{c@{}}{\small{Plays away, wins}}\\
@@ -381,12 +261,12 @@ package idiom, a term such as $\lambda p_R + p_C$ is represented as a
 named numeric vector.  For example, if the home strength were $\lambda
 = 1.8$ then one bracket would be {\tt c(Rangers=1.8, Celtic=1)}
 with an associated power of $-81$.  The computational methodology is a
-generalization of that used in~\cite{hankin2024_hyper3_jss} in which the
+generalization of that used in~\cite{hankin2024_hyper3} in which the
 multiplicative factors correspond to number of clones.  However,
-in~\cite{hankin2024_hyper3_jss} the factors are known non-negative
+in~\cite{hankin2024_hyper3} the factors are known non-negative
 integers, and here they are, in general, unknown non-negative real
-numbers.  The \class{hyper3} class enforces \pkg{disordR}
-discipline~\citep{hankin2022_disordR_jss}.
+numbers.  The {\tt hyper3} class enforces {\tt disordR}
+discipline~\citep{hankin2022_disordR}.
 
 \subsection{The package in use}
 Using package idiom to create a likelihood function for this dataset
@@ -422,7 +302,7 @@ oldfirm <- function(lambda){
 %
 Above we see package idiom for creating a log-likelihood function.  We
 first create an empty {\tt hyper3} object with an appropriate names
-attribute.  The next three lines, using \pkg{magrittr} assignment
+attribute.  The next three lines, using {\tt magrittr} assignment
 pipes, give the results for Rangers at home, and the next three lines
 give the result for Celtic at home.  It is then easy to create a
 bespoke log-likelihood function for Rangers-Celtic matches:
@@ -443,7 +323,7 @@ lam <- seq(from = 0.9, to = 3, len = howmany)
 logLike <- sapply(lam, f)
 @
 %
-Thus \fct{f} returns the support at the evaluate, conditional on a
+Thus function {\tt f} returns the support at the evaluate, conditional on a
 supplied value of $\lambda$.  We may use this to create a profile
 likelihood curve (Figure~\ref{profilesupportlambda}) from which we see
 strong evidence that $\lambda>1$, and find the maximum likelihood
@@ -491,11 +371,11 @@ maximizing equation~\ref{rangers_vs_celtic}: $\widehat{p_{\mbox{\tiny
 \section{Score draws}
 
 About 22\% of matches in Table~\ref{oldfirm} end in a draw and
-\pkg{hyper2} formalism may be used to infer draw probabilities.
+{\tt hyper2} formalism may be used to infer draw probabilities.
 Consider the likelihood functions described in
 Table~\ref{windrawloss}.  We see two likelihood functions: on the
 left, a natural multiplicative Bradley-Terry function, and on the
-right, the likelihood function of~\citet{hankin2020_jss} in which a
+right, the likelihood function of~\citet{hankin2020} in which a
 drawn match was considered to be won by a fictitious entity (a ``draw
 monster'') who possessed his own BT strength $\mathfrak{D}$ and a
 ``home ground monster'' with strength $\mathfrak{H}$ representing the
@@ -558,7 +438,7 @@ strengths.
 \end{tabular}
 \caption{Probabilities \label{windrawloss} of a win, draw, loss for
   two teams under the proposed multiplicative Bradley-Terry model, and
-  the reified Bradley-Terry model of~\citet{hankin2020_jss}.  Observe that
+  the reified Bradley-Terry model of~\citet{hankin2020}.  Observe that
   columns sum to one.  We see Bradley-Terry strengths $p_i$ and $p_j$
   for the two teams; a home ground advantage of $\lambda$
   (multiplicative) or $\mathfrak{H}$ (reified); and a propensity to
@@ -568,8 +448,8 @@ strengths.
 Such arguments give direct operational significance to $\lambda$ and
 $D$, when considered in isolation from BT strengths.  We are now in a
 position to consider the entirety of Table~\ref{oldfirm}.  Bespoke
-package function \fct{home\_draw\_away3} converts data in the form of
-Table~\ref{oldfirm} to a \code{hyper3} likelihood function following
+package function {\tt home\_draw\_away3} converts data in the form of
+Table~\ref{oldfirm} to a {\tt hyper3} likelihood function following
 Table~\ref{windrawloss}; it takes numerical values for the home
 advantage $\lambda$ and proclivity to draw $D$:
 %
@@ -591,9 +471,9 @@ f <- function(v){
 }
 @
 %
-Thus \fct{f} gives us a likelihood function for
+Thus function{\tt f} gives us a likelihood function for
 $\mathbf{v}=(\lambda,D)$.  We may find the evaluate using
-\fct{optim}:
+{\tt optim()}:
 %
 <<findmaxlambdaD, cache = TRUE>>=
 maxv <- optim(par=c(2, 0.3), fn = f, control = list(fnscale = -1))$par
@@ -656,7 +536,7 @@ with a $p$~value of about \Sexpr{signif(pchisq(f(maxv)-jj$objective,lower.tail=F
 Equation~\ref{mostgeneral} is very general and may be applied to a
 range of situations in which standard Bradley-Terry strengths are
 modified in some way.  In the following section, I apply it to
-Plackett-Luce \citep{plackett1975_jss} likelihood functions for
+Plackett-Luce \citep{plackett1975} likelihood functions for
 rank data.
 
 \section{Non-independence in successive arrivals}
@@ -664,7 +544,7 @@ rank data.
 In the following, I use the ``race'' metaphor: five runners take part
 in a race and arrive in order $a\succ b\succ c\succ d\succ e$.  Thus
 competitor $a$ wins, $b$ comes second, and so on.  Consider the
-following Plackett-Luce~\citep{plackett1975_jss} likelihood function for
+following Plackett-Luce~\citep{plackett1975} likelihood function for
 this observation:
 %
 \begin{equation}
@@ -676,7 +556,7 @@ this observation:
 \end{equation}
 %
 Note the use of multiplication between the terms, indicating the
-standard assumption~\citep{turner2020} of conditional independence.
+standard assumption~\citep{turner2020_rmd} of conditional independence.
 Now we use the multiplicative generalization of Bradley-Terry
 strengths to introduce an element of non-independence between the
 terms.  There are many ways to do this, but one simple way would be to
@@ -684,8 +564,8 @@ define equivalence classes of the competitors with each equivalence
 class comprising mutually supporting runners.  The metaphor would be
 that a runner who has finished the race is able to support other
 members of his equivalence class by cheering his still-running
-teammates, boosting their performance.  The \pkg{hyper2} package
-includes function \fct{cheering} which implements this functionality.
+teammates, boosting their performance.  The {\tt hyper2} package
+includes function {\tt cheering()} which implements this functionality.
 
 As an example, consider Figure~\ref{tikzabcde}.  This shows a partial
 probability tree diagram for some of the $5!=120$ possible order
@@ -970,7 +850,7 @@ applied to an apparently different situation.
 
 The classic red bus-blue bus problem was originally stated by
 \cite{mcfadden1980} although different metaphors have been employed
-for the same phenomenon by \cite{tverskey1972_jss}.  The canonical
+for the same phenomenon by \cite{tverskey1972}.  The canonical
 problem is as follows.  A commuter has a choice of going to work by
 different transport methods.  Here, we can assume that he has possibly
 strong---but unknown---views on different forms of transport which
@@ -992,7 +872,7 @@ $\Prob(C | \left\lbrace C,RB,BB\right\rbrace)=\frac{1}{2}$ but
 Bradley-Terry gives us $\frac{1}{3}$.
 
 Various solutions to this problem have been proposed.
-\cite{tverskey1972_jss}, for example, presents an approach involving
+\cite{tverskey1972}, for example, presents an approach involving
 overlapping ``aspects'' of the choice set; \cite{mcfadden1980}
 suggests using a generalized extreme-value model.  Here I suggest an
 alternative in the form of a one-parameter generalization of
@@ -1006,8 +886,8 @@ Specifically, it seems reasonable to assume that if we ask our
 respondent to rank his options, it is highly probable that he will put
 RB and BB consecutively (because they are essentially
 indistinguishable).  Can we quantify the strength of this effect?  To
-do this, we define a bespoke function \fct{RB\_BB\_LF} which
-returns a \code{hyper3} log-likelihood function corresponding to
+do this, we define a bespoke function {\tt RB\_BB\_LF()} which
+returns a {\tt hyper3} log-likelihood function corresponding to
 repeated observations of our commuter's reported ranks for the five
 options.
 %
@@ -1029,21 +909,21 @@ options.
 Above, we see from the function body that he reported $RB\succ BB\succ
 C\succ T\succ W$ three times [first row], and so on; perhaps his
 ranking depends on the weather or how tired he is on any given day.
-Vector \code{ec} places the options into equivalence classes;
+Vector {\tt ec} places the options into equivalence classes;
 equivalence class 3 comprises the two buses and the other classes are
-unsupported as they are of size one.  Vector \code{h} encodes the
+unsupported as they are of size one.  Vector {\tt h} encodes the
 strength of the nonindependence.  Observe that in almost every case he
-ranks RB and BB consecutively.  Function \fct{RB\_BB\_LF} takes
-argument \code{lambda} that quantifies the perceived similarity
-between RB and BB in the same way as function \fct{oldfirm} above.
+ranks RB and BB consecutively.  Function {\tt RB\_BB\_LF()} takes
+argument {\tt lambda} that quantifies the perceived similarity
+between RB and BB in the same way as function {\tt oldfirm()} above.
 %
 <<definefunctiono>>=
 o <- function(lambda){maxp(RB_BB_LF(lambda), give = 1)$`Log-likelihood`} 
 @ 
 %
-Above, we define function \fct{o} which returns the support for a
+Above, we define function {\tt o} which returns the support for a
 given value of $\lambda$ at the evaluate [over permissible Bradley
-  Terry strengths for the options].  We can treat \fct{o} as a
+  Terry strengths for the options].  We can treat {\tt o} as a
 support function for $\lambda$, and then maximize it:
 %
 <<label = maxlikesim, cache = TRUE>>=
@@ -1100,8 +980,8 @@ everything else.  Of course, one can also imagine the opposite
 phenomenon whereby the judge decides he has had enough tuna for the
 moment and this disincentivises further tuna choices.  This mechanism
 would be modelled by having $\lambda<1$.  Implementation in
-\code{hyper3} formalism is straightforward.  The dataset used is
-\code{sushi\_table}, part of the \pkg{hyper2} package:
+{\tt hyper3} formalism is straightforward.  The dataset used is
+{\tt sushi\_table}, part of the {\tt hyper2} package:
 %
 <<showsushitable>>=
 <<echo = FALSE>>=
@@ -1326,8 +1206,8 @@ loop---which tends to magnify differences in death statistic.
 Bradley-Terry strengths $p_1,\ldots,p_n$, $p_i\geqslant 0$, $\sum
 p_i=1$ are generalized with non-negative multiplicative $\lambda$-
 factors that represent temporary or ephemeral changes in competitive
-strength.  The \pkg{hyper2} \proglang{R} package implements the
-resulting likelihood functions using \proglang{S3} class {\tt hyper3},
+strength.  The {\tt hyper2} {R} package implements the
+resulting likelihood functions using {S3} class {\tt hyper3},
 and furnishes a wide range of functionality geared towards assessing
 meaningful nulls using likelihood methods.
 
