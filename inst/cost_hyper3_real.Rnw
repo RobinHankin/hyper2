@@ -122,7 +122,7 @@ engine='R', tidy=FALSE
 options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
 library("hyper2")
 library("magrittr")
-howmany <- 3  # set to a smaller value to save time
+howmany <- 13  # set to a smaller value to save time
 @
 
 The Bradley-Terry model for datasets involving paired comparisons has
