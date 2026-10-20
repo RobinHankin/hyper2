@@ -891,7 +891,7 @@ returns a {\tt hyper3} log-likelihood function corresponding to
 repeated observations of our commuter's reported ranks for the five
 options.
 %
-<<defineredbuslf>>=
+<<defineredbuslf, keep.source=TRUE>>=
 `RB_BB_LF` <- function(lambda){
     ec <- c(C = 1, T = 2, RB = 3, BB = 3, W = 4) 
     h <- c(1, 1, lambda, 1)           
