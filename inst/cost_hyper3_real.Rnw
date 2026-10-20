@@ -287,7 +287,7 @@ at home and 46 times away; Celtic have won 76 times at home and 42
 times away.  One way of representing a likelihood function for
 Rangers-Celtic matches (here, ignoring draws) would be:
 %
-<<defineoldfirm, cache = TRUE>>=
+<<defineoldfirm, cache = TRUE, keep.source=TRUE>>=
 oldfirm <- function(lambda){
     H <- hyper3(pnames = c("Rangers", "Celtic"))
     H[c(Rangers = lambda            )] %<>%      add(81     )
