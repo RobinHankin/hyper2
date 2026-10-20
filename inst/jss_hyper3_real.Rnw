@@ -177,9 +177,9 @@ would be proportional to
   \prod_{i=1}^N
   \left(
   \frac{
-    \prod_{j\in W_i}\lambda_{ij}p_j
+    \sum_{j\in W_i}\lambda_{ij}p_j
   }{
-    \prod_{j\in S_i}\lambda_{ij}p_j
+    \sum_{j\in S_i}\lambda_{ij}p_j
   }
   \right)^{w_i}
 \end{equation}
@@ -189,7 +189,7 @@ where playing set $S_i$ is a subset of the competitors $\left\lbrace
 of players on the winning side of pairwise comparison $i$.  Here the
 $\lambda_{ij}\geqslant 0$ are multiplicative factors that account for
 ephemeral or temporary changes in competitive ability.  The data
-$w_1,\ldots w_N$ correspond to the number of ``wins'' for winning set
+$w_1,\ldots, w_N$ correspond to the number of ``wins'' for winning set
 $W_i$ as per $w_{12},w_{34}$ in Equation~\ref{like1234}.  In practice,
 almost all the $\lambda_{ij}$ are zero.  To fix ideas, consider the
 data presented in Table~\ref{oldfirm}.  Ignoring draws for the moment,
@@ -270,7 +270,7 @@ matches, and ignore score draws:
 \begin{equation}\label{rangers_vs_celtic}
   \mathcal{L}(p_R,p_C;\lambda)=
   \left(\frac{\lambda p_R}{\lambda p_R +         p_C}\right)^{81}\cdot
-  \left(\frac{        p_R}{\lambda p_R +         p_C}\right)^{42}\cdot
+  \left(\frac{        p_C}{\lambda p_R +         p_C}\right)^{42}\cdot
   \left(\frac{\lambda p_C}{        p_R + \lambda p_C}\right)^{76}\cdot
   \left(\frac{        p_R}{        p_R + \lambda p_C}\right)^{46}
 \end{equation}
