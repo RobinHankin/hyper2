@@ -196,6 +196,8 @@ CITATION.cff
 ^inst/jss_hyper3_real.Rnw$
 ^inst/jss_hyper3.Rmd$
 ^inst/jss_hyper3.Rnw$
+^inst/cost_hyper3.Rnw$
+^inst/weaver.sh$
 ^inst/karate.Rmd$
 ^inst/karate.txt$
 ^inst/kka.Rmd$
