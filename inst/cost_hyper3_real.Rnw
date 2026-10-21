@@ -1,5 +1,5 @@
 
-\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}% Math and Physical Sciences Numbered Reference Style
+\documentclass[pdflatex,sn-mathphys-ay]{sn-jnl}% Math and Physical Sciences Author-Year Style
 
 \usepackage{graphicx}%
 \usepackage{multirow}%
