@@ -300,17 +300,19 @@ oldfirm <- function(lambda){
 }
 @
 %
-Above we see package idiom for creating a log-likelihood function.  We
-first create an empty {\tt hyper3} object with an appropriate names
-attribute.  The next three lines, using {\tt magrittr} assignment
-pipes, give the results for Rangers at home, and the next three lines
-give the result for Celtic at home.  It is then easy to evaluate this
-log-likelihood function for $\lambda$ corresponding to
+Above we see package idiom for creating a log-likelihood R function.
+Note the straightforward translation between observations (81, 42,
+etc.) and the corresponding package commands.  We first create an
+empty {\tt hyper3} object with an appropriate names attribute.  The
+next three lines, using {\tt magrittr} assignment pipes, give the
+results for Rangers at home, and the next three lines give the result
+for Celtic at home.  It is then easy to evaluate this log-likelihood
+function for $\lambda$ corresponding to
 equation~\ref{rangers_vs_celtic}.  We may make inferences about the
 true value of $\lambda$ using profile support
-(Figure~\ref{profilesupportlambda}) from which we see
-strong evidence that $\lambda>1$, and a value for the maximum likelihood
-estimate for $\lambda$.
+(Figure~\ref{profilesupportlambda}) from which we see strong evidence
+that $\lambda>1$, and a value for the maximum likelihood estimate for
+$\lambda$.
 %
 <<profilelikeoldfirm, cache = TRUE, echo = FALSE>>=
 f <- function(lambda){maxp(oldfirm(lambda), give = 1)$`Log-likelihood`}
@@ -338,7 +340,7 @@ abline(h = c(0, -2), col = 'gray')
 \end{center}
 \end{figure}
 
-<<optimoldfirm, cache=TRUE>>=
+<<optimoldfirm, cache=FALSE>>=
 lambda_max <-  optimize(f, c(1.5, 2.0), maximum = TRUE)$maximum
 print(lambda_max)
 @
@@ -346,7 +348,7 @@ print(lambda_max)
 Then using this value we may estimate the Bradley-Terry strengths of
 Rangers and Celtic:
 %
-<<mleoldfirm, cache=TRUE>>=
+<<mleoldfirm, cache=FALSE>>=
 print(maxp(oldfirm(lambda_max)))
 @
 %
@@ -438,44 +440,43 @@ strengths.
 Such arguments give direct operational significance to $\lambda$ and
 $D$, when considered in isolation from BT strengths.  We are now in a
 position to consider the entirety of Table~\ref{oldfirm}.  Bespoke
-package function {\tt home\_draw\_away3} converts data in the form of
+package function {\tt home\_draw\_away3()} converts data in the form of
 Table~\ref{oldfirm} to a {\tt hyper3} likelihood function following
 Table~\ref{windrawloss}; it takes numerical values for the home
 advantage $\lambda$ and proclivity to draw $D$:
 %
-<<eg_RCLF3_lf, cache = TRUE>>=
+<<eg_RCLF3_lf, cache = FALSE>>=
 home_draw_away3(RCLF3_table, lambda = 1.7, D = 0.3)
 @
 %
-Observe that the resulting likelihood function has two distinct types
-of parameters: the plain Bradley-Terry strengths $\mathbf{p}=(p_R,
-p_C,p_L,p_F)$, with unit sum; but also the auxiliary parameters
-$\lambda,D$.  To make inferences about these parameters we calculate a
-profile likelihood function: conditional on $\lambda,D$ we maximize
-the likelihood over possible values of $\mathbf{p}$.
+Above we see that brackets are represented as named vectors; example,
+$(2p_{\text{Livingstone}} + 1.3p_{\text{Rangers}})$ appears as {\tt
+  (Livingston=2, Rangers=1.3)}, in this case raised to the power
+$-18$.  Observe that the resulting likelihood function has two
+distinct types of parameters: the plain Bradley-Terry strengths
+$\mathbf{p}=(p_R, p_C,p_L,p_F)$, with unit sum; but also the auxiliary
+parameters $\lambda,D$.  To make inferences about these parameters we
+calculate a profile likelihood function: conditional on $\lambda,D$ we
+maximize the likelihood ${\mathcal L}$ over possible values of
+$\mathbf{p}$.  We may then identify the value of $(\lambda,D)$ at
+which this is maximized.
 %
-<<defineF>>=
+<<defineF, echo=FALSE>>=
 f <- function(v){
     H <- home_draw_away3(RCLF3_table, lambda = v[1], D = v[2])
     maxp(H, give = 1)$`Log-likelihood`
 }
 @
 %
-Thus function {\tt f()} gives us a likelihood function for
-$\mathbf{v}=(\lambda,D)$.  We may find the evaluate using
-{\tt optim()}:
 %
-<<findmaxlambdaD, cache = TRUE>>=
+<<showRcommandsforfindingmaxlambdaD, eval = TRUE, echo=FALSE, cache=TRUE>>=
 maxv <- optim(par=c(2, 0.3), fn = f, control = list(fnscale = -1))$par
-maxv
+max_p <- maxp(home_draw_away3(RCLF3_table, lambda = maxv[1], D = maxv[2]))
 @
 %
-Then
-%
-<<showevaluate, cache = TRUE>>=
-maxp(home_draw_away3(RCLF3_table, lambda = maxv[1], D = maxv[2]))
-@
-%
+We find that the evaluate $\hat{\lambda}=1.724$, $\hat{D}=0.372$, at which point
+$\hat{\boldmath{p}}=0$.
+
 Such estimates have rich predictive power.  For example, if Rangers
 were to play Celtic with both teams away [thus nullifying the home
   ground advantage: $\lambda=1$ in Table~\ref{windrawloss}], the
@@ -487,6 +488,7 @@ estimated at $(0.39;0.27;0.34)$.
 %
 <<makecontourdata, echo = FALSE, cache = TRUE>>=
 n <- howmany
+n <- 3  # OVERRIDE!
 lambda <- seq(from = 1, to = 3, len = n)
 D <- seq(from = 0.1, to = 0.6, len = n)
 V <- as.matrix(expand.grid(lambda, D))
@@ -916,13 +918,13 @@ given value of $\lambda$ at the evaluate [over permissible Bradley
   Terry strengths for the options].  We can treat {\tt o} as a
 support function for $\lambda$, and then maximize it:
 %
-<<label = maxlikesim, cache = TRUE>>=
+<<label = maxlikesim, cache = FALSE>>=
 print(osup <- optimize(o, c(5, 20), maximum = TRUE))
 @ 
 %
 So a likelihood ratio test of the null that $\lambda=1$ would be:
 %
-<<label = LRT_RB, cache = TRUE>>=
+<<label = LRT_RB, cache = FALSE>>=
 print(suppdiff <- osup$objective - o(lambda = 1))
 @
 %
@@ -1007,7 +1009,8 @@ f <- function(lambda){
    H <- make_sushi_H(lambda)
    maxp(H, give = 1)$`Log-likelihood`
 }
-s <- exp(seq(from = log(0.9), to = log(10), len = howmany))
+n <- howmany
+s <- exp(seq(from = log(0.9), to = log(10), len = n))
 L <- sapply(s, f)
 @ 
 %
