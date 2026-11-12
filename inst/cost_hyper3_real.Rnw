@@ -122,7 +122,7 @@ engine='R', tidy=FALSE
 options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
 library("hyper2")
 library("magrittr")
-howmany <- 13  # set to a smaller value to save time
+howmany <- 33  # set to a smaller value to save time
 @
 
 The Bradley-Terry model for datasets involving paired comparisons has
@@ -177,8 +177,8 @@ multiplicative factors with new {S3} class {\tt hyper3} and
 associated methods.
 
 The most general likelihood function for Bradley-Terry strengths
-$p_i\geqslant 0, \sum p_j=1$, for a sequence of pairwise comparisons
-would be proportional to
+$p_i\geqslant 0, \sum p_j=1$, for a sequence of possibly multi-way
+comparisons would be proportional to
 %
 \begin{equation}\label{mostgeneral}
   \prod_{i=1}^N
@@ -193,7 +193,7 @@ would be proportional to
 %
 where playing set $S_i$ is a subset of the competitors $\left\lbrace
 1, \ldots, n\right\rbrace$ and $W_i\subseteq S_i$ is the winning set
-of players on the winning side of pairwise comparison $i$.  Here the
+of players in comparison $i$.  Here the
 $\lambda_{ij}\geqslant 0$ are multiplicative factors that account for
 ephemeral or temporary changes in competitive ability.  The data
 $w_1,\ldots, w_N$ correspond to the number of ``wins'' for winning set
@@ -256,11 +256,13 @@ we have a likelihood proportional to
     \left(\frac{p_F}{p_F + \lambda p_L}\right)^{9}
 \end{equation}
 %
-where the home-ground advantage is represented by~$\lambda$.  In
+where the home-ground advantage is represented by~$\lambda$.  The
+first term shows that Rangers ($p_R$), aided by the home-ground
+advantage $\lambda$, beat Celtic ($p_C$) a total of $81$ times.  In
 package idiom, a term such as $\lambda p_R + p_C$ is represented as a
 named numeric vector.  For example, if the home strength were $\lambda
-= 1.8$ then one bracket would be {\tt c(Rangers=1.8, Celtic=1)}
-with an associated power of $-81$.  The computational methodology is a
+= 1.8$ then one bracket would be {\tt c(Rangers=1.8, Celtic=1)} with
+an associated power of $-81$.  The computational methodology is a
 generalization of that used in~\cite{hankin2024_hyper3} in which the
 multiplicative factors correspond to number of clones.  However,
 in~\cite{hankin2024_hyper3} the factors are known non-negative
@@ -450,7 +452,7 @@ home_draw_away3(RCLF3_table, lambda = 1.7, D = 0.3)
 @
 %
 Above we see that brackets are represented as named vectors; example,
-$(2p_{\text{Livingstone}} + 1.3p_{\text{Rangers}})$ appears as {\tt
+$(2p_L + 1.3p_R)$ appears as {\tt
   (Livingston=2, Rangers=1.3)}, in this case raised to the power
 $-18$.  Observe that the resulting likelihood function has two
 distinct types of parameters: the plain Bradley-Terry strengths
@@ -474,9 +476,7 @@ maxv <- optim(par=c(2, 0.3), fn = f, control = list(fnscale = -1))$par
 max_p <- maxp(home_draw_away3(RCLF3_table, lambda = maxv[1], D = maxv[2]))
 @
 %
-We find that the evaluate $\hat{\lambda}=1.724$, $\hat{D}=0.372$, at which point
-$\hat{\boldmath{p}}=0$.
-
+We find that the evaluate $\hat{\lambda}=1.724$, $\hat{D}=0.372$.
 Such estimates have rich predictive power.  For example, if Rangers
 were to play Celtic with both teams away [thus nullifying the home
   ground advantage: $\lambda=1$ in Table~\ref{windrawloss}], the
@@ -488,7 +488,6 @@ estimated at $(0.39;0.27;0.34)$.
 %
 <<makecontourdata, echo = FALSE, cache = TRUE>>=
 n <- howmany
-n <- 3  # OVERRIDE!
 lambda <- seq(from = 1, to = 3, len = n)
 D <- seq(from = 0.1, to = 0.6, len = n)
 V <- as.matrix(expand.grid(lambda, D))
