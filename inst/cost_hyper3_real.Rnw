@@ -1219,5 +1219,27 @@ factors for the strengths of {\em reified} entities.  These
 modifications would be directly representable with existing {\tt
   hyper3} idiom.
 
+\section*{Declarations}
+
+\subsection*{Availability of data and materials}
+
+All data and materials are available under GPL at {\tt https://github.com/RobinHankin/hyper2}
+
+\subsection*{Competing interests}
+
+There are no competing interests to declare
+
+\subsection*{Funding}
+
+This work was not funded by any organisation
+
+\subsection*{Authors' contributions}
+
+This is a single author document.
+
+\subsection*{Acknowledgements}
+
+No acknowledgements
+
 \bibliography{hyper2}
 \end{document}
