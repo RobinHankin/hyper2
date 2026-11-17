@@ -18,12 +18,11 @@ is standard, that is, can be interpreted by function
 \code{ordertable2supp()} if the final points column is removed.  The
 corresponding support function is \code{motoGP_2019}.
 
-
 \generatedby{inst/moto.Rmd}{moto.rda}{https://robinhankin.github.io/hyper2/moto.html}
 
 }
-\references{
 
+\references{
 Wikipedia contributors. (2020, February 8). 2019 MotoGP season. In
 \emph{Wikipedia, The Free Encyclopedia.} Retrieved 08:16, February 20,
 2020, from \url{https://en.wikipedia.org/w/index.php?title=2019_MotoGP_season&oldid=939711064}

@@ -43,9 +43,9 @@ profile_support_single(H, i, p, evaluate=FALSE, ...)
 \examples{
 
 \dontrun{  # takes too long
-p <- seq(from=0.5,to=0.4,len=10)
-u <- profsupp(icons,"NB",p)
-plot(p,u-max(u))
-abline(h=c(0,-2))
+p <- seq(from=0.5, to=0.4, len=10)
+u <- profsupp(icons, "NB", p)
+plot(p, u-max(u))
+abline(h = c(0,-2))
 }
 }

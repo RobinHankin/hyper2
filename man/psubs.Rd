@@ -10,8 +10,8 @@ psubs(H, from, to)
 psubs_single(H, from, to)
 }
 \arguments{
-  \item{H}{hyper2 object}
-  \item{from,to}{Character vector of players to substitute and their
+  \item{H}{A hyper2 object}
+  \item{from, to}{Character vector of players to substitute and their
     substitutes}
 }
 \details{
