@@ -20,7 +20,7 @@ The Dirichlet distribution in likelihood (for \eqn{p}) form, including the
 generalized Dirichlet distribution due to Connor and Mosimann
 }
 \usage{
-dirichlet(powers, alpha)
+dirichlet(powers, alpha, players)
 dirichlet3(powers, lambda=NULL)
 GD(alpha, beta, beta0=0)
 GD_wong(alpha, beta)
@@ -38,6 +38,8 @@ multinom(x)
   \item{H}{Object of class \code{hyper2}}
   \item{lambda}{Vector of weights in \code{dirichlet3()}}
   \item{n}{Number of observations}
+  \item{players}{A character vector, names of players.  If a
+    \code{hyper2} object, the \code{pnames()} will be taken}
 }
 \details{
 
@@ -143,5 +145,8 @@ colMeans(rdirichlet(1e4, H))
 
 dirichlet3(c(fish=3, chips=2), lambda=1.8)
 dirichlet3(c(x=6, y=5, z=2), 1:3)
+
+dirichlet(c(foo=66))  
+dirichlet(c(foo=66), players=c("foo","bar","baz"))
 
 }

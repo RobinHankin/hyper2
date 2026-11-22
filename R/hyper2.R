@@ -790,7 +790,7 @@ rorder_single <- function(p){
     return(out)
 }
 
-`dirichlet` <-  function(powers, alpha){
+`dirichlet` <-  function(powers, alpha, players){
     if(!xor(missing(powers),missing(alpha))){
         stop("supply exactly one of powers, alpha")
     }
@@ -801,7 +801,13 @@ rorder_single <- function(p){
 
     np <- names(powers)
     if(is.null(np)){stop("supply a named vector")}
-    hyper2(as.list(np),d=powers) - hyper2(list(np),d=sum(powers))
+
+    if(missing(players)){players <- np}
+    if(is.hyper2(players)){players <- pnames(players)}
+    stopifnot(all(np %in% players))
+
+    out <- hyper2(as.list(np), d=powers, pnames=sort(unique(c(np, players))))
+    return(out - hyper2(list(players),d=sum(powers)))
 }
 
 `GD` <- function(alpha, beta, beta0=0){
