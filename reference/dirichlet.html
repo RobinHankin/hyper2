@@ -80,7 +80,7 @@ generalized Dirichlet distribution due to Connor and Mosimann</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dirichlet</span><span class="op">(</span><span class="va">powers</span>, <span class="va">alpha</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dirichlet</span><span class="op">(</span><span class="va">powers</span>, <span class="va">alpha</span>, <span class="va">players</span><span class="op">)</span></span>
 <span><span class="fu">dirichlet3</span><span class="op">(</span><span class="va">powers</span>, lambda<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="fu">GD</span><span class="op">(</span><span class="va">alpha</span>, <span class="va">beta</span>, beta0<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="fu">GD_wong</span><span class="op">(</span><span class="va">alpha</span>, <span class="va">beta</span><span class="op">)</span></span>
@@ -112,6 +112,10 @@ generalized Dirichlet distribution due to Connor and Mosimann</p>
 
   <dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
 <dd><p>Number of observations</p></dd>
+
+  <dt id="arg-players">players<a class="anchor" aria-label="anchor" href="#arg-players"></a></dt>
+<dd><p>A character vector, names of players.  If a
+    <code>hyper2</code> object, the <code><a href="hyper2.html">pnames()</a></code> will be taken</p></dd>
 
 </dl></div>
     <div id="details">
@@ -232,6 +236,11 @@ A list of rendered HTML documentation may be found
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (chips=1)^2 * (chips=1, fish=1.8)^-5 * (fish=1.8)^3)</span>
 <span class="r-in"><span><span class="fu">dirichlet3</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">6</span>, y<span class="op">=</span><span class="fl">5</span>, z<span class="op">=</span><span class="fl">2</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> log( (x=1)^6 * (x=1, y=2, z=3)^-13 * (y=2)^5 * (z=3)^2)</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">dirichlet</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>foo<span class="op">=</span><span class="fl">66</span><span class="op">)</span><span class="op">)</span>  </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log()</span>
+<span class="r-in"><span><span class="fu">dirichlet</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>foo<span class="op">=</span><span class="fl">66</span><span class="op">)</span>, players<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foo"</span>,<span class="st">"bar"</span>,<span class="st">"baz"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log((bar + baz + foo)^-66 * foo^66)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
