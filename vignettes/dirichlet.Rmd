@@ -32,7 +32,8 @@ dirichlet
 To cite the `hyper2` package in publications, please use
 @hankin2017_rmd.  We say that non-negative $p_1,\ldots, p_n$
 satisfying $\sum p_i=1$ follow a _Dirichlet distribution_, and write
-$\mathcal{D}(p_1,\ldots,p_n)$, if their density function is
+$(p_1,\ldots,p_n)\sim\mathcal{D}(\alpha_1,\ldots,\alpha_n)$, if their
+density function is
 
 \begin{equation}
 \frac{\Gamma(\alpha_1+\cdots +\alpha_n)}{\Gamma(\alpha_1)\cdots\Gamma(\alpha_n)}
@@ -43,8 +44,8 @@ for some parameters $\alpha_i>0$.  It is interesting in the current
 context because it is conjugate to the multinomial distribution;
 specifically, given a Dirichlet prior
 $\mathcal{D}(\alpha_1,\ldots,\alpha_n)$ and likelihood function
-$\mathcal{L}(p_1,\ldots,p_n)\propto\prod_{i=1}^n p_i^{\alpha_i}$ then
-the posterior is $\mathcal{D}(\alpha_1+a_1,\ldots,\alpha_n+a_n)$.
+$\mathcal{L}(p_1,\ldots,p_n)\propto\prod_{i=1}^n p_i^{a_i}$ then the
+posterior is $\mathcal{D}(\alpha_1+a_1,\ldots,\alpha_n+a_n)$.
 
 In the context of the `hyper2` package, function `dirichlet()`
 presents some peculiarities, discussed here.
@@ -57,18 +58,15 @@ trials, `a` wins 4, `b` wins 5, and `c` wins 3.  Then an appropriate
 likelihood function would be:
 
 ```{r dirichletcompleteFALSE}
-dirichlet(c(a=4,b=5,c=3))
+L1 <- dirichlet(c(a=4, b=5, c=3))
+L1
 ```
 
-Note the `(a+b+c)^-11` term, which is not strictly necessary according
+Note the `(a+b+c)^-12` term, which is not strictly necessary according
 the Dirichlet density function above which has no such term.  However,
 we see that the returned likelihood function is ${\propto}
 p_{a\vphantom{abc}}^4p_{b\vphantom{abc}}^5p_{c\vphantom{abc}}^3$
 (because $p_a+p_b+p_c=1$).
-
-```{r dirichletabc}
-(L1 <- dirichlet(c(a=4,b=5,c=3)))
-```
 
 Now suppose we observe three-way trials between `b`, `c`, and `d`:
 
