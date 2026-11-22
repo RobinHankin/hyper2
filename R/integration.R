@@ -45,7 +45,7 @@ function(e, H, include.Jacobian=TRUE){
   return(out)
 }
 
-`mgf` <- function(H,powers,...){ B(H + dirichlet(powers = powers), ...)/B(H, ...) }
+`mgf` <- function(H,powers,...){ B(H + dirichlet(powers = powers, players=H), ...)/B(H, ...) }
 
 `mean_hyper2` <- function(H, normalize=TRUE, ...){
   f <- function(i){
