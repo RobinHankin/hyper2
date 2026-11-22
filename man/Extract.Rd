@@ -74,7 +74,8 @@ Also see function \code{hyper2_sum_numeric()}.
 }
 \seealso{
     \code{\link{hyper2}},
-    \code{\link{Ops.hyper2}}
+    \code{\link{Ops.hyper2}},
+    \code{\link{beats}},
 
     \seegithub
 }
@@ -98,6 +99,11 @@ chess[c("Topalov","Kasparov")] <- chess[c("Topalov","Kasparov")] -1
 # magrittr idiom:
 # chess["Topalov"] \%<>\% inc
 # chess[c("Topalov","Kasparov")] \%<>\% dec  
+
+# see also beats() et. seq:
+
+chess + beats("Topalov", "Kasparov")
+
 
 # overwriting idiom:
 H <- hyper2(list("Topalov","X"),6)
