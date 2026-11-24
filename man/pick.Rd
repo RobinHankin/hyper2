@@ -49,10 +49,6 @@ shortly be changed).
 }
 \author{Robin K. S. Hankin}
 \seealso{
-  \usedinonline{
-    \href{https://robinhankin.github.io/hyper2/kka.html}{kka}
-}
-
 \seegithub
 }
 \examples{
