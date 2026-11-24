@@ -44,10 +44,10 @@ p_to_e(p)
     output of \code{adaptIntegrate()}}
   \item{normalize}{Boolean, indicates whether return value of
     \code{mean_hyper2()} is normalized to have unit sum}
-  \item{likmax}{In \code{B()}, a normalizing constant.  Many likelihood
-    functions are extremely small [e.g. \code{chess} has likelihoods
-    \eqn{< 10^{-26}}] and this poses problems for integration routines
-    which round such small evaluations to zero}
+  \item{max_factor}{In \code{B()}, a normalizing constant.  Many
+    likelihood functions are extremely small [e.g. \code{chess} has
+    likelihoods \eqn{< 10^{-26}}] and this poses problems for
+    integration routines which round such small evaluations to zero}
   \item{\dots}{Further arguments passed to \code{adaptIntegrate()}}
 }
 \details{
