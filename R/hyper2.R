@@ -192,6 +192,9 @@ setGeneric("pnames<-",function(x, value){standardGeneric("pnames<-")})
   }
 }
 
+`loglikmax` <- function(H){loglik_single(maxp(H), H, log=TRUE)}
+`likmax`    <- function(H){loglik_single(maxp(H), H, log=FALSE)}
+
 `hyper2_equal` <- function(e1, e2){
   equality(
       brackets(e1), powers(e1),

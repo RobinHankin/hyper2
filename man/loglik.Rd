@@ -3,6 +3,8 @@
 \alias{loglik_single}
 \alias{like_single_list}
 \alias{like_series}
+\alias{loglikmax}
+\alias{likmax}
 \title{Log likelihood functions}
 \description{
   Returns a log-likelihood for a given \code{hyper2} or \code{hyper3}
@@ -13,7 +15,8 @@ loglik(p, H, log = TRUE)
 loglik_single(p,H,log=TRUE)
 like_single_list(p,Lsub)
 like_series(p,L,log=TRUE)
-
+loglikmax(H)
+likmax(H)
 }
 \arguments{
   \item{H}{An object of class \code{hyper2} or \code{hyper3}}
@@ -43,9 +46,11 @@ like_series(p,L,log=TRUE)
   \code{like_single_list()} and \code{like_series()} are intended for
   use with \code{ggrl()}.
 
+  Functions \code{loglikmax()} and \code{likmax()} are convenience
+  functions.  These evaluate \code{loglik(H, maxp(H))} and
+  \code{loglik(H, maxp(H), log=FALSE)} respectively. 
 }
-\note{
-
+  \note{
   \emph{Likelihood} is defined up to an arbitrary multiplicative
   constant.  Log-likelihood (also known as \emph{support}) is defined up
   to an arbitrary additive constant.
@@ -97,6 +102,11 @@ like_series(p,L,log=TRUE)
 \examples{
 data(chess)
 loglik(c(1/3,1/3),chess)
+
+\dontrun{ # takes too long
+loglikmax(chess)
+likmax(chess)
+}
 
 loglik(rp(14,icons),icons)
 

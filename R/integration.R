@@ -2,23 +2,24 @@
 
 `e_to_p` <- function(e){e[1]* cumprod(c(1,1-e[-1]))* c(e[-1],1)}
 
-`B` <- function(H, disallowed=NULL, give=FALSE, ...){  # modelled on hyperdirichlet::calculate_B()
+`B` <- function(H, disallowed=NULL, give=FALSE, max_factor = likmax(H), ...){  # modelled on hyperdirichlet::calculate_B()
   n <- size(H)-1  # "-1" because this is the dimension of the integrand, not the number of p's.
 
   ## No special dispensation for the Dirichlet!
 
   if(is.null(disallowed)){
-    f <- function(e){ dhyper2_e(e,H, include.Jacobian=TRUE) }  # integrate over the whole simplex
+    f <- function(e){ dhyper2_e(e,H, include.Jacobian=TRUE) / max_factor }  # integrate over the whole simplex
   } else {
-    f <- function(e){as.numeric(!disallowed(e_to_p(c(1,e)))) * dhyper2_e(e, H, include.Jacobian=TRUE)}
+    f <- function(e){as.numeric(!disallowed(e_to_p(c(1,e)))) * dhyper2_e(e, H, include.Jacobian=TRUE) / max_factor}
   }
 
   out <- adaptIntegrate(f,lowerLimit=rep(0,n),upperLimit=rep(1,n), ...)
   if(give){
     return(out)
   } else {
-    return(out$integral)
+    return(out$integral * max_factor)
   }
+  
 }
 
 `Jacobian` <-
