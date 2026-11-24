@@ -807,7 +807,7 @@ rorder_single <- function(p){
     stopifnot(all(np %in% players))
 
     out <- hyper2(as.list(np), d=powers, pnames=sort(unique(c(np, players))))
-    return(out - hyper2(list(players),d=sum(powers)))
+    return(balance(out))
 }
 
 `GD` <- function(alpha, beta, beta0=0){
