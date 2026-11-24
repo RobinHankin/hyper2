@@ -83,7 +83,9 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">loglik</span><span class="op">(</span><span class="va">p</span>, <span class="va">H</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">loglik_single</span><span class="op">(</span><span class="va">p</span>,<span class="va">H</span>,log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">like_single_list</span><span class="op">(</span><span class="va">p</span>,<span class="va">Lsub</span><span class="op">)</span></span>
-<span><span class="fu">like_series</span><span class="op">(</span><span class="va">p</span>,<span class="va">L</span>,log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">like_series</span><span class="op">(</span><span class="va">p</span>,<span class="va">L</span>,log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">loglikmax</span><span class="op">(</span><span class="va">H</span><span class="op">)</span></span>
+<span><span class="fu">likmax</span><span class="op">(</span><span class="va">H</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -123,12 +125,13 @@
   likelihood function single point in probability space.  Functions
   <code>like_single_list()</code> and <code>like_series()</code> are intended for
   use with <code><a href="ggrl.html">ggrl()</a></code>.</p>
+<p>Functions <code>loglikmax()</code> and <code>likmax()</code> are convenience
+  functions.  These evaluate <code>loglik(H, maxp(H))</code> and
+  <code>loglik(H, maxp(H), log=FALSE)</code> respectively.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
-
-
-<p><em>Likelihood</em> is defined up to an arbitrary multiplicative
+    <p><em>Likelihood</em> is defined up to an arbitrary multiplicative
   constant.  Log-likelihood (also known as <em>support</em>) is defined up
   to an arbitrary additive constant.</p>
 <p>If function <code>loglik()</code> is given a probability vector of length
@@ -182,6 +185,12 @@ A list of rendered HTML documentation may be found
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">chess</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">loglik</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>,<span class="va">chess</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -60.99695</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>  <span class="co"># takes too long</span></span></span>
+<span class="r-in"><span><span class="fu">loglikmax</span><span class="op">(</span><span class="va">chess</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">likmax</span><span class="op">(</span><span class="va">chess</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in likmax(chess):</span> could not find function "likmax"</span>
+<span class="r-in"><span> <span class="co"># \dontrun{}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">loglik</span><span class="op">(</span><span class="fu"><a href="rp.html">rp</a></span><span class="op">(</span><span class="fl">14</span>,<span class="va">icons</span><span class="op">)</span>,<span class="va">icons</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -184.3772 -184.3772 -184.3772 -184.3772 -184.3772 -184.3772 -184.3772</span>

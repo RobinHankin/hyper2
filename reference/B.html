@@ -78,7 +78,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">B</span><span class="op">(</span><span class="va">H</span>, disallowed<span class="op">=</span><span class="cn">NULL</span>, give<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">B</span><span class="op">(</span><span class="va">H</span>, disallowed<span class="op">=</span><span class="cn">NULL</span>, give<span class="op">=</span><span class="cn">FALSE</span>, max_factor <span class="op">=</span> <span class="fu"><a href="loglik.html">likmax</a></span><span class="op">(</span><span class="va">H</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">probability</span><span class="op">(</span><span class="va">H</span>, disallowed<span class="op">=</span><span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">mgf</span><span class="op">(</span><span class="va">H</span>, <span class="va">powers</span>, <span class="va">...</span><span class="op">)</span> </span>
 <span><span class="fu">dhyper2</span><span class="op">(</span><span class="va">ip</span>, <span class="va">H</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -126,6 +126,12 @@
   <dt id="arg-normalize">normalize<a class="anchor" aria-label="anchor" href="#arg-normalize"></a></dt>
 <dd><p>Boolean, indicates whether return value of
     <code>mean_hyper2()</code> is normalized to have unit sum</p></dd>
+
+  <dt id="arg-likmax">likmax<a class="anchor" aria-label="anchor" href="#arg-likmax"></a></dt>
+<dd><p>In <code>B()</code>, a normalizing constant.  Many likelihood
+    functions are extremely small [e.g. <code>chess</code> has likelihoods
+    \(&lt; 10^{-26}\)] and this poses problems for integration routines
+    which round such small evaluations to zero</p></dd>
 
   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Further arguments passed to <code>adaptIntegrate()</code></p></dd>
