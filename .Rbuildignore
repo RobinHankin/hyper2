@@ -197,6 +197,7 @@ CITATION.cff
 ^inst/jss_hyper3.Rmd$
 ^inst/jss_hyper3.Rnw$
 ^inst/cost_hyper3.Rnw$
+^inst/cost_hyper3_real.Rnw$
 ^inst/weaver.sh$
 ^inst/karate.Rmd$
 ^inst/karate.txt$
@@ -214,6 +215,7 @@ CITATION.cff
 ^inst/mann_whitney_wilcoxon.Rmd$
 ^inst/masterchef.Rmd$
 ^inst/masterchef_series6_allrounds.R$
+^inst/mgf.Rmd$
 ^inst/monster_blue.png$
 ^inst/monster_blue.xcf$
 ^inst/monster.jpg$
@@ -335,8 +337,9 @@ CITATION.cff
 ^inst/wow.Rmd$
 ^inst/zermelo.Rmd$
 ^inst/zurich1953_candidates.txt$
-^inst/eurovision_2022_jury_pre_null.txt$
+^inst/eurovision2022_jury_pre_null.txt$
 ^inst/eurovision_collusion.Rmd$
+^inst/eurovision_collusion3.Rmd$
 ^inst/audit_rd.R$
 ^inst/system_prompt.txt$
 ^inst/exp_grid.Rmd$

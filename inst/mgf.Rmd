@@ -1,0 +1,184 @@
+---
+title: "Moment generating functions:  `mgf()` in the `hyper2` package"
+author: "Robin K. S. Hankin"
+bibliography: hyper2.bib
+link-citations: true
+output: html_vignette
+vignette: |
+  %\VignetteIndexEntry{mgf}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r setup, include=FALSE}
+library("hyper2",quietly=TRUE)
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r label="hexsticker",out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/hyper2.png", package = "hyper2"))
+```
+
+<font size="1"> (takes about twenty minutes to run without cache)
+</font>
+
+```{r showmgf}
+mgf
+```
+
+To cite the `hyper2` package in publications, please use
+@hankin2017_rmd.  Here I define the _joint raw moment function_ for a
+random variable ${\mathbf X}$ as a function $\operatorname{jrm}$ with
+
+$$
+\operatorname{jrm}(i_1,\ldots,i_k)=\mathbb{E}{\left(X_1^{i_1}\ldots X_k^{i_k}\right)}=
+\int_{\operatorname{supp_{\bf X}}(X_1,\ldots,X_k)}X_1^{i_1},\ldots,X_k^{i_k} f(X_1,\ldots,X_k)dX_1\cdots dX_k
+$$
+
+where $\operatorname{supp_{\bf X}}(X_1,\ldots,X_k)$ is the support of
+${\mathbf X}$ and $f()$ is its probability density function.  This is
+function `jrm()` [or `mgf()`, which is being deprecated] in the
+package.  We will start with some examples where analytic and
+semi-analytic results are available, and compare them with direct
+numerical sampling.  First, direct numerical sampling:
+
+```{r, userp, cache=TRUE}
+set.seed(0)
+vec <- c(u=5, v=3, w=4, x=1)
+H <- dirichlet(alpha = vec)
+M <- rp(1e5, H)
+```
+Above, we sample directly from $D(5,3,4,1)$ using Metropolis-Hastings; each row of $M$ is an observation:
+
+```{r}
+head(M)
+```
+
+```{r}
+(mean_numerical <- colMeans(M))
+```
+
+Above, see how lines 2-5 are identical, a standard feature of the MH
+algorithm.  Now, we use the raw generating function, which uses
+adaptive integration techniques:
+
+```{r usemgf, cache=TRUE}
+mean_mgf <- c(
+    u=mgf(H,c(u=1)), 
+    v=mgf(H,c(v=1)), 
+    w=mgf(H,c(w=1)), 
+    x=mgf(H,c(x=1))
+)
+```
+
+```{r}
+mean_mgf
+```
+
+And finally we have the theoretical result obtained by calculus:
+
+```{r}
+(mean_theoretical <- vec/sum(vec))
+```
+
+We may compare all these:
+
+
+```{r compare}
+rbind(mean_numerical, mean_mgf, mean_theoretical)
+```
+
+## Chess dataset
+
+
+```{r showchess}
+chess
+```
+
+This dataset is not a Dirichlet distribution but the techniques should
+still work.  
+
+First we will assess the means, 
+
+
+```{r userpchess, cache=TRUE}
+M <- rp(1e5, chess)
+head(M)
+```
+
+```{r, out.width = "100%", dpi=500, cache=TRUE, label=useternary_high_resolution}
+library("Ternary")
+par(mar = rep(0.2, 4))
+TernaryPlot(grid.lines=10, grid.minor.lines = FALSE, grid.lwd=0.3,
+    alab = "Karpov", blab = "Anand", clab = "Topalov")
+TernaryPoints(M, pch=16, cex=0.06)
+```
+
+We can calculate the means using `mgf()` or direct sampling:
+
+```{r chessmeansnum, cache=TRUE}
+chessmeans_num <- colMeans(M)
+```
+
+```{r chessmeansmgf, cache=TRUE}
+chessmeans_mgf <- c(mgf(chess, c(Topalov=1)), mgf(chess, c(Anand=1)), mgf(chess, c(Karpov=1)))
+```
+
+```{r showchessmeans}
+chessmeans_num
+chessmeans_mgf
+rbind(chessmeans_num, chessmeans_mgf)
+```
+
+Above we see that the results agree to about 3 decimal places.  Now
+suppose, for some reason, we are interested in the quantity
+$(p_\mathrm{\small Karpov})^3(p_\mathrm{\small
+Anand})^1(p_\mathrm{\small Topalov})^4$:
+
+```{r usemgfchess, cache=TRUE}
+(chess314_mgf <- mgf(chess, c(Karpov=3, Anand=1, Topalov=4)))
+```
+
+```{r calcrpchessx}
+x314 <- exp(log(M) %*% c(3,1,4))  # Karpov^3 * Anand^1 * Topalov^4
+```
+
+So `x314` is a (nominally) random sample of $(p_\mathrm{\small
+Karpov})^3(p_\mathrm{\small Anand})^1(p_\mathrm{\small Topalov})^4$.
+We may compare its mean value with the value calculated by `mgf()`:
+
+```{r showk3a1t4}
+chess314_rp <- mean(x314)  # Karpov^3 * Anand^1 * Topalov^4
+```
+
+```{r compare314}
+c(rp=chess314_rp, mgf=chess314_mgf)
+```
+
+We see a difference of about 40\% between numerical sampling result
+and the value given by `mgf()`.  Perhaps the random sampling has a
+large variability? See:
+
+
+```{r tryagain, cache=TRUE}
+M2 <- rp(1e5, chess)
+M3 <- rp(1e5, chess)
+M4 <- rp(1e5, chess)
+```
+
+```{r showrepeatedMGF}
+c(
+mean(exp(log(M2) %*% c(3,1,4))),  # Karpov^3 * Anand^1 * Topalov^4
+mean(exp(log(M3) %*% c(3,1,4))),  # Karpov^3 * Anand^1 * Topalov^4
+mean(exp(log(M4) %*% c(3,1,4)))   # Karpov^3 * Anand^1 * Topalov^4
+)
+```
+
+So the values given by `rp()` are reasonably consistent with a
+variability of about 5\%, much less than the difference between the
+`rp()` and `mgf()` values.
+
+
+
+## References
